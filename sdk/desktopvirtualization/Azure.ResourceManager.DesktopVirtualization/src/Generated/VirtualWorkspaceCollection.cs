@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         private readonly ClientDiagnostics _workspacesClientDiagnostics;
         private readonly Workspaces _workspacesRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesByWorkspaceClientDiagnostics;
-        private readonly PrivateLinkResourcesByWorkspace _privateLinkResourcesByWorkspaceRestClient;
 
         /// <summary> Initializes a new instance of VirtualWorkspaceCollection for mocking. </summary>
         protected VirtualWorkspaceCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             TryGetApiVersion(VirtualWorkspaceResource.ResourceType, out string virtualWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualWorkspaceResource.ResourceType.Namespace, Diagnostics);
             _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, virtualWorkspaceApiVersion ?? "2026-01-01-preview");
-            _privateLinkResourcesByWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", VirtualWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesByWorkspaceRestClient = new PrivateLinkResourcesByWorkspace(_privateLinkResourcesByWorkspaceClientDiagnostics, Pipeline, Endpoint, virtualWorkspaceApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -55,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -302,7 +298,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new VirtualWorkspaceResource(Client, data));
+                context,
+                "VirtualWorkspaceCollection.GetAll"), data => new VirtualWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -340,7 +337,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new VirtualWorkspaceResource(Client, data));
+                context,
+                "VirtualWorkspaceCollection.GetAll"), data => new VirtualWorkspaceResource(Client, data));
         }
 
         /// <summary>

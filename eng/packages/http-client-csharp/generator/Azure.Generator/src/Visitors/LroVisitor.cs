@@ -230,28 +230,8 @@ namespace Azure.Generator.Visitors
                     return null;
                 case KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression { MethodName: "FromValue" } invokeMethodExpression }:
                 {
-                    var response = new VariableExpression(typeof(Response), "response");
-                    var responseType = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(serviceMethod.Response.Type)!;
-                    var client = (ClientProvider)scmMethod.EnclosingType;
-                    var diagnosticsProperty = client.GetClientDiagnosticProperty();
-                    var scopeName = scmMethod.GetScopeName();
-
-                    // Use FromLroResponse static method instead of explicit operator cast
-                    var responseModel = serviceMethod.Response.Type as InputModelType;
-                    var lroServiceMethod = scmMethod.ServiceMethod as InputLongRunningServiceMethod;
-                    var resultSegment = lroServiceMethod?.LongRunningServiceMetadata.ResultPath;
-
-                    ValueExpression conversionExpression;
-                    if (!string.IsNullOrEmpty(resultSegment) && responseModel != null)
-                    {
-                        // Call the FromLroResponse static method
-                        conversionExpression = Static(responseType).Invoke(FromLroResponseMethodName, [response]);
-                    }
-                    else
-                    {
-                        // Fall back to explicit operator cast for models without result path
-                        conversionExpression = new CastExpression(response, responseType);
-                    }
+                    var (conversionExpression, response, diagnosticsProperty, scopeName) =
+                        BuildConvertCallComponents(serviceMethod, scmMethod);
 
                     invokeMethodExpression.Update(
                         instanceReference: Static(typeof(ProtocolOperationHelpers)),
@@ -265,9 +245,48 @@ namespace Azure.Generator.Visitors
                         ]);
                     break;
                 }
+                // Wrap typed LRO convenience methods that directly forward to the protocol method.
+                case KeywordExpression { Keyword: "return", Expression: InvokeMethodExpression protocolCallExpression }
+                    when serviceMethod.Response.Type != null:
+                {
+                    var (conversionExpression, response, diagnosticsProperty, scopeName) =
+                        BuildConvertCallComponents(serviceMethod, scmMethod);
+
+                    return new KeywordExpression("return",
+                        Static(typeof(ProtocolOperationHelpers)).Invoke("Convert",
+                        [
+                            protocolCallExpression,
+                            new FuncExpression([response.Declaration], conversionExpression),
+                            diagnosticsProperty,
+                            Literal(scopeName),
+                        ])).Terminate();
+                }
             }
 
             return expressionStatement;
+        }
+
+        /// <summary>
+        /// Builds the components for a <see cref="ProtocolOperationHelpers.Convert"/> call.
+        /// </summary>
+        private static (ValueExpression ConversionExpression, VariableExpression Response, PropertyProvider DiagnosticsProperty, string ScopeName)
+            BuildConvertCallComponents(InputServiceMethod serviceMethod, ScmMethodProvider scmMethod)
+        {
+            var response = new VariableExpression(typeof(Response), "response");
+            var responseType = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(serviceMethod.Response.Type!)!;
+            var client = (ClientProvider)scmMethod.EnclosingType;
+            var diagnosticsProperty = client.GetClientDiagnosticProperty();
+            var scopeName = scmMethod.GetScopeName();
+
+            var responseModel = serviceMethod.Response.Type as InputModelType;
+            var lroServiceMethod = scmMethod.ServiceMethod as InputLongRunningServiceMethod;
+            var resultSegment = lroServiceMethod?.LongRunningServiceMetadata.ResultPath;
+
+            ValueExpression conversionExpression = !string.IsNullOrEmpty(resultSegment) && responseModel != null
+                ? Static(responseType).Invoke(FromLroResponseMethodName, [response])
+                : new CastExpression(response, responseType);
+
+            return (conversionExpression, response, diagnosticsProperty, scopeName);
         }
 
         protected override InvokeMethodExpression? VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)

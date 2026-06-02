@@ -6,7 +6,7 @@
         "database-user-password": "HDInsight123!"
     },
     "gateway": {
-        "restAuthCredential.isEnabled": "true",
+        "restAuthCredential.isEnabled": true,
         "restAuthCredential.username": "admin3366",
         "restAuthCredential.password": "Password1!8462"
     },

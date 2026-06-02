@@ -138,10 +138,26 @@ namespace OpenAI
                 }
 #endif
             }
+            if (Optional.IsDefined(DeferLoading))
+            {
+                writer.WritePropertyName("defer_loading"u8);
+                writer.WriteBooleanValue(DeferLoading.Value);
+            }
             if (Optional.IsDefined(ProjectConnectionId))
             {
                 writer.WritePropertyName("project_connection_id"u8);
                 writer.WriteStringValue(ProjectConnectionId);
+            }
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
             }
         }
 
@@ -180,7 +196,9 @@ namespace OpenAI
             IDictionary<string, string> headers = default;
             BinaryData allowedTools = default;
             BinaryData requireApproval = default;
+            bool? deferLoading = default;
             string projectConnectionId = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -262,9 +280,32 @@ namespace OpenAI
                     requireApproval = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("defer_loading"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deferLoading = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("project_connection_id"u8))
                 {
                     projectConnectionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -283,7 +324,9 @@ namespace OpenAI
                 headers ?? new ChangeTrackingDictionary<string, string>(),
                 allowedTools,
                 requireApproval,
-                projectConnectionId);
+                deferLoading,
+                projectConnectionId,
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
         }
     }
 }

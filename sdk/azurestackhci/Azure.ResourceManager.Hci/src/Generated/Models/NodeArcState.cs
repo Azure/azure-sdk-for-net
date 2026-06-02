@@ -7,93 +7,145 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> State of Arc agent in this node. </summary>
+    /// <summary> State of the Arc agent in this node. Indicates the current lifecycle status of the agent, such as whether it's being provisioned, connected, updated, or has encountered an error. </summary>
     public readonly partial struct NodeArcState : IEquatable<NodeArcState>
     {
         private readonly string _value;
+        /// <summary> The state is not specified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> An error occurred during the agent's lifecycle. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> The operation completed successfully. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The operation was canceled before completion. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The operation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The Arc agent is connected on this node. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> The Arc agent is disconnected on this node. </summary>
+        private const string DisconnectedValue = "Disconnected";
+        /// <summary> The Arc agent has been deleted from this node. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> The Arc agent is being created on this node. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The Arc agent is being updated on this node. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The Arc agent is being deleted from this node. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The Arc agent is being moved on this node. </summary>
+        private const string MovingValue = "Moving";
+        /// <summary> The operation partially succeeded. </summary>
+        private const string PartiallySucceededValue = "PartiallySucceeded";
+        /// <summary> The Arc agent is partially connected on this node. </summary>
+        private const string PartiallyConnectedValue = "PartiallyConnected";
+        /// <summary> The operation is currently in progress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> The operation has been accepted and is pending execution. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The Arc agent is currently being provisioned on this node. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> The Arc agent is in the process of being disabled on this node. </summary>
+        private const string DisableInProgressValue = "DisableInProgress";
 
         /// <summary> Initializes a new instance of <see cref="NodeArcState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NodeArcState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string ErrorValue = "Error";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-        private const string ConnectedValue = "Connected";
-        private const string DisconnectedValue = "Disconnected";
-        private const string DeletedValue = "Deleted";
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string MovingValue = "Moving";
-        private const string PartiallySucceededValue = "PartiallySucceeded";
-        private const string PartiallyConnectedValue = "PartiallyConnected";
-        private const string InProgressValue = "InProgress";
-        private const string AcceptedValue = "Accepted";
-        private const string ProvisioningValue = "Provisioning";
-        private const string DisableInProgressValue = "DisableInProgress";
-
-        /// <summary> NotSpecified. </summary>
+        /// <summary> The state is not specified. </summary>
         public static NodeArcState NotSpecified { get; } = new NodeArcState(NotSpecifiedValue);
-        /// <summary> Error. </summary>
+
+        /// <summary> An error occurred during the agent's lifecycle. </summary>
         public static NodeArcState Error { get; } = new NodeArcState(ErrorValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> The operation completed successfully. </summary>
         public static NodeArcState Succeeded { get; } = new NodeArcState(SucceededValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The operation was canceled before completion. </summary>
         public static NodeArcState Canceled { get; } = new NodeArcState(CanceledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The operation failed. </summary>
         public static NodeArcState Failed { get; } = new NodeArcState(FailedValue);
-        /// <summary> Connected. </summary>
+
+        /// <summary> The Arc agent is connected on this node. </summary>
         public static NodeArcState Connected { get; } = new NodeArcState(ConnectedValue);
-        /// <summary> Disconnected. </summary>
+
+        /// <summary> The Arc agent is disconnected on this node. </summary>
         public static NodeArcState Disconnected { get; } = new NodeArcState(DisconnectedValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> The Arc agent has been deleted from this node. </summary>
         public static NodeArcState Deleted { get; } = new NodeArcState(DeletedValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> The Arc agent is being created on this node. </summary>
         public static NodeArcState Creating { get; } = new NodeArcState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> The Arc agent is being updated on this node. </summary>
         public static NodeArcState Updating { get; } = new NodeArcState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> The Arc agent is being deleted from this node. </summary>
         public static NodeArcState Deleting { get; } = new NodeArcState(DeletingValue);
-        /// <summary> Moving. </summary>
+
+        /// <summary> The Arc agent is being moved on this node. </summary>
         public static NodeArcState Moving { get; } = new NodeArcState(MovingValue);
-        /// <summary> PartiallySucceeded. </summary>
+
+        /// <summary> The operation partially succeeded. </summary>
         public static NodeArcState PartiallySucceeded { get; } = new NodeArcState(PartiallySucceededValue);
-        /// <summary> PartiallyConnected. </summary>
+
+        /// <summary> The Arc agent is partially connected on this node. </summary>
         public static NodeArcState PartiallyConnected { get; } = new NodeArcState(PartiallyConnectedValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> The operation is currently in progress. </summary>
         public static NodeArcState InProgress { get; } = new NodeArcState(InProgressValue);
-        /// <summary> Accepted. </summary>
+
+        /// <summary> The operation has been accepted and is pending execution. </summary>
         public static NodeArcState Accepted { get; } = new NodeArcState(AcceptedValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> The Arc agent is currently being provisioned on this node. </summary>
         public static NodeArcState Provisioning { get; } = new NodeArcState(ProvisioningValue);
-        /// <summary> DisableInProgress. </summary>
+
+        /// <summary> The Arc agent is in the process of being disabled on this node. </summary>
         public static NodeArcState DisableInProgress { get; } = new NodeArcState(DisableInProgressValue);
+
         /// <summary> Determines if two <see cref="NodeArcState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NodeArcState left, NodeArcState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NodeArcState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NodeArcState left, NodeArcState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NodeArcState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NodeArcState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NodeArcState(string value) => new NodeArcState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NodeArcState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NodeArcState?(string value) => value == null ? null : new NodeArcState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NodeArcState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NodeArcState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _targetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeTargetPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeTargetResource> operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(
-                    new EdgeTargetOperationSource(Client),
+                    new EdgeTargetResourceOperationSource(Client),
                     _targetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _targetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeTargetPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeTargetResource> operation = new WorkloadOrchestrationArmOperation<EdgeTargetResource>(
-                    new EdgeTargetOperationSource(Client),
+                    new EdgeTargetResourceOperationSource(Client),
                     _targetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _targetsRestClient.CreatePublishSolutionVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionVersionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
-                    new EdgeSolutionVersionOperationSource(Client),
+                    new EdgeSolutionVersionResourceOperationSource(Client),
                     _targetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _targetsRestClient.CreatePublishSolutionVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionVersionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
-                    new EdgeSolutionVersionOperationSource(Client),
+                    new EdgeSolutionVersionResourceOperationSource(Client),
                     _targetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _targetsRestClient.CreateReviewSolutionVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
-                    new EdgeSolutionVersionOperationSource(Client),
+                    new EdgeSolutionVersionResourceOperationSource(Client),
                     _targetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _targetsRestClient.CreateReviewSolutionVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeSolutionTemplateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
-                    new EdgeSolutionVersionOperationSource(Client),
+                    new EdgeSolutionVersionResourceOperationSource(Client),
                     _targetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _targetsRestClient.CreateUpdateExternalValidationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateExternalValidationStatusContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
-                    new EdgeSolutionVersionOperationSource(Client),
+                    new EdgeSolutionVersionResourceOperationSource(Client),
                     _targetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _targetsRestClient.CreateUpdateExternalValidationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, UpdateExternalValidationStatusContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
-                    new EdgeSolutionVersionOperationSource(Client),
+                    new EdgeSolutionVersionResourceOperationSource(Client),
                     _targetsClientDiagnostics,
                     Pipeline,
                     message.Request,

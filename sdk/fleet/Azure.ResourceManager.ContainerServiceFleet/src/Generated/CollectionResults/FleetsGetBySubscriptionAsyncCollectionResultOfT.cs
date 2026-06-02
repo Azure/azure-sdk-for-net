@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         private readonly int? _maxCount;
         private readonly string _skipToken;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of FleetsGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Fleets client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skipToken"> The page-continuation token to use with a paged version of this API. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FleetsGetBySubscriptionAsyncCollectionResultOfT(Fleets client, Guid subscriptionId, int? maxCount, string skipToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public FleetsGetBySubscriptionAsyncCollectionResultOfT(Fleets client, Guid subscriptionId, int? maxCount, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _maxCount = maxCount;
             _skipToken = skipToken;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of FleetsGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _maxCount, _skipToken, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _maxCount, _skipToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableContainerServiceFleetSubscriptionResource.GetContainerServiceFleets");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

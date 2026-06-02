@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Sets the number of 'Always Ready' instances for a function group or a specific function. </summary>
+    /// <summary>
+    /// Sets the number of 'Always Ready' instances for a function group or a specific function.
+    /// Serialized Name: FunctionsAlwaysReadyConfig
+    /// </summary>
     public partial class FunctionAppAlwaysReadyConfig
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppAlwaysReadyConfig"/>. </summary>
-        /// <param name="name"> Either a function group or a function name is required. For additional information see https://aka.ms/flexconsumption/alwaysready. </param>
-        /// <param name="alwaysReadyInstanceCount"> Sets the number of 'Always Ready' instances for a given function group or a specific function. For additional information see https://aka.ms/flexconsumption/alwaysready. </param>
+        /// <param name="name">
+        /// Either a function group or a function name is required. For additional information see https://aka.ms/flexconsumption/alwaysready.
+        /// Serialized Name: FunctionsAlwaysReadyConfig.name
+        /// </param>
+        /// <param name="alwaysReadyInstanceCount">
+        /// Sets the number of 'Always Ready' instances for a given function group or a specific function. For additional information see https://aka.ms/flexconsumption/alwaysready.
+        /// Serialized Name: FunctionsAlwaysReadyConfig.instanceCount
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionAppAlwaysReadyConfig(string name, int? alwaysReadyInstanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Either a function group or a function name is required. For additional information see https://aka.ms/flexconsumption/alwaysready. </summary>
+        /// <summary>
+        /// Either a function group or a function name is required. For additional information see https://aka.ms/flexconsumption/alwaysready.
+        /// Serialized Name: FunctionsAlwaysReadyConfig.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Sets the number of 'Always Ready' instances for a given function group or a specific function. For additional information see https://aka.ms/flexconsumption/alwaysready. </summary>
+        /// <summary>
+        /// Sets the number of 'Always Ready' instances for a given function group or a specific function. For additional information see https://aka.ms/flexconsumption/alwaysready.
+        /// Serialized Name: FunctionsAlwaysReadyConfig.instanceCount
+        /// </summary>
         [WirePath("instanceCount")]
         public int? AlwaysReadyInstanceCount { get; set; }
     }

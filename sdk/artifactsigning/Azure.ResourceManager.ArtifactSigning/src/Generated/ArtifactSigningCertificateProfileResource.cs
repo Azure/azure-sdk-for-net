@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 HttpMessage message = _certificateProfilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ArtifactSigningCertificateProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArtifactSigningArmOperation<ArtifactSigningCertificateProfileResource> operation = new ArtifactSigningArmOperation<ArtifactSigningCertificateProfileResource>(
-                    new ArtifactSigningCertificateProfileOperationSource(Client),
+                    new ArtifactSigningCertificateProfileResourceOperationSource(Client),
                     _certificateProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 HttpMessage message = _certificateProfilesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ArtifactSigningCertificateProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArtifactSigningArmOperation<ArtifactSigningCertificateProfileResource> operation = new ArtifactSigningArmOperation<ArtifactSigningCertificateProfileResource>(
-                    new ArtifactSigningCertificateProfileOperationSource(Client),
+                    new ArtifactSigningCertificateProfileResourceOperationSource(Client),
                     _certificateProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,

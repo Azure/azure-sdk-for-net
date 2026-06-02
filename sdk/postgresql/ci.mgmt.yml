@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.PostgreSql
       safeName: AzureResourceManagerPostgreSql
+    - name: Azure.Provisioning.PostgreSql
+      safeName: AzureProvisioningPostgreSql

@@ -29,8 +29,6 @@ namespace Azure.ResourceManager.Attestation
     {
         private readonly ClientDiagnostics _attestationProvidersClientDiagnostics;
         private readonly AttestationProviders _attestationProvidersRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
         /// <summary> Initializes a new instance of AttestationProviderCollection for mocking. </summary>
         protected AttestationProviderCollection()
@@ -45,8 +43,6 @@ namespace Azure.ResourceManager.Attestation
             TryGetApiVersion(AttestationProviderResource.ResourceType, out string attestationProviderApiVersion);
             _attestationProvidersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", AttestationProviderResource.ResourceType.Namespace, Diagnostics);
             _attestationProvidersRestClient = new AttestationProviders(_attestationProvidersClientDiagnostics, Pipeline, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", AttestationProviderResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, attestationProviderApiVersion ?? "2021-06-01");
             ValidateResourceId(id);
         }
 
@@ -56,7 +52,7 @@ namespace Azure.ResourceManager.Attestation
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -293,7 +289,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupAsyncCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AttestationProviderResource(Client, data));
+            return new AsyncPageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupAsyncCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +317,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new AttestationProviderResource(Client, data));
+            return new PageableWrapper<AttestationProviderData, AttestationProviderResource>(new AttestationProvidersGetByResourceGroupCollectionResultOfT(_attestationProvidersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "AttestationProviderCollection.GetAll"), data => new AttestationProviderResource(Client, data));
         }
 
         /// <summary>

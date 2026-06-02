@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `QuestionAnsweringAuthoringClientSettings` to support creating a `QuestionAnsweringAuthoringClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

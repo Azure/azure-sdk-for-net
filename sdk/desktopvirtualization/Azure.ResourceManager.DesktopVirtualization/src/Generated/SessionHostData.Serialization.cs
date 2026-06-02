@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sessionHostData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(sessionHostData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SessionHostData"/> from. </param>

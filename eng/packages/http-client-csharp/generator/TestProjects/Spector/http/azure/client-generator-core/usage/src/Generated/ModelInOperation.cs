@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,6 +17,8 @@ namespace Specs.Azure.ClientGenerator.Core.Usage._ModelInOperation
     public partial class ModelInOperation
     {
         protected ModelInOperation() => throw null;
+
+        internal ModelInOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

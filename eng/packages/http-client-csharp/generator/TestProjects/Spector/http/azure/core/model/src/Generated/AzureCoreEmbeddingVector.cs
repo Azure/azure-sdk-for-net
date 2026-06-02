@@ -18,6 +18,8 @@ namespace Specs.Azure.Core.Model
     {
         protected AzureCoreEmbeddingVector() => throw null;
 
+        internal AzureCoreEmbeddingVector(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Get(RequestContext context) => throw null;

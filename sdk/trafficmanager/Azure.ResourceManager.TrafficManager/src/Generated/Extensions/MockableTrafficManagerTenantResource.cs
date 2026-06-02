@@ -40,13 +40,6 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
 
         private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
 
-        /// <summary> Gets a collection of TrafficManagerGeographicHierarchies in the <see cref="TenantResource"/>. </summary>
-        /// <returns> An object representing collection of TrafficManagerGeographicHierarchies and their operations over a TrafficManagerGeographicHierarchyResource. </returns>
-        public virtual TrafficManagerGeographicHierarchyCollection GetTrafficManagerGeographicHierarchies()
-        {
-            return GetCachedClient(client => new TrafficManagerGeographicHierarchyCollection(client, Id));
-        }
-
         /// <summary>
         /// Gets the default Geographic Hierarchy used by the Geographic traffic routing method.
         /// <list type="bullet">
@@ -62,37 +55,16 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <term> Default Api Version. </term>
         /// <description> 2022-04-01. </description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TrafficManagerGeographicHierarchyResource>> GetTrafficManagerGeographicHierarchyAsync(CancellationToken cancellationToken = default)
-        {
-            return await GetTrafficManagerGeographicHierarchies().GetAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the default Geographic Hierarchy used by the Geographic traffic routing method.
-        /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Network/trafficManagerGeographicHierarchies/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> TrafficManagerGeographicHierarchies_GetDefault. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="TrafficManagerGeographicHierarchyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<TrafficManagerGeographicHierarchyResource> GetTrafficManagerGeographicHierarchy(CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource"/> object. </returns>
+        public virtual TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy()
         {
-            return GetTrafficManagerGeographicHierarchies().Get(cancellationToken);
+            return new TrafficManagerGeographicHierarchyResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerGeographicHierarchies", "default"));
         }
 
         /// <summary>

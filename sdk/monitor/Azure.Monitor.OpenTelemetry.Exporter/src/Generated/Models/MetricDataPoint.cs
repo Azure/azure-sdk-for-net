@@ -6,20 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    /// <summary> Metric data single measurement. </summary>
     internal partial class MetricDataPoint
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="MetricDataPoint"/>. </summary>
         /// <param name="name"> Name of the metric. </param>
-        /// <param name="value"> Single value for measurement. Sum of individual measurements for the aggregation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <param name="value">
+        /// Single value for measurement. Sum of individual measurements for the
+        /// aggregation.
+        /// </param>
         public MetricDataPoint(string name, double value)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
             Value = value;
         }
@@ -28,12 +31,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="namespace"> Namespace of the metric. </param>
         /// <param name="name"> Name of the metric. </param>
         /// <param name="dataPointType"> Metric type. Single measurement or the aggregated value. </param>
-        /// <param name="value"> Single value for measurement. Sum of individual measurements for the aggregation. </param>
+        /// <param name="value">
+        /// Single value for measurement. Sum of individual measurements for the
+        /// aggregation.
+        /// </param>
         /// <param name="count"> Metric weight of the aggregated metric. Should not be set for a measurement. </param>
         /// <param name="min"> Minimum value of the aggregated metric. Should not be set for a measurement. </param>
         /// <param name="max"> Maximum value of the aggregated metric. Should not be set for a measurement. </param>
-        /// <param name="stdDev"> Standard deviation of the aggregated metric. Should not be set for a measurement. </param>
-        internal MetricDataPoint(string @namespace, string name, DataPointType? dataPointType, double value, int? count, double? min, double? max, double? stdDev)
+        /// <param name="stdDev">
+        /// Standard deviation of the aggregated metric. Should not be set for a
+        /// measurement.
+        /// </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDataPoint(string @namespace, string name, DataPointType? dataPointType, double value, int? count, double? min, double? max, double? stdDev, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Namespace = @namespace;
             Name = name;
@@ -43,23 +53,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Min = min;
             Max = max;
             StdDev = stdDev;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Namespace of the metric. </summary>
         public string Namespace { get; set; }
+
         /// <summary> Name of the metric. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
+
         /// <summary> Metric type. Single measurement or the aggregated value. </summary>
         public DataPointType? DataPointType { get; set; }
-        /// <summary> Single value for measurement. Sum of individual measurements for the aggregation. </summary>
-        public double Value { get; }
+
+        /// <summary>
+        /// Single value for measurement. Sum of individual measurements for the
+        /// aggregation.
+        /// </summary>
+        public double Value { get; set; }
+
         /// <summary> Metric weight of the aggregated metric. Should not be set for a measurement. </summary>
         public int? Count { get; set; }
+
         /// <summary> Minimum value of the aggregated metric. Should not be set for a measurement. </summary>
         public double? Min { get; set; }
+
         /// <summary> Maximum value of the aggregated metric. Should not be set for a measurement. </summary>
         public double? Max { get; set; }
-        /// <summary> Standard deviation of the aggregated metric. Should not be set for a measurement. </summary>
+
+        /// <summary>
+        /// Standard deviation of the aggregated metric. Should not be set for a
+        /// measurement.
+        /// </summary>
         public double? StdDev { get; set; }
     }
 }

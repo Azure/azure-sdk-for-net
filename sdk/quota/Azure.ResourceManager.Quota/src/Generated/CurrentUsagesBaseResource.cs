@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CurrentUsagesBaseData> response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentUsagesBasesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CurrentUsagesBaseData> response = Response.FromValue(CurrentUsagesBaseData.FromResponse(result), result);
                 if (response.Value == null)

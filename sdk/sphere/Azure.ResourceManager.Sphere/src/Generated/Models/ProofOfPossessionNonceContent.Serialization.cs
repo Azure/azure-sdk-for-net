@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(proofOfPossessionNonceContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(proofOfPossessionNonceContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

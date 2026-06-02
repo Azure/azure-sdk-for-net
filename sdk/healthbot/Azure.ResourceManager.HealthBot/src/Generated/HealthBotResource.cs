@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HealthBot
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HealthBot
                 HttpMessage message = _botsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HealthBotPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthBotArmOperation<HealthBotResource> operation = new HealthBotArmOperation<HealthBotResource>(
-                    new HealthBotOperationSource(Client),
+                    new HealthBotResourceOperationSource(Client),
                     _botsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.HealthBot
                 HttpMessage message = _botsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HealthBotPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthBotArmOperation<HealthBotResource> operation = new HealthBotArmOperation<HealthBotResource>(
-                    new HealthBotOperationSource(Client),
+                    new HealthBotResourceOperationSource(Client),
                     _botsClientDiagnostics,
                     Pipeline,
                     message.Request,

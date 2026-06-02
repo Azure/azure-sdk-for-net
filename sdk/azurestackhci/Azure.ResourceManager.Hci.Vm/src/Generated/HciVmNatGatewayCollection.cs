@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _natGatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, natGatewayName, HciVmNatGatewayData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmNatGatewayResource> operation = new VmArmOperation<HciVmNatGatewayResource>(
-                    new HciVmNatGatewayOperationSource(Client),
+                    new HciVmNatGatewayResourceOperationSource(Client),
                     _natGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _natGatewaysRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, natGatewayName, HciVmNatGatewayData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmNatGatewayResource> operation = new VmArmOperation<HciVmNatGatewayResource>(
-                    new HciVmNatGatewayOperationSource(Client),
+                    new HciVmNatGatewayResourceOperationSource(Client),
                     _natGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetByResourceGroupAsyncCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmNatGatewayResource(Client, data));
+            return new AsyncPageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetByResourceGroupAsyncCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNatGatewayCollection.GetAll"), data => new HciVmNatGatewayResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetByResourceGroupCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmNatGatewayResource(Client, data));
+            return new PageableWrapper<HciVmNatGatewayData, HciVmNatGatewayResource>(new NatGatewaysGetByResourceGroupCollectionResultOfT(_natGatewaysRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNatGatewayCollection.GetAll"), data => new HciVmNatGatewayResource(Client, data));
         }
 
         /// <summary>

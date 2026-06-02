@@ -15,25 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class FileShareProvisionIlrContent : IlrContent
     {
         /// <summary> Initializes a new instance of <see cref="FileShareProvisionIlrContent"/>. </summary>
-        public FileShareProvisionIlrContent()
+        public FileShareProvisionIlrContent() : base("AzureFileShareProvisionILRRequest")
         {
-            ObjectType = "AzureFileShareProvisionILRRequest";
         }
 
         /// <summary> Initializes a new instance of <see cref="FileShareProvisionIlrContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointId"> Recovery point ID. </param>
         /// <param name="sourceResourceId"> Source Storage account ARM Id. </param>
-        internal FileShareProvisionIlrContent(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryPointId, ResourceIdentifier sourceResourceId) : base(objectType, serializedAdditionalRawData)
+        internal FileShareProvisionIlrContent(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointId, ResourceIdentifier sourceResourceId) : base(objectType, additionalBinaryDataProperties)
         {
             RecoveryPointId = recoveryPointId;
             SourceResourceId = sourceResourceId;
-            ObjectType = objectType ?? "AzureFileShareProvisionILRRequest";
         }
 
         /// <summary> Recovery point ID. </summary>
         public string RecoveryPointId { get; set; }
+
         /// <summary> Source Storage account ARM Id. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
     }

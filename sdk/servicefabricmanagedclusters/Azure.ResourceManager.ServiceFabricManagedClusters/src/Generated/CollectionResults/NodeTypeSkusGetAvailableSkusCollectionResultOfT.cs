@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private readonly string _clusterName;
         private readonly string _nodeTypeName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of NodeTypeSkusGetAvailableSkusCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The NodeTypeSkus client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="clusterName"> The name of the cluster resource. </param>
         /// <param name="nodeTypeName"> The name of the node type. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public NodeTypeSkusGetAvailableSkusCollectionResultOfT(NodeTypeSkus client, string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public NodeTypeSkusGetAvailableSkusCollectionResultOfT(NodeTypeSkus client, string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             _clusterName = clusterName;
             _nodeTypeName = nodeTypeName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of NodeTypeSkusGetAvailableSkusCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAvailableSkusRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _nodeTypeName, _context) : _client.CreateGetAvailableSkusRequest(_subscriptionId, _resourceGroupName, _clusterName, _nodeTypeName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ServiceFabricManagedNodeTypeResource.GetAvailableSkus");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

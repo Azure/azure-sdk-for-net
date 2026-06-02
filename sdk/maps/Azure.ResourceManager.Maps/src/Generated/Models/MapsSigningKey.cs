@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Maps;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    /// <summary> The Map account key to use for signing. Picking `primaryKey` or `secondaryKey` will use the Map account Shared Keys, and using `managedIdentity` will use the auto-renewed private key to sign the SAS. </summary>
+    /// <summary> The Maps account key to use for signing. Picking `primaryKey` or `secondaryKey` will use the Maps account Shared Keys, and using `managedIdentity` will use the auto-renewed private key to sign the SAS. </summary>
     public readonly partial struct MapsSigningKey : IEquatable<MapsSigningKey>
     {
         private readonly string _value;
+        /// <summary> primaryKey. </summary>
+        private const string PrimaryKeyValue = "primaryKey";
+        /// <summary> secondaryKey. </summary>
+        private const string SecondaryKeyValue = "secondaryKey";
+        /// <summary> managedIdentity. </summary>
+        private const string ManagedIdentityValue = "managedIdentity";
 
         /// <summary> Initializes a new instance of <see cref="MapsSigningKey"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MapsSigningKey(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PrimaryKeyValue = "primaryKey";
-        private const string SecondaryKeyValue = "secondaryKey";
-        private const string ManagedIdentityValue = "managedIdentity";
+            _value = value;
+        }
 
         /// <summary> primaryKey. </summary>
         public static MapsSigningKey PrimaryKey { get; } = new MapsSigningKey(PrimaryKeyValue);
+
         /// <summary> secondaryKey. </summary>
         public static MapsSigningKey SecondaryKey { get; } = new MapsSigningKey(SecondaryKeyValue);
+
         /// <summary> managedIdentity. </summary>
         public static MapsSigningKey ManagedIdentity { get; } = new MapsSigningKey(ManagedIdentityValue);
+
         /// <summary> Determines if two <see cref="MapsSigningKey"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MapsSigningKey left, MapsSigningKey right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MapsSigningKey"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MapsSigningKey left, MapsSigningKey right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MapsSigningKey"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MapsSigningKey"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MapsSigningKey(string value) => new MapsSigningKey(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MapsSigningKey"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MapsSigningKey?(string value) => value == null ? null : new MapsSigningKey(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MapsSigningKey other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MapsSigningKey other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

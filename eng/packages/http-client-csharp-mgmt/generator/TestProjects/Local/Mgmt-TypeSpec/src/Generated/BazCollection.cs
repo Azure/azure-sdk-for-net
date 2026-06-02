@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,12 +94,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _bazsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bazName, BazData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
-                    new BazOperationSource(Client),
+                    new BazResourceOperationSource(Client),
                     _bazsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -152,12 +153,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _bazsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, bazName, BazData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
-                    new BazOperationSource(Client),
+                    new BazResourceOperationSource(Client),
                     _bazsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -294,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BazData, BazResource>(new BazsGetAllAsyncCollectionResultOfT(_bazsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new BazResource(Client, data));
+            return new AsyncPageableWrapper<BazData, BazResource>(new BazsGetAllAsyncCollectionResultOfT(_bazsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "BazCollection.GetAll"), data => new BazResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BazData, BazResource>(new BazsGetAllCollectionResultOfT(_bazsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new BazResource(Client, data));
+            return new PageableWrapper<BazData, BazResource>(new BazsGetAllCollectionResultOfT(_bazsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "BazCollection.GetAll"), data => new BazResource(Client, data));
         }
 
         /// <summary>

@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,12 +94,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _sharedConfigsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configName, SharedConfigData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<SharedConfigResource> operation = new TestsArmOperation<SharedConfigResource>(
-                    new SharedConfigOperationSource(Client),
+                    new SharedConfigResourceOperationSource(Client),
                     _sharedConfigsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -152,12 +153,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _sharedConfigsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, configName, SharedConfigData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<SharedConfigResource> operation = new TestsArmOperation<SharedConfigResource>(
-                    new SharedConfigOperationSource(Client),
+                    new SharedConfigResourceOperationSource(Client),
                     _sharedConfigsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -294,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SharedConfigData, SharedConfigResource>(new SharedConfigsGetAllAsyncCollectionResultOfT(_sharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SharedConfigResource(Client, data));
+            return new AsyncPageableWrapper<SharedConfigData, SharedConfigResource>(new SharedConfigsGetAllAsyncCollectionResultOfT(_sharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SharedConfigCollection.GetAll"), data => new SharedConfigResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SharedConfigData, SharedConfigResource>(new SharedConfigsGetAllCollectionResultOfT(_sharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SharedConfigResource(Client, data));
+            return new PageableWrapper<SharedConfigData, SharedConfigResource>(new SharedConfigsGetAllCollectionResultOfT(_sharedConfigsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SharedConfigCollection.GetAll"), data => new SharedConfigResource(Client, data));
         }
 
         /// <summary>

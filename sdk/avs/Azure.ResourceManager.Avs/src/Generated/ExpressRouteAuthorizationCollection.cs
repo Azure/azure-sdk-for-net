@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _authorizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, ExpressRouteAuthorizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<ExpressRouteAuthorizationResource> operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(
-                    new ExpressRouteAuthorizationOperationSource(Client),
+                    new ExpressRouteAuthorizationResourceOperationSource(Client),
                     _authorizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _authorizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, ExpressRouteAuthorizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<ExpressRouteAuthorizationResource> operation = new AvsArmOperation<ExpressRouteAuthorizationResource>(
-                    new ExpressRouteAuthorizationOperationSource(Client),
+                    new ExpressRouteAuthorizationResourceOperationSource(Client),
                     _authorizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteAuthorizationData, ExpressRouteAuthorizationResource>(new AuthorizationsGetAllAsyncCollectionResultOfT(_authorizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ExpressRouteAuthorizationResource(Client, data));
+            return new AsyncPageableWrapper<ExpressRouteAuthorizationData, ExpressRouteAuthorizationResource>(new AuthorizationsGetAllAsyncCollectionResultOfT(
+                _authorizationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ExpressRouteAuthorizationCollection.GetAll"), data => new ExpressRouteAuthorizationResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteAuthorizationData, ExpressRouteAuthorizationResource>(new AuthorizationsGetAllCollectionResultOfT(_authorizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ExpressRouteAuthorizationResource(Client, data));
+            return new PageableWrapper<ExpressRouteAuthorizationData, ExpressRouteAuthorizationResource>(new AuthorizationsGetAllCollectionResultOfT(
+                _authorizationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ExpressRouteAuthorizationCollection.GetAll"), data => new ExpressRouteAuthorizationResource(Client, data));
         }
 
         /// <summary>

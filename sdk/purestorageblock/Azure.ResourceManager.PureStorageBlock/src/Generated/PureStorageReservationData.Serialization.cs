@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(pureStorageReservationData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(pureStorageReservationData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PureStorageReservationData"/> from. </param>

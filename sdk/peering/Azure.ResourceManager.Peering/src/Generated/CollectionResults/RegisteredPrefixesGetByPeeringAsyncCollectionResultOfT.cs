@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Peering
         private readonly string _resourceGroupName;
         private readonly string _peeringName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of RegisteredPrefixesGetByPeeringAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RegisteredPrefixes client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.Peering
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RegisteredPrefixesGetByPeeringAsyncCollectionResultOfT(RegisteredPrefixes client, string subscriptionId, string resourceGroupName, string peeringName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public RegisteredPrefixesGetByPeeringAsyncCollectionResultOfT(RegisteredPrefixes client, string subscriptionId, string resourceGroupName, string peeringName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _peeringName = peeringName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of RegisteredPrefixesGetByPeeringAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Peering
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByPeeringRequest(nextLink, _subscriptionId, _resourceGroupName, _peeringName, _context) : _client.CreateGetByPeeringRequest(_subscriptionId, _resourceGroupName, _peeringName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PeeringRegisteredPrefixCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> TThe query parameters to configure hybrid search behaviors. </summary>
+    /// <summary> The query parameters to configure hybrid search behaviors. </summary>
     public partial class HybridSearch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

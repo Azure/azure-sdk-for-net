@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.MongoCluster
                 HttpMessage message = _usersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoClusterUserData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoClusterArmOperation<MongoClusterUserResource> operation = new MongoClusterArmOperation<MongoClusterUserResource>(
-                    new MongoClusterUserOperationSource(Client),
+                    new MongoClusterUserResourceOperationSource(Client),
                     _usersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.MongoCluster
                 HttpMessage message = _usersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, MongoClusterUserData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoClusterArmOperation<MongoClusterUserResource> operation = new MongoClusterArmOperation<MongoClusterUserResource>(
-                    new MongoClusterUserOperationSource(Client),
+                    new MongoClusterUserResourceOperationSource(Client),
                     _usersClientDiagnostics,
                     Pipeline,
                     message.Request,

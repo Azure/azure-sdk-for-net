@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _schemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaName, EdgeSchemaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSchemaResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaResource>(
-                    new EdgeSchemaOperationSource(Client),
+                    new EdgeSchemaResourceOperationSource(Client),
                     _schemasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _schemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaName, EdgeSchemaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSchemaResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaResource>(
-                    new EdgeSchemaOperationSource(Client),
+                    new EdgeSchemaResourceOperationSource(Client),
                     _schemasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new SchemasGetByResourceGroupAsyncCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeSchemaResource(Client, data));
+            return new AsyncPageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new SchemasGetByResourceGroupAsyncCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeSchemaCollection.GetAll"), data => new EdgeSchemaResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new SchemasGetByResourceGroupCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeSchemaResource(Client, data));
+            return new PageableWrapper<EdgeSchemaData, EdgeSchemaResource>(new SchemasGetByResourceGroupCollectionResultOfT(_schemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeSchemaCollection.GetAll"), data => new EdgeSchemaResource(Client, data));
         }
 
         /// <summary>

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sphere
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, SphereCatalogData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SphereArmOperation<SphereCatalogResource> operation = new SphereArmOperation<SphereCatalogResource>(
-                    new SphereCatalogOperationSource(Client),
+                    new SphereCatalogResourceOperationSource(Client),
                     _catalogsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, SphereCatalogData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SphereArmOperation<SphereCatalogResource> operation = new SphereArmOperation<SphereCatalogResource>(
-                    new SphereCatalogOperationSource(Client),
+                    new SphereCatalogResourceOperationSource(Client),
                     _catalogsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetByResourceGroupAsyncCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new SphereCatalogResource(Client, data));
+            return new AsyncPageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetByResourceGroupAsyncCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SphereCatalogCollection.GetAll"), data => new SphereCatalogResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Sphere
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetByResourceGroupCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new SphereCatalogResource(Client, data));
+            return new PageableWrapper<SphereCatalogData, SphereCatalogResource>(new CatalogsGetByResourceGroupCollectionResultOfT(_catalogsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SphereCatalogCollection.GetAll"), data => new SphereCatalogResource(Client, data));
         }
 
         /// <summary>

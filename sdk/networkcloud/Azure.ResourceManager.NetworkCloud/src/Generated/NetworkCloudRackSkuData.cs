@@ -13,95 +13,123 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing the NetworkCloudRackSku data model.
-    /// RackSku represents the SKU information of the rack.
-    /// </summary>
+    /// <summary> RackSku represents the SKU information of the rack. </summary>
     public partial class NetworkCloudRackSkuData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudRackSkuData"/>. </summary>
-        public NetworkCloudRackSkuData()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The list of the resource properties. </param>
+        internal NetworkCloudRackSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RackSkuProperties properties) : base(id, name, resourceType, systemData)
         {
-            ComputeMachines = new ChangeTrackingList<MachineSkuSlot>();
-            ControllerMachines = new ChangeTrackingList<MachineSkuSlot>();
-            StorageAppliances = new ChangeTrackingList<StorageApplianceSkuSlot>();
-            SupportedRackSkuIds = new ChangeTrackingList<string>();
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkCloudRackSkuData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="computeMachines"> The list of machine SKUs and associated rack slot for the compute-dedicated machines in this rack model. </param>
-        /// <param name="controllerMachines"> The list of machine SKUs and associated rack slot for the control-plane dedicated machines in this rack model. </param>
-        /// <param name="description"> The free-form text describing the rack. </param>
-        /// <param name="maxClusterSlots"> The maximum number of compute racks supported by an aggregator rack. 0 if this is a compute rack or a rack for a single rack cluster(rackType="Single"). </param>
-        /// <param name="provisioningState"> The provisioning state of the rack SKU resource. </param>
-        /// <param name="rackType"> The type of the rack. </param>
-        /// <param name="storageAppliances"> The list of appliance SKUs and associated rack slot for the storage appliance(s) in this rack model. </param>
-        /// <param name="supportedRackSkuIds"> The list of supported SKUs if the rack is an aggregator. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudRackSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<MachineSkuSlot> computeMachines, IReadOnlyList<MachineSkuSlot> controllerMachines, string description, long? maxClusterSlots, RackSkuProvisioningState? provisioningState, RackSkuType? rackType, IReadOnlyList<StorageApplianceSkuSlot> storageAppliances, IReadOnlyList<string> supportedRackSkuIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            ComputeMachines = computeMachines;
-            ControllerMachines = controllerMachines;
-            Description = description;
-            MaxClusterSlots = maxClusterSlots;
-            ProvisioningState = provisioningState;
-            RackType = rackType;
-            StorageAppliances = storageAppliances;
-            SupportedRackSkuIds = supportedRackSkuIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> The list of the resource properties. </summary>
+        internal RackSkuProperties Properties { get; set; }
 
         /// <summary> The list of machine SKUs and associated rack slot for the compute-dedicated machines in this rack model. </summary>
-        public IReadOnlyList<MachineSkuSlot> ComputeMachines { get; }
+        public IReadOnlyList<MachineSkuSlot> ComputeMachines
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RackSkuProperties();
+                }
+                return Properties.ComputeMachines;
+            }
+        }
+
         /// <summary> The list of machine SKUs and associated rack slot for the control-plane dedicated machines in this rack model. </summary>
-        public IReadOnlyList<MachineSkuSlot> ControllerMachines { get; }
+        public IReadOnlyList<MachineSkuSlot> ControllerMachines
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RackSkuProperties();
+                }
+                return Properties.ControllerMachines;
+            }
+        }
+
+        /// <summary> The deployment type supported by the rack SKU. </summary>
+        public NetworkCloudDeploymentType? DeploymentType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentType;
+            }
+        }
+
         /// <summary> The free-form text describing the rack. </summary>
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
         /// <summary> The maximum number of compute racks supported by an aggregator rack. 0 if this is a compute rack or a rack for a single rack cluster(rackType="Single"). </summary>
-        public long? MaxClusterSlots { get; }
+        public long? MaxClusterSlots
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxClusterSlots;
+            }
+        }
+
         /// <summary> The provisioning state of the rack SKU resource. </summary>
-        public RackSkuProvisioningState? ProvisioningState { get; }
+        public RackSkuProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The type of the rack. </summary>
-        public RackSkuType? RackType { get; }
+        public RackSkuType? RackType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RackType;
+            }
+        }
+
         /// <summary> The list of appliance SKUs and associated rack slot for the storage appliance(s) in this rack model. </summary>
-        public IReadOnlyList<StorageApplianceSkuSlot> StorageAppliances { get; }
+        public IReadOnlyList<StorageApplianceSkuSlot> StorageAppliances
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RackSkuProperties();
+                }
+                return Properties.StorageAppliances;
+            }
+        }
+
         /// <summary> The list of supported SKUs if the rack is an aggregator. </summary>
-        public IReadOnlyList<string> SupportedRackSkuIds { get; }
+        public IReadOnlyList<string> SupportedRackSkuIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RackSkuProperties();
+                }
+                return Properties.SupportedRackSkuIds;
+            }
+        }
     }
 }

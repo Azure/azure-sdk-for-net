@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     internal readonly partial struct BackupEngineType : IEquatable<BackupEngineType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupEngineType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupEngineType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string DpmBackupEngineValue = "DpmBackupEngine";
         private const string AzureBackupServerEngineValue = "AzureBackupServerEngine";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupEngineType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupEngineType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static BackupEngineType Invalid { get; } = new BackupEngineType(InvalidValue);
-        /// <summary> DpmBackupEngine. </summary>
+
+        /// <summary> Gets the DpmBackupEngine. </summary>
         public static BackupEngineType DpmBackupEngine { get; } = new BackupEngineType(DpmBackupEngineValue);
-        /// <summary> AzureBackupServerEngine. </summary>
+
+        /// <summary> Gets the AzureBackupServerEngine. </summary>
         public static BackupEngineType AzureBackupServerEngine { get; } = new BackupEngineType(AzureBackupServerEngineValue);
+
         /// <summary> Determines if two <see cref="BackupEngineType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupEngineType left, BackupEngineType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupEngineType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupEngineType left, BackupEngineType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupEngineType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupEngineType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupEngineType(string value) => new BackupEngineType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupEngineType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupEngineType?(string value) => value == null ? null : new BackupEngineType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupEngineType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupEngineType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

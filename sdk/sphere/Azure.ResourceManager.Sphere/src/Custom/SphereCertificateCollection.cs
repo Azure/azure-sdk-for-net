@@ -37,7 +37,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereCertificateResource(Client, data));
+                context,
+                "SphereCertificateCollection.GetAll"), data => new SphereCertificateResource(Client, data));
         }
 
         /// <summary> List Certificate resources by Catalog. </summary>
@@ -62,7 +63,8 @@ namespace Azure.ResourceManager.Sphere
                 top,
                 skip,
                 maxpagesize,
-                context), data => new SphereCertificateResource(Client, data));
+                context,
+                "SphereCertificateCollection.GetAll"), data => new SphereCertificateResource(Client, data));
         }
     }
 }

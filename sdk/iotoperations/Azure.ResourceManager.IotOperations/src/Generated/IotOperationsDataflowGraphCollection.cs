@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != IotOperationsDataflowProfileResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsDataflowProfileResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsDataflowProfileResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowGraphRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataflowGraphName, IotOperationsDataflowGraphData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsDataflowGraphResource> operation = new IotOperationsArmOperation<IotOperationsDataflowGraphResource>(
-                    new IotOperationsDataflowGraphOperationSource(Client),
+                    new IotOperationsDataflowGraphResourceOperationSource(Client),
                     _dataflowGraphClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowGraphRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataflowGraphName, IotOperationsDataflowGraphData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsDataflowGraphResource> operation = new IotOperationsArmOperation<IotOperationsDataflowGraphResource>(
-                    new IotOperationsDataflowGraphOperationSource(Client),
+                    new IotOperationsDataflowGraphResourceOperationSource(Client),
                     _dataflowGraphClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsDataflowGraphResource(Client, data));
+                context,
+                "IotOperationsDataflowGraphCollection.GetAll"), data => new IotOperationsDataflowGraphResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.IotOperations
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new IotOperationsDataflowGraphResource(Client, data));
+                context,
+                "IotOperationsDataflowGraphCollection.GetAll"), data => new IotOperationsDataflowGraphResource(Client, data));
         }
 
         /// <summary>

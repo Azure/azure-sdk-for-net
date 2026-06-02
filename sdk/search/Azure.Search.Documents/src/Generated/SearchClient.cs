@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,74 +22,23 @@ namespace Azure.Search.Documents
     public partial class SearchClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly AzureKeyCredential _keyCredential;
         private const string AuthorizationHeader = "api-key";
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
         private readonly string _apiVersion;
         private readonly string _indexName;
+
+        /// <summary> Initializes a new instance of SearchClient from a <see cref="SearchClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for SearchClient. </param>
+        [Experimental("SCME0002")]
+        public SearchClient(SearchClientSettings settings) : this(null, settings?.Endpoint, settings?.IndexName, settings?.Options)
+        {
+        }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary>
-        /// [Protocol Method] Queries the number of documents in the index.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDocumentCount(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocumentCount");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDocumentCountRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Queries the number of documents in the index.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDocumentCountAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocumentCount");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDocumentCountRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
 
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -543,7 +493,7 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDocument(string key, string querySourceAuthorization, bool? enableElevatedRead, IEnumerable<string> selectedFields, RequestContext context)
+        public virtual Response GetDocument(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocument");
             scope.Start();
@@ -578,7 +528,7 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDocumentAsync(string key, string querySourceAuthorization, bool? enableElevatedRead, IEnumerable<string> selectedFields, RequestContext context)
+        public virtual async Task<Response> GetDocumentAsync(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocument");
             scope.Start();
@@ -594,40 +544,6 @@ namespace Azure.Search.Documents
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Retrieves a document from the index. </summary>
-        /// <param name="key"> The key of the document to retrieve. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
-        /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LookupDocument> GetDocument(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            Response result = GetDocument(key, querySourceAuthorization, enableElevatedRead, selectedFields, cancellationToken.ToRequestContext());
-            return Response.FromValue((LookupDocument)result, result);
-        }
-
-        /// <summary> Retrieves a document from the index. </summary>
-        /// <param name="key"> The key of the document to retrieve. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
-        /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LookupDocument>> GetDocumentAsync(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            Response result = await GetDocumentAsync(key, querySourceAuthorization, enableElevatedRead, selectedFields, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LookupDocument)result, result);
         }
 
         /// <summary>
@@ -800,72 +716,6 @@ namespace Azure.Search.Documents
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Suggests documents in the index that match the given partial query text. </summary>
-        /// <param name="searchText"> The search text to use to suggest documents. Must be at least 1 character, and no more than 100 characters. </param>
-        /// <param name="suggesterName"> The name of the suggester as specified in the suggesters collection that's part of the index definition. </param>
-        /// <param name="filter"> An OData expression that filters the documents considered for suggestions. </param>
-        /// <param name="useFuzzyMatching"> A value indicating whether to use fuzzy matching for the suggestion query. Default is false. When set to true, the query will find suggestions even if there's a substituted or missing character in the search text. While this provides a better experience in some scenarios, it comes at a performance cost as fuzzy suggestion searches are slower and consume more resources. </param>
-        /// <param name="highlightPostTag"> A string tag that is appended to hit highlights. Must be set with highlightPreTag. If omitted, hit highlighting of suggestions is disabled. </param>
-        /// <param name="highlightPreTag"> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. If omitted, hit highlighting of suggestions is disabled. </param>
-        /// <param name="minimumCoverage"> A number between 0 and 100 indicating the percentage of the index that must be covered by a suggestion query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 80. </param>
-        /// <param name="orderBy"> The comma-separated list of OData $orderby expressions by which to sort the results. Each expression can be either a field name or a call to either the geo.distance() or the search.score() functions. Each expression can be followed by asc to indicate ascending, or desc to indicate descending. The default is ascending order. Ties will be broken by the match scores of documents. If no $orderby is specified, the default sort order is descending by document match score. There can be at most 32 $orderby clauses. </param>
-        /// <param name="searchFields"> The comma-separated list of field names to search for the specified search text. Target fields must be included in the specified suggester. </param>
-        /// <param name="select"> The comma-separated list of fields to retrieve. If unspecified, only the key field will be included in the results. </param>
-        /// <param name="top"> The number of suggestions to retrieve. This must be a value between 1 and 100. The default is 5. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SuggestDocumentsResult> SuggestPost(string searchText, string suggesterName, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, IEnumerable<string> searchFields = default, IEnumerable<string> @select = default, int? top = default, CancellationToken cancellationToken = default)
-        {
-            SuggestOptions spreadModel = new SuggestOptions(
-                filter,
-                useFuzzyMatching,
-                highlightPostTag,
-                highlightPreTag,
-                minimumCoverage,
-                default,
-                searchText,
-                default,
-                default,
-                suggesterName,
-                default,
-                default);
-            Response result = SuggestPost(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((SuggestDocumentsResult)result, result);
-        }
-
-        /// <summary> Suggests documents in the index that match the given partial query text. </summary>
-        /// <param name="searchText"> The search text to use to suggest documents. Must be at least 1 character, and no more than 100 characters. </param>
-        /// <param name="suggesterName"> The name of the suggester as specified in the suggesters collection that's part of the index definition. </param>
-        /// <param name="filter"> An OData expression that filters the documents considered for suggestions. </param>
-        /// <param name="useFuzzyMatching"> A value indicating whether to use fuzzy matching for the suggestion query. Default is false. When set to true, the query will find suggestions even if there's a substituted or missing character in the search text. While this provides a better experience in some scenarios, it comes at a performance cost as fuzzy suggestion searches are slower and consume more resources. </param>
-        /// <param name="highlightPostTag"> A string tag that is appended to hit highlights. Must be set with highlightPreTag. If omitted, hit highlighting of suggestions is disabled. </param>
-        /// <param name="highlightPreTag"> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. If omitted, hit highlighting of suggestions is disabled. </param>
-        /// <param name="minimumCoverage"> A number between 0 and 100 indicating the percentage of the index that must be covered by a suggestion query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 80. </param>
-        /// <param name="orderBy"> The comma-separated list of OData $orderby expressions by which to sort the results. Each expression can be either a field name or a call to either the geo.distance() or the search.score() functions. Each expression can be followed by asc to indicate ascending, or desc to indicate descending. The default is ascending order. Ties will be broken by the match scores of documents. If no $orderby is specified, the default sort order is descending by document match score. There can be at most 32 $orderby clauses. </param>
-        /// <param name="searchFields"> The comma-separated list of field names to search for the specified search text. Target fields must be included in the specified suggester. </param>
-        /// <param name="select"> The comma-separated list of fields to retrieve. If unspecified, only the key field will be included in the results. </param>
-        /// <param name="top"> The number of suggestions to retrieve. This must be a value between 1 and 100. The default is 5. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SuggestDocumentsResult>> SuggestPostAsync(string searchText, string suggesterName, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> orderBy = default, IEnumerable<string> searchFields = default, IEnumerable<string> @select = default, int? top = default, CancellationToken cancellationToken = default)
-        {
-            SuggestOptions spreadModel = new SuggestOptions(
-                filter,
-                useFuzzyMatching,
-                highlightPostTag,
-                highlightPreTag,
-                minimumCoverage,
-                default,
-                searchText,
-                default,
-                default,
-                suggesterName,
-                default,
-                default);
-            Response result = await SuggestPostAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SuggestDocumentsResult)result, result);
         }
 
         /// <summary>
@@ -1110,68 +960,6 @@ namespace Azure.Search.Documents
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
-        /// <param name="searchText"> The search text on which to base autocomplete results. </param>
-        /// <param name="suggesterName"> The name of the suggester as specified in the suggesters collection that's part of the index definition. </param>
-        /// <param name="autocompleteMode"> Specifies the mode for Autocomplete. The default is 'oneTerm'. Use 'twoTerms' to get shingles and 'oneTermWithContext' to use the current context while producing auto-completed terms. </param>
-        /// <param name="filter"> An OData expression that filters the documents used to produce completed terms for the Autocomplete result. </param>
-        /// <param name="useFuzzyMatching"> A value indicating whether to use fuzzy matching for the autocomplete query. Default is false. When set to true, the query will autocomplete terms even if there's a substituted or missing character in the search text. While this provides a better experience in some scenarios, it comes at a performance cost as fuzzy autocomplete queries are slower and consume more resources. </param>
-        /// <param name="highlightPostTag"> A string tag that is appended to hit highlights. Must be set with highlightPreTag. If omitted, hit highlighting is disabled. </param>
-        /// <param name="highlightPreTag"> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. If omitted, hit highlighting is disabled. </param>
-        /// <param name="minimumCoverage"> A number between 0 and 100 indicating the percentage of the index that must be covered by an autocomplete query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 80. </param>
-        /// <param name="searchFields"> The comma-separated list of field names to consider when querying for auto-completed terms. Target fields must be included in the specified suggester. </param>
-        /// <param name="top"> The number of auto-completed terms to retrieve. This must be a value between 1 and 100. The default is 5. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<AutocompleteResults> AutocompletePost(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
-        {
-            AutocompleteOptions spreadModel = new AutocompleteOptions(
-                searchText,
-                default,
-                filter,
-                useFuzzyMatching,
-                highlightPostTag,
-                highlightPreTag,
-                minimumCoverage,
-                default,
-                suggesterName,
-                default,
-                default);
-            Response result = AutocompletePost(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((AutocompleteResults)result, result);
-        }
-
-        /// <summary> Autocompletes incomplete query terms based on input text and matching terms in the index. </summary>
-        /// <param name="searchText"> The search text on which to base autocomplete results. </param>
-        /// <param name="suggesterName"> The name of the suggester as specified in the suggesters collection that's part of the index definition. </param>
-        /// <param name="autocompleteMode"> Specifies the mode for Autocomplete. The default is 'oneTerm'. Use 'twoTerms' to get shingles and 'oneTermWithContext' to use the current context while producing auto-completed terms. </param>
-        /// <param name="filter"> An OData expression that filters the documents used to produce completed terms for the Autocomplete result. </param>
-        /// <param name="useFuzzyMatching"> A value indicating whether to use fuzzy matching for the autocomplete query. Default is false. When set to true, the query will autocomplete terms even if there's a substituted or missing character in the search text. While this provides a better experience in some scenarios, it comes at a performance cost as fuzzy autocomplete queries are slower and consume more resources. </param>
-        /// <param name="highlightPostTag"> A string tag that is appended to hit highlights. Must be set with highlightPreTag. If omitted, hit highlighting is disabled. </param>
-        /// <param name="highlightPreTag"> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. If omitted, hit highlighting is disabled. </param>
-        /// <param name="minimumCoverage"> A number between 0 and 100 indicating the percentage of the index that must be covered by an autocomplete query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 80. </param>
-        /// <param name="searchFields"> The comma-separated list of field names to consider when querying for auto-completed terms. Target fields must be included in the specified suggester. </param>
-        /// <param name="top"> The number of auto-completed terms to retrieve. This must be a value between 1 and 100. The default is 5. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<AutocompleteResults>> AutocompletePostAsync(string searchText, string suggesterName, AutocompleteMode? autocompleteMode = default, string filter = default, bool? useFuzzyMatching = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, IEnumerable<string> searchFields = default, int? top = default, CancellationToken cancellationToken = default)
-        {
-            AutocompleteOptions spreadModel = new AutocompleteOptions(
-                searchText,
-                default,
-                filter,
-                useFuzzyMatching,
-                highlightPostTag,
-                highlightPreTag,
-                minimumCoverage,
-                default,
-                suggesterName,
-                default,
-                default);
-            Response result = await AutocompletePostAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AutocompleteResults)result, result);
         }
     }
 }

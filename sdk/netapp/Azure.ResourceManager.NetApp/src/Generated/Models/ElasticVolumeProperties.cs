@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Elastic Volume properties. </summary>
     public partial class ElasticVolumeProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticVolumeProperties"/>. </summary>
         /// <param name="filePath"> A unique file path for the volume. Used when creating mount targets. This needs to be unique within the elastic capacity pool. </param>
@@ -77,8 +49,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="smbProperties"> SMB Properties. </param>
         /// <param name="backupResourceId"> Resource identifier used to identify the Elastic Backup. </param>
         /// <param name="restorationState"> The current state of the restoration process. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticVolumeProperties(string filePath, long size, ElasticExportPolicy exportPolicy, IList<ElasticProtocolType> protocolTypes, NetAppProvisioningState? provisioningState, ElasticResourceAvailabilityStatus? availabilityStatus, ResourceIdentifier snapshotResourceId, IReadOnlyList<ElasticMountTargetProperties> mountTargets, ElasticVolumeDataProtectionProperties dataProtection, SnapshotDirectoryVisibility? snapshotDirectoryVisibility, ElasticSmbProperties smbProperties, ResourceIdentifier backupResourceId, ElasticVolumeRestorationState? restorationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticVolumeProperties(string filePath, long size, ElasticExportPolicy exportPolicy, IList<ElasticProtocolType> protocolTypes, NetAppProvisioningState? provisioningState, ElasticResourceAvailabilityStatus? availabilityStatus, ResourceIdentifier snapshotResourceId, IReadOnlyList<ElasticMountTargetProperties> mountTargets, ElasticVolumeDataProtectionProperties dataProtection, SnapshotDirectoryVisibility? snapshotDirectoryVisibility, ElasticSmbProperties smbProperties, ResourceIdentifier backupResourceId, ElasticVolumeRestorationState? restorationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FilePath = filePath;
             Size = size;
@@ -93,62 +65,76 @@ namespace Azure.ResourceManager.NetApp.Models
             SmbProperties = smbProperties;
             BackupResourceId = backupResourceId;
             RestorationState = restorationState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticVolumeProperties"/> for deserialization. </summary>
-        internal ElasticVolumeProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A unique file path for the volume. Used when creating mount targets. This needs to be unique within the elastic capacity pool. </summary>
         public string FilePath { get; set; }
+
         /// <summary> Maximum size allowed for a volume in bytes. Valid values are in the range 1GiB to 16TiB. Values expressed in bytes as multiples of 1 GiB. </summary>
         public long Size { get; set; }
+
         /// <summary> Set of export policy rules. </summary>
         internal ElasticExportPolicy ExportPolicy { get; set; }
+
+        /// <summary> Set of support protocol types for the elastic volume. </summary>
+        public IList<ElasticProtocolType> ProtocolTypes { get; }
+
+        /// <summary> Azure lifecycle management. </summary>
+        public NetAppProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Current availability status of the resource. </summary>
+        public ElasticResourceAvailabilityStatus? AvailabilityStatus { get; }
+
+        /// <summary> Resource identifier used to identify the Elastic Snapshot. </summary>
+        public ResourceIdentifier SnapshotResourceId { get; set; }
+
+        /// <summary> List of mount targets that can be used to mount this volume. </summary>
+        public IReadOnlyList<ElasticMountTargetProperties> MountTargets { get; }
+
+        /// <summary> Data protection configuration option for the volume, including snapshot policies and backup. </summary>
+        public ElasticVolumeDataProtectionProperties DataProtection { get; set; }
+
+        /// <summary> Controls the visibility of the volume's read-only snapshot directory, which provides access to each of the volume's snapshots. </summary>
+        public SnapshotDirectoryVisibility? SnapshotDirectoryVisibility { get; set; }
+
+        /// <summary> SMB Properties. </summary>
+        internal ElasticSmbProperties SmbProperties { get; set; }
+
+        /// <summary> Resource identifier used to identify the Elastic Backup. </summary>
+        public ResourceIdentifier BackupResourceId { get; set; }
+
+        /// <summary> The current state of the restoration process. </summary>
+        public ElasticVolumeRestorationState? RestorationState { get; }
+
         /// <summary> Export policy rule. </summary>
         public IList<ElasticExportPolicyRule> ExportRules
         {
             get
             {
                 if (ExportPolicy is null)
+                {
                     ExportPolicy = new ElasticExportPolicy();
+                }
                 return ExportPolicy.Rules;
             }
         }
 
-        /// <summary> Set of support protocol types for the elastic volume. </summary>
-        public IList<ElasticProtocolType> ProtocolTypes { get; }
-        /// <summary> Azure lifecycle management. </summary>
-        public NetAppProvisioningState? ProvisioningState { get; }
-        /// <summary> Current availability status of the resource. </summary>
-        public ElasticResourceAvailabilityStatus? AvailabilityStatus { get; }
-        /// <summary> Resource identifier used to identify the Elastic Snapshot. </summary>
-        public ResourceIdentifier SnapshotResourceId { get; set; }
-        /// <summary> List of mount targets that can be used to mount this volume. </summary>
-        public IReadOnlyList<ElasticMountTargetProperties> MountTargets { get; }
-        /// <summary> Data protection configuration option for the volume, including snapshot policies and backup. </summary>
-        public ElasticVolumeDataProtectionProperties DataProtection { get; set; }
-        /// <summary> Controls the visibility of the volume's read-only snapshot directory, which provides access to each of the volume's snapshots. </summary>
-        public SnapshotDirectoryVisibility? SnapshotDirectoryVisibility { get; set; }
-        /// <summary> SMB Properties. </summary>
-        internal ElasticSmbProperties SmbProperties { get; set; }
         /// <summary> Used to enable or disable encryption for in-flight SMB data volume. This flag can be modified during Elastic volume update operation as well. Only applicable for SMB protocol Elastic volumes. </summary>
         public ElasticSmbEncryption? SmbEncryption
         {
-            get => SmbProperties is null ? default : SmbProperties.SmbEncryption;
+            get
+            {
+                return SmbProperties is null ? default : SmbProperties.SmbEncryption;
+            }
             set
             {
                 if (SmbProperties is null)
+                {
                     SmbProperties = new ElasticSmbProperties();
+                }
                 SmbProperties.SmbEncryption = value;
             }
         }
-
-        /// <summary> Resource identifier used to identify the Elastic Backup. </summary>
-        public ResourceIdentifier BackupResourceId { get; set; }
-        /// <summary> The current state of the restoration process. </summary>
-        public ElasticVolumeRestorationState? RestorationState { get; }
     }
 }

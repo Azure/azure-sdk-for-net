@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,45 +16,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class InMageRcmFabricCreationContent : FabricSpecificCreationContent
     {
         /// <summary> Initializes a new instance of <see cref="InMageRcmFabricCreationContent"/>. </summary>
-        /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
+        /// <param name="vMwareSiteId"> The ARM Id of the VMware site. </param>
         /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
         /// <param name="sourceAgentIdentity"> The identity provider input for source agent authentication. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmwareSiteId"/>, <paramref name="physicalSiteId"/> or <paramref name="sourceAgentIdentity"/> is null. </exception>
-        public InMageRcmFabricCreationContent(ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, IdentityProviderContent sourceAgentIdentity)
+        /// <exception cref="ArgumentNullException"> <paramref name="vMwareSiteId"/>, <paramref name="physicalSiteId"/> or <paramref name="sourceAgentIdentity"/> is null. </exception>
+        public InMageRcmFabricCreationContent(ResourceIdentifier vMwareSiteId, ResourceIdentifier physicalSiteId, IdentityProviderContent sourceAgentIdentity) : base("InMageRcm")
         {
-            Argument.AssertNotNull(vmwareSiteId, nameof(vmwareSiteId));
+            Argument.AssertNotNull(vMwareSiteId, nameof(vMwareSiteId));
             Argument.AssertNotNull(physicalSiteId, nameof(physicalSiteId));
             Argument.AssertNotNull(sourceAgentIdentity, nameof(sourceAgentIdentity));
 
-            VMwareSiteId = vmwareSiteId;
+            VMwareSiteId = vMwareSiteId;
             PhysicalSiteId = physicalSiteId;
             SourceAgentIdentity = sourceAgentIdentity;
-            InstanceType = "InMageRcm";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmFabricCreationContent"/>. </summary>
         /// <param name="instanceType"> Gets the class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="vMwareSiteId"> The ARM Id of the VMware site. </param>
         /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
         /// <param name="sourceAgentIdentity"> The identity provider input for source agent authentication. </param>
-        internal InMageRcmFabricCreationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, IdentityProviderContent sourceAgentIdentity) : base(instanceType, serializedAdditionalRawData)
+        internal InMageRcmFabricCreationContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier vMwareSiteId, ResourceIdentifier physicalSiteId, IdentityProviderContent sourceAgentIdentity) : base(instanceType, additionalBinaryDataProperties)
         {
-            VMwareSiteId = vmwareSiteId;
+            VMwareSiteId = vMwareSiteId;
             PhysicalSiteId = physicalSiteId;
             SourceAgentIdentity = sourceAgentIdentity;
-            InstanceType = instanceType ?? "InMageRcm";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="InMageRcmFabricCreationContent"/> for deserialization. </summary>
-        internal InMageRcmFabricCreationContent()
-        {
         }
 
         /// <summary> The ARM Id of the VMware site. </summary>
         public ResourceIdentifier VMwareSiteId { get; }
+
         /// <summary> The ARM Id of the physical site. </summary>
         public ResourceIdentifier PhysicalSiteId { get; }
+
         /// <summary> The identity provider input for source agent authentication. </summary>
         public IdentityProviderContent SourceAgentIdentity { get; }
     }

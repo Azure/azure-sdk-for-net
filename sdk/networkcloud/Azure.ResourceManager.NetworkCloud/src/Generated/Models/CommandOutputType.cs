@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public readonly partial struct CommandOutputType : IEquatable<CommandOutputType>
     {
         private readonly string _value;
+        /// <summary> BareMetalMachineRunCommand output type. </summary>
+        private const string BareMetalMachineRunCommandValue = "BareMetalMachineRunCommand";
+        /// <summary> BareMetalMachineRunDataExtracts output type. </summary>
+        private const string BareMetalMachineRunDataExtractsValue = "BareMetalMachineRunDataExtracts";
+        /// <summary> BareMetalMachineRunReadCommands output type. </summary>
+        private const string BareMetalMachineRunReadCommandsValue = "BareMetalMachineRunReadCommands";
+        /// <summary> StorageRunReadCommands output type. </summary>
+        private const string StorageRunReadCommandsValue = "StorageRunReadCommands";
+        /// <summary> BareMetalMachineRunDataExtractsRestricted output type. </summary>
+        private const string BareMetalMachineRunDataExtractsRestrictedValue = "BareMetalMachineRunDataExtractsRestricted";
 
         /// <summary> Initializes a new instance of <see cref="CommandOutputType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CommandOutputType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string BareMetalMachineRunCommandValue = "BareMetalMachineRunCommand";
-        private const string BareMetalMachineRunDataExtractsValue = "BareMetalMachineRunDataExtracts";
-        private const string BareMetalMachineRunReadCommandsValue = "BareMetalMachineRunReadCommands";
-        private const string StorageRunReadCommandsValue = "StorageRunReadCommands";
-        private const string BareMetalMachineRunDataExtractsRestrictedValue = "BareMetalMachineRunDataExtractsRestricted";
-
-        /// <summary> BareMetalMachineRunCommand. </summary>
+        /// <summary> BareMetalMachineRunCommand output type. </summary>
         public static CommandOutputType BareMetalMachineRunCommand { get; } = new CommandOutputType(BareMetalMachineRunCommandValue);
-        /// <summary> BareMetalMachineRunDataExtracts. </summary>
+
+        /// <summary> BareMetalMachineRunDataExtracts output type. </summary>
         public static CommandOutputType BareMetalMachineRunDataExtracts { get; } = new CommandOutputType(BareMetalMachineRunDataExtractsValue);
-        /// <summary> BareMetalMachineRunReadCommands. </summary>
+
+        /// <summary> BareMetalMachineRunReadCommands output type. </summary>
         public static CommandOutputType BareMetalMachineRunReadCommands { get; } = new CommandOutputType(BareMetalMachineRunReadCommandsValue);
-        /// <summary> StorageRunReadCommands. </summary>
+
+        /// <summary> StorageRunReadCommands output type. </summary>
         public static CommandOutputType StorageRunReadCommands { get; } = new CommandOutputType(StorageRunReadCommandsValue);
-        /// <summary> BareMetalMachineRunDataExtractsRestricted. </summary>
+
+        /// <summary> BareMetalMachineRunDataExtractsRestricted output type. </summary>
         public static CommandOutputType BareMetalMachineRunDataExtractsRestricted { get; } = new CommandOutputType(BareMetalMachineRunDataExtractsRestrictedValue);
+
         /// <summary> Determines if two <see cref="CommandOutputType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CommandOutputType left, CommandOutputType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CommandOutputType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CommandOutputType left, CommandOutputType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CommandOutputType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CommandOutputType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CommandOutputType(string value) => new CommandOutputType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CommandOutputType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CommandOutputType?(string value) => value == null ? null : new CommandOutputType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CommandOutputType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CommandOutputType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

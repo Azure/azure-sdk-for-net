@@ -3,31 +3,21 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
+using System.ComponentModel;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary>
-    /// A class representing the CapacityPool data model.
-    /// Capacity pool resource
-    /// </summary>
-    public partial class CapacityPoolData : TrackedResourceData
+    public partial class CapacityPoolData
     {
-        /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
+        // Backward-compat: GA shipped CustomThroughputMibps as float?, but the spec models it as
+        // int. The generated property is renamed via @@clientName to CustomThroughputMibpsInt,
+        // and this float?-typed shim restores the GA surface.
+        /// <summary> Maximum throughput in MiB/s. </summary>
         public float? CustomThroughputMibps
         {
-            get
-            {
-                return CustomThroughputMibpsInt.HasValue ? (float?)CustomThroughputMibpsInt.Value : null;
-            }
-            set
-            {
-                CustomThroughputMibpsInt = value.HasValue ? (int)value.Value : null;
-            }
+            get => CustomThroughputMibpsInt;
+            set => CustomThroughputMibpsInt = value.HasValue ? (int?)value.Value : null;
         }
     }
 }

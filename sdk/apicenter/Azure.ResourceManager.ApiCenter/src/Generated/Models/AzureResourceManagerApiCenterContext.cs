@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ApiCenter.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,17 +14,21 @@ namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ApiCenterApiData))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiDefinitionData))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(ApiCenterApiManagementSource))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiProperties))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiResource))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiVersionData))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiVersionProperties))]
     [ModelReaderWriterBuildable(typeof(ApiCenterApiVersionResource))]
+    [ModelReaderWriterBuildable(typeof(ApiCenterDeletedServiceData))]
+    [ModelReaderWriterBuildable(typeof(ApiCenterDeletedServiceProperties))]
+    [ModelReaderWriterBuildable(typeof(ApiCenterDeletedServiceResource))]
     [ModelReaderWriterBuildable(typeof(ApiCenterDeploymentData))]
     [ModelReaderWriterBuildable(typeof(ApiCenterDeploymentProperties))]
     [ModelReaderWriterBuildable(typeof(ApiCenterDeploymentResource))]
@@ -32,6 +37,7 @@ namespace Azure.ResourceManager.ApiCenter
     [ModelReaderWriterBuildable(typeof(ApiCenterEnvironmentProperties))]
     [ModelReaderWriterBuildable(typeof(ApiCenterEnvironmentResource))]
     [ModelReaderWriterBuildable(typeof(ApiCenterEnvironmentServer))]
+    [ModelReaderWriterBuildable(typeof(ApiCenterLinkState))]
     [ModelReaderWriterBuildable(typeof(ApiCenterMetadataAssignment))]
     [ModelReaderWriterBuildable(typeof(ApiCenterMetadataSchemaData))]
     [ModelReaderWriterBuildable(typeof(ApiCenterMetadataSchemaProperties))]
@@ -48,11 +54,16 @@ namespace Azure.ResourceManager.ApiCenter
     [ModelReaderWriterBuildable(typeof(ApiExternalDocumentation))]
     [ModelReaderWriterBuildable(typeof(ApiLicenseInformation))]
     [ModelReaderWriterBuildable(typeof(ApiListResult))]
+    [ModelReaderWriterBuildable(typeof(ApiSourceData))]
+    [ModelReaderWriterBuildable(typeof(ApiSourceListResult))]
+    [ModelReaderWriterBuildable(typeof(ApiSourceProperties))]
+    [ModelReaderWriterBuildable(typeof(ApiSourceResource))]
     [ModelReaderWriterBuildable(typeof(ApiSpecExportResult))]
     [ModelReaderWriterBuildable(typeof(ApiSpecificationDetails))]
     [ModelReaderWriterBuildable(typeof(ApiSpecImportContent))]
     [ModelReaderWriterBuildable(typeof(ApiSpecImportRequestSpecification))]
     [ModelReaderWriterBuildable(typeof(ApiVersionListResult))]
+    [ModelReaderWriterBuildable(typeof(DeletedServiceListResult))]
     [ModelReaderWriterBuildable(typeof(DeploymentListResult))]
     [ModelReaderWriterBuildable(typeof(EnvironmentListResult))]
     [ModelReaderWriterBuildable(typeof(EnvironmentOnboardingInformation))]
@@ -62,6 +73,7 @@ namespace Azure.ResourceManager.ApiCenter
     [ModelReaderWriterBuildable(typeof(MetadataSchemaListResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceListResult))]
+    [ModelReaderWriterBuildable(typeof(ServiceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TermsOfService))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

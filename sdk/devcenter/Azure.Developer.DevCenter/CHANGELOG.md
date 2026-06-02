@@ -5,6 +5,9 @@
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
+- Added `DevCenterClientSettings` to support creating a `DevCenterClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `DevBoxesClientSettings` to support creating a `DevBoxesClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `DeploymentEnvironmentsClientSettings` to support creating a `DeploymentEnvironmentsClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ### Breaking Changes
 

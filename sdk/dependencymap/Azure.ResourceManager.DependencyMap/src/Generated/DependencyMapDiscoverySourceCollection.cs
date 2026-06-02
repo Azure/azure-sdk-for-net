@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DependencyMap
         {
             if (id.ResourceType != DependencyMapResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DependencyMapResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DependencyMapResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DependencyMap
                 HttpMessage message = _discoverySourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceName, DependencyMapDiscoverySourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DependencyMapArmOperation<DependencyMapDiscoverySourceResource> operation = new DependencyMapArmOperation<DependencyMapDiscoverySourceResource>(
-                    new DependencyMapDiscoverySourceOperationSource(Client),
+                    new DependencyMapDiscoverySourceResourceOperationSource(Client),
                     _discoverySourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DependencyMap
                 HttpMessage message = _discoverySourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sourceName, DependencyMapDiscoverySourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DependencyMapArmOperation<DependencyMapDiscoverySourceResource> operation = new DependencyMapArmOperation<DependencyMapDiscoverySourceResource>(
-                    new DependencyMapDiscoverySourceOperationSource(Client),
+                    new DependencyMapDiscoverySourceResourceOperationSource(Client),
                     _discoverySourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.DependencyMap
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DependencyMapDiscoverySourceData, DependencyMapDiscoverySourceResource>(new DiscoverySourcesGetByMapsResourceAsyncCollectionResultOfT(_discoverySourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DependencyMapDiscoverySourceResource(Client, data));
+            return new AsyncPageableWrapper<DependencyMapDiscoverySourceData, DependencyMapDiscoverySourceResource>(new DiscoverySourcesGetByMapsResourceAsyncCollectionResultOfT(
+                _discoverySourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DependencyMapDiscoverySourceCollection.GetAll"), data => new DependencyMapDiscoverySourceResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.DependencyMap
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DependencyMapDiscoverySourceData, DependencyMapDiscoverySourceResource>(new DiscoverySourcesGetByMapsResourceCollectionResultOfT(_discoverySourcesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new DependencyMapDiscoverySourceResource(Client, data));
+            return new PageableWrapper<DependencyMapDiscoverySourceData, DependencyMapDiscoverySourceResource>(new DiscoverySourcesGetByMapsResourceCollectionResultOfT(
+                _discoverySourcesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DependencyMapDiscoverySourceCollection.GetAll"), data => new DependencyMapDiscoverySourceResource(Client, data));
         }
 
         /// <summary>

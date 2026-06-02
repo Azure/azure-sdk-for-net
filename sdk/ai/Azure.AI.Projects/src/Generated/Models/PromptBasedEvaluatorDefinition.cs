@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Prompt-based evaluator. </summary>
     public partial class PromptBasedEvaluatorDefinition : EvaluatorDefinition

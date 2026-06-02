@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Cron based trigger. </summary>
-    public partial class CronTrigger : Trigger
+    public partial class CronTrigger : ScheduleTrigger
     {
         /// <summary> Initializes a new instance of <see cref="CronTrigger"/>. </summary>
         /// <param name="expression"> Cron expression that defines the schedule frequency. </param>
@@ -24,10 +25,10 @@ namespace Azure.AI.Projects
         /// <param name="type"> Type of the trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="expression"> Cron expression that defines the schedule frequency. </param>
-        /// <param name="timeZone"> Time zone for the cron schedule. </param>
+        /// <param name="timeZone"> Time zone for the cron schedule. Defaults to `UTC`. </param>
         /// <param name="startTime"> Start time for the cron schedule in ISO 8601 format. </param>
         /// <param name="endTime"> End time for the cron schedule in ISO 8601 format. </param>
-        internal CronTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string expression, string timeZone, string startTime, string endTime) : base(@type, additionalBinaryDataProperties)
+        internal CronTrigger(TriggerType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string expression, string timeZone, DateTimeOffset? startTime, DateTimeOffset? endTime) : base(@type, additionalBinaryDataProperties)
         {
             Expression = expression;
             TimeZone = timeZone;
@@ -38,13 +39,13 @@ namespace Azure.AI.Projects
         /// <summary> Cron expression that defines the schedule frequency. </summary>
         public string Expression { get; set; }
 
-        /// <summary> Time zone for the cron schedule. </summary>
+        /// <summary> Time zone for the cron schedule. Defaults to `UTC`. </summary>
         public string TimeZone { get; set; }
 
         /// <summary> Start time for the cron schedule in ISO 8601 format. </summary>
-        public string StartTime { get; set; }
+        public DateTimeOffset? StartTime { get; set; }
 
         /// <summary> End time for the cron schedule in ISO 8601 format. </summary>
-        public string EndTime { get; set; }
+        public DateTimeOffset? EndTime { get; set; }
     }
 }

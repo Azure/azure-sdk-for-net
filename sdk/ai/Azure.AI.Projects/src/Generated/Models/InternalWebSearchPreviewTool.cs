@@ -13,6 +13,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchPreviewTool"/>. </summary>
         public InternalWebSearchPreviewTool() : base(ToolType.WebSearchPreview)
         {
+            SearchContentTypes = new ChangeTrackingList<SearchContentType>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchPreviewTool"/>. </summary>
@@ -20,10 +21,12 @@ namespace OpenAI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userLocation"></param>
         /// <param name="searchContextSize"> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </param>
-        internal InternalWebSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalApproximateLocation userLocation, SearchContextSize? searchContextSize) : base(@type, additionalBinaryDataProperties)
+        /// <param name="searchContentTypes"></param>
+        internal InternalWebSearchPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalApproximateLocation userLocation, SearchContextSize? searchContextSize, IList<SearchContentType> searchContentTypes) : base(@type, additionalBinaryDataProperties)
         {
             UserLocation = userLocation;
             SearchContextSize = searchContextSize;
+            SearchContentTypes = searchContentTypes;
         }
 
         /// <summary> Gets or sets the UserLocation. </summary>
@@ -31,5 +34,8 @@ namespace OpenAI
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
         public SearchContextSize? SearchContextSize { get; set; }
+
+        /// <summary> Gets the SearchContentTypes. </summary>
+        public IList<SearchContentType> SearchContentTypes { get; }
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             if (id.ResourceType != DataReplicationVaultResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataReplicationVaultResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _replicationExtensionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, DataReplicationExtensionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource>(
-                    new DataReplicationExtensionOperationSource(Client),
+                    new DataReplicationExtensionResourceOperationSource(Client),
                     _replicationExtensionClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _replicationExtensionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, replicationExtensionName, DataReplicationExtensionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationExtensionResource>(
-                    new DataReplicationExtensionOperationSource(Client),
+                    new DataReplicationExtensionResourceOperationSource(Client),
                     _replicationExtensionClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationExtensionData, DataReplicationExtensionResource>(new ReplicationExtensionGetAllAsyncCollectionResultOfT(_replicationExtensionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationExtensionResource(Client, data));
+            return new AsyncPageableWrapper<DataReplicationExtensionData, DataReplicationExtensionResource>(new ReplicationExtensionGetAllAsyncCollectionResultOfT(
+                _replicationExtensionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationExtensionCollection.GetAll"), data => new DataReplicationExtensionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationExtensionData, DataReplicationExtensionResource>(new ReplicationExtensionGetAllCollectionResultOfT(_replicationExtensionRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DataReplicationExtensionResource(Client, data));
+            return new PageableWrapper<DataReplicationExtensionData, DataReplicationExtensionResource>(new ReplicationExtensionGetAllCollectionResultOfT(
+                _replicationExtensionRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataReplicationExtensionCollection.GetAll"), data => new DataReplicationExtensionResource(Client, data));
         }
 
         /// <summary>

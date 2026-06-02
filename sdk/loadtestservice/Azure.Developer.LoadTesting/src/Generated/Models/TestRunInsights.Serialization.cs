@@ -91,19 +91,20 @@ namespace Azure.Developer.LoadTesting
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Rows))
+            if (Optional.IsCollectionDefined(Rows))
             {
                 writer.WritePropertyName("rows"u8);
-                writer.WriteStartArray();
-                foreach (IDictionary<string, string> item in Rows)
+                writer.WriteStartObject();
+                foreach (var item in Rows)
                 {
-                    if (item == null)
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
                     writer.WriteStartObject();
-                    foreach (var item0 in item)
+                    foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
                         if (item0.Value == null)
@@ -115,7 +116,7 @@ namespace Azure.Developer.LoadTesting
                     }
                     writer.WriteEndObject();
                 }
-                writer.WriteEndArray();
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
@@ -170,7 +171,7 @@ namespace Azure.Developer.LoadTesting
                 return null;
             }
             IReadOnlyList<TestRunInsightColumn> columns = default;
-            IReadOnlyList<IDictionary<string, string>> rows = default;
+            IDictionary<string, IDictionary<string, string>> rows = default;
             long? version = default;
             OperationState? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -196,31 +197,31 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    List<IDictionary<string, string>> array = new List<IDictionary<string, string>>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    Dictionary<string, IDictionary<string, string>> dictionary = new Dictionary<string, IDictionary<string, string>>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var prop0 in item.EnumerateObject())
+                            Dictionary<string, string> dictionary0 = new Dictionary<string, string>();
+                            foreach (var prop1 in prop0.Value.EnumerateObject())
                             {
-                                if (prop0.Value.ValueKind == JsonValueKind.Null)
+                                if (prop1.Value.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary.Add(prop0.Name, null);
+                                    dictionary0.Add(prop1.Name, null);
                                 }
                                 else
                                 {
-                                    dictionary.Add(prop0.Name, prop0.Value.GetString());
+                                    dictionary0.Add(prop1.Name, prop1.Value.GetString());
                                 }
                             }
-                            array.Add(dictionary);
+                            dictionary.Add(prop0.Name, dictionary0);
                         }
                     }
-                    rows = array;
+                    rows = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -246,7 +247,7 @@ namespace Azure.Developer.LoadTesting
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TestRunInsights(columns ?? new ChangeTrackingList<TestRunInsightColumn>(), rows ?? new ChangeTrackingList<IDictionary<string, string>>(), version, status, additionalBinaryDataProperties);
+            return new TestRunInsights(columns ?? new ChangeTrackingList<TestRunInsightColumn>(), rows ?? new ChangeTrackingDictionary<string, IDictionary<string, string>>(), version, status, additionalBinaryDataProperties);
         }
     }
 }

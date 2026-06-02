@@ -52,7 +52,7 @@ AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
 AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
+foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
     Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
@@ -120,7 +120,7 @@ AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
     {
         // defaultPolicy: use entity mask for everything unless overridden
         PolicyName = "defaultPolicy",
-        IsDefault = true,
+        IsDefaultPolicy = true,
     }
     }
     }
@@ -129,7 +129,7 @@ AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
 AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
+foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
     Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
@@ -197,7 +197,7 @@ AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput()
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
 AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-foreach (PiiActionResult result in piiTaskResult.Results.Documents)
+foreach (PiiResultWithDetectedLanguage result in piiTaskResult.Results.Documents)
 {
     Console.WriteLine($"Document Id: {result.Id}");
     Console.WriteLine($"  Redacted Text: {result.RedactedText}");
@@ -231,9 +231,9 @@ foreach (DocumentError error in piiTaskResult.Results.Errors)
 To recognize Personally Identifiable Information in multiple documents, call `AnalyzeTextAsync` on an `TextPiiEntitiesRecognitionInput`.  The results are returned as a `AnalyzeTextPiiResult`.
 
 ```C# Snippet:Sample5_AnalyzeTextAsync_RecognizePii_WithSynonyms
-PiiActionContent actionContent = new PiiActionContent();
-actionContent.ExcludePiiCategories.Add(PiiCategoriesExclude.PhoneNumber);
-actionContent.EntitySynonyms.Add(
+PiiActionContent ActionContent = new PiiActionContent();
+ActionContent.ExcludePiiCategories.Add(PiiCategoriesExclude.PhoneNumber);
+ActionContent.EntitySynonyms.Add(
     new EntitySynonyms(
         new EntityCategory("USBankAccountNumber"),
         new List<EntitySynonym>
@@ -256,14 +256,14 @@ AnalyzeTextInput input = new TextPiiEntitiesRecognitionInput
             new MultiLanguageInput("3", "My FAN is 281314478878 and Tom's RAN is 281314478879.") { Language = "en" },
         }
     },
-    ActionContent = actionContent
+    ActionContent = ActionContent
 };
 
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(input);
 AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
 
 Console.WriteLine("Recognized PII entities and redacted texts:\n");
-foreach (PiiActionResult doc in piiResult.Results.Documents)
+foreach (PiiResultWithDetectedLanguage doc in piiResult.Results.Documents)
 {
     Console.WriteLine($"Document ID: {doc.Id}");
     Console.WriteLine($"  Redacted Text: {doc.RedactedText}");
@@ -330,7 +330,7 @@ AnalyzeTextPiiResult result = (AnalyzeTextPiiResult)response.Value;
 Console.WriteLine($"Model Version: {result.Results.ModelVersion}");
 Console.WriteLine();
 
-foreach (PiiActionResult doc in result.Results.Documents)
+foreach (PiiResultWithDetectedLanguage doc in result.Results.Documents)
 {
     Console.WriteLine($"Document ID: {doc.Id}");
     Console.WriteLine($"  Redacted Text: {doc.RedactedText}");
@@ -387,7 +387,7 @@ AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput
     {
         // defaultPolicy: use entity mask for everything unless overridden
         PolicyName = "defaultPolicy",
-        IsDefault = true,
+        IsDefaultPolicy = true,
     },
     new CharacterMaskPolicyType
     {
@@ -417,7 +417,7 @@ AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
 AnalyzeTextPiiResult piiTaskResult = (AnalyzeTextPiiResult)response.Value;
 
-foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
+foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{piiResult.Id}\":");
     Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\"");
@@ -473,15 +473,17 @@ To recognize Personally Identifiable Information with confidence score threshold
     confidenceThreshold.Overrides.Add(
         new ConfidenceScoreThresholdOverride(
             value: 0.9f,
-            entity: PiiCategory.UsSocialSecurityNumber.ToString()
+            entity: PiiCategory.UsSocialSecurityNumber.ToString(),
+            language: "en"
         ));
     confidenceThreshold.Overrides.Add(
         new ConfidenceScoreThresholdOverride(
             value: 0.9f,
-            entity: PiiCategory.Email.ToString()
+            entity: PiiCategory.Email.ToString(),
+            language: "en"
         ));
 
-    PiiActionContent actionContent = new PiiActionContent
+    PiiActionContent ActionContent = new PiiActionContent
     {
         PiiCategories = { PiiCategory.All },
         DisableEntityValidation = true,
@@ -491,13 +493,13 @@ To recognize Personally Identifiable Information with confidence score threshold
     AnalyzeTextInput body = new TextPiiEntitiesRecognitionInput
     {
         TextInput = textInput,
-        ActionContent = actionContent
+        ActionContent = ActionContent
     };
 
     Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
     AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
 
-    PiiActionResult doc = piiResult.Results.Documents[0];
+    PiiResultWithDetectedLanguage doc = piiResult.Results.Documents[0];
 
     Console.WriteLine($"Redacted text: \"{doc.RedactedText}\"");
     Console.WriteLine("Recognized entities (after confidence score filtering):");

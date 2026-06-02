@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetails"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> String of the resource name. </param>
         /// <param name="properties"> The properties of the experiment execution details. </param>
-        internal ExperimentExecutionDetails(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ExperimentExecutionDetailsProperties properties) : base(id, name, resourceType, systemData)
+        internal ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExperimentExecutionDetailsProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return Properties.StartedOn;
+                return Properties is null ? default : Properties.StartedOn;
             }
         }
 
@@ -62,7 +62,16 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return Properties.StoppedOn;
+                return Properties is null ? default : Properties.StoppedOn;
+            }
+        }
+
+        /// <summary> Resource provisioning state. Not currently in use for executions. </summary>
+        public ChaosProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -71,7 +80,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return Properties.FailureReason;
+                return Properties is null ? default : Properties.FailureReason;
             }
         }
 
@@ -80,7 +89,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return Properties.LastActionOn;
+                return Properties is null ? default : Properties.LastActionOn;
             }
         }
 
@@ -89,7 +98,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return Properties.RunInformationSteps;
+                return Properties is null ? default : Properties.RunInformationSteps;
             }
         }
     }

@@ -6,6 +6,7 @@
 using System.ComponentModel;
 using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Azure Defender settings for the security profile. </summary>

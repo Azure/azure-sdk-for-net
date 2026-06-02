@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             if (id.ResourceType != StorageSyncGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageSyncGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageSyncGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _serverEndpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, StorageSyncServerEndpointCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation<StorageSyncServerEndpointResource> operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(
-                    new StorageSyncServerEndpointOperationSource(Client),
+                    new StorageSyncServerEndpointResourceOperationSource(Client),
                     _serverEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _serverEndpointsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, serverEndpointName, StorageSyncServerEndpointCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation<StorageSyncServerEndpointResource> operation = new StorageSyncArmOperation<StorageSyncServerEndpointResource>(
-                    new StorageSyncServerEndpointOperationSource(Client),
+                    new StorageSyncServerEndpointResourceOperationSource(Client),
                     _serverEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -300,7 +300,8 @@ namespace Azure.ResourceManager.StorageSync
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new StorageSyncServerEndpointResource(Client, data));
+                context,
+                "StorageSyncServerEndpointCollection.GetAll"), data => new StorageSyncServerEndpointResource(Client, data));
         }
 
         /// <summary>
@@ -334,7 +335,8 @@ namespace Azure.ResourceManager.StorageSync
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new StorageSyncServerEndpointResource(Client, data));
+                context,
+                "StorageSyncServerEndpointCollection.GetAll"), data => new StorageSyncServerEndpointResource(Client, data));
         }
 
         /// <summary>

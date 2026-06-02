@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(disconnectedOperationPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(disconnectedOperationPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sqlVmGroupData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(sqlVmGroupData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SqlVmGroupData"/> from. </param>

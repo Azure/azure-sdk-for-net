@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sphere
                 {
                     Properties = new ImageProperties();
                 }
-                Properties.RegionalDataBoundary = value.Value;
+                Properties.RegionalDataBoundary = value;
             }
         }
 

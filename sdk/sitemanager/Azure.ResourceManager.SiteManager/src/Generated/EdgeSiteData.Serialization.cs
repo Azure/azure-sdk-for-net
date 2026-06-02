@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.SiteManager
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(edgeSiteData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(edgeSiteData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EdgeSiteData"/> from. </param>

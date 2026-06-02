@@ -197,7 +197,7 @@ namespace Azure.Storage.Files.Shares
                 }
                 else
                 {
-                    AccountName = uri.GetAccountNameFromDomain(Constants.File.UriSubDomain) ?? string.Empty;
+                    AccountName = uri.GetAccountNameFromHost(Constants.File.UriSubDomain) ?? string.Empty;
                 }
 
                 // Find the next slash (if it exists)

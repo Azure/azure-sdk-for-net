@@ -155,12 +155,18 @@ namespace Azure.Storage.Files.DataLake.Models
         public string EncryptionKeySha256 { get; internal set; }
 
         /// <summary>
-        /// The tier of block blob on blob storage LRS accounts. For blob storage LRS accounts, valid values are Hot/Cool/Archive.
+        /// The tier of block blob on blob storage LRS accounts. For blob storage LRS accounts, valid values are Hot/Cool/Archive/Smart.
         /// </summary>
         public string AccessTier { get; internal set; }
 
         /// <summary>
-        /// For blob storage LRS accounts, valid values are rehydrate-pending-to-hot/rehydrate-pending-to-cool.
+        /// For page blobs on a premium storage account only. If the access tier is not explicitly set on the blob,
+        /// the tier is inferred based on its content length and this header will be returned with true value.
+        /// </summary>
+        public bool AccessTierInferred { get; internal set; }
+
+        /// <summary>
+        /// For blob storage LRS accounts, valid values are rehydrate-pending-to-hot/rehydrate-pending-to-cool/rehydrate-pending-to-cold/rehydrate-pending-to-smart.
         /// If the blob is being rehydrated and is not complete then this header is returned indicating that rehydrate is pending
         /// and also tells the destination tier.
         /// </summary>
@@ -170,6 +176,12 @@ namespace Azure.Storage.Files.DataLake.Models
         /// The time the tier was changed on the object. This is only returned if the tier on the block blob was ever set.
         /// </summary>
         public DateTimeOffset AccessTierChangedOn { get; internal set; }
+
+        /// <summary>
+        /// The underlying tier of a smart tier blob. Only returned if the blob is in Smart tier.
+        /// For general purpose v2 and blob storage account types, the valid values are Hot/Cool/Cold.
+        /// </summary>
+        public string SmartAccessTier { get; internal set; }
 
         /// <summary>
         /// The time the path will be deleted.

@@ -8,7 +8,7 @@ using Azure.ResourceManager.Redis.Models;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class RedisSpecification() :
-    Specification("Redis", typeof(RedisExtensions))
+    Specification("Redis", typeof(RedisExtensions), serviceDirectory: "redis")
 {
     protected override void Customize()
     {

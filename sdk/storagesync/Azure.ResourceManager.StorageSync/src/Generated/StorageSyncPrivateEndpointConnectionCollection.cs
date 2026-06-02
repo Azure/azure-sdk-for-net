@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageSync
         {
             if (id.ResourceType != StorageSyncServiceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageSyncServiceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StorageSyncServiceResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, StorageSyncPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation<StorageSyncPrivateEndpointConnectionResource> operation = new StorageSyncArmOperation<StorageSyncPrivateEndpointConnectionResource>(
-                    new StorageSyncPrivateEndpointConnectionOperationSource(Client),
+                    new StorageSyncPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, StorageSyncPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation<StorageSyncPrivateEndpointConnectionResource> operation = new StorageSyncArmOperation<StorageSyncPrivateEndpointConnectionResource>(
-                    new StorageSyncPrivateEndpointConnectionOperationSource(Client),
+                    new StorageSyncPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageSyncPrivateEndpointConnectionData, StorageSyncPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByStorageSyncServiceAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StorageSyncPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<StorageSyncPrivateEndpointConnectionData, StorageSyncPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByStorageSyncServiceAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StorageSyncPrivateEndpointConnectionCollection.GetAll"), data => new StorageSyncPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.StorageSync
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageSyncPrivateEndpointConnectionData, StorageSyncPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByStorageSyncServiceCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StorageSyncPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<StorageSyncPrivateEndpointConnectionData, StorageSyncPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByStorageSyncServiceCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "StorageSyncPrivateEndpointConnectionCollection.GetAll"), data => new StorageSyncPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

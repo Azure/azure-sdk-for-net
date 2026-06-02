@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Relay.Models
     public readonly partial struct RelayNetworkRuleSetDefaultAction : IEquatable<RelayNetworkRuleSetDefaultAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RelayNetworkRuleSetDefaultAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RelayNetworkRuleSetDefaultAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllowValue = "Allow";
         private const string DenyValue = "Deny";
 
-        /// <summary> Allow. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayNetworkRuleSetDefaultAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RelayNetworkRuleSetDefaultAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Allow. </summary>
         public static RelayNetworkRuleSetDefaultAction Allow { get; } = new RelayNetworkRuleSetDefaultAction(AllowValue);
-        /// <summary> Deny. </summary>
+
+        /// <summary> Gets the Deny. </summary>
         public static RelayNetworkRuleSetDefaultAction Deny { get; } = new RelayNetworkRuleSetDefaultAction(DenyValue);
+
         /// <summary> Determines if two <see cref="RelayNetworkRuleSetDefaultAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RelayNetworkRuleSetDefaultAction left, RelayNetworkRuleSetDefaultAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RelayNetworkRuleSetDefaultAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RelayNetworkRuleSetDefaultAction left, RelayNetworkRuleSetDefaultAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RelayNetworkRuleSetDefaultAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RelayNetworkRuleSetDefaultAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RelayNetworkRuleSetDefaultAction(string value) => new RelayNetworkRuleSetDefaultAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RelayNetworkRuleSetDefaultAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RelayNetworkRuleSetDefaultAction?(string value) => value == null ? null : new RelayNetworkRuleSetDefaultAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RelayNetworkRuleSetDefaultAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RelayNetworkRuleSetDefaultAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

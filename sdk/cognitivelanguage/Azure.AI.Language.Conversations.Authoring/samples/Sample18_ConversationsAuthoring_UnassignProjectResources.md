@@ -13,23 +13,24 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To unassign project resources, call `UnassignProjectResources` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource.
 
 ```C# Snippet:Sample18_ConversationsAuthoring_UnassignProjectResources
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 // Set project name and create client for the project
 string sampleProjectName = "{projectName}";
-ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
-
 // Define assigned resource ID to be unassigned
-var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
+var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
 {
-    AzureResourceIds =
+    AssignedResourceIds =
     {
         "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
     }
 };
 
 // Start the operation
-Operation sampleOperation = sampleProjectClient.UnassignProjectResources(
-    waitUntil: WaitUntil.Started,
-    details: sampleUnassignIds
+Operation sampleOperation = projectClient.UnassignProjectResources(
+    WaitUntil.Started,
+    sampleProjectName,
+    sampleUnassignIds
 );
 
 Console.WriteLine($"UnassignProjectResources initiated. Status: {sampleOperation.GetRawResponse().Status}");
@@ -51,23 +52,24 @@ else
 To unassign project resources asynchronously, call `UnassignProjectResourcesAsync` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource asynchronously.
 
 ```C# Snippet:Sample18_ConversationsAuthoring_UnassignProjectResourcesAsync
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 // Set project name and create client for the project
 string sampleProjectName = "{projectName}";
-ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
-
 // Define assigned resource ID to be unassigned
-var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
+var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
 {
-    AzureResourceIds =
+    AssignedResourceIds =
     {
         "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
     }
 };
 
 // Call the operation
-Operation sampleOperation = await sampleProjectClient.UnassignProjectResourcesAsync(
-    waitUntil: WaitUntil.Started,
-    details: sampleUnassignIds
+Operation sampleOperation = await projectClient.UnassignProjectResourcesAsync(
+    WaitUntil.Started,
+    sampleProjectName,
+    sampleUnassignIds
 );
 
 Console.WriteLine($"UnassignProjectResourcesAsync initiated. Status: {sampleOperation.GetRawResponse().Status}");

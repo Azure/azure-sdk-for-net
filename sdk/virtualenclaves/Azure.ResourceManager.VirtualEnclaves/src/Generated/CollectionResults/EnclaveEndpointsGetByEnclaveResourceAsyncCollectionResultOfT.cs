@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         private readonly string _resourceGroupName;
         private readonly string _virtualEnclaveName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of EnclaveEndpointsGetByEnclaveResourceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EnclaveEndpoints client used to send requests. </param>
@@ -29,13 +30,15 @@ namespace Azure.ResourceManager.VirtualEnclaves
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualEnclaveName"> The name of the enclaveResource Resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EnclaveEndpointsGetByEnclaveResourceAsyncCollectionResultOfT(EnclaveEndpoints client, Guid subscriptionId, string resourceGroupName, string virtualEnclaveName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public EnclaveEndpointsGetByEnclaveResourceAsyncCollectionResultOfT(EnclaveEndpoints client, Guid subscriptionId, string resourceGroupName, string virtualEnclaveName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _virtualEnclaveName = virtualEnclaveName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of EnclaveEndpointsGetByEnclaveResourceAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByEnclaveResourceRequest(nextLink, _subscriptionId, _resourceGroupName, _virtualEnclaveName, _context) : _client.CreateGetByEnclaveResourceRequest(_subscriptionId, _resourceGroupName, _virtualEnclaveName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualEnclaveEndpointCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

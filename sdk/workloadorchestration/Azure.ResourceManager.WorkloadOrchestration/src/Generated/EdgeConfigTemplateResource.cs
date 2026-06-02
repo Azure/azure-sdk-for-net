@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _configTemplatesRestClient.CreateCreateVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfigTemplateVersionWithUpdateType.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeConfigTemplateVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateVersionResource>(
-                    new EdgeConfigTemplateVersionOperationSource(Client),
+                    new EdgeConfigTemplateVersionResourceOperationSource(Client),
                     _configTemplatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _configTemplatesRestClient.CreateCreateVersionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ConfigTemplateVersionWithUpdateType.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeConfigTemplateVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeConfigTemplateVersionResource>(
-                    new EdgeConfigTemplateVersionOperationSource(Client),
+                    new EdgeConfigTemplateVersionResourceOperationSource(Client),
                     _configTemplatesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -13,6 +13,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalImageGenTool"/>. </summary>
         public InternalImageGenTool() : base(ToolType.ImageGeneration)
         {
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalImageGenTool"/>. </summary>
@@ -43,7 +44,15 @@ namespace OpenAI
         ///   (string, optional) and `file_id` (string, optional).
         /// </param>
         /// <param name="partialImages"> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </param>
-        internal InternalImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, InternalImageGenToolInputImageMask inputImageMask, long? partialImages) : base(@type, additionalBinaryDataProperties)
+        /// <param name="action"> Whether to generate a new image or edit an existing image. Default: `auto`. </param>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        internal InternalImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, InternalImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             Model = model;
             Quality = quality;
@@ -55,6 +64,10 @@ namespace OpenAI
             InputFidelity = inputFidelity;
             InputImageMask = inputImageMask;
             PartialImages = partialImages;
+            Action = action;
+            Name = name;
+            Description = description;
+            ToolConfigs = toolConfigs;
         }
 
         /// <summary> Gets or sets the Model. </summary>
@@ -101,5 +114,21 @@ namespace OpenAI
 
         /// <summary> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </summary>
         public long? PartialImages { get; set; }
+
+        /// <summary> Whether to generate a new image or edit an existing image. Default: `auto`. </summary>
+        public ImageGenActionEnum? Action { get; set; }
+
+        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        public string Name { get; set; }
+
+        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             if (id.ResourceType != DevTestLabResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _customImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabCustomImageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabCustomImageResource> operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(
-                    new DevTestLabCustomImageOperationSource(Client),
+                    new DevTestLabCustomImageResourceOperationSource(Client),
                     _customImagesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _customImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabCustomImageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabCustomImageResource> operation = new DevTestLabsArmOperation<DevTestLabCustomImageResource>(
-                    new DevTestLabCustomImageOperationSource(Client),
+                    new DevTestLabCustomImageResourceOperationSource(Client),
                     _customImagesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -308,7 +308,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabCustomImageResource(Client, data));
+                context,
+                "DevTestLabCustomImageCollection.GetAll"), data => new DevTestLabCustomImageResource(Client, data));
         }
 
         /// <summary>
@@ -349,7 +350,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabCustomImageResource(Client, data));
+                context,
+                "DevTestLabCustomImageCollection.GetAll"), data => new DevTestLabCustomImageResource(Client, data));
         }
 
         /// <summary>

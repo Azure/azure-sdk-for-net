@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         private readonly string _schemaName;
         private readonly string _dynamicSchemaName;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of DynamicSchemaVersionsGetByDynamicSchemaAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DynamicSchemaVersions client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="schemaName"> The name of the Schema. </param>
         /// <param name="dynamicSchemaName"> The name of the DynamicSchema. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DynamicSchemaVersionsGetByDynamicSchemaAsyncCollectionResultOfT(DynamicSchemaVersions client, Guid subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public DynamicSchemaVersionsGetByDynamicSchemaAsyncCollectionResultOfT(DynamicSchemaVersions client, Guid subscriptionId, string resourceGroupName, string schemaName, string dynamicSchemaName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             _schemaName = schemaName;
             _dynamicSchemaName = dynamicSchemaName;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of DynamicSchemaVersionsGetByDynamicSchemaAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByDynamicSchemaRequest(nextLink, _subscriptionId, _resourceGroupName, _schemaName, _dynamicSchemaName, _context) : _client.CreateGetByDynamicSchemaRequest(_subscriptionId, _resourceGroupName, _schemaName, _dynamicSchemaName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("EdgeDynamicSchemaVersionCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

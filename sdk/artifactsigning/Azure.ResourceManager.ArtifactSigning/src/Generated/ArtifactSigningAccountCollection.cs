@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ArtifactSigning
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 HttpMessage message = _codeSigningAccountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, ArtifactSigningAccountData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ArtifactSigningArmOperation<ArtifactSigningAccountResource> operation = new ArtifactSigningArmOperation<ArtifactSigningAccountResource>(
-                    new ArtifactSigningAccountOperationSource(Client),
+                    new ArtifactSigningAccountResourceOperationSource(Client),
                     _codeSigningAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 HttpMessage message = _codeSigningAccountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, accountName, ArtifactSigningAccountData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ArtifactSigningArmOperation<ArtifactSigningAccountResource> operation = new ArtifactSigningArmOperation<ArtifactSigningAccountResource>(
-                    new ArtifactSigningAccountOperationSource(Client),
+                    new ArtifactSigningAccountResourceOperationSource(Client),
                     _codeSigningAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupAsyncCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ArtifactSigningAccountResource(Client, data));
+            return new AsyncPageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupAsyncCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArtifactSigningAccountCollection.GetAll"), data => new ArtifactSigningAccountResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ArtifactSigning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ArtifactSigningAccountResource(Client, data));
+            return new PageableWrapper<ArtifactSigningAccountData, ArtifactSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ArtifactSigningAccountCollection.GetAll"), data => new ArtifactSigningAccountResource(Client, data));
         }
 
         /// <summary>

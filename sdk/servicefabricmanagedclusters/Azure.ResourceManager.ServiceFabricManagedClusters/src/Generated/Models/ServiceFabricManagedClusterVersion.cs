@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterVersion"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> The name of the result. </param>
         /// <param name="properties"> The detail of the Service Fabric runtime version result. </param>
-        internal ServiceFabricManagedClusterVersion(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ManagedClusterVersionDetails properties) : base(id, name, resourceType, systemData)
+        internal ServiceFabricManagedClusterVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedClusterVersionDetails properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             get
             {
-                return Properties.ClusterCodeVersion;
+                return Properties is null ? default : Properties.ClusterCodeVersion;
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             get
             {
-                return Properties.VersionSupportExpireOn;
+                return Properties is null ? default : Properties.VersionSupportExpireOn;
             }
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             get
             {
-                return Properties.OSType;
+                return Properties is null ? default : Properties.OSType;
             }
         }
     }

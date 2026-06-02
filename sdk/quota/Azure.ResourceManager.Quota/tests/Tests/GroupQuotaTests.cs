@@ -279,9 +279,12 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             ResourceIdentifier subscriptionQuotaAllocationsListResourceId = SubscriptionQuotaAllocationsListResource.CreateResourceIdentifier(managementGroupId, defaultSubscriptionId, groupQuotaName, resourceProviderName, location);
 
             // get the collection of this SubscriptionQuotaAllocationsListResource
-            SubscriptionQuotaAllocationsListCollection collection = managementGroupResource.GetSubscriptionQuotaAllocationsLists();
+            // Collection scope is "Microsoft.Management/managementGroups/subscriptions"; groupQuotaName and
+            // resourceProviderName are passed as method parameters.
+            var scope = new ResourceIdentifier($"{managementGroupResource.Id}/subscriptions/{defaultSubscriptionId}");
+            SubscriptionQuotaAllocationsListCollection collection = Client.GetSubscriptionQuotaAllocationsLists(scope);
 
-            SubscriptionQuotaAllocationsListResource result = await collection.GetAsync(defaultSubscriptionId, groupQuotaName, resourceProviderName, location);
+            SubscriptionQuotaAllocationsListResource result = await collection.GetAsync(groupQuotaName, resourceProviderName, location);
 
             Assert.IsNotNull(result.Data);
             var data = result.Data;

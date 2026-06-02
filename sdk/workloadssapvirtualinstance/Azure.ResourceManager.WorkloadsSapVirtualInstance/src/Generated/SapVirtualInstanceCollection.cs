@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 HttpMessage message = _sapVirtualInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, SapVirtualInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadsSapVirtualInstanceArmOperation<SapVirtualInstanceResource> operation = new WorkloadsSapVirtualInstanceArmOperation<SapVirtualInstanceResource>(
-                    new SapVirtualInstanceOperationSource(Client),
+                    new SapVirtualInstanceResourceOperationSource(Client),
                     _sapVirtualInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 HttpMessage message = _sapVirtualInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sapVirtualInstanceName, SapVirtualInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadsSapVirtualInstanceArmOperation<SapVirtualInstanceResource> operation = new WorkloadsSapVirtualInstanceArmOperation<SapVirtualInstanceResource>(
-                    new SapVirtualInstanceOperationSource(Client),
+                    new SapVirtualInstanceResourceOperationSource(Client),
                     _sapVirtualInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetByResourceGroupAsyncCollectionResultOfT(_sapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SapVirtualInstanceResource(Client, data));
+            return new AsyncPageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetByResourceGroupAsyncCollectionResultOfT(_sapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SapVirtualInstanceCollection.GetAll"), data => new SapVirtualInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetByResourceGroupCollectionResultOfT(_sapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SapVirtualInstanceResource(Client, data));
+            return new PageableWrapper<SapVirtualInstanceData, SapVirtualInstanceResource>(new SapVirtualInstancesGetByResourceGroupCollectionResultOfT(_sapVirtualInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SapVirtualInstanceCollection.GetAll"), data => new SapVirtualInstanceResource(Client, data));
         }
 
         /// <summary>

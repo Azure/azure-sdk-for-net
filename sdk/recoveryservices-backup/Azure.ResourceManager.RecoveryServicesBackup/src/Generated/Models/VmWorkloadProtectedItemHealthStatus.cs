@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct VmWorkloadProtectedItemHealthStatus : IEquatable<VmWorkloadProtectedItemHealthStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectedItemHealthStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VmWorkloadProtectedItemHealthStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string HealthyValue = "Healthy";
         private const string UnhealthyValue = "Unhealthy";
         private const string NotReachableValue = "NotReachable";
         private const string IRPendingValue = "IRPending";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectedItemHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VmWorkloadProtectedItemHealthStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static VmWorkloadProtectedItemHealthStatus Invalid { get; } = new VmWorkloadProtectedItemHealthStatus(InvalidValue);
-        /// <summary> Healthy. </summary>
+
+        /// <summary> Gets the Healthy. </summary>
         public static VmWorkloadProtectedItemHealthStatus Healthy { get; } = new VmWorkloadProtectedItemHealthStatus(HealthyValue);
-        /// <summary> Unhealthy. </summary>
+
+        /// <summary> Gets the Unhealthy. </summary>
         public static VmWorkloadProtectedItemHealthStatus Unhealthy { get; } = new VmWorkloadProtectedItemHealthStatus(UnhealthyValue);
-        /// <summary> NotReachable. </summary>
+
+        /// <summary> Gets the NotReachable. </summary>
         public static VmWorkloadProtectedItemHealthStatus NotReachable { get; } = new VmWorkloadProtectedItemHealthStatus(NotReachableValue);
-        /// <summary> IRPending. </summary>
+
+        /// <summary> Gets the IRPending. </summary>
         public static VmWorkloadProtectedItemHealthStatus IRPending { get; } = new VmWorkloadProtectedItemHealthStatus(IRPendingValue);
+
         /// <summary> Determines if two <see cref="VmWorkloadProtectedItemHealthStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VmWorkloadProtectedItemHealthStatus left, VmWorkloadProtectedItemHealthStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VmWorkloadProtectedItemHealthStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VmWorkloadProtectedItemHealthStatus left, VmWorkloadProtectedItemHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VmWorkloadProtectedItemHealthStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VmWorkloadProtectedItemHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VmWorkloadProtectedItemHealthStatus(string value) => new VmWorkloadProtectedItemHealthStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VmWorkloadProtectedItemHealthStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VmWorkloadProtectedItemHealthStatus?(string value) => value == null ? null : new VmWorkloadProtectedItemHealthStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VmWorkloadProtectedItemHealthStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VmWorkloadProtectedItemHealthStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

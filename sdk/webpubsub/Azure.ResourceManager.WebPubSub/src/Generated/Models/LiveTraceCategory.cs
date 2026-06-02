@@ -7,43 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Live trace category configuration of a Microsoft.SignalRService resource. </summary>
     public partial class LiveTraceCategory
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="LiveTraceCategory"/>. </summary>
+        public LiveTraceCategory()
+        {
+        }
 
         /// <summary> Initializes a new instance of <see cref="LiveTraceCategory"/>. </summary>
         /// <param name="name">
@@ -51,17 +28,33 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// Available values: ConnectivityLogs, MessagingLogs.
         /// Case insensitive.
         /// </param>
-        /// <param name="enabled">
+        /// <param name="isEnabled">
         /// Indicates whether or the live trace category is enabled.
         /// Available values: true, false.
         /// Case insensitive.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LiveTraceCategory(string name, string enabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LiveTraceCategory(string name, bool? isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Enabled = enabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            IsEnabled = isEnabled;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary>
+        /// Gets or sets the live trace category's name.
+        /// Available values: ConnectivityLogs, MessagingLogs.
+        /// Case insensitive.
+        /// </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Indicates whether or the live trace category is enabled.
+        /// Available values: true, false.
+        /// Case insensitive.
+        /// </summary>
+        [WirePath("enabled")]
+        public bool? IsEnabled { get; set; }
     }
 }

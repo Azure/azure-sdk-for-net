@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.ContentUnderstanding
 {
@@ -24,10 +26,31 @@ namespace Azure.AI.ContentUnderstanding
                 ServiceVersion.V2025_11_01 => "2025-11-01",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of ContentUnderstandingClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal ContentUnderstandingClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2025-11-01";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion

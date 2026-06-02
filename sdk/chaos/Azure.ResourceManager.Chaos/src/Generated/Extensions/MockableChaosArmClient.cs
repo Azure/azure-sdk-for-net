@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Chaos;
@@ -35,6 +39,42 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return new ChaosCapabilityResource(Client, id);
         }
 
+        /// <summary> Gets a collection of <see cref="ChaosCapabilityCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ChaosCapabilityResource"/> objects. </returns>
+        public virtual ChaosCapabilityCollection GetChaosCapabilities(ResourceIdentifier scope)
+        {
+            return new ChaosCapabilityCollection(Client, scope);
+        }
+
+        /// <summary> Get a Capability resource that extends a Target resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="capabilityName"> String that represents a Capability resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChaosCapabilityResource> GetChaosCapability(ResourceIdentifier scope, string capabilityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
+
+            return GetChaosCapabilities(scope).Get(capabilityName, cancellationToken);
+        }
+
+        /// <summary> Get a Capability resource that extends a Target resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="capabilityName"> String that represents a Capability resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChaosCapabilityResource>> GetChaosCapabilityAsync(ResourceIdentifier scope, string capabilityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
+
+            return await GetChaosCapabilities(scope).GetAsync(capabilityName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="ChaosTargetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ChaosTargetResource"/> object. </returns>
@@ -42,6 +82,42 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             ChaosTargetResource.ValidateResourceId(id);
             return new ChaosTargetResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ChaosTargetCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ChaosTargetResource"/> objects. </returns>
+        public virtual ChaosTargetCollection GetChaosTargets(ResourceIdentifier scope)
+        {
+            return new ChaosTargetCollection(Client, scope);
+        }
+
+        /// <summary> Get a Target resource that extends a tracked regional resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ChaosTargetResource> GetChaosTarget(ResourceIdentifier scope, string targetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+
+            return GetChaosTargets(scope).Get(targetName, cancellationToken);
+        }
+
+        /// <summary> Get a Target resource that extends a tracked regional resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="targetName"> String that represents a Target resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ChaosTargetResource>> GetChaosTargetAsync(ResourceIdentifier scope, string targetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+
+            return await GetChaosTargets(scope).GetAsync(targetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="ChaosCapabilityMetadataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -71,6 +147,42 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return new ChaosExperimentExecutionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ChaosPrivateAccessResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosPrivateAccessResource"/> object. </returns>
+        public virtual ChaosPrivateAccessResource GetChaosPrivateAccessResource(ResourceIdentifier id)
+        {
+            ChaosPrivateAccessResource.ValidateResourceId(id);
+            return new ChaosPrivateAccessResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual ChaosPrivateEndpointConnectionResource GetChaosPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            ChaosPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new ChaosPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosActionResource"/> object. </returns>
+        public virtual ChaosActionResource GetChaosActionResource(ResourceIdentifier id)
+        {
+            ChaosActionResource.ValidateResourceId(id);
+            return new ChaosActionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosActionVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosActionVersionResource"/> object. </returns>
+        public virtual ChaosActionVersionResource GetChaosActionVersionResource(ResourceIdentifier id)
+        {
+            ChaosActionVersionResource.ValidateResourceId(id);
+            return new ChaosActionVersionResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ChaosTargetMetadataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ChaosTargetMetadataResource"/> object. </returns>
@@ -78,6 +190,51 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             ChaosTargetMetadataResource.ValidateResourceId(id);
             return new ChaosTargetMetadataResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosWorkspaceResource"/> object. </returns>
+        public virtual ChaosWorkspaceResource GetChaosWorkspaceResource(ResourceIdentifier id)
+        {
+            ChaosWorkspaceResource.ValidateResourceId(id);
+            return new ChaosWorkspaceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosDiscoveredResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosDiscoveredResource"/> object. </returns>
+        public virtual ChaosDiscoveredResource GetChaosDiscoveredResource(ResourceIdentifier id)
+        {
+            ChaosDiscoveredResource.ValidateResourceId(id);
+            return new ChaosDiscoveredResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosScenarioResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosScenarioResource"/> object. </returns>
+        public virtual ChaosScenarioResource GetChaosScenarioResource(ResourceIdentifier id)
+        {
+            ChaosScenarioResource.ValidateResourceId(id);
+            return new ChaosScenarioResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosScenarioConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosScenarioConfigurationResource"/> object. </returns>
+        public virtual ChaosScenarioConfigurationResource GetChaosScenarioConfigurationResource(ResourceIdentifier id)
+        {
+            ChaosScenarioConfigurationResource.ValidateResourceId(id);
+            return new ChaosScenarioConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosScenarioRunResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosScenarioRunResource"/> object. </returns>
+        public virtual ChaosScenarioRunResource GetChaosScenarioRunResource(ResourceIdentifier id)
+        {
+            ChaosScenarioRunResource.ValidateResourceId(id);
+            return new ChaosScenarioRunResource(Client, id);
         }
     }
 }

@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class FileShareLimits : IUtf8JsonSerializable, IJsonModel<FileShareLimits>
+    /// <summary> Minimum and maximum provisioned storage, IOPS and bandwidth limits for a file share in the storage account. </summary>
+    public partial class FileShareLimits : IJsonModel<FileShareLimits>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileShareLimits>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FileShareLimits PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FileShareLimits>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFileShareLimits(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FileShareLimits)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FileShareLimits>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FileShareLimits)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FileShareLimits>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FileShareLimits IPersistableModel<FileShareLimits>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FileShareLimits>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FileShareLimits>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileShareLimits>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileShareLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FileShareLimits)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(MinProvisionedStorageGiB))
             {
                 writer.WritePropertyName("minProvisionedStorageGiB"u8);
@@ -65,15 +104,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("maxProvisionedBandwidthMiBPerSec"u8);
                 writer.WriteNumberValue(MaxProvisionedBandwidthMiBPerSec.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,242 +121,107 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        FileShareLimits IJsonModel<FileShareLimits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FileShareLimits IJsonModel<FileShareLimits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FileShareLimits JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FileShareLimits>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FileShareLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FileShareLimits)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFileShareLimits(document.RootElement, options);
         }
 
-        internal static FileShareLimits DeserializeFileShareLimits(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FileShareLimits DeserializeFileShareLimits(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int? minProvisionedStorageGiB = default;
             int? maxProvisionedStorageGiB = default;
-            int? minProvisionedIOPS = default;
-            int? maxProvisionedIOPS = default;
+            int? minProvisionedIops = default;
+            int? maxProvisionedIops = default;
             int? minProvisionedBandwidthMiBPerSec = default;
             int? maxProvisionedBandwidthMiBPerSec = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("minProvisionedStorageGiB"u8))
+                if (prop.NameEquals("minProvisionedStorageGiB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minProvisionedStorageGiB = property.Value.GetInt32();
+                    minProvisionedStorageGiB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxProvisionedStorageGiB"u8))
+                if (prop.NameEquals("maxProvisionedStorageGiB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxProvisionedStorageGiB = property.Value.GetInt32();
+                    maxProvisionedStorageGiB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minProvisionedIOPS"u8))
+                if (prop.NameEquals("minProvisionedIOPS"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minProvisionedIOPS = property.Value.GetInt32();
+                    minProvisionedIops = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxProvisionedIOPS"u8))
+                if (prop.NameEquals("maxProvisionedIOPS"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxProvisionedIOPS = property.Value.GetInt32();
+                    maxProvisionedIops = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minProvisionedBandwidthMiBPerSec"u8))
+                if (prop.NameEquals("minProvisionedBandwidthMiBPerSec"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minProvisionedBandwidthMiBPerSec = property.Value.GetInt32();
+                    minProvisionedBandwidthMiBPerSec = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxProvisionedBandwidthMiBPerSec"u8))
+                if (prop.NameEquals("maxProvisionedBandwidthMiBPerSec"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxProvisionedBandwidthMiBPerSec = property.Value.GetInt32();
+                    maxProvisionedBandwidthMiBPerSec = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FileShareLimits(
                 minProvisionedStorageGiB,
                 maxProvisionedStorageGiB,
-                minProvisionedIOPS,
-                maxProvisionedIOPS,
+                minProvisionedIops,
+                maxProvisionedIops,
                 minProvisionedBandwidthMiBPerSec,
                 maxProvisionedBandwidthMiBPerSec,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinProvisionedStorageGiB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  minProvisionedStorageGiB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MinProvisionedStorageGiB))
-                {
-                    builder.Append("  minProvisionedStorageGiB: ");
-                    builder.AppendLine($"{MinProvisionedStorageGiB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxProvisionedStorageGiB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxProvisionedStorageGiB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxProvisionedStorageGiB))
-                {
-                    builder.Append("  maxProvisionedStorageGiB: ");
-                    builder.AppendLine($"{MaxProvisionedStorageGiB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinProvisionedIops), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  minProvisionedIOPS: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MinProvisionedIops))
-                {
-                    builder.Append("  minProvisionedIOPS: ");
-                    builder.AppendLine($"{MinProvisionedIops.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxProvisionedIops), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxProvisionedIOPS: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxProvisionedIops))
-                {
-                    builder.Append("  maxProvisionedIOPS: ");
-                    builder.AppendLine($"{MaxProvisionedIops.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinProvisionedBandwidthMiBPerSec), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  minProvisionedBandwidthMiBPerSec: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MinProvisionedBandwidthMiBPerSec))
-                {
-                    builder.Append("  minProvisionedBandwidthMiBPerSec: ");
-                    builder.AppendLine($"{MinProvisionedBandwidthMiBPerSec.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxProvisionedBandwidthMiBPerSec), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxProvisionedBandwidthMiBPerSec: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxProvisionedBandwidthMiBPerSec))
-                {
-                    builder.Append("  maxProvisionedBandwidthMiBPerSec: ");
-                    builder.AppendLine($"{MaxProvisionedBandwidthMiBPerSec.Value}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<FileShareLimits>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FileShareLimits>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(FileShareLimits)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FileShareLimits IPersistableModel<FileShareLimits>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FileShareLimits>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFileShareLimits(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FileShareLimits)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FileShareLimits>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

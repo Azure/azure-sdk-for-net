@@ -5,15 +5,15 @@
 
 #nullable disable
 
-using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
+    // Preserves previous patch-model members that are flattened or readonly in the generated TypeSpec model.
     /// <summary> Represents a server to be updated. </summary>
     public partial class PostgreSqlFlexibleServerPatch
     {
         /// <summary> Max storage allowed for a server. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.storage.storageSizeGB")]
         public int? StorageSizeInGB
         {
@@ -25,5 +25,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 Storage.StorageSizeInGB = value;
             }
         }
+
+        /// <summary> The administrator&apos;s login name. </summary>
+        [WirePath("properties.administratorLogin")]
+        public string AdministratorLogin
+        {
+            get => Properties is null ? default : Properties.AdministratorLogin;
+            set
+            {
+                // Backward compatibility: previous SDK exposed a setter, but the service treats this as read-only for PATCH.
+            }
+        }
+
+        /// <summary> The geo-affinity location. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; set; }
     }
 }

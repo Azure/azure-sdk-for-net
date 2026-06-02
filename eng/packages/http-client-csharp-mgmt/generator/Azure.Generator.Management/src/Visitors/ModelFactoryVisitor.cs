@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
+using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
@@ -12,11 +15,8 @@ namespace Azure.Generator.Management.Visitors
 {
     internal class ModelFactoryVisitor : ScmLibraryVisitor
     {
-        // Dictionary mapping property names to their preferred parameter names
-        private static readonly Dictionary<string, string> PropertyToParameterNameMap = new()
-        {
-            { "ETag", "etag" }
-        };
+        private HashSet<CSharpType>? _modelTypes;
+        private HashSet<CSharpType>? _modelFactoryModelTypes;
 
         protected override TypeProvider? VisitType(TypeProvider type)
         {
@@ -26,7 +26,18 @@ namespace Azure.Generator.Management.Visitors
                 foreach (var method in modelFactory.Methods)
                 {
                     var returnType = method.Signature.ReturnType;
-                    if (returnType is not null && ManagementClientGenerator.Instance.OutputLibrary.IsModelFactoryModelType(returnType))
+                    if (returnType is not null && KnownManagementTypes.IsKnownManagementType(returnType))
+                    {
+                        continue;
+                    }
+
+                    if (returnType is not null
+                        && IsModelType(returnType)
+                        && !IsModelFactoryModelType(returnType))
+                    {
+                        updatedMethods.Add(method);
+                    }
+                    else if (returnType is not null && IsModelFactoryModelType(returnType))
                     {
                         // Fix ArgumentNullException XML documentation for parameters that are nullable
                         // Model factory methods should allow all parameters to be null for mocking purposes
@@ -38,10 +49,141 @@ namespace Azure.Generator.Management.Visitors
                         updatedMethods.Add(method);
                     }
                 }
+                AddMissingLastContractModelMethods(modelFactory, updatedMethods);
                 modelFactory.Update(methods: updatedMethods);
                 return modelFactory;
             }
             return base.VisitType(type);
+        }
+
+        private void AddMissingLastContractModelMethods(ModelFactoryProvider modelFactory, List<MethodProvider> updatedMethods)
+        {
+            var previousMethods = modelFactory.LastContractView?.Methods;
+            if (previousMethods is null || previousMethods.Count == 0)
+            {
+                return;
+            }
+
+            var customMethods = modelFactory.CustomCodeView?.Methods ?? [];
+            foreach (var previousMethod in previousMethods)
+            {
+                var returnType = previousMethod.Signature.ReturnType;
+                if (returnType is null
+                    || KnownManagementTypes.IsKnownManagementType(returnType)
+                    || updatedMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
+                    || customMethods.Any(method => HasSameCSharpSignature(method.Signature, previousMethod.Signature))
+                    || !ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(previousMethod, modelFactory, out var restoredMethod))
+                {
+                    continue;
+                }
+
+                updatedMethods.Add(restoredMethod);
+            }
+        }
+
+        private bool IsModelType(CSharpType type) => ContainsModelType(ModelTypes, type.WithNullable(false));
+
+        private bool IsModelFactoryModelType(CSharpType type) => ContainsModelType(ModelFactoryModelTypes, type.WithNullable(false));
+
+        private static bool ContainsModelType(HashSet<CSharpType> modelTypes, CSharpType type)
+            => modelTypes.Contains(type) || modelTypes.Any(modelType => modelType.AreNamesEqual(type));
+
+        private HashSet<CSharpType> ModelTypes
+        {
+            get
+            {
+                BuildModelTypes();
+                return _modelTypes!;
+            }
+        }
+
+        private HashSet<CSharpType> ModelFactoryModelTypes
+        {
+            get
+            {
+                BuildModelTypes();
+                return _modelFactoryModelTypes!;
+            }
+        }
+
+        private void BuildModelTypes()
+        {
+            if (_modelTypes is not null && _modelFactoryModelTypes is not null)
+            {
+                return;
+            }
+
+            var modelTypes = new HashSet<CSharpType>();
+            var modelFactoryModelTypes = new HashSet<CSharpType>();
+
+            foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+            {
+                var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
+                if (model is null)
+                {
+                    continue;
+                }
+
+                AddModelProvider(model, modelTypes, modelFactoryModelTypes);
+            }
+
+            foreach (var model in ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ModelProvider>())
+            {
+                AddModelProvider(model, modelTypes, modelFactoryModelTypes);
+            }
+
+            _modelTypes = modelTypes;
+            _modelFactoryModelTypes = modelFactoryModelTypes;
+        }
+
+        private static void AddModelProvider(
+            ModelProvider model,
+            HashSet<CSharpType> modelTypes,
+            HashSet<CSharpType> modelFactoryModelTypes)
+        {
+            var type = model.Type.WithNullable(false);
+            modelTypes.Add(type);
+            if (IsModelFactoryModel(model))
+            {
+                modelFactoryModelTypes.Add(type);
+            }
+        }
+
+        private static bool IsModelFactoryModel(ModelProvider model)
+        {
+            // A model is a model factory model if it is public and it has at least one public property without a setter.
+            return model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && EnumerateAllPublicProperties(model).Any(prop => !prop.Body.HasSetter);
+
+            IEnumerable<PropertyProvider> EnumerateAllPublicProperties(ModelProvider current)
+            {
+                var currentModel = current;
+                foreach (var property in currentModel.Properties)
+                {
+                    if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                    {
+                        yield return property;
+                    }
+                }
+
+                while (currentModel.BaseModelProvider is not null)
+                {
+                    currentModel = currentModel.BaseModelProvider;
+                    foreach (var property in currentModel.Properties)
+                    {
+                        if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                        {
+                            yield return property;
+                        }
+                    }
+                }
+            }
+        }
+
+        private static bool HasSameCSharpSignature(MethodSignature first, MethodSignature second)
+        {
+            return first.Name == second.Name
+                && first.Parameters.Count == second.Parameters.Count
+                && first.Parameters.Zip(second.Parameters).All(pair => pair.First.Type.AreNamesEqual(pair.Second.Type));
         }
 
         private void FixArgumentNullExceptionXmlDoc(MethodProvider method)
@@ -58,26 +200,57 @@ namespace Azure.Generator.Management.Visitors
 
         private void UpdateParameterNames(MethodProvider method)
         {
-            bool updated = false;
-
-            // Check if any parameter needs to be renamed based on the property name mapping
-            foreach (var parameter in method.Signature.Parameters)
+            if (PreservePreviousParameterNames(method))
             {
-                // Check if the parameter is associated with a property and needs renaming
-                if (parameter.Property != null &&
-                    PropertyToParameterNameMap.TryGetValue(parameter.Property.Name, out var newName) &&
-                    parameter.Name != newName)
-                {
-                    parameter.Update(name: newName);
-                    updated = true;
-                }
-            }
-
-            if (updated)
-            {
-                // Update the method signature to refresh documentation
+                // Update the method signature to refresh documentation after parameter renames.
                 method.Update(signature: method.Signature);
             }
+        }
+
+        private static bool PreservePreviousParameterNames(MethodProvider method)
+        {
+            var previousMethods = method.EnclosingType.LastContractView?.Methods;
+            if (previousMethods is null || previousMethods.Count == 0)
+            {
+                return false;
+            }
+
+            var previousMethod = previousMethods.FirstOrDefault(previous => MethodSignature.MethodSignatureComparer.Equals(method.Signature, previous.Signature));
+            if (previousMethod is null)
+            {
+                return false;
+            }
+
+            var currentParameters = method.Signature.Parameters;
+            var previousParameters = previousMethod.Signature.Parameters;
+            if (currentParameters.Count != previousParameters.Count)
+            {
+                return false;
+            }
+
+            var updated = false;
+            var currentParameterNames = currentParameters.Select(parameter => parameter.Name).ToHashSet(StringComparer.Ordinal);
+            for (int i = 0; i < currentParameters.Count; i++)
+            {
+                var previousName = previousParameters[i].Name;
+                var currentParameter = currentParameters[i];
+                if (string.IsNullOrEmpty(previousName) || currentParameter.Name == previousName)
+                {
+                    continue;
+                }
+
+                if (currentParameterNames.Contains(previousName))
+                {
+                    continue;
+                }
+
+                currentParameterNames.Remove(currentParameter.Name);
+                currentParameter.Update(name: previousName);
+                currentParameterNames.Add(previousName);
+                updated = true;
+            }
+
+            return updated;
         }
     }
 }

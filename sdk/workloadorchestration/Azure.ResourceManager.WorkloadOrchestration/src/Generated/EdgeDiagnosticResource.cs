@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _diagnosticsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeDiagnosticPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeDiagnosticResource> operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(
-                    new EdgeDiagnosticOperationSource(Client),
+                    new EdgeDiagnosticResourceOperationSource(Client),
                     _diagnosticsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _diagnosticsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeDiagnosticPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeDiagnosticResource> operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(
-                    new EdgeDiagnosticOperationSource(Client),
+                    new EdgeDiagnosticResourceOperationSource(Client),
                     _diagnosticsClientDiagnostics,
                     Pipeline,
                     message.Request,

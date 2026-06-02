@@ -86,16 +86,13 @@ namespace Azure.AI.Projects
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Logprobs))
+            writer.WritePropertyName("logprobs"u8);
+            writer.WriteStartArray();
+            foreach (InternalLogProb item in Logprobs)
             {
-                writer.WritePropertyName("logprobs"u8);
-                writer.WriteStartArray();
-                foreach (InternalLogProb item in Logprobs)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -152,10 +149,6 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("logprobs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<InternalLogProb> array = new List<InternalLogProb>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -169,7 +162,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OutputMessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs ?? new ChangeTrackingList<InternalLogProb>());
+            return new OutputMessageContentOutputTextContent(@type, additionalBinaryDataProperties, text, annotations, logprobs);
         }
     }
 }

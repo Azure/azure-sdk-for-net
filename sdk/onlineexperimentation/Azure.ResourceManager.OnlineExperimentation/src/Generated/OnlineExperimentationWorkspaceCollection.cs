@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, OnlineExperimentationWorkspaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource> operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(
-                    new OnlineExperimentationWorkspaceOperationSource(Client),
+                    new OnlineExperimentationWorkspaceResourceOperationSource(Client),
                     _onlineExperimentationWorkspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 HttpMessage message = _onlineExperimentationWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, OnlineExperimentationWorkspaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource> operation = new OnlineExperimentationArmOperation<OnlineExperimentationWorkspaceResource>(
-                    new OnlineExperimentationWorkspaceOperationSource(Client),
+                    new OnlineExperimentationWorkspaceResourceOperationSource(Client),
                     _onlineExperimentationWorkspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_onlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new OnlineExperimentationWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspacesGetByResourceGroupAsyncCollectionResultOfT(_onlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OnlineExperimentationWorkspaceCollection.GetAll"), data => new OnlineExperimentationWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspacesGetByResourceGroupCollectionResultOfT(_onlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new OnlineExperimentationWorkspaceResource(Client, data));
+            return new PageableWrapper<OnlineExperimentationWorkspaceData, OnlineExperimentationWorkspaceResource>(new OnlineExperimentationWorkspacesGetByResourceGroupCollectionResultOfT(_onlineExperimentationWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OnlineExperimentationWorkspaceCollection.GetAll"), data => new OnlineExperimentationWorkspaceResource(Client, data));
         }
 
         /// <summary>

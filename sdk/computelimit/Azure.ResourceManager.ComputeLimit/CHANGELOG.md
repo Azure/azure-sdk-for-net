@@ -1,14 +1,18 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0 (2026-06-01)
 
 ### Features Added
 
-### Breaking Changes
+- Added optional parameter `ComputeLimitFeatureEnableContent content` to `ComputeLimitFeatureResource.Enable` and `ComputeLimitFeatureResource.EnableAsync` methods.
 
-### Bugs Fixed
+## 1.0.0 (2026-04-30)
 
-### Other Changes
+### Features Added
+
+- Upgraded API version to 2026-04-30.
+- Added `ComputeLimitVmFamilyResource`, `ComputeLimitVmFamilyCollection`, and `ComputeLimitVmFamilyData` for managing VM family resources.
+- Added `Disable` operation on `ComputeLimitFeatureResource`.
 
 ## 1.0.0-beta.1 (2025-11-21)
 

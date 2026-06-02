@@ -15,15 +15,17 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentOutputTextContent"/>. </summary>
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="annotations"/> is null. </exception>
-        public OutputMessageContentOutputTextContent(string text, IEnumerable<InternalAnnotation> annotations) : base(OutputMessageContentType.OutputText)
+        /// <param name="logprobs"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="annotations"/> or <paramref name="logprobs"/> is null. </exception>
+        public OutputMessageContentOutputTextContent(string text, IEnumerable<InternalAnnotation> annotations, IEnumerable<InternalLogProb> logprobs) : base(OutputMessageContentType.OutputText)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(annotations, nameof(annotations));
+            Argument.AssertNotNull(logprobs, nameof(logprobs));
 
             Text = text;
             Annotations = annotations.ToList();
-            Logprobs = new ChangeTrackingList<InternalLogProb>();
+            Logprobs = logprobs.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentOutputTextContent"/>. </summary>

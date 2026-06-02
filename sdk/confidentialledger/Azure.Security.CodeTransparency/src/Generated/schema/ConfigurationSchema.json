@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "CodeTransparencyClient": {
+          "type": "object",
+          "description": "Configuration for CodeTransparencyClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/codeTransparencyClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "codeTransparencyClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "CacheTTLSeconds": {
+              "type": "number"
+            },
+            "IdentityClientEndpoint": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

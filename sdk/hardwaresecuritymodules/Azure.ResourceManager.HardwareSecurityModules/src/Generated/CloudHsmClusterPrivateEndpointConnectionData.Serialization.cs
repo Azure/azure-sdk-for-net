@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(cloudHsmClusterPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(cloudHsmClusterPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CloudHsmClusterPrivateEndpointConnectionData"/> from. </param>

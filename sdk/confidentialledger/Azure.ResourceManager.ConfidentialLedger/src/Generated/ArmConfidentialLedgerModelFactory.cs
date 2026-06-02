@@ -8,49 +8,51 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ConfidentialLedger;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmConfidentialLedgerModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.ConfidentialLedgerNameAvailabilityResult"/>. </summary>
+        /// <summary> The check availability result. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is available. </param>
+        /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <returns> A new <see cref="Models.ConfidentialLedgerNameAvailabilityResult"/> instance for mocking. </returns>
-        public static ConfidentialLedgerNameAvailabilityResult ConfidentialLedgerNameAvailabilityResult(bool? isNameAvailable = null, ConfidentialLedgerNameUnavailableReason? reason = null, string message = null)
+        public static ConfidentialLedgerNameAvailabilityResult ConfidentialLedgerNameAvailabilityResult(bool? isNameAvailable = default, ConfidentialLedgerNameUnavailableReason? reason = default, string message = default)
         {
-            return new ConfidentialLedgerNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new ConfidentialLedgerNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfidentialLedger.ConfidentialLedgerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Confidential Ledger. Contains the properties of Confidential Ledger Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of Confidential Ledger Resource. </param>
         /// <returns> A new <see cref="ConfidentialLedger.ConfidentialLedgerData"/> instance for mocking. </returns>
-        public static ConfidentialLedgerData ConfidentialLedgerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ConfidentialLedgerProperties properties = null)
+        public static ConfidentialLedgerData ConfidentialLedgerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfidentialLedgerProperties properties = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ConfidentialLedgerData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties,
-                serializedAdditionalRawData: null);
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfidentialLedgerProperties"/>. </summary>
+        /// <summary> Additional Confidential Ledger properties. </summary>
         /// <param name="ledgerName"> Unique name for the Confidential Ledger. </param>
         /// <param name="ledgerUri"> Endpoint for calling Ledger Service. </param>
         /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>
@@ -69,11 +71,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <param name="workerThreads"> Number of additional threads processing incoming client requests in the enclave (modify with care!). </param>
         /// <param name="enclavePlatform"> Enclave platform of the Confidential Ledger. </param>
         /// <param name="applicationType"> Application type of the Confidential Ledger. </param>
+        /// <param name="scittConfiguration"> The SCITT Configuration that needs to be set for the Confidential Ledger. </param>
         /// <returns> A new <see cref="Models.ConfidentialLedgerProperties"/> instance for mocking. </returns>
-        public static ConfidentialLedgerProperties ConfidentialLedgerProperties(string ledgerName = null, Uri ledgerUri = null, Uri identityServiceUri = null, string ledgerInternalNamespace = null, ConfidentialLedgerRunningState? runningState = null, ConfidentialLedgerType? ledgerType = null, ConfidentialLedgerProvisioningState? provisioningState = null, ConfidentialLedgerSku? ledgerSku = null, IEnumerable<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = null, IEnumerable<CertBasedSecurityPrincipal> certBasedSecurityPrincipals = null, string hostLevel = null, int? maxBodySizeInMb = null, string subjectName = null, int? nodeCount = null, string writeLBAddressPrefix = null, int? workerThreads = null, ConfidentialLedgerEnclavePlatform? enclavePlatform = null, ConfidentialLedgerApplicationType? applicationType = null)
+        public static ConfidentialLedgerProperties ConfidentialLedgerProperties(string ledgerName = default, Uri ledgerUri = default, Uri identityServiceUri = default, string ledgerInternalNamespace = default, ConfidentialLedgerRunningState? runningState = default, ConfidentialLedgerType? ledgerType = default, ConfidentialLedgerProvisioningState? provisioningState = default, ConfidentialLedgerSku? ledgerSku = default, IEnumerable<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = default, IEnumerable<CertBasedSecurityPrincipal> certBasedSecurityPrincipals = default, string hostLevel = default, int? maxBodySizeInMb = default, string subjectName = default, int? nodeCount = default, string writeLBAddressPrefix = default, int? workerThreads = default, ConfidentialLedgerEnclavePlatform? enclavePlatform = default, ConfidentialLedgerApplicationType? applicationType = default, string scittConfiguration = default)
         {
-            aadBasedSecurityPrincipals ??= new List<AadBasedSecurityPrincipal>();
-            certBasedSecurityPrincipals ??= new List<CertBasedSecurityPrincipal>();
+            aadBasedSecurityPrincipals ??= new ChangeTrackingList<AadBasedSecurityPrincipal>();
+            certBasedSecurityPrincipals ??= new ChangeTrackingList<CertBasedSecurityPrincipal>();
 
             return new ConfidentialLedgerProperties(
                 ledgerName,
@@ -84,8 +87,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 ledgerType,
                 provisioningState,
                 ledgerSku,
-                aadBasedSecurityPrincipals?.ToList(),
-                certBasedSecurityPrincipals?.ToList(),
+                aadBasedSecurityPrincipals.ToList(),
+                certBasedSecurityPrincipals.ToList(),
                 hostLevel,
                 maxBodySizeInMb,
                 subjectName,
@@ -94,109 +97,25 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 workerThreads,
                 enclavePlatform,
                 applicationType,
-                serializedAdditionalRawData: null);
+                scittConfiguration,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfidentialLedgerBackupContent"/>. </summary>
-        /// <param name="restoreRegion"> The region where the backup of the ledger will eventually be restored to. </param>
-        /// <param name="uri"> SAS URI used to access the backup Fileshare. </param>
-        /// <returns> A new <see cref="Models.ConfidentialLedgerBackupContent"/> instance for mocking. </returns>
-        public static ConfidentialLedgerBackupContent ConfidentialLedgerBackupContent(string restoreRegion = null, Uri uri = null)
+        /// <summary> Object representing Files Export properties of a Confidential Ledger Resource. </summary>
+        /// <param name="restoreRegion"> The region where the exported ledger files will eventually be restored to. </param>
+        /// <param name="uri"> SAS URI used to access the Fileshare for exporting ledger files. </param>
+        /// <returns> A new <see cref="Models.ConfidentialLedgerFilesExportContent"/> instance for mocking. </returns>
+        public static ConfidentialLedgerFilesExportContent ConfidentialLedgerFilesExportContent(string restoreRegion = default, Uri uri = default)
         {
-            return new ConfidentialLedgerBackupContent(restoreRegion, uri, serializedAdditionalRawData: null);
+            return new ConfidentialLedgerFilesExportContent(restoreRegion, uri, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfidentialLedgerBackupResult"/>. </summary>
-        /// <param name="message"> Response body stating if the ledger is being backed up. </param>
-        /// <returns> A new <see cref="Models.ConfidentialLedgerBackupResult"/> instance for mocking. </returns>
-        public static ConfidentialLedgerBackupResult ConfidentialLedgerBackupResult(string message = null)
+        /// <summary> Object representing the files export response of a Confidential Ledger Resource. </summary>
+        /// <param name="message"> Response body stating if the ledger files are being exported. </param>
+        /// <returns> A new <see cref="Models.ConfidentialLedgerFilesExportResult"/> instance for mocking. </returns>
+        public static ConfidentialLedgerFilesExportResult ConfidentialLedgerFilesExportResult(string message = default)
         {
-            return new ConfidentialLedgerBackupResult(message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConfidentialLedgerRestoreResult"/>. </summary>
-        /// <param name="message"> Response body stating if the ledger is being restored. </param>
-        /// <returns> A new <see cref="Models.ConfidentialLedgerRestoreResult"/> instance for mocking. </returns>
-        public static ConfidentialLedgerRestoreResult ConfidentialLedgerRestoreResult(string message = null)
-        {
-            return new ConfidentialLedgerRestoreResult(message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConfidentialLedger.ManagedCcfData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> Properties of Managed CCF Resource. </param>
-        /// <returns> A new <see cref="ConfidentialLedger.ManagedCcfData"/> instance for mocking. </returns>
-        public static ManagedCcfData ManagedCcfData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedCcfProperties properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ManagedCcfData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedCcfProperties"/>. </summary>
-        /// <param name="appName"> Unique name for the Managed CCF. </param>
-        /// <param name="appUri"> Endpoint for calling Managed CCF Service. </param>
-        /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>
-        /// <param name="memberIdentityCertificates"> List of member identity certificates for  Managed CCF. </param>
-        /// <param name="deploymentType"> Deployment Type of Managed CCF. </param>
-        /// <param name="runningState"> Object representing RunningState for Managed CCF. </param>
-        /// <param name="provisioningState"> Provisioning state of Managed CCF Resource. </param>
-        /// <param name="nodeCount"> Number of CCF nodes in the Managed CCF. </param>
-        /// <param name="enclavePlatform"> Enclave platform of Managed CCF. </param>
-        /// <returns> A new <see cref="Models.ManagedCcfProperties"/> instance for mocking. </returns>
-        public static ManagedCcfProperties ManagedCcfProperties(string appName = null, Uri appUri = null, Uri identityServiceUri = null, IEnumerable<ConfidentialLedgerMemberIdentityCertificate> memberIdentityCertificates = null, ConfidentialLedgerDeploymentType deploymentType = null, ConfidentialLedgerRunningState? runningState = null, ConfidentialLedgerProvisioningState? provisioningState = null, int? nodeCount = null, ConfidentialLedgerEnclavePlatform? enclavePlatform = null)
-        {
-            memberIdentityCertificates ??= new List<ConfidentialLedgerMemberIdentityCertificate>();
-
-            return new ManagedCcfProperties(
-                appName,
-                appUri,
-                identityServiceUri,
-                memberIdentityCertificates?.ToList(),
-                deploymentType,
-                runningState,
-                provisioningState,
-                nodeCount,
-                enclavePlatform,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedCcfBackupContent"/>. </summary>
-        /// <param name="restoreRegion"> The region where the backup of the managed CCF resource will eventually be restored to. </param>
-        /// <param name="uri"> SAS URI used to access the backup Fileshare. </param>
-        /// <returns> A new <see cref="Models.ManagedCcfBackupContent"/> instance for mocking. </returns>
-        public static ManagedCcfBackupContent ManagedCcfBackupContent(string restoreRegion = null, Uri uri = null)
-        {
-            return new ManagedCcfBackupContent(restoreRegion, uri, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedCcfBackupResult"/>. </summary>
-        /// <param name="message"> Response body stating if the managed CCF resource is being backed up. </param>
-        /// <returns> A new <see cref="Models.ManagedCcfBackupResult"/> instance for mocking. </returns>
-        public static ManagedCcfBackupResult ManagedCcfBackupResult(string message = null)
-        {
-            return new ManagedCcfBackupResult(message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedCcfRestoreResult"/>. </summary>
-        /// <param name="message"> Response body stating if the managed CCF resource is being restored. </param>
-        /// <returns> A new <see cref="Models.ManagedCcfRestoreResult"/> instance for mocking. </returns>
-        public static ManagedCcfRestoreResult ManagedCcfRestoreResult(string message = null)
-        {
-            return new ManagedCcfRestoreResult(message, serializedAdditionalRawData: null);
+            return new ConfidentialLedgerFilesExportResult(message, additionalBinaryDataProperties: null);
         }
     }
 }

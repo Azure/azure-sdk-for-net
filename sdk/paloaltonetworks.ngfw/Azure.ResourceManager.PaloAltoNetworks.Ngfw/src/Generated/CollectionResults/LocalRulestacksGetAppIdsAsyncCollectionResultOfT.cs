@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly string _skip;
         private readonly int? _maxCount;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LocalRulestacksGetAppIdsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LocalRulestacks client used to send requests. </param>
@@ -37,7 +38,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="skip"></param>
         /// <param name="maxCount"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LocalRulestacksGetAppIdsAsyncCollectionResultOfT(LocalRulestacks client, string subscriptionId, string resourceGroupName, string localRulestackName, string appIdVersion, string appPrefix, string skip, int? maxCount, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public LocalRulestacksGetAppIdsAsyncCollectionResultOfT(LocalRulestacks client, string subscriptionId, string resourceGroupName, string localRulestackName, string appIdVersion, string appPrefix, string skip, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _skip = skip;
             _maxCount = maxCount;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LocalRulestacksGetAppIdsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -81,7 +84,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAppIdsRequest(nextLink, _subscriptionId, _resourceGroupName, _localRulestackName, _appIdVersion, _appPrefix, _skip, _maxCount, _context) : _client.CreateGetAppIdsRequest(_subscriptionId, _resourceGroupName, _localRulestackName, _appIdVersion, _appPrefix, _skip, _maxCount, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LocalRulestackResource.GetAppIds");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

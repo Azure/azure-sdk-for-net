@@ -103,12 +103,16 @@ namespace Azure.Generator.Visitors
 
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
-            if (ShouldSkipType(method.EnclosingType) || ShouldSkipMethod(method))
+            if (ShouldSkipType(method.EnclosingType))
             {
                 return base.VisitMethod(method);
             }
 
-            if (method.Kind == ScmMethodKind.Protocol)
+            if (IsPagingMethod(method))
+            {
+                UpdatePagingMethodWithScope(method);
+            }
+            else if (method.Kind == ScmMethodKind.Protocol)
             {
                 UpdateProtocolMethodsWithDistributedTracing(method);
             }
@@ -216,8 +220,23 @@ namespace Azure.Generator.Visitors
             [NotNullWhen(true)] out MethodBodyStatement? updatedStatement)
         {
             updatedStatement = originalStatement;
-            if (originalStatement is not ExpressionStatement { Expression: KeywordExpression keywordExpression }
-                || keywordExpression.Expression is not BinaryOperatorExpression binaryOperatorExpression)
+            if (originalStatement is not ExpressionStatement { Expression: KeywordExpression keywordExpression })
+            {
+                return false;
+            }
+
+            // Handle simple return: return new T(Pipeline, _endpoint, ...);
+            if (keywordExpression.Expression is NewInstanceExpression simpleCtorExpression)
+            {
+                updatedStatement = Return(new NewInstanceExpression(
+                    simpleCtorExpression.Type,
+                    [clientDiagnostics, .. simpleCtorExpression.Parameters],
+                    simpleCtorExpression.InitExpression));
+                return true;
+            }
+
+            // Handle cached return: return Volatile.Read(ref _cachedT) ?? Interlocked.CompareExchange(ref _cachedT, new T(...), null) ?? _cachedT;
+            if (keywordExpression.Expression is not BinaryOperatorExpression binaryOperatorExpression)
             {
                 return false;
             }
@@ -274,11 +293,49 @@ namespace Azure.Generator.Visitors
                     .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
         }
 
-        private static bool ShouldSkipMethod(ScmMethodProvider method)
+        private static void UpdatePagingMethodWithScope(ScmMethodProvider method)
         {
-            // Skip instrumentation for methods returning paging collection types
-            // as they have built-in instrumentation
-            return IsPagingMethod(method);
+            string scopeName = method.GetScopeName();
+            const string asyncSuffix = "Async";
+            if (scopeName.EndsWith(asyncSuffix))
+            {
+                scopeName = scopeName[..^asyncSuffix.Length];
+            }
+
+            if (method.BodyExpression is NewInstanceExpression newInstance)
+            {
+                List<MethodBodyStatement> updatedStatements =
+                [
+                    Return(new NewInstanceExpression(
+                        newInstance.Type,
+                        [.. newInstance.Parameters, Literal(scopeName)],
+                        newInstance.InitExpression))
+                ];
+                method.Update(bodyStatements: updatedStatements);
+            }
+            else if (method.BodyStatements != null)
+            {
+                var updatedStatements = new List<MethodBodyStatement>();
+                foreach (var statement in method.BodyStatements)
+                {
+                    if (statement is ExpressionStatement
+                        {
+                            Expression: KeywordExpression
+                            {
+                                Keyword: "return",
+                                Expression: NewInstanceExpression returnNewInstance
+                            } keyword
+                        })
+                    {
+                        keyword.Update(keyword.Keyword, new NewInstanceExpression(
+                            returnNewInstance.Type,
+                            [.. returnNewInstance.Parameters, Literal(scopeName)],
+                            returnNewInstance.InitExpression));
+                    }
+                    updatedStatements.Add(statement);
+                }
+                method.Update(bodyStatements: updatedStatements);
+            }
         }
 
         private static bool IsSubClientFactoryMethod(ScmMethodProvider method)

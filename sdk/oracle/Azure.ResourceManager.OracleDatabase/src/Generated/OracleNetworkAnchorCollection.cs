@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _networkAnchorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkAnchorName, OracleNetworkAnchorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<OracleNetworkAnchorResource> operation = new OracleDatabaseArmOperation<OracleNetworkAnchorResource>(
-                    new OracleNetworkAnchorOperationSource(Client),
+                    new OracleNetworkAnchorResourceOperationSource(Client),
                     _networkAnchorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _networkAnchorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkAnchorName, OracleNetworkAnchorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<OracleNetworkAnchorResource> operation = new OracleDatabaseArmOperation<OracleNetworkAnchorResource>(
-                    new OracleNetworkAnchorOperationSource(Client),
+                    new OracleNetworkAnchorResourceOperationSource(Client),
                     _networkAnchorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetByResourceGroupAsyncCollectionResultOfT(_networkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new OracleNetworkAnchorResource(Client, data));
+            return new AsyncPageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetByResourceGroupAsyncCollectionResultOfT(_networkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleNetworkAnchorCollection.GetAll"), data => new OracleNetworkAnchorResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetByResourceGroupCollectionResultOfT(_networkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new OracleNetworkAnchorResource(Client, data));
+            return new PageableWrapper<OracleNetworkAnchorData, OracleNetworkAnchorResource>(new NetworkAnchorsGetByResourceGroupCollectionResultOfT(_networkAnchorsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "OracleNetworkAnchorCollection.GetAll"), data => new OracleNetworkAnchorResource(Client, data));
         }
 
         /// <summary>

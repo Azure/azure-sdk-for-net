@@ -24,7 +24,7 @@ describe("Test GetInputType for scalar", () => {
       runner
     );
     const context = await createCSharpSdkContext(createEmitterContext(program));
-    const model = createModel(context);
+    const [model] = createModel(context);
 
     const inputParamArray =
       model.clients[0].methods[0].operation.parameters.filter(

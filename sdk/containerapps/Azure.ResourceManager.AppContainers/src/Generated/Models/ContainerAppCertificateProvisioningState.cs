@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppCertificateProvisioningState : IEquatable<ContainerAppCertificateProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> DeleteFailed. </summary>
+        private const string DeleteFailedValue = "DeleteFailed";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppCertificateProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppCertificateProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string DeleteFailedValue = "DeleteFailed";
-        private const string PendingValue = "Pending";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static ContainerAppCertificateProvisioningState Succeeded { get; } = new ContainerAppCertificateProvisioningState(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static ContainerAppCertificateProvisioningState Failed { get; } = new ContainerAppCertificateProvisioningState(FailedValue);
+
         /// <summary> Canceled. </summary>
         public static ContainerAppCertificateProvisioningState Canceled { get; } = new ContainerAppCertificateProvisioningState(CanceledValue);
+
         /// <summary> DeleteFailed. </summary>
         public static ContainerAppCertificateProvisioningState DeleteFailed { get; } = new ContainerAppCertificateProvisioningState(DeleteFailedValue);
+
         /// <summary> Pending. </summary>
         public static ContainerAppCertificateProvisioningState Pending { get; } = new ContainerAppCertificateProvisioningState(PendingValue);
+
         /// <summary> Deleting. </summary>
         public static ContainerAppCertificateProvisioningState Deleting { get; } = new ContainerAppCertificateProvisioningState(DeletingValue);
+
         /// <summary> Determines if two <see cref="ContainerAppCertificateProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppCertificateProvisioningState left, ContainerAppCertificateProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppCertificateProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppCertificateProvisioningState left, ContainerAppCertificateProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppCertificateProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppCertificateProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppCertificateProvisioningState(string value) => new ContainerAppCertificateProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppCertificateProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppCertificateProvisioningState?(string value) => value == null ? null : new ContainerAppCertificateProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppCertificateProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppCertificateProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

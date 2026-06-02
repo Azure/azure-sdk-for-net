@@ -124,7 +124,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             float? rerankerScore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             Uri webUrl = default;
-            SharePointSensitivityLabelInfo searchSensitivityLabelInfo = default;
+            PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -187,7 +187,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     {
                         continue;
                     }
-                    searchSensitivityLabelInfo = SharePointSensitivityLabelInfo.DeserializeSharePointSensitivityLabelInfo(prop.Value, options);
+                    searchSensitivityLabelInfo = PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

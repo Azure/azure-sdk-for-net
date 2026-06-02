@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
+    [CodeGenType("AIProjectDeploymentsOperations")]
     public partial class AIProjectDeploymentsOperations
     {
         /// <summary>

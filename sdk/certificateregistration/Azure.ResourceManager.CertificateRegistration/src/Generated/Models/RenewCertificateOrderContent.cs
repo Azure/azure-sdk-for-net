@@ -30,14 +30,19 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> RenewCertificateOrderRequest resource specific properties. </param>
-        internal RenewCertificateOrderContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RenewCertificateOrderRequestProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="kind"> Kind of resource. </param>
+        internal RenewCertificateOrderContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RenewCertificateOrderRequestProperties properties, string kind) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            Kind = kind;
         }
 
         /// <summary> RenewCertificateOrderRequest resource specific properties. </summary>
         internal RenewCertificateOrderRequestProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
 
         /// <summary> Certificate Key Size. </summary>
         public int? KeySize
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 {
                     Properties = new RenewCertificateOrderRequestProperties();
                 }
-                Properties.KeySize = value.Value;
+                Properties.KeySize = value;
             }
         }
 
@@ -86,7 +91,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 {
                     Properties = new RenewCertificateOrderRequestProperties();
                 }
-                Properties.IsPrivateKeyExternal = value.Value;
+                Properties.IsPrivateKeyExternal = value;
             }
         }
     }

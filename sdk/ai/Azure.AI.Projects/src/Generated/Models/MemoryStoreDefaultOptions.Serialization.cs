@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Memory
 {
     /// <summary> Default memory store configurations. </summary>
     public partial class MemoryStoreDefaultOptions : IJsonModel<MemoryStoreDefaultOptions>
@@ -76,14 +77,24 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(MemoryStoreDefaultOptions)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("user_profile_enabled"u8);
-            writer.WriteBooleanValue(UserProfileEnabled);
+            writer.WriteBooleanValue(IsUserProfileEnabled);
             if (Optional.IsDefined(UserProfileDetails))
             {
                 writer.WritePropertyName("user_profile_details"u8);
                 writer.WriteStringValue(UserProfileDetails);
             }
             writer.WritePropertyName("chat_summary_enabled"u8);
-            writer.WriteBooleanValue(ChatSummaryEnabled);
+            writer.WriteBooleanValue(IsChatSummaryEnabled);
+            if (Optional.IsDefined(ProceduralMemoryEnabled))
+            {
+                writer.WritePropertyName("procedural_memory_enabled"u8);
+                writer.WriteBooleanValue(ProceduralMemoryEnabled.Value);
+            }
+            if (Optional.IsDefined(DefaultTtlSeconds))
+            {
+                writer.WritePropertyName("default_ttl_seconds"u8);
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(DefaultTtlSeconds.Value.TotalSeconds)));
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,15 +137,17 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            bool userProfileEnabled = default;
+            bool isUserProfileEnabled = default;
             string userProfileDetails = default;
-            bool chatSummaryEnabled = default;
+            bool isChatSummaryEnabled = default;
+            bool? proceduralMemoryEnabled = default;
+            TimeSpan? defaultTtlSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("user_profile_enabled"u8))
                 {
-                    userProfileEnabled = prop.Value.GetBoolean();
+                    isUserProfileEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("user_profile_details"u8))
@@ -144,7 +157,25 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("chat_summary_enabled"u8))
                 {
-                    chatSummaryEnabled = prop.Value.GetBoolean();
+                    isChatSummaryEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("procedural_memory_enabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    proceduralMemoryEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("default_ttl_seconds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    defaultTtlSeconds = TimeSpan.FromSeconds(prop.Value.GetInt32());
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +183,13 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MemoryStoreDefaultOptions(userProfileEnabled, userProfileDetails, chatSummaryEnabled, additionalBinaryDataProperties);
+            return new MemoryStoreDefaultOptions(
+                isUserProfileEnabled,
+                userProfileDetails,
+                isChatSummaryEnabled,
+                proceduralMemoryEnabled,
+                defaultTtlSeconds,
+                additionalBinaryDataProperties);
         }
     }
 }

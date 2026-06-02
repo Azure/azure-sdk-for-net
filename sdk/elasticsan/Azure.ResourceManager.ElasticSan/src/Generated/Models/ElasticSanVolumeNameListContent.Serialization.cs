@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(elasticSanVolumeNameListContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(elasticSanVolumeNameListContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

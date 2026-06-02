@@ -13,6 +13,10 @@ namespace Microsoft.ClientModel.TestFramework.Tests;
 
 public class RecordedTestAttributeTests
 {
+    private static void MockTestMethod()
+    {
+    }
+
     private class MockRecordedTestBase : RecordedTestBase
     {
         public MockRecordedTestBase(RecordedTestMode mode) : base(false)
@@ -24,12 +28,14 @@ public class RecordedTestAttributeTests
     private class MockTestCommand : TestCommand
     {
         private readonly TestResult _result;
+        public int ExecutionCount { get; private set; }
         public MockTestCommand(Test test, TestResult result) : base(test)
         {
             _result = result;
         }
         public override TestResult Execute(TestExecutionContext context)
         {
+            ExecutionCount++;
             context.CurrentResult = _result;
             return _result;
         }
@@ -46,7 +52,7 @@ public class RecordedTestAttributeTests
         }
         public override TestResult MakeTestResult()
         {
-            return new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests), "MockTest")));
+            return new TestCaseResult(new TestMethod(new MethodWrapper(typeof(RecordedTestAttributeTests), nameof(MockTestMethod))));
         }
         public override TNode AddToXml(TNode parentNode, bool recursive)
         {
@@ -204,6 +210,45 @@ public class RecordedTestAttributeTests
         {
             Assert.That(result.ResultState.Status, Is.EqualTo(TestStatus.Failed));
             Assert.That(result.Message, Is.EqualTo("Test failed"));
+        }
+    }
+
+    [Test]
+    [NonParallelizable]
+    public void ExecutionWithPlaybackMismatchAndGlobalDisableAutoRecordingReturnsOriginalResult()
+    {
+        var originalDisableAutoRecording = TestEnvironment.GlobalDisableAutoRecording;
+        TestEnvironment.GlobalDisableAutoRecording = true;
+
+        try
+        {
+            var fixture = new MockRecordedTestBase(RecordedTestMode.Playback);
+            var test = new MockTest("TestMethod") { Fixture = fixture };
+            var mismatchResult = new TestCaseResult(new TestMethod(
+                new MethodWrapper(typeof(RecordedTestAttributeTests),
+                nameof(ExecutionWithPlaybackMismatchAndGlobalDisableAutoRecordingReturnsOriginalResult))));
+            mismatchResult.SetResult(ResultState.Failure, $"{typeof(TestRecordingMismatchException).FullName}: Recording mismatch");
+            var innerCommand = new MockTestCommand(test, mismatchResult);
+            var attribute = new RecordedTestAttribute();
+            var wrappedCommand = attribute.Wrap(innerCommand);
+            var context = new TestExecutionContext();
+            context.CurrentTest = test;
+            context.TestObject = fixture;
+
+            var result = wrappedCommand.Execute(context);
+
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result, Is.SameAs(mismatchResult));
+                Assert.That(result.ResultState.Status, Is.EqualTo(TestStatus.Failed));
+                Assert.That(result.Message, Is.EqualTo($"{typeof(TestRecordingMismatchException).FullName}: Recording mismatch"));
+                Assert.That(innerCommand.ExecutionCount, Is.EqualTo(1));
+                Assert.That(fixture.Mode, Is.EqualTo(RecordedTestMode.Playback));
+            }
+        }
+        finally
+        {
+            TestEnvironment.GlobalDisableAutoRecording = originalDisableAutoRecording;
         }
     }
 

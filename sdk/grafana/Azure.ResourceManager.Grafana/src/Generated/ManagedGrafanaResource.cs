@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Grafana
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _managedGrafanasRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedGrafanaPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 GrafanaArmOperation<ManagedGrafanaResource> operation = new GrafanaArmOperation<ManagedGrafanaResource>(
-                    new ManagedGrafanaOperationSource(Client),
+                    new ManagedGrafanaResourceOperationSource(Client),
                     _managedGrafanasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _managedGrafanasRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedGrafanaPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 GrafanaArmOperation<ManagedGrafanaResource> operation = new GrafanaArmOperation<ManagedGrafanaResource>(
-                    new ManagedGrafanaOperationSource(Client),
+                    new ManagedGrafanaResourceOperationSource(Client),
                     _managedGrafanasClientDiagnostics,
                     Pipeline,
                     message.Request,

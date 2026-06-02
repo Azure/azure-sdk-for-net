@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualWorkspaceResource>> UpdateAsync(VirtualWorkspacePatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWorkspaceResource>> UpdateAsync(VirtualWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("VirtualWorkspaceResource.Update");
             scope.Start();
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualWorkspaceResource> Update(VirtualWorkspacePatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWorkspaceResource> Update(VirtualWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("VirtualWorkspaceResource.Update");
             scope.Start();
@@ -433,7 +433,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "VirtualWorkspaceResource.GetPrivateLinkResources");
         }
 
         /// <summary>
@@ -476,7 +477,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "VirtualWorkspaceResource.GetPrivateLinkResources");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

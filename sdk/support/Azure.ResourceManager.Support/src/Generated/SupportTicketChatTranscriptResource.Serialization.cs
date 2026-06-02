@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Support
 {
+    /// <summary></summary>
     public partial class SupportTicketChatTranscriptResource : IJsonModel<ChatTranscriptDetailData>
     {
-        private static ChatTranscriptDetailData s_dataDeserializationInstance;
-        private static ChatTranscriptDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ChatTranscriptDetailData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ChatTranscriptDetailData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ChatTranscriptDetailData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ChatTranscriptDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ChatTranscriptDetailData>)Data).Write(writer, options);
 
-        ChatTranscriptDetailData IJsonModel<ChatTranscriptDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ChatTranscriptDetailData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ChatTranscriptDetailData IJsonModel<ChatTranscriptDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ChatTranscriptDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ChatTranscriptDetailData>(Data, options, AzureResourceManagerSupportContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ChatTranscriptDetailData IPersistableModel<ChatTranscriptDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChatTranscriptDetailData>(data, options, AzureResourceManagerSupportContext.Default);
 
-        string IPersistableModel<ChatTranscriptDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ChatTranscriptDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ChatTranscriptDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

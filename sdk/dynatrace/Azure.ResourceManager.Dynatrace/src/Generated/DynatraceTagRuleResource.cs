@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DynatraceTagRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DynatraceArmOperation<DynatraceTagRuleResource> operation = new DynatraceArmOperation<DynatraceTagRuleResource>(
-                    new DynatraceTagRuleOperationSource(Client),
+                    new DynatraceTagRuleResourceOperationSource(Client),
                     _tagRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DynatraceTagRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DynatraceArmOperation<DynatraceTagRuleResource> operation = new DynatraceArmOperation<DynatraceTagRuleResource>(
-                    new DynatraceTagRuleOperationSource(Client),
+                    new DynatraceTagRuleResourceOperationSource(Client),
                     _tagRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -13,7 +13,7 @@ namespace Azure.Communication.Pipeline
     {
         protected static async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier? responseClassifier = null)
         {
-            Assert.IsInstanceOf<HttpPipelinePolicy>(policy, "Use HttpPipelinePolicy base type for policies");
+            Assert.That(policy, Is.InstanceOf<HttpPipelinePolicy>(), "Use HttpPipelinePolicy base type for policies");
 
             using (Request request = transport.CreateRequest())
             {

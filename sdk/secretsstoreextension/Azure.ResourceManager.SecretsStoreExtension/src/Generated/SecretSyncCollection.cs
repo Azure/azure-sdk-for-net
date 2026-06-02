@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 HttpMessage message = _secretSyncsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, SecretSyncData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecretsStoreExtensionArmOperation<SecretSyncResource> operation = new SecretsStoreExtensionArmOperation<SecretSyncResource>(
-                    new SecretSyncOperationSource(Client),
+                    new SecretSyncResourceOperationSource(Client),
                     _secretSyncsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 HttpMessage message = _secretSyncsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, SecretSyncData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecretsStoreExtensionArmOperation<SecretSyncResource> operation = new SecretsStoreExtensionArmOperation<SecretSyncResource>(
-                    new SecretSyncOperationSource(Client),
+                    new SecretSyncResourceOperationSource(Client),
                     _secretSyncsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetByResourceGroupAsyncCollectionResultOfT(_secretSyncsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SecretSyncResource(Client, data));
+            return new AsyncPageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetByResourceGroupAsyncCollectionResultOfT(_secretSyncsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecretSyncCollection.GetAll"), data => new SecretSyncResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetByResourceGroupCollectionResultOfT(_secretSyncsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new SecretSyncResource(Client, data));
+            return new PageableWrapper<SecretSyncData, SecretSyncResource>(new SecretSyncsGetByResourceGroupCollectionResultOfT(_secretSyncsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SecretSyncCollection.GetAll"), data => new SecretSyncResource(Client, data));
         }
 
         /// <summary>

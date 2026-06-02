@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(selfHelpSolutionData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(selfHelpSolutionData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SelfHelpSolutionData"/> from. </param>

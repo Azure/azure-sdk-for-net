@@ -107,8 +107,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             Console.WriteLine("\nTranscription:");
 
             // Get the first channel's phrases (most audio files have a single channel)
-            var channelPhrases = result.PhrasesByChannel.First();
-            foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
+            var channelPhrases = result.CombinedPhrases.First();
+            foreach (TranscribedPhrase phrase in result.Phrases)
             {
                 Console.WriteLine($"[{phrase.Offset} - {phrase.Offset + phrase.Duration}] {phrase.Text}");
                 Console.WriteLine($"  Confidence: {phrase.Confidence:F2}");
@@ -149,8 +149,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             Console.WriteLine("\nTranscription:");
 
             // Get the first channel's phrases
-            var channelPhrases = result.PhrasesByChannel.First();
-            foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
+            var channelPhrases = result.CombinedPhrases.First();
+            foreach (TranscribedPhrase phrase in result.Phrases)
             {
                 Console.WriteLine($"[{phrase.Offset} - {phrase.Offset + phrase.Duration}] {phrase.Text}");
                 Console.WriteLine($"  Confidence: {phrase.Confidence:F2}");
@@ -170,10 +170,12 @@ namespace Azure.AI.Speech.Transcription.Samples
             Uri endpoint = new Uri("https://myaccount.api.cognitive.microsoft.com/");
             ApiKeyCredential credential = new ApiKeyCredential("your-api-key");
             TranscriptionClient client = new TranscriptionClient(endpoint, credential);
-            string audioFilePath = "path/to/audio.wav";
 #endif
 
             #region Snippet:AccessTranscribedWords
+#if SNIPPET
+            string audioFilePath = "path/to/audio.wav";
+#endif
             using FileStream audioStream = File.OpenRead(audioFilePath);
 
             TranscriptionOptions options = new TranscriptionOptions(audioStream);
@@ -182,8 +184,8 @@ namespace Azure.AI.Speech.Transcription.Samples
             TranscriptionResult result = response.Value;
 
             // Access individual words in each phrase
-            var channelPhrases = result.PhrasesByChannel.First();
-            foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
+            var channelPhrases = result.CombinedPhrases.First();
+            foreach (TranscribedPhrase phrase in result.Phrases)
             {
                 Console.WriteLine($"\nPhrase: {phrase.Text}");
                 Console.WriteLine("Words:");
@@ -221,7 +223,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             TranscriptionResult result = response.Value;
 
             // Access the combined text for each channel
-            foreach (var channelPhrases in result.PhrasesByChannel)
+            foreach (var channelPhrases in result.CombinedPhrases)
             {
                 Console.WriteLine($"Channel {channelPhrases.Channel ?? 0}:");
                 Console.WriteLine($"Combined Text: {channelPhrases.Text}");

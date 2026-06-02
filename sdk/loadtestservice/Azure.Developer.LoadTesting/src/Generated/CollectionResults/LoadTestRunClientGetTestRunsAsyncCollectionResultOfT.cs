@@ -27,12 +27,13 @@ namespace Azure.Developer.LoadTesting
         private readonly IEnumerable<string> _createdByTypes;
         private readonly IEnumerable<string> _testIds;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of LoadTestRunClientGetTestRunsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LoadTestRunClient client used to send requests. </param>
         /// <param name="orderby">
-        /// Sort on the supported fields in (field asc/desc) format. eg: executedDateTime
-        /// asc. Supported fields - executedDateTime
+        /// Sort on the supported fields in (field asc/desc) format. eg: createdDateTime asc.
+        /// Supported fields - createdDateTime, executedDateTime (legacy)
         /// </param>
         /// <param name="search">
         /// Prefix based, case sensitive search on searchable fields - description,
@@ -47,7 +48,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdByTypes"> Comma separated list of type of entities that have created the test run. </param>
         /// <param name="testIds"> Comma-separated list of test IDs. If you are using testIds, do not send a value for testId. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public LoadTestRunClientGetTestRunsAsyncCollectionResultOfT(LoadTestRunClient client, string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxPageSize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public LoadTestRunClientGetTestRunsAsyncCollectionResultOfT(LoadTestRunClient client, string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxPageSize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _orderby = @orderby;
@@ -60,6 +62,7 @@ namespace Azure.Developer.LoadTesting
             _createdByTypes = createdByTypes;
             _testIds = testIds;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of LoadTestRunClientGetTestRunsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -93,7 +96,7 @@ namespace Azure.Developer.LoadTesting
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetTestRunsRequest(nextLink, pageSize, _context) : _client.CreateGetTestRunsRequest(_orderby, _search, _testId, _executionFrom, _executionTo, _status, pageSize, _createdByTypes, _testIds, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRuns");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

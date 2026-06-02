@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
 namespace OpenAI
 {
@@ -20,7 +21,7 @@ namespace OpenAI
         /// </param>
         /// <param name="key"> The key to compare against the value. </param>
         /// <param name="value"> The value to compare against the attribute key; supports string, number, or boolean types. </param>
-        public InternalComparisonFilter(ComparisonFilterType @type, string key, BinaryData value)
+        public InternalComparisonFilter(FileSearchToolFiltersType @type, string key, BinaryData value)
         {
             Type = @type;
             Key = key;
@@ -35,7 +36,7 @@ namespace OpenAI
         /// <param name="key"> The key to compare against the value. </param>
         /// <param name="value"> The value to compare against the attribute key; supports string, number, or boolean types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalComparisonFilter(ComparisonFilterType @type, string key, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalComparisonFilter(FileSearchToolFiltersType @type, string key, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Key = key;
@@ -47,7 +48,7 @@ namespace OpenAI
         /// Specifies the comparison operator: `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `in`, `nin`.
         /// <list type="bullet"><item><description>`eq`: equals</description></item><item><description>`ne`: not equal</description></item><item><description>`gt`: greater than</description></item><item><description>`gte`: greater than or equal</description></item><item><description>`lt`: less than</description></item><item><description>`lte`: less than or equal</description></item><item><description>`in`: in</description></item><item><description>`nin`: not in</description></item></list>
         /// </summary>
-        public ComparisonFilterType Type { get; set; }
+        public FileSearchToolFiltersType Type { get; set; }
 
         /// <summary> The key to compare against the value. </summary>
         public string Key { get; set; }

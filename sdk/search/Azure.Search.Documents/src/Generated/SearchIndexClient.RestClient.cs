@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -28,12 +29,12 @@ namespace Azure.Search.Documents.Indexes
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateCreateOrUpdateSynonymMapRequest(string name, RequestContent content, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateSynonymMapRequest(string synonymMapName, RequestContent content, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/synonymmaps('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(synonymMapName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -43,7 +44,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -54,12 +58,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateDeleteSynonymMapRequest(string name, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateDeleteSynonymMapRequest(string synonymMapName, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/synonymmaps('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(synonymMapName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -69,7 +73,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -77,12 +84,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetSynonymMapRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetSynonymMapRequest(string synonymMapName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/synonymmaps('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(synonymMapName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -92,7 +99,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -113,7 +123,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -130,18 +143,21 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateIndexRequest(string name, RequestContent content, MatchConditions matchConditions, bool? allowIndexDowntime, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateIndexRequest(string indexName, RequestContent content, MatchConditions matchConditions, bool? allowIndexDowntime, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/indexes('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(indexName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -155,7 +171,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -166,12 +185,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateDeleteIndexRequest(string name, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateDeleteIndexRequest(string indexName, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/indexes('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(indexName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -181,7 +200,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -189,12 +211,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetIndexRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetIndexRequest(string indexName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/indexes('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(indexName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -204,11 +226,14 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
-        internal HttpMessage CreateGetIndexesRequest(RequestContext context)
+        internal HttpMessage CreateGetIndexesRequest(int? top, int? skip, bool? count, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -217,15 +242,56 @@ namespace Azure.Search.Documents.Indexes
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
+            }
+            if (count != null)
+            {
+                uri.AppendQuery("$count", TypeFormatters.ConvertToString(count), true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
-        internal HttpMessage CreateGetIndexesWithSelectedPropertiesRequest(IEnumerable<string> @select, RequestContext context)
+        internal HttpMessage CreateNextGetIndexesRequest(Uri nextPage, int? top, int? skip, bool? count, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateGetIndexesWithSelectedPropertiesRequest(IEnumerable<string> @select, int? top, int? skip, bool? count, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -238,11 +304,52 @@ namespace Azure.Search.Documents.Indexes
             {
                 uri.AppendQueryDelimited("$select", @select, ",", escape: true);
             }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
+            }
+            if (count != null)
+            {
+                uri.AppendQuery("$count", TypeFormatters.ConvertToString(count), true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetIndexesWithSelectedPropertiesRequest(Uri nextPage, IEnumerable<string> @select, int? top, int? skip, bool? count, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -259,18 +366,21 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetIndexStatisticsRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetIndexStatisticsRequest(string indexName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/indexes('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(indexName, true);
             uri.AppendPath("')/search.stats", false);
             if (_apiVersion != null)
             {
@@ -280,16 +390,19 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeTextRequest(string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateAnalyzeTextRequest(string indexName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/indexes('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(indexName, true);
             uri.AppendPath("')/search.analyze", false);
             if (_apiVersion != null)
             {
@@ -299,18 +412,21 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateAliasRequest(string name, RequestContent content, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateAliasRequest(string aliasName, RequestContent content, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/aliases('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(aliasName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -320,7 +436,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -331,12 +450,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateDeleteAliasRequest(string name, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateDeleteAliasRequest(string aliasName, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/aliases('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(aliasName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -346,7 +465,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -354,12 +476,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetAliasRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetAliasRequest(string aliasName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/aliases('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(aliasName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -369,7 +491,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -386,7 +511,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -403,18 +531,21 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateKnowledgeBaseRequest(string name, RequestContent content, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateKnowledgeBaseRequest(string knowledgeBaseName, RequestContent content, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/knowledgebases('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(knowledgeBaseName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -424,7 +555,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -435,12 +569,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateDeleteKnowledgeBaseRequest(string name, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateDeleteKnowledgeBaseRequest(string knowledgeBaseName, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/knowledgebases('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(knowledgeBaseName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -450,7 +584,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -458,12 +595,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetKnowledgeBaseRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetKnowledgeBaseRequest(string knowledgeBaseName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/knowledgebases('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(knowledgeBaseName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -473,7 +610,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -490,7 +630,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -507,18 +650,21 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateKnowledgeSourceRequest(string name, RequestContent content, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateKnowledgeSourceRequest(string sourceName, RequestContent content, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/knowledgesources('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(sourceName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -528,7 +674,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -539,12 +688,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateDeleteKnowledgeSourceRequest(string name, MatchConditions matchConditions, RequestContext context)
+        internal HttpMessage CreateDeleteKnowledgeSourceRequest(string sourceName, MatchConditions matchConditions, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/knowledgesources('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(sourceName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -554,7 +703,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -562,12 +714,12 @@ namespace Azure.Search.Documents.Indexes
             return message;
         }
 
-        internal HttpMessage CreateGetKnowledgeSourceRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetKnowledgeSourceRequest(string sourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/knowledgesources('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(sourceName, true);
             uri.AppendPath("')", false);
             if (_apiVersion != null)
             {
@@ -577,7 +729,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -594,7 +749,10 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -611,18 +769,21 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             request.Headers.SetValue("Content-Type", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetKnowledgeSourceStatusRequest(string name, RequestContext context)
+        internal HttpMessage CreateGetKnowledgeSourceStatusRequest(string sourceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/knowledgesources('", false);
-            uri.AppendPath(name, true);
+            uri.AppendPath(sourceName, true);
             uri.AppendPath("')/status", false);
             if (_apiVersion != null)
             {
@@ -632,7 +793,78 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateUploadKnowledgeSourceFileRequest(string sourceName, string contentDisposition, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/knowledgesources('", false);
+            uri.AppendPath(sourceName, true);
+            uri.AppendPath("')/files", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/octet-stream");
+            request.Headers.SetValue("Content-Disposition", contentDisposition);
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetKnowledgeSourceFilesRequest(string sourceName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/knowledgesources('", false);
+            uri.AppendPath(sourceName, true);
+            uri.AppendPath("')/files", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteKnowledgeSourceFileRequest(string fileId, string sourceName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/knowledgesources('", false);
+            uri.AppendPath(sourceName, true);
+            uri.AppendPath("')/files('", false);
+            uri.AppendPath(fileId, true);
+            uri.AppendPath("')", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Delete;
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
@@ -649,11 +881,14 @@ namespace Azure.Search.Documents.Indexes
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
 
-        internal HttpMessage CreateGetIndexStatsSummaryRequest(RequestContext context)
+        internal HttpMessage CreateGetIndexStatsSummaryRequest(int? top, int? skip, bool? count, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -662,11 +897,52 @@ namespace Azure.Search.Documents.Indexes
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
+            }
+            if (count != null)
+            {
+                uri.AppendQuery("$count", TypeFormatters.ConvertToString(count), true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetIndexStatsSummaryRequest(Uri nextPage, int? top, int? skip, bool? count, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if ("application/json;odata.metadata=minimal" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=minimal");
+            }
             return message;
         }
     }

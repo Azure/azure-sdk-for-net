@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     {
         private readonly ClientDiagnostics _hostPoolsClientDiagnostics;
         private readonly HostPools _hostPoolsRestClient;
-        private readonly ClientDiagnostics _activeSessionHostConfigurationsClientDiagnostics;
-        private readonly ActiveSessionHostConfigurations _activeSessionHostConfigurationsRestClient;
         private readonly ClientDiagnostics _appAttachPackageInfoClientDiagnostics;
         private readonly AppAttachPackageInfo _appAttachPackageInfoRestClient;
         private readonly ClientDiagnostics _msixImagesClientDiagnostics;
@@ -66,8 +64,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             TryGetApiVersion(ResourceType, out string hostPoolApiVersion);
             _hostPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _hostPoolsRestClient = new HostPools(_hostPoolsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
-            _activeSessionHostConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _activeSessionHostConfigurationsRestClient = new ActiveSessionHostConfigurations(_activeSessionHostConfigurationsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             _appAttachPackageInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             _appAttachPackageInfoRestClient = new AppAttachPackageInfo(_appAttachPackageInfoClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
             _msixImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
@@ -113,7 +109,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -236,7 +232,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HostPoolResource>> UpdateAsync(HostPoolPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HostPoolResource>> UpdateAsync(HostPoolPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.Update");
             scope.Start();
@@ -285,7 +281,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HostPoolResource> Update(HostPoolPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<HostPoolResource> Update(HostPoolPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.Update");
             scope.Start();
@@ -416,70 +412,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Operation to list the ActiveSessionHostConfigurations associated with the HostPool
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ActiveSessionHostConfigurations_ListByHostPool. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HostPoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActiveSessionHostConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ActiveSessionHostConfigurationResource> GetByHostPoolAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ActiveSessionHostConfigurationData, ActiveSessionHostConfigurationResource>(new ActiveSessionHostConfigurationsGetByHostPoolAsyncCollectionResultOfT(_activeSessionHostConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ActiveSessionHostConfigurationResource(Client, data));
-        }
-
-        /// <summary>
-        /// Operation to list the ActiveSessionHostConfigurations associated with the HostPool
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ActiveSessionHostConfigurations_ListByHostPool. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="HostPoolResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ActiveSessionHostConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ActiveSessionHostConfigurationResource> GetByHostPool(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ActiveSessionHostConfigurationData, ActiveSessionHostConfigurationResource>(new ActiveSessionHostConfigurationsGetByHostPoolCollectionResultOfT(_activeSessionHostConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ActiveSessionHostConfigurationResource(Client, data));
-        }
-
-        /// <summary>
         /// Gets information from a package given the path to the package.
         /// <list type="bullet">
         /// <item>
@@ -518,7 +450,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.ResourceGroupName,
                 Id.Name,
                 ImportPackageInfoContent.ToRequestContent(content),
-                context), data => new AppAttachPackageResource(Client, data));
+                context,
+                "HostPoolResource.ImportAppAttachPackageInfos"), data => new AppAttachPackageResource(Client, data));
         }
 
         /// <summary>
@@ -560,7 +493,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.ResourceGroupName,
                 Id.Name,
                 ImportPackageInfoContent.ToRequestContent(content),
-                context), data => new AppAttachPackageResource(Client, data));
+                context,
+                "HostPoolResource.ImportAppAttachPackageInfos"), data => new AppAttachPackageResource(Client, data));
         }
 
         /// <summary>
@@ -592,7 +526,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new HostPoolsGetRegistrationTokensAsyncCollectionResultOfT(_hostPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new HostPoolsGetRegistrationTokensAsyncCollectionResultOfT(
+                _hostPoolsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HostPoolResource.GetRegistrationTokens");
         }
 
         /// <summary>
@@ -624,7 +564,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new HostPoolsGetRegistrationTokensCollectionResultOfT(_hostPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new HostPoolsGetRegistrationTokensCollectionResultOfT(
+                _hostPoolsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HostPoolResource.GetRegistrationTokens");
         }
 
         /// <summary>
@@ -763,7 +709,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.ResourceGroupName,
                 Id.Name,
                 MsixImageUri.ToRequestContent(msixImageUri),
-                context);
+                context,
+                "HostPoolResource.ExpandMsixImages");
         }
 
         /// <summary>
@@ -806,7 +753,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.ResourceGroupName,
                 Id.Name,
                 MsixImageUri.ToRequestContent(msixImageUri),
-                context);
+                context,
+                "HostPoolResource.ExpandMsixImages");
         }
 
         /// <summary>
@@ -849,7 +797,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "HostPoolResource.GetPrivateLinkResources");
         }
 
         /// <summary>
@@ -892,7 +841,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context);
+                context,
+                "HostPoolResource.GetPrivateLinkResources");
         }
 
         /// <summary>
@@ -935,7 +885,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new ScalingPlanResource(Client, data));
+                context,
+                "HostPoolResource.GetScalingPlans"), data => new ScalingPlanResource(Client, data));
         }
 
         /// <summary>
@@ -978,7 +929,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new ScalingPlanResource(Client, data));
+                context,
+                "HostPoolResource.GetScalingPlans"), data => new ScalingPlanResource(Client, data));
         }
 
         /// <summary>
@@ -1023,7 +975,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new UserSessionResource(Client, data));
+                context,
+                "HostPoolResource.GetUserSessions"), data => new UserSessionResource(Client, data));
         }
 
         /// <summary>
@@ -1068,7 +1021,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 pageSize,
                 isDescending,
                 initialSkip,
-                context), data => new UserSessionResource(Client, data));
+                context,
+                "HostPoolResource.GetUserSessions"), data => new UserSessionResource(Client, data));
         }
 
         /// <summary> Add a tag to the current resource. </summary>

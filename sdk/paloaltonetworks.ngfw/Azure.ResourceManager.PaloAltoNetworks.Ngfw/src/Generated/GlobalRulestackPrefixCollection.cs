@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             if (id.ResourceType != GlobalRulestackResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GlobalRulestackResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GlobalRulestackResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _prefixListGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackPrefixData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<GlobalRulestackPrefixResource> operation = new NgfwArmOperation<GlobalRulestackPrefixResource>(
-                    new GlobalRulestackPrefixOperationSource(Client),
+                    new GlobalRulestackPrefixResourceOperationSource(Client),
                     _prefixListGlobalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _prefixListGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackPrefixData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<GlobalRulestackPrefixResource> operation = new NgfwArmOperation<GlobalRulestackPrefixResource>(
-                    new GlobalRulestackPrefixOperationSource(Client),
+                    new GlobalRulestackPrefixResourceOperationSource(Client),
                     _prefixListGlobalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GlobalRulestackPrefixData, GlobalRulestackPrefixResource>(new PrefixListGlobalRulestackGetAllAsyncCollectionResultOfT(_prefixListGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackPrefixResource(Client, data));
+            return new AsyncPageableWrapper<GlobalRulestackPrefixData, GlobalRulestackPrefixResource>(new PrefixListGlobalRulestackGetAllAsyncCollectionResultOfT(_prefixListGlobalRulestackRestClient, Id.Name, context, "GlobalRulestackPrefixCollection.GetAll"), data => new GlobalRulestackPrefixResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GlobalRulestackPrefixData, GlobalRulestackPrefixResource>(new PrefixListGlobalRulestackGetAllCollectionResultOfT(_prefixListGlobalRulestackRestClient, Id.Name, context), data => new GlobalRulestackPrefixResource(Client, data));
+            return new PageableWrapper<GlobalRulestackPrefixData, GlobalRulestackPrefixResource>(new PrefixListGlobalRulestackGetAllCollectionResultOfT(_prefixListGlobalRulestackRestClient, Id.Name, context, "GlobalRulestackPrefixCollection.GetAll"), data => new GlobalRulestackPrefixResource(Client, data));
         }
 
         /// <summary>

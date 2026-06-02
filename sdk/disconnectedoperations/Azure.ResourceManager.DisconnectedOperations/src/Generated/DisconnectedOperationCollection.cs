@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             TryGetApiVersion(DisconnectedOperationResource.ResourceType, out string disconnectedOperationApiVersion);
             _disconnectedClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationResource.ResourceType.Namespace, Diagnostics);
-            _disconnectedRestClient = new Disconnected(_disconnectedClientDiagnostics, Pipeline, Endpoint, disconnectedOperationApiVersion ?? "2025-06-01-preview");
+            _disconnectedRestClient = new Disconnected(_disconnectedClientDiagnostics, Pipeline, Endpoint, disconnectedOperationApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 HttpMessage message = _disconnectedRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DisconnectedOperationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DisconnectedOperationsArmOperation<DisconnectedOperationResource> operation = new DisconnectedOperationsArmOperation<DisconnectedOperationResource>(
-                    new DisconnectedOperationOperationSource(Client),
+                    new DisconnectedOperationResourceOperationSource(Client),
                     _disconnectedClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 HttpMessage message = _disconnectedRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DisconnectedOperationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DisconnectedOperationsArmOperation<DisconnectedOperationResource> operation = new DisconnectedOperationsArmOperation<DisconnectedOperationResource>(
-                    new DisconnectedOperationOperationSource(Client),
+                    new DisconnectedOperationResourceOperationSource(Client),
                     _disconnectedClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetByResourceGroupAsyncCollectionResultOfT(_disconnectedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DisconnectedOperationResource(Client, data));
+            return new AsyncPageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetByResourceGroupAsyncCollectionResultOfT(_disconnectedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DisconnectedOperationCollection.GetAll"), data => new DisconnectedOperationResource(Client, data));
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetByResourceGroupCollectionResultOfT(_disconnectedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DisconnectedOperationResource(Client, data));
+            return new PageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetByResourceGroupCollectionResultOfT(_disconnectedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DisconnectedOperationCollection.GetAll"), data => new DisconnectedOperationResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.Cache": "2025-08-01-preview"
+  }
+}

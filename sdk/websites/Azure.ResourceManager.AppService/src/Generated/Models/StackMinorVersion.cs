@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Application stack minor version. </summary>
+    /// <summary>
+    /// Application stack minor version.
+    /// Serialized Name: StackMinorVersion
+    /// </summary>
     public partial class StackMinorVersion
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StackMinorVersion"/>. </summary>
-        /// <param name="displayVersion"> Application stack minor version (display only). </param>
-        /// <param name="runtimeVersion"> Application stack minor version (runtime only). </param>
-        /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isRemoteDebuggingEnabled"> &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="displayVersion">
+        /// Application stack minor version (display only).
+        /// Serialized Name: StackMinorVersion.displayVersion
+        /// </param>
+        /// <param name="runtimeVersion">
+        /// Application stack minor version (runtime only).
+        /// Serialized Name: StackMinorVersion.runtimeVersion
+        /// </param>
+        /// <param name="isDefault">
+        /// &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMinorVersion.isDefault
+        /// </param>
+        /// <param name="isRemoteDebuggingEnabled">
+        /// &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMinorVersion.isRemoteDebuggingEnabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StackMinorVersion(string displayVersion, string runtimeVersion, bool? isDefault, bool? isRemoteDebuggingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +80,28 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Application stack minor version (display only). </summary>
+        /// <summary>
+        /// Application stack minor version (display only).
+        /// Serialized Name: StackMinorVersion.displayVersion
+        /// </summary>
         [WirePath("displayVersion")]
         public string DisplayVersion { get; set; }
-        /// <summary> Application stack minor version (runtime only). </summary>
+        /// <summary>
+        /// Application stack minor version (runtime only).
+        /// Serialized Name: StackMinorVersion.runtimeVersion
+        /// </summary>
         [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMinorVersion.isDefault
+        /// </summary>
         [WirePath("isDefault")]
         public bool? IsDefault { get; set; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: StackMinorVersion.isRemoteDebuggingEnabled
+        /// </summary>
         [WirePath("isRemoteDebuggingEnabled")]
         public bool? IsRemoteDebuggingEnabled { get; set; }
     }

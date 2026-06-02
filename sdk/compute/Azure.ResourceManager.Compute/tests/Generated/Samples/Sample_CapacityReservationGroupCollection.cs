@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateABlockCapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/BlockCapacityReservationGroup_CreateOrUpdate.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/BlockCapacityReservationGroup_CreateOrUpdate.json
             // this example is just showing the usage of "CapacityReservationGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateACapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/CapacityReservationGroup_CreateOrUpdate.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/CapacityReservationGroup_CreateOrUpdate.json
             // this example is just showing the usage of "CapacityReservationGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateATargetedCapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/TargetedCapacityReservationGroup_CreateOrUpdate.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/TargetedCapacityReservationGroup_CreateOrUpdate.json
             // this example is just showing the usage of "CapacityReservationGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -164,7 +164,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetABlockCapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/BlockCapacityReservationGroup_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/BlockCapacityReservationGroup_Get.json
             // this example is just showing the usage of "CapacityReservationGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -198,7 +198,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/CapacityReservationGroup_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/CapacityReservationGroup_Get.json
             // this example is just showing the usage of "CapacityReservationGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -232,7 +232,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetATargetedCapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/TargetedCapacityReservationGroup_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/TargetedCapacityReservationGroup_Get.json
             // this example is just showing the usage of "CapacityReservationGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -266,7 +266,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListCapacityReservationGroupsInResourceGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/CapacityReservationGroup_ListByResourceGroup.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/CapacityReservationGroup_ListByResourceGroup.json
             // this example is just showing the usage of "CapacityReservationGroups_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -302,7 +302,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetABlockCapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/BlockCapacityReservationGroup_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/BlockCapacityReservationGroup_Get.json
             // this example is just showing the usage of "CapacityReservationGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -332,7 +332,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetACapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/CapacityReservationGroup_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/CapacityReservationGroup_Get.json
             // this example is just showing the usage of "CapacityReservationGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -362,7 +362,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetATargetedCapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/TargetedCapacityReservationGroup_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/TargetedCapacityReservationGroup_Get.json
             // this example is just showing the usage of "CapacityReservationGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -392,7 +392,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetABlockCapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/BlockCapacityReservationGroup_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/BlockCapacityReservationGroup_Get.json
             // this example is just showing the usage of "CapacityReservationGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -434,7 +434,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetACapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/CapacityReservationGroup_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/CapacityReservationGroup_Get.json
             // this example is just showing the usage of "CapacityReservationGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -476,7 +476,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetATargetedCapacityReservationGroup()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2025-04-01/examples/capacityReservationExamples/TargetedCapacityReservationGroup_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/Compute/stable/2025-11-01/examples/capacityReservationExamples/TargetedCapacityReservationGroup_Get.json
             // this example is just showing the usage of "CapacityReservationGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

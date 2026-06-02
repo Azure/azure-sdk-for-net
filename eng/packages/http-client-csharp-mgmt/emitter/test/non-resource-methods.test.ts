@@ -12,11 +12,9 @@ import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
-  ResourceScope,
-  ResourceOperationKind,
-  assignNonResourceMethodsToResources
+  ResourceScopeKind,
+  ResourceOperationKind
 } from "../src/resource-metadata.js";
-import type { ArmResourceSchema } from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
   let runner: TestHost;
@@ -60,7 +58,7 @@ model ValidationResponse {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
 
     // Build ARM provider schema and verify non-resource methods
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
@@ -80,10 +78,10 @@ model ValidationResponse {
     const method = nonResourceMethods[0];
     // The path should be generated from the ARM template
     strictEqual(
-      method.operationPath,
+      method.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/validateConfiguration"
     );
-    strictEqual(method.operationScope, ResourceScope.Subscription);
+    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
     ok(method.methodId, "Method should have an ID");
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -149,7 +147,7 @@ model GlobalSettings {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -167,23 +165,23 @@ model GlobalSettings {
     // All tenant-scope methods should have Tenant scope
     nonResourceMethods.forEach((method: any) => {
       strictEqual(
-        method.operationScope,
-        ResourceScope.Tenant,
-        `Method ${method.operationPath} should have Tenant scope`
+        method.scope.kind,
+        ResourceScopeKind.Tenant,
+        `Method ${method.operationPath.path} should have Tenant scope`
       );
     });
 
     // Verify specific paths
     const tenantInfoMethod = nonResourceMethods.find(
       (m: any) =>
-        m.operationPath ===
+        m.operationPath.path ===
         "/providers/Microsoft.ContosoProviderHub/getTenantInfo"
     );
     ok(tenantInfoMethod, "Should find tenantInfo method");
 
     const globalSettingsMethod = nonResourceMethods.find(
       (m: any) =>
-        m.operationPath ===
+        m.operationPath.path ===
         "/providers/Microsoft.ContosoProviderHub/updateGlobalSettings"
     );
     ok(globalSettingsMethod, "Should find globalSettings method");
@@ -235,7 +233,7 @@ interface Employees {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     // Should not have non-resource methods since all methods are standard ARM operations
@@ -343,7 +341,7 @@ model MigrationResponse {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -361,19 +359,19 @@ model MigrationResponse {
     // Check that we have the expected non-resource methods
     const bulkImportMethod = nonResourceMethods.find(
       (m: any) =>
-        m.operationPath ===
+        m.operationPath.path ===
         "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/bulkImportEmployees"
     );
     ok(bulkImportMethod, "Should find bulk import method");
-    strictEqual(bulkImportMethod.operationScope, ResourceScope.Subscription);
+    strictEqual(bulkImportMethod.scope.kind, ResourceScopeKind.Subscription);
 
     const migrateMethod = nonResourceMethods.find(
       (m: any) =>
-        m.operationPath ===
+        m.operationPath.path ===
         "/providers/Microsoft.ContosoProviderHub/migrateEmployees"
     );
     ok(migrateMethod, "Should find migrate method");
-    strictEqual(migrateMethod.operationScope, ResourceScope.Tenant);
+    strictEqual(migrateMethod.scope.kind, ResourceScopeKind.Tenant);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -427,7 +425,7 @@ model WorkspaceValidationResponse {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -445,10 +443,10 @@ model WorkspaceValidationResponse {
     const method = nonResourceMethods[0];
     // The path should be generated from the ARM template with nested segments
     strictEqual(
-      method.operationPath,
+      method.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/workspaces/{workspaceName}/validateWorkspace"
     );
-    strictEqual(method.operationScope, ResourceScope.Subscription);
+    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
     ok(method.methodId, "Method should have an ID");
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
@@ -513,7 +511,7 @@ model SearchResult {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -530,10 +528,10 @@ model SearchResult {
 
     const method = nonResourceMethods[0];
     strictEqual(
-      method.operationPath,
+      method.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/search/{action}/searchResources"
     );
-    strictEqual(method.operationScope, ResourceScope.Subscription);
+    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -581,7 +579,7 @@ model FooPreviewAction {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -598,10 +596,10 @@ model FooPreviewAction {
 
     const method = nonResourceMethods[0];
     strictEqual(
-      method.operationPath,
+      method.operationPath.path,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/locations/{location}/previewActions"
     );
-    strictEqual(method.operationScope, ResourceScope.Subscription);
+    strictEqual(method.scope.kind, ResourceScopeKind.Subscription);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
@@ -664,7 +662,7 @@ interface SessionHostManagementOperations {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -763,7 +761,7 @@ interface ChildResources {
 
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
+    const [root] = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -806,89 +804,6 @@ interface ChildResources {
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
       normalizeSchemaForComparison(armProviderSchemaResult)
-    );
-  });
-
-  it("should assign non-resource list methods to resource by resourceModelId", () => {
-    // This test directly validates assignNonResourceMethodsToResources with crafted data
-    // that mirrors the Maintenance SDK emitter output. The actual issue arises from
-    // Legacy.ExtensionOperations interfaces producing list operations with different parent
-    // path structures than the resource ID pattern — prefix matching fails, so both list
-    // operations stay as nonResourceMethods named "GetAll", causing duplicate method signatures.
-    //
-    // The fix uses resourceModelId (propagated from the originating resource) to match
-    // non-resource methods back to their correct resource.
-
-    // A ConfigurationAssignment extension resource
-    const resources: ArmResourceSchema[] = [
-      {
-        resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
-        metadata: {
-          resourceName: "ConfigurationAssignment",
-          resourceIdPattern:
-            "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
-          resourceScope: ResourceScope.Extension,
-          singletonResourceName: undefined,
-          parentResourceId: undefined,
-          parentResourceModelId: undefined,
-          methods: [
-            {
-              methodId: "Microsoft.Maintenance.ConfigurationAssignment.get",
-              kind: ResourceOperationKind.Read,
-              operationPath:
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
-              operationScope: ResourceScope.ResourceGroup,
-              resourceScope:
-                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
-            }
-          ]
-        }
-      }
-    ];
-
-    // Two list operations from different Legacy.ExtensionOperations interfaces.
-    // Both have shorter paths than the resource ID pattern (different parent structures),
-    // so prefix matching fails. The resourceModelId links them back to their originating resource.
-    const nonResourceMethods = [
-      {
-        methodId:
-          "Microsoft.Maintenance.ConfigurationAssignmentForResourceGroupOperationGroup.list",
-        operationPath:
-          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments",
-        operationScope: ResourceScope.ResourceGroup,
-        resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment"
-      },
-      {
-        methodId: "Microsoft.Maintenance.UpdatesOperationGroup.list",
-        operationPath:
-          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/updates",
-        operationScope: ResourceScope.ResourceGroup,
-        resourceModelId: "Microsoft.Maintenance.Update"
-      }
-    ];
-
-    assignNonResourceMethodsToResources(resources, nonResourceMethods);
-
-    // The ConfigurationAssignment list should be moved to the resource
-    // (matched by type segment "configurationAssignments" under "Microsoft.Maintenance")
-    const configMethods = resources[0].metadata.methods.filter(
-      (m) => m.kind === ResourceOperationKind.List
-    );
-    strictEqual(
-      configMethods.length,
-      1,
-      "ConfigurationAssignment resource should have 1 List method from the non-resource list"
-    );
-
-    // The Updates list should remain as a nonResourceMethod (no matching resource type)
-    strictEqual(
-      nonResourceMethods.length,
-      1,
-      "Only the Updates list should remain as a non-resource method"
-    );
-    ok(
-      nonResourceMethods[0].methodId.includes("Updates"),
-      "The remaining non-resource method should be the Updates list"
     );
   });
 });

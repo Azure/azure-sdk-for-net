@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetAllAsyncCollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MongoClusterResource(Client, data));
+            return new AsyncPageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetAllAsyncCollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoClusterSubscriptionResource.GetMongoClusters"), data => new MongoClusterResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetAllCollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MongoClusterResource(Client, data));
+            return new PageableWrapper<MongoClusterData, MongoClusterResource>(new MongoClustersGetAllCollectionResultOfT(MongoClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMongoClusterSubscriptionResource.GetMongoClusters"), data => new MongoClusterResource(Client, data));
         }
 
         /// <summary>

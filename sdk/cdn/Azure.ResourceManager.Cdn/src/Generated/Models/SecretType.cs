@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct SecretType : IEquatable<SecretType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SecretType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SecretType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UriSigningKeyValue = "UrlSigningKey";
         private const string CustomerCertificateValue = "CustomerCertificate";
         private const string ManagedCertificateValue = "ManagedCertificate";
         private const string AzureFirstPartyManagedCertificateValue = "AzureFirstPartyManagedCertificate";
+        private const string MtlsCertificateChainValue = "MtlsCertificateChain";
 
-        /// <summary> UrlSigningKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SecretType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the UriSigningKey. </summary>
         public static SecretType UriSigningKey { get; } = new SecretType(UriSigningKeyValue);
-        /// <summary> CustomerCertificate. </summary>
+
+        /// <summary> Gets the CustomerCertificate. </summary>
         public static SecretType CustomerCertificate { get; } = new SecretType(CustomerCertificateValue);
-        /// <summary> ManagedCertificate. </summary>
+
+        /// <summary> Gets the ManagedCertificate. </summary>
         public static SecretType ManagedCertificate { get; } = new SecretType(ManagedCertificateValue);
-        /// <summary> AzureFirstPartyManagedCertificate. </summary>
+
+        /// <summary> Gets the AzureFirstPartyManagedCertificate. </summary>
         public static SecretType AzureFirstPartyManagedCertificate { get; } = new SecretType(AzureFirstPartyManagedCertificateValue);
+
+        /// <summary> Gets the MtlsCertificateChain. </summary>
+        public static SecretType MtlsCertificateChain { get; } = new SecretType(MtlsCertificateChainValue);
+
         /// <summary> Determines if two <see cref="SecretType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecretType left, SecretType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecretType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecretType left, SecretType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecretType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecretType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecretType(string value) => new SecretType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecretType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecretType?(string value) => value == null ? null : new SecretType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecretType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecretType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct SnapshotDirectoryVisibility : IEquatable<SnapshotDirectoryVisibility>
     {
         private readonly string _value;
+        /// <summary> Value indicating the read-only snapshot directory is not visible. </summary>
+        private const string HiddenValue = "Hidden";
+        /// <summary> Value indicating the read-only snapshot directory is visible. </summary>
+        private const string VisibleValue = "Visible";
 
         /// <summary> Initializes a new instance of <see cref="SnapshotDirectoryVisibility"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SnapshotDirectoryVisibility(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HiddenValue = "Hidden";
-        private const string VisibleValue = "Visible";
+            _value = value;
+        }
 
         /// <summary> Value indicating the read-only snapshot directory is not visible. </summary>
         public static SnapshotDirectoryVisibility Hidden { get; } = new SnapshotDirectoryVisibility(HiddenValue);
+
         /// <summary> Value indicating the read-only snapshot directory is visible. </summary>
         public static SnapshotDirectoryVisibility Visible { get; } = new SnapshotDirectoryVisibility(VisibleValue);
+
         /// <summary> Determines if two <see cref="SnapshotDirectoryVisibility"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SnapshotDirectoryVisibility left, SnapshotDirectoryVisibility right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SnapshotDirectoryVisibility"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SnapshotDirectoryVisibility left, SnapshotDirectoryVisibility right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SnapshotDirectoryVisibility"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SnapshotDirectoryVisibility"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SnapshotDirectoryVisibility(string value) => new SnapshotDirectoryVisibility(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SnapshotDirectoryVisibility"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SnapshotDirectoryVisibility?(string value) => value == null ? null : new SnapshotDirectoryVisibility(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SnapshotDirectoryVisibility other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SnapshotDirectoryVisibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

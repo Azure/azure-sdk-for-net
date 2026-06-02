@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The type of evaluator definition. </summary>
     public readonly partial struct EvaluatorDefinitionType : IEquatable<EvaluatorDefinitionType>
@@ -21,6 +22,8 @@ namespace Azure.AI.Projects
         private const string ServiceValue = "service";
         /// <summary> OpenAI graders. </summary>
         private const string OpenaiGradersValue = "openai_graders";
+        /// <summary> Rubric-based evaluator definition. Stores dimensions (the scoring blueprint) for both quality and safety evaluators. Can be created via the generate API or manually via createVersion. </summary>
+        private const string RubricValue = "rubric";
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -46,6 +49,9 @@ namespace Azure.AI.Projects
 
         /// <summary> OpenAI graders. </summary>
         public static EvaluatorDefinitionType OpenaiGraders { get; } = new EvaluatorDefinitionType(OpenaiGradersValue);
+
+        /// <summary> Rubric-based evaluator definition. Stores dimensions (the scoring blueprint) for both quality and safety evaluators. Can be created via the generate API or manually via createVersion. </summary>
+        public static EvaluatorDefinitionType Rubric { get; } = new EvaluatorDefinitionType(RubricValue);
 
         /// <summary> Determines if two <see cref="EvaluatorDefinitionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

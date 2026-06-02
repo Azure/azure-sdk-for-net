@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Azure OpenAI model configuration. The API version would be selected by the service for querying the model. </summary>
     public partial class AzureOpenAIModelConfiguration : TargetConfig

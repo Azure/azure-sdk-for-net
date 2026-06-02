@@ -10,16 +10,80 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudL3NetworkData : IUtf8JsonSerializable, IJsonModel<NetworkCloudL3NetworkData>
+    /// <summary> L3Network represents a network that utilizes a single isolation domain set up for layer-3 resources. </summary>
+    public partial class NetworkCloudL3NetworkData : TrackedResourceData, IJsonModel<NetworkCloudL3NetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudL3NetworkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkData"/> for deserialization. </summary>
+        internal NetworkCloudL3NetworkData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkCloudL3NetworkData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkCloudL3NetworkData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkCloudL3NetworkData IPersistableModel<NetworkCloudL3NetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkCloudL3NetworkData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkCloudL3NetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="networkCloudL3NetworkData"> The <see cref="NetworkCloudL3NetworkData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkCloudL3NetworkData networkCloudL3NetworkData)
+        {
+            if (networkCloudL3NetworkData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(networkCloudL3NetworkData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NetworkCloudL3NetworkData"/> from. </param>
+        internal static NetworkCloudL3NetworkData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeNetworkCloudL3NetworkData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkCloudL3NetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,13 +95,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -45,435 +110,138 @@ namespace Azure.ResourceManager.NetworkCloud
             }
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedResourceIds))
-            {
-                writer.WritePropertyName("associatedResourceIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in AssociatedResourceIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
-            {
-                writer.WritePropertyName("clusterId"u8);
-                writer.WriteStringValue(ClusterId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
-            {
-                writer.WritePropertyName("detailedStatus"u8);
-                writer.WriteStringValue(DetailedStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
-            {
-                writer.WritePropertyName("detailedStatusMessage"u8);
-                writer.WriteStringValue(DetailedStatusMessage);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
-            {
-                writer.WritePropertyName("hybridAksClustersAssociatedIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in HybridAksClustersAssociatedIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(HybridAksIpamEnabled))
-            {
-                writer.WritePropertyName("hybridAksIpamEnabled"u8);
-                writer.WriteStringValue(HybridAksIpamEnabled.Value.ToString());
-            }
-            if (Optional.IsDefined(HybridAksPluginType))
-            {
-                writer.WritePropertyName("hybridAksPluginType"u8);
-                writer.WriteStringValue(HybridAksPluginType.Value.ToString());
-            }
-            if (Optional.IsDefined(InterfaceName))
-            {
-                writer.WritePropertyName("interfaceName"u8);
-                writer.WriteStringValue(InterfaceName);
-            }
-            if (Optional.IsDefined(IPAllocationType))
-            {
-                writer.WritePropertyName("ipAllocationType"u8);
-                writer.WriteStringValue(IPAllocationType.Value.ToString());
-            }
-            if (Optional.IsDefined(IPv4ConnectedPrefix))
-            {
-                writer.WritePropertyName("ipv4ConnectedPrefix"u8);
-                writer.WriteStringValue(IPv4ConnectedPrefix);
-            }
-            if (Optional.IsDefined(IPv6ConnectedPrefix))
-            {
-                writer.WritePropertyName("ipv6ConnectedPrefix"u8);
-                writer.WriteStringValue(IPv6ConnectedPrefix);
-            }
-            writer.WritePropertyName("l3IsolationDomainId"u8);
-            writer.WriteStringValue(L3IsolationDomainId);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociatedIds))
-            {
-                writer.WritePropertyName("virtualMachinesAssociatedIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in VirtualMachinesAssociatedIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("vlan"u8);
-            writer.WriteNumberValue(Vlan);
-            writer.WriteEndObject();
         }
 
-        NetworkCloudL3NetworkData IJsonModel<NetworkCloudL3NetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkCloudL3NetworkData IJsonModel<NetworkCloudL3NetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkCloudL3NetworkData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkCloudL3NetworkData(document.RootElement, options);
         }
 
-        internal static NetworkCloudL3NetworkData DeserializeNetworkCloudL3NetworkData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkCloudL3NetworkData DeserializeNetworkCloudL3NetworkData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
-            ExtendedLocation extendedLocation = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            IReadOnlyList<ResourceIdentifier> associatedResourceIds = default;
-            ResourceIdentifier clusterId = default;
-            L3NetworkDetailedStatus? detailedStatus = default;
-            string detailedStatusMessage = default;
-            IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds = default;
-            HybridAksIpamEnabled? hybridAksIpamEnabled = default;
-            HybridAksPluginType? hybridAksPluginType = default;
-            string interfaceName = default;
-            IPAllocationType? ipAllocationType = default;
-            string ipv4ConnectedPrefix = default;
-            string ipv6ConnectedPrefix = default;
-            ResourceIdentifier l3IsolationDomainId = default;
-            L3NetworkProvisioningState? provisioningState = default;
-            IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
-            long vlan = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            L3NetworkProperties properties = default;
+            ETag? eTag = default;
+            ExtendedLocation extendedLocation = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("extendedLocation"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    properties = L3NetworkProperties.DeserializeL3NetworkProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("etag"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("extendedLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("associatedResourceIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
-                            }
-                            associatedResourceIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("detailedStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            detailedStatus = new L3NetworkDetailedStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("detailedStatusMessage"u8))
-                        {
-                            detailedStatusMessage = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("hybridAksClustersAssociatedIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
-                            }
-                            hybridAksClustersAssociatedIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("hybridAksIpamEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            hybridAksIpamEnabled = new HybridAksIpamEnabled(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("hybridAksPluginType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            hybridAksPluginType = new HybridAksPluginType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("interfaceName"u8))
-                        {
-                            interfaceName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipAllocationType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ipAllocationType = new IPAllocationType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv4ConnectedPrefix"u8))
-                        {
-                            ipv4ConnectedPrefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv6ConnectedPrefix"u8))
-                        {
-                            ipv6ConnectedPrefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("l3IsolationDomainId"u8))
-                        {
-                            l3IsolationDomainId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new L3NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualMachinesAssociatedIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(new ResourceIdentifier(item.GetString()));
-                                }
-                            }
-                            virtualMachinesAssociatedIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("vlan"u8))
-                        {
-                            vlan = property0.Value.GetInt64();
-                            continue;
-                        }
-                    }
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudL3NetworkData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
-                associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                clusterId,
-                detailedStatus,
-                detailedStatusMessage,
-                hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                hybridAksIpamEnabled,
-                hybridAksPluginType,
-                interfaceName,
-                ipAllocationType,
-                ipv4ConnectedPrefix,
-                ipv6ConnectedPrefix,
-                l3IsolationDomainId,
-                provisioningState,
-                virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                vlan,
-                serializedAdditionalRawData);
+                properties,
+                eTag,
+                extendedLocation);
         }
-
-        BinaryData IPersistableModel<NetworkCloudL3NetworkData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkCloudL3NetworkData IPersistableModel<NetworkCloudL3NetworkData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkCloudL3NetworkData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkCloudL3NetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

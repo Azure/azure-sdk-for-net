@@ -17,6 +17,7 @@ namespace OpenAI
         {
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/>. </summary>
@@ -30,7 +31,7 @@ namespace OpenAI
         /// <param name="connectorId">
         /// Identifier for service connectors, like those available in ChatGPT. One of
         ///   `server_url` or `connector_id` must be provided. Learn more about service
-        ///   connectors [here](https://platform.openai.com/docs/guides/tools-remote-mcp#connectors).
+        ///   connectors [here](/docs/guides/tools-remote-mcp#connectors).
         ///   Currently supported `connector_id` values are:
         /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
         /// </param>
@@ -43,8 +44,14 @@ namespace OpenAI
         /// <param name="headers"></param>
         /// <param name="allowedTools"></param>
         /// <param name="requireApproval"></param>
+        /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, string projectConnectionId) : base(@type, additionalBinaryDataProperties)
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        internal InternalMCPTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, MCPToolConnectorId? connectorId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApproval, bool? deferLoading, string projectConnectionId, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
@@ -54,7 +61,9 @@ namespace OpenAI
             Headers = headers;
             AllowedTools = allowedTools;
             RequireApproval = requireApproval;
+            DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
+            ToolConfigs = toolConfigs;
         }
 
         /// <summary> A label for this MCP server, used to identify it in tool calls. </summary>
@@ -69,7 +78,7 @@ namespace OpenAI
         /// <summary>
         /// Identifier for service connectors, like those available in ChatGPT. One of
         ///   `server_url` or `connector_id` must be provided. Learn more about service
-        ///   connectors [here](https://platform.openai.com/docs/guides/tools-remote-mcp#connectors).
+        ///   connectors [here](/docs/guides/tools-remote-mcp#connectors).
         ///   Currently supported `connector_id` values are:
         /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
         /// </summary>
@@ -100,7 +109,7 @@ namespace OpenAI
         /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="MCPToolFilter"/>. </description>
+        /// <description> <see cref="InternalMCPToolFilter"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -138,7 +147,7 @@ namespace OpenAI
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="MCPToolRequireApproval"/>. </description>
+        /// <description> <see cref="InternalMCPToolRequireApproval"/>. </description>
         /// </item>
         /// <item>
         /// <description> "always". </description>
@@ -173,7 +182,17 @@ namespace OpenAI
         /// </summary>
         public BinaryData RequireApproval { get; set; }
 
+        /// <summary> Whether this MCP tool is deferred and discovered via tool search. </summary>
+        public bool? DeferLoading { get; set; }
+
         /// <summary> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </summary>
         public string ProjectConnectionId { get; set; }
+
+        /// <summary>
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

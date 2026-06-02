@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace _Type.Model.Inheritance.Recursive
 {
     public partial class RecursiveClientOptions : ClientOptions
     {
+        public RecursiveClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal RecursiveClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }
