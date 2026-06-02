@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0 (Unreleased)
+## 1.1.0 (2026-06-02)
  
 ### Features Added
  
@@ -9,10 +9,6 @@
 - Added streaming server events for tool execution, transcript annotations, and video output updates.
 - Added avatar voice synchronization support via `AzureAvatarSyncVoice` with configurable voice parameters.
 - Added phrase-level transcription support, including word-level timing, confidence, and phrase grouping.
-- Added support for including additional response data via session include options (e.g., file search results and transcription metadata).
-- Added support for new transcription models, including diarization scenarios.
-- Added expanded token usage reporting with reasoning token support.
-- Added `AzureRealtimeNativeVoice` and `AzureRealtimeNativeVoiceName` with built-in voice presets (`Aarti`, `Andrew`, `Ava`, `Denise`, `Diya`, `Elsa`, `Florian`, `Francisca`, `Meera`, `Xiaoxiao`, `Ximena`, `Yunxi`).
 - Added new personal voice models: `PersonalVoiceModels.MaiVoice1` and `PersonalVoiceModels.DragonHDOmniLatestNeural`.
 - Added `EchoCancellationReferenceSource` (`Client`, `Server`) on `AudioEchoCancellation.ReferenceSource` for selecting the echo cancellation reference.
 - Added `SmartEndOfTurnDetection` as a new turn-detection option.
