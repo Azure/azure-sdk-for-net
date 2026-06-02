@@ -314,6 +314,60 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void TestBackwardCompatNewInstanceRebuildsWhenAdditionalPropertiesParameterWasInserted()
+        {
+            var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [provisioningStateProperty]);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: false, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var oldProvisioningStateParam = new ParameterProvider("testProvisioningState", $"", typeof(string));
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldProvisioningStateParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var constructorParameters = parentProvider.FullConstructor.Signature.Parameters;
+            var propertiesIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "properties").i;
+            var additionalDataIndex = constructorParameters.Select((p, i) => (p.Name, i)).Single(p => p.Name == "additionalBinaryDataProperties").i;
+            var staleConstructorArguments = constructorParameters
+                .Where(p => p.Name != "additionalBinaryDataProperties")
+                .Select(p => p.Name == "properties" ? Default : p.DefaultValue ?? Default)
+                .ToArray();
+            var method = new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, staleConstructorArguments)), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var updatedMethod = modelFactory.Methods.Single();
+            var statement = updatedMethod.BodyStatements!.Single() as ExpressionStatement;
+            var keywordExpression = statement!.Expression as KeywordExpression;
+            var newInstance = keywordExpression!.Expression as NewInstanceExpression;
+            Assert.That(newInstance!.Parameters.Count, Is.EqualTo(constructorParameters.Count));
+            Assert.That(newInstance.Parameters[additionalDataIndex].ToDisplayString(), Does.Contain("IDictionary<string, global::System.BinaryData>)default"));
+            Assert.That(newInstance.Parameters[propertiesIndex].ToDisplayString(), Does.Contain("testProvisioningState"));
+            Assert.That(newInstance.Parameters[propertiesIndex].ToDisplayString(), Does.Contain("TestProperties"));
+        }
+
+        [Test]
         public void TestBackwardCompatNewInstanceUnwrapsNullableValueTypeForNestedRequiredValue()
         {
             var keyExpirationProperty = InputFactory.Property("keyExpirationPeriodInDays", InputPrimitiveType.Int32, isRequired: true, serializedName: "keyExpirationPeriodInDays");
@@ -702,6 +756,8 @@ namespace Azure.Generator.Mgmt.Tests
         [Test]
         public void TestBackwardCompatDictionaryArgumentUsesConcreteDictionaryForInterfaceMismatch()
         {
+            ManagementMockHelpers.LoadMockPlugin();
+
             var oldIconFileUrisParam = new ParameterProvider("iconFileUris", $"", typeof(IDictionary<string, string>));
             var expectedType = new CSharpType(typeof(IReadOnlyDictionary<string, string>));
             var buildParameterArgument = typeof(ModelFactoryBackwardCompatHelper).GetMethod(
