@@ -208,7 +208,8 @@ Post one inline comment per distinct finding so large refresh PRs (which can tou
 Then submit exactly one review using `submit_pull_request_review`:
 
 - Use `REQUEST_CHANGES` if any blocking issue was found.
-- Use `COMMENT` if no blocking issue was found.
+- Use `REQUEST_CHANGES` if any prior blocking management-review issue is still unresolved, even if the latest review pass does not find new issues in newly changed files.
+- Use `COMMENT` only if no blocking management-review issue remains for the PR.
 - Do not use `APPROVE`.
 - When submitting `COMMENT`, also emit the `dismiss_stale_change_requests` safe-output tool with no arguments. The deterministic safe-output job will check that this workflow's latest review is the new non-blocking comment on the current head, then dismiss this workflow's prior stale `REQUEST_CHANGES` review from an older commit. Do not attempt to dismiss reviews directly from the agent.
 
