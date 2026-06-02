@@ -218,13 +218,12 @@ export function resolveArmResources(
   );
 
   // Step 3: shared post-processing.
-  const methodResponseModelIdMap = deriveMethodResponseModelIdMap(methodMap);
   const filteredResources = postProcessArmResources(
     expandedResources,
     nonResourceMethods,
     parentLookup,
     {
-      methodResponseModelIdMap
+      methodResponseModelIdMap: deriveMethodResponseModelIdMap(methodMap)
     }
   );
 
@@ -293,11 +292,7 @@ export function resolveArmResources(
   // Assign non-resource methods to resources based on operationPath prefix matching.
   // If a non-resource method's path has a prefix matching a resource's resourceIdPattern,
   // move it into that resource as an Action (longest prefix wins).
-  assignNonResourceMethodsToResources(
-    filteredResources,
-    nonResourceMethods,
-    methodResponseModelIdMap
-  );
+  assignNonResourceMethodsToResources(filteredResources, nonResourceMethods);
 
   // Compute per-resource API versions after all post-processing is complete,
   // so that merged/moved methods are reflected in the final version set.
