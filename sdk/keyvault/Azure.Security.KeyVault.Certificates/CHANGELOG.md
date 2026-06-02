@@ -4,8 +4,11 @@
 
 ### Features Added
 
-- We added an experimental feature for Azure Key Vault internal usage. Any calls using this property will fail and is not recommended to be used at this point.
-- The default service version is now `2026-03-01-preview`.
+- Added an experimental PlatformManaged property on CertificatePolicy for Azure Key Vault internal usage. Any calls using this property will fail and it is not recommended to be used at this point. [#59537](https://github.com/Azure/azure-sdk-for-net/pull/59537)
+
+### Other Changes
+
+- Upgraded to API service version `2026-03-01-preview`
 
 ## 4.9.0 (2026-05-26)
 
