@@ -50,7 +50,7 @@ namespace Azure.Identity
             ManagedIdentityId = options.ManagedIdentityId;
             Pipeline = options.Pipeline;
             _isChainedCredential = options.Options?.IsChainedCredential ?? false;
-            _msalManagedIdentityClient = new MsalManagedIdentityClient(options);
+            _msalManagedIdentityClient = CreateMsalManagedIdentityClient(options);
             _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options, _msalManagedIdentityClient));
             _msalConfidentialClient = new MsalConfidentialClient(
                 Pipeline,
@@ -58,6 +58,11 @@ namespace Azure.Identity
                 options.ManagedIdentityId._idType != ManagedIdentityIdType.SystemAssigned ? options.ManagedIdentityId._userAssignedId : "SYSTEM-ASSIGNED-MANAGED-IDENTITY",
                 AppTokenProviderImpl,
                 options.Options);
+        }
+
+        protected virtual MsalManagedIdentityClient CreateMsalManagedIdentityClient(ManagedIdentityClientOptions options)
+        {
+            return options.MsalManagedIdentityClientOverride ?? new MsalManagedIdentityClient(options);
         }
 
         internal CredentialPipeline Pipeline { get; }
@@ -76,7 +81,7 @@ namespace Azure.Identity
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.Source.ToString(), _options.ManagedIdentityId.ToString());
 
             // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
-            if (availableSource.Source == MSAL.ManagedIdentitySource.Imds && _isChainedCredential && !_probeRequestSent)
+            if (availableSource.Source == MSAL.ManagedIdentitySource.DefaultToImds && _isChainedCredential && !_probeRequestSent)
             {
                 var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
                 _probeRequestSent = true;
