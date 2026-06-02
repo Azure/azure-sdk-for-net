@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _galleriesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevCenterGalleryData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterGalleryResource> operation = new DevCenterArmOperation<DevCenterGalleryResource>(
-                    new DevCenterGalleryOperationSource(Client),
+                    new DevCenterGalleryResourceOperationSource(Client),
                     _galleriesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _galleriesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DevCenterGalleryData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterGalleryResource> operation = new DevCenterArmOperation<DevCenterGalleryResource>(
-                    new DevCenterGalleryOperationSource(Client),
+                    new DevCenterGalleryResourceOperationSource(Client),
                     _galleriesClientDiagnostics,
                     Pipeline,
                     message.Request,

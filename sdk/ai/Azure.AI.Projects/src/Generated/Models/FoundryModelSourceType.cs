@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The source type of the model. </summary>
-    public readonly partial struct FoundryModelSourceType : IEquatable<FoundryModelSourceType>
+    internal readonly partial struct FoundryModelSourceType : IEquatable<FoundryModelSourceType>
     {
         private readonly string _value;
         /// <summary> Model was uploaded locally. </summary>

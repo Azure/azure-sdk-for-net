@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _storageAppliancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudStorageAppliancePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudStorageApplianceResource> operation = new NetworkCloudArmOperation<NetworkCloudStorageApplianceResource>(
-                    new NetworkCloudStorageApplianceOperationSource(Client),
+                    new NetworkCloudStorageApplianceResourceOperationSource(Client),
                     _storageAppliancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _storageAppliancesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkCloudStorageAppliancePatch.ToRequestContent(patch), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudStorageApplianceResource> operation = new NetworkCloudArmOperation<NetworkCloudStorageApplianceResource>(
-                    new NetworkCloudStorageApplianceOperationSource(Client),
+                    new NetworkCloudStorageApplianceResourceOperationSource(Client),
                     _storageAppliancesClientDiagnostics,
                     Pipeline,
                     message.Request,

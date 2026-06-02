@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 HttpMessage message = _managedClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ServiceFabricManagedClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricManagedClustersArmOperation<ServiceFabricManagedClusterResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedClusterResource>(
-                    new ServiceFabricManagedClusterOperationSource(Client),
+                    new ServiceFabricManagedClusterResourceOperationSource(Client),
                     _managedClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 HttpMessage message = _managedClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, ServiceFabricManagedClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricManagedClustersArmOperation<ServiceFabricManagedClusterResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedClusterResource>(
-                    new ServiceFabricManagedClusterOperationSource(Client),
+                    new ServiceFabricManagedClusterResourceOperationSource(Client),
                     _managedClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

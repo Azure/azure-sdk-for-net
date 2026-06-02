@@ -235,18 +235,8 @@ namespace Azure.Generator.Management
             }
         }
 
-        // TODO: replace this with CSharpType to TypeProvider mapping and move this logic to ModelFactoryVisitor
-        private HashSet<CSharpType>? _modelFactoryModels;
+        // TODO: replace this with CSharpType to TypeProvider mapping.
         private HashSet<CSharpType>? _allModelTypes;
-
-        private HashSet<CSharpType> ModelFactoryModels
-        {
-            get
-            {
-                BuildModelTypes();
-                return _modelFactoryModels!;
-            }
-        }
 
         private HashSet<CSharpType> AllModelTypes
         {
@@ -259,13 +249,12 @@ namespace Azure.Generator.Management
 
         private void BuildModelTypes()
         {
-            if (_modelFactoryModels is not null && _allModelTypes is not null)
+            if (_allModelTypes is not null)
             {
                 return; // already built
             }
 
             var allModelTypes = new HashSet<CSharpType>();
-            var modelFactoryModels = new HashSet<CSharpType>();
 
             foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
@@ -274,48 +263,11 @@ namespace Azure.Generator.Management
                 {
                     var eraseNullableType = model.Type.WithNullable(false);
                     allModelTypes.Add(eraseNullableType);
-                    if (IsModelFactoryModel(model))
-                    {
-                        modelFactoryModels.Add(eraseNullableType);
-                    }
                 }
             }
 
             _allModelTypes = allModelTypes;
-            _modelFactoryModels = modelFactoryModels;
         }
-
-        private static bool IsModelFactoryModel(ModelProvider model)
-        {
-            // A model is a model factory model if it is public and it has at least one public property without a setter.
-            return model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && EnumerateAllPublicProperties(model).Any(prop => !prop.Body.HasSetter);
-
-            IEnumerable<PropertyProvider> EnumerateAllPublicProperties(ModelProvider current)
-            {
-                var currentModel = current;
-                foreach (var property in currentModel.Properties)
-                {
-                    if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
-                    {
-                        yield return property;
-                    }
-                }
-
-                while (currentModel.BaseModelProvider is not null)
-                {
-                    currentModel = currentModel.BaseModelProvider;
-                    foreach (var property in currentModel.Properties)
-                    {
-                        if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
-                        {
-                            yield return property;
-                        }
-                    }
-                }
-            }
-        }
-
-        internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type.WithNullable(false));
 
         internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type.WithNullable(false));
 
@@ -343,7 +295,7 @@ namespace Azure.Generator.Management
             var arrayResponseCollectionResults = ExtractArrayResponseCollectionResults();
 
             return [
-                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider { IsSystemBase: true }),
+                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 WirePathAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
@@ -427,49 +379,27 @@ namespace Azure.Generator.Management
                 _ => null
             };
 
-            if (lroMetadata != null)
+            var returnType = lroMetadata?.ReturnType;
+            if (returnType == null)
             {
-                var returnType = lroMetadata.ReturnType;
-                var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(returnType);
-                if (returnCSharpType == null)
-                {
-                    return;
-                }
-
-                if (returnType is InputModelType)
-                {
-                    // Find all resource providers that use this data type
-                    var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType)).ToList();
-
-                    if (resourceProviders.Count > 0)
-                    {
-                        // For each resource provider, create an OperationSource keyed by the resource type
-                        foreach (var resourceProvider in resourceProviders)
-                        {
-                            operationSources.TryAdd(resourceProvider.Type, new OperationSourceProvider(resourceProvider));
-                        }
-
-                        // Mirror TryGetResourceClientProvider: when multiple resources share the same data type
-                        // the reader treats the response as a non-resource (raw data type) because wrapping
-                        // would pick an arbitrary resource. Register a matching key so the reader's lookup
-                        // in BuildLroHandling succeeds.
-                        if (resourceProviders.Count > 1)
-                        {
-                            operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
-                        }
-                    }
-                    else
-                    {
-                        // This is a non-resource model - use the data type as the key
-                        operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
-                    }
-                }
-                else
-                {
-                    // Primitive or framework LRO final-result types still need an operation source.
-                    operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
-                }
+                return;
             }
+
+            var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(returnType);
+            if (returnCSharpType == null)
+            {
+                return;
+            }
+
+            // Find all resource providers that use this data type.
+            var resourceProviders = ResourceProviders.Where(r => r.ResourceData.Type.Equals(returnCSharpType)).ToList();
+            foreach (var resourceProvider in resourceProviders)
+            {
+                operationSources.TryAdd(resourceProvider.Type, new OperationSourceProvider(resourceProvider));
+            }
+
+            // Always register a concrete return-type source for non-resource/list/primitive/dictionary fallback paths.
+            operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
         }
 
         internal bool IsResourceModelType(CSharpType type) => GetResourceDataTypes().ContainsKey(type);

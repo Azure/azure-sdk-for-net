@@ -42,7 +42,7 @@ public class Sample_HostedAgent : SamplesBase
             memory: "1Gi"
         )
         {
-            Image = dockerImage,
+            ContainerConfiguration = new(dockerImage),
         };
         return agentDefinition;
     }

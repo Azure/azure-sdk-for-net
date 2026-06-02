@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _inboundEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsResolverInboundEndpointPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverInboundEndpointResource> operation = new DnsResolverArmOperation<DnsResolverInboundEndpointResource>(
-                    new DnsResolverInboundEndpointOperationSource(Client),
+                    new DnsResolverInboundEndpointResourceOperationSource(Client),
                     _inboundEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _inboundEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsResolverInboundEndpointPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverInboundEndpointResource> operation = new DnsResolverArmOperation<DnsResolverInboundEndpointResource>(
-                    new DnsResolverInboundEndpointOperationSource(Client),
+                    new DnsResolverInboundEndpointResourceOperationSource(Client),
                     _inboundEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,

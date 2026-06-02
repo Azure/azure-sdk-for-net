@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _knowledgeSourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, knowledgeSourceName, CdnWebAgentKnowledgeSourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnWebAgentKnowledgeSourceResource> operation = new CdnArmOperation<CdnWebAgentKnowledgeSourceResource>(
-                    new CdnWebAgentKnowledgeSourceOperationSource(Client),
+                    new CdnWebAgentKnowledgeSourceResourceOperationSource(Client),
                     _knowledgeSourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _knowledgeSourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, knowledgeSourceName, CdnWebAgentKnowledgeSourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnWebAgentKnowledgeSourceResource> operation = new CdnArmOperation<CdnWebAgentKnowledgeSourceResource>(
-                    new CdnWebAgentKnowledgeSourceOperationSource(Client),
+                    new CdnWebAgentKnowledgeSourceResourceOperationSource(Client),
                     _knowledgeSourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _frontDoorEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorEndpointPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorEndpointResource> operation = new CdnArmOperation<FrontDoorEndpointResource>(
-                    new FrontDoorEndpointOperationSource(Client),
+                    new FrontDoorEndpointResourceOperationSource(Client),
                     _frontDoorEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _frontDoorEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorEndpointPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorEndpointResource> operation = new CdnArmOperation<FrontDoorEndpointResource>(
-                    new FrontDoorEndpointOperationSource(Client),
+                    new FrontDoorEndpointResourceOperationSource(Client),
                     _frontDoorEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,

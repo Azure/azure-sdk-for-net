@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdvancedThreatProtectionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<AdvancedThreatProtectionResource> operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(
-                    new AdvancedThreatProtectionOperationSource(Client),
+                    new AdvancedThreatProtectionResourceOperationSource(Client),
                     _advancedThreatProtectionSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _advancedThreatProtectionSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AdvancedThreatProtectionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<AdvancedThreatProtectionResource> operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(
-                    new AdvancedThreatProtectionOperationSource(Client),
+                    new AdvancedThreatProtectionResourceOperationSource(Client),
                     _advancedThreatProtectionSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
