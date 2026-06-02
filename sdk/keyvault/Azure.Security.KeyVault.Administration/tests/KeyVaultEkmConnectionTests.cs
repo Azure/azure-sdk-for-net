@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
                 () => new KeyVaultEkmConnection(null, new[] { s_cert1 }));
-            Assert.That(ex.ParamName, Is.EqualTo("fullyQualifiedHostName"));
+            Assert.That(ex.ParamName, Is.EqualTo("hostName"));
         }
 
         [Test]
@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         {
             ArgumentException ex = Assert.Throws<ArgumentException>(
                 () => new KeyVaultEkmConnection(string.Empty, new[] { s_cert1 }));
-            Assert.That(ex.ParamName, Is.EqualTo("fullyQualifiedHostName"));
+            Assert.That(ex.ParamName, Is.EqualTo("hostName"));
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         {
             KeyVaultEkmConnection connection = new("ekm.contoso.com", new[] { s_cert1, s_cert2 });
 
-            Assert.That(connection.Host, Is.EqualTo("ekm.contoso.com"));
+            Assert.That(connection.HostName, Is.EqualTo("ekm.contoso.com"));
             Assert.That(connection.ServerCaCertificates, Has.Count.EqualTo(2));
             CollectionAssert.AreEqual(s_cert1, connection.ServerCaCertificates[0].ToArray());
             CollectionAssert.AreEqual(s_cert2, connection.ServerCaCertificates[1].ToArray());

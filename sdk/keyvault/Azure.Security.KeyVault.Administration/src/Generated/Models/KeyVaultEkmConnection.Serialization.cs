@@ -98,7 +98,7 @@ namespace Azure.Security.KeyVault.Administration
                 throw new FormatException($"The model {nameof(KeyVaultEkmConnection)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("host"u8);
-            writer.WriteStringValue(Host);
+            writer.WriteStringValue(HostName);
             if (Optional.IsDefined(PathPrefix))
             {
                 writer.WritePropertyName("path_prefix"u8);
@@ -163,7 +163,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            string host = default;
+            string hostName = default;
             string pathPrefix = default;
             IList<BinaryData> serverCaCertificates = default;
             string serverSubjectCommonName = default;
@@ -172,7 +172,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 if (prop.NameEquals("host"u8))
                 {
-                    host = prop.Value.GetString();
+                    hostName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("path_prefix"u8))
@@ -207,7 +207,7 @@ namespace Azure.Security.KeyVault.Administration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KeyVaultEkmConnection(host, pathPrefix, serverCaCertificates, serverSubjectCommonName, additionalBinaryDataProperties);
+            return new KeyVaultEkmConnection(hostName, pathPrefix, serverCaCertificates, serverSubjectCommonName, additionalBinaryDataProperties);
         }
     }
 }

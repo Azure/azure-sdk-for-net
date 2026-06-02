@@ -19,7 +19,7 @@ KeyVaultEkmClient client = new KeyVaultEkmClient(new Uri(managedHsmUrl), new Def
 // Read the EKM proxy's CA certificate bytes (DER- or PEM-encoded).
 byte[] serverCaCertificate = File.ReadAllBytes("ekm-proxy-ca.cer");
 
-// Build the EKM connection. Host is the FQDN of the EKM proxy.
+// Build the EKM connection with the EKM proxy's HostName
 KeyVaultEkmConnection connection = new KeyVaultEkmConnection("ekm.contoso.com", new[] { serverCaCertificate })
 {
     PathPrefix = "v1",
@@ -38,7 +38,7 @@ Use `GetEkmConnection` to inspect the EKM connection currently configured on the
 // Retrieve the current EKM connection. Requires the "ekm/read" permission.
 Response<KeyVaultEkmConnection> current = Client.GetEkmConnection();
 
-Console.WriteLine($"EKM host: {current.Value.Host}");
+Console.WriteLine($"EKM host: {current.Value.HostName}");
 Console.WriteLine($"Path prefix: {current.Value.PathPrefix}");
 ```
 

@@ -30,12 +30,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
             // --- Create ---
             Response<KeyVaultEkmConnection> created = await Client.CreateEkmConnectionAsync(input);
             Assert.That(created.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(created.Value.Host, Is.EqualTo(input.Host));
+            Assert.That(created.Value.HostName, Is.EqualTo(input.HostName));
 
             // --- Get ---
             Response<KeyVaultEkmConnection> got = await Client.GetEkmConnectionAsync();
             Assert.That(got.GetRawResponse().Status, Is.EqualTo(200));
-            Assert.That(got.Value.Host, Is.EqualTo(input.Host));
+            Assert.That(got.Value.HostName, Is.EqualTo(input.HostName));
             Assert.That(got.Value.ServerCaCertificates, Is.Not.Null.And.Not.Empty);
 
             // --- Check ---
