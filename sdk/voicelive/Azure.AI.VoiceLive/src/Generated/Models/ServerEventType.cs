@@ -58,6 +58,28 @@ namespace Azure.AI.VoiceLive
         private const string ResponseMcpCallInProgressValue = "response.mcp_call.in_progress";
         private const string ResponseMcpCallCompletedValue = "response.mcp_call.completed";
         private const string ResponseMcpCallFailedValue = "response.mcp_call.failed";
+        /// <summary> Avatar switches to speaking state. </summary>
+        private const string SessionAvatarSwitchToSpeakingValue = "session.avatar.switch_to_speaking";
+        /// <summary> Avatar switches to idle state. </summary>
+        private const string SessionAvatarSwitchToIdleValue = "session.avatar.switch_to_idle";
+        /// <summary> Delta update for avatar video frames. </summary>
+        private const string ResponseVideoDeltaValue = "response.video.delta";
+        /// <summary> Web search call is searching. </summary>
+        private const string ResponseWebSearchCallSearchingValue = "response.web_search_call.searching";
+        /// <summary> Web search call is in progress. </summary>
+        private const string ResponseWebSearchCallInProgressValue = "response.web_search_call.in_progress";
+        /// <summary> Web search call completed. </summary>
+        private const string ResponseWebSearchCallCompletedValue = "response.web_search_call.completed";
+        /// <summary> File search call is searching. </summary>
+        private const string ResponseFileSearchCallSearchingValue = "response.file_search_call.searching";
+        /// <summary> File search call is in progress. </summary>
+        private const string ResponseFileSearchCallInProgressValue = "response.file_search_call.in_progress";
+        /// <summary> File search call completed. </summary>
+        private const string ResponseFileSearchCallCompletedValue = "response.file_search_call.completed";
+        /// <summary> Output audio buffer has been cleared. </summary>
+        private const string OutputAudioBufferClearedValue = "output_audio_buffer.cleared";
+        /// <summary> Audio transcript annotation added. </summary>
+        private const string ResponseAudioTranscriptAnnotationAddedValue = "response.audio_transcript.annotation.added";
 
         /// <summary> Initializes a new instance of <see cref="ServerEventType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -200,6 +222,39 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the ResponseMcpCallFailed. </summary>
         public static ServerEventType ResponseMcpCallFailed { get; } = new ServerEventType(ResponseMcpCallFailedValue);
+
+        /// <summary> Avatar switches to speaking state. </summary>
+        public static ServerEventType SessionAvatarSwitchToSpeaking { get; } = new ServerEventType(SessionAvatarSwitchToSpeakingValue);
+
+        /// <summary> Avatar switches to idle state. </summary>
+        public static ServerEventType SessionAvatarSwitchToIdle { get; } = new ServerEventType(SessionAvatarSwitchToIdleValue);
+
+        /// <summary> Delta update for avatar video frames. </summary>
+        public static ServerEventType ResponseVideoDelta { get; } = new ServerEventType(ResponseVideoDeltaValue);
+
+        /// <summary> Web search call is searching. </summary>
+        public static ServerEventType ResponseWebSearchCallSearching { get; } = new ServerEventType(ResponseWebSearchCallSearchingValue);
+
+        /// <summary> Web search call is in progress. </summary>
+        public static ServerEventType ResponseWebSearchCallInProgress { get; } = new ServerEventType(ResponseWebSearchCallInProgressValue);
+
+        /// <summary> Web search call completed. </summary>
+        public static ServerEventType ResponseWebSearchCallCompleted { get; } = new ServerEventType(ResponseWebSearchCallCompletedValue);
+
+        /// <summary> File search call is searching. </summary>
+        public static ServerEventType ResponseFileSearchCallSearching { get; } = new ServerEventType(ResponseFileSearchCallSearchingValue);
+
+        /// <summary> File search call is in progress. </summary>
+        public static ServerEventType ResponseFileSearchCallInProgress { get; } = new ServerEventType(ResponseFileSearchCallInProgressValue);
+
+        /// <summary> File search call completed. </summary>
+        public static ServerEventType ResponseFileSearchCallCompleted { get; } = new ServerEventType(ResponseFileSearchCallCompletedValue);
+
+        /// <summary> Output audio buffer has been cleared. </summary>
+        public static ServerEventType OutputAudioBufferCleared { get; } = new ServerEventType(OutputAudioBufferClearedValue);
+
+        /// <summary> Audio transcript annotation added. </summary>
+        public static ServerEventType ResponseAudioTranscriptAnnotationAdded { get; } = new ServerEventType(ResponseAudioTranscriptAnnotationAddedValue);
 
         /// <summary> Determines if two <see cref="ServerEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
