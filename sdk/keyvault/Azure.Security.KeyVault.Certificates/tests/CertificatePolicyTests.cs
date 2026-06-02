@@ -384,6 +384,45 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual("AzureApplicationGateway", platformManaged.CertificateUsage);
         }
 
+        [Test]
+        public void PlatformManagedDeserializeThrowsWhenCertificateUsageMissing()
+        {
+            const string originalJson = @"{""platformManaged"":{""metadata"":{""provider"":""contoso""}}}";
+
+            CertificatePolicy policy = new CertificatePolicy();
+            using JsonStream json = new JsonStream(originalJson);
+
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
+                () => policy.Deserialize(json.AsStream()));
+            StringAssert.Contains("certificateUsage", ex.Message);
+        }
+
+        [Test]
+        public void PlatformManagedDeserializeThrowsOnEmptyObject()
+        {
+            const string originalJson = @"{""platformManaged"":{}}";
+
+            CertificatePolicy policy = new CertificatePolicy();
+            using JsonStream json = new JsonStream(originalJson);
+
+            Assert.Throws<InvalidOperationException>(() => policy.Deserialize(json.AsStream()));
+        }
+
+        [Test]
+        public void PlatformManagedSerializeThrowsWhenCertificateUsageIsNull()
+        {
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                PlatformManaged = new PlatformManaged("AzureFrontDoor"),
+            };
+            // Force CertificateUsage back to null via the public setter.
+            policy.PlatformManaged.CertificateUsage = null;
+
+            using JsonStream json = new JsonStream();
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => json.WriteObject(policy));
+            StringAssert.Contains(nameof(PlatformManaged.CertificateUsage), ex.Message);
+        }
+
         public static object[] KeyPolicySerializationTestCases =
         {
             new object[] {new CertificatePolicy() { KeyType = CertificateKeyType.Rsa }, @"{""key_props"":{""kty"":""RSA""}}" },

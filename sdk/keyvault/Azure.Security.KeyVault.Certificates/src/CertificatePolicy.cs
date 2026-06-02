@@ -307,7 +307,9 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
 
                     case PlatformManagedPropertyName:
-                        PlatformManaged = prop.Value.ValueKind == JsonValueKind.Null ? null : PlatformManaged.FromJsonObject(prop.Value);
+                        PlatformManaged = prop.Value.ValueKind == JsonValueKind.Null
+                            ? null
+                            : Certificates.PlatformManaged.FromJsonObject(prop.Value);
                         break;
                 }
             }

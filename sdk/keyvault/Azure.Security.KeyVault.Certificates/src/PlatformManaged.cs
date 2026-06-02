@@ -77,14 +77,23 @@ namespace Azure.Security.KeyVault.Certificates
                         break;
                 }
             }
+
+            if (CertificateUsage is null)
+            {
+                throw new InvalidOperationException(
+                    $"Required property '{CertificateUsagePropertyName}' was not present in the platform-managed certificate JSON.");
+            }
         }
 
         internal void WriteProperties(Utf8JsonWriter json)
         {
-            if (CertificateUsage != null)
+            if (CertificateUsage is null)
             {
-                json.WriteString(s_certificateUsagePropertyNameBytes, CertificateUsage);
+                throw new InvalidOperationException(
+                    $"{nameof(CertificateUsage)} must be set before serializing a {nameof(PlatformManaged)} policy.");
             }
+
+            json.WriteString(s_certificateUsagePropertyNameBytes, CertificateUsage);
 
             if (!_metadata.IsNullOrEmpty())
             {
@@ -100,7 +109,7 @@ namespace Azure.Security.KeyVault.Certificates
                     }
                     else
                     {
-                        using JsonDocument document = JsonDocument.Parse(metadata.Value.ToStream());
+                        using JsonDocument document = JsonDocument.Parse(metadata.Value.ToMemory());
                         document.RootElement.WriteTo(json);
                     }
                 }

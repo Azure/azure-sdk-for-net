@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Added an experimental `PlatformManaged` property on `CertificatePolicy` for Azure Key Vault internal usage only. Any calls using this property will fail and it is not recommended to be used at this point.
+- We added an experimental feature for Azure Key Vault internal usage. Any calls using this property will fail and is not recommended to be used at this point.
 
 ### Breaking Changes
 
