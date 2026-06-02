@@ -245,10 +245,21 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [RecordedTest]
         public async Task VerifyCreateCertificateWithPlatformManaged()
         {
-            if (ServiceVersion < CertificateClientOptions.ServiceVersion.V2026_03_01_Preview)
+            // PlatformManaged is only available on the 2026-03-01-preview API. Build a dedicated
+            // client at that version rather than gating on the fixture's ServiceVersion so this
+            // single recording is exercised exactly once instead of per fixture variant.
+            CertificateClientOptions options = new CertificateClientOptions(CertificateClientOptions.ServiceVersion.V2026_03_01_Preview)
             {
-                Assert.Ignore("PlatformManaged is only supported in V2026_03_01_Preview and later.");
-            }
+                Diagnostics =
+                {
+                    IsLoggingContentEnabled = Debugger.IsAttached || Mode == RecordedTestMode.Live,
+                    LoggedHeaderNames = { "x-ms-request-id" },
+                }
+            };
+            CertificateClient previewClient = InstrumentClient(new CertificateClient(
+                VaultUri,
+                Mode == RecordedTestMode.Record ? new Azure.Identity.AzureCliCredential() : TestEnvironment.Credential,
+                InstrumentClientOptions(options)));
 
             string certName = Recording.GenerateId();
 
@@ -267,7 +278,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             // accepts the policy round-trip. We intentionally do not WaitForCompletionAsync:
             // OneCert backend issuance is asynchronous service behavior, not SDK behavior,
             // and the issuer registration is not always available in test environments.
-            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+            CertificateOperation operation = await previewClient.StartCreateCertificateAsync(certName, certificatePolicy);
             operation = InstrumentOperation(operation);
 
             RegisterForCleanup(certName);
@@ -275,7 +286,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.NotNull(operation);
             Assert.NotNull(operation.Id);
 
-            CertificatePolicy returnedPolicy = await Client.GetCertificatePolicyAsync(certName);
+            CertificatePolicy returnedPolicy = await previewClient.GetCertificatePolicyAsync(certName);
 
             Assert.NotNull(returnedPolicy);
             Assert.NotNull(returnedPolicy.PlatformManaged);

@@ -13,7 +13,6 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Certificates.Tests
 {
     [ClientTestFixture(
-        CertificateClientOptions.ServiceVersion.V2026_03_01_Preview,
         CertificateClientOptions.ServiceVersion.V2025_07_01,
         CertificateClientOptions.ServiceVersion.V7_6,
         CertificateClientOptions.ServiceVersion.V7_5,
