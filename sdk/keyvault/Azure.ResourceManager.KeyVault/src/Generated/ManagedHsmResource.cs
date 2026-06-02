@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.KeyVault
                 HttpMessage message = _managedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedHsmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KeyVaultArmOperation<ManagedHsmResource> operation = new KeyVaultArmOperation<ManagedHsmResource>(
-                    new ManagedHsmOperationSource(Client),
+                    new ManagedHsmResourceOperationSource(Client),
                     _managedHsmsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.KeyVault
                 HttpMessage message = _managedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ManagedHsmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KeyVaultArmOperation<ManagedHsmResource> operation = new KeyVaultArmOperation<ManagedHsmResource>(
-                    new ManagedHsmOperationSource(Client),
+                    new ManagedHsmResourceOperationSource(Client),
                     _managedHsmsClientDiagnostics,
                     Pipeline,
                     message.Request,

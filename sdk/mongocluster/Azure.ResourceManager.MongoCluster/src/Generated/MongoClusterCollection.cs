@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MongoCluster
                 HttpMessage message = _mongoClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mongoClusterName, MongoClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoClusterArmOperation<MongoClusterResource> operation = new MongoClusterArmOperation<MongoClusterResource>(
-                    new MongoClusterOperationSource(Client),
+                    new MongoClusterResourceOperationSource(Client),
                     _mongoClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MongoCluster
                 HttpMessage message = _mongoClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mongoClusterName, MongoClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoClusterArmOperation<MongoClusterResource> operation = new MongoClusterArmOperation<MongoClusterResource>(
-                    new MongoClusterOperationSource(Client),
+                    new MongoClusterResourceOperationSource(Client),
                     _mongoClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

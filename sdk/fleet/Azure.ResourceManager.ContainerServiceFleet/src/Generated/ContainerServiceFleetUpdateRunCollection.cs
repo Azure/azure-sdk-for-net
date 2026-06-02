@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, ContainerServiceFleetUpdateRunData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
+                    new ContainerServiceFleetUpdateRunResourceOperationSource(Client),
                     _updateRunsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _updateRunsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, updateRunName, ContainerServiceFleetUpdateRunData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetUpdateRunResource>(
-                    new ContainerServiceFleetUpdateRunOperationSource(Client),
+                    new ContainerServiceFleetUpdateRunResourceOperationSource(Client),
                     _updateRunsClientDiagnostics,
                     Pipeline,
                     message.Request,

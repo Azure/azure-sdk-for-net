@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsResolverPolicyVirtualNetworkLinkPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>(
-                    new DnsResolverPolicyVirtualNetworkLinkOperationSource(Client),
+                    new DnsResolverPolicyVirtualNetworkLinkResourceOperationSource(Client),
                     _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolverPolicyVirtualNetworkLinksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsResolverPolicyVirtualNetworkLinkPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource> operation = new DnsResolverArmOperation<DnsResolverPolicyVirtualNetworkLinkResource>(
-                    new DnsResolverPolicyVirtualNetworkLinkOperationSource(Client),
+                    new DnsResolverPolicyVirtualNetworkLinkResourceOperationSource(Client),
                     _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics,
                     Pipeline,
                     message.Request,
