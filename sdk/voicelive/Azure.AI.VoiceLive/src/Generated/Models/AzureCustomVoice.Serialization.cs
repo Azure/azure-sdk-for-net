@@ -93,10 +93,10 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("custom_lexicon_url"u8);
                 writer.WriteStringValue(CustomLexiconUri);
             }
-            if (Optional.IsDefined(CustomTextNormalizationUrl))
+            if (Optional.IsDefined(CustomTextNormalizationUri))
             {
                 writer.WritePropertyName("custom_text_normalization_url"u8);
-                writer.WriteStringValue(CustomTextNormalizationUrl);
+                writer.WriteStringValue(CustomTextNormalizationUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(PreferLocales))
             {
@@ -171,7 +171,7 @@ namespace Azure.AI.VoiceLive
             string endpointId = default;
             float? temperature = default;
             string customLexiconUri = default;
-            string customTextNormalizationUrl = default;
+            Uri customTextNormalizationUri = default;
             IList<string> preferLocales = default;
             string locale = default;
             string style = default;
@@ -211,7 +211,11 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("custom_text_normalization_url"u8))
                 {
-                    customTextNormalizationUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customTextNormalizationUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("prefer_locales"u8))
@@ -272,7 +276,7 @@ namespace Azure.AI.VoiceLive
                 endpointId,
                 temperature,
                 customLexiconUri,
-                customTextNormalizationUrl,
+                customTextNormalizationUri,
                 preferLocales ?? new ChangeTrackingList<string>(),
                 locale,
                 style,
