@@ -5,15 +5,10 @@ using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Resources;
 using System.Runtime.CompilerServices;
-using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
@@ -22,7 +17,6 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -35,6 +29,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_RoleID_ToolBoxSkill
     private static readonly string AZURE_AI_USER_ROLE_DEFINITION_GUID = "53ca6127-db72-4b80-b1b0-d745d6d5456d";
+    private static readonly string NAMESPACE_URL = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
     #endregion
     #region Snippet:Sample_GetPath_ToolBoxSkill
     protected static string GetDirectory(string path, [CallerFilePath] string pth = "")
@@ -124,7 +119,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateAgent_ToolBoxSkill_Async
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionFromCodeAsync(
-            agentName: "myCodeSkillAgent",
+            agentName: "myCodeSkillAgent777",
             filePath: GetDirectory(Path.Combine(["Assets", "AgentsCode"])),
             metadata: GetAgentMetadata(skillTool)
         );
@@ -151,27 +146,45 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_AssignRole_ToolBoxSkill_Async
-        RoleAssignmentCollection roleAssignment = armClient.GetRoleAssignments(accountId);
+        //RoleAssignmentCollection roleAssignment = armClient.GetRoleAssignments(accountId);
         ResourceIdentifier aiUserRoleId = new($"/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/{AZURE_AI_USER_ROLE_DEFINITION_GUID}");
         // Calculate uuid5
         string uuid5Hash;
         using (SHA1 sha1 = SHA1.Create())
         {
-            byte[] input = Encoding.UTF8.GetBytes("6ba7b811-9dad-11d1-80b4-00c04fd430c8" + $"{accountId}|{agentVersion.InstanceIdentity}|{AZURE_AI_USER_ROLE_DEFINITION_GUID}");
+            byte[] input = Encoding.UTF8.GetBytes(NAMESPACE_URL + $"{accountId}|{agentVersion.InstanceIdentity}|{AZURE_AI_USER_ROLE_DEFINITION_GUID}");
             byte[] uuid5 = sha1.ComputeHash( input );
             StringBuilder sbHash = new();
-            foreach (byte b in uuid5)
+            for (int i=0; i < uuid5.Length && i < 16; i++)
             {
-                sbHash.Append(b.ToString("x2"));
+                sbHash.Append(uuid5[i].ToString("x2"));
+                if (i == 3 || i == 5 || i == 7 || i == 9)
+                {
+                    sbHash.Append('-');
+                }
             }
             uuid5Hash = sbHash.ToString();
         }
-        //roleAssignment.Any(x => x.Id && x.)
-        RoleAssignmentCreateOrUpdateContent roleContent = new(aiUserRoleId, new Guid(uuid5Hash))
+        Guid roleAssignmentGuid = new(uuid5Hash);
+        try
         {
-            PrincipalType = RoleManagementPrincipalType.ServicePrincipal
-        };
-
+            await armClient.GetRoleAssignmentAsync(scope: accountId, roleAssignmentName: uuid5Hash);
+        }
+        catch (RequestFailedException e)
+        {
+            if (!string.Equals(e.ErrorCode, "RoleAssignmentNotFound"))
+            {
+                throw;
+            }
+            RoleAssignmentCreateOrUpdateContent roleContent = new(aiUserRoleId, roleAssignmentGuid)
+            {
+                PrincipalType = RoleManagementPrincipalType.ServicePrincipal
+            };
+            RoleAssignmentResource roleAssignment = armClient.GetRoleAssignmentResource(aiUserRoleId);
+            ArmOperation<RoleAssignmentResource> newAssignemnt = await roleAssignment.UpdateAsync(WaitUntil.Completed, roleContent);
+            RoleAssignmentResource newResource = newAssignemnt.WaitForCompletion();
+            Console.WriteLine($"Assigned new role to the hosted Agent identity: {newResource.Id}");
+        }
         #endregion
         #region Snippet:Sample_WaitForDeployment_ToolBoxSkill_Async
         while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
