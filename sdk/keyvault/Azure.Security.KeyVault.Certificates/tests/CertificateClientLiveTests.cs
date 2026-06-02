@@ -272,7 +272,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             // shows metadata.subjectAlternateNames.dnsNames, but the deployed service rejects
             // that shape; defer to the working contract.
             certificatePolicy.PlatformManaged.Metadata["sans"] = BinaryData.FromObjectAsJson(
-                new Dictionary<string, string[]> { ["dns_names"] = new[] { "onecertdomain.contoso.com" } });
+                new Dictionary<string, string[]> { ["dns_names"] = new[] { "sanitized.example.invalid" } });
 
             // Verifies the SDK can send a PlatformManaged create request and the service
             // accepts the policy round-trip. We intentionally do not WaitForCompletionAsync:
