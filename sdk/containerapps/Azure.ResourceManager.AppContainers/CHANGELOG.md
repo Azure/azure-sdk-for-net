@@ -1,16 +1,12 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.6.0-beta.1 (2026-06-02)
 
 ### Other Changes
 
 - Migrated Azure.ResourceManager.AppContainers management-plane generation from AutoRest to TypeSpec.
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.5.0 (2025-10-09)
 

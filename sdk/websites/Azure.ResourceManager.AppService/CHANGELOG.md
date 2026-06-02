@@ -1,10 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.4.2 (2026-06-02)
 
 ### Bugs Fixed
 
@@ -12,6 +8,9 @@
 - Fix deserialization when `FunctionAppStorage.Value` is not a valid URI.
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.4.1 (2025-08-11)
 
