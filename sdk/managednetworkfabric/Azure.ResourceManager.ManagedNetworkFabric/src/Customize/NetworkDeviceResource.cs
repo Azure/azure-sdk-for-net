@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkDevicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDevicePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkDeviceResource> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResource>(
-                    new NetworkDeviceOperationSource(Client),
+                    new CompatibilityOperationSource<NetworkDeviceResource, NetworkDeviceData>(Client, NetworkDeviceData.DeserializeNetworkDeviceData, (client, data) => new NetworkDeviceResource(client, data)),
                     _networkDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkDevicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkDevicePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkDeviceResource> operation = new ManagedNetworkFabricArmOperation<NetworkDeviceResource>(
-                    new NetworkDeviceOperationSource(Client),
+                    new CompatibilityOperationSource<NetworkDeviceResource, NetworkDeviceData>(Client, NetworkDeviceData.DeserializeNetworkDeviceData, (client, data) => new NetworkDeviceResource(client, data)),
                     _networkDevicesClientDiagnostics,
                     Pipeline,
                     message.Request,

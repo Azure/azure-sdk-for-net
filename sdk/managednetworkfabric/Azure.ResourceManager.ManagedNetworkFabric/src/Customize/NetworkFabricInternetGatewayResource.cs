@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _internetGatewaysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricInternetGatewayPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayResource>(
-                    new NetworkFabricInternetGatewayOperationSource(Client),
+                    new CompatibilityOperationSource<NetworkFabricInternetGatewayResource, NetworkFabricInternetGatewayData>(Client, NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData, (client, data) => new NetworkFabricInternetGatewayResource(client, data)),
                     _internetGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _internetGatewaysRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricInternetGatewayPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayResource>(
-                    new NetworkFabricInternetGatewayOperationSource(Client),
+                    new CompatibilityOperationSource<NetworkFabricInternetGatewayResource, NetworkFabricInternetGatewayData>(Client, NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData, (client, data) => new NetworkFabricInternetGatewayResource(client, data)),
                     _internetGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,

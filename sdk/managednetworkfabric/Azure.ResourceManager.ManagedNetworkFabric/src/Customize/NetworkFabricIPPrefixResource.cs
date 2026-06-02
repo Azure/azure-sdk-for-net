@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _ipPrefixesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricIPPrefixPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(
-                    new NetworkFabricIPPrefixOperationSource(Client),
+                    new CompatibilityOperationSource<NetworkFabricIPPrefixResource, NetworkFabricIPPrefixData>(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData, (client, data) => new NetworkFabricIPPrefixResource(client, data)),
                     _ipPrefixesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _ipPrefixesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricIPPrefixPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(
-                    new NetworkFabricIPPrefixOperationSource(Client),
+                    new CompatibilityOperationSource<NetworkFabricIPPrefixResource, NetworkFabricIPPrefixData>(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData, (client, data) => new NetworkFabricIPPrefixResource(client, data)),
                     _ipPrefixesClientDiagnostics,
                     Pipeline,
                     message.Request,

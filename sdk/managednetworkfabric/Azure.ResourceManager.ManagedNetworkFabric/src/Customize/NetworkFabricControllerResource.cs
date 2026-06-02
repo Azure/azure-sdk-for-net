@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkFabricControllersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricControllerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricControllerResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricControllerResource>(
-                    new NetworkFabricControllerOperationSource(Client),
+                    new CompatibilityOperationSource<NetworkFabricControllerResource, NetworkFabricControllerData>(Client, NetworkFabricControllerData.DeserializeNetworkFabricControllerData, (client, data) => new NetworkFabricControllerResource(client, data)),
                     _networkFabricControllersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _networkFabricControllersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricControllerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricControllerResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricControllerResource>(
-                    new NetworkFabricControllerOperationSource(Client),
+                    new CompatibilityOperationSource<NetworkFabricControllerResource, NetworkFabricControllerData>(Client, NetworkFabricControllerData.DeserializeNetworkFabricControllerData, (client, data) => new NetworkFabricControllerResource(client, data)),
                     _networkFabricControllersClientDiagnostics,
                     Pipeline,
                     message.Request,

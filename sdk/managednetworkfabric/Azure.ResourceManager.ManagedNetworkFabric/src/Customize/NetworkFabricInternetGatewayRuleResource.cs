@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _internetGatewayRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricInternetGatewayRulePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayRuleResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayRuleResource>(
-                    new NetworkFabricInternetGatewayRuleOperationSource(Client),
+                    new CompatibilityOperationSource<NetworkFabricInternetGatewayRuleResource, NetworkFabricInternetGatewayRuleData>(Client, NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData, (client, data) => new NetworkFabricInternetGatewayRuleResource(client, data)),
                     _internetGatewayRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 HttpMessage message = _internetGatewayRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricInternetGatewayRulePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayRuleResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricInternetGatewayRuleResource>(
-                    new NetworkFabricInternetGatewayRuleOperationSource(Client),
+                    new CompatibilityOperationSource<NetworkFabricInternetGatewayRuleResource, NetworkFabricInternetGatewayRuleData>(Client, NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData, (client, data) => new NetworkFabricInternetGatewayRuleResource(client, data)),
                     _internetGatewayRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
