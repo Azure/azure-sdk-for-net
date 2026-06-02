@@ -330,6 +330,66 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
+        /// Creates and stores a new Algorithm Key Pair (AKP) key in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="akpKeyOptions">The key options object containing information about the AKP key being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="akpKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual Response<KeyVaultKey> CreateAkpKey(CreateAkpKeyOptions akpKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(akpKeyOptions, nameof(akpKeyOptions));
+
+            var parameters = new KeyRequestParameters(akpKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateAkpKey)}");
+            scope.AddAttribute(OTelKeyNameKey, akpKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, parameters, () => new KeyVaultKey(akpKeyOptions.Name), cancellationToken, KeysPath, akpKeyOptions.Name, "/create");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates and stores a new Algorithm Key Pair (AKP) key in Key Vault. If the named key already exists, Azure Key Vault creates a new
+        /// version of the key. This operation requires the keys/create permission.
+        /// </summary>
+        /// <param name="akpKeyOptions">The key options object containing information about the AKP key being created.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="akpKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual async Task<Response<KeyVaultKey>> CreateAkpKeyAsync(CreateAkpKeyOptions akpKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(akpKeyOptions, nameof(akpKeyOptions));
+
+            var parameters = new KeyRequestParameters(akpKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateAkpKey)}");
+            scope.AddAttribute(OTelKeyNameKey, akpKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(akpKeyOptions.Name), cancellationToken, KeysPath, akpKeyOptions.Name, "/create").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// The update key operation changes specified attributes of a stored key and
         /// can be applied to any key type and key version stored in Azure Key Vault.
         /// </summary>

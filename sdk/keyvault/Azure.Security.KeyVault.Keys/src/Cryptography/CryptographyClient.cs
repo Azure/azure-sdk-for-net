@@ -740,6 +740,87 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
+        /// Signs the specified digest using an Algorithm Key Pair (AKP) key (for example, an ML-DSA key)
+        /// where the signing algorithm is determined by the key itself.
+        /// </summary>
+        /// <param name="digest">The data to sign. For AKP (ML-DSA) keys this is the raw message; no pre-hashing is required.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
+        /// along with all other information needed to verify it. This information should be stored with the signature.
+        /// </returns>
+        /// <remarks>
+        /// This overload is intended for keys of type <see cref="KeyType.Akp"/> or <see cref="KeyType.AkpHsm"/>.
+        /// For all other key types, use <see cref="SignAsync(SignatureAlgorithm, byte[], CancellationToken)"/>
+        /// and pass an explicit <see cref="SignatureAlgorithm"/>; otherwise the service will return an error.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="digest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Task<SignResult> SignAsync(byte[] digest, CancellationToken cancellationToken = default) =>
+            SignAsync(default, digest, cancellationToken);
+
+        /// <summary>
+        /// Signs the specified digest using an Algorithm Key Pair (AKP) key (for example, an ML-DSA key)
+        /// where the signing algorithm is determined by the key itself.
+        /// </summary>
+        /// <param name="digest">The data to sign. For AKP (ML-DSA) keys this is the raw message; no pre-hashing is required.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the sign operation. The returned <see cref="SignResult"/> contains the signature
+        /// along with all other information needed to verify it. This information should be stored with the signature.
+        /// </returns>
+        /// <remarks>
+        /// This overload is intended for keys of type <see cref="KeyType.Akp"/> or <see cref="KeyType.AkpHsm"/>.
+        /// For all other key types, use <see cref="Sign(SignatureAlgorithm, byte[], CancellationToken)"/>
+        /// and pass an explicit <see cref="SignatureAlgorithm"/>; otherwise the service will return an error.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="digest"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual SignResult Sign(byte[] digest, CancellationToken cancellationToken = default) =>
+            Sign(default, digest, cancellationToken);
+
+        /// <summary>
+        /// Verifies the specified signature using an Algorithm Key Pair (AKP) key (for example, an ML-DSA key)
+        /// where the verification algorithm is determined by the key itself.
+        /// </summary>
+        /// <param name="digest">The data corresponding to the signature. For AKP (ML-DSA) keys this is the raw message; no pre-hashing is required.</param>
+        /// <param name="signature">The signature to verify.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property
+        /// of the returned <see cref="VerifyResult"/> will be set to true.
+        /// </returns>
+        /// <remarks>
+        /// This overload is intended for keys of type <see cref="KeyType.Akp"/> or <see cref="KeyType.AkpHsm"/>.
+        /// For all other key types, use <see cref="VerifyAsync(SignatureAlgorithm, byte[], byte[], CancellationToken)"/>
+        /// and pass an explicit <see cref="SignatureAlgorithm"/>; otherwise the service will return an error.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="digest"/> or <paramref name="signature"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Task<VerifyResult> VerifyAsync(byte[] digest, byte[] signature, CancellationToken cancellationToken = default) =>
+            VerifyAsync(default, digest, signature, cancellationToken);
+
+        /// <summary>
+        /// Verifies the specified signature using an Algorithm Key Pair (AKP) key (for example, an ML-DSA key)
+        /// where the verification algorithm is determined by the key itself.
+        /// </summary>
+        /// <param name="digest">The data corresponding to the signature. For AKP (ML-DSA) keys this is the raw message; no pre-hashing is required.</param>
+        /// <param name="signature">The signature to verify.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the verify operation. If the signature is valid the <see cref="VerifyResult.IsValid"/> property
+        /// of the returned <see cref="VerifyResult"/> will be set to true.
+        /// </returns>
+        /// <remarks>
+        /// This overload is intended for keys of type <see cref="KeyType.Akp"/> or <see cref="KeyType.AkpHsm"/>.
+        /// For all other key types, use <see cref="Verify(SignatureAlgorithm, byte[], byte[], CancellationToken)"/>
+        /// and pass an explicit <see cref="SignatureAlgorithm"/>; otherwise the service will return an error.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="digest"/> or <paramref name="signature"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual VerifyResult Verify(byte[] digest, byte[] signature, CancellationToken cancellationToken = default) =>
+            Verify(default, digest, signature, cancellationToken);
+        /// <summary>
         /// Signs the specified digest.
         /// </summary>
         /// <param name="algorithm">The <see cref="SignatureAlgorithm"/> to use.</param>

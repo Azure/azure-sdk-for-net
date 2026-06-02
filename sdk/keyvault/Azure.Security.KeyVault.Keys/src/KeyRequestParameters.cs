@@ -17,6 +17,7 @@ namespace Azure.Security.KeyVault.Keys
         private const string TagsPropertyName = "tags";
         private const string PublicExponentPropertyName = "public_exponent";
         private const string ReleasePolicyPropertyName = "release_policy";
+        private const string AlgorithmPropertyName = "alg";
 
         private static readonly JsonEncodedText s_keyTypePropertyNameBytes = JsonEncodedText.Encode(KeyTypePropertyName);
         private static readonly JsonEncodedText s_keySizePropertyNameBytes = JsonEncodedText.Encode(KeySizePropertyName);
@@ -26,6 +27,7 @@ namespace Azure.Security.KeyVault.Keys
         private static readonly JsonEncodedText s_tagsPropertyNameBytes = JsonEncodedText.Encode(TagsPropertyName);
         private static readonly JsonEncodedText s_publicExponentPropertyNameBytes = JsonEncodedText.Encode(PublicExponentPropertyName);
         private static readonly JsonEncodedText s_releasePolicyPropertyNameBytes = JsonEncodedText.Encode(ReleasePolicyPropertyName);
+        private static readonly JsonEncodedText s_algorithmPropertyNameBytes = JsonEncodedText.Encode(AlgorithmPropertyName);
 
         private KeyAttributes _attributes;
 
@@ -41,6 +43,7 @@ namespace Azure.Security.KeyVault.Keys
         public KeyCurveName? Curve { get; set; }
         public int? PublicExponent { get; set; }
         public KeyReleasePolicy ReleasePolicy { get; set; }
+        public AkpAlgorithm? Algorithm { get; set; }
 
         internal KeyRequestParameters(KeyProperties key, IEnumerable<KeyOperation> operations)
         {
@@ -132,6 +135,15 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
+        internal KeyRequestParameters(CreateAkpKeyOptions akpKey)
+            :this(akpKey.KeyType , akpKey)
+        {
+            if (akpKey.Algorithm.HasValue)
+            {
+                Algorithm = akpKey.Algorithm.Value;
+            }
+        }
+
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)
         {
             if (KeyType != default)
@@ -147,6 +159,11 @@ namespace Azure.Security.KeyVault.Keys
             if (Curve.HasValue)
             {
                 json.WriteString(s_curveNamePropertyNameBytes, Curve.Value.ToString());
+            }
+
+            if (Algorithm.HasValue)
+            {
+                json.WriteString(s_algorithmPropertyNameBytes, Algorithm.Value.ToString());
             }
 
             if (_attributes.ShouldSerialize)
