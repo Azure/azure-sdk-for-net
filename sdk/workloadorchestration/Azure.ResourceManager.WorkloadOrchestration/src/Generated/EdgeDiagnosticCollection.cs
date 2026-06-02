@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _diagnosticsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, diagnosticName, EdgeDiagnosticData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeDiagnosticResource> operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(
-                    new EdgeDiagnosticOperationSource(Client),
+                    new EdgeDiagnosticResourceOperationSource(Client),
                     _diagnosticsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _diagnosticsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, diagnosticName, EdgeDiagnosticData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeDiagnosticResource> operation = new WorkloadOrchestrationArmOperation<EdgeDiagnosticResource>(
-                    new EdgeDiagnosticOperationSource(Client),
+                    new EdgeDiagnosticResourceOperationSource(Client),
                     _diagnosticsClientDiagnostics,
                     Pipeline,
                     message.Request,

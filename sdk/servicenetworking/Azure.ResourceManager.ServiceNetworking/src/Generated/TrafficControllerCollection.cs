@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _trafficControllerInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, TrafficControllerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceNetworkingArmOperation<TrafficControllerResource> operation = new ServiceNetworkingArmOperation<TrafficControllerResource>(
-                    new TrafficControllerOperationSource(Client),
+                    new TrafficControllerResourceOperationSource(Client),
                     _trafficControllerInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _trafficControllerInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, TrafficControllerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceNetworkingArmOperation<TrafficControllerResource> operation = new ServiceNetworkingArmOperation<TrafficControllerResource>(
-                    new TrafficControllerOperationSource(Client),
+                    new TrafficControllerResourceOperationSource(Client),
                     _trafficControllerInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,

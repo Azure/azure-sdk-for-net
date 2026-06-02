@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, NewRelicObservabilityTagRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NewRelicObservabilityArmOperation<NewRelicObservabilityTagRuleResource> operation = new NewRelicObservabilityArmOperation<NewRelicObservabilityTagRuleResource>(
-                    new NewRelicObservabilityTagRuleOperationSource(Client),
+                    new NewRelicObservabilityTagRuleResourceOperationSource(Client),
                     _tagRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 HttpMessage message = _tagRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleSetName, NewRelicObservabilityTagRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NewRelicObservabilityArmOperation<NewRelicObservabilityTagRuleResource> operation = new NewRelicObservabilityArmOperation<NewRelicObservabilityTagRuleResource>(
-                    new NewRelicObservabilityTagRuleOperationSource(Client),
+                    new NewRelicObservabilityTagRuleResourceOperationSource(Client),
                     _tagRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
