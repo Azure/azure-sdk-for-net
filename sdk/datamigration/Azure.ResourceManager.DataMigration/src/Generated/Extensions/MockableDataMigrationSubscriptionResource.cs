@@ -349,13 +349,13 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataMigrationSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataMigrationSku> GetSkusAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataMigrationSku> GetSkusResourceSkusAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusGetSkusAsyncCollectionResultOfT(ResourceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSkus");
+            return new ResourceSkusGetSkusResourceSkusAsyncCollectionResultOfT(ResourceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus");
         }
 
         /// <summary>
@@ -377,13 +377,13 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataMigrationSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataMigrationSku> GetSkus(CancellationToken cancellationToken = default)
+        public virtual Pageable<DataMigrationSku> GetSkusResourceSkus(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceSkusGetSkusCollectionResultOfT(ResourceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSkus");
+            return new ResourceSkusGetSkusResourceSkusCollectionResultOfT(ResourceSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus");
         }
 
         /// <summary>

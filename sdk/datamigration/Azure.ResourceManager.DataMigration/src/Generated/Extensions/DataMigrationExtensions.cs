@@ -871,36 +871,36 @@ namespace Azure.ResourceManager.DataMigration
         /// The skus action returns the list of SKUs that DMS (classic) supports.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetSkusAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetSkusResourceSkusAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataMigrationSku"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataMigrationSku> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DataMigrationSku> GetSkusResourceSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetSkusAsync(cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetSkusResourceSkusAsync(cancellationToken);
         }
 
         /// <summary>
         /// The skus action returns the list of SKUs that DMS (classic) supports.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetSkus(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetSkusResourceSkus(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataMigrationSku"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataMigrationSku> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<DataMigrationSku> GetSkusResourceSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetSkus(cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetSkusResourceSkus(cancellationToken);
         }
 
         /// <summary>

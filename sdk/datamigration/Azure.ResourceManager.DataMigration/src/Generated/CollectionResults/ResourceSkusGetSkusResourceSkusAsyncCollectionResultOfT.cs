@@ -15,19 +15,19 @@ using Azure.ResourceManager.DataMigration.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    internal partial class ResourceSkusGetSkusAsyncCollectionResultOfT : AsyncPageable<DataMigrationSku>
+    internal partial class ResourceSkusGetSkusResourceSkusAsyncCollectionResultOfT : AsyncPageable<DataMigrationSku>
     {
         private readonly ResourceSkus _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ResourceSkusGetSkusAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ResourceSkusGetSkusResourceSkusAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ResourceSkus client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ResourceSkusGetSkusAsyncCollectionResultOfT(ResourceSkus client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ResourceSkusGetSkusResourceSkusAsyncCollectionResultOfT(ResourceSkus client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.DataMigration
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ResourceSkusGetSkusAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ResourceSkusGetSkusResourceSkusAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ResourceSkusGetSkusAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ResourceSkusGetSkusResourceSkusAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DataMigrationSku>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetSkusRequest(nextLink, _subscriptionId, _context) : _client.CreateGetSkusRequest(_subscriptionId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetSkusResourceSkusRequest(nextLink, _subscriptionId, _context) : _client.CreateGetSkusResourceSkusRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
