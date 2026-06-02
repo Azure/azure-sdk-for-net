@@ -33,9 +33,8 @@ namespace Azure.Generator.Management.Providers
         private readonly IReadOnlyList<ParameterProvider> _extraCtorParameters;
         private readonly IReadOnlyList<FieldProvider> _extraFields;
         private readonly ResourceClientProvider _resource;
-        // All List-kind methods that should produce a GetAll overload. Ordered so the canonical (broadest-scope)
-        // entry comes first; that entry drives the collection's secondary contextual path / extra ctor parameters.
         private readonly IReadOnlyList<ResourceMethod> _getAlls;
+        private readonly IReadOnlyList<ResourceMethod> _actions;
         private readonly ResourceMethod? _create;
         private readonly ResourceMethod? _get;
 
@@ -58,14 +57,12 @@ namespace Azure.Generator.Management.Providers
             _resource = resource;
 
             // Initialize client info dictionary using extension method
-            _clientInfos = resourceMetadata.CreateClientInfosMap(this);
+            _clientInfos = resourceMetadata.CreateClientInfosMap(this, resourceMethods);
 
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
-            // contextualPath is the request path pattern of the parent resource - it determines this collection's
-            // scope and is also used by InitializeMethods to rank list operations from broadest to narrowest scope.
             var contextualPath = GetContextualPath(resourceMetadata);
-            (_get, _create, _getAlls) = InitializeMethods(resourceMethods, contextualPath);
+            (_get, _create, _getAlls, _actions) = InitializeMethods(resourceMethods, contextualPath);
             _operationContext = InitializeContext(this, contextualPath, _getAlls.Count > 0 ? _getAlls[0] : null);
 
             // this depends on _getAlls being initialized
@@ -79,8 +76,6 @@ namespace Azure.Generator.Management.Providers
                 return OperationContext.Create(contextualPath);
             }
 
-            // The canonical GetAll - the entry with the fewest extra variable path segments beyond the
-            // collection's contextual path - drives the secondary contextual path and extra ctor parameters.
             var secondaryContextualPath = canonicalGetAll.OperationPath;
             // validate the contextualPath should be an ancestor of the secondaryContextualPath, otherwise report diagnostic.
             if (!contextualPath.IsAncestorOf(secondaryContextualPath))
@@ -132,8 +127,6 @@ namespace Azure.Generator.Management.Providers
                 var parameter = new ParameterProvider(
                     contextualParameter.VariableName,
                     $"The {contextualParameter.VariableName} for the resource.",
-                    // _getAlls is non-empty here because _operationContext.SecondaryContextualPathParameters is only
-                    // populated when InitializeContext received a canonical GetAll from a non-empty _getAlls list.
                     ResourceHelpers.GetRequestPathParameterType(contextualParameter.VariableName, _getAlls[0].InputMethod));
                 var field = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, parameter.Type, $"_{contextualParameter.VariableName}", this, description: $"The {contextualParameter.VariableName}.");
                 parameter.Field = field;
@@ -143,13 +136,14 @@ namespace Azure.Generator.Management.Providers
             return (extraParameters, extraFields);
         }
 
-        private static (ResourceMethod? Get, ResourceMethod? Create, IReadOnlyList<ResourceMethod> GetAlls) InitializeMethods(
+        private static (ResourceMethod? Get, ResourceMethod? Create, IReadOnlyList<ResourceMethod> GetAlls, IReadOnlyList<ResourceMethod> Actions) InitializeMethods(
             IReadOnlyList<ResourceMethod> resourceMethods,
             RequestPathPattern contextualPath)
         {
             ResourceMethod? getMethod = null;
             ResourceMethod? createMethod = null;
             var listMethods = new List<ResourceMethod>();
+            var actionMethods = new List<ResourceMethod>();
 
             foreach (var method in resourceMethods)
             {
@@ -159,24 +153,20 @@ namespace Azure.Generator.Management.Providers
                         getMethod ??= method;
                         break;
                     case ResourceOperationKind.List:
-                        // collect all list operations - tuple resources may have multiple list operations
-                        // at different parent scopes, each producing a distinct GetAll overload.
                         listMethods.Add(method);
                         break;
                     case ResourceOperationKind.Create:
                         createMethod ??= method;
                         break;
+                    case ResourceOperationKind.CollectionAction:
+                        actionMethods.Add(method);
+                        break;
                 }
             }
 
-            return (getMethod, createMethod, SortGetAllMethodsByScopeBreadth(listMethods, contextualPath));
+            return (getMethod, createMethod, SortGetAllMethodsByScopeBreadth(listMethods, contextualPath), actionMethods);
         }
 
-        /// <summary>
-        /// Orders list methods so the broadest-scope (canonical) entry is first. The canonical entry has the
-        /// fewest extra variable path segments beyond the collection's contextual path; it drives the
-        /// collection's secondary contextual path, extra ctor parameters, and the parameterless GetAll() overload.
-        /// </summary>
         private static IReadOnlyList<ResourceMethod> SortGetAllMethodsByScopeBreadth(
             IReadOnlyList<ResourceMethod> listMethods,
             RequestPathPattern contextualPath)
@@ -193,8 +183,6 @@ namespace Azure.Generator.Management.Providers
 
         private static int CountExtraVariableSegments(RequestPathPattern contextualPath, RequestPathPattern operationPath)
         {
-            // If the operation path is not on the same branch as the contextual path, deprioritize it so
-            // a same-branch list still wins canonical selection.
             if (!contextualPath.IsAncestorOf(operationPath))
             {
                 return int.MaxValue;
@@ -378,11 +366,39 @@ namespace Azure.Generator.Management.Providers
             methods.AddRange(BuildCreateOrUpdateMethods());
             methods.AddRange(BuildGetMethods());
             methods.AddRange(BuildGetAllMethods());
+            methods.AddRange(BuildActionMethods());
             methods.AddRange(BuildExistsMethods());
             methods.AddRange(BuildGetIfExistsMethods());
             methods.AddRange(BuildEnumeratorMethods());
 
             return [.. methods];
+        }
+
+        private MethodProvider[] BuildActionMethods()
+        {
+            if (_actions.Count == 0)
+            {
+                return [];
+            }
+
+            var methods = new List<MethodProvider>(_actions.Count * 2);
+            foreach (var action in _actions)
+            {
+                methods.Add(BuildActionMethod(action, true));
+                methods.Add(BuildActionMethod(action, false));
+            }
+
+            return [.. methods];
+        }
+
+        private MethodProvider BuildActionMethod(ResourceMethod action, bool isAsync)
+        {
+            var restClientInfo = _clientInfos[action.InputClient];
+            return action.InputMethod switch
+            {
+                InputPagingServiceMethod pagingAction => new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingAction, isAsync, methodName: null, explicitResourceClient: _resource),
+                _ => BuildNonPagingResourceMethod(action.InputMethod, restClientInfo, isAsync, methodName: null, explicitResourceClient: _resource)
+            };
         }
 
         private MethodProvider[] BuildGetAllMethods()
@@ -399,8 +415,6 @@ namespace Azure.Generator.Management.Providers
                 var sync = BuildGetAllMethod(listMethod, false);
                 var async = BuildGetAllMethod(listMethod, true);
 
-                // Cache the canonical sync provider (the broadest-scope GetAll, always at index 0)
-                // for enumerator decisions.
                 if (i == 0)
                 {
                     _getAllSyncMethodProvider = sync;
@@ -463,20 +477,22 @@ namespace Azure.Generator.Management.Providers
             return getAll.InputMethod switch
             {
                 InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _operationContext, restClientInfo, pagingGetAll, isAsync, methodName, _resource),
-                _ => BuildNonPagingGetAllMethod(getAll.InputMethod, restClientInfo, isAsync, methodName)
+                _ => BuildNonPagingResourceMethod(getAll.InputMethod, restClientInfo, isAsync, methodName, explicitResourceClient: _resource)
             };
         }
 
-        private MethodProvider BuildNonPagingGetAllMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName)
+        private MethodProvider BuildNonPagingResourceMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName, ResourceClientProvider? explicitResourceClient)
         {
-            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable.
+            // Long-running operations are excluded: an LRO returning an array is surfaced as
+            // ArmOperation<IReadOnlyList<T>> instead of a pageable.
             var responseBodyType = method.GetResponseBodyType();
-            if (responseBodyType != null && responseBodyType.IsList)
+            if (responseBodyType != null && responseBodyType.IsList && !method.IsLongRunningOperation())
             {
-                return new ArrayResponseOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, _resource);
+                return new ArrayResponseOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient);
             }
 
-            return new ResourceOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName);
+            return new ResourceOperationMethodProvider(this, _operationContext, clientInfo, method, isAsync, methodName, explicitResourceClient: explicitResourceClient);
         }
 
         private MethodProvider? BuildGetMethod(bool isAsync)

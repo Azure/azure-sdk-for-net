@@ -5,16 +5,15 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects;
 
 [Experimental("AAIP001")]
-[CodeGenSuppress("GetAll", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(EvaluatorCategory?), typeof(CancellationToken))]
-[CodeGenSuppress("GetAllAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(EvaluatorCategory?), typeof(CancellationToken))]
-[CodeGenSuppress("GetAll", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetAllAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetAll", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetAllAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetAll", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetAllAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 public partial class EvaluatorGenerationJobs
 {
     /// <summary>
@@ -28,12 +27,9 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<EvaluatorGenerationJob> Create(EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
-        return Create(
-            job: job,
-            foundryFeatures: default,
-            operationId: operationId,
-            cancellationToken: cancellationToken
-        );
+        using BinaryContent jobInput = BinaryContent.Create(job.Inputs);
+        ClientResult result = Create(jobInput, default, operationId, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -47,12 +43,9 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<EvaluatorGenerationJob>> CreateAsync(EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
-        return await CreateAsync(
-            job: job,
-            foundryFeatures: default,
-            operationId: operationId,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
+        using BinaryContent jobInput = BinaryContent.Create(job.Inputs);
+        ClientResult result = await CreateAsync(jobInput, default, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
     }
 
     /// <summary> Gets the details of an evaluator generation job by its ID. </summary>
@@ -104,10 +97,9 @@ public partial class EvaluatorGenerationJobs
     /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
     /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
     /// </param>
-    /// <param name="category"> Filter evaluator generation jobs by category. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<EvaluatorGenerationJob> GetAll(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, EvaluatorCategory? category = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<EvaluatorGenerationJob> GetAll(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAICollectionResultOfT<EvaluatorGenerationJob>(
             Pipeline,
@@ -118,10 +110,9 @@ public partial class EvaluatorGenerationJobs
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
-                    category: localCollectionOptions.Filters.Count > 0 ? localCollectionOptions.Filters[0] : null,
                     options: localRequestOptions),
             dataItemDeserializer: EvaluatorGenerationJob.DeserializeEvaluatorGenerationJob,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [category?.ToString()]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: []),
             cancellationToken.ToRequestOptions());
     }
 
@@ -144,10 +135,9 @@ public partial class EvaluatorGenerationJobs
     /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
     /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
     /// </param>
-    /// <param name="category"> Filter evaluator generation jobs by category. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<EvaluatorGenerationJob> GetAllAsync(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, EvaluatorCategory? category = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<EvaluatorGenerationJob> GetAllAsync(int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAIAsyncCollectionResultOfT<EvaluatorGenerationJob>(
             Pipeline,
@@ -158,10 +148,9 @@ public partial class EvaluatorGenerationJobs
                     order: localCollectionOptions.Order,
                     after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
-                    category: localCollectionOptions.Filters.Count > 0 ? localCollectionOptions.Filters[0] : null,
                     options: localRequestOptions),
             dataItemDeserializer: EvaluatorGenerationJob.DeserializeEvaluatorGenerationJob,
-            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: [category?.ToString()]),
+            new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, filters: []),
             cancellationToken.ToRequestOptions());
     }
 
@@ -204,9 +193,9 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual void Delete(string jobId, CancellationToken cancellationToken = default)
+    public virtual ClientResult Delete(string jobId, CancellationToken cancellationToken = default)
     {
-        Delete(
+        return Delete(
             jobId: jobId,
             foundryFeatures: default,
             cancellationToken: cancellationToken);
@@ -221,9 +210,9 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task DeleteAsync(string jobId, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult> DeleteAsync(string jobId, CancellationToken cancellationToken = default)
     {
-        await DeleteAsync(
+        return await DeleteAsync(
             jobId: jobId,
             foundryFeatures: default,
             cancellationToken: cancellationToken).ConfigureAwait(false);

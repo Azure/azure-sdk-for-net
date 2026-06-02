@@ -81,7 +81,7 @@ private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
         memory: "1Gi"
     )
     {
-        Image = dockerImage,
+        ContainerConfiguration = new(dockerImage)
     };
     return agentDefinition;
 }
@@ -177,30 +177,18 @@ ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClien
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 ```
 
-6. Create the response client to communicate with an Agent and get the response.
-
-**Note:** In this scenario we cannot use the `ProjectOpenAIClient` from `projectClient.ProjectOpenAIClient` property as we need to access customized endpoint, for the Agent, we have created. We set its name in `ProjectOpenAIClientOptions`.
+6. Create the response client to communicate with an Agent and get the response. In this case we will use `GetProjectResponsesClientForAgentEndpoint` method.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Sync
-ProjectOpenAIClientOptions responsesOptions = new()
-{
-    AgentName = agentVersion.Name
-};
-ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
-ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
 ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
 Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
-ProjectOpenAIClientOptions responsesOptions = new()
-{
-    AgentName = agentVersion.Name
-};
-ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
-ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
 ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 Console.WriteLine(response.GetOutputText());
 ```
@@ -209,10 +197,10 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:DeleteHostedAgent_HostedAgent_Sync
-projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name);
+projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
 ```
 
 Asynchronous sample:
 ```C# Snippet:DeleteHostedAgent_HostedAgent_Async
-await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name);
+await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
 ```

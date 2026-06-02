@@ -36,11 +36,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
             writer.WritePropertyName("expressRouteCircuitId"u8);
             writer.WriteStringValue(ExpressRouteCircuitId);
-            if (Optional.IsDefined(ExpressRouteAuthorizationKey))
-            {
-                writer.WritePropertyName("expressRouteAuthorizationKey"u8);
-                writer.WriteStringValue(ExpressRouteAuthorizationKey);
-            }
+            writer.WritePropertyName("expressRouteAuthorizationKey"u8);
+            writer.WriteStringValue(ExpressRouteAuthorizationKey);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

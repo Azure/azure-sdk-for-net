@@ -68,6 +68,7 @@ import {
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
   extensionResourceOperationName,
+  isResourceCollectionAction,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
   builtInResourceOperationName
@@ -424,6 +425,8 @@ function convertResolvedResourceToMetadata(
           methodId,
           kind: isResourceList
             ? ResourceOperationKind.List
+            : isResourceCollectionAction(sdkMethod)
+            ? ResourceOperationKind.CollectionAction
             : ResourceOperationKind.Action,
           operationPath: opPath,
           scope: buildScopeInfoFromPath(opPath)

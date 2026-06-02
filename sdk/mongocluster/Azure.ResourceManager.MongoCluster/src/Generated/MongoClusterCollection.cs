@@ -28,10 +28,6 @@ namespace Azure.ResourceManager.MongoCluster
     {
         private readonly ClientDiagnostics _mongoClustersClientDiagnostics;
         private readonly MongoClusters _mongoClustersRestClient;
-        private readonly ClientDiagnostics _privateLinksClientDiagnostics;
-        private readonly PrivateLinks _privateLinksRestClient;
-        private readonly ClientDiagnostics _replicasClientDiagnostics;
-        private readonly Replicas _replicasRestClient;
 
         /// <summary> Initializes a new instance of MongoClusterCollection for mocking. </summary>
         protected MongoClusterCollection()
@@ -46,10 +42,6 @@ namespace Azure.ResourceManager.MongoCluster
             TryGetApiVersion(MongoClusterResource.ResourceType, out string mongoClusterApiVersion);
             _mongoClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", MongoClusterResource.ResourceType.Namespace, Diagnostics);
             _mongoClustersRestClient = new MongoClusters(_mongoClustersClientDiagnostics, Pipeline, Endpoint, mongoClusterApiVersion ?? "2025-09-01");
-            _privateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", MongoClusterResource.ResourceType.Namespace, Diagnostics);
-            _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Endpoint, mongoClusterApiVersion ?? "2025-09-01");
-            _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", MongoClusterResource.ResourceType.Namespace, Diagnostics);
-            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, mongoClusterApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -102,7 +94,7 @@ namespace Azure.ResourceManager.MongoCluster
                 HttpMessage message = _mongoClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mongoClusterName, MongoClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MongoClusterArmOperation<MongoClusterResource> operation = new MongoClusterArmOperation<MongoClusterResource>(
-                    new MongoClusterOperationSource(Client),
+                    new MongoClusterResourceOperationSource(Client),
                     _mongoClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -160,7 +152,7 @@ namespace Azure.ResourceManager.MongoCluster
                 HttpMessage message = _mongoClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, mongoClusterName, MongoClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MongoClusterArmOperation<MongoClusterResource> operation = new MongoClusterArmOperation<MongoClusterResource>(
-                    new MongoClusterOperationSource(Client),
+                    new MongoClusterResourceOperationSource(Client),
                     _mongoClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -25,7 +25,7 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
             memory: "1Gi"
         )
         {
-            Image = dockerImage,
+            ContainerConfiguration = new(dockerImage)
         };
         return agentDefinition;
     }
@@ -88,17 +88,12 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
         #endregion
         #region Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
-        ProjectOpenAIClientOptions responsesOptions = new()
-        {
-            AgentName = agentVersion.Name
-        };
-        ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
-        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:DeleteHostedAgent_HostedAgent_Async
-        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name);
+        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
         #endregion
     }
 
@@ -157,17 +152,12 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
         #endregion
         #region Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Sync
-        ProjectOpenAIClientOptions responsesOptions = new()
-        {
-            AgentName = agentVersion.Name
-        };
-        ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
-        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+        ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
         ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
         Console.WriteLine(response.GetOutputText());
         #endregion
         #region Snippet:DeleteHostedAgent_HostedAgent_Sync
-        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name);
+        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         #endregion
     }
 

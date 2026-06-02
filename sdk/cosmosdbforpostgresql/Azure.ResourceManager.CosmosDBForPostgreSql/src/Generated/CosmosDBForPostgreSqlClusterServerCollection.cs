@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     {
         private readonly ClientDiagnostics _serversClientDiagnostics;
         private readonly Servers _serversRestClient;
-        private readonly ClientDiagnostics _configurationsClientDiagnostics;
-        private readonly Configurations _configurationsRestClient;
 
         /// <summary> Initializes a new instance of CosmosDBForPostgreSqlClusterServerCollection for mocking. </summary>
         protected CosmosDBForPostgreSqlClusterServerCollection()
@@ -43,8 +41,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             TryGetApiVersion(CosmosDBForPostgreSqlClusterServerResource.ResourceType, out string cosmosDBForPostgreSqlClusterServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlClusterServerResource.ResourceType.Namespace, Diagnostics);
             _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlClusterServerApiVersion ?? "2023-03-02-preview");
-            _configurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDBForPostgreSql", CosmosDBForPostgreSqlClusterServerResource.ResourceType.Namespace, Diagnostics);
-            _configurationsRestClient = new Configurations(_configurationsClientDiagnostics, Pipeline, Endpoint, cosmosDBForPostgreSqlClusterServerApiVersion ?? "2023-03-02-preview");
             ValidateResourceId(id);
         }
 

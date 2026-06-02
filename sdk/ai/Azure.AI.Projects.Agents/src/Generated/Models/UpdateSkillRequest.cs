@@ -14,43 +14,22 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UpdateSkillRequest"/>. </summary>
-        internal UpdateSkillRequest()
+        /// <param name="defaultVersion"> The version identifier that the skill should point to. When set, the skill's default version will resolve to this version instead of the latest. </param>
+        internal UpdateSkillRequest(string defaultVersion)
         {
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            DefaultVersion = defaultVersion;
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateSkillRequest"/>. </summary>
-        /// <param name="description"> A human-readable description of the skill. </param>
-        /// <param name="instructions"> Instructions that define the behavior of the skill. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
+        /// <param name="defaultVersion"> The version identifier that the skill should point to. When set, the skill's default version will resolve to this version instead of the latest. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateSkillRequest(string description, string instructions, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateSkillRequest(string defaultVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Description = description;
-            Instructions = instructions;
-            Metadata = metadata;
+            DefaultVersion = defaultVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> A human-readable description of the skill. </summary>
-        public string Description { get; }
-
-        /// <summary> Instructions that define the behavior of the skill. </summary>
-        public string Instructions { get; }
-
-        /// <summary>
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </summary>
-        public IDictionary<string, string> Metadata { get; }
+        /// <summary> The version identifier that the skill should point to. When set, the skill's default version will resolve to this version instead of the latest. </summary>
+        public string DefaultVersion { get; }
     }
 }

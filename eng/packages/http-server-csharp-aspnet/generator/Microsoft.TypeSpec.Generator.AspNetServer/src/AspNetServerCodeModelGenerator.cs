@@ -3,6 +3,9 @@
 
 using System;
 using System.ComponentModel.Composition;
+using System.IO;
+using System.Linq;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -44,6 +47,21 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
         /// <inheritdoc/>
         public override AspNetServerOutputLibrary OutputLibrary { get; } = new();
 
+        internal string? CurrentApiVersion => InputLibrary.InputNamespace.ApiVersions.LastOrDefault();
+
+        internal string? CurrentApiVersionSegment =>
+            CurrentApiVersion is null ? null : $"V{CurrentApiVersion.Replace("-", string.Empty)}";
+
+        internal string GeneratedNamespace =>
+            CurrentApiVersionSegment is null
+                ? TypeFactory.PrimaryNamespace
+                : $"{TypeFactory.PrimaryNamespace}.Generated.{CurrentApiVersionSegment}";
+
+        internal string GeneratedDirectory =>
+            CurrentApiVersionSegment is null
+                ? Path.Combine("src", "Generated")
+                : Path.Combine("src", "Generated", CurrentApiVersionSegment);
+
         /// <inheritdoc/>
         protected override void Configure()
         {
@@ -63,9 +81,9 @@ namespace Microsoft.TypeSpec.Generator.AspNetServer
             // types from.
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ControllerBase).Assembly.Location));   // Microsoft.AspNetCore.Mvc.Core
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(IActionResult).Assembly.Location));    // Microsoft.AspNetCore.Mvc.Abstractions
+            AddMetadataReference(MetadataReference.CreateFromFile(typeof(ApiVersionAttribute).Assembly.Location)); // Asp.Versioning.Mvc
         }
     }
 }
-
 
 

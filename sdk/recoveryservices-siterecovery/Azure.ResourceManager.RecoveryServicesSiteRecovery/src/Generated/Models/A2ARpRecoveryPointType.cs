@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct A2ARpRecoveryPointType : IEquatable<A2ARpRecoveryPointType>
     {
         private readonly string _value;
+        /// <summary> Latest. </summary>
+        private const string LatestValue = "Latest";
+        /// <summary> LatestApplicationConsistent. </summary>
+        private const string LatestApplicationConsistentValue = "LatestApplicationConsistent";
+        /// <summary> LatestCrashConsistent. </summary>
+        private const string LatestCrashConsistentValue = "LatestCrashConsistent";
+        /// <summary> LatestProcessed. </summary>
+        private const string LatestProcessedValue = "LatestProcessed";
 
         /// <summary> Initializes a new instance of <see cref="A2ARpRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public A2ARpRecoveryPointType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LatestValue = "Latest";
-        private const string LatestApplicationConsistentValue = "LatestApplicationConsistent";
-        private const string LatestCrashConsistentValue = "LatestCrashConsistent";
-        private const string LatestProcessedValue = "LatestProcessed";
+            _value = value;
+        }
 
         /// <summary> Latest. </summary>
         public static A2ARpRecoveryPointType Latest { get; } = new A2ARpRecoveryPointType(LatestValue);
+
         /// <summary> LatestApplicationConsistent. </summary>
         public static A2ARpRecoveryPointType LatestApplicationConsistent { get; } = new A2ARpRecoveryPointType(LatestApplicationConsistentValue);
+
         /// <summary> LatestCrashConsistent. </summary>
         public static A2ARpRecoveryPointType LatestCrashConsistent { get; } = new A2ARpRecoveryPointType(LatestCrashConsistentValue);
+
         /// <summary> LatestProcessed. </summary>
         public static A2ARpRecoveryPointType LatestProcessed { get; } = new A2ARpRecoveryPointType(LatestProcessedValue);
+
         /// <summary> Determines if two <see cref="A2ARpRecoveryPointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(A2ARpRecoveryPointType left, A2ARpRecoveryPointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="A2ARpRecoveryPointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(A2ARpRecoveryPointType left, A2ARpRecoveryPointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="A2ARpRecoveryPointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="A2ARpRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator A2ARpRecoveryPointType(string value) => new A2ARpRecoveryPointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="A2ARpRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator A2ARpRecoveryPointType?(string value) => value == null ? null : new A2ARpRecoveryPointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is A2ARpRecoveryPointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(A2ARpRecoveryPointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -904,8 +905,7 @@ namespace Azure.Generator.Mgmt.Tests
         public void PopulateArguments_StringBodyParameter_UsesRequestContentCreate()
         {
             // When the body parameter is a string (framework type), should generate
-            // RequestContent.Create(BinaryData.FromObjectAsJson(body)) instead of
-            // string.ToRequestContent(body) which doesn't exist.
+            // RequestContent.Create(body) instead of string.ToRequestContent(body) which doesn't exist.
             var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
 
             var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
@@ -928,6 +928,58 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(displayString, Does.Not.Contain("string.ToRequestContent"));
             Assert.That(displayString, Does.Contain("RequestContent"));
             Assert.That(displayString, Does.Not.Contain("FromObjectAsJson"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_CollectionBodyParameter_UsesBinaryContentHelper()
+        {
+            ManagementMockHelpers.LoadMockPlugin();
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(IEnumerable<>), typeof(string)));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.That(arguments.Count, Is.EqualTo(1));
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Not.Contain("IEnumerable<string>.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("BinaryContentHelper.FromEnumerable"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_DictionaryBodyParameter_UsesBinaryContentHelper()
+        {
+            ManagementMockHelpers.LoadMockPlugin();
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(IDictionary<,>), typeof(string), typeof(string)));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.That(arguments.Count, Is.EqualTo(1));
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Not.Contain("IDictionary<string, string>.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("BinaryContentHelper.FromDictionary"));
         }
 
         [TestCase]
@@ -1013,6 +1065,153 @@ namespace Azure.Generator.Mgmt.Tests
             IReadOnlyList<CSharpType> args = Array.Empty<CSharpType>();
             bool isPublic = true;
             bool isStruct = false; // false = fixed enum (C# enum), true = extensible enum (readonly struct)
+            CSharpType? baseType = null;
+            Type underlyingEnumType = typeof(string); // non-null marks this as an enum type
+
+            return (CSharpType)ctor!.Invoke(new object?[] {
+                name, ns, isValueType, isNullable, declaringType,
+                args, isPublic, isStruct, baseType, underlyingEnumType
+            });
+        }
+
+        [TestCase]
+        public void PopulateArguments_NonNullableFixedEnumBody_UsesRequestContentCreateToSerialString()
+        {
+            // Regression test for issue #58627: a non-MRW body type (here a fixed enum) used to
+            // fall through to <BodyType>.ToRequestContent(body) which is never generated, causing
+            // CS0117. Fixed-enum body parameters should now serialize via RequestContent.Create(body.ToSerialString()).
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var fixedEnumType = CreateFixedEnumCSharpType("TestFixedEnum", "TestNs", isNullable: false);
+            var bodyParam = new ParameterProvider("body", $"", fixedEnumType);
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.That(arguments.Count, Is.EqualTo(1));
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Not.Contain("TestFixedEnum.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("RequestContent.Create"));
+            Assert.That(displayString, Does.Contain("body.ToSerialString()"));
+            Assert.That(displayString, Does.Not.Contain("?.ToSerialString()"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NullableFixedEnumBody_UsesTernaryWithNullConditionalToSerialString()
+        {
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var fixedEnumType = CreateFixedEnumCSharpType("TestFixedEnum", "TestNs", isNullable: true);
+            var bodyParam = new ParameterProvider("body", $"", fixedEnumType);
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.That(arguments.Count, Is.EqualTo(1));
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Not.Contain("TestFixedEnum.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("RequestContent.Create"));
+            Assert.That(displayString, Does.Contain("?.ToSerialString()"));
+            // Nullable body should be guarded by a body != null check.
+            Assert.That(displayString, Does.Contain("body != null"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NonNullableExtensibleEnumBody_UsesRequestContentCreateToString()
+        {
+            // Regression test for issue #58627: extensible-enum / union body parameters used to
+            // fall through to <BodyType>.ToRequestContent(body) which is never generated, causing
+            // CS0117. They should now serialize via RequestContent.Create(body.ToString()).
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var extensibleEnumType = CreateExtensibleEnumCSharpType("TestExtensibleEnum", "TestNs", isNullable: false);
+            var bodyParam = new ParameterProvider("body", $"", extensibleEnumType);
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.That(arguments.Count, Is.EqualTo(1));
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Not.Contain("TestExtensibleEnum.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("RequestContent.Create"));
+            Assert.That(displayString, Does.Contain("body.ToString()"));
+            Assert.That(displayString, Does.Not.Contain("?.ToString()"));
+            Assert.That(displayString, Does.Not.Contain("ToSerialString"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_NullableExtensibleEnumBody_UsesTernaryWithNullConditionalToString()
+        {
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var extensibleEnumType = CreateExtensibleEnumCSharpType("TestExtensibleEnum", "TestNs", isNullable: true);
+            var bodyParam = new ParameterProvider("body", $"", extensibleEnumType);
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.That(arguments.Count, Is.EqualTo(1));
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Not.Contain("TestExtensibleEnum.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("RequestContent.Create"));
+            Assert.That(displayString, Does.Contain("?.ToString()"));
+            Assert.That(displayString, Does.Contain("body != null"));
+            Assert.That(displayString, Does.Not.Contain("ToSerialString"));
+        }
+
+        /// <summary>
+        /// Creates a CSharpType that simulates a generated extensible enum (IsEnum=true, IsStruct=true).
+        /// </summary>
+        private static CSharpType CreateExtensibleEnumCSharpType(string name, string ns, bool isNullable)
+        {
+            var ctor = typeof(CSharpType).GetConstructor(
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance,
+                null,
+                new[] { typeof(string), typeof(string), typeof(bool), typeof(bool), typeof(CSharpType),
+                        typeof(IReadOnlyList<CSharpType>), typeof(bool), typeof(bool), typeof(CSharpType), typeof(Type) },
+                null);
+
+            bool isValueType = true;
+            CSharpType? declaringType = null;
+            IReadOnlyList<CSharpType> args = Array.Empty<CSharpType>();
+            bool isPublic = true;
+            bool isStruct = true; // true = extensible enum (readonly struct)
             CSharpType? baseType = null;
             Type underlyingEnumType = typeof(string); // non-null marks this as an enum type
 
