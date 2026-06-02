@@ -1,10 +1,10 @@
 # Release History
 
-## 4.10.0-beta.1 (2025-06-04)
+## 4.10.0-beta.1 (2026-06-02)
 
 ### Features Added
 
-- Added an experimental `PlatformManaged` property on `CertificatePolicy` for Azure Key Vault internal usage. Any calls using this property will fail and it is not recommended to be used at this point.
+- We added an experimental feature for Azure Key Vault internal usage. Any calls using this property will fail and is not recommended to be used at this point.
 - The default service version is now `2026-03-01-preview`.
 
 ## 4.9.0 (2026-05-26)
