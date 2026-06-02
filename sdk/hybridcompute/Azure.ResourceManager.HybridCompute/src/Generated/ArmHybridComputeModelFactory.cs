@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="source"> The source of the run command script. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
         /// <param name="protectedParameters"> The parameters used by the script. </param>
-        /// <param name="asyncExecution"> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </param>
+        /// <param name="isAsyncExecution"> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </param>
         /// <param name="runAsUser"> Specifies the user account on the machine when executing the run command. </param>
         /// <param name="runAsPassword"> Specifies the user account password on the machine when executing the run command. </param>
         /// <param name="timeoutInSeconds"> The timeout in seconds to execute the run command. </param>
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The machine run command instance view. </param>
         /// <returns> A new <see cref="HybridCompute.MachineRunCommandData"/> instance for mocking. </returns>
-        public static MachineRunCommandData MachineRunCommandData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineRunCommandScriptSource source = default, IEnumerable<RunCommandInputParameter> parameters = default, IEnumerable<RunCommandInputParameter> protectedParameters = default, bool? asyncExecution = default, string runAsUser = default, string runAsPassword = default, int? timeoutInSeconds = default, Uri outputBlobUri = default, Uri errorBlobUri = default, RunCommandManagedIdentity outputBlobManagedIdentity = default, RunCommandManagedIdentity errorBlobManagedIdentity = default, string provisioningState = default, MachineRunCommandInstanceView instanceView = default)
+        public static MachineRunCommandData MachineRunCommandData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineRunCommandScriptSource source = default, IEnumerable<RunCommandInputParameter> parameters = default, IEnumerable<RunCommandInputParameter> protectedParameters = default, bool? isAsyncExecution = default, string runAsUser = default, string runAsPassword = default, int? timeoutInSeconds = default, Uri outputBlobUri = default, Uri errorBlobUri = default, RunCommandManagedIdentity outputBlobManagedIdentity = default, RunCommandManagedIdentity errorBlobManagedIdentity = default, string provisioningState = default, MachineRunCommandInstanceView instanceView = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -772,11 +772,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                source is null && parameters is null && protectedParameters is null && asyncExecution is null && runAsUser is null && runAsPassword is null && timeoutInSeconds is null && outputBlobUri is null && errorBlobUri is null && outputBlobManagedIdentity is null && errorBlobManagedIdentity is null && provisioningState is null && instanceView is null ? default : new MachineRunCommandProperties(
+                source is null && parameters is null && protectedParameters is null && isAsyncExecution is null && runAsUser is null && runAsPassword is null && timeoutInSeconds is null && outputBlobUri is null && errorBlobUri is null && outputBlobManagedIdentity is null && errorBlobManagedIdentity is null && provisioningState is null && instanceView is null ? default : new MachineRunCommandProperties(
                     source,
                     (parameters ?? new ChangeTrackingList<RunCommandInputParameter>()).ToList(),
                     (protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>()).ToList(),
-                    asyncExecution,
+                    isAsyncExecution,
                     runAsUser,
                     runAsPassword,
                     timeoutInSeconds,
