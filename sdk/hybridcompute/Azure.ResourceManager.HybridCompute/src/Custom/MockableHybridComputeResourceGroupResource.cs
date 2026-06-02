@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ComponentModel;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -30,8 +31,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             Argument.AssertNotNull(arcSettings, nameof(arcSettings));
 
             ResourceIdentifier id = SettingsResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName);
-            Response<SettingsResource> response = await new SettingsResource(Client, id).UpdateAsync(arcSettings.ToArcSettingsData(), cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(ArcSettings.FromArcSettingsData(response.Value.Data), response.GetRawResponse());
+            Response<SettingsResource> response = await new SettingsResource(Client, id).UpdateAsync(ToArcSettingsData(arcSettings), cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(FromArcSettingsData(response.Value.Data), response.GetRawResponse());
         }
 
         /// <summary>
@@ -50,8 +51,33 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             Argument.AssertNotNull(arcSettings, nameof(arcSettings));
 
             ResourceIdentifier id = SettingsResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName);
-            Response<SettingsResource> response = new SettingsResource(Client, id).Update(arcSettings.ToArcSettingsData(), cancellationToken);
-            return Response.FromValue(ArcSettings.FromArcSettingsData(response.Value.Data), response.GetRawResponse());
+            Response<SettingsResource> response = new SettingsResource(Client, id).Update(ToArcSettingsData(arcSettings), cancellationToken);
+            return Response.FromValue(FromArcSettingsData(response.Value.Data), response.GetRawResponse());
+        }
+
+        private static ArcSettingsData ToArcSettingsData(ArcSettings arcSettings)
+        {
+            string tenantId = arcSettings.TenantId?.ToString();
+            SettingsGatewayProperties gatewayProperties = arcSettings.GatewayResourceId is null ? default : new SettingsGatewayProperties(arcSettings.GatewayResourceId, null);
+
+            return new ArcSettingsData(
+                arcSettings.Id,
+                arcSettings.Name,
+                arcSettings.ResourceType,
+                arcSettings.SystemData,
+                additionalBinaryDataProperties: null,
+                tenantId is null && gatewayProperties is null ? default : new SettingsProperties(tenantId, gatewayProperties, null));
+        }
+
+        private static ArcSettings FromArcSettingsData(ArcSettingsData data)
+        {
+            if (data is null)
+            {
+                return null;
+            }
+
+            Guid? tenantId = Guid.TryParse(data.TenantId, out Guid parsedTenantId) ? parsedTenantId : default(Guid?);
+            return new ArcSettings(data.Id, data.Name, data.ResourceType, data.SystemData, tenantId, data.GatewayResourceId, null);
         }
 
         // Backward-compat justification: the GA mockable resource group APIs exposed machine get overloads with an expand parameter.
