@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 HttpMessage message = _serverlessRuntimesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, InformaticaServerlessRuntimeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource> operation = new InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource>(
-                    new InformaticaServerlessRuntimeOperationSource(Client),
+                    new InformaticaServerlessRuntimeResourceOperationSource(Client),
                     _serverlessRuntimesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                 HttpMessage message = _serverlessRuntimesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverlessRuntimeName, InformaticaServerlessRuntimeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource> operation = new InformaticaDataManagementArmOperation<InformaticaServerlessRuntimeResource>(
-                    new InformaticaServerlessRuntimeOperationSource(Client),
+                    new InformaticaServerlessRuntimeResourceOperationSource(Client),
                     _serverlessRuntimesClientDiagnostics,
                     Pipeline,
                     message.Request,
