@@ -34,6 +34,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         public Uri VaultUri { get; set; }
 
+        protected CertificateClientOptions.ServiceVersion ServiceVersion => _serviceVersion;
+
         // Queue deletes, but poll on the top of the purge stack to increase likelihood of others being purged by then.
         private readonly ConcurrentQueue<string> _certificatesToDelete = new ConcurrentQueue<string>();
         private readonly ConcurrentStack<string> _certificatesToPurge = new ConcurrentStack<string>();
@@ -65,7 +67,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             return InstrumentClient
                 (new CertificateClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
-                    TestEnvironment.Credential,
+                    Mode == RecordedTestMode.Record ? new Azure.Identity.AzureCliCredential() : TestEnvironment.Credential,
                     InstrumentClientOptions(options)));
         }
 

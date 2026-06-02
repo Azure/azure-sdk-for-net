@@ -243,6 +243,47 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [RecordedTest]
+        public async Task VerifyCreateCertificateWithPlatformManaged()
+        {
+            if (ServiceVersion < CertificateClientOptions.ServiceVersion.V2026_03_01_Preview)
+            {
+                Assert.Ignore("PlatformManaged is only supported in V2026_03_01_Preview and later.");
+            }
+
+            string certName = Recording.GenerateId();
+
+            CertificatePolicy certificatePolicy = new CertificatePolicy
+            {
+                PlatformManaged = new PlatformManaged("PublicTLSServerAuth"),
+            };
+
+            // Service expects snake_case metadata.sans.dns_names. The published design doc
+            // shows metadata.subjectAlternateNames.dnsNames, but the deployed service rejects
+            // that shape; defer to the working contract.
+            certificatePolicy.PlatformManaged.Metadata["sans"] = BinaryData.FromObjectAsJson(
+                new Dictionary<string, string[]> { ["dns_names"] = new[] { "onecertdomain.contoso.com" } });
+
+            // Verifies the SDK can send a PlatformManaged create request and the service
+            // accepts the policy round-trip. We intentionally do not WaitForCompletionAsync:
+            // OneCert backend issuance is asynchronous service behavior, not SDK behavior,
+            // and the issuer registration is not always available in test environments.
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(certName, certificatePolicy);
+            operation = InstrumentOperation(operation);
+
+            RegisterForCleanup(certName);
+
+            Assert.NotNull(operation);
+            Assert.NotNull(operation.Id);
+
+            CertificatePolicy returnedPolicy = await Client.GetCertificatePolicyAsync(certName);
+
+            Assert.NotNull(returnedPolicy);
+            Assert.NotNull(returnedPolicy.PlatformManaged);
+            Assert.AreEqual("PublicTLSServerAuth", returnedPolicy.PlatformManaged.CertificateUsage);
+            Assert.IsTrue(returnedPolicy.PlatformManaged.Metadata.ContainsKey("sans"));
+        }
+
+        [RecordedTest]
         public async Task VerifyCertificateOperationError()
         {
             string issuerName = Recording.GenerateId();
