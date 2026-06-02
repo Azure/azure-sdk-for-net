@@ -58,10 +58,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PolyDeviceData IPersistableModel<PolyDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (PolyDeviceData)PersistableModelCreateCore(data, options);
-        }
+        PolyDeviceData IPersistableModel<PolyDeviceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PolyDeviceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PolyDeviceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -89,10 +86,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PolyDeviceData IJsonModel<PolyDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (PolyDeviceData)JsonModelCreateCore(ref reader, options);
-        }
+        PolyDeviceData IJsonModel<PolyDeviceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PolyDeviceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -119,8 +113,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            string kind = "unknown";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string kind = "unknown";
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -170,8 +164,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                kind,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                kind);
         }
     }
 }

@@ -114,8 +114,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
             string derivedProp = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,8 +187,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 derivedProp);
         }
     }

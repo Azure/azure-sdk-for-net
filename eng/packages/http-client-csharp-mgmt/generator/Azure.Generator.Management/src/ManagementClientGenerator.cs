@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Visitors;
-using Azure.Generator.Management.Providers;
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -51,19 +50,10 @@ namespace Azure.Generator.Management
         {
             if (provider is ModelFactoryProvider modelFactory)
             {
-                // Run model-factory repairs at write time, after all visitors have finalized model constructor
-                // shape/order. This keeps both current factory bodies and EBV overloads aligned with the final constructors.
-                ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+                // Model factory back-compat overloads can be synthesized from LastContractView
+                // after normal visitors run. Repair them here so the final methods being written
+                // preserve arguments that were moved into flattened model properties.
                 ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
-            }
-            else
-            {
-                ModelFactoryBackwardCompatHelper.FixConstructorCalls(provider.Methods);
-            }
-
-            foreach (var serialization in provider.SerializationProviders)
-            {
-                ModelFactoryBackwardCompatHelper.FixConstructorCalls(serialization.Methods);
             }
 
             return base.GetWriter(provider);

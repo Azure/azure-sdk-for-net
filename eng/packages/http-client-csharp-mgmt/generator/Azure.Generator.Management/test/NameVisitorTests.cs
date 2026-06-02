@@ -140,16 +140,5 @@ namespace Azure.Generator.Mgmt.Tests
             var type = plugin.Object.TypeFactory.CreateModel(model);
             Assert.That(type?.Properties[0].Name, Is.EqualTo("ETag"));
         }
-
-        [Test]
-        public void TestPatchModelRenameRespectsResourceDerivedClientNameOverride()
-        {
-            var (client, models, patchModel) = InputResourceData.ClientWithResourcePatchBodyEquivalentModelInstance();
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
-
-            var type = plugin.Object.TypeFactory.CreateModel(patchModel);
-
-            Assert.That(type?.Name, Is.EqualTo("OperationSpecificUpdateShape"));
-        }
     }
 }

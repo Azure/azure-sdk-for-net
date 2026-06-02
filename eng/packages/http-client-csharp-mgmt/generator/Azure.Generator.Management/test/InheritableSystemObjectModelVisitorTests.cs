@@ -1,13 +1,11 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Generator.Management;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
-using Azure.Generator.Management.Visitors;
-using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -18,87 +16,221 @@ using System.Reflection;
 
 namespace Azure.Generator.Mgmt.Tests
 {
-    public class InheritableSystemObjectModelVisitorTests
+    internal class InheritableSystemObjectModelVisitorTests
     {
-        [Test]
-        public void EnsureFrameworkTypeRegistered_RegistersBothTypes()
+        /// <summary>
+        /// Verifies that a model extending TrackedResource resolves to TrackedResourceData
+        /// as its base type, not ArmResource or any other incorrect type.
+        /// This reproduces the bug where the framework eagerly caches CSharpType.BaseType
+        /// during model construction. When model processing order causes the derived model
+        /// to be constructed before the base model's InheritableSystemObjectModelProvider,
+        /// the cached BaseType gets permanently set to the wrong value.
+        /// </summary>
+        [TestCase("Azure.ResourceManager.CommonTypes.TrackedResource", typeof(Azure.ResourceManager.Models.TrackedResourceData))]
+        [TestCase("Azure.ResourceManager.CommonTypes.ProxyResource", typeof(Azure.ResourceManager.Models.ResourceData))]
+        [TestCase("Azure.ResourceManager.CommonTypes.ExtensionResource", typeof(Azure.ResourceManager.Models.ResourceData))]
+        public void ResourceDataModelInheritsCorrectBaseType(string baseModelCrossLanguageId, System.Type expectedBaseType)
         {
-            // Set up the mock plugin to get access to CSharpTypeMap
-            var proxyResourceModel = InputFactory.Model(
-                "ProxyResource",
-                properties: [
+            // Arrange: Create a base model (TrackedResource/ProxyResource) and a derived model
+            var baseModel = new InputModelType(
+                "TrackedResource",
+                "Azure.ResourceManager.CommonTypes",
+                baseModelCrossLanguageId,
+                "public",
+                null,
+                null,
+                "ARM Tracked Resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [
                     InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
                     InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
                     InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
                 ],
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
 
-            // Set crossLanguageDefinitionId via reflection since it's not exposed in the factory
-            var crossLangProp = typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId));
-            crossLangProp!.GetSetMethod(true)!.Invoke(proxyResourceModel, ["Azure.ResourceManager.CommonTypes.ProxyResource"]);
+            var derivedModel = new InputModelType(
+                "MonitorResource",
+                "Samples.Models",
+                "MonitorResource",
+                "public",
+                null,
+                null,
+                "Monitor Resource extending tracked resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [InputFactory.Property("monitorName", InputPrimitiveType.String)],
+                baseModel,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
 
+            // Load with derived model FIRST to stress model ordering
             var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [proxyResourceModel]);
+                inputModels: () => [derivedModel, baseModel]);
 
-            // Force creation of the model which triggers the visitor
-            var modelProvider = plugin.Object.TypeFactory.CreateModel(proxyResourceModel);
-            Assert.That(modelProvider, Is.Not.Null);
-            Assert.That(modelProvider, Is.InstanceOf<SystemObjectModelProvider>());
+            // Act - create the derived model
+            var derivedType = plugin.Object.TypeFactory.CreateModel(derivedModel);
 
-            // The CSharpTypeMap should now have both framework and non-framework entries
-            var typeMap = plugin.Object.TypeFactory.CSharpTypeMap;
+            // Assert
+            Assert.That(derivedType, Is.Not.Null, "Derived model should be created");
+            Assert.That(derivedType!.BaseModelProvider, Is.Not.Null, "Derived model should have a base model provider");
 
-            // Check that a framework CSharpType for ResourceData can be found
-            var frameworkResourceData = new CSharpType(typeof(ResourceData));
-            Assert.That(typeMap.ContainsKey(frameworkResourceData), Is.True,
-                "CSharpTypeMap should contain a framework CSharpType entry for ResourceData after EnsureFrameworkTypeRegistered");
+            // The critical assertion: the derived model's CSharpType.BaseType should be the
+            // correct framework type (TrackedResourceData/ResourceData), not ArmResource.
+            var actualBaseType = derivedType.Type.BaseType;
+            Assert.That(actualBaseType, Is.Not.Null, "Derived model's CSharpType.BaseType should not be null");
+            Assert.That(actualBaseType!.IsFrameworkType, Is.True,
+                $"Expected framework type {expectedBaseType.Name} but got non-framework type: {actualBaseType.Name} ({actualBaseType.Namespace})");
+            Assert.That(actualBaseType.FrameworkType, Is.EqualTo(expectedBaseType),
+                $"Derived model should inherit from {expectedBaseType.Name}");
         }
 
+        /// <summary>
+        /// Verifies that a PATCH model reparented (via @@hierarchyBuilding) under a sibling
+        /// resource that itself extends TrackedResource still exposes the public
+        /// (AzureLocation location) constructor chaining to base(location). Reproduces the
+        /// real scenario from https://github.com/Azure/azure-sdk-for-net/issues/58490 where
+        /// the PATCH envelope has multiple properties (so FlattenPropertyVisitor's safe-flatten
+        /// path does not run) and the chain is patch -> resource -> TrackedResource.
+        /// </summary>
         [Test]
-        public void ModelWithInheritableSystemBase_PropertiesAreFiltered()
+        public void PatchModelExtendingTrackedResourceKeepsLocationConstructor()
         {
-            // Create ProxyResource (maps to ResourceData)
-            var proxyResourceModel = InputFactory.Model(
-                "ProxyResource",
-                properties: [
+            var trackedResource = new InputModelType(
+                "TrackedResource",
+                "Azure.ResourceManager.CommonTypes",
+                "Azure.ResourceManager.CommonTypes.TrackedResource",
+                "public",
+                null,
+                null,
+                "ARM Tracked Resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [
                     InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
                     InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
                     InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputFactory.Primitive.String("azureLocation", "Azure.Core.azureLocation"), isRequired: true),
                 ],
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
 
-            var crossLangProp = typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId));
-            crossLangProp!.GetSetMethod(true)!.Invoke(proxyResourceModel, ["Azure.ResourceManager.CommonTypes.ProxyResource"]);
+            // The resource model: extends TrackedResource (via `is TrackedResource`).
+            var multiPropResource = new InputModelType(
+                "MultiProp",
+                "Samples.Models",
+                "MultiProp",
+                "public",
+                null,
+                null,
+                "MultiProp resource extending tracked resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [InputFactory.Property("multiName", InputPrimitiveType.String)],
+                trackedResource,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
 
-            // Create child model that extends ProxyResource
-            var childModel = InputFactory.Model(
-                "ChildModel",
-                properties: [
-                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("customProp", InputPrimitiveType.String),
+            var multiPropsUpdate = InputFactory.Model(
+                "MultiPropsUpdate",
+                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("propA", InputPrimitiveType.String, isRequired: false, serializedName: "propA"),
+                    InputFactory.Property("propB", InputPrimitiveType.Int32, isRequired: false, serializedName: "propB"),
+                    InputFactory.Property("propC", InputPrimitiveType.Boolean, isRequired: false, serializedName: "propC"),
+                ]);
+
+            // The PATCH model: reparented under MultiProp via @@hierarchyBuilding.
+            // Multi-property envelope so FlattenPropertyVisitor's safe-flatten gate is NOT met.
+            var patchModel = new InputModelType(
+                "MultiPropPatch",
+                "Samples.Models",
+                "MultiPropPatch",
+                "public",
+                null,
+                null,
+                "PATCH model extending the resource via hierarchy building",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [
+                    InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String), isRequired: false, serializedName: "tags"),
+                    InputFactory.Property("properties", multiPropsUpdate, isRequired: false, serializedName: "properties"),
                 ],
-                baseModel: proxyResourceModel,
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+                multiPropResource,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [proxyResourceModel, childModel]);
+                inputModels: () => [patchModel, multiPropResource, trackedResource, multiPropsUpdate]);
 
-            var childProvider = plugin.Object.TypeFactory.CreateModel(childModel);
-            Assert.That(childProvider, Is.Not.Null);
+            // Realize all models in the chain so visitors run on each.
+            var resourceModel = plugin.Object.TypeFactory.CreateModel(multiPropResource);
+            var model = plugin.Object.TypeFactory.CreateModel(patchModel);
+            Assert.That(resourceModel, Is.Not.Null);
+            Assert.That(model, Is.Not.Null);
 
-            // The base type properties (id, name, type, systemData) should be filtered out
-            // Only customProp should remain
-            var propertyNames = childProvider!.Properties.Select(p => p.Name).ToList();
-            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should be filtered (from base ResourceData)");
-            Assert.That(propertyNames.Contains("Name"), Is.False, "Name should be filtered (from base ResourceData)");
-            Assert.That(propertyNames.Contains("ResourceType"), Is.False, "ResourceType should be filtered (from base ResourceData)");
-            Assert.That(propertyNames.Contains("SystemData"), Is.False, "SystemData should be filtered (from base ResourceData)");
-            Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain as model-specific property");
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null, "Could not find LibraryVisitor.VisitTypeCore method");
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [resourceModel]);
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+
+            // Resource itself should expose the (AzureLocation location) public ctor with : base(location).
+            AssertHasLocationCtorChainingToBase(resourceModel!, "Resource model");
+
+            // PATCH descendant must also expose (AzureLocation location) chaining to its (now-fixed) base.
+            AssertHasLocationCtorChainingToBase(model!, "PATCH model");
+        }
+
+        private static void AssertHasLocationCtorChainingToBase(ModelProvider model, string label)
+        {
+            var publicConstructor = model.Constructors.SingleOrDefault(
+                c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+            Assert.That(publicConstructor, Is.Not.Null, $"{label} should keep a public constructor");
+            Assert.That(publicConstructor!.Signature.Parameters.Count, Is.EqualTo(1), $"{label} should expose a single required location parameter");
+            Assert.That(publicConstructor.Signature.Parameters[0].Name, Is.EqualTo("location"));
+            Assert.That(publicConstructor.Signature.Parameters[0].Type.Name, Is.EqualTo("AzureLocation"));
+
+            var initializer = publicConstructor.Signature.Initializer;
+            Assert.That(initializer, Is.Not.Null, $"{label}'s public constructor should delegate to a base constructor");
+            Assert.That(initializer!.IsBase, Is.True, $"{label}'s public constructor should use a base initializer");
+            Assert.That(initializer.Arguments.Count, Is.EqualTo(1));
+            Assert.That(initializer.Arguments[0], Is.TypeOf<VariableExpression>());
+            Assert.That(((VariableExpression)initializer.Arguments[0]).Declaration.RequestedName, Is.EqualTo("location"));
         }
 
         /// <summary>
@@ -203,101 +335,112 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         /// <summary>
-        /// Verifies that when custom code overrides a model's base type to an inheritable
-        /// system type (e.g., TrackedResourceData) that is NOT present as an
-        /// InheritableSystemObjectModelProvider, the visitor uses CLR reflection to enumerate
-        /// base properties and filters them from the model.
+        /// Verifies that a two-level inheritance chain (Resource → BaseModel → DerivedModel)
+        /// produces consistent raw-data field references. Before the fix, the derived model's
+        /// FullConstructor parameter for additionalBinaryDataProperties referenced a different
+        /// FieldProvider than the one the serialization code finds via base-model field lookup,
+        /// causing the code writer to emit mismatched variable names (additionalBinaryDataProperties0).
+        /// Regression test for https://github.com/Azure/azure-sdk-for-net/issues/57281
         /// </summary>
         [Test]
-        public void CustomCodeBaseTypeOverride_UsesClrReflectionFallback()
+        public void DerivedModelRawDataFieldMatchesBaseModelField()
         {
-            // Create a TrackedResource input model with all the base properties
-            var trackedResourceInputModel = InputFactory.Model(
-                "TrackedResource",
-                properties: [
+            // Arrange: Resource → EntityResourceLike → ContainerItemLike
+            var resourceModel = new InputModelType(
+                "Resource",
+                "Azure.ResourceManager.CommonTypes",
+                "Azure.ResourceManager.CommonTypes.Resource",
+                "public",
+                null,
+                null,
+                "ARM Resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [
                     InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
                     InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
                     InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("location", InputPrimitiveType.String),
-                    InputFactory.Property("tags", InputPrimitiveType.String),
                 ],
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
 
-            // Create a simple model with properties that overlap TrackedResourceData's properties
-            var inputModel = InputFactory.Model(
-                "MyTrackedModel",
-                properties: [
-                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("location", InputPrimitiveType.String),
-                    InputFactory.Property("tags", InputPrimitiveType.String),
-                    InputFactory.Property("customProp", InputPrimitiveType.String),
-                ],
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+            // Mid-level model extending Resource (like AzureEntityResource)
+            var entityModel = new InputModelType(
+                "EntityResourceLike",
+                "Samples.Models",
+                "EntityResourceLike",
+                "public",
+                null,
+                null,
+                "Entity resource extending ARM Resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [InputFactory.Property("etag", InputPrimitiveType.String, isReadOnly: true)],
+                resourceModel,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
 
-            // Load mock plugin (needed for ManagementClientGenerator.Instance)
+            // Leaf model extending mid-level model (like ListContainerItem)
+            var containerModel = new InputModelType(
+                "ContainerItemLike",
+                "Samples.Models",
+                "ContainerItemLike",
+                "public",
+                null,
+                null,
+                "Container item extending entity resource",
+                InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                [InputFactory.Property("something", InputPrimitiveType.String)],
+                entityModel,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+
             var plugin = ManagementMockHelpers.LoadMockPlugin(
-                inputModels: () => [inputModel, trackedResourceInputModel]);
+                inputModels: () => [resourceModel, entityModel, containerModel]);
 
-            // Register a SystemObjectModelProvider for TrackedResourceData in CSharpTypeMap
-            var trackedResourceType = new CSharpType(typeof(TrackedResourceData));
-            var systemBase = new SystemObjectModelProvider(trackedResourceType, trackedResourceInputModel);
-            var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
-            typeMap[trackedResourceType] = systemBase;
+            // Act - create models in order; the visitor runs Update on entityModel
+            // (adding a new _additionalBinaryDataProperties field) and then
+            // FixRawDataFieldReference on containerModel.
+            var entityType = plugin.Object.TypeFactory.CreateModel(entityModel);
+            var containerType = plugin.Object.TypeFactory.CreateModel(containerModel);
 
-            // Create model directly (not via TypeFactory to avoid the automatic visitor pass)
-            var model = new ModelProvider(inputModel);
+            Assert.That(entityType, Is.Not.Null);
+            Assert.That(containerType, Is.Not.Null);
 
-            // Set custom code view with BaseType = TrackedResourceData
-            SetCustomCodeView(model, new TrackedResourceDataCustomCodeView());
+            // Find the _additionalBinaryDataProperties field on the base model
+            var baseRawDataField = entityType!.Fields.FirstOrDefault(
+                f => f.Name == "_additionalBinaryDataProperties");
+            Assert.That(baseRawDataField, Is.Not.Null, "Base model should have _additionalBinaryDataProperties field");
 
-            // Create a testable visitor and invoke PreVisitModel
-            var visitor = new TestableInheritableSystemObjectModelVisitor();
-            var result = visitor.InvokePreVisitModel(inputModel, model);
+            // Find the constructor parameter on the derived model
+            var derivedCtorParam = containerType!.FullConstructor.Signature.Parameters
+                .FirstOrDefault(p => p.Name == "additionalBinaryDataProperties");
+            Assert.That(derivedCtorParam, Is.Not.Null, "Derived model should have additionalBinaryDataProperties constructor parameter");
 
-            Assert.That(result, Is.Not.Null);
-
-            // Properties from TrackedResourceData (Id, Name, ResourceType, SystemData, Tags, Location)
-            // should be filtered out by the base generator's native property dedup.
-            // Only CustomProp should remain.
-            var propertyNames = result!.Properties.Select(p => p.Name).ToList();
-            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should be filtered (from TrackedResourceData base)");
-            Assert.That(propertyNames.Contains("Name"), Is.False, "Name should be filtered (from TrackedResourceData base)");
-            Assert.That(propertyNames.Contains("ResourceType"), Is.False, "ResourceType should be filtered (from TrackedResourceData base)");
-            Assert.That(propertyNames.Contains("SystemData"), Is.False, "SystemData should be filtered (from TrackedResourceData base)");
-            Assert.That(propertyNames.Contains("Tags"), Is.False, "Tags should be filtered (from TrackedResourceData base)");
-            Assert.That(propertyNames.Contains("Location"), Is.False, "Location should be filtered (from TrackedResourceData base)");
-            Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain as model-specific property");
-        }
-
-        private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
-        {
-            typeProvider.GetType().BaseType!.GetField(
-                    "_customCodeView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)?
-                .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
-        }
-
-        /// <summary>
-        /// A custom code view that declares TrackedResourceData as the base type,
-        /// simulating custom code like: public partial class MyTrackedModel : TrackedResourceData { }
-        /// </summary>
-        private class TrackedResourceDataCustomCodeView : TypeProvider
-        {
-            protected override CSharpType BuildBaseType() => new CSharpType(typeof(TrackedResourceData));
-            protected override string BuildName() => "MyTrackedModel";
-            protected override string BuildRelativeFilePath() => "MyTrackedModel.cs";
-        }
-
-        private class TestableInheritableSystemObjectModelVisitor : InheritableSystemObjectModelVisitor
-        {
-            public ModelProvider? InvokePreVisitModel(InputModelType inputType, ModelProvider? type)
-            {
-                return base.PreVisitModel(inputType, type);
-            }
+            // Assert: the derived model's constructor parameter references the same
+            // FieldProvider that the base model exposes — this is exactly what
+            // FixRawDataFieldReference ensures.
+            Assert.That(derivedCtorParam!.Field, Is.SameAs(baseRawDataField),
+                "Derived model's constructor parameter must reference the same FieldProvider " +
+                "as the base model's _additionalBinaryDataProperties field to avoid variable " +
+                "name mismatch in generated serialization code");
         }
     }
 }

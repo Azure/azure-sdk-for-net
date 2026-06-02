@@ -394,7 +394,6 @@ namespace Azure.Generator.Tests.Common
         /// <param name="decorators"></param>
         /// <param name="isDynamicModel"></param>
         /// <param name="serializationOptions"></param>
-        /// <param name="externalTypeMetadata"></param>
         /// <returns></returns>
         public static InputModelType Model(
             string name,
@@ -410,8 +409,7 @@ namespace Azure.Generator.Tests.Common
             IEnumerable<InputModelType>? derivedModels = null,
             IReadOnlyList<InputDecoratorInfo>? decorators = null,
             bool isDynamicModel = false,
-            InputSerializationOptions? serializationOptions = null,
-            InputExternalTypeMetadata? externalTypeMetadata = null)
+            InputSerializationOptions? serializationOptions = null)
         {
             IEnumerable<InputModelProperty> propertiesList = properties ?? [Property("StringProperty", InputPrimitiveType.String)];
             var model = new InputModelType(
@@ -438,12 +436,6 @@ namespace Azure.Generator.Tests.Common
                 var decoratorProperty = typeof(InputModelType).GetProperty(nameof(InputModelType.Decorators));
                 var setDecoratorMethod = decoratorProperty?.GetSetMethod(true);
                 setDecoratorMethod!.Invoke(model, [decorators]);
-            }
-            if (externalTypeMetadata is not null)
-            {
-                var externalTypeMetadataProperty = typeof(InputModelType).GetProperty(nameof(InputModelType.External));
-                var setExternalTypeMetadataMethod = externalTypeMetadataProperty?.GetSetMethod(true);
-                setExternalTypeMetadataMethod!.Invoke(model, [externalTypeMetadata]);
             }
             return model;
         }

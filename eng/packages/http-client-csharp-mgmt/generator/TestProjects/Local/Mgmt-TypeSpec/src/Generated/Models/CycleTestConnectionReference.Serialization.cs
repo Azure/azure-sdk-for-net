@@ -83,21 +83,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -126,11 +111,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            CycleTestConnectionProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string name = default;
+            CycleTestConnectionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -140,11 +125,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                         continue;
                     }
                     id = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -165,6 +145,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -181,11 +166,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             return new CycleTestConnectionReference(
                 id,
-                name,
                 resourceType,
                 systemData,
-                properties,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                name,
+                properties);
         }
     }
 }

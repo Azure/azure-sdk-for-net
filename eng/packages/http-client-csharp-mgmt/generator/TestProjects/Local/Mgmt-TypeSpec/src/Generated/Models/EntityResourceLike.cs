@@ -29,12 +29,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="eTag"> Resource Etag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityResourceLike(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="eTag"> Resource Etag. </param>
+        internal EntityResourceLike(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eTag) : base(id, name, resourceType, systemData)
         {
-            ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            ETag = eTag;
         }
 
         /// <summary> Resource Etag. </summary>

@@ -26,10 +26,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="eTag"> Resource Etag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="eTag"> Resource Etag. </param>
         /// <param name="properties"> The container properties. </param>
-        internal ContainerItemLike(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerItemLikeProperties properties) : base(id, name, resourceType, systemData, eTag, additionalBinaryDataProperties)
+        internal ContainerItemLike(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eTag, ContainerItemLikeProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, eTag)
         {
             Properties = properties;
         }

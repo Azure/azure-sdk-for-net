@@ -130,8 +130,9 @@ namespace Azure.Generator.Management.Primitives
         public static bool TryGetFrameworkType(string fullyQualifiedTypeName, [MaybeNullWhen(false)] out Type frameworkType)
             => _fullyQualifiedNameToFrameworkTypeMap.TryGetValue(fullyQualifiedTypeName, out frameworkType);
 
-        // Known management types can be represented as framework or generated CSharpType instances;
-        // compare namespace and name so both representations are treated as the same type.
+        // The comparison could be CSharpType from Azure.ResourceManager, which is a framework type
+        // and CSharpType from InheritableSystemObjectModelProvider, which is not a framework type, they should still be equal if namespace and name match
+        // Then, the default Equals of CSharpType doesn't apply here
         private class CSharpFullNameComparer : IEqualityComparer<CSharpType>
         {
             public bool Equals(CSharpType? x, CSharpType? y)

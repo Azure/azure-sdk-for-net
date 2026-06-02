@@ -28,7 +28,6 @@ import "./trafficmanager.tsp";
 import "./extensionresources.tsp";
 import "./flatten-with-customized-property.tsp";
 import "./extensionresourcename.tsp";
-import "./custom-base-type-resource.tsp";
 import "./testcertificate.tsp";
 import "./sharedmodel.tsp";
 import "./entityresource.tsp";

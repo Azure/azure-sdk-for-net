@@ -28,7 +28,7 @@ using BicepIdentifierExpression = Azure.Provisioning.Expressions.IdentifierExpre
 namespace Azure.Generator.Provisioning.Providers
 {
     /// <summary>
-    /// Generates a ProvisionableResource subclass from a provisioning resource projection.
+    /// Generates a ProvisionableResource subclass from an InputModelType + ArmResourceMetadata.
     /// Flattens the ARM "properties" bag, includes system properties from the base model chain,
     /// and generates ResourceVersions, FromExisting, and the resource constructor.
     /// </summary>
@@ -53,7 +53,7 @@ namespace Azure.Generator.Provisioning.Providers
         };
 
         private readonly InputModelType _inputModel;
-        private readonly ProvisioningResourceProjection? _resourceProjection;
+        private readonly ArmResourceMetadata? _resourceMetadata;
         private readonly string? _defaultApiVersion;
         /// <summary>
         /// All collected properties for the resource, including flattened and inherited ones,
@@ -80,15 +80,15 @@ namespace Azure.Generator.Provisioning.Providers
         private CSharpType? _parentType;
 
         /// <summary>
-        /// Gets the provisioning resource projection, if this is a base resource type.
+        /// Gets the resource metadata, if this is a base resource type.
         /// </summary>
-        internal ProvisioningResourceProjection? ResourceProjection => _resourceProjection;
+        internal ArmResourceMetadata? ResourceMetadata => _resourceMetadata;
 
         /// <summary>
         /// Gets the parent resource's CSharpType via the output library, or null for top-level resources.
         /// </summary>
         private CSharpType? ParentResourceType
-            => _resourceProjection?.ParentResourceId is { } parentId
+            => _resourceMetadata?.ParentResourceId is { } parentId
                 ? ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId)?.Type
                 : null;
 
@@ -109,13 +109,13 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>
         /// Constructor for base resource types (with metadata from ARM provider schema).
         /// </summary>
-        public ProvisioningResourceProvider(ProvisioningResourceProjection projection)
-            : base(projection.ResourceModel)
+        public ProvisioningResourceProvider(InputModelType inputModel, ArmResourceMetadata metadata)
+            : base(inputModel)
         {
-            _inputModel = projection.ResourceModel;
-            _resourceProjection = projection;
-            _defaultApiVersion = projection.ApiVersions.Count > 0
-                ? projection.ApiVersions.Last()
+            _inputModel = inputModel;
+            _resourceMetadata = metadata;
+            _defaultApiVersion = metadata.ApiVersions.Count > 0
+                ? metadata.ApiVersions.Last()
                 : null;
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _allProperties = CollectAllProperties();
@@ -129,7 +129,7 @@ namespace Azure.Generator.Provisioning.Providers
             : base(inputModel)
         {
             _inputModel = inputModel;
-            _resourceProjection = null;
+            _resourceMetadata = null;
             _defaultApiVersion = null;
             _createBodyWritableProperties = [];
             _allProperties = CollectAllProperties();
@@ -151,8 +151,8 @@ namespace Azure.Generator.Provisioning.Providers
         {
             // When the same input model is shared by multiple resources (e.g. parent +
             // child views like ContainerGroupProfile + ContainerGroupProfileRevision),
-            // fall back to the projection's ResourceName to avoid file/type collisions.
-            return _resourceProjection?.ResourceName ?? base.BuildName();
+            // fall back to the metadata's ResourceName to avoid file/type collisions.
+            return _resourceMetadata?.ResourceName ?? base.BuildName();
         }
 
         protected override string BuildRelativeFilePath()
@@ -262,7 +262,7 @@ namespace Azure.Generator.Provisioning.Providers
                 true,
                 [
                     bicepIdentifierParam,
-                    Literal(_resourceProjection!.ResourceType),
+                    Literal(_resourceMetadata!.ResourceType),
                     resourceVersionArg
                 ]);
 
@@ -294,14 +294,14 @@ namespace Azure.Generator.Provisioning.Providers
             methods.Add(BuildDefineAdditionalPropertiesMethod());
 
             // GetResourceNameRequirements() override — only for base resource types
-            var nameRequirementsMethod = BuildGetResourceNameRequirementsMethod(_resourceProjection, this);
+            var nameRequirementsMethod = BuildGetResourceNameRequirementsMethod(_resourceMetadata, this);
             if (nameRequirementsMethod != null)
             {
                 methods.Add(nameRequirementsMethod);
             }
 
             // CreateRoleAssignment() overloads — only for resources that have RBAC roles
-            if (_inputModel.DiscriminatorValue == null && _resourceProjection?.RbacRoles.Count > 0)
+            if (_inputModel.DiscriminatorValue == null && _resourceMetadata?.RbacRoles?.Count > 0)
             {
                 var outputLibrary = (ProvisioningOutputLibrary)ProvisioningGenerator.Instance.OutputLibrary;
                 var builtInRole = outputLibrary.BuiltInRole;
@@ -321,7 +321,7 @@ namespace Azure.Generator.Provisioning.Providers
             if (_inputModel.DiscriminatorValue != null)
                 return [];
 
-            var apiVersions = _resourceProjection?.ApiVersions;
+            var apiVersions = _resourceMetadata?.ApiVersions;
             if (apiVersions == null || apiVersions.Count == 0)
                 return [];
 
@@ -352,9 +352,9 @@ namespace Azure.Generator.Provisioning.Providers
         private HashSet<string> BuildCreateBodyWritableProperties()
         {
             var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            if (_resourceProjection == null) return result;
+            if (_resourceMetadata == null) return result;
 
-            var createMethod = _resourceProjection.Methods
+            var createMethod = _resourceMetadata.Methods
                 .FirstOrDefault(m => m.Kind == ResourceOperationKind.Create)?.InputMethod;
             if (createMethod == null) return result;
 
@@ -449,9 +449,9 @@ namespace Azure.Generator.Provisioning.Providers
                 // For singleton resources, the "name" property is output-only with a default value
                 string? defaultValue = null;
                 if (serializedName == "name"
-                    && _resourceProjection?.SingletonResourceName is not null)
+                    && _resourceMetadata?.SingletonResourceName is not null)
                 {
-                    defaultValue = _resourceProjection.SingletonResourceName;
+                    defaultValue = _resourceMetadata.SingletonResourceName;
                     isOutput = true;
                 }
                 // Ensure "location" at the resource level always uses AzureLocation,
@@ -602,14 +602,14 @@ namespace Azure.Generator.Provisioning.Providers
             return new MethodProvider(sig, this);
         }
 
-        private static MethodProvider? BuildGetResourceNameRequirementsMethod(ProvisioningResourceProjection? resourceProjection, TypeProvider enclosingType)
+        private static MethodProvider? BuildGetResourceNameRequirementsMethod(ArmResourceMetadata? resourceMetadata, TypeProvider enclosingType)
         {
-            if (resourceProjection is null)
+            if (resourceMetadata is null)
             {
                 return null;
             }
 
-            var constraints = resourceProjection.NameConstraints;
+            var constraints = resourceMetadata.NameConstraints;
 
             // Only generate the override when the spec actually specifies name constraints
             if (constraints.Pattern is null && constraints.MinLength is null && constraints.MaxLength is null)

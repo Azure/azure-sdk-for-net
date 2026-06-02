@@ -4,8 +4,6 @@
 using System;
 using System.Reflection;
 using Azure.Generator.Management;
-using Azure.Generator.Management.Models;
-using Azure.Generator.Provisioning.Primitives;
 using Azure.Generator.Provisioning.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -60,20 +58,19 @@ namespace Azure.Generator.Provisioning
             var byModel = new Dictionary<InputModelType, List<ProvisioningResourceProvider>>();
 
             var allMetadata = ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources;
-            var projections = ProvisioningResourceProjection.Create(allMetadata);
-            foreach (var projection in projections)
+            foreach (var metadata in allMetadata)
             {
-                var resource = new ProvisioningResourceProvider(projection);
-                list.Add(resource);
-                foreach (var resourceIdPattern in projection.ResourceIdPatterns)
-                {
-                    byIdPattern[resourceIdPattern.SerializedPath] = resource;
-                }
+                if (metadata.ResourceModel == null)
+                    continue;
 
-                if (!byModel.TryGetValue(projection.ResourceModel, out var modelList))
+                var resource = new ProvisioningResourceProvider(metadata.ResourceModel, metadata);
+                list.Add(resource);
+                byIdPattern[metadata.ResourceIdPattern] = resource;
+
+                if (!byModel.TryGetValue(metadata.ResourceModel, out var modelList))
                 {
                     modelList = new List<ProvisioningResourceProvider>();
-                    byModel[projection.ResourceModel] = modelList;
+                    byModel[metadata.ResourceModel] = modelList;
                 }
                 modelList.Add(resource);
             }
@@ -108,9 +105,9 @@ namespace Azure.Generator.Provisioning
         /// Gets a resource provider by its ARM resource ID pattern.
         /// Returns null if not found.
         /// </summary>
-        internal ProvisioningResourceProvider? GetResourceByIdPattern(RequestPathPattern resourceIdPattern)
+        internal ProvisioningResourceProvider? GetResourceByIdPattern(string resourceIdPattern)
         {
-            GetValue(ref _resourcesByIdPattern).TryGetValue(resourceIdPattern.SerializedPath, out var resource);
+            GetValue(ref _resourcesByIdPattern).TryGetValue(resourceIdPattern, out var resource);
             return resource;
         }
 
@@ -204,9 +201,12 @@ namespace Azure.Generator.Provisioning
             var enums = new List<InputEnumType>();
             var queue = new Queue<InputType>();
 
-            foreach (var resource in Resources)
+            foreach (var metadata in ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources)
             {
-                queue.Enqueue(resource.ResourceProjection!.ResourceModel);
+                if (metadata.ResourceModel != null)
+                {
+                    queue.Enqueue(metadata.ResourceModel);
+                }
             }
 
             while (queue.Count > 0)

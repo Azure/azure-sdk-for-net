@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -64,22 +65,14 @@ internal class NameVisitor : ScmLibraryVisitor
             return null;
         }
 
-        type = base.PreVisitModel(model, type);
-        if (type is null)
-        {
-            return null;
-        }
-
-        if (TryTransformUrlToUri(type.Name, out var newName))
+        if (TryTransformUrlToUri(model.Name, out var newName))
         {
             type.Update(name: newName);
         }
 
         if (_knownTypes.Contains(model.Name))
         {
-            // Compose with type.Name (not model.Name) so any prior provider-level rename
-            // (e.g. ResourceDataModelProvider's "Data" suffix) is preserved.
-            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{type.Name}";
+            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
             type.Update(name: newName);
         }
 
@@ -96,12 +89,11 @@ internal class NameVisitor : ScmLibraryVisitor
             }
             else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
             {
-                // PATCH-only payloads use {Resource}Patch unless the service provided an explicit clientName.
                 newName = $"{enclosingResourceName}Patch";
                 type.Update(name: newName);
             }
         }
-        return type;
+        return base.PreVisitModel(model, type);
     }
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
@@ -120,7 +112,7 @@ internal class NameVisitor : ScmLibraryVisitor
             return;
         }
         var enclosingType = propertyProvider.EnclosingType;
-        if (enclosingType is not SystemObjectModelProvider modelProvider
+        if (enclosingType is not InheritableSystemObjectModelProvider modelProvider
             || modelProvider.CrossLanguageDefinitionId?.Equals(KnownManagementTypes.ArmResourceId) != true)
         {
             return;

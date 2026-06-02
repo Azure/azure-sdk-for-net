@@ -112,21 +112,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 writer.WritePropertyName("extendedLocation"u8);
                 ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -158,11 +143,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ZooProperties properties = default;
             ExtendedLocation extendedLocation = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -251,11 +236,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                extendedLocation,
-                additionalBinaryDataProperties);
+                extendedLocation);
         }
     }
 }

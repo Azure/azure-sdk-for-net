@@ -98,16 +98,7 @@ interface Zoos {
       $maxpagesize?: int32;
     }
   >;
-
-  @action("deleteZooItems")
-  deleteZooItems is ArmResourceActionSync<
-    Zoo,
-    ZooItemNames,
-    ArmResponse<ZooRecommendation>
-  >;
 }
-
-model ZooItemNames is Array<string>;
 
 model ZooAddressListListResult is Azure.Core.Page<ZooAddress>;
 
@@ -125,7 +116,6 @@ model ZooRecommendation {
 }
 
 @@clientLocation(Zoos.recommend, "ZooRecommendation");
-@@clientName(Zoos.deleteZooItems::parameters.body, "zooItemNames");
 
 /**
  * Test resource to reproduce issue #55436 - Missing constructor parameters in factory methods.

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.Generator.Management.Models;
-using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Management
@@ -23,14 +22,14 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
-        private HashSet<string>? _resourceModelIds;
+        private HashSet<InputModelType>? _resourceModels;
         private HashSet<InputModelType>? _safeFlattenDisabledModels;
         private HashSet<InputModelType>? _clientNameOverriddenModels;
         private HashSet<InputServiceMethod>? _clientNameOverriddenMethods;
         private ArmProviderSchema? _providerSchema;
         private IReadOnlyDictionary<string, InputModelType>? _modelsByCrossLanguageDefinitionId;
 
-        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)>? _resourceUpdateModelToResourceNameMap;
+        private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)>? _resourceUpdateModelToResourceNameMap;
 
         internal IReadOnlyDictionary<string, InputModelType> ModelsByCrossLanguageDefinitionId => _modelsByCrossLanguageDefinitionId ??= BuildModelsByCrossLanguageDefinitionId();
 
@@ -273,25 +272,21 @@ namespace Azure.Generator.Management
             return base.InputNamespace;
         }
 
-        // Resource-model checks must use the model's semantic identity rather than InputModelType object identity.
-        // Some generator paths can see equivalent InputModelType instances for the same TypeSpec model, and those
-        // instances would not match a HashSet<InputModelType> built from ArmProviderSchema.Resources.
-        private HashSet<string> ResourceModelIds => _resourceModelIds ??= BuildResourceModelIds();
+        private HashSet<InputModelType> ResourceModels => _resourceModels ??= BuildResourceModels();
 
-        private HashSet<string> BuildResourceModelIds()
+        private HashSet<InputModelType> BuildResourceModels()
         {
             // Get resource models from ArmProviderSchema
-            var resourceModelIds = new HashSet<string>(StringComparer.Ordinal);
+            var resourceModels = new HashSet<InputModelType>();
             foreach (var resource in ArmProviderSchema.Resources)
             {
-                var resourceModelId = resource.ResourceModel?.CrossLanguageDefinitionId;
-                if (!string.IsNullOrEmpty(resourceModelId))
+                if (resource.ResourceModel != null)
                 {
-                    resourceModelIds.Add(resourceModelId);
+                    resourceModels.Add(resource.ResourceModel);
                 }
             }
 
-            return resourceModelIds;
+            return resourceModels;
         }
 
         internal IReadOnlyList<ArmResourceMetadata> ResourceMetadatas => ArmProviderSchema.Resources;
@@ -302,14 +297,14 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> InputMethodClientMap => _intMethodClientMap ??= ConstructMethodClientMap();
 
-        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
+        private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
 
         /// <summary> Gets the ARM provider schema containing all resource metadata and non-resource methods. </summary>
         public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
 
-        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)> BuildResourceUpdateModelToResourceNameMap()
+        private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)> BuildResourceUpdateModelToResourceNameMap()
         {
-            Dictionary<string, (string ResourceName, int Count, bool IsAlsoUsedInCreate)> tempMap = new(StringComparer.Ordinal);
+            Dictionary<InputModelType, (string ResourceName, int Count, bool IsAlsoUsedInCreate)> tempMap = new();
 
             foreach (var metadata in ResourceMetadatas)
             {
@@ -318,25 +313,16 @@ namespace Azure.Generator.Management
                 {
                     foreach (var parameter in patchMethod.Parameters)
                     {
-                        if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && !HasSameModelIdentity(updateModel, metadata.ResourceModel))
+                        if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != metadata.ResourceModel)
                         {
-                            // Use the semantic model key because the PATCH operation body and the model visitor
-                            // can receive distinct InputModelType instances for the same TypeSpec declaration.
-                            var updateModelKey = GetModelIdentityKey(updateModel);
                             bool isAlsoUsedInCreate = IsModelUsedInCreateOperation(metadata, updateModel);
-                            if (tempMap.TryGetValue(updateModelKey, out var existing))
+                            if (tempMap.TryGetValue(updateModel, out var existing))
                             {
-                                var resourceCount = string.Equals(existing.ResourceName, metadata.ResourceName, StringComparison.Ordinal)
-                                    ? existing.Count
-                                    : existing.Count + 1;
-                                tempMap[updateModelKey] = (existing.ResourceName, resourceCount, existing.IsAlsoUsedInCreate || isAlsoUsedInCreate);
+                                tempMap[updateModel] = (existing.ResourceName, existing.Count + 1, existing.IsAlsoUsedInCreate || isAlsoUsedInCreate);
                             }
                             else
                             {
-                                // Use ARM metadata.ResourceName rather than the raw model name. Some services
-                                // customize resource model names, while the previous SDK patch type was based on
-                                // the resource name that owns the PATCH operation.
-                                tempMap[updateModelKey] = (metadata.ResourceName, 1, isAlsoUsedInCreate);
+                                tempMap[updateModel] = (metadata.ResourceModel.Name, 1, isAlsoUsedInCreate);
                             }
                             break;
                         }
@@ -344,8 +330,7 @@ namespace Azure.Generator.Management
                 }
             }
 
-            // Only keep update models that are used by exactly one resource (count == 1). The same
-            // resource can have multiple PATCH methods/API versions using the same model.
+            // Only keep update models that are used in exactly one resource (count == 1)
             return tempMap
                 .Where(kvp => kvp.Value.Count == 1)
                 .ToDictionary(kvp => kvp.Key, kvp => (kvp.Value.ResourceName, kvp.Value.IsAlsoUsedInCreate));
@@ -358,7 +343,7 @@ namespace Azure.Generator.Management
             {
                 foreach (var parameter in createMethod.Parameters)
                 {
-                    if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType createModel && HasSameModelIdentity(createModel, model))
+                    if (parameter.Location == InputRequestLocation.Body && parameter.Type == model)
                     {
                         return true;
                     }
@@ -366,14 +351,6 @@ namespace Azure.Generator.Management
             }
             return false;
         }
-
-        private static bool HasSameModelIdentity(InputModelType left, InputModelType right)
-            => string.Equals(GetModelIdentityKey(left), GetModelIdentityKey(right), StringComparison.Ordinal);
-
-        private static string GetModelIdentityKey(InputModelType model)
-            => !string.IsNullOrEmpty(model.Namespace)
-                ? $"{model.Namespace}.{model.Name}"
-                : model.CrossLanguageDefinitionId;
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> ConstructMethodClientMap()
         {
@@ -446,12 +423,11 @@ namespace Azure.Generator.Management
         /// <summary> Determines whether the specified model is a resource model. </summary>
         /// <param name="model"> The input model type to check. </param>
         /// <returns> <c>true</c> if the model is a resource model; otherwise, <c>false</c>. </returns>
-        public bool IsResourceModel(InputModelType model)
-            => ResourceModelIds.Contains(model.CrossLanguageDefinitionId);
+        public bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
 
         internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName, out bool isAlsoUsedInCreate)
         {
-            if (ResourceUpdateModelToResourceNameMap.TryGetValue(GetModelIdentityKey(model), out var entry))
+            if (ResourceUpdateModelToResourceNameMap.TryGetValue(model, out var entry))
             {
                 resourceName = entry.ResourceName;
                 isAlsoUsedInCreate = entry.IsAlsoUsedInCreate;
