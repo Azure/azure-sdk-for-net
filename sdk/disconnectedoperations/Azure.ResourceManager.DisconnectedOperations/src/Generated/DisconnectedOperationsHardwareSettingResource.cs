@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 HttpMessage message = _hardwareSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DisconnectedOperationsHardwareSettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DisconnectedOperationsArmOperation<DisconnectedOperationsHardwareSettingResource> operation = new DisconnectedOperationsArmOperation<DisconnectedOperationsHardwareSettingResource>(
-                    new DisconnectedOperationsHardwareSettingOperationSource(Client),
+                    new DisconnectedOperationsHardwareSettingResourceOperationSource(Client),
                     _hardwareSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 HttpMessage message = _hardwareSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DisconnectedOperationsHardwareSettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DisconnectedOperationsArmOperation<DisconnectedOperationsHardwareSettingResource> operation = new DisconnectedOperationsArmOperation<DisconnectedOperationsHardwareSettingResource>(
-                    new DisconnectedOperationsHardwareSettingOperationSource(Client),
+                    new DisconnectedOperationsHardwareSettingResourceOperationSource(Client),
                     _hardwareSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

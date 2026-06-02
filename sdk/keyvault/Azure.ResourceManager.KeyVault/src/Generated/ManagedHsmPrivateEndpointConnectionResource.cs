@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.KeyVault
                 HttpMessage message = _mhsmPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource> operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(
-                    new ManagedHsmPrivateEndpointConnectionOperationSource(Client),
+                    new ManagedHsmPrivateEndpointConnectionResourceOperationSource(Client),
                     _mhsmPrivateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.KeyVault
                 HttpMessage message = _mhsmPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource> operation = new KeyVaultArmOperation<ManagedHsmPrivateEndpointConnectionResource>(
-                    new ManagedHsmPrivateEndpointConnectionOperationSource(Client),
+                    new ManagedHsmPrivateEndpointConnectionResourceOperationSource(Client),
                     _mhsmPrivateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

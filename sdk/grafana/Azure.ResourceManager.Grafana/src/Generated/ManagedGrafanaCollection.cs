@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _managedGrafanasRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, ManagedGrafanaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 GrafanaArmOperation<ManagedGrafanaResource> operation = new GrafanaArmOperation<ManagedGrafanaResource>(
-                    new ManagedGrafanaOperationSource(Client),
+                    new ManagedGrafanaResourceOperationSource(Client),
                     _managedGrafanasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _managedGrafanasRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, ManagedGrafanaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 GrafanaArmOperation<ManagedGrafanaResource> operation = new GrafanaArmOperation<ManagedGrafanaResource>(
-                    new ManagedGrafanaOperationSource(Client),
+                    new ManagedGrafanaResourceOperationSource(Client),
                     _managedGrafanasClientDiagnostics,
                     Pipeline,
                     message.Request,

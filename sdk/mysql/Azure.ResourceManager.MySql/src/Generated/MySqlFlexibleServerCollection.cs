@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _serversRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serverName, MySqlFlexibleServerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(
-                    new MySqlFlexibleServerOperationSource(Client),
+                    new MySqlFlexibleServerResourceOperationSource(Client),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _serversRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serverName, MySqlFlexibleServerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(
-                    new MySqlFlexibleServerOperationSource(Client),
+                    new MySqlFlexibleServerResourceOperationSource(Client),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,

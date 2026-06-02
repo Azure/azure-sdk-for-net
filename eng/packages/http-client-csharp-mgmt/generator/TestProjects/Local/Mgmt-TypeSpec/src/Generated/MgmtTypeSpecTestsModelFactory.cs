@@ -558,6 +558,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new ZooAddressListListResult((value ?? new ChangeTrackingList<SubResource>()).ToList(), nextLink, default);
         }
 
+        /// <param name="recommendedValue"> The recommended value. </param>
+        /// <param name="reason"> The reason for the recommendation. </param>
+        /// <returns> A new <see cref="Models.ZooRecommendation"/> instance for mocking. </returns>
+        public static ZooRecommendation ZooRecommendation(string recommendedValue = default, string reason = default)
+        {
+            return new ZooRecommendation(recommendedValue, reason, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1944,14 +1952,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         public static EventGridPrivateEndpointConnectionProperties EventGridPrivateEndpointConnectionProperties(string status = default, string description = default)
         {
             return new EventGridPrivateEndpointConnectionProperties(status, description, default);
-        }
-
-        /// <param name="recommendedValue"> The recommended value. </param>
-        /// <param name="reason"> The reason for the recommendation. </param>
-        /// <returns> A new <see cref="Models.ZooRecommendation"/> instance for mocking. </returns>
-        public static ZooRecommendation ZooRecommendation(string recommendedValue = default, string reason = default)
-        {
-            return new ZooRecommendation(recommendedValue, reason, default);
         }
     }
 }

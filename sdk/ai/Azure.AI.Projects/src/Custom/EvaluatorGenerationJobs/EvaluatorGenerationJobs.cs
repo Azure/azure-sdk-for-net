@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects;
@@ -28,12 +27,9 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<EvaluatorGenerationJob> Create(EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
-        return Create(
-            job: job,
-            foundryFeatures: default,
-            operationId: operationId,
-            cancellationToken: cancellationToken
-        );
+        using BinaryContent jobInput = BinaryContent.Create(job.Inputs);
+        ClientResult result = Create(jobInput, default, operationId, cancellationToken.ToRequestOptions());
+        return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
     }
 
     /// <summary>
@@ -47,12 +43,9 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<EvaluatorGenerationJob>> CreateAsync(EvaluatorGenerationJob job, string operationId = default, CancellationToken cancellationToken = default)
     {
-        return await CreateAsync(
-            job: job,
-            foundryFeatures: default,
-            operationId: operationId,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
+        using BinaryContent jobInput = BinaryContent.Create(job.Inputs);
+        ClientResult result = await CreateAsync(jobInput, default, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        return ClientResult.FromValue((EvaluatorGenerationJob)result, result.GetRawResponse());
     }
 
     /// <summary> Gets the details of an evaluator generation job by its ID. </summary>
@@ -200,9 +193,9 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual void Delete(string jobId, CancellationToken cancellationToken = default)
+    public virtual ClientResult Delete(string jobId, CancellationToken cancellationToken = default)
     {
-        Delete(
+        return Delete(
             jobId: jobId,
             foundryFeatures: default,
             cancellationToken: cancellationToken);
@@ -217,9 +210,9 @@ public partial class EvaluatorGenerationJobs
     /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task DeleteAsync(string jobId, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult> DeleteAsync(string jobId, CancellationToken cancellationToken = default)
     {
-        await DeleteAsync(
+        return await DeleteAsync(
             jobId: jobId,
             foundryFeatures: default,
             cancellationToken: cancellationToken).ConfigureAwait(false);

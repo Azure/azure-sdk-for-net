@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _exportPipelinesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exportPipelineName, ContainerRegistryExportPipelineData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryExportPipelineResource> operation = new ContainerRegistryArmOperation<ContainerRegistryExportPipelineResource>(
-                    new ContainerRegistryExportPipelineOperationSource(Client),
+                    new ContainerRegistryExportPipelineResourceOperationSource(Client),
                     _exportPipelinesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _exportPipelinesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, exportPipelineName, ContainerRegistryExportPipelineData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryExportPipelineResource> operation = new ContainerRegistryArmOperation<ContainerRegistryExportPipelineResource>(
-                    new ContainerRegistryExportPipelineOperationSource(Client),
+                    new ContainerRegistryExportPipelineResourceOperationSource(Client),
                     _exportPipelinesClientDiagnostics,
                     Pipeline,
                     message.Request,
