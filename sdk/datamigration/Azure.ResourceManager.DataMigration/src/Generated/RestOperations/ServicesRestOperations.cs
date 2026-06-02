@@ -360,14 +360,14 @@ namespace Azure.ResourceManager.DataMigration
             return message;
         }
 
-        internal HttpMessage CreateCheckDataMigrationNameAvailabilityRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckDataMigrationNameAvailabilityRequest(Guid subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.DataMigration/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/checkNameAvailability", false);
             if (_apiVersion != null)
             {

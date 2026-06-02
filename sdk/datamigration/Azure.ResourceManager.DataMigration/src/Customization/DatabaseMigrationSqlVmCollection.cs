@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataMigration
         [System.Diagnostics.Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != "Microsoft.SqlVirtualMachine/sqlVirtualMachines")
+            if ((id.ResourceType != "Microsoft.SqlVirtualMachine/sqlVirtualMachines") && (id.ResourceType != "Microsoft.Resources/resourceGroups"))
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.SqlVirtualMachine/sqlVirtualMachines"), nameof(id));
             }
