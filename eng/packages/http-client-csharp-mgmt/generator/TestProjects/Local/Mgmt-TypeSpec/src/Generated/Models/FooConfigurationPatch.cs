@@ -12,20 +12,20 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The type used for update operations of the FooSettings. </summary>
-    public partial class FooSettingsPatch
+    public partial class FooConfigurationPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FooSettingsPatch"/>. </summary>
-        public FooSettingsPatch()
+        /// <summary> Initializes a new instance of <see cref="FooConfigurationPatch"/>. </summary>
+        public FooConfigurationPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FooSettingsPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FooConfigurationPatch"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooSettingsPatch(FooSettingsUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooConfigurationPatch(FooSettingsUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
