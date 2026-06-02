@@ -65,16 +65,23 @@ namespace Azure.Core.Tests.Identity
             bool preserveTransport = true)
         {
             var pipeline = CredentialPipeline.GetInstance(options, isManagedIdentityPipeline);
+            var clientOptions = new ManagedIdentityClientOptions
+            {
+                Pipeline = pipeline,
+                ManagedIdentityId = managedIdentityId,
+                IsForceRefreshEnabled = isForceRefreshEnabled,
+                PreserveTransport = preserveTransport,
+                Options = options
+            };
+            // Inject a mock MSAL client that:
+            // 1. Uses the static GetManagedIdentitySource() for source detection (no network probe)
+            // 2. For IMDS sources, sends token requests directly through the pipeline (bypasses
+            //    MSAL's internal source-detection probing which conflicts with mock transports)
+            // 3. For non-IMDS sources, delegates to MSAL (which detects them from env vars without probing)
+            var mockMsal = new MockMsalManagedIdentityClient(clientOptions);
+            clientOptions.MsalManagedIdentityClientOverride = mockMsal;
             return InstrumentClient(new ManagedIdentityCredential(
-                new ManagedIdentityClient(
-                    new ManagedIdentityClientOptions
-                    {
-                        Pipeline = pipeline,
-                        ManagedIdentityId = managedIdentityId,
-                        IsForceRefreshEnabled = isForceRefreshEnabled,
-                        PreserveTransport = preserveTransport,
-                        Options = options
-                    })));
+                new ManagedIdentityClient(clientOptions)));
         }
 
         #endregion
