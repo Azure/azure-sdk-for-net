@@ -4,10 +4,11 @@
 
 ### Features Added
 
-- Migrated from AutoRest/Swagger to TypeSpec-based generation
+- Upgraded api-version to 2025-09-01-preview.
 
 ### Other Changes
 
+- Migrated from AutoRest/Swagger to TypeSpec-based generation.
 - Upgraded dependent Azure.Core to 1.57.0.
 - Upgraded dependent Azure.ResourceManager to 1.14.0.
 

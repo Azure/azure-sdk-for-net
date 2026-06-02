@@ -2,6 +2,10 @@
 
 ## 1.6.0-beta.1 (2026-06-02)
 
+### Features Added
+
+- Upgraded api-version to 2025-10-02-preview.
+
 ### Other Changes
 
 - Migrated Azure.ResourceManager.AppContainers management-plane generation from AutoRest to TypeSpec.

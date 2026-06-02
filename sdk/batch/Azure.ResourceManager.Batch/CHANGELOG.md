@@ -1,10 +1,10 @@
 # Release History
 
-## 1.6.1 (2026-06-02)
+## 1.7.0 (2026-06-02)
 
 ### Features Added
 
-- Upgraded API version to `2025-06-01`
+- Upgraded api-version to `2025-06-01`
 - Added `AddTag`, `RemoveTag`, and `SetTags` convenience methods to `BatchAccountResource`.
 
 ### Other Changes

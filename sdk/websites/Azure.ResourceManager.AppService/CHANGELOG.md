@@ -1,6 +1,11 @@
 # Release History
 
-## 1.4.2 (2026-06-02)
+## 1.5.0 (2026-06-02)
+
+### Features Added
+
+- Upgraded api-version to 2025-05-01.
+- Separated CertificateRegistration and DomainRegistration from App Service.
 
 ### Bugs Fixed
 
