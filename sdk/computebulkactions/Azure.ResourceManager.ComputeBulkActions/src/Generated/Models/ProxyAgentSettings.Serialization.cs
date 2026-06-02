@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 throw new FormatException($"The model {nameof(ProxyAgentSettings)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Mode))
             {
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 writer.WritePropertyName("imds"u8);
                 writer.WriteObjectValue(Imds, options);
             }
-            if (Optional.IsDefined(AddProxyAgentExtension))
+            if (Optional.IsDefined(ShouldAddProxyAgentExtension))
             {
                 writer.WritePropertyName("addProxyAgentExtension"u8);
-                writer.WriteBooleanValue(AddProxyAgentExtension.Value);
+                writer.WriteBooleanValue(ShouldAddProxyAgentExtension.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            bool? enabled = default;
-            Mode? mode = default;
+            bool? isEnabled = default;
+            ProxyAgentMode? mode = default;
             int? keyIncarnationId = default;
             HostEndpointSettings wireServer = default;
             HostEndpointSettings imds = default;
-            bool? addProxyAgentExtension = default;
+            bool? shouldAddProxyAgentExtension = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("mode"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    mode = new Mode(prop.Value.GetString());
+                    mode = new ProxyAgentMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("keyIncarnationId"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    addProxyAgentExtension = prop.Value.GetBoolean();
+                    shouldAddProxyAgentExtension = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
             }
             return new ProxyAgentSettings(
-                enabled,
+                isEnabled,
                 mode,
                 keyIncarnationId,
                 wireServer,
                 imds,
-                addProxyAgentExtension,
+                shouldAddProxyAgentExtension,
                 additionalBinaryDataProperties);
         }
     }

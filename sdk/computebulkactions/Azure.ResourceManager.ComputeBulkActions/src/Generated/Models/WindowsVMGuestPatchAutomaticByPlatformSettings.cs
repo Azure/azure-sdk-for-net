@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="WindowsVMGuestPatchAutomaticByPlatformSettings"/>. </summary>
         /// <param name="rebootSetting"> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </param>
-        /// <param name="bypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
+        /// <param name="isBypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsVMGuestPatchAutomaticByPlatformSettings(WindowsVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? bypassPlatformSafetyChecksOnUserSchedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WindowsVMGuestPatchAutomaticByPlatformSettings(WindowsVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting, bool? isBypassPlatformSafetyChecksOnUserSchedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RebootSetting = rebootSetting;
-            BypassPlatformSafetyChecksOnUserSchedule = bypassPlatformSafetyChecksOnUserSchedule;
+            IsBypassPlatformSafetyChecksOnUserSchedule = isBypassPlatformSafetyChecksOnUserSchedule;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public WindowsVMGuestPatchAutomaticByPlatformRebootSetting? RebootSetting { get; set; }
 
         /// <summary> Enables customer to schedule patching without accidental upgrades. </summary>
-        public bool? BypassPlatformSafetyChecksOnUserSchedule { get; set; }
+        public bool? IsBypassPlatformSafetyChecksOnUserSchedule { get; set; }
     }
 }

@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
     {
         private readonly string _value;
         /// <summary> GPU Accelerator. </summary>
-        private const string GPUValue = "GPU";
+        private const string GpuValue = "GPU";
         /// <summary> FPGA Accelerator. </summary>
-        private const string FPGAValue = "FPGA";
+        private const string FpgaValue = "FPGA";
 
         /// <summary> Initializes a new instance of <see cref="AcceleratorType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> GPU Accelerator. </summary>
-        public static AcceleratorType GPU { get; } = new AcceleratorType(GPUValue);
+        public static AcceleratorType Gpu { get; } = new AcceleratorType(GpuValue);
 
         /// <summary> FPGA Accelerator. </summary>
-        public static AcceleratorType FPGA { get; } = new AcceleratorType(FPGAValue);
+        public static AcceleratorType Fpga { get; } = new AcceleratorType(FpgaValue);
 
         /// <summary> Determines if two <see cref="AcceleratorType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             ResourceIdentifier id = default;
             string @type = default;
             VMOperationStatus operationStatus = default;
-            ApiError error = default;
+            ComputeBulkActionsApiError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    error = ApiError.DeserializeApiError(prop.Value, options);
+                    error = ComputeBulkActionsApiError.DeserializeComputeBulkActionsApiError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            ProtocolTypes? protocol = default;
+            ProtocolType? protocol = default;
             string certificateUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    protocol = new ProtocolTypes(prop.Value.GetString());
+                    protocol = new ProtocolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("certificateUrl"u8))

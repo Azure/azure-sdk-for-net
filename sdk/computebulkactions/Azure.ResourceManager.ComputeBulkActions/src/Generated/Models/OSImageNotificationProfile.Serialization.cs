@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 writer.WritePropertyName("notBeforeTimeout"u8);
                 writer.WriteStringValue(NotBeforeTimeout);
             }
-            if (Optional.IsDefined(Enable))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
-                writer.WriteBooleanValue(Enable.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 return null;
             }
             string notBeforeTimeout = default;
-            bool? enable = default;
+            bool? isEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    enable = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OSImageNotificationProfile(notBeforeTimeout, enable, additionalBinaryDataProperties);
+            return new OSImageNotificationProfile(notBeforeTimeout, isEnabled, additionalBinaryDataProperties);
         }
     }
 }

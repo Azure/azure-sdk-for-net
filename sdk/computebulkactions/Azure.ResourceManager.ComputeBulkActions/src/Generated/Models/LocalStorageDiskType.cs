@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
     {
         private readonly string _value;
         /// <summary> HDD DiskType. </summary>
-        private const string HDDValue = "HDD";
+        private const string HddValue = "HDD";
         /// <summary> SSD DiskType. </summary>
-        private const string SSDValue = "SSD";
+        private const string SsdValue = "SSD";
 
         /// <summary> Initializes a new instance of <see cref="LocalStorageDiskType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> HDD DiskType. </summary>
-        public static LocalStorageDiskType HDD { get; } = new LocalStorageDiskType(HDDValue);
+        public static LocalStorageDiskType Hdd { get; } = new LocalStorageDiskType(HddValue);
 
         /// <summary> SSD DiskType. </summary>
-        public static LocalStorageDiskType SSD { get; } = new LocalStorageDiskType(SSDValue);
+        public static LocalStorageDiskType Ssd { get; } = new LocalStorageDiskType(SsdValue);
 
         /// <summary> Determines if two <see cref="LocalStorageDiskType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

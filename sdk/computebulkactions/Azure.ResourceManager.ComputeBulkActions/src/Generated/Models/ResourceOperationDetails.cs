@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="resourceId"> Unique identifier for the resource involved in the operation, eg Azure Resource Manager ID. </param>
         /// <param name="opType"> Type of operation performed on the resources. </param>
         /// <param name="subscriptionId"> Subscription id attached to the request. </param>
-        /// <param name="deadline"> Deadline for the operation. </param>
+        /// <param name="deadlineOn"> Deadline for the operation. </param>
         /// <param name="deadlineType"> Type of deadline of the operation. </param>
         /// <param name="state"> Current state of the operation. </param>
         /// <param name="timezone"> Timezone for the operation. </param>
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadline, DeadlineType? deadlineType, OperationState? state, string timezone, ResourceOperationError resourceOperationError, DateTimeOffset? completedOn, RetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadlineOn, DeadlineType? deadlineType, OperationState? state, string timezone, ResourceOperationError resourceOperationError, DateTimeOffset? completedOn, BulkActionRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             ResourceId = resourceId;
             OpType = opType;
             SubscriptionId = subscriptionId;
-            Deadline = deadline;
+            DeadlineOn = deadlineOn;
             DeadlineType = deadlineType;
             State = state;
             Timezone = timezone;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public string SubscriptionId { get; }
 
         /// <summary> Deadline for the operation. </summary>
-        public DateTimeOffset? Deadline { get; }
+        public DateTimeOffset? DeadlineOn { get; }
 
         /// <summary> Type of deadline of the operation. </summary>
         public DeadlineType? DeadlineType { get; }
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public DateTimeOffset? CompletedOn { get; }
 
         /// <summary> Retry policy the user can pass. </summary>
-        public RetryPolicy RetryPolicy { get; }
+        public BulkActionRetryPolicy RetryPolicy { get; }
     }
 }

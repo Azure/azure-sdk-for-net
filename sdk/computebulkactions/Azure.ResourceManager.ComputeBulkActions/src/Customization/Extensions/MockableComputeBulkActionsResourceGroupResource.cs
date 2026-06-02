@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetBulkAction", typeof(AzureLocation), typeof(string), typeof(CancellationToken))]
     public partial class MockableComputeBulkActionsResourceGroupResource
     {
-        /// <summary> Gets an instance of LaunchBulkInstancesOperations. </summary>
+        /// <summary> Gets an instance of <see cref="BulkActionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <param name="name"> The name of the LaunchBulkInstancesOperation. </param>
+        /// <param name="name"> The name of the bulk action operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual async Task<Response<BulkActionResource>> GetBulkActionAsync(AzureLocation location, string name, CancellationToken cancellationToken = default)
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
             return Response.FromValue(new BulkActionResource(Client, resourceId), response.GetRawResponse());
         }
 
-        /// <summary> Gets an instance of LaunchBulkInstancesOperations. </summary>
+        /// <summary> Gets an instance of <see cref="BulkActionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <param name="name"> The name of the LaunchBulkInstancesOperation. </param>
+        /// <param name="name"> The name of the bulk action operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual Response<BulkActionResource> GetBulkAction(AzureLocation location, string name, CancellationToken cancellationToken = default)

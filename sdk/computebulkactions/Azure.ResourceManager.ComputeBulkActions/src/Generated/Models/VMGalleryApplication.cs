@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ComputeBulkActions;
 
 namespace Azure.ResourceManager.ComputeBulkActions.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> Initializes a new instance of <see cref="VMGalleryApplication"/>. </summary>
         /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageReferenceId"/> is null. </exception>
-        public VMGalleryApplication(string packageReferenceId)
+        public VMGalleryApplication(ResourceIdentifier packageReferenceId)
         {
             Argument.AssertNotNull(packageReferenceId, nameof(packageReferenceId));
 
@@ -32,17 +33,17 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="order"> Optional, Specifies the order in which the packages have to be installed. </param>
         /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
         /// <param name="configurationReference"> Optional, Specifies the uri to an azure blob that will replace the default configuration for the package if provided. </param>
-        /// <param name="treatFailureAsDeploymentFailure"> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </param>
-        /// <param name="enableAutomaticUpgrade"> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the VM/VMSS. </param>
+        /// <param name="shouldTreatFailureAsDeploymentFailure"> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </param>
+        /// <param name="isAutomaticUpgradeEnabled"> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the VM/VMSS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMGalleryApplication(string tags, int? order, string packageReferenceId, string configurationReference, bool? treatFailureAsDeploymentFailure, bool? enableAutomaticUpgrade, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VMGalleryApplication(string tags, int? order, ResourceIdentifier packageReferenceId, string configurationReference, bool? shouldTreatFailureAsDeploymentFailure, bool? isAutomaticUpgradeEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Order = order;
             PackageReferenceId = packageReferenceId;
             ConfigurationReference = configurationReference;
-            TreatFailureAsDeploymentFailure = treatFailureAsDeploymentFailure;
-            EnableAutomaticUpgrade = enableAutomaticUpgrade;
+            ShouldTreatFailureAsDeploymentFailure = shouldTreatFailureAsDeploymentFailure;
+            IsAutomaticUpgradeEnabled = isAutomaticUpgradeEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,15 +54,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public int? Order { get; set; }
 
         /// <summary> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </summary>
-        public string PackageReferenceId { get; set; }
+        public ResourceIdentifier PackageReferenceId { get; set; }
 
         /// <summary> Optional, Specifies the uri to an azure blob that will replace the default configuration for the package if provided. </summary>
         public string ConfigurationReference { get; set; }
 
         /// <summary> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </summary>
-        public bool? TreatFailureAsDeploymentFailure { get; set; }
+        public bool? ShouldTreatFailureAsDeploymentFailure { get; set; }
 
         /// <summary> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the VM/VMSS. </summary>
-        public bool? EnableAutomaticUpgrade { get; set; }
+        public bool? IsAutomaticUpgradeEnabled { get; set; }
     }
 }

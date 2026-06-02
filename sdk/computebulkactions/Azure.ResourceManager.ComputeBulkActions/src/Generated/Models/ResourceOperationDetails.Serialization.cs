@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(Deadline))
+            if (Optional.IsDefined(DeadlineOn))
             {
                 writer.WritePropertyName("deadline"u8);
-                writer.WriteStringValue(Deadline.Value, "O");
+                writer.WriteStringValue(DeadlineOn.Value, "O");
             }
             if (Optional.IsDefined(DeadlineType))
             {
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             ResourceIdentifier resourceId = default;
             ResourceOperationType? opType = default;
             string subscriptionId = default;
-            DateTimeOffset? deadline = default;
+            DateTimeOffset? deadlineOn = default;
             DeadlineType? deadlineType = default;
             OperationState? state = default;
             string timezone = default;
             ResourceOperationError resourceOperationError = default;
             DateTimeOffset? completedOn = default;
-            RetryPolicy retryPolicy = default;
+            BulkActionRetryPolicy retryPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    deadline = prop.Value.GetDateTimeOffset("O");
+                    deadlineOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("deadlineType"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    retryPolicy = RetryPolicy.DeserializeRetryPolicy(prop.Value, options);
+                    retryPolicy = BulkActionRetryPolicy.DeserializeBulkActionRetryPolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 resourceId,
                 opType,
                 subscriptionId,
-                deadline,
+                deadlineOn,
                 deadlineType,
                 state,
                 timezone,

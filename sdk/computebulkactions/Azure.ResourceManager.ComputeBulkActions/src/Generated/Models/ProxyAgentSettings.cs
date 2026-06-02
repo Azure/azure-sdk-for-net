@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProxyAgentSettings"/>. </summary>
-        /// <param name="enabled"> Specifies whether ProxyAgent feature should be enabled on the virtual machine or virtual machine scale set. </param>
+        /// <param name="isEnabled"> Specifies whether ProxyAgent feature should be enabled on the virtual machine or virtual machine scale set. </param>
         /// <param name="mode"> Specifies the mode that ProxyAgent will execute on. Warning: this property has been deprecated, please specify 'mode' under particular hostendpoint setting. </param>
         /// <param name="keyIncarnationId"> Increase the value of this property allows users to reset the key used for securing communication channel between guest and host. </param>
         /// <param name="wireServer"> Specifies the Wire Server endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
         /// <param name="imds"> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
-        /// <param name="addProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
+        /// <param name="shouldAddProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyAgentSettings(bool? enabled, Mode? mode, int? keyIncarnationId, HostEndpointSettings wireServer, HostEndpointSettings imds, bool? addProxyAgentExtension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProxyAgentSettings(bool? isEnabled, ProxyAgentMode? mode, int? keyIncarnationId, HostEndpointSettings wireServer, HostEndpointSettings imds, bool? shouldAddProxyAgentExtension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Mode = mode;
             KeyIncarnationId = keyIncarnationId;
             WireServer = wireServer;
             Imds = imds;
-            AddProxyAgentExtension = addProxyAgentExtension;
+            ShouldAddProxyAgentExtension = shouldAddProxyAgentExtension;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether ProxyAgent feature should be enabled on the virtual machine or virtual machine scale set. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> Specifies the mode that ProxyAgent will execute on. Warning: this property has been deprecated, please specify 'mode' under particular hostendpoint setting. </summary>
-        public Mode? Mode { get; set; }
+        public ProxyAgentMode? Mode { get; set; }
 
         /// <summary> Increase the value of this property allows users to reset the key used for securing communication channel between guest and host. </summary>
         public int? KeyIncarnationId { get; set; }
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public HostEndpointSettings Imds { get; set; }
 
         /// <summary> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </summary>
-        public bool? AddProxyAgentExtension { get; set; }
+        public bool? ShouldAddProxyAgentExtension { get; set; }
     }
 }

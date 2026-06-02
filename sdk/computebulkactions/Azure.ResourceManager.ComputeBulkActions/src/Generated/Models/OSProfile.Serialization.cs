@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowExtensionOperations))
+            if (Optional.IsDefined(IsExtensionOperationsAllowed))
             {
                 writer.WritePropertyName("allowExtensionOperations"u8);
-                writer.WriteBooleanValue(AllowExtensionOperations.Value);
+                writer.WriteBooleanValue(IsExtensionOperationsAllowed.Value);
             }
-            if (Optional.IsDefined(RequireGuestProvisionSignal))
+            if (Optional.IsDefined(IsGuestProvisionSignalRequired))
             {
                 writer.WritePropertyName("requireGuestProvisionSignal"u8);
-                writer.WriteBooleanValue(RequireGuestProvisionSignal.Value);
+                writer.WriteBooleanValue(IsGuestProvisionSignalRequired.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             WindowsConfiguration windowsConfiguration = default;
             LinuxConfiguration linuxConfiguration = default;
             IList<VaultSecretGroup> secrets = default;
-            bool? allowExtensionOperations = default;
-            bool? requireGuestProvisionSignal = default;
+            bool? isExtensionOperationsAllowed = default;
+            bool? isGuestProvisionSignalRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    allowExtensionOperations = prop.Value.GetBoolean();
+                    isExtensionOperationsAllowed = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("requireGuestProvisionSignal"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    requireGuestProvisionSignal = prop.Value.GetBoolean();
+                    isGuestProvisionSignalRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -261,8 +261,8 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 windowsConfiguration,
                 linuxConfiguration,
                 secrets ?? new ChangeTrackingList<VaultSecretGroup>(),
-                allowExtensionOperations,
-                requireGuestProvisionSignal,
+                isExtensionOperationsAllowed,
+                isGuestProvisionSignalRequired,
                 additionalBinaryDataProperties);
         }
     }

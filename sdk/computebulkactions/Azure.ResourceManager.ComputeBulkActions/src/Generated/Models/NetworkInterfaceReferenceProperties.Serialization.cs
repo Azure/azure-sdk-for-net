@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 throw new FormatException($"The model {nameof(NetworkInterfaceReferenceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Primary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
-                writer.WriteBooleanValue(Primary.Value);
+                writer.WriteBooleanValue(IsPrimary.Value);
             }
             if (Optional.IsDefined(DeleteOption))
             {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            bool? primary = default;
-            DeleteOptions? deleteOption = default;
+            bool? isPrimary = default;
+            DeleteOption? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    primary = prop.Value.GetBoolean();
+                    isPrimary = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("deleteOption"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOptions(prop.Value.GetString());
+                    deleteOption = new DeleteOption(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkInterfaceReferenceProperties(primary, deleteOption, additionalBinaryDataProperties);
+            return new NetworkInterfaceReferenceProperties(isPrimary, deleteOption, additionalBinaryDataProperties);
         }
     }
 }

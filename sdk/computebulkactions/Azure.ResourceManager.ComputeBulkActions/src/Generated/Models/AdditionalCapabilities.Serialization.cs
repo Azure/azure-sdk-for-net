@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 throw new FormatException($"The model {nameof(AdditionalCapabilities)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(UltraSSDEnabled))
+            if (Optional.IsDefined(IsUltraSsdEnabled))
             {
                 writer.WritePropertyName("ultraSSDEnabled"u8);
-                writer.WriteBooleanValue(UltraSSDEnabled.Value);
+                writer.WriteBooleanValue(IsUltraSsdEnabled.Value);
             }
-            if (Optional.IsDefined(HibernationEnabled))
+            if (Optional.IsDefined(IsHibernationEnabled))
             {
                 writer.WritePropertyName("hibernationEnabled"u8);
-                writer.WriteBooleanValue(HibernationEnabled.Value);
+                writer.WriteBooleanValue(IsHibernationEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            bool? ultraSSDEnabled = default;
-            bool? hibernationEnabled = default;
+            bool? isUltraSsdEnabled = default;
+            bool? isHibernationEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    ultraSSDEnabled = prop.Value.GetBoolean();
+                    isUltraSsdEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("hibernationEnabled"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    hibernationEnabled = prop.Value.GetBoolean();
+                    isHibernationEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AdditionalCapabilities(ultraSSDEnabled, hibernationEnabled, additionalBinaryDataProperties);
+            return new AdditionalCapabilities(isUltraSsdEnabled, isHibernationEnabled, additionalBinaryDataProperties);
         }
     }
 }

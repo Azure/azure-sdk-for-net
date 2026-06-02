@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToString());
             }
-            if (Optional.IsDefined(WriteAcceleratorEnabled))
+            if (Optional.IsDefined(IsWriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
-                writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
+                writer.WriteBooleanValue(IsWriteAcceleratorEnabled.Value);
             }
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToString());
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 writer.WritePropertyName("sourceResource"u8);
                 writer.WriteObjectValue(SourceResource, options);
             }
-            if (Optional.IsDefined(ToBeDetached))
+            if (Optional.IsDefined(IsToBeDetached))
             {
                 writer.WritePropertyName("toBeDetached"u8);
-                writer.WriteBooleanValue(ToBeDetached.Value);
+                writer.WriteBooleanValue(IsToBeDetached.Value);
             }
             if (Optional.IsDefined(DetachOption))
             {
@@ -184,15 +184,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             string name = default;
             VirtualHardDisk vhd = default;
             VirtualHardDisk image = default;
-            CachingTypes? caching = default;
-            bool? writeAcceleratorEnabled = default;
-            DiskCreateOptionTypes createOption = default;
+            CachingType? caching = default;
+            bool? isWriteAcceleratorEnabled = default;
+            DiskCreateOptionType createOption = default;
             int? diskSizeGB = default;
-            ManagedDiskParameters managedDisk = default;
+            ManagedDiskInfo managedDisk = default;
             ApiEntityReference sourceResource = default;
-            bool? toBeDetached = default;
-            DiskDetachOptionTypes? detachOption = default;
-            DiskDeleteOptionTypes? deleteOption = default;
+            bool? isToBeDetached = default;
+            DiskDetachOptionType? detachOption = default;
+            DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    caching = new CachingTypes(prop.Value.GetString());
+                    caching = new CachingType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("writeAcceleratorEnabled"u8))
@@ -239,12 +239,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    writeAcceleratorEnabled = prop.Value.GetBoolean();
+                    isWriteAcceleratorEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("createOption"u8))
                 {
-                    createOption = new DiskCreateOptionTypes(prop.Value.GetString());
+                    createOption = new DiskCreateOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskSizeGB"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    managedDisk = ManagedDiskParameters.DeserializeManagedDiskParameters(prop.Value, options);
+                    managedDisk = ManagedDiskInfo.DeserializeManagedDiskInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sourceResource"u8))
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    toBeDetached = prop.Value.GetBoolean();
+                    isToBeDetached = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("detachOption"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    detachOption = new DiskDetachOptionTypes(prop.Value.GetString());
+                    detachOption = new DiskDetachOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("deleteOption"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    deleteOption = new DiskDeleteOptionTypes(prop.Value.GetString());
+                    deleteOption = new DiskDeleteOptionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -312,12 +312,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 vhd,
                 image,
                 caching,
-                writeAcceleratorEnabled,
+                isWriteAcceleratorEnabled,
                 createOption,
                 diskSizeGB,
                 managedDisk,
                 sourceResource,
-                toBeDetached,
+                isToBeDetached,
                 detachOption,
                 deleteOption,
                 additionalBinaryDataProperties);

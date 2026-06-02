@@ -9,16 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ComputeBulkActions;
 
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Describes a network interface reference. </summary>
-    public partial class NetworkInterfaceReference : SubResource, IJsonModel<NetworkInterfaceReference>
+    public partial class NetworkInterfaceReference : ComputeBulkActionsSubResource, IJsonModel<NetworkInterfaceReference>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputeBulkActionsSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputeBulkActionsSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -107,14 +108,18 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkInterfaceReferenceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

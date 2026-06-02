@@ -79,35 +79,35 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceConfigurationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Primary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
-                writer.WriteBooleanValue(Primary.Value);
+                writer.WriteBooleanValue(IsPrimary.Value);
             }
             if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
-            if (Optional.IsDefined(EnableAcceleratedNetworking))
+            if (Optional.IsDefined(IsAcceleratedNetworkingEnabled))
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
-                writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
+                writer.WriteBooleanValue(IsAcceleratedNetworkingEnabled.Value);
             }
-            if (Optional.IsDefined(DisableTcpStateTracking))
+            if (Optional.IsDefined(IsTcpStateTrackingDisabled))
             {
                 writer.WritePropertyName("disableTcpStateTracking"u8);
-                writer.WriteBooleanValue(DisableTcpStateTracking.Value);
+                writer.WriteBooleanValue(IsTcpStateTrackingDisabled.Value);
             }
-            if (Optional.IsDefined(EnableFpga))
+            if (Optional.IsDefined(IsFpgaEnabled))
             {
                 writer.WritePropertyName("enableFpga"u8);
-                writer.WriteBooleanValue(EnableFpga.Value);
+                writer.WriteBooleanValue(IsFpgaEnabled.Value);
             }
-            if (Optional.IsDefined(EnableIPForwarding))
+            if (Optional.IsDefined(IsIPForwardingEnabled))
             {
                 writer.WritePropertyName("enableIPForwarding"u8);
-                writer.WriteBooleanValue(EnableIPForwarding.Value);
+                writer.WriteBooleanValue(IsIPForwardingEnabled.Value);
             }
             if (Optional.IsDefined(NetworkSecurityGroup))
             {
@@ -183,16 +183,16 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            bool? primary = default;
-            DeleteOptions? deleteOption = default;
-            bool? enableAcceleratedNetworking = default;
-            bool? disableTcpStateTracking = default;
-            bool? enableFpga = default;
-            bool? enableIPForwarding = default;
-            SubResource networkSecurityGroup = default;
+            bool? isPrimary = default;
+            DeleteOption? deleteOption = default;
+            bool? isAcceleratedNetworkingEnabled = default;
+            bool? isTcpStateTrackingDisabled = default;
+            bool? isFpgaEnabled = default;
+            bool? isIPForwardingEnabled = default;
+            ComputeBulkActionsSubResource networkSecurityGroup = default;
             VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default;
-            SubResource dscpConfiguration = default;
+            ComputeBulkActionsSubResource dscpConfiguration = default;
             NetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
             NetworkInterfaceAuxiliarySku? auxiliarySku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    primary = prop.Value.GetBoolean();
+                    isPrimary = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("deleteOption"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOptions(prop.Value.GetString());
+                    deleteOption = new DeleteOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableAcceleratedNetworking"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    enableAcceleratedNetworking = prop.Value.GetBoolean();
+                    isAcceleratedNetworkingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("disableTcpStateTracking"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    disableTcpStateTracking = prop.Value.GetBoolean();
+                    isTcpStateTrackingDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableFpga"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    enableFpga = prop.Value.GetBoolean();
+                    isFpgaEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableIPForwarding"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    enableIPForwarding = prop.Value.GetBoolean();
+                    isIPForwardingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("networkSecurityGroup"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    networkSecurityGroup = SubResource.DeserializeSubResource(prop.Value, options);
+                    networkSecurityGroup = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dnsSettings"u8))
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    dscpConfiguration = SubResource.DeserializeSubResource(prop.Value, options);
+                    dscpConfiguration = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("auxiliaryMode"u8))
@@ -313,12 +313,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
             }
             return new VirtualMachineNetworkInterfaceConfigurationProperties(
-                primary,
+                isPrimary,
                 deleteOption,
-                enableAcceleratedNetworking,
-                disableTcpStateTracking,
-                enableFpga,
-                enableIPForwarding,
+                isAcceleratedNetworkingEnabled,
+                isTcpStateTrackingDisabled,
+                isFpgaEnabled,
+                isIPForwardingEnabled,
                 networkSecurityGroup,
                 dnsSettings,
                 ipConfigurations,

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ComputeBulkActions;
 
 namespace Azure.ResourceManager.ComputeBulkActions.Models
@@ -96,15 +97,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 writer.WritePropertyName("configurationReference"u8);
                 writer.WriteStringValue(ConfigurationReference);
             }
-            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
+            if (Optional.IsDefined(ShouldTreatFailureAsDeploymentFailure))
             {
                 writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
-                writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
+                writer.WriteBooleanValue(ShouldTreatFailureAsDeploymentFailure.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
-                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+                writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -150,10 +151,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             string tags = default;
             int? order = default;
-            string packageReferenceId = default;
+            ResourceIdentifier packageReferenceId = default;
             string configurationReference = default;
-            bool? treatFailureAsDeploymentFailure = default;
-            bool? enableAutomaticUpgrade = default;
+            bool? shouldTreatFailureAsDeploymentFailure = default;
+            bool? isAutomaticUpgradeEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
                 if (prop.NameEquals("packageReferenceId"u8))
                 {
-                    packageReferenceId = prop.Value.GetString();
+                    packageReferenceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("configurationReference"u8))
@@ -187,7 +188,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    treatFailureAsDeploymentFailure = prop.Value.GetBoolean();
+                    shouldTreatFailureAsDeploymentFailure = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpgrade"u8))
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    enableAutomaticUpgrade = prop.Value.GetBoolean();
+                    isAutomaticUpgradeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -209,8 +210,8 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 order,
                 packageReferenceId,
                 configurationReference,
-                treatFailureAsDeploymentFailure,
-                enableAutomaticUpgrade,
+                shouldTreatFailureAsDeploymentFailure,
+                isAutomaticUpgradeEnabled,
                 additionalBinaryDataProperties);
         }
     }

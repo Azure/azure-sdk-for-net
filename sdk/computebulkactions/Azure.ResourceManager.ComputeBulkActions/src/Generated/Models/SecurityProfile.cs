@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
@@ -23,15 +24,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="SecurityProfile"/>. </summary>
         /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Minimum compute api-version: 2020-12-01. </param>
-        /// <param name="encryptionAtHost"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. The default behavior is: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
+        /// <param name="isEncryptionAtHostEnabled"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. The default behavior is: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. The default behavior is: UefiSettings will not be enabled unless this property is set. </param>
         /// <param name="encryptionIdentity"> Specifies the Managed Identity used by ADE to get access token for keyvault operations. </param>
         /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. Minimum compute api-version: 2023-09-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityProfile(UefiSettings uefiSettings, bool? encryptionAtHost, SecurityTypes? securityType, EncryptionIdentity encryptionIdentity, ProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityProfile(UefiSettings uefiSettings, bool? isEncryptionAtHostEnabled, SecurityType? securityType, EncryptionIdentity encryptionIdentity, ProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UefiSettings = uefiSettings;
-            EncryptionAtHost = encryptionAtHost;
+            IsEncryptionAtHostEnabled = isEncryptionAtHostEnabled;
             SecurityType = securityType;
             EncryptionIdentity = encryptionIdentity;
             ProxyAgentSettings = proxyAgentSettings;
@@ -42,10 +43,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public UefiSettings UefiSettings { get; set; }
 
         /// <summary> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. The default behavior is: The Encryption at host will be disabled unless this property is set to true for the resource. </summary>
-        public bool? EncryptionAtHost { get; set; }
+        public bool? IsEncryptionAtHostEnabled { get; set; }
 
         /// <summary> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. The default behavior is: UefiSettings will not be enabled unless this property is set. </summary>
-        public SecurityTypes? SecurityType { get; set; }
+        public SecurityType? SecurityType { get; set; }
 
         /// <summary> Specifies the Managed Identity used by ADE to get access token for keyvault operations. </summary>
         internal EncryptionIdentity EncryptionIdentity { get; set; }
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public ProxyAgentSettings ProxyAgentSettings { get; set; }
 
         /// <summary> Specifies ARM Resource ID of one of the user identities associated with the VM. </summary>
-        public string UserAssignedIdentityResourceId
+        public ResourceIdentifier UserAssignedIdentityResourceId
         {
             get
             {

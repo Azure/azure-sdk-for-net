@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="windowsConfiguration"> Specifies Windows operating system settings on the virtual machine. </param>
         /// <param name="linuxConfiguration"> Specifies the Linux operating system settings on the virtual machine. For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </param>
         /// <param name="secrets"> Specifies set of certificates that should be installed onto the virtual machine. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
-        /// <param name="allowExtensionOperations"> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </param>
-        /// <param name="requireGuestProvisionSignal"> Optional property which must either be set to True or omitted. </param>
+        /// <param name="isExtensionOperationsAllowed"> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </param>
+        /// <param name="isGuestProvisionSignalRequired"> Optional property which must either be set to True or omitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OSProfile(string computerName, string adminUsername, string adminPassword, string customData, WindowsConfiguration windowsConfiguration, LinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets, bool? allowExtensionOperations, bool? requireGuestProvisionSignal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OSProfile(string computerName, string adminUsername, string adminPassword, string customData, WindowsConfiguration windowsConfiguration, LinuxConfiguration linuxConfiguration, IList<VaultSecretGroup> secrets, bool? isExtensionOperationsAllowed, bool? isGuestProvisionSignalRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputerName = computerName;
             AdminUsername = adminUsername;
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             WindowsConfiguration = windowsConfiguration;
             LinuxConfiguration = linuxConfiguration;
             Secrets = secrets;
-            AllowExtensionOperations = allowExtensionOperations;
-            RequireGuestProvisionSignal = requireGuestProvisionSignal;
+            IsExtensionOperationsAllowed = isExtensionOperationsAllowed;
+            IsGuestProvisionSignalRequired = isGuestProvisionSignalRequired;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public IList<VaultSecretGroup> Secrets { get; }
 
         /// <summary> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </summary>
-        public bool? AllowExtensionOperations { get; set; }
+        public bool? IsExtensionOperationsAllowed { get; set; }
 
         /// <summary> Optional property which must either be set to True or omitted. </summary>
-        public bool? RequireGuestProvisionSignal { get; set; }
+        public bool? IsGuestProvisionSignalRequired { get; set; }
     }
 }

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for launching instances. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.LaunchBulkInstancesOperationProperties"/> instance for mocking. </returns>
-        public static LaunchBulkInstancesOperationProperties LaunchBulkInstancesOperationProperties(ProvisioningState? provisioningState = default, int capacity = default, CapacityType? capacityType = default, PriorityProfile priorityProfile = default, IEnumerable<VmSizeProfile> vmSizesProfile = default, VMAttributes vmAttributes = default, ComputeProfile computeProfile = default, ZoneAllocationPolicy zoneAllocationPolicy = default, RetryPolicy retryPolicy = default)
+        public static LaunchBulkInstancesOperationProperties LaunchBulkInstancesOperationProperties(ProvisioningState? provisioningState = default, int capacity = default, CapacityType? capacityType = default, PriorityProfile priorityProfile = default, IEnumerable<VmSizeProfile> vmSizesProfile = default, VMAttributes vmAttributes = default, ComputeProfile computeProfile = default, ZoneAllocationPolicy zoneAllocationPolicy = default, BulkActionRetryPolicy retryPolicy = default)
         {
             vmSizesProfile ??= new ChangeTrackingList<VmSizeProfile>();
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="dataDisks"> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="diskControllerType"> Specifies the disk controller type configured for the VM. <b>Note:</b> This property will be set to the default disk controller type if not specified provided virtual machine is being created with 'hyperVGeneration' set to V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. Minimum api-version: 2022-08-01. </param>
         /// <returns> A new <see cref="Models.StorageProfile"/> instance for mocking. </returns>
-        public static StorageProfile StorageProfile(ImageReference imageReference = default, OSDisk osDisk = default, IEnumerable<DataDisk> dataDisks = default, DiskControllerTypes? diskControllerType = default)
+        public static StorageProfile StorageProfile(ImageReference imageReference = default, OSDisk osDisk = default, IEnumerable<DataDisk> dataDisks = default, DiskControllerType? diskControllerType = default)
         {
             dataDisks ??= new ChangeTrackingList<DataDisk>();
 
@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="windowsConfiguration"> Specifies Windows operating system settings on the virtual machine. </param>
         /// <param name="linuxConfiguration"> Specifies the Linux operating system settings on the virtual machine. For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </param>
         /// <param name="secrets"> Specifies set of certificates that should be installed onto the virtual machine. To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
-        /// <param name="allowExtensionOperations"> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </param>
-        /// <param name="requireGuestProvisionSignal"> Optional property which must either be set to True or omitted. </param>
+        /// <param name="isExtensionOperationsAllowed"> Specifies whether extension operations should be allowed on the virtual machine. This may only be set to False when no extensions are present on the virtual machine. </param>
+        /// <param name="isGuestProvisionSignalRequired"> Optional property which must either be set to True or omitted. </param>
         /// <returns> A new <see cref="Models.OSProfile"/> instance for mocking. </returns>
-        public static OSProfile OSProfile(string computerName = default, string adminUsername = default, string adminPassword = default, string customData = default, WindowsConfiguration windowsConfiguration = default, LinuxConfiguration linuxConfiguration = default, IEnumerable<VaultSecretGroup> secrets = default, bool? allowExtensionOperations = default, bool? requireGuestProvisionSignal = default)
+        public static OSProfile OSProfile(string computerName = default, string adminUsername = default, string adminPassword = default, string customData = default, WindowsConfiguration windowsConfiguration = default, LinuxConfiguration linuxConfiguration = default, IEnumerable<VaultSecretGroup> secrets = default, bool? isExtensionOperationsAllowed = default, bool? isGuestProvisionSignalRequired = default)
         {
             secrets ??= new ChangeTrackingList<VaultSecretGroup>();
 
@@ -219,24 +219,24 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 windowsConfiguration,
                 linuxConfiguration,
                 secrets.ToList(),
-                allowExtensionOperations,
-                requireGuestProvisionSignal,
+                isExtensionOperationsAllowed,
+                isGuestProvisionSignalRequired,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="provisionVMAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, it is set to true by default. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
+        /// <param name="isVMAgentProvisioned"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, it is set to true by default. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
         /// <param name="enableAutomaticUpdates"> Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true. For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning. </param>
         /// <param name="timeZone"> Specifies the time zone of the virtual machine. e.g. "Pacific Standard Time". Possible values can be [TimeZoneInfo.Id](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id) value from time zones returned by [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.getsystemtimezones). </param>
         /// <param name="additionalUnattendContent"> Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. </param>
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </param>
         /// <param name="winRMListeners"> The list of Windows Remote Management listeners. </param>
         /// <returns> A new <see cref="Models.WindowsConfiguration"/> instance for mocking. </returns>
-        public static WindowsConfiguration WindowsConfiguration(bool? provisionVMAgent = default, bool? enableAutomaticUpdates = default, string timeZone = default, IEnumerable<AdditionalUnattendContent> additionalUnattendContent = default, PatchSettings patchSettings = default, IEnumerable<WinRMListener> winRMListeners = default)
+        public static WindowsConfiguration WindowsConfiguration(bool? isVMAgentProvisioned = default, bool? enableAutomaticUpdates = default, string timeZone = default, IEnumerable<AdditionalUnattendContent> additionalUnattendContent = default, PatchSettings patchSettings = default, IEnumerable<WinRMListener> winRMListeners = default)
         {
             additionalUnattendContent ??= new ChangeTrackingList<AdditionalUnattendContent>();
 
             return new WindowsConfiguration(
-                provisionVMAgent,
+                isVMAgentProvisioned,
                 enableAutomaticUpdates,
                 timeZone,
                 additionalUnattendContent.ToList(),
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="sourceVaultId"> The ID of the sub-resource. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         /// <returns> A new <see cref="Models.VaultSecretGroup"/> instance for mocking. </returns>
-        public static VaultSecretGroup VaultSecretGroup(string sourceVaultId = default, IEnumerable<VaultCertificate> vaultCertificates = default)
+        public static VaultSecretGroup VaultSecretGroup(ResourceIdentifier sourceVaultId = default, IEnumerable<VaultCertificate> vaultCertificates = default)
         {
             vaultCertificates ??= new ChangeTrackingList<VaultCertificate>();
 
-            return new VaultSecretGroup(sourceVaultId is null ? default : new SubResource(sourceVaultId, null), vaultCertificates.ToList(), additionalBinaryDataProperties: null);
+            return new VaultSecretGroup(sourceVaultId is null ? default : new ComputeBulkActionsSubResource(sourceVaultId, null), vaultCertificates.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Specifies the network interfaces or the networking configuration of the virtual machine. </summary>
@@ -280,12 +280,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             return new VirtualMachineNetworkInterfaceConfiguration(name, properties, tags, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="isPrimary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
-        /// <param name="disableTcpStateTracking"> Specifies whether the network interface is disabled for tcp state tracking. </param>
-        /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
-        /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
+        /// <param name="isAcceleratedNetworkingEnabled"> Specifies whether the network interface is accelerated networking-enabled. </param>
+        /// <param name="isTcpStateTrackingDisabled"> Specifies whether the network interface is disabled for tcp state tracking. </param>
+        /// <param name="isFpgaEnabled"> Specifies whether the network interface is FPGA networking-enabled. </param>
+        /// <param name="isIPForwardingEnabled"> Whether IP forwarding enabled on this NIC. </param>
         /// <param name="networkSecurityGroupId"> The ID of the sub-resource. </param>
         /// <param name="dnsServers"> List of DNS servers IP addresses. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
@@ -293,43 +293,43 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceConfigurationProperties VirtualMachineNetworkInterfaceConfigurationProperties(bool? primary = default, DeleteOptions? deleteOption = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableFpga = default, bool? enableIPForwarding = default, string networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, string dscpConfigurationId = default, NetworkInterfaceAuxiliaryMode? auxiliaryMode = default, NetworkInterfaceAuxiliarySku? auxiliarySku = default)
+        public static VirtualMachineNetworkInterfaceConfigurationProperties VirtualMachineNetworkInterfaceConfigurationProperties(bool? isPrimary = default, DeleteOption? deleteOption = default, bool? isAcceleratedNetworkingEnabled = default, bool? isTcpStateTrackingDisabled = default, bool? isFpgaEnabled = default, bool? isIPForwardingEnabled = default, ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, IEnumerable<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default, ResourceIdentifier dscpConfigurationId = default, NetworkInterfaceAuxiliaryMode? auxiliaryMode = default, NetworkInterfaceAuxiliarySku? auxiliarySku = default)
         {
             ipConfigurations ??= new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>();
 
             return new VirtualMachineNetworkInterfaceConfigurationProperties(
-                primary,
+                isPrimary,
                 deleteOption,
-                enableAcceleratedNetworking,
-                disableTcpStateTracking,
-                enableFpga,
-                enableIPForwarding,
-                networkSecurityGroupId is null ? default : new SubResource(networkSecurityGroupId, null),
+                isAcceleratedNetworkingEnabled,
+                isTcpStateTrackingDisabled,
+                isFpgaEnabled,
+                isIPForwardingEnabled,
+                networkSecurityGroupId is null ? default : new ComputeBulkActionsSubResource(networkSecurityGroupId, null),
                 dnsServers is null ? default : new VirtualMachineNetworkInterfaceDnsSettingsConfiguration((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
                 ipConfigurations.ToList(),
-                dscpConfigurationId is null ? default : new SubResource(dscpConfigurationId, null),
+                dscpConfigurationId is null ? default : new ComputeBulkActionsSubResource(dscpConfigurationId, null),
                 auxiliaryMode,
                 auxiliarySku,
                 additionalBinaryDataProperties: null);
         }
 
         /// <param name="subnetId"> The ID of the sub-resource. </param>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="isPrimary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
         /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
         /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
         /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
         /// <returns> A new <see cref="Models.VirtualMachineNetworkInterfaceIPConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachineNetworkInterfaceIPConfigurationProperties VirtualMachineNetworkInterfaceIPConfigurationProperties(string subnetId = default, bool? primary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersions? privateIPAddressVersion = default, IEnumerable<SubResource> applicationSecurityGroups = default, IEnumerable<SubResource> applicationGatewayBackendAddressPools = default, IEnumerable<SubResource> loadBalancerBackendAddressPools = default)
+        public static VirtualMachineNetworkInterfaceIPConfigurationProperties VirtualMachineNetworkInterfaceIPConfigurationProperties(ResourceIdentifier subnetId = default, bool? isPrimary = default, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default, IPVersion? privateIPAddressVersion = default, IEnumerable<ComputeBulkActionsSubResource> applicationSecurityGroups = default, IEnumerable<ComputeBulkActionsSubResource> applicationGatewayBackendAddressPools = default, IEnumerable<ComputeBulkActionsSubResource> loadBalancerBackendAddressPools = default)
         {
-            applicationSecurityGroups ??= new ChangeTrackingList<SubResource>();
-            applicationGatewayBackendAddressPools ??= new ChangeTrackingList<SubResource>();
-            loadBalancerBackendAddressPools ??= new ChangeTrackingList<SubResource>();
+            applicationSecurityGroups ??= new ChangeTrackingList<ComputeBulkActionsSubResource>();
+            applicationGatewayBackendAddressPools ??= new ChangeTrackingList<ComputeBulkActionsSubResource>();
+            loadBalancerBackendAddressPools ??= new ChangeTrackingList<ComputeBulkActionsSubResource>();
 
             return new VirtualMachineNetworkInterfaceIPConfigurationProperties(
-                subnetId is null ? default : new SubResource(subnetId, null),
-                primary,
+                subnetId is null ? default : new ComputeBulkActionsSubResource(subnetId, null),
+                isPrimary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
                 applicationSecurityGroups.ToList(),
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, DeleteOptions? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIpTag> ipTags = default, string publicIPPrefixId = default, IPVersions? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
+        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, DeleteOption? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIpTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, IPVersion? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
         {
             ipTags ??= new ChangeTrackingList<VirtualMachineIpTag>();
 
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 deleteOption,
                 dnsSettings,
                 ipTags.ToList(),
-                publicIPPrefixId is null ? default : new SubResource(publicIPPrefixId, null),
+                publicIPPrefixId is null ? default : new ComputeBulkActionsSubResource(publicIPPrefixId, null),
                 publicIPAddressVersion,
                 publicIPAllocationMethod,
                 additionalBinaryDataProperties: null);
@@ -379,15 +379,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> Specifies the type of the extension; an example is 'CustomScriptExtension'. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        /// <param name="isAutoUpgradeMinorVersionEnabled"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
+        /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
         /// <param name="settings"> JSON formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
-        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
+        /// <param name="isSuppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
         /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <returns> A new <see cref="Models.VirtualMachineExtensionProperties"/> instance for mocking. </returns>
-        public static VirtualMachineExtensionProperties VirtualMachineExtensionProperties(string forceUpdateTag = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, IDictionary<string, BinaryData> settings = default, IDictionary<string, BinaryData> protectedSettings = default, bool? suppressFailures = default, KeyVaultSecretReference protectedSettingsFromKeyVault = default, IEnumerable<string> provisionAfterExtensions = default)
+        public static VirtualMachineExtensionProperties VirtualMachineExtensionProperties(string forceUpdateTag = default, string publisher = default, string @type = default, string typeHandlerVersion = default, bool? isAutoUpgradeMinorVersionEnabled = default, bool? isAutomaticUpgradeEnabled = default, IDictionary<string, BinaryData> settings = default, IDictionary<string, BinaryData> protectedSettings = default, bool? isSuppressFailures = default, KeyVaultSecretReference protectedSettingsFromKeyVault = default, IEnumerable<string> provisionAfterExtensions = default)
         {
             settings ??= new ChangeTrackingDictionary<string, BinaryData>();
             protectedSettings ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -398,11 +398,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 publisher,
                 @type,
                 typeHandlerVersion,
-                autoUpgradeMinorVersion,
-                enableAutomaticUpgrade,
+                isAutoUpgradeMinorVersionEnabled,
+                isAutomaticUpgradeEnabled,
                 settings,
                 protectedSettings,
-                suppressFailures,
+                isSuppressFailures,
                 protectedSettingsFromKeyVault,
                 provisionAfterExtensions.ToList(),
                 additionalBinaryDataProperties: null);
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
         /// <returns> A new <see cref="Models.VirtualMachine"/> instance for mocking. </returns>
-        public static VirtualMachine VirtualMachine(string name = default, ResourceIdentifier id = default, string @type = default, VMOperationStatus operationStatus = default, ApiError error = default)
+        public static VirtualMachine VirtualMachine(string name = default, ResourceIdentifier id = default, string @type = default, VMOperationStatus operationStatus = default, ComputeBulkActionsApiError error = default)
         {
             return new VirtualMachine(
                 name,
@@ -443,12 +443,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The API error details. </param>
         /// <param name="innererror"> The API inner error. </param>
-        /// <returns> A new <see cref="Models.ApiError"/> instance for mocking. </returns>
-        public static ApiError ApiError(string code = default, string target = default, string message = default, IEnumerable<ApiErrorBase> details = default, InnerError innererror = default)
+        /// <returns> A new <see cref="Models.ComputeBulkActionsApiError"/> instance for mocking. </returns>
+        public static ComputeBulkActionsApiError ComputeBulkActionsApiError(string code = default, string target = default, string message = default, IEnumerable<ComputeBulkActionsApiErrorBase> details = default, ComputeBulkActionsInnerError innererror = default)
         {
-            details ??= new ChangeTrackingList<ApiErrorBase>();
+            details ??= new ChangeTrackingList<ComputeBulkActionsApiErrorBase>();
 
-            return new ApiError(
+            return new ComputeBulkActionsApiError(
                 code,
                 target,
                 message,
@@ -461,28 +461,28 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
-        /// <returns> A new <see cref="Models.ApiErrorBase"/> instance for mocking. </returns>
-        public static ApiErrorBase ApiErrorBase(string code = default, string target = default, string message = default)
+        /// <returns> A new <see cref="Models.ComputeBulkActionsApiErrorBase"/> instance for mocking. </returns>
+        public static ComputeBulkActionsApiErrorBase ComputeBulkActionsApiErrorBase(string code = default, string target = default, string message = default)
         {
-            return new ApiErrorBase(code, target, message, additionalBinaryDataProperties: null);
+            return new ComputeBulkActionsApiErrorBase(code, target, message, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Inner error details. </summary>
         /// <param name="exceptionType"> The exception type. </param>
         /// <param name="errorDetail"> The internal error message or exception dump. </param>
-        /// <returns> A new <see cref="Models.InnerError"/> instance for mocking. </returns>
-        public static InnerError InnerError(string exceptionType = default, string errorDetail = default)
+        /// <returns> A new <see cref="Models.ComputeBulkActionsInnerError"/> instance for mocking. </returns>
+        public static ComputeBulkActionsInnerError ComputeBulkActionsInnerError(string exceptionType = default, string errorDetail = default)
         {
-            return new InnerError(exceptionType, errorDetail, additionalBinaryDataProperties: null);
+            return new ComputeBulkActionsInnerError(exceptionType, errorDetail, additionalBinaryDataProperties: null);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resourcesIds"> The resource ids used for the request. </param>
-        /// <param name="correlationid"> CorrelationId item. </param>
-        /// <returns> A new <see cref="Models.ExecuteDeallocateRequest"/> instance for mocking. </returns>
-        public static ExecuteDeallocateRequest ExecuteDeallocateRequest(ExecutionParameters executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationid = default)
+        /// <param name="correlationId"> CorrelationId item. </param>
+        /// <returns> A new <see cref="Models.ExecuteDeallocateContent"/> instance for mocking. </returns>
+        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionConfig executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new ExecuteDeallocateRequest(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationid, additionalBinaryDataProperties: null);
+            return new ExecuteDeallocateContent(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response from a deallocate request. </summary>
@@ -490,12 +490,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="type"> The type of resources used in the request eg virtual machines. </param>
         /// <param name="location"> The location of the request eg westus. </param>
         /// <param name="results"> The results from the request. </param>
-        /// <returns> A new <see cref="Models.DeallocateResourceOperationResponse"/> instance for mocking. </returns>
-        public static DeallocateResourceOperationResponse DeallocateResourceOperationResponse(string description = default, string @type = default, AzureLocation location = default, IEnumerable<ResourceOperation> results = default)
+        /// <returns> A new <see cref="Models.DeallocateResourceOperationResult"/> instance for mocking. </returns>
+        public static DeallocateResourceOperationResult DeallocateResourceOperationResult(string description = default, string @type = default, AzureLocation location = default, IEnumerable<BulkActionResourceOperationInfo> results = default)
         {
-            results ??= new ChangeTrackingList<ResourceOperation>();
+            results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new DeallocateResourceOperationResponse(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new DeallocateResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Top level response from an operation on a resource. </summary>
@@ -503,10 +503,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="errorCode"> Resource level error code if it exists. </param>
         /// <param name="errorDetails"> Resource level error details if they exist. </param>
         /// <param name="operation"> Details of the operation performed on a resource. </param>
-        /// <returns> A new <see cref="Models.ResourceOperation"/> instance for mocking. </returns>
-        public static ResourceOperation ResourceOperation(ResourceIdentifier resourceId = default, string errorCode = default, string errorDetails = default, ResourceOperationDetails operation = default)
+        /// <returns> A new <see cref="Models.BulkActionResourceOperationInfo"/> instance for mocking. </returns>
+        public static BulkActionResourceOperationInfo BulkActionResourceOperationInfo(ResourceIdentifier resourceId = default, string errorCode = default, string errorDetails = default, ResourceOperationDetails operation = default)
         {
-            return new ResourceOperation(resourceId, errorCode, errorDetails, operation, additionalBinaryDataProperties: null);
+            return new BulkActionResourceOperationInfo(resourceId, errorCode, errorDetails, operation, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The details of a response from an operation on a resource. </summary>
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="resourceId"> Unique identifier for the resource involved in the operation, eg Azure Resource Manager ID. </param>
         /// <param name="opType"> Type of operation performed on the resources. </param>
         /// <param name="subscriptionId"> Subscription id attached to the request. </param>
-        /// <param name="deadline"> Deadline for the operation. </param>
+        /// <param name="deadlineOn"> Deadline for the operation. </param>
         /// <param name="deadlineType"> Type of deadline of the operation. </param>
         /// <param name="state"> Current state of the operation. </param>
         /// <param name="timezone"> Timezone for the operation. </param>
@@ -522,14 +522,14 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ResourceOperationDetails"/> instance for mocking. </returns>
-        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadline = default, DeadlineType? deadlineType = default, OperationState? state = default, string timezone = default, ResourceOperationError resourceOperationError = default, DateTimeOffset? completedOn = default, RetryPolicy retryPolicy = default)
+        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadlineOn = default, DeadlineType? deadlineType = default, OperationState? state = default, string timezone = default, ResourceOperationError resourceOperationError = default, DateTimeOffset? completedOn = default, BulkActionRetryPolicy retryPolicy = default)
         {
             return new ResourceOperationDetails(
                 operationId,
                 resourceId,
                 opType,
                 subscriptionId,
-                deadline,
+                deadlineOn,
                 deadlineType,
                 state,
                 timezone,
@@ -550,11 +550,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resourcesIds"> The resource ids used for the request. </param>
-        /// <param name="correlationid"> CorrelationId item. </param>
-        /// <returns> A new <see cref="Models.ExecuteHibernateRequest"/> instance for mocking. </returns>
-        public static ExecuteHibernateRequest ExecuteHibernateRequest(ExecutionParameters executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationid = default)
+        /// <param name="correlationId"> CorrelationId item. </param>
+        /// <returns> A new <see cref="Models.ExecuteHibernateContent"/> instance for mocking. </returns>
+        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionConfig executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new ExecuteHibernateRequest(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationid, additionalBinaryDataProperties: null);
+            return new ExecuteHibernateContent(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response from a Hibernate request. </summary>
@@ -562,21 +562,21 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="type"> The type of resources used in the request eg virtual machines. </param>
         /// <param name="location"> The location of the request eg westus. </param>
         /// <param name="results"> The results from the request. </param>
-        /// <returns> A new <see cref="Models.HibernateResourceOperationResponse"/> instance for mocking. </returns>
-        public static HibernateResourceOperationResponse HibernateResourceOperationResponse(string description = default, string @type = default, AzureLocation location = default, IEnumerable<ResourceOperation> results = default)
+        /// <returns> A new <see cref="Models.HibernateResourceOperationResult"/> instance for mocking. </returns>
+        public static HibernateResourceOperationResult HibernateResourceOperationResult(string description = default, string @type = default, AzureLocation location = default, IEnumerable<BulkActionResourceOperationInfo> results = default)
         {
-            results ??= new ChangeTrackingList<ResourceOperation>();
+            results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new HibernateResourceOperationResponse(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new HibernateResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resourcesIds"> The resource ids used for the request. </param>
-        /// <param name="correlationid"> CorrelationId item. </param>
-        /// <returns> A new <see cref="Models.ExecuteStartRequest"/> instance for mocking. </returns>
-        public static ExecuteStartRequest ExecuteStartRequest(ExecutionParameters executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationid = default)
+        /// <param name="correlationId"> CorrelationId item. </param>
+        /// <returns> A new <see cref="Models.ExecuteStartContent"/> instance for mocking. </returns>
+        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionConfig executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new ExecuteStartRequest(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationid, additionalBinaryDataProperties: null);
+            return new ExecuteStartContent(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response from a start request. </summary>
@@ -584,22 +584,22 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="type"> The type of resources used in the request eg virtual machines. </param>
         /// <param name="location"> The location of the request eg westus. </param>
         /// <param name="results"> The results from the request. </param>
-        /// <returns> A new <see cref="Models.StartResourceOperationResponse"/> instance for mocking. </returns>
-        public static StartResourceOperationResponse StartResourceOperationResponse(string description = default, string @type = default, AzureLocation location = default, IEnumerable<ResourceOperation> results = default)
+        /// <returns> A new <see cref="Models.StartResourceOperationResult"/> instance for mocking. </returns>
+        public static StartResourceOperationResult StartResourceOperationResult(string description = default, string @type = default, AzureLocation location = default, IEnumerable<BulkActionResourceOperationInfo> results = default)
         {
-            results ??= new ChangeTrackingList<ResourceOperation>();
+            results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new StartResourceOperationResponse(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new StartResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ExecuteCreateRequest request for create operations. </summary>
         /// <param name="resourceConfigParameters"> resource creation payload. </param>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
-        /// <param name="correlationid"> CorrelationId item. </param>
-        /// <returns> A new <see cref="Models.ExecuteCreateRequest"/> instance for mocking. </returns>
-        public static ExecuteCreateRequest ExecuteCreateRequest(ResourceProvisionPayload resourceConfigParameters = default, ExecutionParameters executionParameters = default, string correlationid = default)
+        /// <param name="correlationId"> CorrelationId item. </param>
+        /// <returns> A new <see cref="Models.ExecuteCreateContent"/> instance for mocking. </returns>
+        public static ExecuteCreateContent ExecuteCreateContent(ResourceProvisionPayload resourceConfigParameters = default, BulkActionExecutionConfig executionParameters = default, string correlationId = default)
         {
-            return new ExecuteCreateRequest(resourceConfigParameters, executionParameters, correlationid, additionalBinaryDataProperties: null);
+            return new ExecuteCreateContent(resourceConfigParameters, executionParameters, correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Resource creation data model. </summary>
@@ -621,22 +621,22 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="type"> The type of resources used in the request eg virtual machines. </param>
         /// <param name="location"> The location of the request eg westus. </param>
         /// <param name="results"> The results from the request. </param>
-        /// <returns> A new <see cref="Models.CreateResourceOperationResponse"/> instance for mocking. </returns>
-        public static CreateResourceOperationResponse CreateResourceOperationResponse(string description = default, string @type = default, AzureLocation location = default, IEnumerable<ResourceOperation> results = default)
+        /// <returns> A new <see cref="Models.CreateResourceOperationResult"/> instance for mocking. </returns>
+        public static CreateResourceOperationResult CreateResourceOperationResult(string description = default, string @type = default, AzureLocation location = default, IEnumerable<BulkActionResourceOperationInfo> results = default)
         {
-            results ??= new ChangeTrackingList<ResourceOperation>();
+            results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new CreateResourceOperationResponse(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new CreateResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="resourcesIds"> The resource ids used for the request. </param>
-        /// <param name="correlationid"> CorrelationId item. </param>
-        /// <param name="forceDeletion"> Forced delete resource item. </param>
-        /// <returns> A new <see cref="Models.ExecuteDeleteRequest"/> instance for mocking. </returns>
-        public static ExecuteDeleteRequest ExecuteDeleteRequest(ExecutionParameters executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationid = default, bool? forceDeletion = default)
+        /// <param name="correlationId"> CorrelationId item. </param>
+        /// <param name="isForceDeletion"> Forced delete resource item. </param>
+        /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
+        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionConfig executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default, bool? isForceDeletion = default)
         {
-            return new ExecuteDeleteRequest(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationid, forceDeletion, additionalBinaryDataProperties: null);
+            return new ExecuteDeleteContent(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, isForceDeletion, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The response from a delete request. </summary>
@@ -644,54 +644,54 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="type"> The type of resources used in the request eg virtual machines. </param>
         /// <param name="location"> The location of the request eg westus. </param>
         /// <param name="results"> The results from the request. </param>
-        /// <returns> A new <see cref="Models.DeleteResourceOperationResponse"/> instance for mocking. </returns>
-        public static DeleteResourceOperationResponse DeleteResourceOperationResponse(string description = default, string @type = default, AzureLocation location = default, IEnumerable<ResourceOperation> results = default)
+        /// <returns> A new <see cref="Models.DeleteResourceOperationResult"/> instance for mocking. </returns>
+        public static DeleteResourceOperationResult DeleteResourceOperationResult(string description = default, string @type = default, AzureLocation location = default, IEnumerable<BulkActionResourceOperationInfo> results = default)
         {
-            results ??= new ChangeTrackingList<ResourceOperation>();
+            results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new DeleteResourceOperationResponse(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new DeleteResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is the request to get operation status using operationids. </summary>
         /// <param name="operationIds"> The list of operation ids to get the status of. </param>
-        /// <param name="correlationid"> CorrelationId item. </param>
-        /// <returns> A new <see cref="Models.GetOperationStatusRequest"/> instance for mocking. </returns>
-        public static GetOperationStatusRequest GetOperationStatusRequest(IEnumerable<string> operationIds = default, string correlationid = default)
+        /// <param name="correlationId"> CorrelationId item. </param>
+        /// <returns> A new <see cref="Models.GetOperationStatusContent"/> instance for mocking. </returns>
+        public static GetOperationStatusContent GetOperationStatusContent(IEnumerable<string> operationIds = default, string correlationId = default)
         {
             operationIds ??= new ChangeTrackingList<string>();
 
-            return new GetOperationStatusRequest(operationIds.ToList(), correlationid, additionalBinaryDataProperties: null);
+            return new GetOperationStatusContent(operationIds.ToList(), correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is the response from a get operations status request. </summary>
         /// <param name="results"> An array of resource operations based on their operation ids. </param>
-        /// <returns> A new <see cref="Models.GetOperationStatusResponse"/> instance for mocking. </returns>
-        public static GetOperationStatusResponse GetOperationStatusResponse(IEnumerable<ResourceOperation> results = default)
+        /// <returns> A new <see cref="Models.GetOperationStatusResult"/> instance for mocking. </returns>
+        public static GetOperationStatusResult GetOperationStatusResult(IEnumerable<BulkActionResourceOperationInfo> results = default)
         {
-            results ??= new ChangeTrackingList<ResourceOperation>();
+            results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new GetOperationStatusResponse(results.ToList(), additionalBinaryDataProperties: null);
+            return new GetOperationStatusResult(results.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is the request to cancel running operations in bulkactions using the operation ids. </summary>
         /// <param name="operationIds"> The list of operation ids to cancel operations on. </param>
-        /// <param name="correlationid"> CorrelationId item. </param>
-        /// <returns> A new <see cref="Models.CancelOperationsRequest"/> instance for mocking. </returns>
-        public static CancelOperationsRequest CancelOperationsRequest(IEnumerable<string> operationIds = default, string correlationid = default)
+        /// <param name="correlationId"> CorrelationId item. </param>
+        /// <returns> A new <see cref="Models.CancelOperationsContent"/> instance for mocking. </returns>
+        public static CancelOperationsContent CancelOperationsContent(IEnumerable<string> operationIds = default, string correlationId = default)
         {
             operationIds ??= new ChangeTrackingList<string>();
 
-            return new CancelOperationsRequest(operationIds.ToList(), correlationid, additionalBinaryDataProperties: null);
+            return new CancelOperationsContent(operationIds.ToList(), correlationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> This is the response from a cancel operations request. </summary>
         /// <param name="results"> An array of resource operations that were successfully cancelled. </param>
-        /// <returns> A new <see cref="Models.CancelOperationsResponse"/> instance for mocking. </returns>
-        public static CancelOperationsResponse CancelOperationsResponse(IEnumerable<ResourceOperation> results = default)
+        /// <returns> A new <see cref="Models.CancelOperationsResult"/> instance for mocking. </returns>
+        public static CancelOperationsResult CancelOperationsResult(IEnumerable<BulkActionResourceOperationInfo> results = default)
         {
-            results ??= new ChangeTrackingList<ResourceOperation>();
+            results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new CancelOperationsResponse(results.ToList(), additionalBinaryDataProperties: null);
+            return new CancelOperationsResult(results.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

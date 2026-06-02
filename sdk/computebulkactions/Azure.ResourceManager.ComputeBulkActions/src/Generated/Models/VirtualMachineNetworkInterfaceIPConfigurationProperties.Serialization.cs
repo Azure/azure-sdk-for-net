@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet, options);
             }
-            if (Optional.IsDefined(Primary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
-                writer.WriteBooleanValue(Primary.Value);
+                writer.WriteBooleanValue(IsPrimary.Value);
             }
             if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 writer.WritePropertyName("applicationSecurityGroups"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in ApplicationSecurityGroups)
+                foreach (ComputeBulkActionsSubResource item in ApplicationSecurityGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in ApplicationGatewayBackendAddressPools)
+                foreach (ComputeBulkActionsSubResource item in ApplicationGatewayBackendAddressPools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPools"u8);
                 writer.WriteStartArray();
-                foreach (SubResource item in LoadBalancerBackendAddressPools)
+                foreach (ComputeBulkActionsSubResource item in LoadBalancerBackendAddressPools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -166,13 +166,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            SubResource subnet = default;
-            bool? primary = default;
+            ComputeBulkActionsSubResource subnet = default;
+            bool? isPrimary = default;
             VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration = default;
-            IPVersions? privateIPAddressVersion = default;
-            IList<SubResource> applicationSecurityGroups = default;
-            IList<SubResource> applicationGatewayBackendAddressPools = default;
-            IList<SubResource> loadBalancerBackendAddressPools = default;
+            IPVersion? privateIPAddressVersion = default;
+            IList<ComputeBulkActionsSubResource> applicationSecurityGroups = default;
+            IList<ComputeBulkActionsSubResource> applicationGatewayBackendAddressPools = default;
+            IList<ComputeBulkActionsSubResource> loadBalancerBackendAddressPools = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    subnet = SubResource.DeserializeSubResource(prop.Value, options);
+                    subnet = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("primary"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    primary = prop.Value.GetBoolean();
+                    isPrimary = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publicIPAddressConfiguration"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    privateIPAddressVersion = new IPVersions(prop.Value.GetString());
+                    privateIPAddressVersion = new IPVersion(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("applicationSecurityGroups"u8))
@@ -218,10 +218,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeBulkActionsSubResource> array = new List<ComputeBulkActionsSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(item, options));
                     }
                     applicationSecurityGroups = array;
                     continue;
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeBulkActionsSubResource> array = new List<ComputeBulkActionsSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(item, options));
                     }
                     applicationGatewayBackendAddressPools = array;
                     continue;
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
+                    List<ComputeBulkActionsSubResource> array = new List<ComputeBulkActionsSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubResource.DeserializeSubResource(item, options));
+                        array.Add(ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(item, options));
                     }
                     loadBalancerBackendAddressPools = array;
                     continue;
@@ -261,12 +261,12 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             return new VirtualMachineNetworkInterfaceIPConfigurationProperties(
                 subnet,
-                primary,
+                isPrimary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
-                applicationSecurityGroups ?? new ChangeTrackingList<SubResource>(),
-                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<SubResource>(),
-                loadBalancerBackendAddressPools ?? new ChangeTrackingList<SubResource>(),
+                applicationSecurityGroups ?? new ChangeTrackingList<ComputeBulkActionsSubResource>(),
+                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ComputeBulkActionsSubResource>(),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<ComputeBulkActionsSubResource>(),
                 additionalBinaryDataProperties);
         }
     }

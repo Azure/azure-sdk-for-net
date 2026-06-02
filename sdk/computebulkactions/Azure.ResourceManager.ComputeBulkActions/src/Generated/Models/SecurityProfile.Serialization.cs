@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 writer.WritePropertyName("uefiSettings"u8);
                 writer.WriteObjectValue(UefiSettings, options);
             }
-            if (Optional.IsDefined(EncryptionAtHost))
+            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
             {
                 writer.WritePropertyName("encryptionAtHost"u8);
-                writer.WriteBooleanValue(EncryptionAtHost.Value);
+                writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
             }
             if (Optional.IsDefined(SecurityType))
             {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 return null;
             }
             UefiSettings uefiSettings = default;
-            bool? encryptionAtHost = default;
-            SecurityTypes? securityType = default;
+            bool? isEncryptionAtHostEnabled = default;
+            SecurityType? securityType = default;
             EncryptionIdentity encryptionIdentity = default;
             ProxyAgentSettings proxyAgentSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    encryptionAtHost = prop.Value.GetBoolean();
+                    isEncryptionAtHostEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("securityType"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    securityType = new SecurityTypes(prop.Value.GetString());
+                    securityType = new SecurityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryptionIdentity"u8))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             return new SecurityProfile(
                 uefiSettings,
-                encryptionAtHost,
+                isEncryptionAtHostEnabled,
                 securityType,
                 encryptionIdentity,
                 proxyAgentSettings,

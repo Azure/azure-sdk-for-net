@@ -24,7 +24,7 @@ dotnet add package Azure.ResourceManager.ComputeBulkActions --prerelease
 
 ### Prerequisites
 
-* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+* You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
 ### Authenticate the Client
 

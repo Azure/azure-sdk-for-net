@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 writer.WritePropertyName("patchMode"u8);
                 writer.WriteStringValue(PatchMode.Value.ToString());
             }
-            if (Optional.IsDefined(EnableHotpatching))
+            if (Optional.IsDefined(IsHotpatchingEnabled))
             {
                 writer.WritePropertyName("enableHotpatching"u8);
-                writer.WriteBooleanValue(EnableHotpatching.Value);
+                writer.WriteBooleanValue(IsHotpatchingEnabled.Value);
             }
             if (Optional.IsDefined(AssessmentMode))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 return null;
             }
             WindowsVMGuestPatchMode? patchMode = default;
-            bool? enableHotpatching = default;
+            bool? isHotpatchingEnabled = default;
             WindowsPatchAssessmentMode? assessmentMode = default;
             WindowsVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    enableHotpatching = prop.Value.GetBoolean();
+                    isHotpatchingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("assessmentMode"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PatchSettings(patchMode, enableHotpatching, assessmentMode, automaticByPlatformSettings, additionalBinaryDataProperties);
+            return new PatchSettings(patchMode, isHotpatchingEnabled, assessmentMode, automaticByPlatformSettings, additionalBinaryDataProperties);
         }
     }
 }

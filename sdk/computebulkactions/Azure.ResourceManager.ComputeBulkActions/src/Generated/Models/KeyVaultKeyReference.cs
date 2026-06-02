@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ComputeBulkActions;
 
 namespace Azure.ResourceManager.ComputeBulkActions.Models
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing the key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultKeyReference(string keyUri, SubResource sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultKeyReference(string keyUri, ComputeBulkActionsSubResource sourceVault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyUri = keyUri;
             SourceVault = sourceVault;
@@ -42,10 +43,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public string KeyUri { get; set; }
 
         /// <summary> The relative URL of the Key Vault containing the key. </summary>
-        internal SubResource SourceVault { get; set; }
+        internal ComputeBulkActionsSubResource SourceVault { get; set; }
 
         /// <summary> The ID of the sub-resource. </summary>
-        public string SourceVaultId
+        public ResourceIdentifier SourceVaultId
         {
             get
             {
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 if (SourceVault is null)
                 {
-                    SourceVault = new SubResource();
+                    SourceVault = new ComputeBulkActionsSubResource();
                 }
                 SourceVault.Id = value;
             }

@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteDeallocateAsync(AzureLocation, ExecuteDeallocateRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteDeallocateAsync(AzureLocation, ExecuteDeallocateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DeallocateResourceOperationResponse>> VirtualMachinesExecuteDeallocateAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteDeallocateRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeallocateResourceOperationResult>> VirtualMachinesExecuteDeallocateAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteDeallocate(AzureLocation, ExecuteDeallocateRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteDeallocate(AzureLocation, ExecuteDeallocateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DeallocateResourceOperationResponse> VirtualMachinesExecuteDeallocate(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteDeallocateRequest content, CancellationToken cancellationToken = default)
+        public static Response<DeallocateResourceOperationResult> VirtualMachinesExecuteDeallocate(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteHibernateAsync(AzureLocation, ExecuteHibernateRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteHibernateAsync(AzureLocation, ExecuteHibernateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<HibernateResourceOperationResponse>> VirtualMachinesExecuteHibernateAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteHibernateRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<HibernateResourceOperationResult>> VirtualMachinesExecuteHibernateAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteHibernate(AzureLocation, ExecuteHibernateRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteHibernate(AzureLocation, ExecuteHibernateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<HibernateResourceOperationResponse> VirtualMachinesExecuteHibernate(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteHibernateRequest content, CancellationToken cancellationToken = default)
+        public static Response<HibernateResourceOperationResult> VirtualMachinesExecuteHibernate(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteStartAsync(AzureLocation, ExecuteStartRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteStartAsync(AzureLocation, ExecuteStartContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<StartResourceOperationResponse>> VirtualMachinesExecuteStartAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteStartRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<StartResourceOperationResult>> VirtualMachinesExecuteStartAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteStart(AzureLocation, ExecuteStartRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteStart(AzureLocation, ExecuteStartContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<StartResourceOperationResponse> VirtualMachinesExecuteStart(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteStartRequest content, CancellationToken cancellationToken = default)
+        public static Response<StartResourceOperationResult> VirtualMachinesExecuteStart(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteStartContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteCreateAsync(AzureLocation, ExecuteCreateRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteCreateAsync(AzureLocation, ExecuteCreateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CreateResourceOperationResponse>> VirtualMachinesExecuteCreateAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteCreateRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CreateResourceOperationResult>> VirtualMachinesExecuteCreateAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteCreate(AzureLocation, ExecuteCreateRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteCreate(AzureLocation, ExecuteCreateContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CreateResourceOperationResponse> VirtualMachinesExecuteCreate(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteCreateRequest content, CancellationToken cancellationToken = default)
+        public static Response<CreateResourceOperationResult> VirtualMachinesExecuteCreate(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteDeleteAsync(AzureLocation, ExecuteDeleteRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteDeleteAsync(AzureLocation, ExecuteDeleteContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DeleteResourceOperationResponse>> VirtualMachinesExecuteDeleteAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteDeleteRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<DeleteResourceOperationResult>> VirtualMachinesExecuteDeleteAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteDelete(AzureLocation, ExecuteDeleteRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesExecuteDelete(AzureLocation, ExecuteDeleteContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DeleteResourceOperationResponse> VirtualMachinesExecuteDelete(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteDeleteRequest content, CancellationToken cancellationToken = default)
+        public static Response<DeleteResourceOperationResult> VirtualMachinesExecuteDelete(this SubscriptionResource subscriptionResource, AzureLocation location, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesGetOperationStatusAsync(AzureLocation, GetOperationStatusRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesGetOperationStatusAsync(AzureLocation, GetOperationStatusContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<GetOperationStatusResponse>> VirtualMachinesGetOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, GetOperationStatusRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<GetOperationStatusResult>> VirtualMachinesGetOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, GetOperationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesGetOperationStatus(AzureLocation, GetOperationStatusRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesGetOperationStatus(AzureLocation, GetOperationStatusContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<GetOperationStatusResponse> VirtualMachinesGetOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, GetOperationStatusRequest content, CancellationToken cancellationToken = default)
+        public static Response<GetOperationStatusResult> VirtualMachinesGetOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, GetOperationStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesCancelOperationsAsync(AzureLocation, CancelOperationsRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesCancelOperationsAsync(AzureLocation, CancelOperationsContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CancelOperationsResponse>> VirtualMachinesCancelOperationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancelOperationsRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CancelOperationsResult>> VirtualMachinesCancelOperationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancelOperationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesCancelOperations(AzureLocation, CancelOperationsRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.VirtualMachinesCancelOperations(AzureLocation, CancelOperationsContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CancelOperationsResponse> VirtualMachinesCancelOperations(this SubscriptionResource subscriptionResource, AzureLocation location, CancelOperationsRequest content, CancellationToken cancellationToken = default)
+        public static Response<CancelOperationsResult> VirtualMachinesCancelOperations(this SubscriptionResource subscriptionResource, AzureLocation location, CancelOperationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

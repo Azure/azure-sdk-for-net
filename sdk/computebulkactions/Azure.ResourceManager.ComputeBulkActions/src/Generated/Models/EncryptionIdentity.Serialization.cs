@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ComputeBulkActions;
 
 namespace Azure.ResourceManager.ComputeBulkActions.Models
@@ -121,13 +122,17 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            string userAssignedIdentityResourceId = default;
+            ResourceIdentifier userAssignedIdentityResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("userAssignedIdentityResourceId"u8))
                 {
-                    userAssignedIdentityResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userAssignedIdentityResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

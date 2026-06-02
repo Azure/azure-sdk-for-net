@@ -9,16 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ComputeBulkActions;
 
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
     /// <summary> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. NOTE: Image reference publisher and offer can only be set when you create the scale set. </summary>
-    public partial class ImageReference : SubResource, IJsonModel<ImageReference>
+    public partial class ImageReference : ComputeBulkActionsSubResource, IJsonModel<ImageReference>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ComputeBulkActionsSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ImageReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ComputeBulkActionsSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string publisher = default;
             string offer = default;
@@ -144,7 +145,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publisher"u8))

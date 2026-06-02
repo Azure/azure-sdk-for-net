@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="location"> The location for the resource. </param>
         internal BulkActionCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : this(client, id)
         {
+            _ = location;
         }
 
         /// <summary> Get the status of a LaunchBulkInstancesOperation. </summary>
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, id, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, id, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 using var document = await JsonDocument.ParseAsync(result.ContentStream, default, cancellationToken).ConfigureAwait(false);
                 var value = ModelReaderWriter.Read<OperationStatusResult>(BinaryData.FromString(document.RootElement.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default);
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, id, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, id, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 using var document = JsonDocument.Parse(result.ContentStream);
                 var value = ModelReaderWriter.Read<OperationStatusResult>(BinaryData.FromString(document.RootElement.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default);
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, id, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 switch (result.Status)
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, id, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 switch (result.Status)
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, id, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, id, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 switch (result.Status)
@@ -209,7 +210,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, id, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, id, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 switch (result.Status)

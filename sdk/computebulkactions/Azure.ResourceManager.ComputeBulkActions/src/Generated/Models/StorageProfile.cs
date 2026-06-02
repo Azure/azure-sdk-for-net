@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="dataDisks"> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="diskControllerType"> Specifies the disk controller type configured for the VM. <b>Note:</b> This property will be set to the default disk controller type if not specified provided virtual machine is being created with 'hyperVGeneration' set to V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. Minimum api-version: 2022-08-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageProfile(ImageReference imageReference, OSDisk osDisk, IList<DataDisk> dataDisks, DiskControllerTypes? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageProfile(ImageReference imageReference, OSDisk osDisk, IList<DataDisk> dataDisks, DiskControllerType? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
             OsDisk = osDisk;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public IList<DataDisk> DataDisks { get; }
 
         /// <summary> Specifies the disk controller type configured for the VM. <b>Note:</b> This property will be set to the default disk controller type if not specified provided virtual machine is being created with 'hyperVGeneration' set to V2 based on the capabilities of the operating system disk and VM size from the the specified minimum api version. You need to deallocate the VM before updating its disk controller type unless you are updating the VM size in the VM configuration which implicitly deallocates and reallocates the VM. Minimum api-version: 2022-08-01. </summary>
-        public DiskControllerTypes? DiskControllerType { get; set; }
+        public DiskControllerType? DiskControllerType { get; set; }
     }
 }

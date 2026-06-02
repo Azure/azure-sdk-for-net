@@ -17,11 +17,15 @@ namespace Azure.ResourceManager.ComputeBulkActions
     {
         /// <summary>
         /// Gets an object representing a <see cref="BulkActionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// </summary>
+        /// <remarks>
+        /// <list type="table">
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsArmClient.GetBulkActionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
-        /// </summary>
+        /// </list>
+        /// </remarks>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>

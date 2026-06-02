@@ -74,30 +74,30 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DisablePasswordAuthentication))
+            if (Optional.IsDefined(IsPasswordAuthenticationDisabled))
             {
                 writer.WritePropertyName("disablePasswordAuthentication"u8);
-                writer.WriteBooleanValue(DisablePasswordAuthentication.Value);
+                writer.WriteBooleanValue(IsPasswordAuthenticationDisabled.Value);
             }
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh, options);
             }
-            if (Optional.IsDefined(ProvisionVMAgent))
+            if (Optional.IsDefined(IsVMAgentProvisioned))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
-                writer.WriteBooleanValue(ProvisionVMAgent.Value);
+                writer.WriteBooleanValue(IsVMAgentProvisioned.Value);
             }
             if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
                 writer.WriteObjectValue(PatchSettings, options);
             }
-            if (Optional.IsDefined(EnableVMAgentPlatformUpdates))
+            if (Optional.IsDefined(IsVMAgentPlatformUpdatesEnabled))
             {
                 writer.WritePropertyName("enableVMAgentPlatformUpdates"u8);
-                writer.WriteBooleanValue(EnableVMAgentPlatformUpdates.Value);
+                writer.WriteBooleanValue(IsVMAgentPlatformUpdatesEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            bool? disablePasswordAuthentication = default;
+            bool? isPasswordAuthenticationDisabled = default;
             SshConfiguration ssh = default;
-            bool? provisionVMAgent = default;
+            bool? isVMAgentProvisioned = default;
             LinuxPatchSettings patchSettings = default;
-            bool? enableVMAgentPlatformUpdates = default;
+            bool? isVMAgentPlatformUpdatesEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    disablePasswordAuthentication = prop.Value.GetBoolean();
+                    isPasswordAuthenticationDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("ssh"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    provisionVMAgent = prop.Value.GetBoolean();
+                    isVMAgentProvisioned = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("patchSettings"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    enableVMAgentPlatformUpdates = prop.Value.GetBoolean();
+                    isVMAgentPlatformUpdatesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,11 +200,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
             }
             return new LinuxConfiguration(
-                disablePasswordAuthentication,
+                isPasswordAuthenticationDisabled,
                 ssh,
-                provisionVMAgent,
+                isVMAgentProvisioned,
                 patchSettings,
-                enableVMAgentPlatformUpdates,
+                isVMAgentPlatformUpdatesEnabled,
                 additionalBinaryDataProperties);
         }
     }

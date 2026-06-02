@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 return null;
             }
             int? idleTimeoutInMinutes = default;
-            DeleteOptions? deleteOption = default;
+            DeleteOption? deleteOption = default;
             VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default;
             IList<VirtualMachineIpTag> ipTags = default;
-            SubResource publicIPPrefix = default;
-            IPVersions? publicIPAddressVersion = default;
+            ComputeBulkActionsSubResource publicIPPrefix = default;
+            IPVersion? publicIPAddressVersion = default;
             PublicIPAllocationMethod? publicIPAllocationMethod = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    deleteOption = new DeleteOptions(prop.Value.GetString());
+                    deleteOption = new DeleteOption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dnsSettings"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    publicIPPrefix = SubResource.DeserializeSubResource(prop.Value, options);
+                    publicIPPrefix = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("publicIPAddressVersion"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    publicIPAddressVersion = new IPVersions(prop.Value.GetString());
+                    publicIPAddressVersion = new IPVersion(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicIPAllocationMethod"u8))

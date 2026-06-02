@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            SubResource capacityReservationGroup = default;
+            ComputeBulkActionsSubResource capacityReservationGroup = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    capacityReservationGroup = SubResource.DeserializeSubResource(prop.Value, options);
+                    capacityReservationGroup = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

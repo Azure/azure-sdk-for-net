@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WindowsConfiguration"/>. </summary>
-        /// <param name="provisionVMAgent"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, it is set to true by default. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
+        /// <param name="isVMAgentProvisioned"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, it is set to true by default. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
         /// <param name="enableAutomaticUpdates"> Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true. For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning. </param>
         /// <param name="timeZone"> Specifies the time zone of the virtual machine. e.g. "Pacific Standard Time". Possible values can be [TimeZoneInfo.Id](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.id?#System_TimeZoneInfo_Id) value from time zones returned by [TimeZoneInfo.GetSystemTimeZones](https://docs.microsoft.com/dotnet/api/system.timezoneinfo.getsystemtimezones). </param>
         /// <param name="additionalUnattendContent"> Specifies additional base-64 encoded XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. </param>
         /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Windows. </param>
         /// <param name="winRM"> Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsConfiguration(bool? provisionVMAgent, bool? enableAutomaticUpdates, string timeZone, IList<AdditionalUnattendContent> additionalUnattendContent, PatchSettings patchSettings, WinRMConfiguration winRM, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WindowsConfiguration(bool? isVMAgentProvisioned, bool? enableAutomaticUpdates, string timeZone, IList<AdditionalUnattendContent> additionalUnattendContent, PatchSettings patchSettings, WinRMConfiguration winRM, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ProvisionVMAgent = provisionVMAgent;
+            IsVMAgentProvisioned = isVMAgentProvisioned;
             EnableAutomaticUpdates = enableAutomaticUpdates;
             TimeZone = timeZone;
             AdditionalUnattendContent = additionalUnattendContent;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, it is set to true by default. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </summary>
-        public bool? ProvisionVMAgent { get; set; }
+        public bool? IsVMAgentProvisioned { get; set; }
 
         /// <summary> Indicates whether Automatic Updates is enabled for the Windows virtual machine. Default value is true. For virtual machine scale sets, this property can be updated and updates will take effect on OS reprovisioning. </summary>
         public bool? EnableAutomaticUpdates { get; set; }

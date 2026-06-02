@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ComputeBulkActions;
 
 namespace Azure.ResourceManager.ComputeBulkActions.Models
@@ -126,8 +127,8 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            Modes? mode = default;
-            string inVMAccessControlProfileReferenceId = default;
+            HostEndpointMode? mode = default;
+            ResourceIdentifier inVMAccessControlProfileReferenceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,12 +138,16 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    mode = new Modes(prop.Value.GetString());
+                    mode = new HostEndpointMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("inVMAccessControlProfileReferenceId"u8))
                 {
-                    inVMAccessControlProfileReferenceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inVMAccessControlProfileReferenceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

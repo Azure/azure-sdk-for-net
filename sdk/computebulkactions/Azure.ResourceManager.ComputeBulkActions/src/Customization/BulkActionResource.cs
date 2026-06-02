@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 using var document = await JsonDocument.ParseAsync(result.ContentStream, default, cancellationToken).ConfigureAwait(false);
                 var value = ModelReaderWriter.Read<OperationStatusResult>(BinaryData.FromString(document.RootElement.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                using HttpMessage message = _bulkActionsRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 using var document = JsonDocument.Parse(result.ContentStream);
                 var value = ModelReaderWriter.Read<OperationStatusResult>(BinaryData.FromString(document.RootElement.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default);

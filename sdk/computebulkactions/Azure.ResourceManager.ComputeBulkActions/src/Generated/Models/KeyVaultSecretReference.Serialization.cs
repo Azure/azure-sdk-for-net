@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 return null;
             }
             string secretUri = default;
-            SubResource sourceVault = default;
+            ComputeBulkActionsSubResource sourceVault = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
                 if (prop.NameEquals("sourceVault"u8))
                 {
-                    sourceVault = SubResource.DeserializeSubResource(prop.Value, options);
+                    sourceVault = ComputeBulkActionsSubResource.DeserializeComputeBulkActionsSubResource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

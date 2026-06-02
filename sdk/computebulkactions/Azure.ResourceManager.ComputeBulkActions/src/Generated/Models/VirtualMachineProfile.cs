@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
@@ -111,7 +112,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> The ID of the sub-resource. </summary>
-        public string CapacityReservationGroupId
+        public ResourceIdentifier CapacityReservationGroupId
         {
             get
             {

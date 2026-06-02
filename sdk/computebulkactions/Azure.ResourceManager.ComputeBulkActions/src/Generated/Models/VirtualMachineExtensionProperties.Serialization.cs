@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (Optional.IsDefined(IsAutoUpgradeMinorVersionEnabled))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
-                writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
+                writer.WriteBooleanValue(IsAutoUpgradeMinorVersionEnabled.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
-                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+                writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Settings))
             {
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(SuppressFailures))
+            if (Optional.IsDefined(IsSuppressFailures))
             {
                 writer.WritePropertyName("suppressFailures"u8);
-                writer.WriteBooleanValue(SuppressFailures.Value);
+                writer.WriteBooleanValue(IsSuppressFailures.Value);
             }
             if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
             {
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             string publisher = default;
             string @type = default;
             string typeHandlerVersion = default;
-            bool? autoUpgradeMinorVersion = default;
-            bool? enableAutomaticUpgrade = default;
+            bool? isAutoUpgradeMinorVersionEnabled = default;
+            bool? isAutomaticUpgradeEnabled = default;
             IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> protectedSettings = default;
-            bool? suppressFailures = default;
+            bool? isSuppressFailures = default;
             KeyVaultSecretReference protectedSettingsFromKeyVault = default;
             IList<string> provisionAfterExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    autoUpgradeMinorVersion = prop.Value.GetBoolean();
+                    isAutoUpgradeMinorVersionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpgrade"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    enableAutomaticUpgrade = prop.Value.GetBoolean();
+                    isAutomaticUpgradeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("settings"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    suppressFailures = prop.Value.GetBoolean();
+                    isSuppressFailures = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("protectedSettingsFromKeyVault"u8))
@@ -360,11 +360,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 publisher,
                 @type,
                 typeHandlerVersion,
-                autoUpgradeMinorVersion,
-                enableAutomaticUpgrade,
+                isAutoUpgradeMinorVersionEnabled,
+                isAutomaticUpgradeEnabled,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                suppressFailures,
+                isSuppressFailures,
                 protectedSettingsFromKeyVault,
                 provisionAfterExtensions ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

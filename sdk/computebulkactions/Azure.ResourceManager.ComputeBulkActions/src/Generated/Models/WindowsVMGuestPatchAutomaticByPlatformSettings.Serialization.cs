@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting.Value.ToString());
             }
-            if (Optional.IsDefined(BypassPlatformSafetyChecksOnUserSchedule))
+            if (Optional.IsDefined(IsBypassPlatformSafetyChecksOnUserSchedule))
             {
                 writer.WritePropertyName("bypassPlatformSafetyChecksOnUserSchedule"u8);
-                writer.WriteBooleanValue(BypassPlatformSafetyChecksOnUserSchedule.Value);
+                writer.WriteBooleanValue(IsBypassPlatformSafetyChecksOnUserSchedule.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 return null;
             }
             WindowsVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default;
-            bool? bypassPlatformSafetyChecksOnUserSchedule = default;
+            bool? isBypassPlatformSafetyChecksOnUserSchedule = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    bypassPlatformSafetyChecksOnUserSchedule = prop.Value.GetBoolean();
+                    isBypassPlatformSafetyChecksOnUserSchedule = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WindowsVMGuestPatchAutomaticByPlatformSettings(rebootSetting, bypassPlatformSafetyChecksOnUserSchedule, additionalBinaryDataProperties);
+            return new WindowsVMGuestPatchAutomaticByPlatformSettings(rebootSetting, isBypassPlatformSafetyChecksOnUserSchedule, additionalBinaryDataProperties);
         }
     }
 }

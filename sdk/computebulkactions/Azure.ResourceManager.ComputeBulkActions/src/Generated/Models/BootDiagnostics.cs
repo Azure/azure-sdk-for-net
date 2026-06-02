@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BootDiagnostics"/>. </summary>
-        /// <param name="enabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
+        /// <param name="isEnabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
         /// <param name="storageUri"> Uri of the storage account to use for placing the console output and screenshot. If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BootDiagnostics(bool? enabled, string storageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BootDiagnostics(bool? isEnabled, string storageUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             StorageUri = storageUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether boot diagnostics should be enabled on the Virtual Machine. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> Uri of the storage account to use for placing the console output and screenshot. If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </summary>
         public string StorageUri { get; set; }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeBulkActions.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> Initializes a new instance of <see cref="EncryptionIdentity"/>. </summary>
         /// <param name="userAssignedIdentityResourceId"> Specifies ARM Resource ID of one of the user identities associated with the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionIdentity(string userAssignedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EncryptionIdentity(ResourceIdentifier userAssignedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies ARM Resource ID of one of the user identities associated with the VM. </summary>
-        public string UserAssignedIdentityResourceId { get; set; }
+        public ResourceIdentifier UserAssignedIdentityResourceId { get; set; }
     }
 }

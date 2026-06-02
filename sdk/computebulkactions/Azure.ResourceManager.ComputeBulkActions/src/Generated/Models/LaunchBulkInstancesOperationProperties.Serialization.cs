@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             VMAttributes vmAttributes = default;
             ComputeProfile computeProfile = default;
             ZoneAllocationPolicy zoneAllocationPolicy = default;
-            RetryPolicy retryPolicy = default;
+            BulkActionRetryPolicy retryPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    retryPolicy = RetryPolicy.DeserializeRetryPolicy(prop.Value, options);
+                    retryPolicy = BulkActionRetryPolicy.DeserializeBulkActionRetryPolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

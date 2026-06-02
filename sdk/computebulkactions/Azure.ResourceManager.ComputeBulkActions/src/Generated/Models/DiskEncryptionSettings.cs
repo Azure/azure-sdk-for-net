@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionSettings"/>. </summary>
         /// <param name="diskEncryptionKey"> Specifies the location of the disk encryption key, which is a Key Vault Secret. </param>
         /// <param name="keyEncryptionKey"> Specifies the location of the key encryption key in Key Vault. </param>
-        /// <param name="enabled"> Specifies whether disk encryption should be enabled on the virtual machine. </param>
+        /// <param name="isEnabled"> Specifies whether disk encryption should be enabled on the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionSettings(KeyVaultSecretReference diskEncryptionKey, KeyVaultKeyReference keyEncryptionKey, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskEncryptionSettings(KeyVaultSecretReference diskEncryptionKey, KeyVaultKeyReference keyEncryptionKey, bool? isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskEncryptionKey = diskEncryptionKey;
             KeyEncryptionKey = keyEncryptionKey;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public KeyVaultKeyReference KeyEncryptionKey { get; set; }
 
         /// <summary> Specifies whether disk encryption should be enabled on the virtual machine. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

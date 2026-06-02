@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             set
             {
+                if (value is null)
+                {
+                    UserInitiatedRedeploy = null;
+                    return;
+                }
                 if (UserInitiatedRedeploy is null)
                 {
                     UserInitiatedRedeploy = new UserInitiatedRedeploy();
@@ -35,6 +40,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             set
             {
+                if (value is null)
+                {
+                    UserInitiatedReboot = null;
+                    return;
+                }
                 if (UserInitiatedReboot is null)
                 {
                     UserInitiatedReboot = new UserInitiatedReboot();
@@ -52,6 +62,11 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             }
             set
             {
+                if (value is null)
+                {
+                    AllInstancesDown = null;
+                    return;
+                }
                 if (AllInstancesDown is null)
                 {
                     AllInstancesDown = new AllInstancesDown();

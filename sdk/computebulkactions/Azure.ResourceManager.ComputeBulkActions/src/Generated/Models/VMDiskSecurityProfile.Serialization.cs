@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            SecurityEncryptionTypes? securityEncryptionType = default;
-            DiskEncryptionSetParameters diskEncryptionSet = default;
+            SecurityEncryptionType? securityEncryptionType = default;
+            DiskEncryptionSetReference diskEncryptionSet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    securityEncryptionType = new SecurityEncryptionTypes(prop.Value.GetString());
+                    securityEncryptionType = new SecurityEncryptionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionSet"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    diskEncryptionSet = DiskEncryptionSetParameters.DeserializeDiskEncryptionSetParameters(prop.Value, options);
+                    diskEncryptionSet = DiskEncryptionSetReference.DeserializeDiskEncryptionSetReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
