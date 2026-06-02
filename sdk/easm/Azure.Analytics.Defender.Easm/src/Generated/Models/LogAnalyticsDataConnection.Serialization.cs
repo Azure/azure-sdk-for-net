@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The LogAnalyticsDataConnection. </summary>
-    public partial class LogAnalyticsDataConnection : DataConnection, IJsonModel<LogAnalyticsDataConnection>
+    public partial class LogAnalyticsDataConnection : DataConnection, IJsonModel<global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>
     {
-        /// <summary> Initializes a new instance of <see cref="LogAnalyticsDataConnection"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection"/> for deserialization. </summary>
         internal LogAnalyticsDataConnection()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLogAnalyticsDataConnection(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection.DeserializeLogAnalyticsDataConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LogAnalyticsDataConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LogAnalyticsDataConnection IPersistableModel<LogAnalyticsDataConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => (LogAnalyticsDataConnection)PersistableModelCreateCore(data, options);
+        LogAnalyticsDataConnection IPersistableModel<global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => ((LogAnalyticsDataConnection)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LogAnalyticsDataConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LogAnalyticsDataConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,38 +73,38 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnection>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            writer.WriteObjectValue<LogAnalyticsDataConnectionProperties>(Properties, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LogAnalyticsDataConnection IJsonModel<LogAnalyticsDataConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LogAnalyticsDataConnection)JsonModelCreateCore(ref reader, options);
+        LogAnalyticsDataConnection IJsonModel<global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((LogAnalyticsDataConnection)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataConnection JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnection>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLogAnalyticsDataConnection(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection.DeserializeLogAnalyticsDataConnection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static LogAnalyticsDataConnection DeserializeLogAnalyticsDataConnection(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Defender.Easm
             DateTimeOffset? userUpdatedAt = default;
             bool? active = default;
             string inactiveMessage = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             LogAnalyticsDataConnectionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("content"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("createdDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -164,7 +164,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("frequency"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -173,7 +173,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("frequencyOffset"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("updatedDate"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -191,7 +191,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("userUpdatedAt"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -200,7 +200,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("active"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -214,12 +214,12 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = LogAnalyticsDataConnectionProperties.DeserializeLogAnalyticsDataConnectionProperties(prop.Value, options);
+                    properties = global::Azure.Analytics.Defender.Easm.LogAnalyticsDataConnectionProperties.DeserializeLogAnalyticsDataConnectionProperties(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new LogAnalyticsDataConnection(

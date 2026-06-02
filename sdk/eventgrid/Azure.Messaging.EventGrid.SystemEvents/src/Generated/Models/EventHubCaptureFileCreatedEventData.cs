@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class EventHubCaptureFileCreatedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EventHubCaptureFileCreatedEventData"/>. </summary>
         /// <param name="fileurl"> The path to the capture file. </param>
         /// <param name="fileType"> The file type of the capture file. </param>
         /// <param name="partitionId"> The shard ID. </param>
@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             PartitionId = partitionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.EventHubCaptureFileCreatedEventData"/>. </summary>
         /// <param name="fileurl"> The path to the capture file. </param>
         /// <param name="fileType"> The file type of the capture file. </param>
         /// <param name="partitionId"> The shard ID. </param>
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="firstEnqueueTime"> The first time from the queue. </param>
         /// <param name="lastEnqueueTime"> The last time from the queue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId, int? sizeInBytes, int? eventCount, int? firstSequenceNumber, int? lastSequenceNumber, DateTimeOffset? firstEnqueueTime, DateTimeOffset? lastEnqueueTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId, int? sizeInBytes, int? eventCount, int? firstSequenceNumber, int? lastSequenceNumber, DateTimeOffset? firstEnqueueTime, DateTimeOffset? lastEnqueueTime, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Fileurl = fileurl;
             FileType = fileType;

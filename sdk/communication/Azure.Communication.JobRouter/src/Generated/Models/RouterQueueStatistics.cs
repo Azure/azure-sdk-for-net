@@ -14,25 +14,25 @@ namespace Azure.Communication.JobRouter
     public partial class RouterQueueStatistics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RouterQueueStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterQueueStatistics"/>. </summary>
         /// <param name="queueId"> Id of the queue these details are about. </param>
         /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
         internal RouterQueueStatistics(string queueId, int length)
         {
             QueueId = queueId;
             Length = length;
-            EstimatedWaitTimes = new ChangeTrackingDictionary<int, TimeSpan>();
+            EstimatedWaitTimes = new ChangeTrackingDictionary<int, global::System.TimeSpan>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RouterQueueStatistics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.JobRouter.RouterQueueStatistics"/>. </summary>
         /// <param name="queueId"> Id of the queue these details are about. </param>
         /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
         /// <param name="estimatedWaitTimes"> The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority. </param>
         /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RouterQueueStatistics(string queueId, int length, IDictionary<int, TimeSpan> estimatedWaitTimes, double? longestJobWaitTimeMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RouterQueueStatistics(string queueId, int length, IDictionary<int, global::System.TimeSpan> estimatedWaitTimes, double? longestJobWaitTimeMinutes, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             QueueId = queueId;
             Length = length;

@@ -13,26 +13,26 @@ namespace Azure.Communication.Messages
     /// <summary> The message content of type image information. </summary>
     public partial class ImageMessageContent : MessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="ImageMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ImageMessageContent"/>. </summary>
         /// <param name="mediaUri"> MediaUri of the media content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mediaUri"/> is null. </exception>
-        public ImageMessageContent(Uri mediaUri) : base(MessageContentKind.Image)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="mediaUri"/> is null. </exception>
+        public ImageMessageContent(global::System.Uri mediaUri) : base(global::Azure.Communication.Messages.MessageContentKind.Image)
         {
-            Argument.AssertNotNull(mediaUri, nameof(mediaUri));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(mediaUri, nameof(mediaUri));
 
             MediaUri = mediaUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImageMessageContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.ImageMessageContent"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mediaUri"> MediaUri of the media content. </param>
-        internal ImageMessageContent(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri mediaUri) : base(kind, additionalBinaryDataProperties)
+        internal ImageMessageContent(MessageContentKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, global::System.Uri mediaUri) : base(kind, additionalBinaryDataProperties)
         {
             MediaUri = mediaUri;
         }
 
         /// <summary> MediaUri of the media content. </summary>
-        public Uri MediaUri { get; }
+        public global::System.Uri MediaUri { get; }
     }
 }

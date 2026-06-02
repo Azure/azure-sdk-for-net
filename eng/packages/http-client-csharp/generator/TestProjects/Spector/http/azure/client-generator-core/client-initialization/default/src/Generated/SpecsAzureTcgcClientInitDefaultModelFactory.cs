@@ -12,7 +12,7 @@ namespace Specs.Azure.Tcgc.ClientInit.Default
 {
     public static partial class SpecsAzureTcgcClientInitDefaultModelFactory
     {
-        public static Input Input(string name = default) => throw null;
+        public static global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input Input(string name = default) => throw null;
 
         public static WithBodyRequest WithBodyRequest(string name = default) => throw null;
 

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The status of the vector store file batch. </summary>
-    public readonly partial struct VectorStoreFileBatchStatus : IEquatable<VectorStoreFileBatchStatus>
+    public readonly partial struct VectorStoreFileBatchStatus : IEquatable<global::Azure.AI.Agents.Persistent.VectorStoreFileBatchStatus>
     {
         private readonly string _value;
         /// <summary> The vector store is still processing this file batch. </summary>
@@ -23,12 +23,12 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The vector store file batch failed to process. </summary>
         private const string FailedValue = "failed";
 
-        /// <summary> Initializes a new instance of <see cref="VectorStoreFileBatchStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileBatchStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VectorStoreFileBatchStatus(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> The vector store file batch failed to process. </summary>
         public static VectorStoreFileBatchStatus Failed { get; } = new VectorStoreFileBatchStatus(FailedValue);
 
-        /// <summary> Determines if two <see cref="VectorStoreFileBatchStatus"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileBatchStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VectorStoreFileBatchStatus left, VectorStoreFileBatchStatus right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VectorStoreFileBatchStatus"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileBatchStatus"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VectorStoreFileBatchStatus left, VectorStoreFileBatchStatus right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VectorStoreFileBatchStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileBatchStatus"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator VectorStoreFileBatchStatus(string value) => new VectorStoreFileBatchStatus(value);
 
-        /// <summary> Converts a string to a <see cref="VectorStoreFileBatchStatus"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Agents.Persistent.VectorStoreFileBatchStatus"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VectorStoreFileBatchStatus?(string value) => value == null ? null : new VectorStoreFileBatchStatus(value);
+        public static implicit operator VectorStoreFileBatchStatus?(string value) => (value == null) ? null : new VectorStoreFileBatchStatus(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VectorStoreFileBatchStatus other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is VectorStoreFileBatchStatus other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(VectorStoreFileBatchStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(VectorStoreFileBatchStatus other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

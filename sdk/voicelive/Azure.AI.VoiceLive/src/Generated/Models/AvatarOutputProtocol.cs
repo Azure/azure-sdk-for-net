@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Avatar config output protocols. </summary>
-    public readonly partial struct AvatarOutputProtocol : IEquatable<AvatarOutputProtocol>
+    public readonly partial struct AvatarOutputProtocol : IEquatable<global::Azure.AI.VoiceLive.AvatarOutputProtocol>
     {
         private readonly string _value;
         /// <summary> WebRTC protocol, output the audio/video streams via WebRTC. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.VoiceLive
         /// <summary> WebSocket protocol, output the video frames over WebSocket. </summary>
         private const string WebsocketValue = "websocket";
 
-        /// <summary> Initializes a new instance of <see cref="AvatarOutputProtocol"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.AvatarOutputProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvatarOutputProtocol(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.VoiceLive
         /// <summary> WebSocket protocol, output the video frames over WebSocket. </summary>
         public static AvatarOutputProtocol Websocket { get; } = new AvatarOutputProtocol(WebsocketValue);
 
-        /// <summary> Determines if two <see cref="AvatarOutputProtocol"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.AvatarOutputProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvatarOutputProtocol left, AvatarOutputProtocol right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AvatarOutputProtocol"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.VoiceLive.AvatarOutputProtocol"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvatarOutputProtocol left, AvatarOutputProtocol right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AvatarOutputProtocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.AvatarOutputProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AvatarOutputProtocol(string value) => new AvatarOutputProtocol(value);
 
-        /// <summary> Converts a string to a <see cref="AvatarOutputProtocol"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.VoiceLive.AvatarOutputProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvatarOutputProtocol?(string value) => value == null ? null : new AvatarOutputProtocol(value);
+        public static implicit operator AvatarOutputProtocol?(string value) => (value == null) ? null : new AvatarOutputProtocol(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AvatarOutputProtocol other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AvatarOutputProtocol other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AvatarOutputProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AvatarOutputProtocol other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

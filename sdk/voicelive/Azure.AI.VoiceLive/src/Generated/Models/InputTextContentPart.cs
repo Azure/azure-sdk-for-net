@@ -13,21 +13,21 @@ namespace Azure.AI.VoiceLive
     /// <summary> Input text content part. </summary>
     public partial class InputTextContentPart : MessageContentPart
     {
-        /// <summary> Initializes a new instance of <see cref="InputTextContentPart"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.InputTextContentPart"/>. </summary>
         /// <param name="text"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public InputTextContentPart(string text) : base(ContentPartType.InputText)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public InputTextContentPart(string text) : base(global::Azure.AI.VoiceLive.ContentPartType.InputText)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.AI.VoiceLive.Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InputTextContentPart"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.InputTextContentPart"/>. </summary>
         /// <param name="type"> The type of the content part. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"></param>
-        internal InputTextContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
+        internal InputTextContentPart(ContentPartType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
         }

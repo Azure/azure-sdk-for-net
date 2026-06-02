@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// </summary>
     public partial class RunStepCodeInterpreterToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="internalDetails"> The details of the tool call to the code interpreter tool. </param>
         internal RunStepCodeInterpreterToolCall(string id, InternalCodeInterpreterToolCallDetails internalDetails) : base("code_interpreter", id)
@@ -24,12 +24,12 @@ namespace Azure.AI.Agents.Persistent
             InternalDetails = internalDetails;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepCodeInterpreterToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalDetails"> The details of the tool call to the code interpreter tool. </param>
-        internal RunStepCodeInterpreterToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalCodeInterpreterToolCallDetails internalDetails) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepCodeInterpreterToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, InternalCodeInterpreterToolCallDetails internalDetails) : base(@type, id, additionalBinaryDataProperties)
         {
             InternalDetails = internalDetails;
         }

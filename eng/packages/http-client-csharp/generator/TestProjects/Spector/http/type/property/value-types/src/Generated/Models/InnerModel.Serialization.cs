@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace _Type.Property.ValueTypes
 {
-    public partial class InnerModel : IJsonModel<InnerModel>
+    public partial class InnerModel : IJsonModel<global::_Type.Property.ValueTypes.InnerModel>
     {
         internal InnerModel() => throw null;
 
@@ -19,17 +19,17 @@ namespace _Type.Property.ValueTypes
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<InnerModel>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.ValueTypes.InnerModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        InnerModel IPersistableModel<InnerModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        InnerModel IPersistableModel<global::_Type.Property.ValueTypes.InnerModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<InnerModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.ValueTypes.InnerModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<InnerModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.ValueTypes.InnerModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        InnerModel IJsonModel<InnerModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        InnerModel IJsonModel<global::_Type.Property.ValueTypes.InnerModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual InnerModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

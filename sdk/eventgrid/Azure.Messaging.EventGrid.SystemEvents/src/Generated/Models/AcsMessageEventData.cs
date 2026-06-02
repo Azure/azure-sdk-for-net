@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsMessageEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageEventData"/>. </summary>
         /// <param name="from"> The message sender. </param>
         /// <param name="to"> The message recipient. </param>
         internal AcsMessageEventData(string @from, string to)
@@ -25,13 +25,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             To = to;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsMessageEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsMessageEventData"/>. </summary>
         /// <param name="from"> The message sender. </param>
         /// <param name="to"> The message recipient. </param>
         /// <param name="receivedTimestamp"> The time message was received. </param>
         /// <param name="errorInternal"> The channel event error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsMessageEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsMessageEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             From = @from;
             To = to;

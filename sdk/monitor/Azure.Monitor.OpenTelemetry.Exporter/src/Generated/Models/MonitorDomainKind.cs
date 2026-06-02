@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal readonly partial struct MonitorDomainKind : IEquatable<MonitorDomainKind>
+    internal readonly partial struct MonitorDomainKind : IEquatable<global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomainKind>
     {
         private readonly string _value;
         /// <summary> AvailabilityData type. </summary>
@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <summary> RequestData type. </summary>
         private const string RequestDataValue = "RequestData";
 
-        /// <summary> Initializes a new instance of <see cref="MonitorDomainKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomainKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public MonitorDomainKind(string value)
         {
@@ -66,34 +66,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <summary> RequestData type. </summary>
         public static MonitorDomainKind RequestData { get; } = new MonitorDomainKind(RequestDataValue);
 
-        /// <summary> Determines if two <see cref="MonitorDomainKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomainKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorDomainKind left, MonitorDomainKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MonitorDomainKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomainKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorDomainKind left, MonitorDomainKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MonitorDomainKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomainKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator MonitorDomainKind(string value) => new MonitorDomainKind(value);
 
-        /// <summary> Converts a string to a <see cref="MonitorDomainKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorDomainKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorDomainKind?(string value) => value == null ? null : new MonitorDomainKind(value);
+        public static implicit operator MonitorDomainKind?(string value) => (value == null) ? null : new MonitorDomainKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MonitorDomainKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is MonitorDomainKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(MonitorDomainKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MonitorDomainKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

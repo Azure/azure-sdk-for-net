@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for a connected agent tool which defines a domain specific sub-agent. </summary>
     public partial class ConnectedAgentToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectedAgentToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ConnectedAgentToolDefinition"/>. </summary>
         /// <param name="connectedAgent"> The sub-agent to connect. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedAgent"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="connectedAgent"/> is null. </exception>
         public ConnectedAgentToolDefinition(ConnectedAgentDetails connectedAgent) : base("connected_agent")
         {
-            Argument.AssertNotNull(connectedAgent, nameof(connectedAgent));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(connectedAgent, nameof(connectedAgent));
 
             ConnectedAgent = connectedAgent;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectedAgentToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ConnectedAgentToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectedAgent"> The sub-agent to connect. </param>
-        internal ConnectedAgentToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConnectedAgentDetails connectedAgent) : base(@type, additionalBinaryDataProperties)
+        internal ConnectedAgentToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, ConnectedAgentDetails connectedAgent) : base(@type, additionalBinaryDataProperties)
         {
             ConnectedAgent = connectedAgent;
         }

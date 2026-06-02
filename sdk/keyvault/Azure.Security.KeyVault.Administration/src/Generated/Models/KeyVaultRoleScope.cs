@@ -11,19 +11,19 @@ using System.ComponentModel;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The role scope. </summary>
-    public readonly partial struct KeyVaultRoleScope : IEquatable<KeyVaultRoleScope>
+    public readonly partial struct KeyVaultRoleScope : IEquatable<global::Azure.Security.KeyVault.Administration.KeyVaultRoleScope>
     {
         /// <summary> Global scope. </summary>
         private const string GlobalValue = "/";
         /// <summary> Keys scope. </summary>
         private const string KeysValue = "/keys";
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleScope"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultRoleScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KeyVaultRoleScope(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Security.KeyVault.Administration.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -34,34 +34,34 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Keys scope. </summary>
         public static KeyVaultRoleScope Keys { get; } = new KeyVaultRoleScope(KeysValue);
 
-        /// <summary> Determines if two <see cref="KeyVaultRoleScope"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultRoleScope"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KeyVaultRoleScope left, KeyVaultRoleScope right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="KeyVaultRoleScope"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultRoleScope"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KeyVaultRoleScope left, KeyVaultRoleScope right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="KeyVaultRoleScope"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultRoleScope"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator KeyVaultRoleScope(string value) => new KeyVaultRoleScope(value);
 
-        /// <summary> Converts a string to a <see cref="KeyVaultRoleScope"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultRoleScope"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KeyVaultRoleScope?(string value) => value == null ? null : new KeyVaultRoleScope(value);
+        public static implicit operator KeyVaultRoleScope?(string value) => (value == null) ? null : new KeyVaultRoleScope(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is KeyVaultRoleScope other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is KeyVaultRoleScope other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(KeyVaultRoleScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(KeyVaultRoleScope other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

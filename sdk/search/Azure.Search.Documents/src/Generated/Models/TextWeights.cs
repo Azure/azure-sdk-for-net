@@ -15,22 +15,22 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class TextWeights
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextWeights"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.TextWeights"/>. </summary>
         /// <param name="weights"> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="weights"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="weights"/> is null. </exception>
         public TextWeights(IDictionary<string, double> weights)
         {
-            Argument.AssertNotNull(weights, nameof(weights));
+            global::Azure.Search.Documents.Argument.AssertNotNull(weights, nameof(weights));
 
             Weights = weights;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextWeights"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.TextWeights"/>. </summary>
         /// <param name="weights"> The dictionary of per-field weights to boost document scoring. The keys are field names and the values are the weights for each field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextWeights(IDictionary<string, double> weights, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextWeights(IDictionary<string, double> weights, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Weights = weights;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

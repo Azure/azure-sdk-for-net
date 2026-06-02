@@ -14,64 +14,64 @@ using Azure.Core;
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
     /// <summary> Parameters to query a knowledge base. </summary>
-    public partial class AnswersOptions : IJsonModel<AnswersOptions>
+    public partial class AnswersOptions : IJsonModel<global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnswersOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnswersOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.QuestionAnswering.Inference.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAnswersOptions(document.RootElement, options);
+                        return global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions.DeserializeAnswersOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnswersOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnswersOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageQuestionAnsweringInferenceContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.QuestionAnswering.Inference.AzureAILanguageQuestionAnsweringInferenceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AnswersOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnswersOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnswersOptions IPersistableModel<AnswersOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AnswersOptions IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnswersOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="answersOptions"> The <see cref="AnswersOptions"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="answersOptions"> The <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(AnswersOptions answersOptions)
         {
-            if (answersOptions == null)
+            if ((answersOptions == null))
             {
                 return null;
             }
-            return RequestContent.Create(answersOptions, ModelSerializationExtensions.WireOptions);
+            return global::Azure.Core.RequestContent.Create(answersOptions, global::Azure.AI.Language.QuestionAnswering.Inference.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AnswersOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -79,67 +79,67 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnswersOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnswersOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(QnaId))
+            if (global::Azure.AI.Language.QuestionAnswering.Inference.Optional.IsDefined(QnaId))
             {
                 writer.WritePropertyName("qnaId"u8);
                 writer.WriteNumberValue(QnaId.Value);
             }
-            if (Optional.IsDefined(Question))
+            if (global::Azure.AI.Language.QuestionAnswering.Inference.Optional.IsDefined(Question))
             {
                 writer.WritePropertyName("question"u8);
                 writer.WriteStringValue(Question);
             }
-            if (Optional.IsDefined(Size))
+            if (global::Azure.AI.Language.QuestionAnswering.Inference.Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (Optional.IsDefined(UserId))
+            if (global::Azure.AI.Language.QuestionAnswering.Inference.Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Optional.IsDefined(ConfidenceThreshold))
+            if (global::Azure.AI.Language.QuestionAnswering.Inference.Optional.IsDefined(ConfidenceThreshold))
             {
                 writer.WritePropertyName("confidenceScoreThreshold"u8);
                 writer.WriteNumberValue(ConfidenceThreshold.Value);
             }
-            if (Optional.IsDefined(AnswerContext))
+            if (global::Azure.AI.Language.QuestionAnswering.Inference.Optional.IsDefined(AnswerContext))
             {
                 writer.WritePropertyName("context"u8);
-                writer.WriteObjectValue(AnswerContext, options);
+                writer.WriteObjectValue<KnowledgeBaseAnswerContext>(AnswerContext, options);
             }
-            if (Optional.IsDefined(RankerKind))
+            if (global::Azure.AI.Language.QuestionAnswering.Inference.Optional.IsDefined(RankerKind))
             {
                 writer.WritePropertyName("rankerType"u8);
                 writer.WriteStringValue(RankerKind.Value.ToString());
             }
-            if (Optional.IsDefined(Filters))
+            if (global::Azure.AI.Language.QuestionAnswering.Inference.Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters, options);
+                writer.WriteObjectValue<QueryFilters>(Filters, options);
             }
-            if (Optional.IsDefined(ShortAnswerOptions))
+            if (global::Azure.AI.Language.QuestionAnswering.Inference.Optional.IsDefined(ShortAnswerOptions))
             {
                 writer.WritePropertyName("answerSpanRequest"u8);
-                writer.WriteObjectValue(ShortAnswerOptions, options);
+                writer.WriteObjectValue<ShortAnswerOptions>(ShortAnswerOptions, options);
             }
-            if (Optional.IsDefined(IncludeUnstructuredSources))
+            if (global::Azure.AI.Language.QuestionAnswering.Inference.Optional.IsDefined(IncludeUnstructuredSources))
             {
                 writer.WritePropertyName("includeUnstructuredSources"u8);
                 writer.WriteBooleanValue(IncludeUnstructuredSources.Value);
             }
-            if (Optional.IsDefined(QueryPreferences))
+            if (global::Azure.AI.Language.QuestionAnswering.Inference.Optional.IsDefined(QueryPreferences))
             {
                 writer.WritePropertyName("queryPreferences"u8);
-                writer.WriteObjectValue(QueryPreferences, options);
+                writer.WriteObjectValue<QueryPreferences>(QueryPreferences, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -147,9 +147,9 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -158,26 +158,26 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnswersOptions IJsonModel<AnswersOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AnswersOptions IJsonModel<global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AnswersOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnswersOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(AnswersOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnswersOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.QuestionAnswering.Inference.AnswersOptions.DeserializeAnswersOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static AnswersOptions DeserializeAnswersOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -192,12 +192,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             ShortAnswerOptions shortAnswerOptions = default;
             bool? includeUnstructuredSources = default;
             QueryPreferences queryPreferences = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("qnaId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -211,7 +211,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 }
                 if (prop.NameEquals("top"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -225,7 +225,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 }
                 if (prop.NameEquals("confidenceScoreThreshold"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -234,16 +234,16 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 }
                 if (prop.NameEquals("context"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    answerContext = KnowledgeBaseAnswerContext.DeserializeKnowledgeBaseAnswerContext(prop.Value, options);
+                    answerContext = global::Azure.AI.Language.QuestionAnswering.Inference.KnowledgeBaseAnswerContext.DeserializeKnowledgeBaseAnswerContext(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("rankerType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -252,25 +252,25 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 }
                 if (prop.NameEquals("filters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    filters = QueryFilters.DeserializeQueryFilters(prop.Value, options);
+                    filters = global::Azure.AI.Language.QuestionAnswering.Inference.QueryFilters.DeserializeQueryFilters(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("answerSpanRequest"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    shortAnswerOptions = ShortAnswerOptions.DeserializeShortAnswerOptions(prop.Value, options);
+                    shortAnswerOptions = global::Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions.DeserializeShortAnswerOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("includeUnstructuredSources"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -279,16 +279,16 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
                 }
                 if (prop.NameEquals("queryPreferences"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    queryPreferences = QueryPreferences.DeserializeQueryPreferences(prop.Value, options);
+                    queryPreferences = global::Azure.AI.Language.QuestionAnswering.Inference.QueryPreferences.DeserializeQueryPreferences(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AnswersOptions(

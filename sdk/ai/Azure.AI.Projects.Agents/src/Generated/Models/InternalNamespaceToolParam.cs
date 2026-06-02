@@ -12,24 +12,24 @@ namespace Azure.AI.Projects.Agents
 {
     internal partial class InternalNamespaceToolParam : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalNamespaceToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalNamespaceToolParam"/>. </summary>
         /// <param name="name"> The namespace name used in tool calls (for example, `crm`). </param>
         /// <param name="description"> A description of the namespace shown to the model. </param>
         /// <param name="tools"> The function/custom tools available inside this namespace. </param>
-        public InternalNamespaceToolParam(string name, string description, IEnumerable<BinaryData> tools) : base(ToolType.Namespace)
+        public InternalNamespaceToolParam(string name, string description, IEnumerable<global::System.BinaryData> tools) : base(global::OpenAI.ToolType.Namespace)
         {
             Name = name;
             Description = description;
             Tools = tools.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalNamespaceToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.InternalNamespaceToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The namespace name used in tool calls (for example, `crm`). </param>
         /// <param name="description"> A description of the namespace shown to the model. </param>
         /// <param name="tools"> The function/custom tools available inside this namespace. </param>
-        internal InternalNamespaceToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, IList<BinaryData> tools) : base(@type, additionalBinaryDataProperties)
+        internal InternalNamespaceToolParam(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, IList<global::System.BinaryData> tools) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -44,17 +44,17 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The function/custom tools available inside this namespace.
-        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the element of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description> <see cref="InternalFunctionToolParam"/>. </description>
+        /// <description> <see cref="global::Azure.AI.Projects.Agents.InternalFunctionToolParam"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalCustomToolParam"/>. </description>
+        /// <description> <see cref="global::OpenAI.InternalCustomToolParam"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -81,6 +81,6 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public IList<BinaryData> Tools { get; }
+        public IList<global::System.BinaryData> Tools { get; }
     }
 }

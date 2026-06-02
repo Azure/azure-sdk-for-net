@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Communication model identifier kind. </summary>
-    public readonly partial struct AcsCommunicationIdentifierKind : IEquatable<AcsCommunicationIdentifierKind>
+    public readonly partial struct AcsCommunicationIdentifierKind : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AcsCommunicationIdentifierKind>
     {
         private readonly string _value;
         /// <summary> Unknown. </summary>
@@ -25,12 +25,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Microsoft Teams App. </summary>
         private const string MicrosoftTeamsAppValue = "microsoftTeamsApp";
 
-        /// <summary> Initializes a new instance of <see cref="AcsCommunicationIdentifierKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCommunicationIdentifierKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsCommunicationIdentifierKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Microsoft Teams App. </summary>
         public static AcsCommunicationIdentifierKind MicrosoftTeamsApp { get; } = new AcsCommunicationIdentifierKind(MicrosoftTeamsAppValue);
 
-        /// <summary> Determines if two <see cref="AcsCommunicationIdentifierKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCommunicationIdentifierKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsCommunicationIdentifierKind left, AcsCommunicationIdentifierKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AcsCommunicationIdentifierKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCommunicationIdentifierKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsCommunicationIdentifierKind left, AcsCommunicationIdentifierKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AcsCommunicationIdentifierKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCommunicationIdentifierKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AcsCommunicationIdentifierKind(string value) => new AcsCommunicationIdentifierKind(value);
 
-        /// <summary> Converts a string to a <see cref="AcsCommunicationIdentifierKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCommunicationIdentifierKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsCommunicationIdentifierKind?(string value) => value == null ? null : new AcsCommunicationIdentifierKind(value);
+        public static implicit operator AcsCommunicationIdentifierKind?(string value) => (value == null) ? null : new AcsCommunicationIdentifierKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AcsCommunicationIdentifierKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AcsCommunicationIdentifierKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AcsCommunicationIdentifierKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AcsCommunicationIdentifierKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

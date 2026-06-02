@@ -12,12 +12,12 @@ namespace Azure.AI.VoiceLive
 {
     internal partial class ClientEventResponseCancel : ClientEvent
     {
-        /// <summary> Initializes a new instance of <see cref="ClientEventResponseCancel"/>. </summary>
-        public ClientEventResponseCancel() : base(ClientEventType.ResponseCancel)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventResponseCancel"/>. </summary>
+        public ClientEventResponseCancel() : base(global::Azure.AI.VoiceLive.ClientEventType.ResponseCancel)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClientEventResponseCancel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.ClientEventResponseCancel"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -25,7 +25,7 @@ namespace Azure.AI.VoiceLive
         /// A specific response ID to cancel - if not provided, will cancel an
         /// in-progress response in the default conversation.
         /// </param>
-        internal ClientEventResponseCancel(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventResponseCancel(ClientEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string responseId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
         }

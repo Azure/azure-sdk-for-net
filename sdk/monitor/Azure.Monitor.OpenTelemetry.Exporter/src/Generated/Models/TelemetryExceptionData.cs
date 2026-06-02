@@ -14,17 +14,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class TelemetryExceptionData : MonitorDomain
     {
-        /// <summary> Initializes a new instance of <see cref="TelemetryExceptionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="exceptions"> Exception chain - list of inner exceptions. </param>
-        public TelemetryExceptionData(int version, IEnumerable<TelemetryExceptionDetails> exceptions) : base(version)
+        public TelemetryExceptionData(int version, IEnumerable<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionDetails> exceptions) : base(version)
         {
             Exceptions = exceptions.ToList();
             Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TelemetryExceptionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData"/>. </summary>
         /// <param name="version"> Schema version. </param>
         /// <param name="kind"> Discriminator property to identify the specific telemetry data type. </param>
         /// <param name="additionalProperties"></param>
@@ -40,7 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal TelemetryExceptionData(int version, MonitorDomainKind kind, IDictionary<string, BinaryData> additionalProperties, IList<TelemetryExceptionDetails> exceptions, SeverityLevel? severityLevel, string problemId, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, kind, additionalProperties)
+        internal TelemetryExceptionData(int version, MonitorDomainKind kind, IDictionary<string, global::System.BinaryData> additionalProperties, IList<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionDetails> exceptions, SeverityLevel? severityLevel, string problemId, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, kind, additionalProperties)
         {
             Exceptions = exceptions;
             SeverityLevel = severityLevel;
@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         }
 
         /// <summary> Exception chain - list of inner exceptions. </summary>
-        public IList<TelemetryExceptionDetails> Exceptions { get; }
+        public IList<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionDetails> Exceptions { get; }
 
         /// <summary>
         /// Severity level. Mostly used to indicate exception severity level when it is

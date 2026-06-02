@@ -14,23 +14,23 @@ namespace Azure.Communication.Messages.Models.Channels
     /// <summary> The template bindings for WhatsApp. </summary>
     public partial class WhatsAppMessageTemplateBindings : MessageTemplateBindings
     {
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindings"/>. </summary>
-        public WhatsAppMessageTemplateBindings() : base(MessageTemplateBindingsKind.WhatsApp)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings"/>. </summary>
+        public WhatsAppMessageTemplateBindings() : base(global::Azure.Communication.Messages.MessageTemplateBindingsKind.WhatsApp)
         {
-            Header = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
-            Body = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
-            Footer = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
-            Buttons = new ChangeTrackingList<WhatsAppMessageTemplateBindingsButton>();
+            Header = new ChangeTrackingList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent>();
+            Body = new ChangeTrackingList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent>();
+            Footer = new ChangeTrackingList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent>();
+            Buttons = new ChangeTrackingList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindings"/>. </summary>
         /// <param name="kind"> The type discriminator describing a template bindings type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="header"> The header template bindings. </param>
         /// <param name="body"> The body template bindings. </param>
         /// <param name="footer"> The footer template bindings. </param>
         /// <param name="buttons"> The button template bindings. </param>
-        internal WhatsAppMessageTemplateBindings(MessageTemplateBindingsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<WhatsAppMessageTemplateBindingsComponent> header, IList<WhatsAppMessageTemplateBindingsComponent> body, IList<WhatsAppMessageTemplateBindingsComponent> footer, IList<WhatsAppMessageTemplateBindingsButton> buttons) : base(kind, additionalBinaryDataProperties)
+        internal WhatsAppMessageTemplateBindings(MessageTemplateBindingsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> header, IList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> body, IList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> footer, IList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton> buttons) : base(kind, additionalBinaryDataProperties)
         {
             Header = header;
             Body = body;
@@ -39,15 +39,15 @@ namespace Azure.Communication.Messages.Models.Channels
         }
 
         /// <summary> The header template bindings. </summary>
-        public IList<WhatsAppMessageTemplateBindingsComponent> Header { get; }
+        public IList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> Header { get; }
 
         /// <summary> The body template bindings. </summary>
-        public IList<WhatsAppMessageTemplateBindingsComponent> Body { get; }
+        public IList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> Body { get; }
 
         /// <summary> The footer template bindings. </summary>
-        public IList<WhatsAppMessageTemplateBindingsComponent> Footer { get; }
+        public IList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsComponent> Footer { get; }
 
         /// <summary> The button template bindings. </summary>
-        public IList<WhatsAppMessageTemplateBindingsButton> Buttons { get; }
+        public IList<global::Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateBindingsButton> Buttons { get; }
     }
 }

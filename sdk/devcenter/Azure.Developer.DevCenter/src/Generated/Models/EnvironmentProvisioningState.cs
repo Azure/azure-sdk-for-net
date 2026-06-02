@@ -12,7 +12,7 @@ using Azure.Developer.DevCenter;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> The provisioning state of the environment. </summary>
-    public readonly partial struct EnvironmentProvisioningState : IEquatable<EnvironmentProvisioningState>
+    public readonly partial struct EnvironmentProvisioningState : IEquatable<global::Azure.Developer.DevCenter.Models.EnvironmentProvisioningState>
     {
         private readonly string _value;
         /// <summary> The environment was successfully provisioned. </summary>
@@ -42,12 +42,12 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The environment storage provisioning failed. </summary>
         private const string StorageProvisioningFailedValue = "StorageProvisioningFailed";
 
-        /// <summary> Initializes a new instance of <see cref="EnvironmentProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.EnvironmentProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EnvironmentProvisioningState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.DevCenter.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -91,34 +91,34 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The environment storage provisioning failed. </summary>
         public static EnvironmentProvisioningState StorageProvisioningFailed { get; } = new EnvironmentProvisioningState(StorageProvisioningFailedValue);
 
-        /// <summary> Determines if two <see cref="EnvironmentProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.EnvironmentProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnvironmentProvisioningState left, EnvironmentProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EnvironmentProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.DevCenter.Models.EnvironmentProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnvironmentProvisioningState left, EnvironmentProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EnvironmentProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.EnvironmentProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator EnvironmentProvisioningState(string value) => new EnvironmentProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="EnvironmentProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.DevCenter.Models.EnvironmentProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EnvironmentProvisioningState?(string value) => value == null ? null : new EnvironmentProvisioningState(value);
+        public static implicit operator EnvironmentProvisioningState?(string value) => (value == null) ? null : new EnvironmentProvisioningState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EnvironmentProvisioningState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is EnvironmentProvisioningState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(EnvironmentProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EnvironmentProvisioningState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

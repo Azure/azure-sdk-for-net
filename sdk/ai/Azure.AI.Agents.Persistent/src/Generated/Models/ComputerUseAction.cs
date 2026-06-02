@@ -12,24 +12,24 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a computer use action.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClickAction"/>, <see cref="DoubleClickAction"/>, <see cref="DragAction"/>, <see cref="KeyPressAction"/>, <see cref="MoveAction"/>, <see cref="ScreenshotAction"/>, <see cref="ScrollAction"/>, <see cref="TypeAction"/>, and <see cref="WaitAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.ClickAction"/>, <see cref="Azure.AI.Agents.Persistent.DoubleClickAction"/>, <see cref="Azure.AI.Agents.Persistent.DragAction"/>, <see cref="Azure.AI.Agents.Persistent.KeyPressAction"/>, <see cref="Azure.AI.Agents.Persistent.MoveAction"/>, <see cref="Azure.AI.Agents.Persistent.ScreenshotAction"/>, <see cref="Azure.AI.Agents.Persistent.ScrollAction"/>, <see cref="Azure.AI.Agents.Persistent.TypeAction"/>, and <see cref="Azure.AI.Agents.Persistent.WaitAction"/>.
     /// </summary>
     public abstract partial class ComputerUseAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputerUseAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerUseAction"/>. </summary>
         /// <param name="type"> The type of computer use action. </param>
         private protected ComputerUseAction(string @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputerUseAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ComputerUseAction"/>. </summary>
         /// <param name="type"> The type of computer use action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputerUseAction(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputerUseAction(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

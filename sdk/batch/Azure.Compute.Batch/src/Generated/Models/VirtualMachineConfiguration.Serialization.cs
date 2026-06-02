@@ -16,9 +16,9 @@ namespace Azure.Compute.Batch
     /// The configuration for Compute Nodes in a Pool based on the Azure Virtual
     /// Machines infrastructure.
     /// </summary>
-    public partial class VirtualMachineConfiguration : IJsonModel<VirtualMachineConfiguration>
+    public partial class VirtualMachineConfiguration : IJsonModel<global::Azure.Compute.Batch.VirtualMachineConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineConfiguration"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.VirtualMachineConfiguration"/> for deserialization. </summary>
         internal VirtualMachineConfiguration()
         {
         }
@@ -27,48 +27,48 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VirtualMachineConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Compute.Batch.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVirtualMachineConfiguration(document.RootElement, options);
+                        return global::Azure.Compute.Batch.VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.VirtualMachineConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Compute.Batch.AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.VirtualMachineConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualMachineConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Compute.Batch.VirtualMachineConfiguration>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineConfiguration IPersistableModel<VirtualMachineConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VirtualMachineConfiguration IPersistableModel<global::Azure.Compute.Batch.VirtualMachineConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualMachineConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Compute.Batch.VirtualMachineConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VirtualMachineConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Compute.Batch.VirtualMachineConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -76,76 +76,76 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VirtualMachineConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.VirtualMachineConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue(ImageReference, options);
+            writer.WriteObjectValue<BatchVmImageReference>(ImageReference, options);
             writer.WritePropertyName("nodeAgentSKUId"u8);
             writer.WriteStringValue(NodeAgentSkuId);
-            if (Optional.IsDefined(WindowsConfiguration))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration, options);
+                writer.WriteObjectValue<WindowsConfiguration>(WindowsConfiguration, options);
             }
-            if (Optional.IsCollectionDefined(DataDisks))
+            if (global::Azure.Compute.Batch.Optional.IsCollectionDefined(DataDisks))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
                 foreach (DataDisk item in DataDisks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<DataDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LicenseType))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (Optional.IsDefined(ContainerConfiguration))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
-                writer.WriteObjectValue(ContainerConfiguration, options);
+                writer.WriteObjectValue<BatchContainerConfiguration>(ContainerConfiguration, options);
             }
-            if (Optional.IsDefined(DiskEncryptionConfiguration))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(DiskEncryptionConfiguration))
             {
                 writer.WritePropertyName("diskEncryptionConfiguration"u8);
-                writer.WriteObjectValue(DiskEncryptionConfiguration, options);
+                writer.WriteObjectValue<DiskEncryptionConfiguration>(DiskEncryptionConfiguration, options);
             }
-            if (Optional.IsDefined(NodePlacementConfiguration))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(NodePlacementConfiguration))
             {
                 writer.WritePropertyName("nodePlacementConfiguration"u8);
-                writer.WriteObjectValue(NodePlacementConfiguration, options);
+                writer.WriteObjectValue<BatchNodePlacementConfiguration>(NodePlacementConfiguration, options);
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (global::Azure.Compute.Batch.Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
                 foreach (VMExtension item in Extensions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<VMExtension>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OsDisk))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(OsDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OsDisk, options);
+                writer.WriteObjectValue<BatchOsDisk>(OsDisk, options);
             }
-            if (Optional.IsDefined(SecurityProfile))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
+                writer.WriteObjectValue<SecurityProfile>(SecurityProfile, options);
             }
-            if (Optional.IsDefined(ServiceArtifactReference))
+            if (global::Azure.Compute.Batch.Optional.IsDefined(ServiceArtifactReference))
             {
                 writer.WritePropertyName("serviceArtifactReference"u8);
-                writer.WriteObjectValue(ServiceArtifactReference, options);
+                writer.WriteObjectValue<ServiceArtifactReference>(ServiceArtifactReference, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -153,9 +153,9 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -164,47 +164,47 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineConfiguration IJsonModel<VirtualMachineConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VirtualMachineConfiguration IJsonModel<global::Azure.Compute.Batch.VirtualMachineConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VirtualMachineConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Compute.Batch.VirtualMachineConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(VirtualMachineConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Compute.Batch.VirtualMachineConfiguration)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVirtualMachineConfiguration(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Compute.Batch.VirtualMachineConfiguration.DeserializeVirtualMachineConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static VirtualMachineConfiguration DeserializeVirtualMachineConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             BatchVmImageReference imageReference = default;
             string nodeAgentSkuId = default;
             WindowsConfiguration windowsConfiguration = default;
-            IList<DataDisk> dataDisks = default;
+            IList<global::Azure.Compute.Batch.DataDisk> dataDisks = default;
             string licenseType = default;
             BatchContainerConfiguration containerConfiguration = default;
             DiskEncryptionConfiguration diskEncryptionConfiguration = default;
             BatchNodePlacementConfiguration nodePlacementConfiguration = default;
-            IList<VMExtension> extensions = default;
+            IList<global::Azure.Compute.Batch.VMExtension> extensions = default;
             BatchOsDisk osDisk = default;
             SecurityProfile securityProfile = default;
             ServiceArtifactReference serviceArtifactReference = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("imageReference"u8))
                 {
-                    imageReference = BatchVmImageReference.DeserializeBatchVmImageReference(prop.Value, options);
+                    imageReference = global::Azure.Compute.Batch.BatchVmImageReference.DeserializeBatchVmImageReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("nodeAgentSKUId"u8))
@@ -214,23 +214,23 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("windowsConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(prop.Value, options);
+                    windowsConfiguration = global::Azure.Compute.Batch.WindowsConfiguration.DeserializeWindowsConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dataDisks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<DataDisk> array = new List<DataDisk>();
+                    List<global::Azure.Compute.Batch.DataDisk> array = new List<global::Azure.Compute.Batch.DataDisk>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DataDisk.DeserializeDataDisk(item, options));
+                        array.Add(global::Azure.Compute.Batch.DataDisk.DeserializeDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;
@@ -242,87 +242,87 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("containerConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    containerConfiguration = BatchContainerConfiguration.DeserializeBatchContainerConfiguration(prop.Value, options);
+                    containerConfiguration = global::Azure.Compute.Batch.BatchContainerConfiguration.DeserializeBatchContainerConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diskEncryptionConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(prop.Value, options);
+                    diskEncryptionConfiguration = global::Azure.Compute.Batch.DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("nodePlacementConfiguration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    nodePlacementConfiguration = BatchNodePlacementConfiguration.DeserializeBatchNodePlacementConfiguration(prop.Value, options);
+                    nodePlacementConfiguration = global::Azure.Compute.Batch.BatchNodePlacementConfiguration.DeserializeBatchNodePlacementConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("extensions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<VMExtension> array = new List<VMExtension>();
+                    List<global::Azure.Compute.Batch.VMExtension> array = new List<global::Azure.Compute.Batch.VMExtension>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VMExtension.DeserializeVMExtension(item, options));
+                        array.Add(global::Azure.Compute.Batch.VMExtension.DeserializeVMExtension(item, options));
                     }
                     extensions = array;
                     continue;
                 }
                 if (prop.NameEquals("osDisk"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    osDisk = BatchOsDisk.DeserializeBatchOsDisk(prop.Value, options);
+                    osDisk = global::Azure.Compute.Batch.BatchOsDisk.DeserializeBatchOsDisk(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("securityProfile"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(prop.Value, options);
+                    securityProfile = global::Azure.Compute.Batch.SecurityProfile.DeserializeSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("serviceArtifactReference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    serviceArtifactReference = ServiceArtifactReference.DeserializeServiceArtifactReference(prop.Value, options);
+                    serviceArtifactReference = global::Azure.Compute.Batch.ServiceArtifactReference.DeserializeServiceArtifactReference(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new VirtualMachineConfiguration(
                 imageReference,
                 nodeAgentSkuId,
                 windowsConfiguration,
-                dataDisks ?? new ChangeTrackingList<DataDisk>(),
+                (dataDisks ?? new ChangeTrackingList<global::Azure.Compute.Batch.DataDisk>()),
                 licenseType,
                 containerConfiguration,
                 diskEncryptionConfiguration,
                 nodePlacementConfiguration,
-                extensions ?? new ChangeTrackingList<VMExtension>(),
+                (extensions ?? new ChangeTrackingList<global::Azure.Compute.Batch.VMExtension>()),
                 osDisk,
                 securityProfile,
                 serviceArtifactReference,

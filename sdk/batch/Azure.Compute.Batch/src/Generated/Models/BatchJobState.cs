@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> BatchJobState enums. </summary>
-    public readonly partial struct BatchJobState : IEquatable<BatchJobState>
+    public readonly partial struct BatchJobState : IEquatable<global::Azure.Compute.Batch.BatchJobState>
     {
         private readonly string _value;
         /// <summary> The Job is available to have Tasks scheduled. </summary>
@@ -29,12 +29,12 @@ namespace Azure.Compute.Batch
         /// <summary> A user has requested that the Job be deleted, but the delete operation is still in progress (for example, because the system is still terminating running Tasks). </summary>
         private const string DeletingValue = "deleting";
 
-        /// <summary> Initializes a new instance of <see cref="BatchJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchJobState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchJobState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -60,34 +60,34 @@ namespace Azure.Compute.Batch
         /// <summary> A user has requested that the Job be deleted, but the delete operation is still in progress (for example, because the system is still terminating running Tasks). </summary>
         public static BatchJobState Deleting { get; } = new BatchJobState(DeletingValue);
 
-        /// <summary> Determines if two <see cref="BatchJobState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchJobState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchJobState left, BatchJobState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchJobState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.BatchJobState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchJobState left, BatchJobState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchJobState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchJobState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator BatchJobState(string value) => new BatchJobState(value);
 
-        /// <summary> Converts a string to a <see cref="BatchJobState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.BatchJobState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchJobState?(string value) => value == null ? null : new BatchJobState(value);
+        public static implicit operator BatchJobState?(string value) => (value == null) ? null : new BatchJobState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchJobState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is BatchJobState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(BatchJobState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchJobState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

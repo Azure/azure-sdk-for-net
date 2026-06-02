@@ -14,17 +14,17 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Splits words into subwords and performs optional transformations on subword groups. This token filter is implemented using Apache Lucene. </summary>
     public partial class WordDelimiterTokenFilter : TokenFilter
     {
-        /// <summary> Initializes a new instance of <see cref="WordDelimiterTokenFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public WordDelimiterTokenFilter(string name) : base("#Microsoft.Azure.Search.WordDelimiterTokenFilter", name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
             ProtectedWords = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WordDelimiterTokenFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.WordDelimiterTokenFilter"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="splitOnNumerics"> A value indicating whether to split on numbers. For example, if this is set to true, "Azure1Search" becomes "Azure" "1" "Search". Default is true. </param>
         /// <param name="stemEnglishPossessive"> A value indicating whether to remove trailing "'s" for each subword. Default is true. </param>
         /// <param name="protectedWords"> A list of tokens to protect from being delimited. </param>
-        internal WordDelimiterTokenFilter(string odataType, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? generateWordParts, bool? generateNumberParts, bool? catenateWords, bool? catenateNumbers, bool? catenateAll, bool? splitOnCaseChange, bool? preserveOriginal, bool? splitOnNumerics, bool? stemEnglishPossessive, IList<string> protectedWords) : base(odataType, name, additionalBinaryDataProperties)
+        internal WordDelimiterTokenFilter(string odataType, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, bool? generateWordParts, bool? generateNumberParts, bool? catenateWords, bool? catenateNumbers, bool? catenateAll, bool? splitOnCaseChange, bool? preserveOriginal, bool? splitOnNumerics, bool? stemEnglishPossessive, IList<string> protectedWords) : base(odataType, name, additionalBinaryDataProperties)
         {
             GenerateWordParts = generateWordParts;
             GenerateNumberParts = generateNumberParts;

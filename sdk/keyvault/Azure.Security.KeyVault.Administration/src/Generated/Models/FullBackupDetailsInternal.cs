@@ -13,14 +13,14 @@ namespace Azure.Security.KeyVault.Administration.Models
     internal partial class FullBackupDetailsInternal
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FullBackupDetailsInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.FullBackupDetailsInternal"/>. </summary>
         internal FullBackupDetailsInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FullBackupDetailsInternal"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.Models.FullBackupDetailsInternal"/>. </summary>
         /// <param name="status"> Status of the backup operation. </param>
         /// <param name="statusDetails"> The status details of backup operation. </param>
         /// <param name="error"> Error encountered, if any, during the full backup operation. </param>
@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="jobId"> Identifier for the full backup operation. </param>
         /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the full backup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FullBackupDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, string azureStorageBlobContainerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FullBackupDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, string azureStorageBlobContainerUri, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StatusDetails = statusDetails;

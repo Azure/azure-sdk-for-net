@@ -11,36 +11,36 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseServiceTier value) => value switch
         {
-            ResponseServiceTier.Auto => "auto",
-            ResponseServiceTier.Default => "default",
-            ResponseServiceTier.Flex => "flex",
-            ResponseServiceTier.Scale => "scale",
-            ResponseServiceTier.Priority => "priority",
+            global::Azure.AI.Extensions.OpenAI.ResponseServiceTier.Auto => "auto",
+            global::Azure.AI.Extensions.OpenAI.ResponseServiceTier.Default => "default",
+            global::Azure.AI.Extensions.OpenAI.ResponseServiceTier.Flex => "flex",
+            global::Azure.AI.Extensions.OpenAI.ResponseServiceTier.Scale => "scale",
+            global::Azure.AI.Extensions.OpenAI.ResponseServiceTier.Priority => "priority",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseServiceTier value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static ResponseServiceTier ToResponseServiceTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))
             {
-                return ResponseServiceTier.Auto;
+                return global::Azure.AI.Extensions.OpenAI.ResponseServiceTier.Auto;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "default"))
             {
-                return ResponseServiceTier.Default;
+                return global::Azure.AI.Extensions.OpenAI.ResponseServiceTier.Default;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "flex"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "flex"))
             {
-                return ResponseServiceTier.Flex;
+                return global::Azure.AI.Extensions.OpenAI.ResponseServiceTier.Flex;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "scale"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "scale"))
             {
-                return ResponseServiceTier.Scale;
+                return global::Azure.AI.Extensions.OpenAI.ResponseServiceTier.Scale;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "priority"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "priority"))
             {
-                return ResponseServiceTier.Priority;
+                return global::Azure.AI.Extensions.OpenAI.ResponseServiceTier.Priority;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseServiceTier value.");
         }

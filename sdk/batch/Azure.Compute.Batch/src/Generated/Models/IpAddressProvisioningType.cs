@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Compute.Batch
 {
     /// <summary> IPAddressProvisioningType enums. </summary>
-    public readonly partial struct IpAddressProvisioningType : IEquatable<IpAddressProvisioningType>
+    public readonly partial struct IpAddressProvisioningType : IEquatable<global::Azure.Compute.Batch.IpAddressProvisioningType>
     {
         private readonly string _value;
         /// <summary> A public IP will be created and managed by Batch. There may be multiple public IPs depending on the size of the Pool. </summary>
@@ -21,12 +21,12 @@ namespace Azure.Compute.Batch
         /// <summary> No public IP Address will be created. </summary>
         private const string NoPublicIpAddressesValue = "nopublicipaddresses";
 
-        /// <summary> Initializes a new instance of <see cref="IpAddressProvisioningType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.IpAddressProvisioningType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IpAddressProvisioningType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -40,34 +40,34 @@ namespace Azure.Compute.Batch
         /// <summary> No public IP Address will be created. </summary>
         public static IpAddressProvisioningType NoPublicIpAddresses { get; } = new IpAddressProvisioningType(NoPublicIpAddressesValue);
 
-        /// <summary> Determines if two <see cref="IpAddressProvisioningType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.IpAddressProvisioningType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IpAddressProvisioningType left, IpAddressProvisioningType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IpAddressProvisioningType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Compute.Batch.IpAddressProvisioningType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IpAddressProvisioningType left, IpAddressProvisioningType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IpAddressProvisioningType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.IpAddressProvisioningType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator IpAddressProvisioningType(string value) => new IpAddressProvisioningType(value);
 
-        /// <summary> Converts a string to a <see cref="IpAddressProvisioningType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Compute.Batch.IpAddressProvisioningType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IpAddressProvisioningType?(string value) => value == null ? null : new IpAddressProvisioningType(value);
+        public static implicit operator IpAddressProvisioningType?(string value) => (value == null) ? null : new IpAddressProvisioningType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IpAddressProvisioningType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is IpAddressProvisioningType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(IpAddressProvisioningType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IpAddressProvisioningType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

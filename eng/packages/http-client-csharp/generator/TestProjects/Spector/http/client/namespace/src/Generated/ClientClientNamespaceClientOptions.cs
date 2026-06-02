@@ -15,7 +15,7 @@ namespace Client.Clientnamespace
     {
         public ClientClientNamespaceClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal ClientClientNamespaceClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

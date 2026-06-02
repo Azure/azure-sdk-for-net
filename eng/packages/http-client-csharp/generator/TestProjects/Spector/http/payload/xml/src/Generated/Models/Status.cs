@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Payload.Xml
 {
-    public readonly partial struct Status : IEquatable<Status>
+    public readonly partial struct Status : IEquatable<global::Payload.Xml.Status>
     {
         public Status(string value) => throw null;
 
@@ -24,20 +24,20 @@ namespace Payload.Xml
 
         public static bool operator !=(Status left, Status right) => throw null;
 
-        /// <summary> Converts a string to a <see cref="Status"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Payload.Xml.Status"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator Status(string value) => throw null;
 
-        /// <summary> Converts a string to a <see cref="Status"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Payload.Xml.Status"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator Status?(string value) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 
         public bool Equals(Status other) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => throw null;
 
         public override string ToString() => throw null;

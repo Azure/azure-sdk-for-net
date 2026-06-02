@@ -15,9 +15,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Configuration for Fabric Data Agent knowledge source. </summary>
-    public partial class FabricDataAgentKnowledgeSource : KnowledgeSource, IJsonModel<FabricDataAgentKnowledgeSource>
+    public partial class FabricDataAgentKnowledgeSource : KnowledgeSource, IJsonModel<global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource>
     {
-        /// <summary> Initializes a new instance of <see cref="FabricDataAgentKnowledgeSource"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource"/> for deserialization. </summary>
         internal FabricDataAgentKnowledgeSource()
         {
         }
@@ -26,48 +26,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricDataAgentKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFabricDataAgentKnowledgeSource(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource.DeserializeFabricDataAgentKnowledgeSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FabricDataAgentKnowledgeSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricDataAgentKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FabricDataAgentKnowledgeSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FabricDataAgentKnowledgeSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FabricDataAgentKnowledgeSource IPersistableModel<FabricDataAgentKnowledgeSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (FabricDataAgentKnowledgeSource)PersistableModelCreateCore(data, options);
+        FabricDataAgentKnowledgeSource IPersistableModel<global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource>.Create(BinaryData data, ModelReaderWriterOptions options) => ((FabricDataAgentKnowledgeSource)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FabricDataAgentKnowledgeSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FabricDataAgentKnowledgeSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -75,38 +75,38 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricDataAgentKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(FabricDataAgentKnowledgeSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("fabricDataAgentParameters"u8);
-            writer.WriteObjectValue(FabricDataAgentParameters, options);
+            writer.WriteObjectValue<FabricDataAgentKnowledgeSourceParameters>(FabricDataAgentParameters, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FabricDataAgentKnowledgeSource IJsonModel<FabricDataAgentKnowledgeSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FabricDataAgentKnowledgeSource)JsonModelCreateCore(ref reader, options);
+        FabricDataAgentKnowledgeSource IJsonModel<global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((FabricDataAgentKnowledgeSource)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override KnowledgeSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricDataAgentKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(FabricDataAgentKnowledgeSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFabricDataAgentKnowledgeSource(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSource.DeserializeFabricDataAgentKnowledgeSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static FabricDataAgentKnowledgeSource DeserializeFabricDataAgentKnowledgeSource(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -115,7 +115,7 @@ namespace Azure.Search.Documents.Indexes.Models
             KnowledgeSourceKind kind = default;
             ETag? eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             FabricDataAgentKnowledgeSourceParameters fabricDataAgentParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,7 +136,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("@odata.etag"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -145,22 +145,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         encryptionKey = null;
                         continue;
                     }
-                    encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
+                    encryptionKey = global::Azure.Search.Documents.Indexes.Models.SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("fabricDataAgentParameters"u8))
                 {
-                    fabricDataAgentParameters = FabricDataAgentKnowledgeSourceParameters.DeserializeFabricDataAgentKnowledgeSourceParameters(prop.Value, options);
+                    fabricDataAgentParameters = global::Azure.Search.Documents.Indexes.Models.FabricDataAgentKnowledgeSourceParameters.DeserializeFabricDataAgentKnowledgeSourceParameters(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new FabricDataAgentKnowledgeSource(

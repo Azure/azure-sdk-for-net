@@ -13,21 +13,21 @@ namespace Azure.AI.Language.Text
     /// <summary> Represents the Information entity Metadata model. </summary>
     public partial class TemperatureMetadata : BaseMetadata
     {
-        /// <summary> Initializes a new instance of <see cref="TemperatureMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TemperatureMetadata"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for temperature. </param>
-        internal TemperatureMetadata(double value, TemperatureUnit unit) : base(MetadataKind.TemperatureMetadata)
+        internal TemperatureMetadata(double value, TemperatureUnit unit) : base(global::Azure.AI.Language.Text.MetadataKind.TemperatureMetadata)
         {
             Value = value;
             Unit = unit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemperatureMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.TemperatureMetadata"/>. </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>
         /// <param name="unit"> Unit of measure for temperature. </param>
-        internal TemperatureMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, double value, TemperatureUnit unit) : base(metadataKind, additionalBinaryDataProperties)
+        internal TemperatureMetadata(MetadataKind metadataKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, double value, TemperatureUnit unit) : base(metadataKind, additionalBinaryDataProperties)
         {
             Value = value;
             Unit = unit;

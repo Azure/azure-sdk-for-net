@@ -14,19 +14,19 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> A skill looks for text from a custom, user-defined list of words and phrases. </summary>
     public partial class CustomEntityLookupSkill : SearchIndexerSkill
     {
-        /// <summary> Initializes a new instance of <see cref="CustomEntityLookupSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkill"/>. </summary>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
-        public CustomEntityLookupSkill(IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.CustomEntityLookupSkill", inputs, outputs)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="inputs"/> or <paramref name="outputs"/> is null. </exception>
+        public CustomEntityLookupSkill(IEnumerable<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IEnumerable<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs) : base("#Microsoft.Skills.Text.CustomEntityLookupSkill", inputs, outputs)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
-            Argument.AssertNotNull(outputs, nameof(outputs));
+            global::Azure.Search.Documents.Argument.AssertNotNull(inputs, nameof(inputs));
+            global::Azure.Search.Documents.Argument.AssertNotNull(outputs, nameof(outputs));
 
-            InlineEntitiesDefinition = new ChangeTrackingList<CustomEntity>();
+            InlineEntitiesDefinition = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.CustomEntity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomEntityLookupSkill"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.CustomEntityLookupSkill"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="globalDefaultCaseSensitive"> A global flag for CaseSensitive. If CaseSensitive is not set in CustomEntity, this value will be the default value. </param>
         /// <param name="globalDefaultAccentSensitive"> A global flag for AccentSensitive. If AccentSensitive is not set in CustomEntity, this value will be the default value. </param>
         /// <param name="globalDefaultFuzzyEditDistance"> A global flag for FuzzyEditDistance. If FuzzyEditDistance is not set in CustomEntity, this value will be the default value. </param>
-        internal CustomEntityLookupSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomEntityLookupSkillLanguage? defaultLanguageCode, Uri entitiesDefinitionUri, IList<CustomEntity> inlineEntitiesDefinition, bool? globalDefaultCaseSensitive, bool? globalDefaultAccentSensitive, int? globalDefaultFuzzyEditDistance) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal CustomEntityLookupSkill(string odataType, string name, string description, string context, IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs, IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, CustomEntityLookupSkillLanguage? defaultLanguageCode, global::System.Uri entitiesDefinitionUri, IList<global::Azure.Search.Documents.Indexes.Models.CustomEntity> inlineEntitiesDefinition, bool? globalDefaultCaseSensitive, bool? globalDefaultAccentSensitive, int? globalDefaultFuzzyEditDistance) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
             DefaultLanguageCode = defaultLanguageCode;
             EntitiesDefinitionUri = entitiesDefinitionUri;
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public CustomEntityLookupSkillLanguage? DefaultLanguageCode { get; set; }
 
         /// <summary> Path to a JSON or CSV file containing all the target text to match against. This entity definition is read at the beginning of an indexer run. Any updates to this file during an indexer run will not take effect until subsequent runs. This config must be accessible over HTTPS. </summary>
-        public Uri EntitiesDefinitionUri { get; set; }
+        public global::System.Uri EntitiesDefinitionUri { get; set; }
 
         /// <summary> A global flag for CaseSensitive. If CaseSensitive is not set in CustomEntity, this value will be the default value. </summary>
         public bool? GlobalDefaultCaseSensitive { get; set; }

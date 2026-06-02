@@ -15,9 +15,9 @@ using Azure.Core;
 namespace BasicTypeSpec
 {
     /// <summary> The XmlModelWithNamespace. </summary>
-    public partial class XmlModelWithNamespace : IPersistableModel<XmlModelWithNamespace>, IXmlSerializable
+    public partial class XmlModelWithNamespace : IPersistableModel<global::BasicTypeSpec.XmlModelWithNamespace>, IXmlSerializable
     {
-        /// <summary> Initializes a new instance of <see cref="XmlModelWithNamespace"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::BasicTypeSpec.XmlModelWithNamespace"/> for deserialization. </summary>
         internal XmlModelWithNamespace()
         {
         }
@@ -26,69 +26,69 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual XmlModelWithNamespace PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<XmlModelWithNamespace>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.XmlModelWithNamespace>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
                     using (Stream dataStream = data.ToStream())
                     {
-                        return DeserializeXmlModelWithNamespace(XElement.Load(dataStream, LoadOptions.PreserveWhitespace), options);
+                        return global::BasicTypeSpec.XmlModelWithNamespace.DeserializeXmlModelWithNamespace(global::System.Xml.Linq.XElement.Load(dataStream, global::System.Xml.Linq.LoadOptions.PreserveWhitespace), options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(XmlModelWithNamespace)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.XmlModelWithNamespace)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<XmlModelWithNamespace>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.XmlModelWithNamespace>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "X":
                     using (MemoryStream stream = new MemoryStream(256))
                     {
-                        using (XmlWriter writer = XmlWriter.Create(stream, ModelSerializationExtensions.XmlWriterSettings))
+                        using (XmlWriter writer = global::System.Xml.XmlWriter.Create(stream, global::BasicTypeSpec.ModelSerializationExtensions.XmlWriterSettings))
                         {
-                            WriteXml(writer, options, "XmlModelWithNamespace");
+                            this.WriteXml(writer, options, "XmlModelWithNamespace");
                         }
-                        if (stream.Position > int.MaxValue)
+                        if ((stream.Position > int.MaxValue))
                         {
-                            return BinaryData.FromStream(stream);
+                            return global::System.BinaryData.FromStream(stream);
                         }
                         else
                         {
-                            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                            return new BinaryData(stream.GetBuffer().AsMemory(0, ((int)stream.Position)));
                         }
                     }
                 default:
-                    throw new FormatException($"The model {nameof(XmlModelWithNamespace)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::BasicTypeSpec.XmlModelWithNamespace)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<XmlModelWithNamespace>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::BasicTypeSpec.XmlModelWithNamespace>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        XmlModelWithNamespace IPersistableModel<XmlModelWithNamespace>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        XmlModelWithNamespace IPersistableModel<global::BasicTypeSpec.XmlModelWithNamespace>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<XmlModelWithNamespace>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
+        string IPersistableModel<global::BasicTypeSpec.XmlModelWithNamespace>.GetFormatFromOptions(ModelReaderWriterOptions options) => "X";
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         /// <param name="nameHint"> An optional name hint. </param>
         private void WriteXml(XmlWriter writer, ModelReaderWriterOptions options, string nameHint)
         {
-            if (nameHint != null)
+            if ((nameHint != null))
             {
                 writer.WriteStartElement("ns1", nameHint, "http://www.example.com/namespace");
             }
 
-            XmlModelWriteCore(writer, options);
+            this.XmlModelWriteCore(writer, options);
 
-            if (nameHint != null)
+            if ((nameHint != null))
             {
                 writer.WriteEndElement();
             }
@@ -98,10 +98,10 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         internal virtual void XmlModelWriteCore(XmlWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<XmlModelWithNamespace>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "X")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::BasicTypeSpec.XmlModelWithNamespace>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "X"))
             {
-                throw new FormatException($"The model {nameof(XmlModelWithNamespace)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::BasicTypeSpec.XmlModelWithNamespace)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartElement("foo");
@@ -113,7 +113,7 @@ namespace BasicTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static XmlModelWithNamespace DeserializeXmlModelWithNamespace(XElement element, ModelReaderWriterOptions options)
         {
-            if (element == null)
+            if ((element == null))
             {
                 return null;
             }
@@ -123,9 +123,9 @@ namespace BasicTypeSpec
             foreach (var child in element.Elements())
             {
                 string localName = child.Name.LocalName;
-                if (localName == "foo")
+                if ((localName == "foo"))
                 {
-                    foo = (string)child;
+                    foo = ((string)child);
                     continue;
                 }
             }
@@ -134,6 +134,6 @@ namespace BasicTypeSpec
 
         /// <param name="writer"> The XML writer. </param>
         /// <param name="nameHint"> An optional name hint. </param>
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => WriteXml(writer, ModelSerializationExtensions.WireOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => this.WriteXml(writer, global::BasicTypeSpec.ModelSerializationExtensions.WireOptions, nameHint);
     }
 }

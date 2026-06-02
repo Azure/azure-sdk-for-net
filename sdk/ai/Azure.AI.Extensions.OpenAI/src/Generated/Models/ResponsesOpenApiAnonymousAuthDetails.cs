@@ -10,15 +10,15 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Security details for OpenApi anonymous authentication. </summary>
     public partial class ResponsesOpenApiAnonymousAuthDetails : ResponsesOpenApiAuthDetails
     {
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiAnonymousAuthDetails"/>. </summary>
-        public ResponsesOpenApiAnonymousAuthDetails() : base(OpenApiAuthType.Anonymous)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiAnonymousAuthDetails"/>. </summary>
+        public ResponsesOpenApiAnonymousAuthDetails() : base(global::Azure.AI.Extensions.OpenAI.OpenApiAuthType.Anonymous)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiAnonymousAuthDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiAnonymousAuthDetails"/>. </summary>
         /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesOpenApiAnonymousAuthDetails(OpenApiAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        internal ResponsesOpenApiAnonymousAuthDetails(OpenApiAuthType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

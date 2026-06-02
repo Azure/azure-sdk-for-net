@@ -10,8 +10,8 @@ using Versioning.Added;
 
 namespace Versioning.Added.V2
 {
-    [ModelReaderWriterBuildable(typeof(ModelV1))]
-    [ModelReaderWriterBuildable(typeof(ModelV2))]
+    [ModelReaderWriterBuildableAttribute(typeof(ModelV1))]
+    [ModelReaderWriterBuildableAttribute(typeof(ModelV2))]
     public partial class VersioningAddedV2Context : ModelReaderWriterContext
     {
     }

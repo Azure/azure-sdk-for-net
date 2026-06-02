@@ -19,7 +19,7 @@ namespace Azure.AI.Speech.Transcription
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue<T>(item, global::Azure.AI.Speech.Transcription.ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -27,13 +27,13 @@ namespace Azure.AI.Speech.Transcription
         }
 
         /// <param name="enumerable"></param>
-        public static BinaryContent FromEnumerable(IEnumerable<BinaryData> enumerable)
+        public static BinaryContent FromEnumerable(IEnumerable<global::System.BinaryData> enumerable)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                if (item == null)
+                if ((item == null))
                 {
                     content.JsonWriter.WriteNullValue();
                 }
@@ -42,9 +42,9 @@ namespace Azure.AI.Speech.Transcription
 #if NET6_0_OR_GREATER
                     content.JsonWriter.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item))
                     {
-                        JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
                     }
 #endif
                 }
@@ -61,9 +61,9 @@ namespace Azure.AI.Speech.Transcription
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartArray();
             int i = 0;
-            for (; i < span.Length; i++)
+            for (; (i < span.Length); i++)
             {
-                content.JsonWriter.WriteObjectValue(span[i], ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue<T>(span[i], global::Azure.AI.Speech.Transcription.ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -79,7 +79,7 @@ namespace Azure.AI.Speech.Transcription
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value, ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue<TValue>(item.Value, global::Azure.AI.Speech.Transcription.ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndObject();
 
@@ -87,14 +87,14 @@ namespace Azure.AI.Speech.Transcription
         }
 
         /// <param name="dictionary"></param>
-        public static BinaryContent FromDictionary(IDictionary<string, BinaryData> dictionary)
+        public static BinaryContent FromDictionary(IDictionary<string, global::System.BinaryData> dictionary)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartObject();
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                if (item.Value == null)
+                if ((item.Value == null))
                 {
                     content.JsonWriter.WriteNullValue();
                 }
@@ -103,9 +103,9 @@ namespace Azure.AI.Speech.Transcription
 #if NET6_0_OR_GREATER
                     content.JsonWriter.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
                     }
 #endif
                 }
@@ -119,7 +119,7 @@ namespace Azure.AI.Speech.Transcription
         public static BinaryContent FromObject(object value)
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue<object>(value, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<object>(value, global::Azure.AI.Speech.Transcription.ModelSerializationExtensions.WireOptions);
             return content;
         }
 
@@ -130,9 +130,9 @@ namespace Azure.AI.Speech.Transcription
 #if NET6_0_OR_GREATER
             content.JsonWriter.WriteRawValue(value);
 #else
-            using (JsonDocument document = JsonDocument.Parse(value))
+            using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(value))
             {
-                JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
+                global::System.Text.Json.JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
             }
 #endif
             return content;

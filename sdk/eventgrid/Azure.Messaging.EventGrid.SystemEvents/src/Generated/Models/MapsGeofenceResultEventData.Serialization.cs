@@ -14,55 +14,55 @@ using System.Text.Json.Serialization;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Maps.GeofenceResult event. </summary>
-    [JsonConverter(typeof(MapsGeofenceResultEventDataConverter))]
-    public partial class MapsGeofenceResultEventData : MapsGeofenceEventProperties, IJsonModel<MapsGeofenceResultEventData>
+    [JsonConverter(typeof(global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData.MapsGeofenceResultEventDataConverter))]
+    public partial class MapsGeofenceResultEventData : MapsGeofenceEventProperties, IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MapsGeofenceEventProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MapsGeofenceResultEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMapsGeofenceResultEventData(document.RootElement, options);
+                        return global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData.DeserializeMapsGeofenceResultEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapsGeofenceResultEventData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MapsGeofenceResultEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Messaging.EventGrid.SystemEvents.AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MapsGeofenceResultEventData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MapsGeofenceResultEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MapsGeofenceResultEventData IPersistableModel<MapsGeofenceResultEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MapsGeofenceResultEventData)PersistableModelCreateCore(data, options);
+        MapsGeofenceResultEventData IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((MapsGeofenceResultEventData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MapsGeofenceResultEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MapsGeofenceResultEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,44 +70,44 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MapsGeofenceResultEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MapsGeofenceResultEventData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MapsGeofenceResultEventData IJsonModel<MapsGeofenceResultEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MapsGeofenceResultEventData)JsonModelCreateCore(ref reader, options);
+        MapsGeofenceResultEventData IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((MapsGeofenceResultEventData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MapsGeofenceEventProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MapsGeofenceResultEventData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MapsGeofenceResultEventData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMapsGeofenceResultEventData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData.DeserializeMapsGeofenceResultEventData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MapsGeofenceResultEventData DeserializeMapsGeofenceResultEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             IReadOnlyList<string> expiredGeofenceGeometryId = default;
-            IReadOnlyList<MapsGeofenceGeometry> geometries = default;
+            IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceGeometry> geometries = default;
             IReadOnlyList<string> invalidPeriodGeofenceGeometryId = default;
             bool? isEventPublished = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("expiredGeofenceGeometryId"u8))
@@ -115,7 +115,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -129,10 +129,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("geometries"u8))
                 {
-                    List<MapsGeofenceGeometry> array = new List<MapsGeofenceGeometry>();
+                    List<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceGeometry> array = new List<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceGeometry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MapsGeofenceGeometry.DeserializeMapsGeofenceGeometry(item, options));
+                        array.Add(global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceGeometry.DeserializeMapsGeofenceGeometry(item, options));
                     }
                     geometries = array;
                     continue;
@@ -142,7 +142,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
+                        if ((item.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             array.Add(null);
                         }
@@ -156,22 +156,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("isEventPublished"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     isEventPublished = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new MapsGeofenceResultEventData(expiredGeofenceGeometryId, geometries, invalidPeriodGeofenceGeometryId, isEventPublished, additionalBinaryDataProperties);
         }
 
-        internal partial class MapsGeofenceResultEventDataConverter : JsonConverter<MapsGeofenceResultEventData>
+        internal partial class MapsGeofenceResultEventDataConverter : JsonConverter<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>
         {
             /// <summary> Writes the JSON representation of the model. </summary>
             /// <param name="writer"> The writer. </param>
@@ -179,7 +179,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, MapsGeofenceResultEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<MapsGeofenceResultEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<global::Azure.Messaging.EventGrid.SystemEvents.MapsGeofenceResultEventData>>(model, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
 
             /// <summary> Reads the JSON representation and converts into the model. </summary>
@@ -188,8 +188,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             /// <param name="options"> The serialization options. </param>
             public override MapsGeofenceResultEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeMapsGeofenceResultEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+                return DeserializeMapsGeofenceResultEventData(document.RootElement, global::Azure.Messaging.EventGrid.SystemEvents.ModelSerializationExtensions.WireOptions);
             }
         }
     }

@@ -13,28 +13,28 @@ using Azure.Core;
 
 namespace _Type.Property.Optional
 {
-    public partial class PlainDateProperty : IJsonModel<PlainDateProperty>
+    public partial class PlainDateProperty : IJsonModel<global::_Type.Property.Optional.PlainDateProperty>
     {
         protected virtual PlainDateProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<PlainDateProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.Optional.PlainDateProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        PlainDateProperty IPersistableModel<PlainDateProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        PlainDateProperty IPersistableModel<global::_Type.Property.Optional.PlainDateProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<PlainDateProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.Optional.PlainDateProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="plainDateProperty"> The <see cref="PlainDateProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="plainDateProperty"> The <see cref="global::_Type.Property.Optional.PlainDateProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(PlainDateProperty plainDateProperty) => throw null;
 
         public static explicit operator PlainDateProperty(Response response) => throw null;
 
-        void IJsonModel<PlainDateProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.Optional.PlainDateProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        PlainDateProperty IJsonModel<PlainDateProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        PlainDateProperty IJsonModel<global::_Type.Property.Optional.PlainDateProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual PlainDateProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

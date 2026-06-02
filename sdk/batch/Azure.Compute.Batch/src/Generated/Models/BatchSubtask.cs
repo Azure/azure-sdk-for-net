@@ -14,14 +14,14 @@ namespace Azure.Compute.Batch
     public partial class BatchSubtask
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchSubtask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchSubtask"/>. </summary>
         internal BatchSubtask()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchSubtask"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchSubtask"/>. </summary>
         /// <param name="id"> The ID of the subtask. </param>
         /// <param name="nodeInfo"> Information about the Compute Node on which the subtask ran. </param>
         /// <param name="startTime"> The time at which the subtask started running. If the subtask has been restarted or retried, this is the most recent time at which the subtask started running. </param>
@@ -35,7 +35,7 @@ namespace Azure.Compute.Batch
         /// <param name="previousStateTransitionTime"> The time at which the subtask entered its previous state. This property is not set if the subtask is in its initial running state. </param>
         /// <param name="result"> The result of the Task execution. If the value is 'failed', then the details of the failure can be found in the failureInfo property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchSubtask(int? id, BatchNodeInfo nodeInfo, DateTimeOffset? startTime, DateTimeOffset? endTime, int? exitCode, BatchTaskContainerExecutionInfo containerInfo, BatchTaskFailureInfo failureInfo, BatchSubtaskState? state, DateTimeOffset? stateTransitionTime, BatchSubtaskState? previousState, DateTimeOffset? previousStateTransitionTime, BatchTaskExecutionResult? result, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchSubtask(int? id, BatchNodeInfo nodeInfo, DateTimeOffset? startTime, DateTimeOffset? endTime, int? exitCode, BatchTaskContainerExecutionInfo containerInfo, BatchTaskFailureInfo failureInfo, BatchSubtaskState? state, DateTimeOffset? stateTransitionTime, BatchSubtaskState? previousState, DateTimeOffset? previousStateTransitionTime, BatchTaskExecutionResult? result, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             NodeInfo = nodeInfo;

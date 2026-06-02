@@ -12,24 +12,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// An intended query to execute without model query planning.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeRetrievalSemanticIntent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalSemanticIntent"/>.
     /// </summary>
     public abstract partial class KnowledgeRetrievalIntent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalIntent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalIntent"/>. </summary>
         /// <param name="type"> The type of the intent. </param>
         private protected KnowledgeRetrievalIntent(KnowledgeRetrievalIntentType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeRetrievalIntent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalIntent"/>. </summary>
         /// <param name="type"> The type of the intent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeRetrievalIntent(KnowledgeRetrievalIntentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeRetrievalIntent(KnowledgeRetrievalIntentType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

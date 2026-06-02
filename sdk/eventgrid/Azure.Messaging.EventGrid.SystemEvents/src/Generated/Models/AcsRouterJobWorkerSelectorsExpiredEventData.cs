@@ -13,14 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobWorkerSelectorsExpired event. </summary>
     public partial class AcsRouterJobWorkerSelectorsExpiredEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobWorkerSelectorsExpiredEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobWorkerSelectorsExpiredEventData"/>. </summary>
         internal AcsRouterJobWorkerSelectorsExpiredEventData()
         {
-            ExpiredRequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
-            ExpiredAttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
+            ExpiredRequestedWorkerSelectors = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector>();
+            ExpiredAttachedWorkerSelectors = new ChangeTrackingList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobWorkerSelectorsExpiredEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobWorkerSelectorsExpiredEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
@@ -30,16 +30,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="expiredRequestedWorkerSelectors"> Router Job Worker Selectors Expired Requested Worker Selectors. </param>
         /// <param name="expiredAttachedWorkerSelectors"> Router Job Worker Selectors Expired Attached Worker Selectors. </param>
-        internal AcsRouterJobWorkerSelectorsExpiredEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IReadOnlyList<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors, IReadOnlyList<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
+        internal AcsRouterJobWorkerSelectorsExpiredEventData(string jobId, string channelReference, string channelId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredRequestedWorkerSelectors, IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> expiredAttachedWorkerSelectors) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             ExpiredRequestedWorkerSelectors = expiredRequestedWorkerSelectors;
             ExpiredAttachedWorkerSelectors = expiredAttachedWorkerSelectors;
         }
 
         /// <summary> Router Job Worker Selectors Expired Requested Worker Selectors. </summary>
-        public IReadOnlyList<AcsRouterWorkerSelector> ExpiredRequestedWorkerSelectors { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> ExpiredRequestedWorkerSelectors { get; }
 
         /// <summary> Router Job Worker Selectors Expired Attached Worker Selectors. </summary>
-        public IReadOnlyList<AcsRouterWorkerSelector> ExpiredAttachedWorkerSelectors { get; }
+        public IReadOnlyList<global::Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelector> ExpiredAttachedWorkerSelectors { get; }
     }
 }

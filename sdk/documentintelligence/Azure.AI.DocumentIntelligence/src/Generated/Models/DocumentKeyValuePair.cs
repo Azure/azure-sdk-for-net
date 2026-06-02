@@ -17,9 +17,9 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentKeyValuePair
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentKeyValuePair"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentKeyValuePair"/>. </summary>
         /// <param name="key"> Field label of the key-value pair. </param>
         /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
         internal DocumentKeyValuePair(DocumentKeyValueElement key, float confidence)
@@ -28,12 +28,12 @@ namespace Azure.AI.DocumentIntelligence
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentKeyValuePair"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentKeyValuePair"/>. </summary>
         /// <param name="key"> Field label of the key-value pair. </param>
         /// <param name="value"> Field value of the key-value pair. </param>
         /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentKeyValuePair(DocumentKeyValueElement key, DocumentKeyValueElement value, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentKeyValuePair(DocumentKeyValueElement key, DocumentKeyValueElement value, float confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Value = value;

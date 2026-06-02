@@ -12,21 +12,21 @@ namespace Azure.Analytics.Defender.Easm
 {
     /// <summary>
     /// The DataConnection.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LogAnalyticsDataConnection"/> and <see cref="AzureDataExplorerDataConnection"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.Defender.Easm.LogAnalyticsDataConnection"/> and <see cref="Azure.Analytics.Defender.Easm.AzureDataExplorerDataConnection"/>.
     /// </summary>
     public abstract partial class DataConnection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DataConnection"/>. </summary>
         /// <param name="kind"> Discriminator property for DataConnection. </param>
         private protected DataConnection(string kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DataConnection"/>. </summary>
         /// <param name="kind"> Discriminator property for DataConnection. </param>
         /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Id = id;

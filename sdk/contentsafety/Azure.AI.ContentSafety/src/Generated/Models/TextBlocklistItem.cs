@@ -14,25 +14,25 @@ namespace Azure.AI.ContentSafety
     public partial class TextBlocklistItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextBlocklistItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.TextBlocklistItem"/>. </summary>
         /// <param name="text"> BlocklistItem content. The length is counted using Unicode code point. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public TextBlocklistItem(string text)
         {
-            Argument.AssertNotNull(text, nameof(text));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextBlocklistItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.TextBlocklistItem"/>. </summary>
         /// <param name="blocklistItemId"> The service will generate a BlocklistItemId, which will be a UUID. </param>
         /// <param name="description"> BlocklistItem description. </param>
         /// <param name="text"> BlocklistItem content. The length is counted using Unicode code point. </param>
         /// <param name="isRegex"> An optional properties indicating whether this item is to be matched as a regular expression. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextBlocklistItem(string blocklistItemId, string description, string text, bool? isRegex, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextBlocklistItem(string blocklistItemId, string description, string text, bool? isRegex, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BlocklistItemId = blocklistItemId;
             Description = description;

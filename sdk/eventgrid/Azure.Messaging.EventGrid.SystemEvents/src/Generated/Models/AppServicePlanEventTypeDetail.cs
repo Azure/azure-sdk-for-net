@@ -14,19 +14,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AppServicePlanEventTypeDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AppServicePlanEventTypeDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppServicePlanEventTypeDetail"/>. </summary>
         internal AppServicePlanEventTypeDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServicePlanEventTypeDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppServicePlanEventTypeDetail"/>. </summary>
         /// <param name="stampKind"> Kind of environment where app service plan is. </param>
         /// <param name="action"> Type of action on the app service plan. </param>
         /// <param name="status"> Asynchronous operation status of the operation on the app service plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicePlanEventTypeDetail(StampKind? stampKind, AppServicePlanAction? action, AsyncStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServicePlanEventTypeDetail(StampKind? stampKind, AppServicePlanAction? action, AsyncStatus? status, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             StampKind = stampKind;
             Action = action;

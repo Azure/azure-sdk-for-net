@@ -14,19 +14,19 @@ namespace Azure.AI.DocumentIntelligence
     public partial class DocumentIntelligenceInnerError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceInnerError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceInnerError"/>. </summary>
         internal DocumentIntelligenceInnerError()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceInnerError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceInnerError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="innerError"> Inner error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentIntelligenceInnerError(string code, string message, DocumentIntelligenceInnerError innerError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentIntelligenceInnerError(string code, string message, DocumentIntelligenceInnerError innerError, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;

@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Text
     public partial class AnalyzeTextJobState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextJobState"/>. </summary>
         /// <param name="createdAt"> Date and time job created. </param>
         /// <param name="lastUpdatedAt"> last updated date and time. </param>
         /// <param name="status"> status. </param>
@@ -26,11 +26,11 @@ namespace Azure.AI.Language.Text
             CreatedAt = createdAt;
             LastUpdatedAt = lastUpdatedAt;
             Status = status;
-            Errors = new ChangeTrackingList<AnalyzeTextError>();
+            Errors = new ChangeTrackingList<global::Azure.AI.Language.Text.AnalyzeTextError>();
             Tasks = tasks;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextJobState"/>. </summary>
         /// <param name="displayName"> display name. </param>
         /// <param name="createdAt"> Date and time job created. </param>
         /// <param name="expiresOn"> Date and time job expires. </param>
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Text
         /// <param name="tasks"> List of tasks. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdAt, DateTimeOffset? expiresOn, Guid jobId, DateTimeOffset lastUpdatedAt, TextActionState status, IList<AnalyzeTextError> errors, string nextLink, TextActions tasks, RequestStatistics statistics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextJobState(string displayName, DateTimeOffset createdAt, DateTimeOffset? expiresOn, Guid jobId, DateTimeOffset lastUpdatedAt, TextActionState status, IList<global::Azure.AI.Language.Text.AnalyzeTextError> errors, string nextLink, TextActions tasks, RequestStatistics statistics, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             CreatedAt = createdAt;
@@ -76,7 +76,7 @@ namespace Azure.AI.Language.Text
         public TextActionState Status { get; }
 
         /// <summary> errors. </summary>
-        public IList<AnalyzeTextError> Errors { get; }
+        public IList<global::Azure.AI.Language.Text.AnalyzeTextError> Errors { get; }
 
         /// <summary> next link. </summary>
         public string NextLink { get; }

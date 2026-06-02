@@ -12,14 +12,14 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Ingestion Source
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SharedAccessSignatureTokenIngestionSource"/> and <see cref="ManagedIdentityIngestionSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenIngestionSource"/> and <see cref="Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource"/>.
     /// </summary>
     public abstract partial class IngestionSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IngestionSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionSource"/>. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="kind"> Discriminator for the ingestion source. </param>
         private protected IngestionSource(Guid id, IngestionSourceType kind)
@@ -28,12 +28,12 @@ namespace Azure.Analytics.PlanetaryComputer
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IngestionSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.IngestionSource"/>. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="created"> Created time in UTC format. </param>
         /// <param name="kind"> Discriminator for the ingestion source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionSource(Guid id, DateTimeOffset? created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionSource(Guid id, DateTimeOffset? created, IngestionSourceType kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Created = created;

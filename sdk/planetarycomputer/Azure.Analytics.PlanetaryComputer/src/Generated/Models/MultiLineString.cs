@@ -14,27 +14,27 @@ namespace Azure.Analytics.PlanetaryComputer
     /// <summary> Represents a MultiLineString. </summary>
     public partial class MultiLineString : GeoJsonGeometry
     {
-        /// <summary> Initializes a new instance of <see cref="MultiLineString"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.MultiLineString"/>. </summary>
         /// <param name="coordinates"> The coordinates of the multilinestring. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public MultiLineString(IEnumerable<IList<IList<float>>> coordinates) : base(GeometryType.MultiLineString)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        public MultiLineString(IEnumerable<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<float>>> coordinates) : base(global::Azure.Analytics.PlanetaryComputer.GeometryType.MultiLineString)
         {
-            Argument.AssertNotNull(coordinates, nameof(coordinates));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
             Coordinates = coordinates.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultiLineString"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.MultiLineString"/>. </summary>
         /// <param name="type"> Discriminator property for GeoJsonGeometry. </param>
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coordinates"> The coordinates of the multilinestring. </param>
-        internal MultiLineString(GeometryType @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<IList<float>>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
+        internal MultiLineString(GeometryType @type, IList<float> boundingBox, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<float>>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
         }
 
         /// <summary> The coordinates of the multilinestring. </summary>
-        public IList<IList<IList<float>>> Coordinates { get; }
+        public IList<global::System.Collections.Generic.IList<global::System.Collections.Generic.IList<float>>> Coordinates { get; }
     }
 }

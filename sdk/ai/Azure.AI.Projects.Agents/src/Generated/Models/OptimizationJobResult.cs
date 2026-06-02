@@ -11,16 +11,16 @@ namespace Azure.AI.Projects.Agents
     public partial class OptimizationJobResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationJobResult"/>. </summary>
         internal OptimizationJobResult()
         {
-            Candidates = new ChangeTrackingList<OptimizationCandidate>();
+            Candidates = new ChangeTrackingList<global::Azure.AI.Projects.Agents.OptimizationCandidate>();
             Warnings = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationJobResult"/>. </summary>
         /// <param name="baseline"> Evaluation scores for the original (un-optimized) agent configuration. </param>
         /// <param name="best"> The highest-scoring candidate found during optimization. </param>
         /// <param name="candidates"> All evaluated candidates including baseline. </param>
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="warnings"> Non-fatal warnings from the optimization run (e.g., target attribute failures that were skipped). </param>
         /// <param name="allTargetAttributesFailed"> True when all target attributes failed — only the baseline was evaluated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationJobResult(OptimizationCandidate baseline, OptimizationCandidate best, IList<OptimizationCandidate> candidates, OptimizationOptions options, IList<string> warnings, bool? allTargetAttributesFailed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationJobResult(OptimizationCandidate baseline, OptimizationCandidate best, IList<global::Azure.AI.Projects.Agents.OptimizationCandidate> candidates, OptimizationOptions options, IList<string> warnings, bool? allTargetAttributesFailed, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Baseline = baseline;
             Best = best;
@@ -46,7 +46,7 @@ namespace Azure.AI.Projects.Agents
         public OptimizationCandidate Best { get; }
 
         /// <summary> All evaluated candidates including baseline. </summary>
-        public IList<OptimizationCandidate> Candidates { get; }
+        public IList<global::Azure.AI.Projects.Agents.OptimizationCandidate> Candidates { get; }
 
         /// <summary> The options used for this optimization run. </summary>
         public OptimizationOptions Options { get; }

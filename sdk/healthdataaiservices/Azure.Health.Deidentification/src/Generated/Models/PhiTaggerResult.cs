@@ -15,19 +15,19 @@ namespace Azure.Health.Deidentification
     public partial class PhiTaggerResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.PhiTaggerResult"/>. </summary>
         /// <param name="entities"> List of entities detected in the input. </param>
-        internal PhiTaggerResult(IEnumerable<PhiEntity> entities)
+        internal PhiTaggerResult(IEnumerable<global::Azure.Health.Deidentification.PhiEntity> entities)
         {
             Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Health.Deidentification.PhiTaggerResult"/>. </summary>
         /// <param name="entities"> List of entities detected in the input. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PhiTaggerResult(IReadOnlyList<PhiEntity> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PhiTaggerResult(IReadOnlyList<global::Azure.Health.Deidentification.PhiEntity> entities, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Entities = entities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

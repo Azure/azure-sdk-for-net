@@ -15,14 +15,14 @@ namespace Documentation
 {
     public partial class DocumentationClient
     {
-        public DocumentationClient() : this(new Uri("http://localhost:3000"), new DocumentationClientOptions()) => throw null;
+        public DocumentationClient() : this(new global::System.Uri("http://localhost:3000"), new DocumentationClientOptions()) => throw null;
 
-        internal DocumentationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DocumentationClientOptions options) => throw null;
+        internal DocumentationClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, DocumentationClientOptions options) => throw null;
 
-        public DocumentationClient(Uri endpoint, DocumentationClientOptions options) : this(null, endpoint, options) => throw null;
+        public DocumentationClient(global::System.Uri endpoint, DocumentationClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public DocumentationClient(DocumentationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public DocumentationClient(DocumentationClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

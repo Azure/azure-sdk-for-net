@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents an entity in an exported project with composite entities enabled. </summary>
-    public partial class TextAuthoringExportedCompositeEntity : IJsonModel<TextAuthoringExportedCompositeEntity>
+    public partial class TextAuthoringExportedCompositeEntity : IJsonModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TextAuthoringExportedCompositeEntity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringExportedCompositeEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTextAuthoringExportedCompositeEntity(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity.DeserializeTextAuthoringExportedCompositeEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TextAuthoringExportedCompositeEntity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringExportedCompositeEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TextAuthoringExportedCompositeEntity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TextAuthoringExportedCompositeEntity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TextAuthoringExportedCompositeEntity IPersistableModel<TextAuthoringExportedCompositeEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TextAuthoringExportedCompositeEntity IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TextAuthoringExportedCompositeEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TextAuthoringExportedCompositeEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,37 +68,37 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringExportedCompositeEntity>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TextAuthoringExportedCompositeEntity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CompositionSetting))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsDefined(CompositionSetting))
             {
                 writer.WritePropertyName("compositionSetting"u8);
                 writer.WriteStringValue(CompositionSetting.Value.ToString());
             }
-            if (Optional.IsDefined(List))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsDefined(List))
             {
                 writer.WritePropertyName("list"u8);
-                writer.WriteObjectValue(List, options);
+                writer.WriteObjectValue<TextAuthoringExportedEntityList>(List, options);
             }
-            if (Optional.IsCollectionDefined(Prebuilts))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsCollectionDefined(Prebuilts))
             {
                 writer.WritePropertyName("prebuilts"u8);
                 writer.WriteStartArray();
                 foreach (TextAuthoringExportedPrebuiltEntity item in Prebuilts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<TextAuthoringExportedPrebuiltEntity>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Category))
+            if (global::Azure.AI.Language.Text.Authoring.Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -106,9 +106,9 @@ namespace Azure.AI.Language.Text.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -117,39 +117,39 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TextAuthoringExportedCompositeEntity IJsonModel<TextAuthoringExportedCompositeEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TextAuthoringExportedCompositeEntity IJsonModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TextAuthoringExportedCompositeEntity JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TextAuthoringExportedCompositeEntity>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TextAuthoringExportedCompositeEntity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTextAuthoringExportedCompositeEntity(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity.DeserializeTextAuthoringExportedCompositeEntity(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TextAuthoringExportedCompositeEntity DeserializeTextAuthoringExportedCompositeEntity(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             TextAuthoringCompositionMode? compositionSetting = default;
             TextAuthoringExportedEntityList list = default;
-            IList<TextAuthoringExportedPrebuiltEntity> prebuilts = default;
+            IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity> prebuilts = default;
             string category = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("compositionSetting"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -158,23 +158,23 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (prop.NameEquals("list"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    list = TextAuthoringExportedEntityList.DeserializeTextAuthoringExportedEntityList(prop.Value, options);
+                    list = global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedEntityList.DeserializeTextAuthoringExportedEntityList(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("prebuilts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<TextAuthoringExportedPrebuiltEntity> array = new List<TextAuthoringExportedPrebuiltEntity>();
+                    List<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity> array = new List<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TextAuthoringExportedPrebuiltEntity.DeserializeTextAuthoringExportedPrebuiltEntity(item, options));
+                        array.Add(global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity.DeserializeTextAuthoringExportedPrebuiltEntity(item, options));
                     }
                     prebuilts = array;
                     continue;
@@ -184,12 +184,12 @@ namespace Azure.AI.Language.Text.Authoring
                     category = prop.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TextAuthoringExportedCompositeEntity(compositionSetting, list, prebuilts ?? new ChangeTrackingList<TextAuthoringExportedPrebuiltEntity>(), category, additionalBinaryDataProperties);
+            return new TextAuthoringExportedCompositeEntity(compositionSetting, list, (prebuilts ?? new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity>()), category, additionalBinaryDataProperties);
         }
     }
 }

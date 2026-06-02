@@ -11,17 +11,17 @@ namespace Azure.AI.Projects.Agents
     public partial class ToolboxPolicies
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ToolboxPolicies"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolboxPolicies"/>. </summary>
         public ToolboxPolicies()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolboxPolicies"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolboxPolicies"/>. </summary>
         /// <param name="raiConfig"> Responsible AI content filtering configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolboxPolicies(ContentFilterConfiguration raiConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolboxPolicies(ContentFilterConfiguration raiConfig, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             RaiConfig = raiConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

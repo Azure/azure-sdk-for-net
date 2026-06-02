@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Supported parameters for a conversational summarization task. </summary>
-    public readonly partial struct SummaryAspect : IEquatable<SummaryAspect>
+    public readonly partial struct SummaryAspect : IEquatable<global::Azure.AI.Language.Conversations.Models.SummaryAspect>
     {
         private readonly string _value;
         /// <summary> Summary of issues in transcripts of web chats and service calls between customer-service agents and customers. </summary>
@@ -28,12 +28,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Action items and tasks that arose during a meeting. </summary>
         private const string FollowUpTasksValue = "follow-up tasks";
 
-        /// <summary> Initializes a new instance of <see cref="SummaryAspect"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.SummaryAspect"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SummaryAspect(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -56,34 +56,34 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Action items and tasks that arose during a meeting. </summary>
         public static SummaryAspect FollowUpTasks { get; } = new SummaryAspect(FollowUpTasksValue);
 
-        /// <summary> Determines if two <see cref="SummaryAspect"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.SummaryAspect"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SummaryAspect left, SummaryAspect right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SummaryAspect"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.SummaryAspect"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SummaryAspect left, SummaryAspect right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SummaryAspect"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.SummaryAspect"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SummaryAspect(string value) => new SummaryAspect(value);
 
-        /// <summary> Converts a string to a <see cref="SummaryAspect"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.SummaryAspect"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SummaryAspect?(string value) => value == null ? null : new SummaryAspect(value);
+        public static implicit operator SummaryAspect?(string value) => (value == null) ? null : new SummaryAspect(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SummaryAspect other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SummaryAspect other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SummaryAspect other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SummaryAspect other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

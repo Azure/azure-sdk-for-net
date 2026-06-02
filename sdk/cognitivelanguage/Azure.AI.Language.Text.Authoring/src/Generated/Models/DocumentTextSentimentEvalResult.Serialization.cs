@@ -13,9 +13,9 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the comparison between the expected and predicted sentiment that result from an evaluation operation. </summary>
-    public partial class DocumentTextSentimentEvalResult : IJsonModel<DocumentTextSentimentEvalResult>
+    public partial class DocumentTextSentimentEvalResult : IJsonModel<global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentTextSentimentEvalResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult"/> for deserialization. </summary>
         internal DocumentTextSentimentEvalResult()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentTextSentimentEvalResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTextSentimentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Language.Text.Authoring.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentTextSentimentEvalResult(document.RootElement, options);
+                        return global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult.DeserializeDocumentTextSentimentEvalResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTextSentimentEvalResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTextSentimentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageTextAuthoringContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTextSentimentEvalResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentTextSentimentEvalResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentTextSentimentEvalResult IPersistableModel<DocumentTextSentimentEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentTextSentimentEvalResult IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentTextSentimentEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentTextSentimentEvalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,26 +73,26 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTextSentimentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentTextSentimentEvalResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("expectedSentimentSpans"u8);
             writer.WriteStartArray();
             foreach (DocumentSentimentLabelEvalResult item in ExpectedSentimentSpans)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DocumentSentimentLabelEvalResult>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("predictedSentimentSpans"u8);
             writer.WriteStartArray();
             foreach (DocumentSentimentLabelEvalResult item in PredictedSentimentSpans)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<DocumentSentimentLabelEvalResult>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -100,9 +100,9 @@ namespace Azure.AI.Language.Text.Authoring
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -111,57 +111,57 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentTextSentimentEvalResult IJsonModel<DocumentTextSentimentEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentTextSentimentEvalResult IJsonModel<global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentTextSentimentEvalResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentTextSentimentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentTextSentimentEvalResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentTextSentimentEvalResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Language.Text.Authoring.DocumentTextSentimentEvalResult.DeserializeDocumentTextSentimentEvalResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentTextSentimentEvalResult DeserializeDocumentTextSentimentEvalResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IList<DocumentSentimentLabelEvalResult> expectedSentimentSpans = default;
-            IList<DocumentSentimentLabelEvalResult> predictedSentimentSpans = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> expectedSentimentSpans = default;
+            IList<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> predictedSentimentSpans = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("expectedSentimentSpans"u8))
                 {
-                    List<DocumentSentimentLabelEvalResult> array = new List<DocumentSentimentLabelEvalResult>();
+                    List<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> array = new List<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSentimentLabelEvalResult.DeserializeDocumentSentimentLabelEvalResult(item, options));
+                        array.Add(global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult.DeserializeDocumentSentimentLabelEvalResult(item, options));
                     }
                     expectedSentimentSpans = array;
                     continue;
                 }
                 if (prop.NameEquals("predictedSentimentSpans"u8))
                 {
-                    List<DocumentSentimentLabelEvalResult> array = new List<DocumentSentimentLabelEvalResult>();
+                    List<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult> array = new List<global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSentimentLabelEvalResult.DeserializeDocumentSentimentLabelEvalResult(item, options));
+                        array.Add(global::Azure.AI.Language.Text.Authoring.DocumentSentimentLabelEvalResult.DeserializeDocumentSentimentLabelEvalResult(item, options));
                     }
                     predictedSentimentSpans = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentTextSentimentEvalResult(expectedSentimentSpans, predictedSentimentSpans, additionalBinaryDataProperties);

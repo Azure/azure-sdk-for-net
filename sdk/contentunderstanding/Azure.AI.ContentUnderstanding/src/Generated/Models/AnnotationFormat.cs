@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Representation format of annotations in analyze result markdown. </summary>
-    public readonly partial struct AnnotationFormat : IEquatable<AnnotationFormat>
+    public readonly partial struct AnnotationFormat : IEquatable<global::Azure.AI.ContentUnderstanding.AnnotationFormat>
     {
         private readonly string _value;
         /// <summary> Do not represent annotations. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Represent basic annotation information using markdown formatting. </summary>
         private const string MarkdownValue = "markdown";
 
-        /// <summary> Initializes a new instance of <see cref="AnnotationFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.AnnotationFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AnnotationFormat(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.ContentUnderstanding.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Represent basic annotation information using markdown formatting. </summary>
         public static AnnotationFormat Markdown { get; } = new AnnotationFormat(MarkdownValue);
 
-        /// <summary> Determines if two <see cref="AnnotationFormat"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.AnnotationFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AnnotationFormat left, AnnotationFormat right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AnnotationFormat"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.AnnotationFormat"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AnnotationFormat left, AnnotationFormat right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AnnotationFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.AnnotationFormat"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AnnotationFormat(string value) => new AnnotationFormat(value);
 
-        /// <summary> Converts a string to a <see cref="AnnotationFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.AnnotationFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AnnotationFormat?(string value) => value == null ? null : new AnnotationFormat(value);
+        public static implicit operator AnnotationFormat?(string value) => (value == null) ? null : new AnnotationFormat(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AnnotationFormat other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AnnotationFormat other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AnnotationFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AnnotationFormat other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

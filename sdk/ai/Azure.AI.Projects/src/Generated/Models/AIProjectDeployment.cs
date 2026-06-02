@@ -9,25 +9,25 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Model Deployment Definition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ModelDeployment"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.ModelDeployment"/>.
     /// </summary>
     public abstract partial class AIProjectDeployment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectDeployment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectDeployment"/>. </summary>
         /// <param name="type"> The type of the deployment. </param>
         private protected AIProjectDeployment(AIProjectDeploymentType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AIProjectDeployment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.AIProjectDeployment"/>. </summary>
         /// <param name="type"> The type of the deployment. </param>
         /// <param name="name"> Name of the deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIProjectDeployment(AIProjectDeploymentType @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIProjectDeployment(AIProjectDeploymentType @type, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Name = name;

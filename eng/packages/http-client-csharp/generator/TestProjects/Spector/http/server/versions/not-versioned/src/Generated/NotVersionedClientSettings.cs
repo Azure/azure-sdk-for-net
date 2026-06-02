@@ -12,10 +12,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace Server.Versions.NotVersioned
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public partial class NotVersionedClientSettings : ClientSettings
     {
-        public Uri Endpoint
+        public global::System.Uri Endpoint
         {
             get => throw null;
             set => throw null;

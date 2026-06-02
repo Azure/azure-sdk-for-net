@@ -13,9 +13,9 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class PageViewPerfData : MonitorDomain, IJsonModel<PageViewPerfData>
+    internal partial class PageViewPerfData : MonitorDomain, IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData>
     {
-        /// <summary> Initializes a new instance of <see cref="PageViewPerfData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData"/> for deserialization. </summary>
         internal PageViewPerfData()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MonitorDomain PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageViewPerfData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Monitor.OpenTelemetry.Exporter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePageViewPerfData(document.RootElement, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData.DeserializePageViewPerfData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PageViewPerfData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageViewPerfData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMonitorOpenTelemetryExporterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PageViewPerfData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PageViewPerfData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PageViewPerfData IPersistableModel<PageViewPerfData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PageViewPerfData)PersistableModelCreateCore(data, options);
+        PageViewPerfData IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((PageViewPerfData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PageViewPerfData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PageViewPerfData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,59 +73,59 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageViewPerfData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PageViewPerfData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Url))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (Optional.IsDefined(Duration))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration);
             }
-            if (Optional.IsDefined(PerfTotal))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsDefined(PerfTotal))
             {
                 writer.WritePropertyName("perfTotal"u8);
                 writer.WriteStringValue(PerfTotal);
             }
-            if (Optional.IsDefined(NetworkConnect))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsDefined(NetworkConnect))
             {
                 writer.WritePropertyName("networkConnect"u8);
                 writer.WriteStringValue(NetworkConnect);
             }
-            if (Optional.IsDefined(SentRequest))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsDefined(SentRequest))
             {
                 writer.WritePropertyName("sentRequest"u8);
                 writer.WriteStringValue(SentRequest);
             }
-            if (Optional.IsDefined(ReceivedResponse))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsDefined(ReceivedResponse))
             {
                 writer.WritePropertyName("receivedResponse"u8);
                 writer.WriteStringValue(ReceivedResponse);
             }
-            if (Optional.IsDefined(DomProcessing))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsDefined(DomProcessing))
             {
                 writer.WritePropertyName("domProcessing"u8);
                 writer.WriteStringValue(DomProcessing);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -134,7 +134,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Measurements))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsCollectionDefined(Measurements))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();
@@ -149,32 +149,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PageViewPerfData IJsonModel<PageViewPerfData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PageViewPerfData)JsonModelCreateCore(ref reader, options);
+        PageViewPerfData IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((PageViewPerfData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MonitorDomain JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PageViewPerfData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(PageViewPerfData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePageViewPerfData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Monitor.OpenTelemetry.Exporter.Models.PageViewPerfData.DeserializePageViewPerfData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static PageViewPerfData DeserializePageViewPerfData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             int version = default;
             MonitorDomainKind kind = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string id = default;
             string name = default;
             string url = default;
@@ -245,14 +245,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -266,7 +266,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 if (prop.NameEquals("measurements"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -278,7 +278,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     measurements = dictionary;
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new PageViewPerfData(
                 version,
@@ -293,8 +293,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 sentRequest,
                 receivedResponse,
                 domProcessing,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                measurements ?? new ChangeTrackingDictionary<string, double>());
+                (properties ?? new ChangeTrackingDictionary<string, string>()),
+                (measurements ?? new ChangeTrackingDictionary<string, double>()));
         }
     }
 }

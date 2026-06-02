@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The prompt agent definition. </summary>
     public partial class DeclarativeAgentDefinition : ProjectsAgentDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="DeclarativeAgentDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.DeclarativeAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="textOptions"> Configuration options for a text response from the model. Can be plain text or structured JSON data. </param>
         /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
-        internal DeclarativeAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string model, string instructions, float? temperature, float? topP, ResponseReasoningOptions reasoningOptions, IList<ResponseTool> tools, BinaryData toolChoice, ResponseTextOptions textOptions, IDictionary<string, StructuredInputDefinition> structuredInputs) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
+        internal DeclarativeAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string model, string instructions, float? temperature, float? topP, ResponseReasoningOptions reasoningOptions, IList<global::OpenAI.Responses.ResponseTool> tools, BinaryData toolChoice, ResponseTextOptions textOptions, IDictionary<string, global::Azure.AI.Projects.Agents.StructuredInputDefinition> structuredInputs) : base(kind, contentFilterConfiguration, additionalBinaryDataProperties)
         {
             Model = model;
             Instructions = instructions;
@@ -78,8 +78,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary>
         /// How the model should select which tool (or tools) to use when generating a response.
         /// See the `tools` parameter to see how to specify which tools the model can call.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -88,7 +88,7 @@ namespace Azure.AI.Projects.Agents
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="InternalToolChoiceParam"/>. </description>
+        /// <description> <see cref="global::OpenAI.InternalToolChoiceParam"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -118,6 +118,6 @@ namespace Azure.AI.Projects.Agents
         public BinaryData ToolChoice { get; set; }
 
         /// <summary> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </summary>
-        public IDictionary<string, StructuredInputDefinition> StructuredInputs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.StructuredInputDefinition> StructuredInputs { get; }
     }
 }

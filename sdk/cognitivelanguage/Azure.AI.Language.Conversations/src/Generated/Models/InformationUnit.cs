@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The information (data) Unit of measurement. </summary>
-    public readonly partial struct InformationUnit : IEquatable<InformationUnit>
+    public readonly partial struct InformationUnit : IEquatable<global::Azure.AI.Language.Conversations.Models.InformationUnit>
     {
         private readonly string _value;
         /// <summary> Unspecified information unit. </summary>
@@ -42,12 +42,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Petabyte information unit. </summary>
         private const string PetabyteValue = "Petabyte";
 
-        /// <summary> Initializes a new instance of <see cref="InformationUnit"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.InformationUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InformationUnit(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -91,34 +91,34 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Petabyte information unit. </summary>
         public static InformationUnit Petabyte { get; } = new InformationUnit(PetabyteValue);
 
-        /// <summary> Determines if two <see cref="InformationUnit"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.InformationUnit"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InformationUnit left, InformationUnit right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="InformationUnit"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.InformationUnit"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InformationUnit left, InformationUnit right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="InformationUnit"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.InformationUnit"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator InformationUnit(string value) => new InformationUnit(value);
 
-        /// <summary> Converts a string to a <see cref="InformationUnit"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.InformationUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InformationUnit?(string value) => value == null ? null : new InformationUnit(value);
+        public static implicit operator InformationUnit?(string value) => (value == null) ? null : new InformationUnit(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is InformationUnit other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is InformationUnit other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(InformationUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(InformationUnit other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

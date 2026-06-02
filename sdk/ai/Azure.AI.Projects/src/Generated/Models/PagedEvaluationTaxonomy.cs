@@ -11,20 +11,20 @@ namespace Azure.AI.Projects.Evaluation
     internal partial class PagedEvaluationTaxonomy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PagedEvaluationTaxonomy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.PagedEvaluationTaxonomy"/>. </summary>
         /// <param name="value"> The EvaluationTaxonomy items on this page. </param>
-        internal PagedEvaluationTaxonomy(IEnumerable<EvaluationTaxonomy> value)
+        internal PagedEvaluationTaxonomy(IEnumerable<global::Azure.AI.Projects.Evaluation.EvaluationTaxonomy> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PagedEvaluationTaxonomy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.PagedEvaluationTaxonomy"/>. </summary>
         /// <param name="value"> The EvaluationTaxonomy items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedEvaluationTaxonomy(IList<EvaluationTaxonomy> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedEvaluationTaxonomy(IList<global::Azure.AI.Projects.Evaluation.EvaluationTaxonomy> value, global::System.Uri nextLink, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -32,9 +32,9 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary> The EvaluationTaxonomy items on this page. </summary>
-        public IList<EvaluationTaxonomy> Value { get; }
+        public IList<global::Azure.AI.Projects.Evaluation.EvaluationTaxonomy> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        public global::System.Uri NextLink { get; }
     }
 }

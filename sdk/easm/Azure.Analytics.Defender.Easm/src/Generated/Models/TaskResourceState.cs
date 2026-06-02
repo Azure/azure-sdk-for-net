@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The state the task is in. </summary>
-    public readonly partial struct TaskResourceState : IEquatable<TaskResourceState>
+    public readonly partial struct TaskResourceState : IEquatable<global::Azure.Analytics.Defender.Easm.TaskResourceState>
     {
         private readonly string _value;
         private const string PendingValue = "pending";
@@ -22,12 +22,12 @@ namespace Azure.Analytics.Defender.Easm
         private const string FailedValue = "failed";
         private const string WarningValue = "warning";
 
-        /// <summary> Initializes a new instance of <see cref="TaskResourceState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.TaskResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TaskResourceState(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Analytics.Defender.Easm.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -53,34 +53,34 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Warning. </summary>
         public static TaskResourceState Warning { get; } = new TaskResourceState(WarningValue);
 
-        /// <summary> Determines if two <see cref="TaskResourceState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.TaskResourceState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TaskResourceState left, TaskResourceState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TaskResourceState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Analytics.Defender.Easm.TaskResourceState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TaskResourceState left, TaskResourceState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TaskResourceState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.TaskResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TaskResourceState(string value) => new TaskResourceState(value);
 
-        /// <summary> Converts a string to a <see cref="TaskResourceState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Analytics.Defender.Easm.TaskResourceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TaskResourceState?(string value) => value == null ? null : new TaskResourceState(value);
+        public static implicit operator TaskResourceState?(string value) => (value == null) ? null : new TaskResourceState(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TaskResourceState other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TaskResourceState other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TaskResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TaskResourceState other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

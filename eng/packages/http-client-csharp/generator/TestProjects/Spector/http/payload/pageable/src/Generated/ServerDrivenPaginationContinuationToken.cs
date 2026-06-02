@@ -17,56 +17,56 @@ namespace Payload.Pageable._ServerDrivenPagination.ContinuationToken
     {
         protected ServerDrivenPaginationContinuationToken() => throw null;
 
-        internal ServerDrivenPaginationContinuationToken(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ServerDrivenPaginationContinuationToken(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Pageable<BinaryData> RequestQueryResponseBody(string token, string foo, string bar, RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> RequestQueryResponseBody(string token, string foo, string bar, RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> RequestQueryResponseBodyAsync(string token, string foo, string bar, RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> RequestQueryResponseBodyAsync(string token, string foo, string bar, RequestContext context) => throw null;
 
-        public virtual Pageable<Pet> RequestQueryResponseBody(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<Pet> RequestQueryResponseBody(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Pet> RequestQueryResponseBodyAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.Pet> RequestQueryResponseBodyAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> RequestHeaderResponseBody(string token, string foo, string bar, RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> RequestHeaderResponseBody(string token, string foo, string bar, RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> RequestHeaderResponseBodyAsync(string token, string foo, string bar, RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> RequestHeaderResponseBodyAsync(string token, string foo, string bar, RequestContext context) => throw null;
 
-        public virtual Pageable<Pet> RequestHeaderResponseBody(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<Pet> RequestHeaderResponseBody(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Pet> RequestHeaderResponseBodyAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.Pet> RequestHeaderResponseBodyAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> RequestQueryResponseHeader(string token, string foo, string bar, RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> RequestQueryResponseHeader(string token, string foo, string bar, RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> RequestQueryResponseHeaderAsync(string token, string foo, string bar, RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> RequestQueryResponseHeaderAsync(string token, string foo, string bar, RequestContext context) => throw null;
 
-        public virtual Pageable<Pet> RequestQueryResponseHeader(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<Pet> RequestQueryResponseHeader(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Pet> RequestQueryResponseHeaderAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.Pet> RequestQueryResponseHeaderAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> RequestHeaderResponseHeader(string token, string foo, string bar, RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> RequestHeaderResponseHeader(string token, string foo, string bar, RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> RequestHeaderResponseHeaderAsync(string token, string foo, string bar, RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> RequestHeaderResponseHeaderAsync(string token, string foo, string bar, RequestContext context) => throw null;
 
-        public virtual Pageable<Pet> RequestHeaderResponseHeader(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<Pet> RequestHeaderResponseHeader(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Pet> RequestHeaderResponseHeaderAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.Pet> RequestHeaderResponseHeaderAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> RequestQueryNestedResponseBody(string token, string foo, string bar, RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> RequestQueryNestedResponseBody(string token, string foo, string bar, RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> RequestQueryNestedResponseBodyAsync(string token, string foo, string bar, RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> RequestQueryNestedResponseBodyAsync(string token, string foo, string bar, RequestContext context) => throw null;
 
-        public virtual Pageable<Pet> RequestQueryNestedResponseBody(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<Pet> RequestQueryNestedResponseBody(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Pet> RequestQueryNestedResponseBodyAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.Pet> RequestQueryNestedResponseBodyAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Pageable<BinaryData> RequestHeaderNestedResponseBody(string token, string foo, string bar, RequestContext context) => throw null;
+        public virtual global::Azure.Pageable<BinaryData> RequestHeaderNestedResponseBody(string token, string foo, string bar, RequestContext context) => throw null;
 
-        public virtual AsyncPageable<BinaryData> RequestHeaderNestedResponseBodyAsync(string token, string foo, string bar, RequestContext context) => throw null;
+        public virtual AsyncPageable<global::System.BinaryData> RequestHeaderNestedResponseBodyAsync(string token, string foo, string bar, RequestContext context) => throw null;
 
-        public virtual Pageable<Pet> RequestHeaderNestedResponseBody(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual global::Azure.Pageable<Pet> RequestHeaderNestedResponseBody(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual AsyncPageable<Pet> RequestHeaderNestedResponseBodyAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual AsyncPageable<global::Payload.Pageable.Pet> RequestHeaderNestedResponseBodyAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

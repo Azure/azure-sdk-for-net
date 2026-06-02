@@ -14,21 +14,21 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ActionParametersContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActionParametersContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ActionParametersContent"/>. </summary>
         public ActionParametersContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionParametersContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ActionParametersContent"/>. </summary>
         /// <param name="value">
         /// The value parameter that is used by the policy action. This is action specific,
         /// for further information please refer to documentation here:
         /// https://learn.microsoft.com/en-us/azure/external-attack-surface-management/policy-engine
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionParametersContent(string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActionParametersContent(string value, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

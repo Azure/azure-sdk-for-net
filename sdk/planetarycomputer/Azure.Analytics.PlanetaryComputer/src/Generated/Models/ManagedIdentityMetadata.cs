@@ -15,9 +15,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class ManagedIdentityMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ManagedIdentityMetadata"/>. </summary>
         /// <param name="objectId"> Object id of the managed identity. </param>
         /// <param name="resourceId"> ARM path or resource id of the managed identity. </param>
         internal ManagedIdentityMetadata(Guid objectId, ResourceIdentifier resourceId)
@@ -26,11 +26,11 @@ namespace Azure.Analytics.PlanetaryComputer
             ResourceId = resourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedIdentityMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.ManagedIdentityMetadata"/>. </summary>
         /// <param name="objectId"> Object id of the managed identity. </param>
         /// <param name="resourceId"> ARM path or resource id of the managed identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedIdentityMetadata(Guid objectId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedIdentityMetadata(Guid objectId, ResourceIdentifier resourceId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             ResourceId = resourceId;

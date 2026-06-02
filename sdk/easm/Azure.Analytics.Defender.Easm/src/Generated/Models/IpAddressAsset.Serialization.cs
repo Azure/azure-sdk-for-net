@@ -13,54 +13,54 @@ using System.Text.Json;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The IpAddressAsset. </summary>
-    public partial class IpAddressAsset : InventoryAsset, IJsonModel<IpAddressAsset>
+    public partial class IpAddressAsset : InventoryAsset, IJsonModel<global::Azure.Analytics.Defender.Easm.IpAddressAsset>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InventoryAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Analytics.Defender.Easm.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIpAddressAsset(document.RootElement, options);
+                        return global::Azure.Analytics.Defender.Easm.IpAddressAsset.DeserializeIpAddressAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IpAddressAsset)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.IpAddressAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Analytics.Defender.Easm.AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IpAddressAsset)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.IpAddressAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IpAddressAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Analytics.Defender.Easm.IpAddressAsset>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpAddressAsset IPersistableModel<IpAddressAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (IpAddressAsset)PersistableModelCreateCore(data, options);
+        IpAddressAsset IPersistableModel<global::Azure.Analytics.Defender.Easm.IpAddressAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => ((IpAddressAsset)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IpAddressAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Analytics.Defender.Easm.IpAddressAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IpAddressAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Analytics.Defender.Easm.IpAddressAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,228 +68,228 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(IpAddressAsset)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.IpAddressAsset)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(IpAddress))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(IpAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IpAddress);
             }
-            if (Optional.IsCollectionDefined(Asns))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Asns))
             {
                 writer.WritePropertyName("asns"u8);
                 writer.WriteStartArray();
                 foreach (ObservedLong item in Asns)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedLong>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Reputations))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Reputations))
             {
                 writer.WritePropertyName("reputations"u8);
                 writer.WriteStartArray();
                 foreach (ReputationDetails item in Reputations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ReputationDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WebComponents))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(WebComponents))
             {
                 writer.WritePropertyName("webComponents"u8);
                 writer.WriteStartArray();
                 foreach (WebComponent item in WebComponents)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<WebComponent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetRanges))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(NetRanges))
             {
                 writer.WritePropertyName("netRanges"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in NetRanges)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (ObservedHeader item in Headers)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedHeader>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Attributes))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartArray();
                 foreach (AttributeDetails item in Attributes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AttributeDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Cookies))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Cookies))
             {
                 writer.WritePropertyName("cookies"u8);
                 writer.WriteStartArray();
                 foreach (CookieDetails item in Cookies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<CookieDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SslCerts))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(SslCerts))
             {
                 writer.WritePropertyName("sslCerts"u8);
                 writer.WriteStartArray();
                 foreach (SslCertAsset item in SslCerts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SslCertAsset>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Services))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Services))
             {
                 writer.WritePropertyName("services"u8);
                 writer.WriteStartArray();
                 foreach (AssetService item in Services)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<AssetService>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpBlocks))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(IpBlocks))
             {
                 writer.WritePropertyName("ipBlocks"u8);
                 writer.WriteStartArray();
                 foreach (IpBlock item in IpBlocks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<IpBlock>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (SourceDetails item in Sources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SourceDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(FirstSeen))
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(LastSeen))
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsCollectionDefined(Banners))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Banners))
             {
                 writer.WritePropertyName("banners"u8);
                 writer.WriteStartArray();
                 foreach (BannerDetails item in Banners)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<BannerDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ScanMetadata))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(ScanMetadata))
             {
                 writer.WritePropertyName("scanMetadata"u8);
                 writer.WriteStartArray();
                 foreach (ScanMetadata item in ScanMetadata)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ScanMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NsRecord))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(NsRecord))
             {
                 writer.WritePropertyName("nsRecord"u8);
                 writer.WriteStartArray();
                 foreach (ObservedBoolean item in NsRecord)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MxRecord))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(MxRecord))
             {
                 writer.WritePropertyName("mxRecord"u8);
                 writer.WriteStartArray();
                 foreach (ObservedBoolean item in MxRecord)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Location))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStartArray();
                 foreach (ObservedLocation item in Location)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Hosts))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Hosts))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
                 foreach (ObservedString item in Hosts)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Nxdomain))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(Nxdomain))
             {
                 writer.WritePropertyName("nxdomain"u8);
                 writer.WriteStartArray();
                 foreach (ObservedBoolean item in Nxdomain)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ObservedBoolean>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SslServerConfig))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsCollectionDefined(SslServerConfig))
             {
                 writer.WritePropertyName("sslServerConfig"u8);
                 writer.WriteStartArray();
                 foreach (SslServerConfig item in SslServerConfig)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SslServerConfig>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Ipv4))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Ipv4))
             {
                 writer.WritePropertyName("ipv4"u8);
                 writer.WriteBooleanValue(Ipv4.Value);
             }
-            if (Optional.IsDefined(Ipv6))
+            if (global::Azure.Analytics.Defender.Easm.Optional.IsDefined(Ipv6))
             {
                 writer.WritePropertyName("ipv6"u8);
                 writer.WriteBooleanValue(Ipv6.Value);
@@ -298,53 +298,53 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpAddressAsset IJsonModel<IpAddressAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IpAddressAsset)JsonModelCreateCore(ref reader, options);
+        IpAddressAsset IJsonModel<global::Azure.Analytics.Defender.Easm.IpAddressAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IpAddressAsset)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InventoryAsset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Analytics.Defender.Easm.IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(IpAddressAsset)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Analytics.Defender.Easm.IpAddressAsset)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIpAddressAsset(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Analytics.Defender.Easm.IpAddressAsset.DeserializeIpAddressAsset(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static IpAddressAsset DeserializeIpAddressAsset(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string ipAddress = default;
-            IList<ObservedLong> asns = default;
-            IList<ReputationDetails> reputations = default;
-            IList<WebComponent> webComponents = default;
-            IList<ObservedString> netRanges = default;
-            IList<ObservedHeader> headers = default;
-            IList<AttributeDetails> attributes = default;
-            IList<CookieDetails> cookies = default;
-            IList<SslCertAsset> sslCerts = default;
-            IList<AssetService> services = default;
-            IList<IpBlock> ipBlocks = default;
-            IList<SourceDetails> sources = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedLong> asns = default;
+            IList<global::Azure.Analytics.Defender.Easm.ReputationDetails> reputations = default;
+            IList<global::Azure.Analytics.Defender.Easm.WebComponent> webComponents = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> netRanges = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedHeader> headers = default;
+            IList<global::Azure.Analytics.Defender.Easm.AttributeDetails> attributes = default;
+            IList<global::Azure.Analytics.Defender.Easm.CookieDetails> cookies = default;
+            IList<global::Azure.Analytics.Defender.Easm.SslCertAsset> sslCerts = default;
+            IList<global::Azure.Analytics.Defender.Easm.AssetService> services = default;
+            IList<global::Azure.Analytics.Defender.Easm.IpBlock> ipBlocks = default;
+            IList<global::Azure.Analytics.Defender.Easm.SourceDetails> sources = default;
             DateTimeOffset? firstSeen = default;
             DateTimeOffset? lastSeen = default;
             long? count = default;
-            IList<BannerDetails> banners = default;
-            IList<ScanMetadata> scanMetadata = default;
-            IList<ObservedBoolean> nsRecord = default;
-            IList<ObservedBoolean> mxRecord = default;
-            IList<ObservedLocation> location = default;
-            IList<ObservedString> hosts = default;
-            IList<ObservedBoolean> nxdomain = default;
-            IList<SslServerConfig> sslServerConfig = default;
+            IList<global::Azure.Analytics.Defender.Easm.BannerDetails> banners = default;
+            IList<global::Azure.Analytics.Defender.Easm.ScanMetadata> scanMetadata = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> nsRecord = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> mxRecord = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedLocation> location = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedString> hosts = default;
+            IList<global::Azure.Analytics.Defender.Easm.ObservedBoolean> nxdomain = default;
+            IList<global::Azure.Analytics.Defender.Easm.SslServerConfig> sslServerConfig = default;
             bool? ipv4 = default;
             bool? ipv6 = default;
             foreach (var prop in element.EnumerateObject())
@@ -356,161 +356,161 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("asns"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedLong> array = new List<ObservedLong>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedLong> array = new List<global::Azure.Analytics.Defender.Easm.ObservedLong>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedLong.DeserializeObservedLong(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedLong.DeserializeObservedLong(item, options));
                     }
                     asns = array;
                     continue;
                 }
                 if (prop.NameEquals("reputations"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ReputationDetails> array = new List<ReputationDetails>();
+                    List<global::Azure.Analytics.Defender.Easm.ReputationDetails> array = new List<global::Azure.Analytics.Defender.Easm.ReputationDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ReputationDetails.DeserializeReputationDetails(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ReputationDetails.DeserializeReputationDetails(item, options));
                     }
                     reputations = array;
                     continue;
                 }
                 if (prop.NameEquals("webComponents"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<WebComponent> array = new List<WebComponent>();
+                    List<global::Azure.Analytics.Defender.Easm.WebComponent> array = new List<global::Azure.Analytics.Defender.Easm.WebComponent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(WebComponent.DeserializeWebComponent(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.WebComponent.DeserializeWebComponent(item, options));
                     }
                     webComponents = array;
                     continue;
                 }
                 if (prop.NameEquals("netRanges"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     netRanges = array;
                     continue;
                 }
                 if (prop.NameEquals("headers"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedHeader> array = new List<ObservedHeader>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedHeader> array = new List<global::Azure.Analytics.Defender.Easm.ObservedHeader>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedHeader.DeserializeObservedHeader(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedHeader.DeserializeObservedHeader(item, options));
                     }
                     headers = array;
                     continue;
                 }
                 if (prop.NameEquals("attributes"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AttributeDetails> array = new List<AttributeDetails>();
+                    List<global::Azure.Analytics.Defender.Easm.AttributeDetails> array = new List<global::Azure.Analytics.Defender.Easm.AttributeDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AttributeDetails.DeserializeAttributeDetails(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.AttributeDetails.DeserializeAttributeDetails(item, options));
                     }
                     attributes = array;
                     continue;
                 }
                 if (prop.NameEquals("cookies"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<CookieDetails> array = new List<CookieDetails>();
+                    List<global::Azure.Analytics.Defender.Easm.CookieDetails> array = new List<global::Azure.Analytics.Defender.Easm.CookieDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CookieDetails.DeserializeCookieDetails(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.CookieDetails.DeserializeCookieDetails(item, options));
                     }
                     cookies = array;
                     continue;
                 }
                 if (prop.NameEquals("sslCerts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SslCertAsset> array = new List<SslCertAsset>();
+                    List<global::Azure.Analytics.Defender.Easm.SslCertAsset> array = new List<global::Azure.Analytics.Defender.Easm.SslCertAsset>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SslCertAsset.DeserializeSslCertAsset(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.SslCertAsset.DeserializeSslCertAsset(item, options));
                     }
                     sslCerts = array;
                     continue;
                 }
                 if (prop.NameEquals("services"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<AssetService> array = new List<AssetService>();
+                    List<global::Azure.Analytics.Defender.Easm.AssetService> array = new List<global::Azure.Analytics.Defender.Easm.AssetService>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AssetService.DeserializeAssetService(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.AssetService.DeserializeAssetService(item, options));
                     }
                     services = array;
                     continue;
                 }
                 if (prop.NameEquals("ipBlocks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<IpBlock> array = new List<IpBlock>();
+                    List<global::Azure.Analytics.Defender.Easm.IpBlock> array = new List<global::Azure.Analytics.Defender.Easm.IpBlock>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpBlock.DeserializeIpBlock(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.IpBlock.DeserializeIpBlock(item, options));
                     }
                     ipBlocks = array;
                     continue;
                 }
                 if (prop.NameEquals("sources"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SourceDetails> array = new List<SourceDetails>();
+                    List<global::Azure.Analytics.Defender.Easm.SourceDetails> array = new List<global::Azure.Analytics.Defender.Easm.SourceDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
                 }
                 if (prop.NameEquals("firstSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -519,7 +519,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("lastSeen"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -528,7 +528,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("count"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -537,119 +537,119 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("banners"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<BannerDetails> array = new List<BannerDetails>();
+                    List<global::Azure.Analytics.Defender.Easm.BannerDetails> array = new List<global::Azure.Analytics.Defender.Easm.BannerDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(BannerDetails.DeserializeBannerDetails(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.BannerDetails.DeserializeBannerDetails(item, options));
                     }
                     banners = array;
                     continue;
                 }
                 if (prop.NameEquals("scanMetadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ScanMetadata> array = new List<ScanMetadata>();
+                    List<global::Azure.Analytics.Defender.Easm.ScanMetadata> array = new List<global::Azure.Analytics.Defender.Easm.ScanMetadata>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Easm.ScanMetadata.DeserializeScanMetadata(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ScanMetadata.DeserializeScanMetadata(item, options));
                     }
                     scanMetadata = array;
                     continue;
                 }
                 if (prop.NameEquals("nsRecord"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedBoolean> array = new List<ObservedBoolean>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedBoolean> array = new List<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
                     nsRecord = array;
                     continue;
                 }
                 if (prop.NameEquals("mxRecord"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedBoolean> array = new List<ObservedBoolean>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedBoolean> array = new List<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
                     mxRecord = array;
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedLocation> array = new List<ObservedLocation>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedLocation> array = new List<global::Azure.Analytics.Defender.Easm.ObservedLocation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedLocation.DeserializeObservedLocation(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedLocation.DeserializeObservedLocation(item, options));
                     }
                     location = array;
                     continue;
                 }
                 if (prop.NameEquals("hosts"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedString> array = new List<ObservedString>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedString> array = new List<global::Azure.Analytics.Defender.Easm.ObservedString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedString.DeserializeObservedString(item, options));
                     }
                     hosts = array;
                     continue;
                 }
                 if (prop.NameEquals("nxdomain"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ObservedBoolean> array = new List<ObservedBoolean>();
+                    List<global::Azure.Analytics.Defender.Easm.ObservedBoolean> array = new List<global::Azure.Analytics.Defender.Easm.ObservedBoolean>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
                     nxdomain = array;
                     continue;
                 }
                 if (prop.NameEquals("sslServerConfig"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SslServerConfig> array = new List<SslServerConfig>();
+                    List<global::Azure.Analytics.Defender.Easm.SslServerConfig> array = new List<global::Azure.Analytics.Defender.Easm.SslServerConfig>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Easm.SslServerConfig.DeserializeSslServerConfig(item, options));
+                        array.Add(global::Azure.Analytics.Defender.Easm.SslServerConfig.DeserializeSslServerConfig(item, options));
                     }
                     sslServerConfig = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv4"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -658,43 +658,43 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("ipv6"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     ipv6 = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new IpAddressAsset(
                 additionalBinaryDataProperties,
                 ipAddress,
-                asns ?? new ChangeTrackingList<ObservedLong>(),
-                reputations ?? new ChangeTrackingList<ReputationDetails>(),
-                webComponents ?? new ChangeTrackingList<WebComponent>(),
-                netRanges ?? new ChangeTrackingList<ObservedString>(),
-                headers ?? new ChangeTrackingList<ObservedHeader>(),
-                attributes ?? new ChangeTrackingList<AttributeDetails>(),
-                cookies ?? new ChangeTrackingList<CookieDetails>(),
-                sslCerts ?? new ChangeTrackingList<SslCertAsset>(),
-                services ?? new ChangeTrackingList<AssetService>(),
-                ipBlocks ?? new ChangeTrackingList<IpBlock>(),
-                sources ?? new ChangeTrackingList<SourceDetails>(),
+                (asns ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLong>()),
+                (reputations ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ReputationDetails>()),
+                (webComponents ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.WebComponent>()),
+                (netRanges ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (headers ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedHeader>()),
+                (attributes ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AttributeDetails>()),
+                (cookies ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.CookieDetails>()),
+                (sslCerts ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslCertAsset>()),
+                (services ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.AssetService>()),
+                (ipBlocks ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.IpBlock>()),
+                (sources ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SourceDetails>()),
                 firstSeen,
                 lastSeen,
                 count,
-                banners ?? new ChangeTrackingList<BannerDetails>(),
-                scanMetadata ?? new ChangeTrackingList<ScanMetadata>(),
-                nsRecord ?? new ChangeTrackingList<ObservedBoolean>(),
-                mxRecord ?? new ChangeTrackingList<ObservedBoolean>(),
-                location ?? new ChangeTrackingList<ObservedLocation>(),
-                hosts ?? new ChangeTrackingList<ObservedString>(),
-                nxdomain ?? new ChangeTrackingList<ObservedBoolean>(),
-                sslServerConfig ?? new ChangeTrackingList<SslServerConfig>(),
+                (banners ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.BannerDetails>()),
+                (scanMetadata ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ScanMetadata>()),
+                (nsRecord ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>()),
+                (mxRecord ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>()),
+                (location ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedLocation>()),
+                (hosts ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedString>()),
+                (nxdomain ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.ObservedBoolean>()),
+                (sslServerConfig ?? new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.SslServerConfig>()),
                 ipv4,
                 ipv6);
         }

@@ -13,7 +13,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageEdited event. </summary>
     public partial class AcsChatMessageEditedEventData : AcsChatMessageEventBaseProperties
     {
-        /// <summary> Initializes a new instance of <see cref="AcsChatMessageEditedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEditedEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="messageId"> The chat message id. </param>
@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatMessageEditedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEditedEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
         /// <param name="editTime"> The time at which the message was edited. </param>
-        internal AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, long? sequenceId, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata, DateTimeOffset? editTime) : base(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId, composeTime, @type, version)
+        internal AcsChatMessageEditedEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, long? sequenceId, DateTimeOffset? composeTime, string @type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata, DateTimeOffset? editTime) : base(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties, messageId, senderCommunicationIdentifier, senderDisplayName, sequenceId, composeTime, @type, version)
         {
             MessageBody = messageBody;
             Metadata = metadata;

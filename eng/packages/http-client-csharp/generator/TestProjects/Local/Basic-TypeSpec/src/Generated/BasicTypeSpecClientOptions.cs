@@ -12,39 +12,39 @@ using Microsoft.Extensions.Configuration;
 
 namespace BasicTypeSpec
 {
-    /// <summary> Client options for <see cref="BasicTypeSpecClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::BasicTypeSpec.BasicTypeSpecClient"/>. </summary>
     public partial class BasicTypeSpecClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_08_16_Preview;
+        private const global::BasicTypeSpec.BasicTypeSpecClientOptions.ServiceVersion LatestVersion = global::BasicTypeSpec.BasicTypeSpecClientOptions.ServiceVersion.V2024_08_16_Preview;
 
         /// <summary> Initializes a new instance of BasicTypeSpecClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public BasicTypeSpecClientOptions(ServiceVersion version = LatestVersion)
+        public BasicTypeSpecClientOptions(global::BasicTypeSpec.BasicTypeSpecClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2024_07_16_Preview => "2024-07-16-preview",
-                ServiceVersion.V2024_08_16_Preview => "2024-08-16-preview",
+                global::BasicTypeSpec.BasicTypeSpecClientOptions.ServiceVersion.V2024_07_16_Preview => "2024-07-16-preview",
+                global::BasicTypeSpec.BasicTypeSpecClientOptions.ServiceVersion.V2024_08_16_Preview => "2024-08-16-preview",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of BasicTypeSpecClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal BasicTypeSpecClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2024-08-16-preview";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

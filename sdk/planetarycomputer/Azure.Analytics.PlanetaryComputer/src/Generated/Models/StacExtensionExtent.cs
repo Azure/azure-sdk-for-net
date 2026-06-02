@@ -17,9 +17,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class StacExtensionExtent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StacExtensionExtent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacExtensionExtent"/>. </summary>
         /// <param name="spatial">
         /// Spatial extent defined by bounding boxes.
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
@@ -28,17 +28,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// Temporal extent defined by time intervals.
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="spatial"/> or <paramref name="temporal"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="spatial"/> or <paramref name="temporal"/> is null. </exception>
         public StacExtensionExtent(StacExtensionSpatialExtent spatial, StacCollectionTemporalExtent temporal)
         {
-            Argument.AssertNotNull(spatial, nameof(spatial));
-            Argument.AssertNotNull(temporal, nameof(temporal));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(spatial, nameof(spatial));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(temporal, nameof(temporal));
 
             Spatial = spatial;
             Temporal = temporal;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacExtensionExtent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacExtensionExtent"/>. </summary>
         /// <param name="spatial">
         /// Spatial extent defined by bounding boxes.
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
@@ -48,7 +48,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacExtensionExtent(StacExtensionSpatialExtent spatial, StacCollectionTemporalExtent temporal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacExtensionExtent(StacExtensionSpatialExtent spatial, StacCollectionTemporalExtent temporal, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Spatial = spatial;
             Temporal = temporal;

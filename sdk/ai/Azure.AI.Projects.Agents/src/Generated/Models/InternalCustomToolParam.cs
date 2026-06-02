@@ -10,21 +10,21 @@ namespace OpenAI
 {
     internal partial class InternalCustomToolParam : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="InternalCustomToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalCustomToolParam"/>. </summary>
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
-        public InternalCustomToolParam(string name) : base(ToolType.Custom)
+        public InternalCustomToolParam(string name) : base(global::OpenAI.ToolType.Custom)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalCustomToolParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalCustomToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the custom tool, used to identify it in tool calls. </param>
         /// <param name="description"> Optional description of the custom tool, used to provide more context. </param>
         /// <param name="format"> The input format for the custom tool. Default is unconstrained text. </param>
         /// <param name="deferLoading"> Whether this tool should be deferred and discovered via tool search. </param>
-        internal InternalCustomToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, CustomToolParamFormat format, bool? deferLoading) : base(@type, additionalBinaryDataProperties)
+        internal InternalCustomToolParam(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string name, string description, CustomToolParamFormat format, bool? deferLoading) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

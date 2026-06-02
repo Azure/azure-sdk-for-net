@@ -11,17 +11,17 @@ namespace Azure.AI.Projects.Memory
     public partial class MemorySearchResultOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemorySearchResultOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemorySearchResultOptions"/>. </summary>
         public MemorySearchResultOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemorySearchResultOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemorySearchResultOptions"/>. </summary>
         /// <param name="maxMemories"> Maximum number of memory items to return. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemorySearchResultOptions(int? maxMemories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemorySearchResultOptions(int? maxMemories, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MaxMemories = maxMemories;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

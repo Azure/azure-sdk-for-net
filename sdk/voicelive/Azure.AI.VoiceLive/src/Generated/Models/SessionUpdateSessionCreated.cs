@@ -17,19 +17,19 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class SessionUpdateSessionCreated : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateSessionCreated"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateSessionCreated"/>. </summary>
         /// <param name="session"></param>
-        internal SessionUpdateSessionCreated(VoiceLiveSessionResponse session) : base(ServerEventType.SessionCreated)
+        internal SessionUpdateSessionCreated(VoiceLiveSessionResponse session) : base(global::Azure.AI.VoiceLive.ServerEventType.SessionCreated)
         {
             Session = session;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateSessionCreated"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateSessionCreated"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="session"></param>
-        internal SessionUpdateSessionCreated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceLiveSessionResponse session) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateSessionCreated(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, VoiceLiveSessionResponse session) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Session = session;
         }

@@ -11,9 +11,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A specific version of a toolbox. </summary>
-    public partial class ToolboxVersion : IJsonModel<ToolboxVersion>
+    public partial class ToolboxVersion : IJsonModel<global::Azure.AI.Projects.Agents.ToolboxVersion>
     {
-        /// <summary> Initializes a new instance of <see cref="ToolboxVersion"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.ToolboxVersion"/> for deserialization. </summary>
         internal ToolboxVersion()
         {
         }
@@ -22,56 +22,56 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ToolboxVersion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxVersion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.ToolboxVersion>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeToolboxVersion(document.RootElement, options);
+                        return global::Azure.AI.Projects.Agents.ToolboxVersion.DeserializeToolboxVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ToolboxVersion)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.ToolboxVersion)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxVersion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.ToolboxVersion>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.Agents.AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ToolboxVersion)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.ToolboxVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ToolboxVersion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.Agents.ToolboxVersion>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ToolboxVersion IPersistableModel<ToolboxVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ToolboxVersion IPersistableModel<global::Azure.AI.Projects.Agents.ToolboxVersion>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ToolboxVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.Agents.ToolboxVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ToolboxVersion"/> from. </param>
+        /// <param name="result"> The <see cref="global::System.ClientModel.ClientResult"/> to deserialize the <see cref="global::Azure.AI.Projects.Agents.ToolboxVersion"/> from. </param>
         public static explicit operator ToolboxVersion(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeToolboxVersion(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Projects.Agents.ToolboxVersion.DeserializeToolboxVersion(document.RootElement, global::Azure.AI.Projects.Agents.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ToolboxVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.Agents.ToolboxVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -79,19 +79,19 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxVersion>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.ToolboxVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ToolboxVersion)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.ToolboxVersion)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -110,7 +110,7 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Name);
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
-            if (Optional.IsDefined(Description))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -121,25 +121,25 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStartArray();
             foreach (ProjectsAgentTool item in Tools)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ProjectsAgentTool>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Skills))
+            if (global::Azure.AI.Projects.Agents.Optional.IsCollectionDefined(Skills))
             {
                 writer.WritePropertyName("skills"u8);
                 writer.WriteStartArray();
                 foreach (ToolboxSkill item in Skills)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ToolboxSkill>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Policies))
+            if (global::Azure.AI.Projects.Agents.Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
-                writer.WriteObjectValue(Policies, options);
+                writer.WriteObjectValue<ToolboxPolicies>(Policies, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -147,9 +147,9 @@ namespace Azure.AI.Projects.Agents
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -158,26 +158,26 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ToolboxVersion IJsonModel<ToolboxVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ToolboxVersion IJsonModel<global::Azure.AI.Projects.Agents.ToolboxVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ToolboxVersion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxVersion>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.Agents.ToolboxVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ToolboxVersion)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.Agents.ToolboxVersion)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeToolboxVersion(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.Agents.ToolboxVersion.DeserializeToolboxVersion(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ToolboxVersion DeserializeToolboxVersion(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -187,15 +187,15 @@ namespace Azure.AI.Projects.Agents
             string version = default;
             string description = default;
             DateTimeOffset createdAt = default;
-            IList<ProjectsAgentTool> tools = default;
-            IList<ToolboxSkill> skills = default;
+            IList<global::Azure.AI.Projects.Agents.ProjectsAgentTool> tools = default;
+            IList<global::Azure.AI.Projects.Agents.ToolboxSkill> skills = default;
             ToolboxPolicies policies = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("metadata"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         metadata = new ChangeTrackingDictionary<string, string>();
                         continue;
@@ -203,7 +203,7 @@ namespace Azure.AI.Projects.Agents
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -237,45 +237,45 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = global::System.DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<ProjectsAgentTool> array = new List<ProjectsAgentTool>();
+                    List<global::Azure.AI.Projects.Agents.ProjectsAgentTool> array = new List<global::Azure.AI.Projects.Agents.ProjectsAgentTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ProjectsAgentTool.DeserializeProjectsAgentTool(item, options));
+                        array.Add(global::Azure.AI.Projects.Agents.ProjectsAgentTool.DeserializeProjectsAgentTool(item, options));
                     }
                     tools = array;
                     continue;
                 }
                 if (prop.NameEquals("skills"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ToolboxSkill> array = new List<ToolboxSkill>();
+                    List<global::Azure.AI.Projects.Agents.ToolboxSkill> array = new List<global::Azure.AI.Projects.Agents.ToolboxSkill>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ToolboxSkill.DeserializeToolboxSkill(item, options));
+                        array.Add(global::Azure.AI.Projects.Agents.ToolboxSkill.DeserializeToolboxSkill(item, options));
                     }
                     skills = array;
                     continue;
                 }
                 if (prop.NameEquals("policies"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    policies = ToolboxPolicies.DeserializeToolboxPolicies(prop.Value, options);
+                    policies = global::Azure.AI.Projects.Agents.ToolboxPolicies.DeserializeToolboxPolicies(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ToolboxVersion(
@@ -286,7 +286,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 createdAt,
                 tools,
-                skills ?? new ChangeTrackingList<ToolboxSkill>(),
+                (skills ?? new ChangeTrackingList<global::Azure.AI.Projects.Agents.ToolboxSkill>()),
                 policies,
                 additionalBinaryDataProperties);
         }

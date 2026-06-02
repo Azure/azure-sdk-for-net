@@ -14,20 +14,20 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringTrainingConfigVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringTrainingConfigVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingConfigVersion"/>. </summary>
         /// <param name="modelExpirationDate"> Represents the training config version expiration date. </param>
         internal ConversationAuthoringTrainingConfigVersion(DateTimeOffset modelExpirationDate)
         {
             ModelExpirationDate = modelExpirationDate;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringTrainingConfigVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringTrainingConfigVersion"/>. </summary>
         /// <param name="trainingConfigVersion"> Represents the version of the config. </param>
         /// <param name="modelExpirationDate"> Represents the training config version expiration date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringTrainingConfigVersion(string trainingConfigVersion, DateTimeOffset modelExpirationDate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringTrainingConfigVersion(string trainingConfigVersion, DateTimeOffset modelExpirationDate, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TrainingConfigVersion = trainingConfigVersion;
             ModelExpirationDate = modelExpirationDate;

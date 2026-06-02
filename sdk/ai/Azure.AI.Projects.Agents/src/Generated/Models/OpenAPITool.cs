@@ -11,18 +11,18 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
     public partial class OpenAPITool : ProjectsAgentTool
     {
-        /// <summary> Initializes a new instance of <see cref="OpenAPITool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OpenAPITool"/>. </summary>
         /// <param name="functionDefinition"> The openapi function definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionDefinition"/> is null. </exception>
-        public OpenAPITool(OpenApiFunctionDefinition functionDefinition) : base(ToolType.Openapi)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="functionDefinition"/> is null. </exception>
+        public OpenAPITool(OpenApiFunctionDefinition functionDefinition) : base(global::OpenAI.ToolType.Openapi)
         {
-            Argument.AssertNotNull(functionDefinition, nameof(functionDefinition));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(functionDefinition, nameof(functionDefinition));
 
             FunctionDefinition = functionDefinition;
-            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            ToolConfigs = new ChangeTrackingDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAPITool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OpenAPITool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="functionDefinition"> The openapi function definition. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
-        internal OpenAPITool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, OpenApiFunctionDefinition functionDefinition, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal OpenAPITool(ToolType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, OpenApiFunctionDefinition functionDefinition, IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             FunctionDefinition = functionDefinition;
             ToolConfigs = toolConfigs;
@@ -45,6 +45,6 @@ namespace Azure.AI.Projects.Agents
         /// Resolution order: exact tool name match takes priority over `*`.
         /// Unknown tool names are silently ignored at runtime.
         /// </summary>
-        public IDictionary<string, ToolConfig> ToolConfigs { get; }
+        public IDictionary<string, global::Azure.AI.Projects.Agents.ToolConfig> ToolConfigs { get; }
     }
 }

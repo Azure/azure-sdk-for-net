@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace _Type.Property.Optional
 {
-    public partial class RequiredAndOptionalProperty : IJsonModel<RequiredAndOptionalProperty>
+    public partial class RequiredAndOptionalProperty : IJsonModel<global::_Type.Property.Optional.RequiredAndOptionalProperty>
     {
         internal RequiredAndOptionalProperty() => throw null;
 
@@ -21,22 +21,22 @@ namespace _Type.Property.Optional
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<RequiredAndOptionalProperty>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::_Type.Property.Optional.RequiredAndOptionalProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
-        RequiredAndOptionalProperty IPersistableModel<RequiredAndOptionalProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        RequiredAndOptionalProperty IPersistableModel<global::_Type.Property.Optional.RequiredAndOptionalProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<RequiredAndOptionalProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::_Type.Property.Optional.RequiredAndOptionalProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="requiredAndOptionalProperty"> The <see cref="RequiredAndOptionalProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="requiredAndOptionalProperty"> The <see cref="global::_Type.Property.Optional.RequiredAndOptionalProperty"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(RequiredAndOptionalProperty requiredAndOptionalProperty) => throw null;
 
         public static explicit operator RequiredAndOptionalProperty(Response response) => throw null;
 
-        void IJsonModel<RequiredAndOptionalProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::_Type.Property.Optional.RequiredAndOptionalProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        RequiredAndOptionalProperty IJsonModel<RequiredAndOptionalProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        RequiredAndOptionalProperty IJsonModel<global::_Type.Property.Optional.RequiredAndOptionalProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual RequiredAndOptionalProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

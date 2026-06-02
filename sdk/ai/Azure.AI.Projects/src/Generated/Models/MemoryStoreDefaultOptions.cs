@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Memory
     public partial class MemoryStoreDefaultOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreDefaultOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions"/>. </summary>
         /// <param name="isUserProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
         /// <param name="isChatSummaryEnabled"> Whether to enable chat summary extraction and storage. Defaults to `true`. </param>
         public MemoryStoreDefaultOptions(bool isUserProfileEnabled, bool isChatSummaryEnabled)
@@ -22,14 +22,14 @@ namespace Azure.AI.Projects.Memory
             IsChatSummaryEnabled = isChatSummaryEnabled;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MemoryStoreDefaultOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Memory.MemoryStoreDefaultOptions"/>. </summary>
         /// <param name="isUserProfileEnabled"> Whether to enable user profile extraction and storage. Default is true. </param>
         /// <param name="userProfileDetails"> Specific categories or types of user profile information to extract and store. </param>
         /// <param name="isChatSummaryEnabled"> Whether to enable chat summary extraction and storage. Defaults to `true`. </param>
         /// <param name="proceduralMemoryEnabled"> Whether to enable procedural memory extraction and storage. The service defaults to `true` if a value is not specified by the caller. </param>
         /// <param name="defaultTtlSeconds"> The default time-to-live for memories in seconds. A value of `0` indicates that memories do not expire. Defaults to `0`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled, bool? proceduralMemoryEnabled, TimeSpan? defaultTtlSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled, bool? proceduralMemoryEnabled, TimeSpan? defaultTtlSeconds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             IsUserProfileEnabled = isUserProfileEnabled;
             UserProfileDetails = userProfileDetails;

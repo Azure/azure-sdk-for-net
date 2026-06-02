@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies how the LLM should format the response. </summary>
-    public readonly partial struct ChatCompletionResponseFormatType : IEquatable<ChatCompletionResponseFormatType>
+    public readonly partial struct ChatCompletionResponseFormatType : IEquatable<global::Azure.Search.Documents.Indexes.Models.ChatCompletionResponseFormatType>
     {
         private readonly string _value;
         /// <summary> Plain text response format. </summary>
@@ -22,12 +22,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> JSON schema-adhering response format. </summary>
         private const string JsonSchemaValue = "jsonSchema";
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionResponseFormatType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionResponseFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ChatCompletionResponseFormatType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> JSON schema-adhering response format. </summary>
         public static ChatCompletionResponseFormatType JsonSchema { get; } = new ChatCompletionResponseFormatType(JsonSchemaValue);
 
-        /// <summary> Determines if two <see cref="ChatCompletionResponseFormatType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionResponseFormatType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ChatCompletionResponseFormatType left, ChatCompletionResponseFormatType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ChatCompletionResponseFormatType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionResponseFormatType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ChatCompletionResponseFormatType left, ChatCompletionResponseFormatType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ChatCompletionResponseFormatType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionResponseFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ChatCompletionResponseFormatType(string value) => new ChatCompletionResponseFormatType(value);
 
-        /// <summary> Converts a string to a <see cref="ChatCompletionResponseFormatType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionResponseFormatType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ChatCompletionResponseFormatType?(string value) => value == null ? null : new ChatCompletionResponseFormatType(value);
+        public static implicit operator ChatCompletionResponseFormatType?(string value) => (value == null) ? null : new ChatCompletionResponseFormatType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ChatCompletionResponseFormatType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ChatCompletionResponseFormatType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ChatCompletionResponseFormatType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ChatCompletionResponseFormatType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

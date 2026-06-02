@@ -13,9 +13,9 @@ using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal partial class TelemetryExceptionData : MonitorDomain, IJsonModel<TelemetryExceptionData>
+    internal partial class TelemetryExceptionData : MonitorDomain, IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData>
     {
-        /// <summary> Initializes a new instance of <see cref="TelemetryExceptionData"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData"/> for deserialization. </summary>
         internal TelemetryExceptionData()
         {
         }
@@ -24,48 +24,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MonitorDomain PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TelemetryExceptionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Monitor.OpenTelemetry.Exporter.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTelemetryExceptionData(document.RootElement, options);
+                        return global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData.DeserializeTelemetryExceptionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TelemetryExceptionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TelemetryExceptionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMonitorOpenTelemetryExporterContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorOpenTelemetryExporterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TelemetryExceptionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TelemetryExceptionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TelemetryExceptionData IPersistableModel<TelemetryExceptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TelemetryExceptionData)PersistableModelCreateCore(data, options);
+        TelemetryExceptionData IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ((TelemetryExceptionData)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TelemetryExceptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TelemetryExceptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -73,37 +73,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TelemetryExceptionData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TelemetryExceptionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("exceptions"u8);
             writer.WriteStartArray();
             foreach (TelemetryExceptionDetails item in Exceptions)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<TelemetryExceptionDetails>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(SeverityLevel))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsDefined(SeverityLevel))
             {
                 writer.WritePropertyName("severityLevel"u8);
                 writer.WriteStringValue(SeverityLevel.Value.ToString());
             }
-            if (Optional.IsDefined(ProblemId))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsDefined(ProblemId))
             {
                 writer.WritePropertyName("problemId"u8);
                 writer.WriteStringValue(ProblemId);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -112,7 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Measurements))
+            if (global::Azure.Monitor.OpenTelemetry.Exporter.Optional.IsCollectionDefined(Measurements))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();
@@ -127,33 +127,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TelemetryExceptionData IJsonModel<TelemetryExceptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TelemetryExceptionData)JsonModelCreateCore(ref reader, options);
+        TelemetryExceptionData IJsonModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((TelemetryExceptionData)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override MonitorDomain JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TelemetryExceptionData>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(TelemetryExceptionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTelemetryExceptionData(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionData.DeserializeTelemetryExceptionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static TelemetryExceptionData DeserializeTelemetryExceptionData(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             int version = default;
             MonitorDomainKind kind = default;
-            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<TelemetryExceptionDetails> exceptions = default;
+            IDictionary<string, global::System.BinaryData> additionalProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionDetails> exceptions = default;
             SeverityLevel? severityLevel = default;
             string problemId = default;
             IDictionary<string, string> properties = default;
@@ -172,17 +172,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 if (prop.NameEquals("exceptions"u8))
                 {
-                    List<TelemetryExceptionDetails> array = new List<TelemetryExceptionDetails>();
+                    List<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionDetails> array = new List<global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionDetails>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TelemetryExceptionDetails.DeserializeTelemetryExceptionDetails(item, options));
+                        array.Add(global::Azure.Monitor.OpenTelemetry.Exporter.Models.TelemetryExceptionDetails.DeserializeTelemetryExceptionDetails(item, options));
                     }
                     exceptions = array;
                     continue;
                 }
                 if (prop.NameEquals("severityLevel"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -196,14 +196,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
@@ -217,7 +217,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 if (prop.NameEquals("measurements"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -229,7 +229,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     measurements = dictionary;
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new TelemetryExceptionData(
                 version,
@@ -238,8 +238,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 exceptions,
                 severityLevel,
                 problemId,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                measurements ?? new ChangeTrackingDictionary<string, double>());
+                (properties ?? new ChangeTrackingDictionary<string, string>()),
+                (measurements ?? new ChangeTrackingDictionary<string, double>()));
         }
     }
 }

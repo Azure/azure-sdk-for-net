@@ -21,10 +21,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innerError"> An object containing more specific information than the current object about the error. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceError"/> instance for mocking. </returns>
-        public static DocumentIntelligenceError DocumentIntelligenceError(string code = default, string message = default, string target = default, IEnumerable<DocumentIntelligenceError> details = default, DocumentIntelligenceInnerError innerError = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceError"/> instance for mocking. </returns>
+        public static DocumentIntelligenceError DocumentIntelligenceError(string code = default, string message = default, string target = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceError> details = default, DocumentIntelligenceInnerError innerError = default)
         {
-            details ??= new ChangeTrackingList<DocumentIntelligenceError>();
+            details ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceError>();
 
             return new DocumentIntelligenceError(
                 code,
@@ -39,7 +39,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="innerError"> Inner error. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceInnerError"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceInnerError"/> instance for mocking. </returns>
         public static DocumentIntelligenceInnerError DocumentIntelligenceInnerError(string code = default, string message = default, DocumentIntelligenceInnerError innerError = default)
         {
             return new DocumentIntelligenceInnerError(code, message, innerError, additionalBinaryDataProperties: null);
@@ -66,15 +66,15 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="barcodes"> Extracted barcodes from the page. </param>
         /// <param name="formulas"> Extracted formulas from the page. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentPage"/> instance for mocking. </returns>
-        public static DocumentPage DocumentPage(int pageNumber = default, float? angle = default, float? width = default, float? height = default, LengthUnit? unit = default, IEnumerable<DocumentSpan> spans = default, IEnumerable<DocumentWord> words = default, IEnumerable<DocumentSelectionMark> selectionMarks = default, IEnumerable<DocumentLine> lines = default, IEnumerable<DocumentBarcode> barcodes = default, IEnumerable<DocumentFormula> formulas = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentPage"/> instance for mocking. </returns>
+        public static DocumentPage DocumentPage(int pageNumber = default, float? angle = default, float? width = default, float? height = default, LengthUnit? unit = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentWord> words = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSelectionMark> selectionMarks = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentLine> lines = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentBarcode> barcodes = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentFormula> formulas = default)
         {
-            spans ??= new ChangeTrackingList<DocumentSpan>();
-            words ??= new ChangeTrackingList<DocumentWord>();
-            selectionMarks ??= new ChangeTrackingList<DocumentSelectionMark>();
-            lines ??= new ChangeTrackingList<DocumentLine>();
-            barcodes ??= new ChangeTrackingList<DocumentBarcode>();
-            formulas ??= new ChangeTrackingList<DocumentFormula>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
+            words ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentWord>();
+            selectionMarks ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSelectionMark>();
+            lines ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentLine>();
+            barcodes ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentBarcode>();
+            formulas ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentFormula>();
 
             return new DocumentPage(
                 pageNumber,
@@ -97,7 +97,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         /// <param name="offset"> Zero-based index of the content represented by the span. </param>
         /// <param name="length"> Number of characters in the content represented by the span. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentSpan"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentSpan"/> instance for mocking. </returns>
         public static DocumentSpan DocumentSpan(int offset = default, int length = default)
         {
             return new DocumentSpan(offset, length, additionalBinaryDataProperties: null);
@@ -117,7 +117,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentWord"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentWord"/> instance for mocking. </returns>
         public static DocumentWord DocumentWord(string content = default, IEnumerable<float> polygon = default, DocumentSpan span = default, float confidence = default)
         {
             polygon ??= new ChangeTrackingList<float>();
@@ -138,7 +138,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentSelectionMark"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentSelectionMark"/> instance for mocking. </returns>
         public static DocumentSelectionMark DocumentSelectionMark(DocumentSelectionMarkState state = default, IEnumerable<float> polygon = default, DocumentSpan span = default, float confidence = default)
         {
             polygon ??= new ChangeTrackingList<float>();
@@ -158,11 +158,11 @@ namespace Azure.AI.DocumentIntelligence
         /// element orientation.
         /// </param>
         /// <param name="spans"> Location of the line in the reading order concatenated content. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentLine"/> instance for mocking. </returns>
-        public static DocumentLine DocumentLine(string content = default, IEnumerable<float> polygon = default, IEnumerable<DocumentSpan> spans = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentLine"/> instance for mocking. </returns>
+        public static DocumentLine DocumentLine(string content = default, IEnumerable<float> polygon = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default)
         {
             polygon ??= new ChangeTrackingList<float>();
-            spans ??= new ChangeTrackingList<DocumentSpan>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
 
             return new DocumentLine(content, polygon.ToList(), spans.ToList(), additionalBinaryDataProperties: null);
         }
@@ -178,7 +178,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the barcode. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentBarcode"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentBarcode"/> instance for mocking. </returns>
         public static DocumentBarcode DocumentBarcode(DocumentBarcodeKind kind = default, string value = default, IEnumerable<float> polygon = default, DocumentSpan span = default, float confidence = default)
         {
             polygon ??= new ChangeTrackingList<float>();
@@ -203,7 +203,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="span"> Location of the formula in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the formula. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentFormula"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentFormula"/> instance for mocking. </returns>
         public static DocumentFormula DocumentFormula(DocumentFormulaKind kind = default, string value = default, IEnumerable<float> polygon = default, DocumentSpan span = default, float confidence = default)
         {
             polygon ??= new ChangeTrackingList<float>();
@@ -225,11 +225,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="content"> Concatenated content of the paragraph in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the paragraph. </param>
         /// <param name="spans"> Location of the paragraph in the reading order concatenated content. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentParagraph"/> instance for mocking. </returns>
-        public static DocumentParagraph DocumentParagraph(ParagraphRole? role = default, string content = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentParagraph"/> instance for mocking. </returns>
+        public static DocumentParagraph DocumentParagraph(ParagraphRole? role = default, string content = default, IEnumerable<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default)
         {
-            boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
-            spans ??= new ChangeTrackingList<DocumentSpan>();
+            boundingRegions ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
 
             return new DocumentParagraph(role, content, boundingRegions.ToList(), spans.ToList(), additionalBinaryDataProperties: null);
         }
@@ -242,7 +242,7 @@ namespace Azure.AI.DocumentIntelligence
         /// represent the x, y values of the polygon vertices, clockwise from the left
         /// (-180 degrees inclusive) relative to the element orientation.
         /// </param>
-        /// <returns> A new <see cref="DocumentIntelligence.BoundingRegion"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.BoundingRegion"/> instance for mocking. </returns>
         public static BoundingRegion BoundingRegion(int pageNumber = default, IEnumerable<float> polygon = default)
         {
             polygon ??= new ChangeTrackingList<float>();
@@ -258,13 +258,13 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the table in the reading order concatenated content. </param>
         /// <param name="caption"> Caption associated with the table. </param>
         /// <param name="footnotes"> List of footnotes associated with the table. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentTable"/> instance for mocking. </returns>
-        public static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<DocumentTableCell> cells = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, DocumentCaption caption = default, IEnumerable<DocumentFootnote> footnotes = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentTable"/> instance for mocking. </returns>
+        public static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentTableCell> cells = default, IEnumerable<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default, DocumentCaption caption = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentFootnote> footnotes = default)
         {
-            cells ??= new ChangeTrackingList<DocumentTableCell>();
-            boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
-            spans ??= new ChangeTrackingList<DocumentSpan>();
-            footnotes ??= new ChangeTrackingList<DocumentFootnote>();
+            cells ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentTableCell>();
+            boundingRegions ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
+            footnotes ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentFootnote>();
 
             return new DocumentTable(
                 rowCount,
@@ -287,11 +287,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="boundingRegions"> Bounding regions covering the table cell. </param>
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the table cell. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentTableCell"/> instance for mocking. </returns>
-        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = default, int rowIndex = default, int columnIndex = default, int? rowSpan = default, int? columnSpan = default, string content = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, IEnumerable<string> elements = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentTableCell"/> instance for mocking. </returns>
+        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = default, int rowIndex = default, int columnIndex = default, int? rowSpan = default, int? columnSpan = default, string content = default, IEnumerable<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default, IEnumerable<string> elements = default)
         {
-            boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
-            spans ??= new ChangeTrackingList<DocumentSpan>();
+            boundingRegions ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
             elements ??= new ChangeTrackingList<string>();
 
             return new DocumentTableCell(
@@ -312,11 +312,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="boundingRegions"> Bounding regions covering the caption. </param>
         /// <param name="spans"> Location of the caption in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the caption. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentCaption"/> instance for mocking. </returns>
-        public static DocumentCaption DocumentCaption(string content = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, IEnumerable<string> elements = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentCaption"/> instance for mocking. </returns>
+        public static DocumentCaption DocumentCaption(string content = default, IEnumerable<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default, IEnumerable<string> elements = default)
         {
-            boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
-            spans ??= new ChangeTrackingList<DocumentSpan>();
+            boundingRegions ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
             elements ??= new ChangeTrackingList<string>();
 
             return new DocumentCaption(content, boundingRegions.ToList(), spans.ToList(), elements.ToList(), additionalBinaryDataProperties: null);
@@ -327,11 +327,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="boundingRegions"> Bounding regions covering the footnote. </param>
         /// <param name="spans"> Location of the footnote in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the footnote. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentFootnote"/> instance for mocking. </returns>
-        public static DocumentFootnote DocumentFootnote(string content = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, IEnumerable<string> elements = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentFootnote"/> instance for mocking. </returns>
+        public static DocumentFootnote DocumentFootnote(string content = default, IEnumerable<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default, IEnumerable<string> elements = default)
         {
-            boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
-            spans ??= new ChangeTrackingList<DocumentSpan>();
+            boundingRegions ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
             elements ??= new ChangeTrackingList<string>();
 
             return new DocumentFootnote(content, boundingRegions.ToList(), spans.ToList(), elements.ToList(), additionalBinaryDataProperties: null);
@@ -344,13 +344,13 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="caption"> Caption associated with the figure. </param>
         /// <param name="footnotes"> List of footnotes associated with the figure. </param>
         /// <param name="id"> Figure ID. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentFigure"/> instance for mocking. </returns>
-        public static DocumentFigure DocumentFigure(IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, IEnumerable<string> elements = default, DocumentCaption caption = default, IEnumerable<DocumentFootnote> footnotes = default, string id = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentFigure"/> instance for mocking. </returns>
+        public static DocumentFigure DocumentFigure(IEnumerable<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default, IEnumerable<string> elements = default, DocumentCaption caption = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentFootnote> footnotes = default, string id = default)
         {
-            boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
-            spans ??= new ChangeTrackingList<DocumentSpan>();
+            boundingRegions ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
             elements ??= new ChangeTrackingList<string>();
-            footnotes ??= new ChangeTrackingList<DocumentFootnote>();
+            footnotes ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentFootnote>();
 
             return new DocumentFigure(
                 boundingRegions.ToList(),
@@ -365,10 +365,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> An object representing a section in the document. </summary>
         /// <param name="spans"> Location of the section in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the section. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentSection"/> instance for mocking. </returns>
-        public static DocumentSection DocumentSection(IEnumerable<DocumentSpan> spans = default, IEnumerable<string> elements = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentSection"/> instance for mocking. </returns>
+        public static DocumentSection DocumentSection(IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default, IEnumerable<string> elements = default)
         {
-            spans ??= new ChangeTrackingList<DocumentSpan>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
             elements ??= new ChangeTrackingList<string>();
 
             return new DocumentSection(spans.ToList(), elements.ToList(), additionalBinaryDataProperties: null);
@@ -381,7 +381,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="key"> Field label of the key-value pair. </param>
         /// <param name="value"> Field value of the key-value pair. </param>
         /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentKeyValuePair"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentKeyValuePair"/> instance for mocking. </returns>
         public static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key = default, DocumentKeyValueElement value = default, float confidence = default)
         {
             return new DocumentKeyValuePair(key, value, confidence, additionalBinaryDataProperties: null);
@@ -391,11 +391,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="content"> Concatenated content of the key-value element in reading order. </param>
         /// <param name="boundingRegions"> Bounding regions covering the key-value element. </param>
         /// <param name="spans"> Location of the key-value element in the reading order concatenated content. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentKeyValueElement"/> instance for mocking. </returns>
-        public static DocumentKeyValueElement DocumentKeyValueElement(string content = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentKeyValueElement"/> instance for mocking. </returns>
+        public static DocumentKeyValueElement DocumentKeyValueElement(string content = default, IEnumerable<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default)
         {
-            boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
-            spans ??= new ChangeTrackingList<DocumentSpan>();
+            boundingRegions ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
 
             return new DocumentKeyValueElement(content, boundingRegions.ToList(), spans.ToList(), additionalBinaryDataProperties: null);
         }
@@ -412,10 +412,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="backgroundColor"> Background color in #rrggbb hexadecimal format.. </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentStyle"/> instance for mocking. </returns>
-        public static DocumentStyle DocumentStyle(bool? isHandwritten = default, string similarFontFamily = default, DocumentFontStyle? fontStyle = default, DocumentFontWeight? fontWeight = default, string color = default, string backgroundColor = default, IEnumerable<DocumentSpan> spans = default, float confidence = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentStyle"/> instance for mocking. </returns>
+        public static DocumentStyle DocumentStyle(bool? isHandwritten = default, string similarFontFamily = default, DocumentFontStyle? fontStyle = default, DocumentFontWeight? fontWeight = default, string color = default, string backgroundColor = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default, float confidence = default)
         {
-            spans ??= new ChangeTrackingList<DocumentSpan>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
 
             return new DocumentStyle(
                 isHandwritten,
@@ -439,10 +439,10 @@ namespace Azure.AI.DocumentIntelligence
         /// to.
         /// </param>
         /// <param name="confidence"> Confidence of correctly identifying the language. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentLanguage"/> instance for mocking. </returns>
-        public static DocumentLanguage DocumentLanguage(string locale = default, IEnumerable<DocumentSpan> spans = default, float confidence = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentLanguage"/> instance for mocking. </returns>
+        public static DocumentLanguage DocumentLanguage(string locale = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default, float confidence = default)
         {
-            spans ??= new ChangeTrackingList<DocumentSpan>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
 
             return new DocumentLanguage(locale, spans.ToList(), confidence, additionalBinaryDataProperties: null);
         }
@@ -453,12 +453,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
         /// <param name="fieldsPrivate"> Dictionary of named field values. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AnalyzedDocument"/> instance for mocking. </returns>
-        public static AnalyzedDocument AnalyzedDocument(string documentType = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, IReadOnlyDictionary<string, DocumentField> fieldsPrivate = default, float confidence = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.AnalyzedDocument"/> instance for mocking. </returns>
+        public static AnalyzedDocument AnalyzedDocument(string documentType = default, IEnumerable<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default, IReadOnlyDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentField> fieldsPrivate = default, float confidence = default)
         {
-            boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
-            spans ??= new ChangeTrackingList<DocumentSpan>();
-            fieldsPrivate ??= new ChangeTrackingDictionary<string, DocumentField>();
+            boundingRegions ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
+            fieldsPrivate ??= new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentField>();
 
             return new AnalyzedDocument(
                 documentType,
@@ -490,14 +490,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="boundingRegions"> Bounding regions covering the field. </param>
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentField"/> instance for mocking. </returns>
-        public static DocumentField DocumentField(DocumentFieldType fieldType = default, string valueString = default, DateTimeOffset? valueDate = default, TimeSpan? valueTime = default, string valuePhoneNumber = default, double? valueDouble = default, long? valueInt64 = default, DocumentSelectionMarkState? valueSelectionMark = default, DocumentSignatureType? valueSignature = default, string valueCountryRegion = default, IEnumerable<DocumentField> valueList = default, IReadOnlyDictionary<string, DocumentField> valueObject = default, CurrencyValue valueCurrency = default, AddressValue valueAddress = default, bool? valueBoolean = default, IEnumerable<string> valueSelectionGroup = default, string content = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, float? confidence = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentField"/> instance for mocking. </returns>
+        public static DocumentField DocumentField(DocumentFieldType fieldType = default, string valueString = default, DateTimeOffset? valueDate = default, TimeSpan? valueTime = default, string valuePhoneNumber = default, double? valueDouble = default, long? valueInt64 = default, DocumentSelectionMarkState? valueSelectionMark = default, DocumentSignatureType? valueSignature = default, string valueCountryRegion = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentField> valueList = default, IReadOnlyDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentField> valueObject = default, CurrencyValue valueCurrency = default, AddressValue valueAddress = default, bool? valueBoolean = default, IEnumerable<string> valueSelectionGroup = default, string content = default, IEnumerable<global::Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentSpan> spans = default, float? confidence = default)
         {
-            valueList ??= new ChangeTrackingList<DocumentField>();
-            valueObject ??= new ChangeTrackingDictionary<string, DocumentField>();
+            valueList ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentField>();
+            valueObject ??= new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentField>();
             valueSelectionGroup ??= new ChangeTrackingList<string>();
-            boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
-            spans ??= new ChangeTrackingList<DocumentSpan>();
+            boundingRegions ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.BoundingRegion>();
+            spans ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentSpan>();
 
             return new DocumentField(
                 fieldType,
@@ -527,7 +527,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="amount"> Currency amount. </param>
         /// <param name="currencySymbol"> Currency symbol label, if any. </param>
         /// <param name="currencyCode"> Resolved currency code (ISO 4217), if any. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.CurrencyValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.CurrencyValue"/> instance for mocking. </returns>
         public static CurrencyValue CurrencyValue(double amount = default, string currencySymbol = default, string currencyCode = default)
         {
             return new CurrencyValue(amount, currencySymbol, currencyCode, additionalBinaryDataProperties: null);
@@ -551,7 +551,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="suburb"> Unofficial neighborhood name, like Chinatown. </param>
         /// <param name="house"> Build name, such as World Trade Center. </param>
         /// <param name="level"> Floor number, such as 3F. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AddressValue"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.AddressValue"/> instance for mocking. </returns>
         public static AddressValue AddressValue(string houseNumber = default, string poBox = default, string road = default, string city = default, string state = default, string postalCode = default, string countryRegion = default, string streetAddress = default, string unit = default, string cityDistrict = default, string stateDistrict = default, string suburb = default, string house = default, string level = default)
         {
             return new AddressValue(
@@ -576,7 +576,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="code"> One of a server-defined set of warning codes. </param>
         /// <param name="message"> A human-readable representation of the warning. </param>
         /// <param name="target"> The target of the error. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceWarning"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning"/> instance for mocking. </returns>
         public static DocumentIntelligenceWarning DocumentIntelligenceWarning(string code = default, string message = default, string target = default)
         {
             return new DocumentIntelligenceWarning(code, message, target, additionalBinaryDataProperties: null);
@@ -594,8 +594,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="resultContainerUri"> Azure Blob Storage container URL where analyze result files will be stored. </param>
         /// <param name="resultPrefix"> Blob name prefix of result files. </param>
         /// <param name="overwriteExisting"> Overwrite existing analyze result files?. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AnalyzeBatchDocumentsOptions"/> instance for mocking. </returns>
-        public static AnalyzeBatchDocumentsOptions AnalyzeBatchDocumentsOptions(BlobContentSource blobSource = default, BlobFileListContentSource blobFileListSource = default, Uri resultContainerUri = default, string resultPrefix = default, bool? overwriteExisting = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeBatchDocumentsOptions"/> instance for mocking. </returns>
+        public static AnalyzeBatchDocumentsOptions AnalyzeBatchDocumentsOptions(BlobContentSource blobSource = default, BlobFileListContentSource blobFileListSource = default, global::System.Uri resultContainerUri = default, string resultPrefix = default, bool? overwriteExisting = default)
         {
             return new AnalyzeBatchDocumentsOptions(
                 blobSource,
@@ -609,8 +609,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Azure Blob Storage content. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <param name="prefix"> Blob name prefix. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.BlobContentSource"/> instance for mocking. </returns>
-        public static BlobContentSource BlobContentSource(Uri containerUri = default, string prefix = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.BlobContentSource"/> instance for mocking. </returns>
+        public static BlobContentSource BlobContentSource(global::System.Uri containerUri = default, string prefix = default)
         {
             return new BlobContentSource(containerUri, prefix, additionalBinaryDataProperties: null);
         }
@@ -618,8 +618,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> File list in Azure Blob Storage. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <param name="fileList"> Path to a JSONL file within the container specifying a subset of documents. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.BlobFileListContentSource"/> instance for mocking. </returns>
-        public static BlobFileListContentSource BlobFileListContentSource(Uri containerUri = default, string fileList = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.BlobFileListContentSource"/> instance for mocking. </returns>
+        public static BlobFileListContentSource BlobFileListContentSource(global::System.Uri containerUri = default, string fileList = default)
         {
             return new BlobFileListContentSource(containerUri, fileList, additionalBinaryDataProperties: null);
         }
@@ -629,10 +629,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="failedCount"> Number of documents that completed with status failed. </param>
         /// <param name="skippedCount"> Number of documents that completed with status skipped. </param>
         /// <param name="details"> Operation detail for each document in the batch. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AnalyzeBatchResult"/> instance for mocking. </returns>
-        public static AnalyzeBatchResult AnalyzeBatchResult(int succeededCount = default, int failedCount = default, int skippedCount = default, IEnumerable<AnalyzeBatchResultDetails> details = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeBatchResult"/> instance for mocking. </returns>
+        public static AnalyzeBatchResult AnalyzeBatchResult(int succeededCount = default, int failedCount = default, int skippedCount = default, IEnumerable<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails> details = default)
         {
-            details ??= new ChangeTrackingList<AnalyzeBatchResultDetails>();
+            details ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails>();
 
             return new AnalyzeBatchResult(succeededCount, failedCount, skippedCount, details.ToList(), additionalBinaryDataProperties: null);
         }
@@ -642,8 +642,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="sourceUri"> URL of the source document. </param>
         /// <param name="resultUri"> URL of the analyze result JSON. </param>
         /// <param name="error"> Encountered error. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AnalyzeBatchResultDetails"/> instance for mocking. </returns>
-        public static AnalyzeBatchResultDetails AnalyzeBatchResultDetails(DocumentIntelligenceOperationStatus status = default, Uri sourceUri = default, Uri resultUri = default, DocumentIntelligenceError error = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails"/> instance for mocking. </returns>
+        public static AnalyzeBatchResultDetails AnalyzeBatchResultDetails(DocumentIntelligenceOperationStatus status = default, global::System.Uri sourceUri = default, global::System.Uri resultUri = default, DocumentIntelligenceError error = default)
         {
             return new AnalyzeBatchResultDetails(status, sourceUri, resultUri, error, additionalBinaryDataProperties: null);
         }
@@ -656,7 +656,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
         /// <param name="error"> Encountered error during batch document analysis. </param>
         /// <param name="result"> Batch document analysis result. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AnalyzeBatchOperationDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.AnalyzeBatchOperationDetails"/> instance for mocking. </returns>
         public static AnalyzeBatchOperationDetails AnalyzeBatchOperationDetails(string resultId = default, DocumentIntelligenceOperationStatus status = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, int? percentCompleted = default, DocumentIntelligenceError error = default, AnalyzeBatchResult result = default)
         {
             return new AnalyzeBatchOperationDetails(
@@ -685,7 +685,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="maxTrainingHours"> Max number of V100-equivalent GPU hours to use for model training.  Default=0.5. </param>
         /// <param name="allowOverwrite"> Allow overwriting an existing model with the same name. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.BuildDocumentModelOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.BuildDocumentModelOptions"/> instance for mocking. </returns>
         public static BuildDocumentModelOptions BuildDocumentModelOptions(string modelId = default, string description = default, DocumentBuildMode buildMode = default, BlobContentSource blobSource = default, BlobFileListContentSource blobFileListSource = default, IDictionary<string, string> tags = default, float? maxTrainingHours = default, bool? allowOverwrite = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -724,12 +724,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="documentTypes"> Supported document types. </param>
         /// <param name="warnings"> List of warnings encountered while building the model. </param>
         /// <param name="trainingHours"> Number of V100-equivalent GPU hours consumed for model training. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelDetails"/> instance for mocking. </returns>
-        public static DocumentModelDetails DocumentModelDetails(string modelId = default, string description = default, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = default, DateTimeOffset? modifiedOn = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentBuildMode? buildMode = default, BlobContentSource blobSource = default, BlobFileListContentSource blobFileListSource = default, string classifierId = default, SplitMode? split = default, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes = default, IEnumerable<DocumentIntelligenceWarning> warnings = default, float? trainingHours = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentModelDetails"/> instance for mocking. </returns>
+        public static DocumentModelDetails DocumentModelDetails(string modelId = default, string description = default, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = default, DateTimeOffset? modifiedOn = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentBuildMode? buildMode = default, BlobContentSource blobSource = default, BlobFileListContentSource blobFileListSource = default, string classifierId = default, SplitMode? split = default, IReadOnlyDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentTypeDetails> documentTypes = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> warnings = default, float? trainingHours = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
-            documentTypes ??= new ChangeTrackingDictionary<string, DocumentTypeDetails>();
-            warnings ??= new ChangeTrackingList<DocumentIntelligenceWarning>();
+            documentTypes ??= new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentTypeDetails>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning>();
 
             return new DocumentModelDetails(
                 modelId,
@@ -760,12 +760,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="features"> List of optional analysis features. </param>
         /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
         /// <param name="maxDocumentsToAnalyze"> Maximum number of documents of specified type to analyze.  Default=all. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentTypeDetails"/> instance for mocking. </returns>
-        public static DocumentTypeDetails DocumentTypeDetails(string description = default, DocumentBuildMode? buildMode = default, IDictionary<string, DocumentFieldSchema> fieldSchema = default, IDictionary<string, float> fieldConfidence = default, string modelId = default, float? confidenceThreshold = default, IEnumerable<DocumentAnalysisFeature> features = default, IEnumerable<string> queryFields = default, int? maxDocumentsToAnalyze = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentTypeDetails"/> instance for mocking. </returns>
+        public static DocumentTypeDetails DocumentTypeDetails(string description = default, DocumentBuildMode? buildMode = default, IDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentFieldSchema> fieldSchema = default, IDictionary<string, float> fieldConfidence = default, string modelId = default, float? confidenceThreshold = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = default, IEnumerable<string> queryFields = default, int? maxDocumentsToAnalyze = default)
         {
-            fieldSchema ??= new ChangeTrackingDictionary<string, DocumentFieldSchema>();
+            fieldSchema ??= new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentFieldSchema>();
             fieldConfidence ??= new ChangeTrackingDictionary<string, float>();
-            features ??= new ChangeTrackingList<DocumentAnalysisFeature>();
+            features ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentAnalysisFeature>();
             queryFields ??= new ChangeTrackingList<string>();
 
             return new DocumentTypeDetails(
@@ -787,10 +787,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="example"> Example field content. </param>
         /// <param name="items"> Field type schema of each array element. </param>
         /// <param name="properties"> Named sub-fields of the object field. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentFieldSchema"/> instance for mocking. </returns>
-        public static DocumentFieldSchema DocumentFieldSchema(DocumentFieldType fieldType = default, string description = default, string example = default, DocumentFieldSchema items = default, IDictionary<string, DocumentFieldSchema> properties = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentFieldSchema"/> instance for mocking. </returns>
+        public static DocumentFieldSchema DocumentFieldSchema(DocumentFieldType fieldType = default, string description = default, string example = default, DocumentFieldSchema items = default, IDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentFieldSchema> properties = default)
         {
-            properties ??= new ChangeTrackingDictionary<string, DocumentFieldSchema>();
+            properties ??= new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentFieldSchema>();
 
             return new DocumentFieldSchema(
                 fieldType,
@@ -812,8 +812,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentModelDetails result = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentModelBuildOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelBuildOperationDetails DocumentModelBuildOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, global::System.Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentModelDetails result = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -823,7 +823,7 @@ namespace Azure.AI.DocumentIntelligence
                 percentCompleted,
                 createdOn,
                 lastUpdatedOn,
-                OperationKind.DocumentModelBuild,
+                global::Azure.AI.DocumentIntelligence.OperationKind.DocumentModelBuild,
                 resourceLocation,
                 apiVersion,
                 tags,
@@ -834,7 +834,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary>
         /// Operation info.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/>, <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/>, <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/>, <see cref="DocumentIntelligence.DocumentClassifierCopyToOperationDetails"/>, and <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.DocumentIntelligence.DocumentModelBuildOperationDetails"/>, <see cref="Azure.AI.DocumentIntelligence.DocumentModelComposeOperationDetails"/>, <see cref="Azure.AI.DocumentIntelligence.DocumentModelCopyToOperationDetails"/>, <see cref="Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails"/>, and <see cref="Azure.AI.DocumentIntelligence.DocumentClassifierBuildOperationDetails"/>.
         /// </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
@@ -846,8 +846,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceOperationDetails"/> instance for mocking. </returns>
-        public static DocumentIntelligenceOperationDetails DocumentIntelligenceOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, string kind = default, Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationDetails"/> instance for mocking. </returns>
+        public static DocumentIntelligenceOperationDetails DocumentIntelligenceOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, string kind = default, global::System.Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -876,8 +876,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentModelDetails result = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentModelComposeOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelComposeOperationDetails DocumentModelComposeOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, global::System.Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentModelDetails result = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -887,7 +887,7 @@ namespace Azure.AI.DocumentIntelligence
                 percentCompleted,
                 createdOn,
                 lastUpdatedOn,
-                OperationKind.DocumentModelCompose,
+                global::Azure.AI.DocumentIntelligence.OperationKind.DocumentModelCompose,
                 resourceLocation,
                 apiVersion,
                 tags,
@@ -907,8 +907,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/> instance for mocking. </returns>
-        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentModelDetails result = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentModelCopyToOperationDetails"/> instance for mocking. </returns>
+        public static DocumentModelCopyToOperationDetails DocumentModelCopyToOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, global::System.Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentModelDetails result = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -918,7 +918,7 @@ namespace Azure.AI.DocumentIntelligence
                 percentCompleted,
                 createdOn,
                 lastUpdatedOn,
-                OperationKind.DocumentModelCopyTo,
+                global::Azure.AI.DocumentIntelligence.OperationKind.DocumentModelCopyTo,
                 resourceLocation,
                 apiVersion,
                 tags,
@@ -938,8 +938,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierCopyToOperationDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierCopyToOperationDetails DocumentClassifierCopyToOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentClassifierDetails result = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentClassifierCopyToOperationDetails"/> instance for mocking. </returns>
+        public static DocumentClassifierCopyToOperationDetails DocumentClassifierCopyToOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, global::System.Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentClassifierDetails result = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -949,7 +949,7 @@ namespace Azure.AI.DocumentIntelligence
                 percentCompleted,
                 createdOn,
                 lastUpdatedOn,
-                OperationKind.DocumentClassifierCopyTo,
+                global::Azure.AI.DocumentIntelligence.OperationKind.DocumentClassifierCopyTo,
                 resourceLocation,
                 apiVersion,
                 tags,
@@ -968,11 +968,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="baseClassifierId"> Base classifierId on top of which the classifier was trained. </param>
         /// <param name="documentTypes"> List of document types to classify against. </param>
         /// <param name="warnings"> List of warnings encountered while building the classifier. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = default, string description = default, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = default, DateTimeOffset? modifiedOn = default, string apiVersion = default, string baseClassifierId = default, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes = default, IEnumerable<DocumentIntelligenceWarning> warnings = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentClassifierDetails"/> instance for mocking. </returns>
+        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = default, string description = default, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = default, DateTimeOffset? modifiedOn = default, string apiVersion = default, string baseClassifierId = default, IReadOnlyDictionary<string, global::Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> documentTypes = default, IEnumerable<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> warnings = default)
         {
-            documentTypes ??= new ChangeTrackingDictionary<string, ClassifierDocumentTypeDetails>();
-            warnings ??= new ChangeTrackingList<DocumentIntelligenceWarning>();
+            documentTypes ??= new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails>();
+            warnings ??= new ChangeTrackingList<global::Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning>();
 
             return new DocumentClassifierDetails(
                 classifierId,
@@ -998,8 +998,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentClassifierDetails result = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentClassifierBuildOperationDetails"/> instance for mocking. </returns>
+        public static DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = default, DocumentIntelligenceOperationStatus status = default, int? percentCompleted = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, global::System.Uri resourceLocation = default, string apiVersion = default, IReadOnlyDictionary<string, string> tags = default, DocumentIntelligenceError error = default, DocumentClassifierDetails result = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1009,7 +1009,7 @@ namespace Azure.AI.DocumentIntelligence
                 percentCompleted,
                 createdOn,
                 lastUpdatedOn,
-                OperationKind.DocumentClassifierBuild,
+                global::Azure.AI.DocumentIntelligence.OperationKind.DocumentClassifierBuild,
                 resourceLocation,
                 apiVersion,
                 tags,
@@ -1025,10 +1025,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="split"> File splitting behavior. </param>
         /// <param name="documentTypes"> Dictionary mapping supported docTypes to the corresponding document models. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.ComposeModelOptions"/> instance for mocking. </returns>
-        public static ComposeModelOptions ComposeModelOptions(string modelId = default, string description = default, string classifierId = default, SplitMode? split = default, IDictionary<string, DocumentTypeDetails> documentTypes = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.ComposeModelOptions"/> instance for mocking. </returns>
+        public static ComposeModelOptions ComposeModelOptions(string modelId = default, string description = default, string classifierId = default, SplitMode? split = default, IDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentTypeDetails> documentTypes = default, IDictionary<string, string> tags = default)
         {
-            documentTypes ??= new ChangeTrackingDictionary<string, DocumentTypeDetails>();
+            documentTypes ??= new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.DocumentTypeDetails>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ComposeModelOptions(
@@ -1045,7 +1045,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AuthorizeModelCopyOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions"/> instance for mocking. </returns>
         public static AuthorizeModelCopyOptions AuthorizeModelCopyOptions(string modelId = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1066,8 +1066,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="targetModelLocation"> URL of the copied document model in the target account. </param>
         /// <param name="accessToken"> Token used to authorize the request. </param>
         /// <param name="expiresOn"> Date/time when the access token expires. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.ModelCopyAuthorization"/> instance for mocking. </returns>
-        public static ModelCopyAuthorization ModelCopyAuthorization(string targetResourceId = default, string targetResourceRegion = default, string targetModelId = default, Uri targetModelLocation = default, string accessToken = default, DateTimeOffset expiresOn = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.ModelCopyAuthorization"/> instance for mocking. </returns>
+        public static ModelCopyAuthorization ModelCopyAuthorization(string targetResourceId = default, string targetResourceRegion = default, string targetModelId = default, global::System.Uri targetModelLocation = default, string accessToken = default, DateTimeOffset expiresOn = default)
         {
             return new ModelCopyAuthorization(
                 targetResourceId,
@@ -1081,7 +1081,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> General information regarding the current resource. </summary>
         /// <param name="customDocumentModels"> Details regarding custom document models. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceResourceDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.DocumentIntelligenceResourceDetails"/> instance for mocking. </returns>
         public static DocumentIntelligenceResourceDetails DocumentIntelligenceResourceDetails(CustomDocumentModelsDetails customDocumentModels = default)
         {
             return new DocumentIntelligenceResourceDetails(customDocumentModels, additionalBinaryDataProperties: null);
@@ -1090,7 +1090,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Details regarding custom document models. </summary>
         /// <param name="count"> Number of custom document models in the current resource. </param>
         /// <param name="limit"> Maximum number of custom document models supported in the current resource. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.CustomDocumentModelsDetails"/> instance for mocking. </returns>
         public static CustomDocumentModelsDetails CustomDocumentModelsDetails(int count = default, int limit = default)
         {
             return new CustomDocumentModelsDetails(count, limit, additionalBinaryDataProperties: null);
@@ -1102,10 +1102,10 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="baseClassifierId"> Base classifierId on top of which to train the classifier. </param>
         /// <param name="documentTypes"> List of document types to classify against. </param>
         /// <param name="allowOverwrite"> Allow overwriting an existing classifier with the same name. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.BuildClassifierOptions"/> instance for mocking. </returns>
-        public static BuildClassifierOptions BuildClassifierOptions(string classifierId = default, string description = default, string baseClassifierId = default, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes = default, bool? allowOverwrite = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.BuildClassifierOptions"/> instance for mocking. </returns>
+        public static BuildClassifierOptions BuildClassifierOptions(string classifierId = default, string description = default, string baseClassifierId = default, IDictionary<string, global::Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails> documentTypes = default, bool? allowOverwrite = default)
         {
-            documentTypes ??= new ChangeTrackingDictionary<string, ClassifierDocumentTypeDetails>();
+            documentTypes ??= new ChangeTrackingDictionary<string, global::Azure.AI.DocumentIntelligence.ClassifierDocumentTypeDetails>();
 
             return new BuildClassifierOptions(
                 classifierId,
@@ -1120,7 +1120,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document classifier. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AuthorizeClassifierCopyOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.AuthorizeClassifierCopyOptions"/> instance for mocking. </returns>
         public static AuthorizeClassifierCopyOptions AuthorizeClassifierCopyOptions(string classifierId = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1141,8 +1141,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="targetClassifierLocation"> URL of the copied document classifier in the target account. </param>
         /// <param name="accessToken"> Token used to authorize the request. </param>
         /// <param name="expiresOn"> Date/time when the access token expires. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.ClassifierCopyAuthorization"/> instance for mocking. </returns>
-        public static ClassifierCopyAuthorization ClassifierCopyAuthorization(string targetResourceId = default, string targetResourceRegion = default, string targetClassifierId = default, Uri targetClassifierLocation = default, string accessToken = default, DateTimeOffset expiresOn = default)
+        /// <returns> A new <see cref="global::Azure.AI.DocumentIntelligence.ClassifierCopyAuthorization"/> instance for mocking. </returns>
+        public static ClassifierCopyAuthorization ClassifierCopyAuthorization(string targetResourceId = default, string targetResourceRegion = default, string targetClassifierId = default, global::System.Uri targetClassifierLocation = default, string accessToken = default, DateTimeOffset expiresOn = default)
         {
             return new ClassifierCopyAuthorization(
                 targetResourceId,

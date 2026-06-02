@@ -13,28 +13,28 @@ namespace Azure.AI.Language.Conversations.Authoring
     /// <summary> Represents the assets of an orchestration project. </summary>
     public partial class OrchestrationExportedProjectAsset : ConversationAuthoringExportedProjectAsset
     {
-        /// <summary> Initializes a new instance of <see cref="OrchestrationExportedProjectAsset"/>. </summary>
-        public OrchestrationExportedProjectAsset() : base(ConversationAuthoringProjectKind.Orchestration)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset"/>. </summary>
+        public OrchestrationExportedProjectAsset() : base(global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectKind.Orchestration)
         {
-            Intents = new ChangeTrackingList<OrchestrationExportedIntent>();
-            Utterances = new ChangeTrackingList<OrchestrationExportedUtterance>();
+            Intents = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent>();
+            Utterances = new ChangeTrackingList<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedUtterance>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrchestrationExportedProjectAsset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedProjectAsset"/>. </summary>
         /// <param name="projectKind"> The type of project containing the assets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="intents"> Represents the intents of the project. </param>
         /// <param name="utterances"> Represents the utterances of the project. </param>
-        internal OrchestrationExportedProjectAsset(ConversationAuthoringProjectKind projectKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<OrchestrationExportedIntent> intents, IList<OrchestrationExportedUtterance> utterances) : base(projectKind, additionalBinaryDataProperties)
+        internal OrchestrationExportedProjectAsset(ConversationAuthoringProjectKind projectKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent> intents, IList<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedUtterance> utterances) : base(projectKind, additionalBinaryDataProperties)
         {
             Intents = intents;
             Utterances = utterances;
         }
 
         /// <summary> Represents the intents of the project. </summary>
-        public IList<OrchestrationExportedIntent> Intents { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedIntent> Intents { get; }
 
         /// <summary> Represents the utterances of the project. </summary>
-        public IList<OrchestrationExportedUtterance> Utterances { get; }
+        public IList<global::Azure.AI.Language.Conversations.Authoring.OrchestrationExportedUtterance> Utterances { get; }
     }
 }

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The access tier of the blob. </summary>
-    public readonly partial struct StorageBlobAccessTier : IEquatable<StorageBlobAccessTier>
+    public readonly partial struct StorageBlobAccessTier : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier>
     {
         private readonly string _value;
         /// <summary> The blob is in access tier Hot. </summary>
@@ -25,12 +25,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The blob is in access tier Default(Inferred). </summary>
         private const string DefaultValue = "Default";
 
-        /// <summary> Initializes a new instance of <see cref="StorageBlobAccessTier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageBlobAccessTier(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The blob is in access tier Default(Inferred). </summary>
         public static StorageBlobAccessTier Default { get; } = new StorageBlobAccessTier(DefaultValue);
 
-        /// <summary> Determines if two <see cref="StorageBlobAccessTier"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageBlobAccessTier left, StorageBlobAccessTier right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StorageBlobAccessTier"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageBlobAccessTier left, StorageBlobAccessTier right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StorageBlobAccessTier"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator StorageBlobAccessTier(string value) => new StorageBlobAccessTier(value);
 
-        /// <summary> Converts a string to a <see cref="StorageBlobAccessTier"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageBlobAccessTier"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StorageBlobAccessTier?(string value) => value == null ? null : new StorageBlobAccessTier(value);
+        public static implicit operator StorageBlobAccessTier?(string value) => (value == null) ? null : new StorageBlobAccessTier(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StorageBlobAccessTier other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is StorageBlobAccessTier other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(StorageBlobAccessTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(StorageBlobAccessTier other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

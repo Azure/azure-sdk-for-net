@@ -14,17 +14,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AppEventTypeDetail
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AppEventTypeDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail"/>. </summary>
         internal AppEventTypeDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppEventTypeDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AppEventTypeDetail"/>. </summary>
         /// <param name="action"> Type of action of the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppEventTypeDetail(AppAction? action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppEventTypeDetail(AppAction? action, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

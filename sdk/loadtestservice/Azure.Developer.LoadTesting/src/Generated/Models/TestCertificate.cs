@@ -14,19 +14,19 @@ namespace Azure.Developer.LoadTesting
     public partial class TestCertificate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TestCertificate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestCertificate"/>. </summary>
         public TestCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestCertificate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.TestCertificate"/>. </summary>
         /// <param name="value"> The value of the certificate for respective type. </param>
         /// <param name="certificateKind"> Type of certificate. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestCertificate(string value, CertificateType? certificateKind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestCertificate(string value, CertificateType? certificateKind, string name, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             CertificateKind = certificateKind;

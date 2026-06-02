@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Client.AlternateApiVersion.Service.Path
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class PathClientHostExtensions
     {
         public static IClientBuilder AddPathClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddPathClient(this IHostApplicationBuilder host, string sectionName, Action<PathClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddPathClient(this IHostApplicationBuilder host, string sectionName, Action<global::Client.AlternateApiVersion.Service.Path.PathClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedPathClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedPathClient(this IHostApplicationBuilder host, string key, string sectionName, Action<PathClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedPathClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Client.AlternateApiVersion.Service.Path.PathClientSettings> configureSettings) => throw null;
     }
 }

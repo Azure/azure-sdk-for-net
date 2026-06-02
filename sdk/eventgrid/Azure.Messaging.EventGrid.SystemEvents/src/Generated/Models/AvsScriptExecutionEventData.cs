@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AvsScriptExecutionEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
         internal AvsScriptExecutionEventData(string operationId, string cmdletId)
@@ -26,12 +26,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Output = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AvsScriptExecutionEventData"/>. </summary>
         /// <param name="operationId"> Id of the operation that caused this event. </param>
         /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
         /// <param name="output"> Stdout outputs from the execution, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvsScriptExecutionEventData(string operationId, string cmdletId, IReadOnlyList<string> output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvsScriptExecutionEventData(string operationId, string cmdletId, IReadOnlyList<string> output, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             CmdletId = cmdletId;

@@ -14,19 +14,19 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeUserUpdateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeUserUpdateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeUserUpdateOptions"/>. </summary>
         public BatchNodeUserUpdateOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeUserUpdateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeUserUpdateOptions"/>. </summary>
         /// <param name="password"> The password of the Account. The password is required for Windows Compute Nodes. For Linux Compute Nodes, the password can optionally be specified along with the sshPublicKey property. If omitted, any existing password is removed. </param>
         /// <param name="expiryTime"> The time at which the Account should expire. If omitted, the default is 1 day from the current time. For Linux Compute Nodes, the expiryTime has a precision up to a day. </param>
         /// <param name="sshPublicKey"> The SSH public key that can be used for remote login to the Compute Node. The public key should be compatible with OpenSSH encoding and should be base 64 encoded. This property can be specified only for Linux Compute Nodes. If this is specified for a Windows Compute Node, then the Batch service rejects the request; if you are calling the REST API directly, the HTTP status code is 400 (Bad Request). If omitted, any existing SSH public key is removed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeUserUpdateOptions(string password, DateTimeOffset? expiryTime, string sshPublicKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeUserUpdateOptions(string password, DateTimeOffset? expiryTime, string sshPublicKey, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Password = password;
             ExpiryTime = expiryTime;

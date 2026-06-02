@@ -13,12 +13,12 @@ namespace Azure.AI.VoiceLive
     /// <summary> Indicates completion of viseme animation delivery for a response. </summary>
     public partial class SessionUpdateResponseAnimationVisemeDone : SessionUpdate
     {
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationVisemeDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>. </summary>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        internal SessionUpdateResponseAnimationVisemeDone(string responseId, string itemId, int outputIndex, int contentIndex) : base(ServerEventType.ResponseAnimationVisemeDone)
+        internal SessionUpdateResponseAnimationVisemeDone(string responseId, string itemId, int outputIndex, int contentIndex) : base(global::Azure.AI.VoiceLive.ServerEventType.ResponseAnimationVisemeDone)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -26,7 +26,7 @@ namespace Azure.AI.VoiceLive
             ContentIndex = contentIndex;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationVisemeDone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        internal SessionUpdateResponseAnimationVisemeDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex) : base(@type, eventId, additionalBinaryDataProperties)
+        internal SessionUpdateResponseAnimationVisemeDone(ServerEventType @type, string eventId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

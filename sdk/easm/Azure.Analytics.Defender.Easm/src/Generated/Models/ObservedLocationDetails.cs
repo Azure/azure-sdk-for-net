@@ -14,14 +14,14 @@ namespace Azure.Analytics.Defender.Easm
     public partial class ObservedLocationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ObservedLocationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservedLocationDetails"/>. </summary>
         internal ObservedLocationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ObservedLocationDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.ObservedLocationDetails"/>. </summary>
         /// <param name="countryCode"></param>
         /// <param name="countryName"></param>
         /// <param name="region"></param>
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="dmaCode"></param>
         /// <param name="metroCodeId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObservedLocationDetails(string countryCode, string countryName, string region, string regionName, string city, int? areaCode, string postalCode, float? latitude, float? longitude, int? dmaCode, int? metroCodeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObservedLocationDetails(string countryCode, string countryName, string region, string regionName, string city, int? areaCode, string postalCode, float? latitude, float? longitude, int? dmaCode, int? metroCodeId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CountryCode = countryCode;
             CountryName = countryName;

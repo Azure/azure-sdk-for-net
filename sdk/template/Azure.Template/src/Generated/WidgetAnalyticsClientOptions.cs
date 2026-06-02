@@ -12,38 +12,38 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Template
 {
-    /// <summary> Client options for <see cref="WidgetAnalyticsClient"/>. </summary>
+    /// <summary> Client options for <see cref="global::Azure.Template.WidgetAnalyticsClient"/>. </summary>
     public partial class WidgetAnalyticsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_12_01;
+        private const global::Azure.Template.WidgetAnalyticsClientOptions.ServiceVersion LatestVersion = global::Azure.Template.WidgetAnalyticsClientOptions.ServiceVersion.V2022_12_01;
 
         /// <summary> Initializes a new instance of WidgetAnalyticsClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public WidgetAnalyticsClientOptions(ServiceVersion version = LatestVersion)
+        public WidgetAnalyticsClientOptions(global::Azure.Template.WidgetAnalyticsClientOptions.ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
-                ServiceVersion.V2022_12_01 => "2022-12-01",
+                global::Azure.Template.WidgetAnalyticsClientOptions.ServiceVersion.V2022_12_01 => "2022-12-01",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of WidgetAnalyticsClientOptions from configuration. </summary>
         /// <param name="section"> The configuration section. </param>
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal WidgetAnalyticsClientOptions(IConfigurationSection section) : base(section, null)
         {
             Version = "2022-12-01";
-            if (section is null || !section.Exists())
+            if (((section is null) || !section.Exists()))
             {
                 return;
             }
-            if (section["Version"] is string version)
+            if ((section["Version"] is string version))
             {
-                Version = version;
+                this.Version = version;
             }
-            ConfigureLogging();
+            this.ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>

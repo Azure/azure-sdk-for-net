@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Determines whether the count and facets should includes all documents that matched the search query, or only the documents that are retrieved within the 'maxTextRecallSize' window. The default value is 'countAllResults'. </summary>
-    public readonly partial struct HybridCountAndFacetMode : IEquatable<HybridCountAndFacetMode>
+    public readonly partial struct HybridCountAndFacetMode : IEquatable<global::Azure.Search.Documents.Models.HybridCountAndFacetMode>
     {
         private readonly string _value;
         /// <summary> Only include documents that were matched within the 'maxTextRecallSize' retrieval window when computing 'count' and 'facets'. </summary>
@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> Include all documents that were matched by the search query when computing 'count' and 'facets', regardless of whether or not those documents are within the 'maxTextRecallSize' retrieval window. </summary>
         private const string CountAllResultsValue = "countAllResults";
 
-        /// <summary> Initializes a new instance of <see cref="HybridCountAndFacetMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.HybridCountAndFacetMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridCountAndFacetMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.Search.Documents.Models
         /// <summary> Include all documents that were matched by the search query when computing 'count' and 'facets', regardless of whether or not those documents are within the 'maxTextRecallSize' retrieval window. </summary>
         public static HybridCountAndFacetMode CountAllResults { get; } = new HybridCountAndFacetMode(CountAllResultsValue);
 
-        /// <summary> Determines if two <see cref="HybridCountAndFacetMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.HybridCountAndFacetMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridCountAndFacetMode left, HybridCountAndFacetMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="HybridCountAndFacetMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Models.HybridCountAndFacetMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridCountAndFacetMode left, HybridCountAndFacetMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="HybridCountAndFacetMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.HybridCountAndFacetMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator HybridCountAndFacetMode(string value) => new HybridCountAndFacetMode(value);
 
-        /// <summary> Converts a string to a <see cref="HybridCountAndFacetMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Models.HybridCountAndFacetMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator HybridCountAndFacetMode?(string value) => value == null ? null : new HybridCountAndFacetMode(value);
+        public static implicit operator HybridCountAndFacetMode?(string value) => (value == null) ? null : new HybridCountAndFacetMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is HybridCountAndFacetMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is HybridCountAndFacetMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(HybridCountAndFacetMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HybridCountAndFacetMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

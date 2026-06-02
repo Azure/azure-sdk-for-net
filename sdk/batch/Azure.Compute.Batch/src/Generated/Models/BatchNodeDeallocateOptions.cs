@@ -14,17 +14,17 @@ namespace Azure.Compute.Batch
     public partial class BatchNodeDeallocateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeDeallocateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeDeallocateOptions"/>. </summary>
         public BatchNodeDeallocateOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchNodeDeallocateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchNodeDeallocateOptions"/>. </summary>
         /// <param name="nodeDeallocateOption"> When to deallocate the Compute Node and what to do with currently running Tasks. The default value is requeue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeDeallocateOptions(BatchNodeDeallocateOption? nodeDeallocateOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchNodeDeallocateOptions(BatchNodeDeallocateOption? nodeDeallocateOption, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             NodeDeallocateOption = nodeDeallocateOption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

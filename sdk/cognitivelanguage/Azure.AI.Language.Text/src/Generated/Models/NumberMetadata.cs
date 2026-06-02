@@ -13,21 +13,21 @@ namespace Azure.AI.Language.Text
     /// <summary> A metadata for numeric entity instances. </summary>
     public partial class NumberMetadata : BaseMetadata
     {
-        /// <summary> Initializes a new instance of <see cref="NumberMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.NumberMetadata"/>. </summary>
         /// <param name="numberKind"> Kind of the number type. </param>
         /// <param name="value"> A numeric representation of what the extracted text denotes. </param>
-        internal NumberMetadata(NumberKind numberKind, double value) : base(MetadataKind.NumberMetadata)
+        internal NumberMetadata(NumberKind numberKind, double value) : base(global::Azure.AI.Language.Text.MetadataKind.NumberMetadata)
         {
             NumberKind = numberKind;
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NumberMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.NumberMetadata"/>. </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="numberKind"> Kind of the number type. </param>
         /// <param name="value"> A numeric representation of what the extracted text denotes. </param>
-        internal NumberMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> additionalBinaryDataProperties, NumberKind numberKind, double value) : base(metadataKind, additionalBinaryDataProperties)
+        internal NumberMetadata(MetadataKind metadataKind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, NumberKind numberKind, double value) : base(metadataKind, additionalBinaryDataProperties)
         {
             NumberKind = numberKind;
             Value = value;

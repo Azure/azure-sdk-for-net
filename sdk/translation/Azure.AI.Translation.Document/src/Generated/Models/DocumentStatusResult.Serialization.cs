@@ -14,9 +14,9 @@ using Azure;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Document Status Response. </summary>
-    public partial class DocumentStatusResult : IJsonModel<DocumentStatusResult>
+    public partial class DocumentStatusResult : IJsonModel<global::Azure.AI.Translation.Document.DocumentStatusResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DocumentStatusResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Translation.Document.DocumentStatusResult"/> for deserialization. </summary>
         internal DocumentStatusResult()
         {
         }
@@ -25,55 +25,55 @@ namespace Azure.AI.Translation.Document
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentStatusResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Document.DocumentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Translation.Document.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDocumentStatusResult(document.RootElement, options);
+                        return global::Azure.AI.Translation.Document.DocumentStatusResult.DeserializeDocumentStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentStatusResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Document.DocumentStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Document.DocumentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAITranslationDocumentContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Translation.Document.AzureAITranslationDocumentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentStatusResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Document.DocumentStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DocumentStatusResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Translation.Document.DocumentStatusResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentStatusResult IPersistableModel<DocumentStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DocumentStatusResult IPersistableModel<global::Azure.AI.Translation.Document.DocumentStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DocumentStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Translation.Document.DocumentStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DocumentStatusResult"/> from. </param>
+        /// <param name="response"> The <see cref="global::Azure.Response"/> to deserialize the <see cref="global::Azure.AI.Translation.Document.DocumentStatusResult"/> from. </param>
         public static explicit operator DocumentStatusResult(Response response)
         {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDocumentStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.Parse(response.Content, global::Azure.AI.Translation.Document.ModelSerializationExtensions.JsonDocumentOptions);
+            return global::Azure.AI.Translation.Document.DocumentStatusResult.DeserializeDocumentStatusResult(document.RootElement, global::Azure.AI.Translation.Document.ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DocumentStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Translation.Document.DocumentStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -81,12 +81,12 @@ namespace Azure.AI.Translation.Document
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Document.DocumentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentStatusResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Document.DocumentStatusResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(TranslatedDocumentUri))
+            if (global::Azure.AI.Translation.Document.Optional.IsDefined(TranslatedDocumentUri))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(TranslatedDocumentUri.AbsoluteUri);
@@ -107,22 +107,22 @@ namespace Azure.AI.Translation.Document
             writer.WriteStringValue(Id);
             writer.WritePropertyName("characterCharged"u8);
             writer.WriteNumberValue(CharactersCharged);
-            if (Optional.IsDefined(TotalImageScansSucceeded))
+            if (global::Azure.AI.Translation.Document.Optional.IsDefined(TotalImageScansSucceeded))
             {
                 writer.WritePropertyName("totalImageScansSucceeded"u8);
                 writer.WriteNumberValue(TotalImageScansSucceeded.Value);
             }
-            if (Optional.IsDefined(TotalImageScansFailed))
+            if (global::Azure.AI.Translation.Document.Optional.IsDefined(TotalImageScansFailed))
             {
                 writer.WritePropertyName("totalImageScansFailed"u8);
                 writer.WriteNumberValue(TotalImageScansFailed.Value);
             }
-            if (Optional.IsDefined(_error))
+            if (global::Azure.AI.Translation.Document.Optional.IsDefined(_error))
             {
                 writer.WritePropertyName("error"u8);
                 _error.WriteTo(writer);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -130,9 +130,9 @@ namespace Azure.AI.Translation.Document
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -141,31 +141,31 @@ namespace Azure.AI.Translation.Document
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DocumentStatusResult IJsonModel<DocumentStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DocumentStatusResult IJsonModel<global::Azure.AI.Translation.Document.DocumentStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DocumentStatusResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DocumentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Translation.Document.DocumentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(DocumentStatusResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Translation.Document.DocumentStatusResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentStatusResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Translation.Document.DocumentStatusResult.DeserializeDocumentStatusResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static DocumentStatusResult DeserializeDocumentStatusResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
-            Uri translatedDocumentUri = default;
-            Uri sourceDocumentUri = default;
+            global::System.Uri translatedDocumentUri = default;
+            global::System.Uri sourceDocumentUri = default;
             DateTimeOffset createdOn = default;
             DateTimeOffset lastModified = default;
             DocumentTranslationStatus status = default;
@@ -176,21 +176,21 @@ namespace Azure.AI.Translation.Document
             int? totalImageScansSucceeded = default;
             int? totalImageScansFailed = default;
             JsonElement error = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("path"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    translatedDocumentUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    translatedDocumentUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("sourcePath"u8))
                 {
-                    sourceDocumentUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    sourceDocumentUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("createdDateTimeUtc"u8))
@@ -225,7 +225,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (prop.NameEquals("characterCharged"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -234,7 +234,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (prop.NameEquals("totalImageScansSucceeded"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -243,7 +243,7 @@ namespace Azure.AI.Translation.Document
                 }
                 if (prop.NameEquals("totalImageScansFailed"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -255,9 +255,9 @@ namespace Azure.AI.Translation.Document
                     error = prop.Value.Clone();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new DocumentStatusResult(

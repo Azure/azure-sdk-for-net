@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The supported scenarios for a data generation job. </summary>
-    public readonly partial struct DataGenerationJobScenario : IEquatable<DataGenerationJobScenario>
+    public readonly partial struct DataGenerationJobScenario : IEquatable<global::Azure.AI.Projects.DataGenerationJobScenario>
     {
         private readonly string _value;
         /// <summary> Supervised Fine-tuning scenario. </summary>
@@ -18,12 +18,12 @@ namespace Azure.AI.Projects
         /// <summary> Evaluation scenario. </summary>
         private const string EvaluationValue = "evaluation";
 
-        /// <summary> Initializes a new instance of <see cref="DataGenerationJobScenario"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.DataGenerationJobScenario"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataGenerationJobScenario(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Projects.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -37,34 +37,34 @@ namespace Azure.AI.Projects
         /// <summary> Evaluation scenario. </summary>
         public static DataGenerationJobScenario Evaluation { get; } = new DataGenerationJobScenario(EvaluationValue);
 
-        /// <summary> Determines if two <see cref="DataGenerationJobScenario"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.DataGenerationJobScenario"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataGenerationJobScenario left, DataGenerationJobScenario right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DataGenerationJobScenario"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Projects.DataGenerationJobScenario"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataGenerationJobScenario left, DataGenerationJobScenario right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DataGenerationJobScenario"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.DataGenerationJobScenario"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator DataGenerationJobScenario(string value) => new DataGenerationJobScenario(value);
 
-        /// <summary> Converts a string to a <see cref="DataGenerationJobScenario"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Projects.DataGenerationJobScenario"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DataGenerationJobScenario?(string value) => value == null ? null : new DataGenerationJobScenario(value);
+        public static implicit operator DataGenerationJobScenario?(string value) => (value == null) ? null : new DataGenerationJobScenario(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DataGenerationJobScenario other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is DataGenerationJobScenario other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(DataGenerationJobScenario other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DataGenerationJobScenario other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

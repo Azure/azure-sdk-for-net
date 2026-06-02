@@ -14,17 +14,17 @@ namespace Azure.Analytics.Defender.Easm
     public partial class DiscoveryGroup
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryGroup"/>. </summary>
         internal DiscoveryGroup()
         {
-            Seeds = new ChangeTrackingList<DiscoverySource>();
+            Seeds = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
             Names = new ChangeTrackingList<string>();
-            Excludes = new ChangeTrackingList<DiscoverySource>();
+            Excludes = new ChangeTrackingList<global::Azure.Analytics.Defender.Easm.DiscoverySource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.Defender.Easm.DiscoveryGroup"/>. </summary>
         /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="createdDate"> The date for the disco group was created. </param>
         /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryGroup(string id, string name, string displayName, string description, string tier, long? frequencyMilliseconds, IList<DiscoverySource> seeds, IList<string> names, IList<DiscoverySource> excludes, DiscoveryRunResult latestRun, DateTimeOffset? createdDate, string templateId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveryGroup(string id, string name, string displayName, string description, string tier, long? frequencyMilliseconds, IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> seeds, IList<string> names, IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> excludes, DiscoveryRunResult latestRun, DateTimeOffset? createdDate, string templateId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -74,13 +74,13 @@ namespace Azure.Analytics.Defender.Easm
         public long? FrequencyMilliseconds { get; }
 
         /// <summary> The list of seeds used for the disco group runs. </summary>
-        public IList<DiscoverySource> Seeds { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> Seeds { get; }
 
         /// <summary> The list of names used for the disco group runs. </summary>
         public IList<string> Names { get; }
 
         /// <summary> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </summary>
-        public IList<DiscoverySource> Excludes { get; }
+        public IList<global::Azure.Analytics.Defender.Easm.DiscoverySource> Excludes { get; }
 
         /// <summary> The latest run of this disco group with some limited information, null if the group has never been run. </summary>
         public DiscoveryRunResult LatestRun { get; }

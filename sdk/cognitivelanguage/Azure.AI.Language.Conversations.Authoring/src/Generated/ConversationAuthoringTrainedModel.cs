@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Conversations.Authoring
     /// <summary> The ConversationAuthoringTrainedModel sub-client. </summary>
     public partial class ConversationAuthoringTrainedModel
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of ConversationAuthoringTrainedModel for mocking. </summary>
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ConversationAuthoringTrainedModel(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ConversationAuthoringTrainedModel(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -55,9 +55,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTrainedModel(string projectName, string trainedModelLabel, RequestContext context)
         {
@@ -65,10 +65,10 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-                using HttpMessage message = CreateGetTrainedModelRequest(projectName, trainedModelLabel, context);
+                using HttpMessage message = this.CreateGetTrainedModelRequest(projectName, trainedModelLabel, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -89,20 +89,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringTrainedModel.GetTrainedModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-                using HttpMessage message = CreateGetTrainedModelRequest(projectName, trainedModelLabel, context);
+                using HttpMessage message = this.CreateGetTrainedModelRequest(projectName, trainedModelLabel, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -116,32 +116,32 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ConversationAuthoringProjectTrainedModel> GetTrainedModel(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectTrainedModel> GetTrainedModel(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            Response result = GetTrainedModel(projectName, trainedModelLabel, cancellationToken.ToRequestContext());
-            return Response.FromValue((ConversationAuthoringProjectTrainedModel)result, result);
+            Response result = this.GetTrainedModel(projectName, trainedModelLabel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ConversationAuthoringProjectTrainedModel)result), result);
         }
 
         /// <summary> Gets the details of a trained model. </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ConversationAuthoringProjectTrainedModel>> GetTrainedModelAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringProjectTrainedModel>> GetTrainedModelAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            Response result = await GetTrainedModelAsync(projectName, trainedModelLabel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ConversationAuthoringProjectTrainedModel)result, result);
+            Response result = await this.GetTrainedModelAsync(projectName, trainedModelLabel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ConversationAuthoringProjectTrainedModel)result), result);
         }
 
         /// <summary>
@@ -155,9 +155,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteTrainedModel(string projectName, string trainedModelLabel, RequestContext context)
         {
@@ -165,10 +165,10 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-                using HttpMessage message = CreateDeleteTrainedModelRequest(projectName, trainedModelLabel, context);
+                using HttpMessage message = this.CreateDeleteTrainedModelRequest(projectName, trainedModelLabel, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -189,20 +189,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringTrainedModel.DeleteTrainedModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-                using HttpMessage message = CreateDeleteTrainedModelRequest(projectName, trainedModelLabel, context);
+                using HttpMessage message = this.CreateDeleteTrainedModelRequest(projectName, trainedModelLabel, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -216,30 +216,30 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteTrainedModel(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            return DeleteTrainedModel(projectName, trainedModelLabel, cancellationToken.ToRequestContext());
+            return this.DeleteTrainedModel(projectName, trainedModelLabel, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes an existing trained model. </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            return await DeleteTrainedModelAsync(projectName, trainedModelLabel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteTrainedModelAsync(projectName, trainedModelLabel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Triggers evaluation operation on a trained model. </summary>
@@ -248,21 +248,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> EvaluateModel(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContent content, RequestContext context = null)
+        public virtual Operation<global::System.BinaryData> EvaluateModel(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringTrainedModel.EvaluateModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateEvaluateModelRequest(projectName, trainedModelLabel, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateEvaluateModelRequest(projectName, trainedModelLabel, content, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModel", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -277,21 +277,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> EvaluateModelAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Operation<global::System.BinaryData>> EvaluateModelAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringTrainedModel.EvaluateModel");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateEvaluateModelRequest(projectName, trainedModelLabel, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModelAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateEvaluateModelRequest(projectName, trainedModelLabel, content, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModelAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -306,15 +306,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="details"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation<ConversationAuthoringEvaluationJobResult> EvaluateModel(WaitUntil waitUntil, string projectName, string trainedModelLabel, ConversationAuthoringEvaluationDetails details, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationJobResult> EvaluateModel(WaitUntil waitUntil, string projectName, string trainedModelLabel, ConversationAuthoringEvaluationDetails details, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNull(details, nameof(details));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(details, nameof(details));
 
-            return ProtocolOperationHelpers.Convert(EvaluateModel(waitUntil, projectName, trainedModelLabel, details, cancellationToken.ToRequestContext()), response => ConversationAuthoringEvaluationJobResult.FromLroResponse(response), ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModel");
+            return global::Azure.Core.ProtocolOperationHelpers.Convert(this.EvaluateModel(waitUntil, projectName, trainedModelLabel, details, cancellationToken.ToRequestContext()), response => global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationJobResult.FromLroResponse(response), ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModel");
         }
 
         /// <summary> Triggers evaluation operation on a trained model. </summary>
@@ -323,15 +323,15 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="details"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation<ConversationAuthoringEvaluationJobResult>> EvaluateModelAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, ConversationAuthoringEvaluationDetails details, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationJobResult>> EvaluateModelAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, ConversationAuthoringEvaluationDetails details, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNull(details, nameof(details));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(details, nameof(details));
 
-            return ProtocolOperationHelpers.Convert(await EvaluateModelAsync(waitUntil, projectName, trainedModelLabel, details, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => ConversationAuthoringEvaluationJobResult.FromLroResponse(response), ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModelAsync");
+            return global::Azure.Core.ProtocolOperationHelpers.Convert(await this.EvaluateModelAsync(waitUntil, projectName, trainedModelLabel, details, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationJobResult.FromLroResponse(response), ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModelAsync");
         }
 
         /// <summary> Restores the snapshot of this trained model to be the current working directory of the project. </summary>
@@ -339,8 +339,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation LoadSnapshot(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context)
         {
@@ -348,11 +348,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-                using HttpMessage message = CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConversationAuthoringTrainedModel.LoadSnapshot", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConversationAuthoringTrainedModel.LoadSnapshot", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -366,20 +366,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> LoadSnapshotAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context)
+        public virtual async Task<global::Azure.Operation> LoadSnapshotAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringTrainedModel.LoadSnapshot");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-                using HttpMessage message = CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringTrainedModel.LoadSnapshotAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringTrainedModel.LoadSnapshotAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -393,14 +393,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation LoadSnapshot(WaitUntil waitUntil, string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            return LoadSnapshot(waitUntil, projectName, trainedModelLabel, cancellationToken.ToRequestContext());
+            return this.LoadSnapshot(waitUntil, projectName, trainedModelLabel, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Restores the snapshot of this trained model to be the current working directory of the project. </summary>
@@ -408,14 +408,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> LoadSnapshotAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> LoadSnapshotAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            return await LoadSnapshotAsync(waitUntil, projectName, trainedModelLabel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.LoadSnapshotAsync(waitUntil, projectName, trainedModelLabel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -430,9 +430,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetEvaluationStatus(string projectName, string trainedModelLabel, string jobId, RequestContext context)
         {
@@ -440,11 +440,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetEvaluationStatusRequest(projectName, trainedModelLabel, jobId, context);
+                using HttpMessage message = this.CreateGetEvaluationStatusRequest(projectName, trainedModelLabel, jobId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -466,21 +466,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetEvaluationStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetEvaluationStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringTrainedModel.GetEvaluationStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetEvaluationStatusRequest(projectName, trainedModelLabel, jobId, context);
+                using HttpMessage message = this.CreateGetEvaluationStatusRequest(projectName, trainedModelLabel, jobId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -495,17 +495,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ConversationAuthoringEvaluationState> GetEvaluationStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationState> GetEvaluationStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = GetEvaluationStatus(projectName, trainedModelLabel, jobId, cancellationToken.ToRequestContext());
-            return Response.FromValue((ConversationAuthoringEvaluationState)result, result);
+            Response result = this.GetEvaluationStatus(projectName, trainedModelLabel, jobId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ConversationAuthoringEvaluationState)result), result);
         }
 
         /// <summary> Gets the status for an evaluation job. </summary>
@@ -513,17 +513,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ConversationAuthoringEvaluationState>> GetEvaluationStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvaluationState>> GetEvaluationStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await GetEvaluationStatusAsync(projectName, trainedModelLabel, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ConversationAuthoringEvaluationState)result, result);
+            Response result = await this.GetEvaluationStatusAsync(projectName, trainedModelLabel, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ConversationAuthoringEvaluationState)result), result);
         }
 
         /// <summary>
@@ -541,14 +541,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount = default, int? skip = default, int? maxPageSize = default, RequestContext context = null)
+        public virtual Pageable<global::System.BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount = default, int? skip = default, int? maxPageSize = default, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             return new ConversationAuthoringTrainedModelGetModelEvaluationResultsCollectionResult(
                 this,
@@ -577,14 +577,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount = default, int? skip = default, int? maxPageSize = default, RequestContext context = null)
+        public virtual AsyncPageable<global::System.BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount = default, int? skip = default, int? maxPageSize = default, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             return new ConversationAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResult(
                 this,
@@ -606,13 +606,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> GetModelEvaluationResults(string projectName, string trainedModelLabel, StringIndexType stringIndexType, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringUtteranceEvaluationResult> GetModelEvaluationResults(string projectName, string trainedModelLabel, StringIndexType stringIndexType, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             return new ConversationAuthoringTrainedModelGetModelEvaluationResultsCollectionResultOfT(
                 this,
@@ -634,13 +634,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<AnalyzeConversationAuthoringUtteranceEvaluationResult> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, StringIndexType stringIndexType, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoringUtteranceEvaluationResult> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, StringIndexType stringIndexType, int? maxCount = default, int? skip = default, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
             return new ConversationAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT(
                 this,
@@ -665,9 +665,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetModelEvaluationSummary(string projectName, string trainedModelLabel, RequestContext context)
         {
@@ -675,10 +675,10 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-                using HttpMessage message = CreateGetModelEvaluationSummaryRequest(projectName, trainedModelLabel, context);
+                using HttpMessage message = this.CreateGetModelEvaluationSummaryRequest(projectName, trainedModelLabel, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -699,20 +699,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringTrainedModel.GetModelEvaluationSummary");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-                using HttpMessage message = CreateGetModelEvaluationSummaryRequest(projectName, trainedModelLabel, context);
+                using HttpMessage message = this.CreateGetModelEvaluationSummaryRequest(projectName, trainedModelLabel, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -726,32 +726,32 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ConversationAuthoringEvalSummary> GetModelEvaluationSummary(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvalSummary> GetModelEvaluationSummary(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            Response result = GetModelEvaluationSummary(projectName, trainedModelLabel, cancellationToken.ToRequestContext());
-            return Response.FromValue((ConversationAuthoringEvalSummary)result, result);
+            Response result = this.GetModelEvaluationSummary(projectName, trainedModelLabel, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ConversationAuthoringEvalSummary)result), result);
         }
 
         /// <summary> Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ConversationAuthoringEvalSummary>> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringEvalSummary>> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            Response result = await GetModelEvaluationSummaryAsync(projectName, trainedModelLabel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ConversationAuthoringEvalSummary)result, result);
+            Response result = await this.GetModelEvaluationSummaryAsync(projectName, trainedModelLabel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ConversationAuthoringEvalSummary)result), result);
         }
 
         /// <summary>
@@ -766,9 +766,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, RequestContext context)
         {
@@ -776,11 +776,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetLoadSnapshotStatusRequest(projectName, trainedModelLabel, jobId, context);
+                using HttpMessage message = this.CreateGetLoadSnapshotStatusRequest(projectName, trainedModelLabel, jobId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -802,21 +802,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConversationAuthoringTrainedModel.GetLoadSnapshotStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-                Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-                Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+                global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-                using HttpMessage message = CreateGetLoadSnapshotStatusRequest(projectName, trainedModelLabel, jobId, context);
+                using HttpMessage message = this.CreateGetLoadSnapshotStatusRequest(projectName, trainedModelLabel, jobId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -831,17 +831,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ConversationAuthoringLoadSnapshotState> GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringLoadSnapshotState> GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = GetLoadSnapshotStatus(projectName, trainedModelLabel, jobId, cancellationToken.ToRequestContext());
-            return Response.FromValue((ConversationAuthoringLoadSnapshotState)result, result);
+            Response result = this.GetLoadSnapshotStatus(projectName, trainedModelLabel, jobId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ConversationAuthoringLoadSnapshotState)result), result);
         }
 
         /// <summary> Gets the status for loading a snapshot. </summary>
@@ -849,17 +849,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ConversationAuthoringLoadSnapshotState>> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringLoadSnapshotState>> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            Response result = await GetLoadSnapshotStatusAsync(projectName, trainedModelLabel, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ConversationAuthoringLoadSnapshotState)result, result);
+            Response result = await this.GetLoadSnapshotStatusAsync(projectName, trainedModelLabel, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ConversationAuthoringLoadSnapshotState)result), result);
         }
     }
 }

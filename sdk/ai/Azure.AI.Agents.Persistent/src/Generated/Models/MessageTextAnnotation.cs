@@ -12,14 +12,14 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of an annotation to text thread message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageTextUriCitationAnnotation"/>, <see cref="MessageTextFileCitationAnnotation"/>, and <see cref="MessageTextFilePathAnnotation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Agents.Persistent.MessageTextUriCitationAnnotation"/>, <see cref="Azure.AI.Agents.Persistent.MessageTextFileCitationAnnotation"/>, and <see cref="Azure.AI.Agents.Persistent.MessageTextFilePathAnnotation"/>.
     /// </summary>
     public abstract partial class MessageTextAnnotation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageTextAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageTextAnnotation"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
         private protected MessageTextAnnotation(string @type, string text)
@@ -28,11 +28,11 @@ namespace Azure.AI.Agents.Persistent
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageTextAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageTextAnnotation"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageTextAnnotation(string @type, string text, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageTextAnnotation(string @type, string text, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Text = text;

@@ -13,21 +13,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class MonitorBase
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitorBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorBase"/>. </summary>
         public MonitorBase()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitorBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.MonitorBase"/>. </summary>
         /// <param name="baseType">
         /// Name of item (B section) if any. If telemetry data is derived straight from
         /// this, this should be null.
         /// </param>
         /// <param name="baseData"> The data payload for the telemetry request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorBase(string baseType, MonitorDomain baseData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorBase(string baseType, MonitorDomain baseData, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BaseType = baseType;
             BaseData = baseData;

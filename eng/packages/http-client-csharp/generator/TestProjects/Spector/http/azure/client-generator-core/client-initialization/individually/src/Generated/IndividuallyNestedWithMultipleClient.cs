@@ -18,41 +18,41 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
     {
         protected IndividuallyNestedWithMultipleClient() => throw null;
 
-        public IndividuallyNestedWithMultipleClient(string name, string region) : this(new Uri("http://localhost:3000"), name, region, new SpecsAzureTcgcClientInitIndividuallyClientOptions()) => throw null;
+        public IndividuallyNestedWithMultipleClient(string name, string region) : this(new global::System.Uri("http://localhost:3000"), name, region, new SpecsAzureTcgcClientInitIndividuallyClientOptions()) => throw null;
 
-        public IndividuallyNestedWithMultipleClient(string name, string region, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(new Uri("http://localhost:3000"), name, region, options) => throw null;
+        public IndividuallyNestedWithMultipleClient(string name, string region, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(new global::System.Uri("http://localhost:3000"), name, region, options) => throw null;
 
-        internal IndividuallyNestedWithMultipleClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, string name, string region, SpecsAzureTcgcClientInitIndividuallyClientOptions options) => throw null;
+        internal IndividuallyNestedWithMultipleClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, string name, string region, SpecsAzureTcgcClientInitIndividuallyClientOptions options) => throw null;
 
-        public IndividuallyNestedWithMultipleClient(Uri endpoint, string name, string region, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(null, endpoint, name, region, options) => throw null;
+        public IndividuallyNestedWithMultipleClient(global::System.Uri endpoint, string name, string region, SpecsAzureTcgcClientInitIndividuallyClientOptions options) : this(null, endpoint, name, region, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public IndividuallyNestedWithMultipleClient(IndividuallyNestedWithMultipleClientSettings settings) : this(null, settings?.Endpoint, settings?.Name, settings?.Region, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public IndividuallyNestedWithMultipleClient(IndividuallyNestedWithMultipleClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Name, settings?.Region, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response WithQuery(string format, RequestContext context) => throw null;
 
-        public virtual Task<Response> WithQueryAsync(string format, RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryAsync(string format, RequestContext context) => throw null;
 
         public virtual Response WithQuery(string format = default, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithQueryAsync(string format = default, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> WithQueryAsync(string format = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response GetStandalone(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetStandaloneAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetStandaloneAsync(RequestContext context) => throw null;
 
         public virtual Response GetStandalone(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> GetStandaloneAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> GetStandaloneAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response DeleteStandalone(RequestContext context) => throw null;
 
-        public virtual Task<Response> DeleteStandaloneAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> DeleteStandaloneAsync(RequestContext context) => throw null;
 
         public virtual Response DeleteStandalone(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> DeleteStandaloneAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> DeleteStandaloneAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

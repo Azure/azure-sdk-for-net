@@ -13,11 +13,11 @@ namespace Versioning.RenamedFrom
 {
     public partial class RenamedFromClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1;
+        private const global::Versioning.RenamedFrom.RenamedFromClientOptions.ServiceVersion LatestVersion = global::Versioning.RenamedFrom.RenamedFromClientOptions.ServiceVersion.V1;
 
-        public RenamedFromClientOptions(ServiceVersion version = LatestVersion) => throw null;
+        public RenamedFromClientOptions(global::Versioning.RenamedFrom.RenamedFromClientOptions.ServiceVersion version = LatestVersion) => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal RenamedFromClientOptions(IConfigurationSection section) : base(section, null) => throw null;
 
         public enum ServiceVersion

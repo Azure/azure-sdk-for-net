@@ -14,22 +14,22 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringModelFile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringModelFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringModelFile"/>. </summary>
         /// <param name="name"> The name of the file. </param>
         /// <param name="contentUri"> The URI to retrieve the content of the file. </param>
-        internal TextAuthoringModelFile(string name, Uri contentUri)
+        internal TextAuthoringModelFile(string name, global::System.Uri contentUri)
         {
             Name = name;
             ContentUri = contentUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringModelFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringModelFile"/>. </summary>
         /// <param name="name"> The name of the file. </param>
         /// <param name="contentUri"> The URI to retrieve the content of the file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringModelFile(string name, Uri contentUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringModelFile(string name, global::System.Uri contentUri, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ContentUri = contentUri;
@@ -40,6 +40,6 @@ namespace Azure.AI.Language.Text.Authoring
         public string Name { get; }
 
         /// <summary> The URI to retrieve the content of the file. </summary>
-        public Uri ContentUri { get; }
+        public global::System.Uri ContentUri { get; }
     }
 }

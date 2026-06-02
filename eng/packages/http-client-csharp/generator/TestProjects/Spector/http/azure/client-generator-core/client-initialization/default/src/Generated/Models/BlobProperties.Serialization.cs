@@ -12,7 +12,7 @@ using Azure;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 {
-    public partial class BlobProperties : IJsonModel<BlobProperties>
+    public partial class BlobProperties : IJsonModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.BlobProperties>
     {
         internal BlobProperties() => throw null;
 
@@ -20,19 +20,19 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<BlobProperties>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.BlobProperties>.Write(ModelReaderWriterOptions options) => throw null;
 
-        BlobProperties IPersistableModel<BlobProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        BlobProperties IPersistableModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.BlobProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<BlobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.BlobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         public static explicit operator BlobProperties(Response response) => throw null;
 
-        void IJsonModel<BlobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.BlobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        BlobProperties IJsonModel<BlobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        BlobProperties IJsonModel<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.BlobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual BlobProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

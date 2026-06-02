@@ -14,23 +14,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class StorageTaskCompletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskCompletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedEventData"/>. </summary>
         /// <param name="summaryReportBlobUri"> The summary report blob url for a storage task. </param>
-        internal StorageTaskCompletedEventData(Uri summaryReportBlobUri)
+        internal StorageTaskCompletedEventData(global::System.Uri summaryReportBlobUri)
         {
             SummaryReportBlobUri = summaryReportBlobUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskCompletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageTaskCompletedEventData"/>. </summary>
         /// <param name="status"> The status for a storage task. </param>
         /// <param name="completedDateTime"> The time at which a storage task was completed. </param>
         /// <param name="taskExecutionId"> The execution id for a storage task. </param>
         /// <param name="taskName"> The task name for a storage task. </param>
         /// <param name="summaryReportBlobUri"> The summary report blob url for a storage task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskCompletedEventData(StorageTaskCompletedStatus? status, DateTimeOffset? completedDateTime, string taskExecutionId, string taskName, Uri summaryReportBlobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageTaskCompletedEventData(StorageTaskCompletedStatus? status, DateTimeOffset? completedDateTime, string taskExecutionId, string taskName, global::System.Uri summaryReportBlobUri, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             CompletedDateTime = completedDateTime;
@@ -53,6 +53,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string TaskName { get; }
 
         /// <summary> The summary report blob url for a storage task. </summary>
-        public Uri SummaryReportBlobUri { get; }
+        public global::System.Uri SummaryReportBlobUri { get; }
     }
 }

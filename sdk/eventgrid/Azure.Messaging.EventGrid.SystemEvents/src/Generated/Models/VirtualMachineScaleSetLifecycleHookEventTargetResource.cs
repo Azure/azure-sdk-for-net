@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class VirtualMachineScaleSetLifecycleHookEventTargetResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventTargetResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource"/>. </summary>
         /// <param name="resource"> Specifies the target ARM resource. Currently, this can be a Virtual Machine Scale Set resource or an individual virtual machine resource within a VirtualMachineScaleSet. </param>
         /// <param name="actionState"> State of the Lifecycle Hook for the target resource. The customer can patch this property to move the Lifecycle Hook to a terminal state. </param>
         internal VirtualMachineScaleSetLifecycleHookEventTargetResource(ApiEntityReference resource, LifecycleHookActionState actionState)
@@ -25,11 +25,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ActionState = actionState;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetLifecycleHookEventTargetResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.VirtualMachineScaleSetLifecycleHookEventTargetResource"/>. </summary>
         /// <param name="resource"> Specifies the target ARM resource. Currently, this can be a Virtual Machine Scale Set resource or an individual virtual machine resource within a VirtualMachineScaleSet. </param>
         /// <param name="actionState"> State of the Lifecycle Hook for the target resource. The customer can patch this property to move the Lifecycle Hook to a terminal state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetLifecycleHookEventTargetResource(ApiEntityReference resource, LifecycleHookActionState actionState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetLifecycleHookEventTargetResource(ApiEntityReference resource, LifecycleHookActionState actionState, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Resource = resource;
             ActionState = actionState;

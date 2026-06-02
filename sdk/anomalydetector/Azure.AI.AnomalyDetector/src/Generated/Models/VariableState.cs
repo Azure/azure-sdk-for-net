@@ -14,21 +14,21 @@ namespace Azure.AI.AnomalyDetector
     public partial class VariableState
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VariableState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.VariableState"/>. </summary>
         internal VariableState()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VariableState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.VariableState"/>. </summary>
         /// <param name="variable"> Variable name in variable states. </param>
         /// <param name="filledNARatio"> Proportion of missing values that need to be filled by fillNAMethod. </param>
         /// <param name="effectiveCount"> Number of effective data points before fillNAMethod is applied. </param>
         /// <param name="firstTimestamp"> First valid time stamp with a value of input data. </param>
         /// <param name="lastTimestamp"> Last valid time stamp with a value of input data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VariableState(string variable, float? filledNARatio, int? effectiveCount, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VariableState(string variable, float? filledNARatio, int? effectiveCount, DateTimeOffset? firstTimestamp, DateTimeOffset? lastTimestamp, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Variable = variable;
             FilledNARatio = filledNARatio;

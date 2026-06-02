@@ -12,11 +12,11 @@ namespace Azure.AI.Agents.Persistent
 {
     internal partial class UnknownMessageDeltaContent : MessageDeltaContent
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMessageDeltaContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.UnknownMessageDeltaContent"/>. </summary>
         /// <param name="index"> The index of the content part of the message. </param>
         /// <param name="type"> The type of content for this content part. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMessageDeltaContent(int index, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(index, @type ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownMessageDeltaContent(int index, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(index, (@type ?? "unknown"), additionalBinaryDataProperties)
         {
         }
     }

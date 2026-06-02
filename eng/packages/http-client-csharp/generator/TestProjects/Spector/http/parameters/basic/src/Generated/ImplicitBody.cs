@@ -18,16 +18,16 @@ namespace Parameters.Basic._ImplicitBody
     {
         protected ImplicitBody() => throw null;
 
-        internal ImplicitBody(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal ImplicitBody(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Simple(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> SimpleAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> SimpleAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Simple(string name, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SimpleAsync(string name, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> SimpleAsync(string name, CancellationToken cancellationToken = default) => throw null;
     }
 }

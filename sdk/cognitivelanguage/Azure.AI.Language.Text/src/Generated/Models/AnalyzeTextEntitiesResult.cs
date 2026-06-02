@@ -13,18 +13,18 @@ namespace Azure.AI.Language.Text
     /// <summary> Contains the entity task. </summary>
     public partial class AnalyzeTextEntitiesResult : AnalyzeTextResult
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextEntitiesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextEntitiesResult"/>. </summary>
         /// <param name="results"> Results for entity recognition. </param>
-        internal AnalyzeTextEntitiesResult(EntitiesWithMetadataAutoResult results) : base(AnalyzeTextResultsKind.EntityRecognitionResults)
+        internal AnalyzeTextEntitiesResult(EntitiesWithMetadataAutoResult results) : base(global::Azure.AI.Language.Text.AnalyzeTextResultsKind.EntityRecognitionResults)
         {
             Results = results;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextEntitiesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.AnalyzeTextEntitiesResult"/>. </summary>
         /// <param name="kind"> The kind of task result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> Results for entity recognition. </param>
-        internal AnalyzeTextEntitiesResult(AnalyzeTextResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, EntitiesWithMetadataAutoResult results) : base(kind, additionalBinaryDataProperties)
+        internal AnalyzeTextEntitiesResult(AnalyzeTextResultsKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, EntitiesWithMetadataAutoResult results) : base(kind, additionalBinaryDataProperties)
         {
             Results = results;
         }

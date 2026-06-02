@@ -13,34 +13,34 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+    /// <summary> Extension methods to add clients to <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class ComputeBatchClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="BatchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="BatchClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"></param>
         /// <param name="credential"></param>
-        public static IAzureClientBuilder<BatchClient, BatchClientOptions> AddBatchClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureNamedKeyCredential credential)
+        public static IAzureClientBuilder<global::Azure.Compute.Batch.BatchClient, global::Azure.Compute.Batch.BatchClientOptions> AddBatchClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint, AzureNamedKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<BatchClient, BatchClientOptions>(options => new BatchClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="BatchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="BatchClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"></param>
-        public static IAzureClientBuilder<BatchClient, BatchClientOptions> AddBatchClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<global::Azure.Compute.Batch.BatchClient, global::Azure.Compute.Batch.BatchClientOptions> AddBatchClient<TBuilder>(this TBuilder builder, global::System.Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             return builder.RegisterClientFactory<BatchClient, BatchClientOptions>((options, credential) => new BatchClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="BatchClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="BatchClient"/> client with the specified <see cref="global::Azure.Core.Extensions.IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<BatchClient, BatchClientOptions> AddBatchClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        [RequiresUnreferencedCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<global::Azure.Compute.Batch.BatchClient, global::Azure.Compute.Batch.BatchClientOptions> AddBatchClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<BatchClient, BatchClientOptions>(configuration);

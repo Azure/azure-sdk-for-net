@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary></summary>
-    public readonly partial struct ConversationAuthoringCompositionMode : IEquatable<ConversationAuthoringCompositionMode>
+    public readonly partial struct ConversationAuthoringCompositionMode : IEquatable<global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCompositionMode>
     {
         private readonly string _value;
         /// <summary> When two or more components are found in the text and overlap, the component with the longest set of characters is returned. </summary>
@@ -23,12 +23,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> When two or more components are found in the text and overlap, the components' spans are merged together into one span combining all of them. </summary>
         private const string CombineComponentsValue = "combineComponents";
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringCompositionMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCompositionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConversationAuthoringCompositionMode(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -45,34 +45,34 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> When two or more components are found in the text and overlap, the components' spans are merged together into one span combining all of them. </summary>
         public static ConversationAuthoringCompositionMode CombineComponents { get; } = new ConversationAuthoringCompositionMode(CombineComponentsValue);
 
-        /// <summary> Determines if two <see cref="ConversationAuthoringCompositionMode"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCompositionMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConversationAuthoringCompositionMode left, ConversationAuthoringCompositionMode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ConversationAuthoringCompositionMode"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCompositionMode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConversationAuthoringCompositionMode left, ConversationAuthoringCompositionMode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ConversationAuthoringCompositionMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCompositionMode"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ConversationAuthoringCompositionMode(string value) => new ConversationAuthoringCompositionMode(value);
 
-        /// <summary> Converts a string to a <see cref="ConversationAuthoringCompositionMode"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringCompositionMode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ConversationAuthoringCompositionMode?(string value) => value == null ? null : new ConversationAuthoringCompositionMode(value);
+        public static implicit operator ConversationAuthoringCompositionMode?(string value) => (value == null) ? null : new ConversationAuthoringCompositionMode(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ConversationAuthoringCompositionMode other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ConversationAuthoringCompositionMode other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ConversationAuthoringCompositionMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ConversationAuthoringCompositionMode other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

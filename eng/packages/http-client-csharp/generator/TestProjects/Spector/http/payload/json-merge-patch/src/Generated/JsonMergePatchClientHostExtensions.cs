@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Payload.JsonMergePatch
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class JsonMergePatchClientHostExtensions
     {
         public static IClientBuilder AddJsonMergePatchClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddJsonMergePatchClient(this IHostApplicationBuilder host, string sectionName, Action<JsonMergePatchClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddJsonMergePatchClient(this IHostApplicationBuilder host, string sectionName, Action<global::Payload.JsonMergePatch.JsonMergePatchClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedJsonMergePatchClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedJsonMergePatchClient(this IHostApplicationBuilder host, string key, string sectionName, Action<JsonMergePatchClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedJsonMergePatchClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Payload.JsonMergePatch.JsonMergePatchClientSettings> configureSettings) => throw null;
     }
 }

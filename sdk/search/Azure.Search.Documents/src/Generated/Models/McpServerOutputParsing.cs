@@ -12,24 +12,24 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Output parsing configuration for an MCP server tool.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="McpServerAutoOutputParsing"/>, <see cref="McpServerJsonOutputParsing"/>, <see cref="McpServerSplitOutputParsing"/>, and <see cref="McpServerNoneOutputParsing"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.Indexes.Models.McpServerAutoOutputParsing"/>, <see cref="Azure.Search.Documents.Indexes.Models.McpServerJsonOutputParsing"/>, <see cref="Azure.Search.Documents.Indexes.Models.McpServerSplitOutputParsing"/>, and <see cref="Azure.Search.Documents.Indexes.Models.McpServerNoneOutputParsing"/>.
     /// </summary>
     public abstract partial class McpServerOutputParsing
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="McpServerOutputParsing"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing"/>. </summary>
         /// <param name="kind"> The kind of output parsing to apply. </param>
         private protected McpServerOutputParsing(McpServerOutputParsingKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="McpServerOutputParsing"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsing"/>. </summary>
         /// <param name="kind"> The kind of output parsing to apply. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal McpServerOutputParsing(McpServerOutputParsingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal McpServerOutputParsing(McpServerOutputParsingKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

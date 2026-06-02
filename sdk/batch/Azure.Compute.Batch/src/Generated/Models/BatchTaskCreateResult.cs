@@ -15,9 +15,9 @@ namespace Azure.Compute.Batch
     public partial class BatchTaskCreateResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskCreateResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskCreateResult"/>. </summary>
         /// <param name="status"> The status of the add Task request. </param>
         /// <param name="taskId"> The ID of the Task for which this is the result. </param>
         internal BatchTaskCreateResult(BatchTaskAddStatus status, string taskId)
@@ -26,7 +26,7 @@ namespace Azure.Compute.Batch
             TaskId = taskId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchTaskCreateResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchTaskCreateResult"/>. </summary>
         /// <param name="status"> The status of the add Task request. </param>
         /// <param name="taskId"> The ID of the Task for which this is the result. </param>
         /// <param name="eTag"> The ETag of the Task, if the Task was successfully added. You can use this to detect whether the Task has changed between requests. In particular, you can be pass the ETag with an Update Task request to specify that your changes should take effect only if nobody else has modified the Job in the meantime. </param>
@@ -34,7 +34,7 @@ namespace Azure.Compute.Batch
         /// <param name="location"> The URL of the Task, if the Task was successfully added. </param>
         /// <param name="error"> The error encountered while attempting to add the Task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskCreateResult(BatchTaskAddStatus status, string taskId, ETag? eTag, DateTimeOffset? lastModified, string location, BatchError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchTaskCreateResult(BatchTaskAddStatus status, string taskId, ETag? eTag, DateTimeOffset? lastModified, string location, BatchError error, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             TaskId = taskId;

@@ -12,24 +12,24 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Specifies the connection parameters for the model to use for query planning.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseAzureOpenAIModel"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.Indexes.Models.KnowledgeBaseAzureOpenAIModel"/>.
     /// </summary>
     public abstract partial class KnowledgeBaseModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseModel"/>. </summary>
         /// <param name="kind"> The AI model to be used for query planning. </param>
         private protected KnowledgeBaseModel(KnowledgeBaseModelKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.KnowledgeBaseModel"/>. </summary>
         /// <param name="kind"> The AI model to be used for query planning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseModel(KnowledgeBaseModelKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseModel(KnowledgeBaseModelKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

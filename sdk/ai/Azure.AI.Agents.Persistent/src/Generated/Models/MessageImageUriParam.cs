@@ -14,23 +14,23 @@ namespace Azure.AI.Agents.Persistent
     public partial class MessageImageUriParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MessageImageUriParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageImageUriParam"/>. </summary>
         /// <param name="uri"> The publicly accessible URL of the external image. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public MessageImageUriParam(string uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(uri, nameof(uri));
 
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageImageUriParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.MessageImageUriParam"/>. </summary>
         /// <param name="uri"> The publicly accessible URL of the external image. </param>
         /// <param name="detail"> Optional detail level for the image (auto, low, or high). Defaults to 'auto' if not specified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessageImageUriParam(string uri, ImageDetailLevel? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessageImageUriParam(string uri, ImageDetailLevel? detail, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             Detail = detail;

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace AzureExampleBasicClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class AzureExampleClientHostExtensions
     {
         public static IClientBuilder AddAzureExampleClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddAzureExampleClient(this IHostApplicationBuilder host, string sectionName, Action<AzureExampleClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddAzureExampleClient(this IHostApplicationBuilder host, string sectionName, Action<global::AzureExampleBasicClient.AzureExampleClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedAzureExampleClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedAzureExampleClient(this IHostApplicationBuilder host, string key, string sectionName, Action<AzureExampleClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedAzureExampleClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::AzureExampleBasicClient.AzureExampleClientSettings> configureSettings) => throw null;
     }
 }

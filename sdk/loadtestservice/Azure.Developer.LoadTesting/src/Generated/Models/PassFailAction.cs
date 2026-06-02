@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Action to take on failure of pass/fail criteria. </summary>
-    public readonly partial struct PassFailAction : IEquatable<PassFailAction>
+    public readonly partial struct PassFailAction : IEquatable<global::Azure.Developer.LoadTesting.PassFailAction>
     {
         private readonly string _value;
         /// <summary> Test will continue to run even if pass fail metric criteria metric gets failed. </summary>
@@ -19,12 +19,12 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Test run will stop if pass fail criteria metric is not passed. </summary>
         private const string StopValue = "stop";
 
-        /// <summary> Initializes a new instance of <see cref="PassFailAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.PassFailAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PassFailAction(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Test run will stop if pass fail criteria metric is not passed. </summary>
         public static PassFailAction Stop { get; } = new PassFailAction(StopValue);
 
-        /// <summary> Determines if two <see cref="PassFailAction"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.PassFailAction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PassFailAction left, PassFailAction right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PassFailAction"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.PassFailAction"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PassFailAction left, PassFailAction right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PassFailAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.PassFailAction"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PassFailAction(string value) => new PassFailAction(value);
 
-        /// <summary> Converts a string to a <see cref="PassFailAction"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.PassFailAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PassFailAction?(string value) => value == null ? null : new PassFailAction(value);
+        public static implicit operator PassFailAction?(string value) => (value == null) ? null : new PassFailAction(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PassFailAction other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PassFailAction other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PassFailAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PassFailAction other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

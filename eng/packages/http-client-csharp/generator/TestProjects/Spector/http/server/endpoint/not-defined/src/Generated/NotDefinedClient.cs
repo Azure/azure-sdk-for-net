@@ -18,23 +18,23 @@ namespace Server.Endpoint.NotDefined
     {
         protected NotDefinedClient() => throw null;
 
-        public NotDefinedClient(Uri endpoint) : this(endpoint, new NotDefinedClientOptions()) => throw null;
+        public NotDefinedClient(global::System.Uri endpoint) : this(endpoint, new NotDefinedClientOptions()) => throw null;
 
-        internal NotDefinedClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, NotDefinedClientOptions options) => throw null;
+        internal NotDefinedClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, NotDefinedClientOptions options) => throw null;
 
-        public NotDefinedClient(Uri endpoint, NotDefinedClientOptions options) : this(null, endpoint, options) => throw null;
+        public NotDefinedClient(global::System.Uri endpoint, NotDefinedClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public NotDefinedClient(NotDefinedClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public NotDefinedClient(NotDefinedClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Valid(RequestContext context) => throw null;
 
-        public virtual Task<Response> ValidAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> ValidAsync(RequestContext context) => throw null;
 
         public virtual Response Valid(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> ValidAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> ValidAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

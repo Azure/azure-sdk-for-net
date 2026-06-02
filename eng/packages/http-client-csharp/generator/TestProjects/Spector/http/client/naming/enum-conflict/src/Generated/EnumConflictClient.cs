@@ -13,14 +13,14 @@ namespace Client.Naming.EnumConflict
 {
     public partial class EnumConflictClient
     {
-        public EnumConflictClient() : this(new Uri("http://localhost:3000"), new EnumConflictClientOptions()) => throw null;
+        public EnumConflictClient() : this(new global::System.Uri("http://localhost:3000"), new EnumConflictClientOptions()) => throw null;
 
-        internal EnumConflictClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, EnumConflictClientOptions options) => throw null;
+        internal EnumConflictClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, EnumConflictClientOptions options) => throw null;
 
-        public EnumConflictClient(Uri endpoint, EnumConflictClientOptions options) : this(null, endpoint, options) => throw null;
+        public EnumConflictClient(global::System.Uri endpoint, EnumConflictClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public EnumConflictClient(EnumConflictClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public EnumConflictClient(EnumConflictClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Computer tool call output. </summary>
-    public partial class OutputItemComputerToolCallOutput : AgentResponseItem, IJsonModel<OutputItemComputerToolCallOutput>
+    public partial class OutputItemComputerToolCallOutput : AgentResponseItem, IJsonModel<global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput>
     {
-        /// <summary> Initializes a new instance of <see cref="OutputItemComputerToolCallOutput"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput"/> for deserialization. </summary>
         internal OutputItemComputerToolCallOutput()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputItemComputerToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOutputItemComputerToolCallOutput(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput.DeserializeOutputItemComputerToolCallOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OutputItemComputerToolCallOutput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputItemComputerToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OutputItemComputerToolCallOutput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OutputItemComputerToolCallOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OutputItemComputerToolCallOutput IPersistableModel<OutputItemComputerToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => (OutputItemComputerToolCallOutput)PersistableModelCreateCore(data, options);
+        OutputItemComputerToolCallOutput IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => ((OutputItemComputerToolCallOutput)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OutputItemComputerToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OutputItemComputerToolCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,27 +70,27 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputItemComputerToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OutputItemComputerToolCallOutput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
-            if (Optional.IsCollectionDefined(AcknowledgedSafetyChecks))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(AcknowledgedSafetyChecks))
             {
                 writer.WritePropertyName("acknowledged_safety_checks"u8);
                 writer.WriteStartArray();
                 foreach (ComputerCallSafetyCheckParam item in AcknowledgedSafetyChecks)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<ComputerCallSafetyCheckParam>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("output"u8);
-            writer.WriteObjectValue(Output, options);
-            if (Optional.IsDefined(Status))
+            writer.WriteObjectValue<ComputerScreenshotImage>(Output, options);
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
@@ -99,26 +99,26 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OutputItemComputerToolCallOutput IJsonModel<OutputItemComputerToolCallOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (OutputItemComputerToolCallOutput)JsonModelCreateCore(ref reader, options);
+        OutputItemComputerToolCallOutput IJsonModel<global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((OutputItemComputerToolCallOutput)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OutputItemComputerToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(OutputItemComputerToolCallOutput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOutputItemComputerToolCallOutput(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput.DeserializeOutputItemComputerToolCallOutput(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static OutputItemComputerToolCallOutput DeserializeOutputItemComputerToolCallOutput(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -126,9 +126,9 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             string callId = default;
-            IList<ComputerCallSafetyCheckParam> acknowledgedSafetyChecks = default;
+            IList<global::Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam> acknowledgedSafetyChecks = default;
             ComputerScreenshotImage output = default;
             ItemFieldComputerToolCallOutputStatus? status = default;
             foreach (var prop in element.EnumerateObject())
@@ -145,11 +145,11 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("agent_reference"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    agentReference = AgentReference.DeserializeAgentReference(prop.Value, options);
+                    agentReference = global::Azure.AI.Extensions.OpenAI.AgentReference.DeserializeAgentReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))
@@ -164,35 +164,35 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("acknowledged_safety_checks"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<ComputerCallSafetyCheckParam> array = new List<ComputerCallSafetyCheckParam>();
+                    List<global::Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam> array = new List<global::Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputerCallSafetyCheckParam.DeserializeComputerCallSafetyCheckParam(item, options));
+                        array.Add(global::Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam.DeserializeComputerCallSafetyCheckParam(item, options));
                     }
                     acknowledgedSafetyChecks = array;
                     continue;
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    output = ComputerScreenshotImage.DeserializeComputerScreenshotImage(prop.Value, options);
+                    output = global::Azure.AI.Extensions.OpenAI.ComputerScreenshotImage.DeserializeComputerScreenshotImage(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
                     status = prop.Value.GetString().ToItemFieldComputerToolCallOutputStatus();
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new OutputItemComputerToolCallOutput(
@@ -202,7 +202,7 @@ namespace Azure.AI.Extensions.OpenAI
                 responseId,
                 additionalBinaryDataProperties,
                 callId,
-                acknowledgedSafetyChecks ?? new ChangeTrackingList<ComputerCallSafetyCheckParam>(),
+                (acknowledgedSafetyChecks ?? new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam>()),
                 output,
                 status);
         }

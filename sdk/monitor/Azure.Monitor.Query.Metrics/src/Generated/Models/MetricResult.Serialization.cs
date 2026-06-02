@@ -14,9 +14,9 @@ using Azure.Monitor.Query.Metrics;
 namespace Azure.Monitor.Query.Metrics.Models
 {
     /// <summary> The result data of a query. </summary>
-    public partial class MetricResult : IJsonModel<MetricResult>
+    public partial class MetricResult : IJsonModel<global::Azure.Monitor.Query.Metrics.Models.MetricResult>
     {
-        /// <summary> Initializes a new instance of <see cref="MetricResult"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricResult"/> for deserialization. </summary>
         internal MetricResult()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Monitor.Query.Metrics.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MetricResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Metrics.Models.MetricResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Monitor.Query.Metrics.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMetricResult(document.RootElement, options);
+                        return global::Azure.Monitor.Query.Metrics.Models.MetricResult.DeserializeMetricResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Metrics.Models.MetricResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Metrics.Models.MetricResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMonitorQueryMetricsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Monitor.Query.Metrics.AzureMonitorQueryMetricsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MetricResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Metrics.Models.MetricResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MetricResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Monitor.Query.Metrics.Models.MetricResult>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MetricResult IPersistableModel<MetricResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MetricResult IPersistableModel<global::Azure.Monitor.Query.Metrics.Models.MetricResult>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MetricResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Monitor.Query.Metrics.Models.MetricResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MetricResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Monitor.Query.Metrics.Models.MetricResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,28 +74,28 @@ namespace Azure.Monitor.Query.Metrics.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Metrics.Models.MetricResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MetricResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Metrics.Models.MetricResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue(LocalizedName, options);
-            if (Optional.IsDefined(Description))
+            writer.WriteObjectValue<LocalizableString>(LocalizedName, options);
+            if (global::Azure.Monitor.Query.Metrics.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("displayDescription"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ErrorCode))
+            if (global::Azure.Monitor.Query.Metrics.Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (global::Azure.Monitor.Query.Metrics.Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -106,10 +106,10 @@ namespace Azure.Monitor.Query.Metrics.Models
             writer.WriteStartArray();
             foreach (MetricTimeSeriesElement item in TimeSeries)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<MetricTimeSeriesElement>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -117,9 +117,9 @@ namespace Azure.Monitor.Query.Metrics.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -128,26 +128,26 @@ namespace Azure.Monitor.Query.Metrics.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MetricResult IJsonModel<MetricResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MetricResult IJsonModel<global::Azure.Monitor.Query.Metrics.Models.MetricResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MetricResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MetricResult>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Monitor.Query.Metrics.Models.MetricResult>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(MetricResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Monitor.Query.Metrics.Models.MetricResult)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMetricResult(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Monitor.Query.Metrics.Models.MetricResult.DeserializeMetricResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static MetricResult DeserializeMetricResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -158,8 +158,8 @@ namespace Azure.Monitor.Query.Metrics.Models
             string errorCode = default;
             string errorMessage = default;
             MetricUnit unit = default;
-            IList<MetricTimeSeriesElement> timeSeries = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<global::Azure.Monitor.Query.Metrics.Models.MetricTimeSeriesElement> timeSeries = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -174,7 +174,7 @@ namespace Azure.Monitor.Query.Metrics.Models
                 }
                 if (prop.NameEquals("name"u8))
                 {
-                    localizedName = LocalizableString.DeserializeLocalizableString(prop.Value, options);
+                    localizedName = global::Azure.Monitor.Query.Metrics.Models.LocalizableString.DeserializeLocalizableString(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("displayDescription"u8))
@@ -199,17 +199,17 @@ namespace Azure.Monitor.Query.Metrics.Models
                 }
                 if (prop.NameEquals("timeseries"u8))
                 {
-                    List<MetricTimeSeriesElement> array = new List<MetricTimeSeriesElement>();
+                    List<global::Azure.Monitor.Query.Metrics.Models.MetricTimeSeriesElement> array = new List<global::Azure.Monitor.Query.Metrics.Models.MetricTimeSeriesElement>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MetricTimeSeriesElement.DeserializeMetricTimeSeriesElement(item, options));
+                        array.Add(global::Azure.Monitor.Query.Metrics.Models.MetricTimeSeriesElement.DeserializeMetricTimeSeriesElement(item, options));
                     }
                     timeSeries = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new MetricResult(

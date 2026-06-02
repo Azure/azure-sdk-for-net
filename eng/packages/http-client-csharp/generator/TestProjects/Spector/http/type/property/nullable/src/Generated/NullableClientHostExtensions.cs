@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Property.Nullable
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class NullableClientHostExtensions
     {
         public static IClientBuilder AddNullableClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddNullableClient(this IHostApplicationBuilder host, string sectionName, Action<NullableClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddNullableClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Property.Nullable.NullableClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedNullableClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedNullableClient(this IHostApplicationBuilder host, string key, string sectionName, Action<NullableClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedNullableClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Property.Nullable.NullableClientSettings> configureSettings) => throw null;
     }
 }

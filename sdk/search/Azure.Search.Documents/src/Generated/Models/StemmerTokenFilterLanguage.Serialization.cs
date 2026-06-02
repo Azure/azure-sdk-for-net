@@ -14,281 +14,281 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this StemmerTokenFilterLanguage value) => value switch
         {
-            StemmerTokenFilterLanguage.Arabic => "arabic",
-            StemmerTokenFilterLanguage.Armenian => "armenian",
-            StemmerTokenFilterLanguage.Basque => "basque",
-            StemmerTokenFilterLanguage.Brazilian => "brazilian",
-            StemmerTokenFilterLanguage.Bulgarian => "bulgarian",
-            StemmerTokenFilterLanguage.Catalan => "catalan",
-            StemmerTokenFilterLanguage.Czech => "czech",
-            StemmerTokenFilterLanguage.Danish => "danish",
-            StemmerTokenFilterLanguage.Dutch => "dutch",
-            StemmerTokenFilterLanguage.DutchKp => "dutchKp",
-            StemmerTokenFilterLanguage.English => "english",
-            StemmerTokenFilterLanguage.LightEnglish => "lightEnglish",
-            StemmerTokenFilterLanguage.MinimalEnglish => "minimalEnglish",
-            StemmerTokenFilterLanguage.PossessiveEnglish => "possessiveEnglish",
-            StemmerTokenFilterLanguage.Porter2 => "porter2",
-            StemmerTokenFilterLanguage.Lovins => "lovins",
-            StemmerTokenFilterLanguage.Finnish => "finnish",
-            StemmerTokenFilterLanguage.LightFinnish => "lightFinnish",
-            StemmerTokenFilterLanguage.French => "french",
-            StemmerTokenFilterLanguage.LightFrench => "lightFrench",
-            StemmerTokenFilterLanguage.MinimalFrench => "minimalFrench",
-            StemmerTokenFilterLanguage.Galician => "galician",
-            StemmerTokenFilterLanguage.MinimalGalician => "minimalGalician",
-            StemmerTokenFilterLanguage.German => "german",
-            StemmerTokenFilterLanguage.German2 => "german2",
-            StemmerTokenFilterLanguage.LightGerman => "lightGerman",
-            StemmerTokenFilterLanguage.MinimalGerman => "minimalGerman",
-            StemmerTokenFilterLanguage.Greek => "greek",
-            StemmerTokenFilterLanguage.Hindi => "hindi",
-            StemmerTokenFilterLanguage.Hungarian => "hungarian",
-            StemmerTokenFilterLanguage.LightHungarian => "lightHungarian",
-            StemmerTokenFilterLanguage.Indonesian => "indonesian",
-            StemmerTokenFilterLanguage.Irish => "irish",
-            StemmerTokenFilterLanguage.Italian => "italian",
-            StemmerTokenFilterLanguage.LightItalian => "lightItalian",
-            StemmerTokenFilterLanguage.Sorani => "sorani",
-            StemmerTokenFilterLanguage.Latvian => "latvian",
-            StemmerTokenFilterLanguage.Norwegian => "norwegian",
-            StemmerTokenFilterLanguage.LightNorwegian => "lightNorwegian",
-            StemmerTokenFilterLanguage.MinimalNorwegian => "minimalNorwegian",
-            StemmerTokenFilterLanguage.LightNynorsk => "lightNynorsk",
-            StemmerTokenFilterLanguage.MinimalNynorsk => "minimalNynorsk",
-            StemmerTokenFilterLanguage.Portuguese => "portuguese",
-            StemmerTokenFilterLanguage.LightPortuguese => "lightPortuguese",
-            StemmerTokenFilterLanguage.MinimalPortuguese => "minimalPortuguese",
-            StemmerTokenFilterLanguage.PortugueseRslp => "portugueseRslp",
-            StemmerTokenFilterLanguage.Romanian => "romanian",
-            StemmerTokenFilterLanguage.Russian => "russian",
-            StemmerTokenFilterLanguage.LightRussian => "lightRussian",
-            StemmerTokenFilterLanguage.Spanish => "spanish",
-            StemmerTokenFilterLanguage.LightSpanish => "lightSpanish",
-            StemmerTokenFilterLanguage.Swedish => "swedish",
-            StemmerTokenFilterLanguage.LightSwedish => "lightSwedish",
-            StemmerTokenFilterLanguage.Turkish => "turkish",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Arabic => "arabic",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Armenian => "armenian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Basque => "basque",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Brazilian => "brazilian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Bulgarian => "bulgarian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Catalan => "catalan",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Czech => "czech",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Danish => "danish",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Dutch => "dutch",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.DutchKp => "dutchKp",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.English => "english",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightEnglish => "lightEnglish",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalEnglish => "minimalEnglish",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.PossessiveEnglish => "possessiveEnglish",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Porter2 => "porter2",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Lovins => "lovins",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Finnish => "finnish",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightFinnish => "lightFinnish",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.French => "french",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightFrench => "lightFrench",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalFrench => "minimalFrench",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Galician => "galician",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalGalician => "minimalGalician",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.German => "german",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.German2 => "german2",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightGerman => "lightGerman",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalGerman => "minimalGerman",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Greek => "greek",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Hindi => "hindi",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Hungarian => "hungarian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightHungarian => "lightHungarian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Indonesian => "indonesian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Irish => "irish",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Italian => "italian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightItalian => "lightItalian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Sorani => "sorani",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Latvian => "latvian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Norwegian => "norwegian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightNorwegian => "lightNorwegian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalNorwegian => "minimalNorwegian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightNynorsk => "lightNynorsk",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalNynorsk => "minimalNynorsk",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Portuguese => "portuguese",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightPortuguese => "lightPortuguese",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalPortuguese => "minimalPortuguese",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.PortugueseRslp => "portugueseRslp",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Romanian => "romanian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Russian => "russian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightRussian => "lightRussian",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Spanish => "spanish",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightSpanish => "lightSpanish",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Swedish => "swedish",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightSwedish => "lightSwedish",
+            global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Turkish => "turkish",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StemmerTokenFilterLanguage value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static StemmerTokenFilterLanguage ToStemmerTokenFilterLanguage(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "arabic"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "arabic"))
             {
-                return StemmerTokenFilterLanguage.Arabic;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Arabic;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "armenian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "armenian"))
             {
-                return StemmerTokenFilterLanguage.Armenian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Armenian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "basque"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "basque"))
             {
-                return StemmerTokenFilterLanguage.Basque;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Basque;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "brazilian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "brazilian"))
             {
-                return StemmerTokenFilterLanguage.Brazilian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Brazilian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "bulgarian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "bulgarian"))
             {
-                return StemmerTokenFilterLanguage.Bulgarian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Bulgarian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "catalan"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "catalan"))
             {
-                return StemmerTokenFilterLanguage.Catalan;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Catalan;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "czech"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "czech"))
             {
-                return StemmerTokenFilterLanguage.Czech;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Czech;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "danish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "danish"))
             {
-                return StemmerTokenFilterLanguage.Danish;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Danish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "dutch"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "dutch"))
             {
-                return StemmerTokenFilterLanguage.Dutch;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Dutch;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "dutchKp"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "dutchKp"))
             {
-                return StemmerTokenFilterLanguage.DutchKp;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.DutchKp;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "english"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "english"))
             {
-                return StemmerTokenFilterLanguage.English;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.English;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lightEnglish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lightEnglish"))
             {
-                return StemmerTokenFilterLanguage.LightEnglish;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightEnglish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "minimalEnglish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "minimalEnglish"))
             {
-                return StemmerTokenFilterLanguage.MinimalEnglish;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalEnglish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "possessiveEnglish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "possessiveEnglish"))
             {
-                return StemmerTokenFilterLanguage.PossessiveEnglish;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.PossessiveEnglish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "porter2"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "porter2"))
             {
-                return StemmerTokenFilterLanguage.Porter2;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Porter2;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lovins"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lovins"))
             {
-                return StemmerTokenFilterLanguage.Lovins;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Lovins;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "finnish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "finnish"))
             {
-                return StemmerTokenFilterLanguage.Finnish;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Finnish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lightFinnish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lightFinnish"))
             {
-                return StemmerTokenFilterLanguage.LightFinnish;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightFinnish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "french"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "french"))
             {
-                return StemmerTokenFilterLanguage.French;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.French;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lightFrench"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lightFrench"))
             {
-                return StemmerTokenFilterLanguage.LightFrench;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightFrench;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "minimalFrench"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "minimalFrench"))
             {
-                return StemmerTokenFilterLanguage.MinimalFrench;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalFrench;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "galician"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "galician"))
             {
-                return StemmerTokenFilterLanguage.Galician;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Galician;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "minimalGalician"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "minimalGalician"))
             {
-                return StemmerTokenFilterLanguage.MinimalGalician;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalGalician;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "german"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "german"))
             {
-                return StemmerTokenFilterLanguage.German;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.German;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "german2"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "german2"))
             {
-                return StemmerTokenFilterLanguage.German2;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.German2;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lightGerman"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lightGerman"))
             {
-                return StemmerTokenFilterLanguage.LightGerman;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightGerman;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "minimalGerman"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "minimalGerman"))
             {
-                return StemmerTokenFilterLanguage.MinimalGerman;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalGerman;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "greek"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "greek"))
             {
-                return StemmerTokenFilterLanguage.Greek;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Greek;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hindi"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "hindi"))
             {
-                return StemmerTokenFilterLanguage.Hindi;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Hindi;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "hungarian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "hungarian"))
             {
-                return StemmerTokenFilterLanguage.Hungarian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Hungarian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lightHungarian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lightHungarian"))
             {
-                return StemmerTokenFilterLanguage.LightHungarian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightHungarian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "indonesian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "indonesian"))
             {
-                return StemmerTokenFilterLanguage.Indonesian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Indonesian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "irish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "irish"))
             {
-                return StemmerTokenFilterLanguage.Irish;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Irish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "italian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "italian"))
             {
-                return StemmerTokenFilterLanguage.Italian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Italian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lightItalian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lightItalian"))
             {
-                return StemmerTokenFilterLanguage.LightItalian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightItalian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "sorani"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "sorani"))
             {
-                return StemmerTokenFilterLanguage.Sorani;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Sorani;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "latvian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "latvian"))
             {
-                return StemmerTokenFilterLanguage.Latvian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Latvian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "norwegian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "norwegian"))
             {
-                return StemmerTokenFilterLanguage.Norwegian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Norwegian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lightNorwegian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lightNorwegian"))
             {
-                return StemmerTokenFilterLanguage.LightNorwegian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightNorwegian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "minimalNorwegian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "minimalNorwegian"))
             {
-                return StemmerTokenFilterLanguage.MinimalNorwegian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalNorwegian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lightNynorsk"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lightNynorsk"))
             {
-                return StemmerTokenFilterLanguage.LightNynorsk;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightNynorsk;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "minimalNynorsk"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "minimalNynorsk"))
             {
-                return StemmerTokenFilterLanguage.MinimalNynorsk;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalNynorsk;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "portuguese"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "portuguese"))
             {
-                return StemmerTokenFilterLanguage.Portuguese;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Portuguese;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lightPortuguese"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lightPortuguese"))
             {
-                return StemmerTokenFilterLanguage.LightPortuguese;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightPortuguese;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "minimalPortuguese"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "minimalPortuguese"))
             {
-                return StemmerTokenFilterLanguage.MinimalPortuguese;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.MinimalPortuguese;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "portugueseRslp"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "portugueseRslp"))
             {
-                return StemmerTokenFilterLanguage.PortugueseRslp;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.PortugueseRslp;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "romanian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "romanian"))
             {
-                return StemmerTokenFilterLanguage.Romanian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Romanian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "russian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "russian"))
             {
-                return StemmerTokenFilterLanguage.Russian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Russian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lightRussian"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lightRussian"))
             {
-                return StemmerTokenFilterLanguage.LightRussian;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightRussian;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "spanish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "spanish"))
             {
-                return StemmerTokenFilterLanguage.Spanish;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Spanish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lightSpanish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lightSpanish"))
             {
-                return StemmerTokenFilterLanguage.LightSpanish;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightSpanish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "swedish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "swedish"))
             {
-                return StemmerTokenFilterLanguage.Swedish;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Swedish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "lightSwedish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "lightSwedish"))
             {
-                return StemmerTokenFilterLanguage.LightSwedish;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.LightSwedish;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "turkish"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "turkish"))
             {
-                return StemmerTokenFilterLanguage.Turkish;
+                return global::Azure.Search.Documents.Indexes.Models.StemmerTokenFilterLanguage.Turkish;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StemmerTokenFilterLanguage value.");
         }

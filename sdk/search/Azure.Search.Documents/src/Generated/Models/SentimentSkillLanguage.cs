@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The language codes supported for input text by SentimentSkill. </summary>
-    public readonly partial struct SentimentSkillLanguage : IEquatable<SentimentSkillLanguage>
+    public readonly partial struct SentimentSkillLanguage : IEquatable<global::Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage>
     {
         private readonly string _value;
         /// <summary> Danish. </summary>
@@ -46,12 +46,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Turkish. </summary>
         private const string TrValue = "tr";
 
-        /// <summary> Initializes a new instance of <see cref="SentimentSkillLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SentimentSkillLanguage(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -101,34 +101,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Turkish. </summary>
         public static SentimentSkillLanguage Tr { get; } = new SentimentSkillLanguage(TrValue);
 
-        /// <summary> Determines if two <see cref="SentimentSkillLanguage"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SentimentSkillLanguage left, SentimentSkillLanguage right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SentimentSkillLanguage"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SentimentSkillLanguage left, SentimentSkillLanguage right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SentimentSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator SentimentSkillLanguage(string value) => new SentimentSkillLanguage(value);
 
-        /// <summary> Converts a string to a <see cref="SentimentSkillLanguage"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.SentimentSkillLanguage"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SentimentSkillLanguage?(string value) => value == null ? null : new SentimentSkillLanguage(value);
+        public static implicit operator SentimentSkillLanguage?(string value) => (value == null) ? null : new SentimentSkillLanguage(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SentimentSkillLanguage other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is SentimentSkillLanguage other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(SentimentSkillLanguage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SentimentSkillLanguage other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

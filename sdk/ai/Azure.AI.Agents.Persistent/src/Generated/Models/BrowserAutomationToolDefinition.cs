@@ -13,21 +13,21 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
     public partial class BrowserAutomationToolDefinition : ToolDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BrowserAutomationToolDefinition"/>. </summary>
         /// <param name="browserAutomation"> The Browser Automation Tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="browserAutomation"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="browserAutomation"/> is null. </exception>
         public BrowserAutomationToolDefinition(BrowserAutomationToolParameters browserAutomation) : base("browser_automation")
         {
-            Argument.AssertNotNull(browserAutomation, nameof(browserAutomation));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(browserAutomation, nameof(browserAutomation));
 
             BrowserAutomation = browserAutomation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.BrowserAutomationToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="browserAutomation"> The Browser Automation Tool parameters. </param>
-        internal BrowserAutomationToolDefinition(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BrowserAutomationToolParameters browserAutomation) : base(@type, additionalBinaryDataProperties)
+        internal BrowserAutomationToolDefinition(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, BrowserAutomationToolParameters browserAutomation) : base(@type, additionalBinaryDataProperties)
         {
             BrowserAutomation = browserAutomation;
         }

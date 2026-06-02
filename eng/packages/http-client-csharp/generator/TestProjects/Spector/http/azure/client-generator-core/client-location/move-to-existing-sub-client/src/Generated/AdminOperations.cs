@@ -17,24 +17,24 @@ namespace Specs.Azure.ClientGenerator.Core.ClientLocation._MoveToExistingSubClie
     {
         protected AdminOperations() => throw null;
 
-        internal AdminOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal AdminOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetAdminInfo(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAdminInfoAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetAdminInfoAsync(RequestContext context) => throw null;
 
         public virtual Response GetAdminInfo(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> GetAdminInfoAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> GetAdminInfoAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response DeleteUser(RequestContext context) => throw null;
 
-        public virtual Task<Response> DeleteUserAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> DeleteUserAsync(RequestContext context) => throw null;
 
         public virtual Response DeleteUser(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> DeleteUserAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> DeleteUserAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

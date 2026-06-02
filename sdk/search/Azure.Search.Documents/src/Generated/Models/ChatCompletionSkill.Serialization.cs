@@ -14,9 +14,9 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A skill that calls a language model via Azure AI Foundry's Chat Completions endpoint. </summary>
-    public partial class ChatCompletionSkill : SearchIndexerSkill, IJsonModel<ChatCompletionSkill>
+    public partial class ChatCompletionSkill : SearchIndexerSkill, IJsonModel<global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill>
     {
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionSkill"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill"/> for deserialization. </summary>
         internal ChatCompletionSkill()
         {
         }
@@ -25,48 +25,48 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SearchIndexerSkill PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeChatCompletionSkill(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill.DeserializeChatCompletionSkill(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletionSkill)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletionSkill)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ChatCompletionSkill>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ChatCompletionSkill IPersistableModel<ChatCompletionSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => (ChatCompletionSkill)PersistableModelCreateCore(data, options);
+        ChatCompletionSkill IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ChatCompletionSkill)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ChatCompletionSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ChatCompletionSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -74,37 +74,37 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ChatCompletionSkill)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(AuthIdentity))
+            if (global::Azure.Search.Documents.Optional.IsDefined(AuthIdentity))
             {
                 writer.WritePropertyName("authIdentity"u8);
-                writer.WriteObjectValue(AuthIdentity, options);
+                writer.WriteObjectValue<SearchIndexerDataIdentity>(AuthIdentity, options);
             }
-            if (Optional.IsDefined(ApiKey))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(CommonModelParameters))
+            if (global::Azure.Search.Documents.Optional.IsDefined(CommonModelParameters))
             {
                 writer.WritePropertyName("commonModelParameters"u8);
-                writer.WriteObjectValue(CommonModelParameters, options);
+                writer.WriteObjectValue<ChatCompletionCommonModelParameters>(CommonModelParameters, options);
             }
-            if (Optional.IsCollectionDefined(ExtraParameters))
+            if (global::Azure.Search.Documents.Optional.IsCollectionDefined(ExtraParameters))
             {
                 writer.WritePropertyName("extraParameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in ExtraParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if ((item.Value == null))
                     {
                         writer.WriteNullValue();
                         continue;
@@ -112,48 +112,48 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ExtraParametersBehavior))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ExtraParametersBehavior))
             {
                 writer.WritePropertyName("extraParametersBehavior"u8);
                 writer.WriteStringValue(ExtraParametersBehavior.Value.ToString());
             }
-            if (Optional.IsDefined(ResponseFormat))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("responseFormat"u8);
-                writer.WriteObjectValue(ResponseFormat, options);
+                writer.WriteObjectValue<ChatCompletionResponseFormat>(ResponseFormat, options);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ChatCompletionSkill IJsonModel<ChatCompletionSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ChatCompletionSkill)JsonModelCreateCore(ref reader, options);
+        ChatCompletionSkill IJsonModel<global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ChatCompletionSkill)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SearchIndexerSkill JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ChatCompletionSkill)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChatCompletionSkill(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.ChatCompletionSkill.DeserializeChatCompletionSkill(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ChatCompletionSkill DeserializeChatCompletionSkill(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -161,14 +161,14 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             string context = default;
-            IList<InputFieldMappingEntry> inputs = default;
-            IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            Uri uri = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = default;
+            IList<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            global::System.Uri uri = default;
             SearchIndexerDataIdentity authIdentity = default;
             string apiKey = default;
             ChatCompletionCommonModelParameters commonModelParameters = default;
-            IDictionary<string, BinaryData> extraParameters = default;
+            IDictionary<string, global::System.BinaryData> extraParameters = default;
             ChatCompletionExtraParametersBehavior? extraParametersBehavior = default;
             ChatCompletionResponseFormat responseFormat = default;
             foreach (var prop in element.EnumerateObject())
@@ -195,37 +195,37 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("inputs"u8))
                 {
-                    List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
+                    List<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> array = new List<global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
                     }
                     inputs = array;
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))
                 {
-                    List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
+                    List<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> array = new List<global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
+                        array.Add(global::Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
                     }
                     outputs = array;
                     continue;
                 }
                 if (prop.NameEquals("uri"u8))
                 {
-                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new global::System.Uri(prop.Value.GetString(), global::System.UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("authIdentity"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         authIdentity = null;
                         continue;
                     }
-                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
+                    authIdentity = global::Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("apiKey"u8))
@@ -235,29 +235,29 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("commonModelParameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    commonModelParameters = ChatCompletionCommonModelParameters.DeserializeChatCompletionCommonModelParameters(prop.Value, options);
+                    commonModelParameters = global::Azure.Search.Documents.Indexes.Models.ChatCompletionCommonModelParameters.DeserializeChatCompletionCommonModelParameters(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("extraParameters"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    Dictionary<string, global::System.BinaryData> dictionary = new Dictionary<string, global::System.BinaryData>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        if ((prop0.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                         {
                             dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, global::System.BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     extraParameters = dictionary;
@@ -265,7 +265,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("extraParametersBehavior"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -274,16 +274,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("responseFormat"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    responseFormat = ChatCompletionResponseFormat.DeserializeChatCompletionResponseFormat(prop.Value, options);
+                    responseFormat = global::Azure.Search.Documents.Indexes.Models.ChatCompletionResponseFormat.DeserializeChatCompletionResponseFormat(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ChatCompletionSkill(
@@ -298,7 +298,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 authIdentity,
                 apiKey,
                 commonModelParameters,
-                extraParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                (extraParameters ?? new ChangeTrackingDictionary<string, global::System.BinaryData>()),
                 extraParametersBehavior,
                 responseFormat);
         }

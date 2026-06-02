@@ -11,22 +11,22 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesOpenApiProjectConnectionSecurityScheme
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiProjectConnectionSecurityScheme"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiProjectConnectionSecurityScheme"/>. </summary>
         /// <param name="projectConnectionId"> Project connection id for Project Connection auth type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
         public ResponsesOpenApiProjectConnectionSecurityScheme(string projectConnectionId)
         {
-            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
+            global::Azure.AI.Extensions.OpenAI.Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
             ProjectConnectionId = projectConnectionId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiProjectConnectionSecurityScheme"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.ResponsesOpenApiProjectConnectionSecurityScheme"/>. </summary>
         /// <param name="projectConnectionId"> Project connection id for Project Connection auth type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponsesOpenApiProjectConnectionSecurityScheme(string projectConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponsesOpenApiProjectConnectionSecurityScheme(string projectConnectionId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

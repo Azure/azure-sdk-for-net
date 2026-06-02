@@ -13,54 +13,54 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </summary>
-    public partial class IndexingParametersConfiguration : IJsonModel<IndexingParametersConfiguration>
+    public partial class IndexingParametersConfiguration : IJsonModel<global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual IndexingParametersConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.Search.Documents.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIndexingParametersConfiguration(document.RootElement, options);
+                        return global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.Search.Documents.AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IndexingParametersConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IndexingParametersConfiguration IPersistableModel<IndexingParametersConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IndexingParametersConfiguration IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => this.PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IndexingParametersConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IndexingParametersConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -68,102 +68,102 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ParsingMode))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ParsingMode))
             {
                 writer.WritePropertyName("parsingMode"u8);
                 writer.WriteStringValue(ParsingMode.Value.ToString());
             }
-            if (Optional.IsDefined(ExcludedFileNameExtensions))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ExcludedFileNameExtensions))
             {
                 writer.WritePropertyName("excludedFileNameExtensions"u8);
                 writer.WriteStringValue(ExcludedFileNameExtensions);
             }
-            if (Optional.IsDefined(IndexedFileNameExtensions))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IndexedFileNameExtensions))
             {
                 writer.WritePropertyName("indexedFileNameExtensions"u8);
                 writer.WriteStringValue(IndexedFileNameExtensions);
             }
-            if (Optional.IsDefined(FailOnUnsupportedContentType))
+            if (global::Azure.Search.Documents.Optional.IsDefined(FailOnUnsupportedContentType))
             {
                 writer.WritePropertyName("failOnUnsupportedContentType"u8);
                 writer.WriteBooleanValue(FailOnUnsupportedContentType.Value);
             }
-            if (Optional.IsDefined(FailOnUnprocessableDocument))
+            if (global::Azure.Search.Documents.Optional.IsDefined(FailOnUnprocessableDocument))
             {
                 writer.WritePropertyName("failOnUnprocessableDocument"u8);
                 writer.WriteBooleanValue(FailOnUnprocessableDocument.Value);
             }
-            if (Optional.IsDefined(IndexStorageMetadataOnlyForOversizedDocuments))
+            if (global::Azure.Search.Documents.Optional.IsDefined(IndexStorageMetadataOnlyForOversizedDocuments))
             {
                 writer.WritePropertyName("indexStorageMetadataOnlyForOversizedDocuments"u8);
                 writer.WriteBooleanValue(IndexStorageMetadataOnlyForOversizedDocuments.Value);
             }
-            if (Optional.IsDefined(DelimitedTextHeaders))
+            if (global::Azure.Search.Documents.Optional.IsDefined(DelimitedTextHeaders))
             {
                 writer.WritePropertyName("delimitedTextHeaders"u8);
                 writer.WriteStringValue(DelimitedTextHeaders);
             }
-            if (Optional.IsDefined(DelimitedTextDelimiter))
+            if (global::Azure.Search.Documents.Optional.IsDefined(DelimitedTextDelimiter))
             {
                 writer.WritePropertyName("delimitedTextDelimiter"u8);
                 writer.WriteStringValue(DelimitedTextDelimiter);
             }
-            if (Optional.IsDefined(FirstLineContainsHeaders))
+            if (global::Azure.Search.Documents.Optional.IsDefined(FirstLineContainsHeaders))
             {
                 writer.WritePropertyName("firstLineContainsHeaders"u8);
                 writer.WriteBooleanValue(FirstLineContainsHeaders.Value);
             }
-            if (Optional.IsDefined(MarkdownParsingSubmode))
+            if (global::Azure.Search.Documents.Optional.IsDefined(MarkdownParsingSubmode))
             {
                 writer.WritePropertyName("markdownParsingSubmode"u8);
                 writer.WriteStringValue(MarkdownParsingSubmode.Value.ToString());
             }
-            if (Optional.IsDefined(MarkdownHeaderDepth))
+            if (global::Azure.Search.Documents.Optional.IsDefined(MarkdownHeaderDepth))
             {
                 writer.WritePropertyName("markdownHeaderDepth"u8);
                 writer.WriteStringValue(MarkdownHeaderDepth.Value.ToString());
             }
-            if (Optional.IsDefined(DocumentRoot))
+            if (global::Azure.Search.Documents.Optional.IsDefined(DocumentRoot))
             {
                 writer.WritePropertyName("documentRoot"u8);
                 writer.WriteStringValue(DocumentRoot);
             }
-            if (Optional.IsDefined(DataToExtract))
+            if (global::Azure.Search.Documents.Optional.IsDefined(DataToExtract))
             {
                 writer.WritePropertyName("dataToExtract"u8);
                 writer.WriteStringValue(DataToExtract.Value.ToString());
             }
-            if (Optional.IsDefined(ImageAction))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ImageAction))
             {
                 writer.WritePropertyName("imageAction"u8);
                 writer.WriteStringValue(ImageAction.Value.ToString());
             }
-            if (Optional.IsDefined(AllowSkillsetToReadFileData))
+            if (global::Azure.Search.Documents.Optional.IsDefined(AllowSkillsetToReadFileData))
             {
                 writer.WritePropertyName("allowSkillsetToReadFileData"u8);
                 writer.WriteBooleanValue(AllowSkillsetToReadFileData.Value);
             }
-            if (Optional.IsDefined(PdfTextRotationAlgorithm))
+            if (global::Azure.Search.Documents.Optional.IsDefined(PdfTextRotationAlgorithm))
             {
                 writer.WritePropertyName("pdfTextRotationAlgorithm"u8);
                 writer.WriteStringValue(PdfTextRotationAlgorithm.Value.ToString());
             }
-            if (Optional.IsDefined(ExecutionEnvironment))
+            if (global::Azure.Search.Documents.Optional.IsDefined(ExecutionEnvironment))
             {
                 writer.WritePropertyName("executionEnvironment"u8);
                 writer.WriteStringValue(ExecutionEnvironment.Value.ToString());
             }
-            if (Optional.IsDefined(_queryTimeout))
+            if (global::Azure.Search.Documents.Optional.IsDefined(_queryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteStringValue(_queryTimeout);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (((options.Format != "W") && (_additionalBinaryDataProperties != null)))
             {
                 foreach (var item in _additionalBinaryDataProperties)
                 {
@@ -171,9 +171,9 @@ namespace Azure.Search.Documents.Indexes.Models
 #if NET6_0_OR_GREATER
                     writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        global::System.Text.Json.JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
@@ -182,19 +182,19 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IndexingParametersConfiguration IJsonModel<IndexingParametersConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IndexingParametersConfiguration IJsonModel<global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => this.JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual IndexingParametersConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(IndexingParametersConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIndexingParametersConfiguration(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.Search.Documents.Indexes.Models.IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(document.RootElement, options);
         }
     }
 }

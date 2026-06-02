@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Evaluation
     public partial class EvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvalResult"/>. </summary>
         /// <param name="name"> name of the check. </param>
         /// <param name="type"> type of the check. </param>
         /// <param name="score"> score. </param>
@@ -26,13 +26,13 @@ namespace Azure.AI.Projects.Evaluation
             IsPassed = isPassed;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvalResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.EvalResult"/>. </summary>
         /// <param name="name"> name of the check. </param>
         /// <param name="type"> type of the check. </param>
         /// <param name="score"> score. </param>
         /// <param name="isPassed"> indicates if the check passed or failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvalResult(string name, string @type, float score, bool isPassed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvalResult(string name, string @type, float score, bool isPassed, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;

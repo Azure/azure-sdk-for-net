@@ -16,29 +16,29 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class IndexedOneLakeKnowledgeSourceParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IndexedOneLakeKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexedOneLakeKnowledgeSourceParameters"/>. </summary>
         /// <param name="fabricWorkspaceId"> OneLake workspace ID. </param>
         /// <param name="lakehouseId"> Specifies which OneLake lakehouse to access. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fabricWorkspaceId"/> or <paramref name="lakehouseId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fabricWorkspaceId"/> or <paramref name="lakehouseId"/> is null. </exception>
         public IndexedOneLakeKnowledgeSourceParameters(string fabricWorkspaceId, string lakehouseId)
         {
-            Argument.AssertNotNull(fabricWorkspaceId, nameof(fabricWorkspaceId));
-            Argument.AssertNotNull(lakehouseId, nameof(lakehouseId));
+            global::Azure.Search.Documents.Argument.AssertNotNull(fabricWorkspaceId, nameof(fabricWorkspaceId));
+            global::Azure.Search.Documents.Argument.AssertNotNull(lakehouseId, nameof(lakehouseId));
 
             FabricWorkspaceId = fabricWorkspaceId;
             LakehouseId = lakehouseId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IndexedOneLakeKnowledgeSourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexedOneLakeKnowledgeSourceParameters"/>. </summary>
         /// <param name="fabricWorkspaceId"> OneLake workspace ID. </param>
         /// <param name="lakehouseId"> Specifies which OneLake lakehouse to access. </param>
         /// <param name="targetPath"> Optional OneLakehouse folder or shortcut to filter OneLake content. </param>
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexedOneLakeKnowledgeSourceParameters(string fabricWorkspaceId, string lakehouseId, string targetPath, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexedOneLakeKnowledgeSourceParameters(string fabricWorkspaceId, string lakehouseId, string targetPath, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             FabricWorkspaceId = fabricWorkspaceId;
             LakehouseId = lakehouseId;

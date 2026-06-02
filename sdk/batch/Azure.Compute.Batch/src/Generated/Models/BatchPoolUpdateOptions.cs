@@ -14,18 +14,18 @@ namespace Azure.Compute.Batch
     public partial class BatchPoolUpdateOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolUpdateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolUpdateOptions"/>. </summary>
         public BatchPoolUpdateOptions()
         {
-            ApplicationPackageReferences = new ChangeTrackingList<BatchApplicationPackageReference>();
-            Metadata = new ChangeTrackingList<BatchMetadataItem>();
-            UserAccounts = new ChangeTrackingList<UserAccount>();
-            MountConfiguration = new ChangeTrackingList<MountConfiguration>();
+            ApplicationPackageReferences = new ChangeTrackingList<global::Azure.Compute.Batch.BatchApplicationPackageReference>();
+            Metadata = new ChangeTrackingList<global::Azure.Compute.Batch.BatchMetadataItem>();
+            UserAccounts = new ChangeTrackingList<global::Azure.Compute.Batch.UserAccount>();
+            MountConfiguration = new ChangeTrackingList<global::Azure.Compute.Batch.MountConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPoolUpdateOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPoolUpdateOptions"/>. </summary>
         /// <param name="displayName"> The display name for the Pool. The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. This field can be updated only when the pool is empty. </param>
         /// <param name="vmSize"> The size of virtual machines in the Pool. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes).&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
         /// <param name="enableInterNodeCommunication"> Whether the Pool permits direct communication between Compute Nodes. Enabling inter-node communication limits the maximum size of the Pool due to deployment restrictions on the Compute Nodes of the Pool. This may result in the Pool not reaching its desired size. The default value is false.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch
         /// <param name="mountConfiguration"> Mount storage using specified file system for the entire lifetime of the pool. Mount the storage using Azure fileshare, NFS, CIFS or Blobfuse based file system.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
         /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPoolUpdateOptions(string displayName, string vmSize, bool? enableInterNodeCommunication, BatchStartTask startTask, IList<BatchApplicationPackageReference> applicationPackageReferences, IList<BatchMetadataItem> metadata, VirtualMachineConfiguration virtualMachineConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, NetworkConfiguration networkConfiguration, IList<UserAccount> userAccounts, IList<MountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPoolUpdateOptions(string displayName, string vmSize, bool? enableInterNodeCommunication, BatchStartTask startTask, IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> applicationPackageReferences, IList<global::Azure.Compute.Batch.BatchMetadataItem> metadata, VirtualMachineConfiguration virtualMachineConfiguration, int? taskSlotsPerNode, BatchTaskSchedulingPolicy taskSchedulingPolicy, NetworkConfiguration networkConfiguration, IList<global::Azure.Compute.Batch.UserAccount> userAccounts, IList<global::Azure.Compute.Batch.MountConfiguration> mountConfiguration, UpgradePolicy upgradePolicy, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             VmSize = vmSize;
@@ -71,10 +71,10 @@ namespace Azure.Compute.Batch
         public BatchStartTask StartTask { get; set; }
 
         /// <summary> A list of Packages to be installed on each Compute Node in the Pool. Changes to Package references affect all new Nodes joining the Pool, but do not affect Compute Nodes that are already in the Pool until they are rebooted or reimaged. If this element is present, it replaces any existing Package references. If you specify an empty collection, then all Package references are removed from the Pool. If omitted, any existing Package references are left unchanged. </summary>
-        public IList<BatchApplicationPackageReference> ApplicationPackageReferences { get; }
+        public IList<global::Azure.Compute.Batch.BatchApplicationPackageReference> ApplicationPackageReferences { get; }
 
         /// <summary> A list of name-value pairs associated with the Pool as metadata. If this element is present, it replaces any existing metadata configured on the Pool. If you specify an empty collection, any metadata is removed from the Pool. If omitted, any existing metadata is left unchanged. </summary>
-        public IList<BatchMetadataItem> Metadata { get; }
+        public IList<global::Azure.Compute.Batch.BatchMetadataItem> Metadata { get; }
 
         /// <summary> The virtual machine configuration for the Pool. This property must be specified.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </summary>
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
@@ -89,10 +89,10 @@ namespace Azure.Compute.Batch
         public NetworkConfiguration NetworkConfiguration { get; set; }
 
         /// <summary> The list of user Accounts to be created on each Compute Node in the Pool. This field can be updated only when the pool is empty. </summary>
-        public IList<UserAccount> UserAccounts { get; }
+        public IList<global::Azure.Compute.Batch.UserAccount> UserAccounts { get; }
 
         /// <summary> Mount storage using specified file system for the entire lifetime of the pool. Mount the storage using Azure fileshare, NFS, CIFS or Blobfuse based file system.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </summary>
-        public IList<MountConfiguration> MountConfiguration { get; }
+        public IList<global::Azure.Compute.Batch.MountConfiguration> MountConfiguration { get; }
 
         /// <summary> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling.&lt;br /&gt;&lt;br /&gt;This field can be updated only when the pool is empty. </summary>
         public UpgradePolicy UpgradePolicy { get; set; }

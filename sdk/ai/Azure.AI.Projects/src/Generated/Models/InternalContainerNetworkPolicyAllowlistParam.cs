@@ -10,20 +10,20 @@ namespace Azure.AI.Projects
 {
     internal partial class InternalContainerNetworkPolicyAllowlistParam : InternalContainerNetworkPolicyParam
     {
-        /// <summary> Initializes a new instance of <see cref="InternalContainerNetworkPolicyAllowlistParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam"/>. </summary>
         /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>
-        public InternalContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains) : base(ContainerNetworkPolicyParamType.Allowlist)
+        public InternalContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains) : base(global::Azure.AI.Projects.ContainerNetworkPolicyParamType.Allowlist)
         {
             AllowedDomains = allowedDomains.ToList();
-            DomainSecrets = new ChangeTrackingList<InternalContainerNetworkPolicyDomainSecretParam>();
+            DomainSecrets = new ChangeTrackingList<global::Azure.AI.Projects.InternalContainerNetworkPolicyDomainSecretParam>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalContainerNetworkPolicyAllowlistParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.InternalContainerNetworkPolicyAllowlistParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>
         /// <param name="domainSecrets"> Optional domain-scoped secrets for allowlisted domains. </param>
-        internal InternalContainerNetworkPolicyAllowlistParam(ContainerNetworkPolicyParamType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> allowedDomains, IList<InternalContainerNetworkPolicyDomainSecretParam> domainSecrets) : base(@type, additionalBinaryDataProperties)
+        internal InternalContainerNetworkPolicyAllowlistParam(ContainerNetworkPolicyParamType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<string> allowedDomains, IList<global::Azure.AI.Projects.InternalContainerNetworkPolicyDomainSecretParam> domainSecrets) : base(@type, additionalBinaryDataProperties)
         {
             AllowedDomains = allowedDomains;
             DomainSecrets = domainSecrets;
@@ -33,6 +33,6 @@ namespace Azure.AI.Projects
         public IList<string> AllowedDomains { get; }
 
         /// <summary> Optional domain-scoped secrets for allowlisted domains. </summary>
-        public IList<InternalContainerNetworkPolicyDomainSecretParam> DomainSecrets { get; }
+        public IList<global::Azure.AI.Projects.InternalContainerNetworkPolicyDomainSecretParam> DomainSecrets { get; }
     }
 }

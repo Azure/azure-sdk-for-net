@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Call participant kind. </summary>
-    public readonly partial struct AcsCallParticipantKind : IEquatable<AcsCallParticipantKind>
+    public readonly partial struct AcsCallParticipantKind : IEquatable<global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantKind>
     {
         private readonly string _value;
         /// <summary> Attendee. </summary>
@@ -25,12 +25,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Collaborator. </summary>
         private const string CollaboratorValue = "Collaborator";
 
-        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsCallParticipantKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Messaging.EventGrid.SystemEvents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Collaborator. </summary>
         public static AcsCallParticipantKind Collaborator { get; } = new AcsCallParticipantKind(CollaboratorValue);
 
-        /// <summary> Determines if two <see cref="AcsCallParticipantKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsCallParticipantKind left, AcsCallParticipantKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AcsCallParticipantKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsCallParticipantKind left, AcsCallParticipantKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AcsCallParticipantKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator AcsCallParticipantKind(string value) => new AcsCallParticipantKind(value);
 
-        /// <summary> Converts a string to a <see cref="AcsCallParticipantKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Messaging.EventGrid.SystemEvents.AcsCallParticipantKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AcsCallParticipantKind?(string value) => value == null ? null : new AcsCallParticipantKind(value);
+        public static implicit operator AcsCallParticipantKind?(string value) => (value == null) ? null : new AcsCallParticipantKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AcsCallParticipantKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is AcsCallParticipantKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(AcsCallParticipantKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AcsCallParticipantKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

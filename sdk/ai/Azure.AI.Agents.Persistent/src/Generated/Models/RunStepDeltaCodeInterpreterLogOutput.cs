@@ -13,18 +13,18 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Represents a log output as produced by the Code Interpreter tool and as represented in a streaming run step's delta tool calls collection. </summary>
     public partial class RunStepDeltaCodeInterpreterLogOutput : RunStepDeltaCodeInterpreterOutput
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaCodeInterpreterLogOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterLogOutput"/>. </summary>
         /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
         internal RunStepDeltaCodeInterpreterLogOutput(int index) : base(index, "logs")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaCodeInterpreterLogOutput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaCodeInterpreterLogOutput"/>. </summary>
         /// <param name="index"> The index of the output in the streaming run step tool call's Code Interpreter outputs array. </param>
         /// <param name="type"> The type of the streaming run step tool call's Code Interpreter output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="logs"> The text output from the Code Interpreter tool call. </param>
-        internal RunStepDeltaCodeInterpreterLogOutput(int index, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string logs) : base(index, @type, additionalBinaryDataProperties)
+        internal RunStepDeltaCodeInterpreterLogOutput(int index, string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string logs) : base(index, @type, additionalBinaryDataProperties)
         {
             Logs = logs;
         }

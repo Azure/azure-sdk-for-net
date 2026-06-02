@@ -10,10 +10,10 @@ namespace Azure.AI.Projects.Evaluation
 {
     internal partial class UnknownEvaluationRuleAction : EvaluationRuleAction
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEvaluationRuleAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.UnknownEvaluationRuleAction"/>. </summary>
         /// <param name="type"> Type of the evaluation action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEvaluationRuleAction(EvaluationRuleActionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownEvaluationRuleAction(EvaluationRuleActionType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

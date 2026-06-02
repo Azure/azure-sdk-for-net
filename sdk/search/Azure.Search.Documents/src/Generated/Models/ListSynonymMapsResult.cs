@@ -14,24 +14,24 @@ namespace Azure.Search.Documents.Indexes.Models
     internal partial class ListSynonymMapsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ListSynonymMapsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ListSynonymMapsResult"/>. </summary>
         internal ListSynonymMapsResult()
         {
-            SynonymMaps = new ChangeTrackingList<SynonymMap>();
+            SynonymMaps = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SynonymMap>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListSynonymMapsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ListSynonymMapsResult"/>. </summary>
         /// <param name="synonymMaps"> The synonym maps in the Search service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListSynonymMapsResult(IReadOnlyList<SynonymMap> synonymMaps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListSynonymMapsResult(IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SynonymMap> synonymMaps, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SynonymMaps = synonymMaps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The synonym maps in the Search service. </summary>
-        public IReadOnlyList<SynonymMap> SynonymMaps { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SynonymMap> SynonymMaps { get; }
     }
 }

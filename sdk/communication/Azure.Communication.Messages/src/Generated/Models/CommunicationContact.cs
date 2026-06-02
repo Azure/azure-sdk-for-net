@@ -13,20 +13,20 @@ namespace Azure.Communication.Messages
     /// <summary> Communication Contact. </summary>
     public partial class CommunicationContact : ConversationContact
     {
-        /// <summary> Initializes a new instance of <see cref="CommunicationContact"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.CommunicationContact"/>. </summary>
         /// <param name="id"> External platform identifier. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public CommunicationContact(string id) : base(id, MessagePlatformKind.Communication)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public CommunicationContact(string id) : base(id, global::Azure.Communication.Messages.MessagePlatformKind.Communication)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(id, nameof(id));
 
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationContact"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.CommunicationContact"/>. </summary>
         /// <param name="id"> External platform identifier. </param>
         /// <param name="kind"> Type of message platform (e.g., WhatsApp). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationContact(string id, MessagePlatformKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, kind, additionalBinaryDataProperties)
+        internal CommunicationContact(string id, MessagePlatformKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base(id, kind, additionalBinaryDataProperties)
         {
         }
     }

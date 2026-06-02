@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> (Optional) describes the PII categories to return. </summary>
-    public readonly partial struct PiiCategory : IEquatable<PiiCategory>
+    public readonly partial struct PiiCategory : IEquatable<global::Azure.AI.Language.Text.PiiCategory>
     {
         private readonly string _value;
         /// <summary> ABA Routing number. </summary>
@@ -413,12 +413,12 @@ namespace Azure.AI.Language.Text
         /// <summary> Default PII categories for the language. </summary>
         private const string DefaultValue = "Default";
 
-        /// <summary> Initializes a new instance of <see cref="PiiCategory"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.PiiCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PiiCategory(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -1020,34 +1020,34 @@ namespace Azure.AI.Language.Text
         /// <summary> Default PII categories for the language. </summary>
         public static PiiCategory Default { get; } = new PiiCategory(DefaultValue);
 
-        /// <summary> Determines if two <see cref="PiiCategory"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.PiiCategory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PiiCategory left, PiiCategory right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PiiCategory"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.PiiCategory"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PiiCategory left, PiiCategory right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PiiCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.PiiCategory"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PiiCategory(string value) => new PiiCategory(value);
 
-        /// <summary> Converts a string to a <see cref="PiiCategory"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.PiiCategory"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PiiCategory?(string value) => value == null ? null : new PiiCategory(value);
+        public static implicit operator PiiCategory?(string value) => (value == null) ? null : new PiiCategory(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PiiCategory other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PiiCategory other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PiiCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PiiCategory other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

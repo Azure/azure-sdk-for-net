@@ -11,9 +11,9 @@ namespace Azure.AI.Projects.Agents
     public partial class DatasetInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DatasetInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.DatasetInfo"/>. </summary>
         /// <param name="taskCount"> Number of tasks/rows in the dataset. </param>
         /// <param name="isInline"> True when the dataset was provided inline in the request body. </param>
         internal DatasetInfo(int taskCount, bool isInline)
@@ -22,13 +22,13 @@ namespace Azure.AI.Projects.Agents
             IsInline = isInline;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatasetInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.DatasetInfo"/>. </summary>
         /// <param name="name"> Dataset name when using a registered dataset reference. Null for inline datasets. </param>
         /// <param name="version"> Dataset version when using a registered dataset reference. Null for inline datasets. </param>
         /// <param name="taskCount"> Number of tasks/rows in the dataset. </param>
         /// <param name="isInline"> True when the dataset was provided inline in the request body. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatasetInfo(string name, string version, int taskCount, bool isInline, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatasetInfo(string name, string version, int taskCount, bool isInline, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;

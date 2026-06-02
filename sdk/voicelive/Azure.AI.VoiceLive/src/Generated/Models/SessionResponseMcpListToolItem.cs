@@ -14,30 +14,30 @@ namespace Azure.AI.VoiceLive
     /// <summary> A response item that lists the tools available on an MCP server. </summary>
     public partial class SessionResponseMcpListToolItem : SessionResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="SessionResponseMcpListToolItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseMcpListToolItem"/>. </summary>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="serverLabel"> The label of the server that provides the tools. </param>
-        internal SessionResponseMcpListToolItem(IEnumerable<VoiceLiveMcpTool> tools, string serverLabel) : base(ItemType.McpListTools)
+        internal SessionResponseMcpListToolItem(IEnumerable<global::Azure.AI.VoiceLive.VoiceLiveMcpTool> tools, string serverLabel) : base(global::Azure.AI.VoiceLive.ItemType.McpListTools)
         {
             Tools = tools.ToList();
             ServerLabel = serverLabel;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SessionResponseMcpListToolItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.VoiceLive.SessionResponseMcpListToolItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="object"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tools"> The tools available on the server. </param>
         /// <param name="serverLabel"> The label of the server that provides the tools. </param>
-        internal SessionResponseMcpListToolItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<VoiceLiveMcpTool> tools, string serverLabel) : base(@type, id, @object, additionalBinaryDataProperties)
+        internal SessionResponseMcpListToolItem(ItemType @type, string id, string @object, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.AI.VoiceLive.VoiceLiveMcpTool> tools, string serverLabel) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             Tools = tools;
             ServerLabel = serverLabel;
         }
 
         /// <summary> The tools available on the server. </summary>
-        public IList<VoiceLiveMcpTool> Tools { get; }
+        public IList<global::Azure.AI.VoiceLive.VoiceLiveMcpTool> Tools { get; }
 
         /// <summary> The label of the server that provides the tools. </summary>
         public string ServerLabel { get; }

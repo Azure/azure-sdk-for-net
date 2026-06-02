@@ -13,9 +13,9 @@ namespace Azure.AI.Projects.Agents
     public partial class OptimizationCandidate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationCandidate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationCandidate"/>. </summary>
         /// <param name="name"> Display name of the candidate (e.g., 'baseline', 'instruction-v2'). </param>
         /// <param name="config"> The agent configuration that produced this candidate. </param>
         /// <param name="mutations"> What was mutated from the baseline (e.g., {system_prompt: 'new prompt'}). </param>
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="passRate"> Fraction of tasks that met the pass threshold. </param>
         /// <param name="taskScores"> Individual task-level scores. </param>
         /// <param name="isParetoOptimal"> Whether this candidate is on the Pareto frontier (score vs cost). </param>
-        internal OptimizationCandidate(string name, OptimizationAgentDefinition config, IDictionary<string, BinaryData> mutations, double avgScore, double avgTokens, double passRate, IEnumerable<OptimizationTaskResult> taskScores, bool isParetoOptimal)
+        internal OptimizationCandidate(string name, OptimizationAgentDefinition config, IDictionary<string, global::System.BinaryData> mutations, double avgScore, double avgTokens, double passRate, IEnumerable<global::Azure.AI.Projects.Agents.OptimizationTaskResult> taskScores, bool isParetoOptimal)
         {
             Name = name;
             Config = config;
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
             IsParetoOptimal = isParetoOptimal;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OptimizationCandidate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.OptimizationCandidate"/>. </summary>
         /// <param name="candidateId"> Server-assigned candidate identifier. Use with GET /candidates/{id} sub-endpoints. </param>
         /// <param name="name"> Display name of the candidate (e.g., 'baseline', 'instruction-v2'). </param>
         /// <param name="config"> The agent configuration that produced this candidate. </param>
@@ -50,7 +50,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="evalRunId"> Foundry evaluation run identifier for this candidate's scoring run. </param>
         /// <param name="promotion"> Promotion metadata. Null if the candidate has not been promoted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationCandidate(string candidateId, string name, OptimizationAgentDefinition config, IDictionary<string, BinaryData> mutations, double avgScore, double avgTokens, double passRate, IList<OptimizationTaskResult> taskScores, bool isParetoOptimal, string evalId, string evalRunId, PromotionInfo promotion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationCandidate(string candidateId, string name, OptimizationAgentDefinition config, IDictionary<string, global::System.BinaryData> mutations, double avgScore, double avgTokens, double passRate, IList<global::Azure.AI.Projects.Agents.OptimizationTaskResult> taskScores, bool isParetoOptimal, string evalId, string evalRunId, PromotionInfo promotion, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CandidateId = candidateId;
             Name = name;
@@ -78,8 +78,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// What was mutated from the baseline (e.g., {system_prompt: 'new prompt'}).
-        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to the value of this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
@@ -102,7 +102,7 @@ namespace Azure.AI.Projects.Agents
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Mutations { get; }
+        public IDictionary<string, global::System.BinaryData> Mutations { get; }
 
         /// <summary> Average composite score across all tasks. </summary>
         public double AvgScore { get; }
@@ -114,7 +114,7 @@ namespace Azure.AI.Projects.Agents
         public double PassRate { get; }
 
         /// <summary> Individual task-level scores. </summary>
-        public IList<OptimizationTaskResult> TaskScores { get; }
+        public IList<global::Azure.AI.Projects.Agents.OptimizationTaskResult> TaskScores { get; }
 
         /// <summary> Whether this candidate is on the Pareto frontier (score vs cost). </summary>
         public bool IsParetoOptimal { get; }

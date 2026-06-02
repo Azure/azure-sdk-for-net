@@ -9,24 +9,24 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Recurrence schedule model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HourlyRecurrenceSchedule"/>, <see cref="DailyRecurrenceSchedule"/>, <see cref="WeeklyRecurrenceSchedule"/>, and <see cref="MonthlyRecurrenceSchedule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.AI.Projects.Evaluation.HourlyRecurrenceSchedule"/>, <see cref="Azure.AI.Projects.Evaluation.DailyRecurrenceSchedule"/>, <see cref="Azure.AI.Projects.Evaluation.WeeklyRecurrenceSchedule"/>, and <see cref="Azure.AI.Projects.Evaluation.MonthlyRecurrenceSchedule"/>.
     /// </summary>
     public abstract partial class RecurrenceSchedule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RecurrenceSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.RecurrenceSchedule"/>. </summary>
         /// <param name="type"> Recurrence type for the recurrence schedule. </param>
         private protected RecurrenceSchedule(RecurrenceType @type)
         {
             Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecurrenceSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.RecurrenceSchedule"/>. </summary>
         /// <param name="type"> Recurrence type for the recurrence schedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecurrenceSchedule(RecurrenceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecurrenceSchedule(RecurrenceType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

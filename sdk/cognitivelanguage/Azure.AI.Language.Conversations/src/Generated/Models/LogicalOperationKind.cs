@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Set to 'OR' or 'AND' for using corresponding logical operation. </summary>
-    public readonly partial struct LogicalOperationKind : IEquatable<LogicalOperationKind>
+    public readonly partial struct LogicalOperationKind : IEquatable<global::Azure.AI.Language.Conversations.Models.LogicalOperationKind>
     {
         private readonly string _value;
         /// <summary> Logical AND. </summary>
@@ -20,12 +20,12 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Logical OR. </summary>
         private const string OrValue = "OR";
 
-        /// <summary> Initializes a new instance of <see cref="LogicalOperationKind"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.LogicalOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LogicalOperationKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Conversations.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -36,34 +36,34 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary> Logical OR. </summary>
         public static LogicalOperationKind Or { get; } = new LogicalOperationKind(OrValue);
 
-        /// <summary> Determines if two <see cref="LogicalOperationKind"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.LogicalOperationKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LogicalOperationKind left, LogicalOperationKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LogicalOperationKind"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Conversations.Models.LogicalOperationKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LogicalOperationKind left, LogicalOperationKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LogicalOperationKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.LogicalOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator LogicalOperationKind(string value) => new LogicalOperationKind(value);
 
-        /// <summary> Converts a string to a <see cref="LogicalOperationKind"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Conversations.Models.LogicalOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LogicalOperationKind?(string value) => value == null ? null : new LogicalOperationKind(value);
+        public static implicit operator LogicalOperationKind?(string value) => (value == null) ? null : new LogicalOperationKind(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LogicalOperationKind other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is LogicalOperationKind other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(LogicalOperationKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LogicalOperationKind other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

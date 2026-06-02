@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Metrics for pass/fail criteria. </summary>
-    public readonly partial struct PfMetrics : IEquatable<PfMetrics>
+    public readonly partial struct PfMetrics : IEquatable<global::Azure.Developer.LoadTesting.PfMetrics>
     {
         private readonly string _value;
         /// <summary> Pass fail criteria for response time metric in milliseconds. </summary>
@@ -25,12 +25,12 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Pass fail criteria for request per second. </summary>
         private const string RequestsPerSecondValue = "requests_per_sec";
 
-        /// <summary> Initializes a new instance of <see cref="PfMetrics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.LoadTesting.PfMetrics"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PfMetrics(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -50,34 +50,34 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Pass fail criteria for request per second. </summary>
         public static PfMetrics RequestsPerSecond { get; } = new PfMetrics(RequestsPerSecondValue);
 
-        /// <summary> Determines if two <see cref="PfMetrics"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.PfMetrics"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PfMetrics left, PfMetrics right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PfMetrics"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Developer.LoadTesting.PfMetrics"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PfMetrics left, PfMetrics right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PfMetrics"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.PfMetrics"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PfMetrics(string value) => new PfMetrics(value);
 
-        /// <summary> Converts a string to a <see cref="PfMetrics"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Developer.LoadTesting.PfMetrics"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PfMetrics?(string value) => value == null ? null : new PfMetrics(value);
+        public static implicit operator PfMetrics?(string value) => (value == null) ? null : new PfMetrics(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PfMetrics other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PfMetrics other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PfMetrics other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PfMetrics other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

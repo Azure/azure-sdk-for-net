@@ -17,7 +17,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A collection of file‐related operations under `/files`. </summary>
     public partial class PersistentAgentsFiles
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of PersistentAgentsFiles for mocking. </summary>
@@ -30,7 +30,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal PersistentAgentsFiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal PersistentAgentsFiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -54,7 +54,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="purpose"> The purpose of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalListFiles(string purpose, RequestContext context)
         {
@@ -62,7 +62,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalListFilesRequest(purpose, context);
+                using HttpMessage message = this.CreateInternalListFilesRequest(purpose, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -82,15 +82,15 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="purpose"> The purpose of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalListFilesAsync(string purpose, RequestContext context)
+        internal virtual async Task<global::Azure.Response> InternalListFilesAsync(string purpose, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.InternalListFiles");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalListFilesRequest(purpose, context);
+                using HttpMessage message = this.CreateInternalListFilesRequest(purpose, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -103,21 +103,21 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Gets a list of previously uploaded files. </summary>
         /// <param name="purpose"> The purpose of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<InternalFileListResponse> InternalListFiles(PersistentAgentFilePurpose? purpose = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.AI.Agents.Persistent.InternalFileListResponse> InternalListFiles(PersistentAgentFilePurpose? purpose = default, CancellationToken cancellationToken = default)
         {
-            Response result = InternalListFiles(purpose?.ToString(), cancellationToken.ToRequestContext());
-            return Response.FromValue((InternalFileListResponse)result, result);
+            Response result = this.InternalListFiles(purpose?.ToString(), cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((InternalFileListResponse)result), result);
         }
 
         /// <summary> Gets a list of previously uploaded files. </summary>
         /// <param name="purpose"> The purpose of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<InternalFileListResponse>> InternalListFilesAsync(PersistentAgentFilePurpose? purpose = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.InternalFileListResponse>> InternalListFilesAsync(PersistentAgentFilePurpose? purpose = default, CancellationToken cancellationToken = default)
         {
-            Response result = await InternalListFilesAsync(purpose?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((InternalFileListResponse)result, result);
+            Response result = await this.InternalListFilesAsync(purpose?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((InternalFileListResponse)result), result);
         }
 
         /// <summary>
@@ -131,8 +131,8 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UploadFile(RequestContent content, string contentType, RequestContext context = null)
         {
@@ -140,9 +140,9 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUploadFileRequest(content, contentType, context);
+                using HttpMessage message = this.CreateUploadFileRequest(content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -163,18 +163,18 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UploadFileAsync(RequestContent content, string contentType, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UploadFileAsync(RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.UploadFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUploadFileRequest(content, contentType, context);
+                using HttpMessage message = this.CreateUploadFileRequest(content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -194,7 +194,7 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="fileId"> The ID of the file to delete. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response InternalDeleteFile(string fileId, RequestContext context)
         {
@@ -202,7 +202,7 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteFileRequest(fileId, context);
+                using HttpMessage message = this.CreateInternalDeleteFileRequest(fileId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -222,15 +222,15 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="fileId"> The ID of the file to delete. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> InternalDeleteFileAsync(string fileId, RequestContext context)
+        internal virtual async Task<global::Azure.Response> InternalDeleteFileAsync(string fileId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.InternalDeleteFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateInternalDeleteFileRequest(fileId, context);
+                using HttpMessage message = this.CreateInternalDeleteFileRequest(fileId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -243,21 +243,21 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Delete a previously uploaded file. </summary>
         /// <param name="fileId"> The ID of the file to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<InternalFileDeletionStatus> InternalDeleteFile(string fileId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.AI.Agents.Persistent.InternalFileDeletionStatus> InternalDeleteFile(string fileId, CancellationToken cancellationToken = default)
         {
-            Response result = InternalDeleteFile(fileId, cancellationToken.ToRequestContext());
-            return Response.FromValue((InternalFileDeletionStatus)result, result);
+            Response result = this.InternalDeleteFile(fileId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((InternalFileDeletionStatus)result), result);
         }
 
         /// <summary> Delete a previously uploaded file. </summary>
         /// <param name="fileId"> The ID of the file to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<InternalFileDeletionStatus>> InternalDeleteFileAsync(string fileId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.InternalFileDeletionStatus>> InternalDeleteFileAsync(string fileId, CancellationToken cancellationToken = default)
         {
-            Response result = await InternalDeleteFileAsync(fileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((InternalFileDeletionStatus)result, result);
+            Response result = await this.InternalDeleteFileAsync(fileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((InternalFileDeletionStatus)result), result);
         }
 
         /// <summary>
@@ -270,9 +270,9 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="fileId"> The ID of the file to retrieve. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetFile(string fileId, RequestContext context)
         {
@@ -280,9 +280,9 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-                using HttpMessage message = CreateGetFileRequest(fileId, context);
+                using HttpMessage message = this.CreateGetFileRequest(fileId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -302,19 +302,19 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="fileId"> The ID of the file to retrieve. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetFileAsync(string fileId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetFileAsync(string fileId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.GetFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-                using HttpMessage message = CreateGetFileRequest(fileId, context);
+                using HttpMessage message = this.CreateGetFileRequest(fileId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -327,29 +327,29 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Returns information about a specific file. Does not retrieve file content. </summary>
         /// <param name="fileId"> The ID of the file to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PersistentAgentFileInfo> GetFile(string fileId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.AI.Agents.Persistent.PersistentAgentFileInfo> GetFile(string fileId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            Response result = GetFile(fileId, cancellationToken.ToRequestContext());
-            return Response.FromValue((PersistentAgentFileInfo)result, result);
+            Response result = this.GetFile(fileId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((PersistentAgentFileInfo)result), result);
         }
 
         /// <summary> Returns information about a specific file. Does not retrieve file content. </summary>
         /// <param name="fileId"> The ID of the file to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PersistentAgentFileInfo>> GetFileAsync(string fileId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.AI.Agents.Persistent.PersistentAgentFileInfo>> GetFileAsync(string fileId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            Response result = await GetFileAsync(fileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((PersistentAgentFileInfo)result, result);
+            Response result = await this.GetFileAsync(fileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((PersistentAgentFileInfo)result), result);
         }
 
         /// <summary>
@@ -362,9 +362,9 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="fileId"> The ID of the file to retrieve. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetFileContent(string fileId, RequestContext context)
         {
@@ -372,9 +372,9 @@ namespace Azure.AI.Agents.Persistent
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-                using HttpMessage message = CreateGetFileContentRequest(fileId, context);
+                using HttpMessage message = this.CreateGetFileContentRequest(fileId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -394,19 +394,19 @@ namespace Azure.AI.Agents.Persistent
         /// </summary>
         /// <param name="fileId"> The ID of the file to retrieve. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetFileContentAsync(string fileId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetFileContentAsync(string fileId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsFiles.GetFileContent");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+                global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-                using HttpMessage message = CreateGetFileContentRequest(fileId, context);
+                using HttpMessage message = this.CreateGetFileContentRequest(fileId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -419,29 +419,29 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Retrieves the raw content of a specific file. </summary>
         /// <param name="fileId"> The ID of the file to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetFileContent(string fileId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::System.BinaryData> GetFileContent(string fileId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            Response result = GetFileContent(fileId, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = this.GetFileContent(fileId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(result.Content, result);
         }
 
         /// <summary> Retrieves the raw content of a specific file. </summary>
         /// <param name="fileId"> The ID of the file to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetFileContentAsync(string fileId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::System.BinaryData>> GetFileContentAsync(string fileId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            Response result = await GetFileContentAsync(fileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = await this.GetFileContentAsync(fileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(result.Content, result);
         }
     }
 }

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Representation format of tables in analyze result markdown. </summary>
-    public readonly partial struct TableFormat : IEquatable<TableFormat>
+    public readonly partial struct TableFormat : IEquatable<global::Azure.AI.ContentUnderstanding.TableFormat>
     {
         private readonly string _value;
         /// <summary> Represent tables using HTML table elements: \&lt;table&gt;, \&lt;th&gt;, \&lt;tr&gt;, \&lt;td&gt;. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Represent tables using GitHub Flavored Markdown table syntax, which does not support merged cells or rich headers. </summary>
         private const string MarkdownValue = "markdown";
 
-        /// <summary> Initializes a new instance of <see cref="TableFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentUnderstanding.TableFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TableFormat(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.ContentUnderstanding.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Represent tables using GitHub Flavored Markdown table syntax, which does not support merged cells or rich headers. </summary>
         public static TableFormat Markdown { get; } = new TableFormat(MarkdownValue);
 
-        /// <summary> Determines if two <see cref="TableFormat"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.TableFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TableFormat left, TableFormat right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TableFormat"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.ContentUnderstanding.TableFormat"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TableFormat left, TableFormat right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TableFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.TableFormat"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator TableFormat(string value) => new TableFormat(value);
 
-        /// <summary> Converts a string to a <see cref="TableFormat"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.ContentUnderstanding.TableFormat"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TableFormat?(string value) => value == null ? null : new TableFormat(value);
+        public static implicit operator TableFormat?(string value) => (value == null) ? null : new TableFormat(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TableFormat other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is TableFormat other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(TableFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TableFormat other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

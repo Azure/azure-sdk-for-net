@@ -12,21 +12,21 @@ namespace Azure.Search.Documents.Models
 {
     /// <summary>
     /// The query parameters for vector and hybrid search queries.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorizedQuery"/>, <see cref="VectorizableTextQuery"/>, <see cref="VectorizableImageUrlQuery"/>, and <see cref="VectorizableImageBinaryQuery"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Azure.Search.Documents.Models.VectorizedQuery"/>, <see cref="Azure.Search.Documents.Models.VectorizableTextQuery"/>, <see cref="Azure.Search.Documents.Models.VectorizableImageUrlQuery"/>, and <see cref="Azure.Search.Documents.Models.VectorizableImageBinaryQuery"/>.
     /// </summary>
     public abstract partial class VectorQuery
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VectorQuery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorQuery"/>. </summary>
         /// <param name="kind"> Type of query. </param>
         private protected VectorQuery(VectorQueryKind kind)
         {
             Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorQuery"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Models.VectorQuery"/>. </summary>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
         /// <param name="kind"> Type of query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             KNearestNeighborsCount = kNearestNeighborsCount;
             FieldsRaw = fieldsRaw;

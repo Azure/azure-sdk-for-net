@@ -18,16 +18,16 @@ namespace Versioning.Added
     {
         protected InterfaceV2() => throw null;
 
-        internal InterfaceV2(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string version) => throw null;
+        internal InterfaceV2(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint, string version) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response V2InInterface(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> V2InInterfaceAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> V2InInterfaceAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<ModelV2> V2InInterface(ModelV2 body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Versioning.Added.ModelV2> V2InInterface(ModelV2 body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<ModelV2>> V2InInterfaceAsync(ModelV2 body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Versioning.Added.ModelV2>> V2InInterfaceAsync(ModelV2 body, CancellationToken cancellationToken = default) => throw null;
     }
 }

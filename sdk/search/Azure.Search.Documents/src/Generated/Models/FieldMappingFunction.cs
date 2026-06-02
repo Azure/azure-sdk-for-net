@@ -15,24 +15,24 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class FieldMappingFunction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FieldMappingFunction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FieldMappingFunction"/>. </summary>
         /// <param name="name"> The name of the field mapping function. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public FieldMappingFunction(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Search.Documents.Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FieldMappingFunction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.FieldMappingFunction"/>. </summary>
         /// <param name="name"> The name of the field mapping function. </param>
         /// <param name="parameters"> A dictionary of parameter name/value pairs to pass to the function. Each value must be of a primitive type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FieldMappingFunction(string name, IDictionary<string, object> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FieldMappingFunction(string name, IDictionary<string, object> parameters, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Parameters = parameters;

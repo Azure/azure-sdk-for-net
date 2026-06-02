@@ -23,15 +23,15 @@ namespace Azure.Search.Documents.Indexes
     /// <summary> The SearchIndexClient. </summary>
     public partial class SearchIndexClient
     {
-        private readonly Uri _endpoint;
+        private readonly global::System.Uri _endpoint;
         private const string AuthorizationHeader = "api-key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://search.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of SearchIndexClient from a <see cref="SearchIndexClientSettings"/>. </summary>
         /// <param name="settings"> The settings for SearchIndexClient. </param>
-        [Experimental("SCME0002")]
-        public SearchIndexClient(SearchIndexClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public SearchIndexClient(SearchIndexClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateOrUpdateSynonymMap(string synonymMapName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
@@ -61,7 +61,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateSynonymMapRequest(synonymMapName, content, matchConditions, context);
+                using HttpMessage message = this.CreateCreateOrUpdateSynonymMapRequest(synonymMapName, content, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -83,15 +83,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateSynonymMapAsync(string synonymMapName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> CreateOrUpdateSynonymMapAsync(string synonymMapName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.CreateOrUpdateSynonymMap");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateSynonymMapRequest(synonymMapName, content, matchConditions, context);
+                using HttpMessage message = this.CreateCreateOrUpdateSynonymMapRequest(synonymMapName, content, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -106,11 +106,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="synonymMap"> The definition of the synonym map to create or update. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SynonymMap> CreateOrUpdateSynonymMap(string synonymMapName, SynonymMap synonymMap, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Indexes.Models.SynonymMap> CreateOrUpdateSynonymMap(string synonymMapName, SynonymMap synonymMap, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = CreateOrUpdateSynonymMap(synonymMapName, synonymMap, matchConditions, cancellationToken.ToRequestContext());
-            return Response.FromValue((SynonymMap)result, result);
+            Response result = this.CreateOrUpdateSynonymMap(synonymMapName, synonymMap, matchConditions, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SynonymMap)result), result);
         }
 
         /// <summary> Creates a new synonym map or updates a synonym map if it already exists. </summary>
@@ -118,11 +118,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="synonymMap"> The definition of the synonym map to create or update. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SynonymMap>> CreateOrUpdateSynonymMapAsync(string synonymMapName, SynonymMap synonymMap, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SynonymMap>> CreateOrUpdateSynonymMapAsync(string synonymMapName, SynonymMap synonymMap, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = await CreateOrUpdateSynonymMapAsync(synonymMapName, synonymMap, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SynonymMap)result, result);
+            Response result = await this.CreateOrUpdateSynonymMapAsync(synonymMapName, synonymMap, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SynonymMap)result), result);
         }
 
         /// <summary>
@@ -136,9 +136,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="synonymMapName"> The name of the synonym map. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteSynonymMap(string synonymMapName, MatchConditions matchConditions, RequestContext context)
         {
@@ -146,9 +146,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
 
-                using HttpMessage message = CreateDeleteSynonymMapRequest(synonymMapName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteSynonymMapRequest(synonymMapName, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -169,19 +169,19 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="synonymMapName"> The name of the synonym map. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteSynonymMapAsync(string synonymMapName, MatchConditions matchConditions, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteSynonymMapAsync(string synonymMapName, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteSynonymMap");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
 
-                using HttpMessage message = CreateDeleteSynonymMapRequest(synonymMapName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteSynonymMapRequest(synonymMapName, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -195,28 +195,28 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="synonymMapName"> The name of the synonym map. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteSynonymMap(string synonymMapName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
 
-            return DeleteSynonymMap(synonymMapName, matchConditions, cancellationToken.ToRequestContext());
+            return this.DeleteSynonymMap(synonymMapName, matchConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a synonym map. </summary>
         /// <param name="synonymMapName"> The name of the synonym map. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteSynonymMapAsync(string synonymMapName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteSynonymMapAsync(string synonymMapName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
 
-            return await DeleteSynonymMapAsync(synonymMapName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteSynonymMapAsync(synonymMapName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -229,9 +229,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="synonymMapName"> The name of the synonym map. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSynonymMap(string synonymMapName, RequestContext context)
         {
@@ -239,9 +239,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
 
-                using HttpMessage message = CreateGetSynonymMapRequest(synonymMapName, context);
+                using HttpMessage message = this.CreateGetSynonymMapRequest(synonymMapName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -261,19 +261,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="synonymMapName"> The name of the synonym map. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSynonymMapAsync(string synonymMapName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetSynonymMapAsync(string synonymMapName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetSynonymMap");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
 
-                using HttpMessage message = CreateGetSynonymMapRequest(synonymMapName, context);
+                using HttpMessage message = this.CreateGetSynonymMapRequest(synonymMapName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -286,29 +286,29 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Retrieves a synonym map definition. </summary>
         /// <param name="synonymMapName"> The name of the synonym map. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SynonymMap> GetSynonymMap(string synonymMapName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SynonymMap> GetSynonymMap(string synonymMapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
 
-            Response result = GetSynonymMap(synonymMapName, cancellationToken.ToRequestContext());
-            return Response.FromValue((SynonymMap)result, result);
+            Response result = this.GetSynonymMap(synonymMapName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SynonymMap)result), result);
         }
 
         /// <summary> Retrieves a synonym map definition. </summary>
         /// <param name="synonymMapName"> The name of the synonym map. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SynonymMap>> GetSynonymMapAsync(string synonymMapName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="synonymMapName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="synonymMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SynonymMap>> GetSynonymMapAsync(string synonymMapName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(synonymMapName, nameof(synonymMapName));
 
-            Response result = await GetSynonymMapAsync(synonymMapName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SynonymMap)result, result);
+            Response result = await this.GetSynonymMapAsync(synonymMapName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SynonymMap)result), result);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetSynonymMaps(IEnumerable<string> @select, RequestContext context)
         {
@@ -329,7 +329,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSynonymMapsRequest(@select, context);
+                using HttpMessage message = this.CreateGetSynonymMapsRequest(@select, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -349,15 +349,15 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetSynonymMapsAsync(IEnumerable<string> @select, RequestContext context)
+        internal virtual async Task<global::Azure.Response> GetSynonymMapsAsync(IEnumerable<string> @select, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetSynonymMaps");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSynonymMapsRequest(@select, context);
+                using HttpMessage message = this.CreateGetSynonymMapsRequest(@select, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -370,21 +370,21 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Lists all synonym maps available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<ListSynonymMapsResult> GetSynonymMaps(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Indexes.Models.ListSynonymMapsResult> GetSynonymMaps(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetSynonymMaps(@select, cancellationToken.ToRequestContext());
-            return Response.FromValue((ListSynonymMapsResult)result, result);
+            Response result = this.GetSynonymMaps(@select, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((ListSynonymMapsResult)result), result);
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<ListSynonymMapsResult>> GetSynonymMapsAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.ListSynonymMapsResult>> GetSynonymMapsAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSynonymMapsAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ListSynonymMapsResult)result, result);
+            Response result = await this.GetSynonymMapsAsync(@select, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((ListSynonymMapsResult)result), result);
         }
 
         /// <summary>
@@ -397,8 +397,8 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateSynonymMap(RequestContent content, RequestContext context = null)
         {
@@ -406,9 +406,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateSynonymMapRequest(content, context);
+                using HttpMessage message = this.CreateCreateSynonymMapRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -428,18 +428,18 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateSynonymMapAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateSynonymMapAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.CreateSynonymMap");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateSynonymMapRequest(content, context);
+                using HttpMessage message = this.CreateCreateSynonymMapRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -452,27 +452,27 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Creates a new synonym map. </summary>
         /// <param name="synonymMap"> The definition of the synonym map to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonymMap"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SynonymMap> CreateSynonymMap(SynonymMap synonymMap, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="synonymMap"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SynonymMap> CreateSynonymMap(SynonymMap synonymMap, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+            global::Azure.Search.Documents.Argument.AssertNotNull(synonymMap, nameof(synonymMap));
 
-            Response result = CreateSynonymMap(synonymMap, cancellationToken.ToRequestContext());
-            return Response.FromValue((SynonymMap)result, result);
+            Response result = this.CreateSynonymMap(synonymMap, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SynonymMap)result), result);
         }
 
         /// <summary> Creates a new synonym map. </summary>
         /// <param name="synonymMap"> The definition of the synonym map to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synonymMap"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SynonymMap>> CreateSynonymMapAsync(SynonymMap synonymMap, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="synonymMap"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SynonymMap>> CreateSynonymMapAsync(SynonymMap synonymMap, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+            global::Azure.Search.Documents.Argument.AssertNotNull(synonymMap, nameof(synonymMap));
 
-            Response result = await CreateSynonymMapAsync(synonymMap, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SynonymMap)result, result);
+            Response result = await this.CreateSynonymMapAsync(synonymMap, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SynonymMap)result), result);
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="allowIndexDowntime"> Allows new analyzers, tokenizers, token filters, or char filters to be added to an index by taking the index offline for at least a few seconds. This temporarily causes indexing and query requests to fail. Performance and write availability of the index can be impaired for several minutes after the index is updated, or longer for very large indexes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateOrUpdateIndex(string indexName, RequestContent content, MatchConditions matchConditions = default, bool? allowIndexDowntime = default, RequestContext context = null)
         {
@@ -496,7 +496,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateIndexRequest(indexName, content, matchConditions, allowIndexDowntime, context);
+                using HttpMessage message = this.CreateCreateOrUpdateIndexRequest(indexName, content, matchConditions, allowIndexDowntime, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -519,15 +519,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="allowIndexDowntime"> Allows new analyzers, tokenizers, token filters, or char filters to be added to an index by taking the index offline for at least a few seconds. This temporarily causes indexing and query requests to fail. Performance and write availability of the index can be impaired for several minutes after the index is updated, or longer for very large indexes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateIndexAsync(string indexName, RequestContent content, MatchConditions matchConditions = default, bool? allowIndexDowntime = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> CreateOrUpdateIndexAsync(string indexName, RequestContent content, MatchConditions matchConditions = default, bool? allowIndexDowntime = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.CreateOrUpdateIndex");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateIndexRequest(indexName, content, matchConditions, allowIndexDowntime, context);
+                using HttpMessage message = this.CreateCreateOrUpdateIndexRequest(indexName, content, matchConditions, allowIndexDowntime, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -543,11 +543,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="allowIndexDowntime"> Allows new analyzers, tokenizers, token filters, or char filters to be added to an index by taking the index offline for at least a few seconds. This temporarily causes indexing and query requests to fail. Performance and write availability of the index can be impaired for several minutes after the index is updated, or longer for very large indexes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchIndex> CreateOrUpdateIndex(string indexName, SearchIndex index, MatchConditions matchConditions = default, bool? allowIndexDowntime = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndex> CreateOrUpdateIndex(string indexName, SearchIndex index, MatchConditions matchConditions = default, bool? allowIndexDowntime = default, CancellationToken cancellationToken = default)
         {
-            Response result = CreateOrUpdateIndex(indexName, index, matchConditions, allowIndexDowntime, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndex)result, result);
+            Response result = this.CreateOrUpdateIndex(indexName, index, matchConditions, allowIndexDowntime, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndex)result), result);
         }
 
         /// <summary> Creates a new search index or updates an index if it already exists. </summary>
@@ -556,11 +556,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="allowIndexDowntime"> Allows new analyzers, tokenizers, token filters, or char filters to be added to an index by taking the index offline for at least a few seconds. This temporarily causes indexing and query requests to fail. Performance and write availability of the index can be impaired for several minutes after the index is updated, or longer for very large indexes. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchIndex>> CreateOrUpdateIndexAsync(string indexName, SearchIndex index, MatchConditions matchConditions = default, bool? allowIndexDowntime = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndex>> CreateOrUpdateIndexAsync(string indexName, SearchIndex index, MatchConditions matchConditions = default, bool? allowIndexDowntime = default, CancellationToken cancellationToken = default)
         {
-            Response result = await CreateOrUpdateIndexAsync(indexName, index, matchConditions, allowIndexDowntime, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndex)result, result);
+            Response result = await this.CreateOrUpdateIndexAsync(indexName, index, matchConditions, allowIndexDowntime, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndex)result), result);
         }
 
         /// <summary>
@@ -574,9 +574,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteIndex(string indexName, MatchConditions matchConditions, RequestContext context)
         {
@@ -584,9 +584,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
 
-                using HttpMessage message = CreateDeleteIndexRequest(indexName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteIndexRequest(indexName, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -607,19 +607,19 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteIndexAsync(string indexName, MatchConditions matchConditions, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteIndexAsync(string indexName, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteIndex");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
 
-                using HttpMessage message = CreateDeleteIndexRequest(indexName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteIndexRequest(indexName, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -633,28 +633,28 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteIndex(string indexName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
 
-            return DeleteIndex(indexName, matchConditions, cancellationToken.ToRequestContext());
+            return this.DeleteIndex(indexName, matchConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a search index and all the documents it contains. This operation is permanent, with no recovery option. Make sure you have a master copy of your index definition, data ingestion code, and a backup of the primary data source in case you need to re-build the index. </summary>
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteIndexAsync(string indexName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteIndexAsync(string indexName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
 
-            return await DeleteIndexAsync(indexName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteIndexAsync(indexName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -667,9 +667,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetIndex(string indexName, RequestContext context)
         {
@@ -677,9 +677,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
 
-                using HttpMessage message = CreateGetIndexRequest(indexName, context);
+                using HttpMessage message = this.CreateGetIndexRequest(indexName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -699,19 +699,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetIndexAsync(string indexName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetIndexAsync(string indexName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetIndex");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
 
-                using HttpMessage message = CreateGetIndexRequest(indexName, context);
+                using HttpMessage message = this.CreateGetIndexRequest(indexName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -724,29 +724,29 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Retrieves an index definition. </summary>
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchIndex> GetIndex(string indexName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndex> GetIndex(string indexName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
 
-            Response result = GetIndex(indexName, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndex)result, result);
+            Response result = this.GetIndex(indexName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndex)result), result);
         }
 
         /// <summary> Retrieves an index definition. </summary>
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchIndex>> GetIndexAsync(string indexName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndex>> GetIndexAsync(string indexName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
 
-            Response result = await GetIndexAsync(indexName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndex)result, result);
+            Response result = await this.GetIndexAsync(indexName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndex)result), result);
         }
 
         /// <summary>
@@ -761,9 +761,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetIndexes(int? top, int? skip, bool? count, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetIndexes(int? top, int? skip, bool? count, RequestContext context)
         {
             return new SearchIndexClientGetIndexesCollectionResult(
                 this,
@@ -786,9 +786,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetIndexesAsync(int? top, int? skip, bool? count, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetIndexesAsync(int? top, int? skip, bool? count, RequestContext context)
         {
             return new SearchIndexClientGetIndexesAsyncCollectionResult(
                 this,
@@ -804,8 +804,8 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<SearchIndex> GetIndexes(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Search.Documents.Indexes.Models.SearchIndex> GetIndexes(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             return new SearchIndexClientGetIndexesCollectionResultOfT(
                 this,
@@ -821,8 +821,8 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<SearchIndex> GetIndexesAsync(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Search.Documents.Indexes.Models.SearchIndex> GetIndexesAsync(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             return new SearchIndexClientGetIndexesAsyncCollectionResultOfT(
                 this,
@@ -846,9 +846,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetIndexesWithSelectedProperties(IEnumerable<string> @select, int? top, int? skip, bool? count, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetIndexesWithSelectedProperties(IEnumerable<string> @select, int? top, int? skip, bool? count, RequestContext context)
         {
             return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResult(
                 this,
@@ -873,9 +873,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select, int? top, int? skip, bool? count, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select, int? top, int? skip, bool? count, RequestContext context)
         {
             return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResult(
                 this,
@@ -893,8 +893,8 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<SearchIndexResponse> GetIndexesWithSelectedProperties(IEnumerable<string> @select = default, int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Search.Documents.Indexes.Models.SearchIndexResponse> GetIndexesWithSelectedProperties(IEnumerable<string> @select = default, int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResultOfT(
                 this,
@@ -912,8 +912,8 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select = default, int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Search.Documents.Indexes.Models.SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select = default, int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResultOfT(
                 this,
@@ -935,8 +935,8 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateIndex(RequestContent content, RequestContext context = null)
         {
@@ -944,9 +944,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateIndexRequest(content, context);
+                using HttpMessage message = this.CreateCreateIndexRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -966,18 +966,18 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateIndexAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateIndexAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.CreateIndex");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateIndexRequest(content, context);
+                using HttpMessage message = this.CreateCreateIndexRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -990,27 +990,27 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Creates a new search index. </summary>
         /// <param name="index"> The definition of the index to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="index"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchIndex> CreateIndex(SearchIndex index, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="index"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndex> CreateIndex(SearchIndex index, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(index, nameof(index));
+            global::Azure.Search.Documents.Argument.AssertNotNull(index, nameof(index));
 
-            Response result = CreateIndex(index, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndex)result, result);
+            Response result = this.CreateIndex(index, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndex)result), result);
         }
 
         /// <summary> Creates a new search index. </summary>
         /// <param name="index"> The definition of the index to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="index"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchIndex>> CreateIndexAsync(SearchIndex index, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="index"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndex>> CreateIndexAsync(SearchIndex index, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(index, nameof(index));
+            global::Azure.Search.Documents.Argument.AssertNotNull(index, nameof(index));
 
-            Response result = await CreateIndexAsync(index, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndex)result, result);
+            Response result = await this.CreateIndexAsync(index, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndex)result), result);
         }
 
         /// <summary>
@@ -1023,9 +1023,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetIndexStatistics(string indexName, RequestContext context)
         {
@@ -1033,9 +1033,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
 
-                using HttpMessage message = CreateGetIndexStatisticsRequest(indexName, context);
+                using HttpMessage message = this.CreateGetIndexStatisticsRequest(indexName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1055,19 +1055,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetIndexStatisticsAsync(string indexName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetIndexStatisticsAsync(string indexName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetIndexStatistics");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
 
-                using HttpMessage message = CreateGetIndexStatisticsRequest(indexName, context);
+                using HttpMessage message = this.CreateGetIndexStatisticsRequest(indexName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1080,29 +1080,29 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchIndexStatistics> GetIndexStatistics(string indexName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexStatistics> GetIndexStatistics(string indexName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
 
-            Response result = GetIndexStatistics(indexName, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchIndexStatistics)result, result);
+            Response result = this.GetIndexStatistics(indexName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchIndexStatistics)result), result);
         }
 
         /// <summary> Returns statistics for the given index, including a document count and storage usage. </summary>
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchIndexStatistics>> GetIndexStatisticsAsync(string indexName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchIndexStatistics>> GetIndexStatisticsAsync(string indexName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
 
-            Response result = await GetIndexStatisticsAsync(indexName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchIndexStatistics)result, result);
+            Response result = await this.GetIndexStatisticsAsync(indexName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchIndexStatistics)result), result);
         }
 
         /// <summary>
@@ -1116,9 +1116,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response AnalyzeText(string indexName, RequestContent content, RequestContext context = null)
         {
@@ -1126,10 +1126,10 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAnalyzeTextRequest(indexName, content, context);
+                using HttpMessage message = this.CreateAnalyzeTextRequest(indexName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1150,20 +1150,20 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="indexName"> The name of the index. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="indexName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="indexName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AnalyzeTextAsync(string indexName, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> AnalyzeTextAsync(string indexName, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.AnalyzeText");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(indexName, nameof(indexName));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateAnalyzeTextRequest(indexName, content, context);
+                using HttpMessage message = this.CreateAnalyzeTextRequest(indexName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1185,7 +1185,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateOrUpdateAlias(string aliasName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
@@ -1193,7 +1193,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateAliasRequest(aliasName, content, matchConditions, context);
+                using HttpMessage message = this.CreateCreateOrUpdateAliasRequest(aliasName, content, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1215,15 +1215,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateAliasAsync(string aliasName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> CreateOrUpdateAliasAsync(string aliasName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.CreateOrUpdateAlias");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateAliasRequest(aliasName, content, matchConditions, context);
+                using HttpMessage message = this.CreateCreateOrUpdateAliasRequest(aliasName, content, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1238,11 +1238,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="alias"> The definition of the alias to create or update. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<SearchAlias> CreateOrUpdateAlias(string aliasName, SearchAlias @alias, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchAlias> CreateOrUpdateAlias(string aliasName, SearchAlias @alias, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = CreateOrUpdateAlias(aliasName, @alias, matchConditions, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchAlias)result, result);
+            Response result = this.CreateOrUpdateAlias(aliasName, @alias, matchConditions, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchAlias)result), result);
         }
 
         /// <summary> Creates a new search alias or updates an alias if it already exists. </summary>
@@ -1250,11 +1250,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="alias"> The definition of the alias to create or update. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<SearchAlias>> CreateOrUpdateAliasAsync(string aliasName, SearchAlias @alias, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchAlias>> CreateOrUpdateAliasAsync(string aliasName, SearchAlias @alias, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = await CreateOrUpdateAliasAsync(aliasName, @alias, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchAlias)result, result);
+            Response result = await this.CreateOrUpdateAliasAsync(aliasName, @alias, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchAlias)result), result);
         }
 
         /// <summary>
@@ -1268,9 +1268,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="aliasName"> The name of the alias. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteAlias(string aliasName, MatchConditions matchConditions, RequestContext context)
         {
@@ -1278,9 +1278,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-                using HttpMessage message = CreateDeleteAliasRequest(aliasName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteAliasRequest(aliasName, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1301,19 +1301,19 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="aliasName"> The name of the alias. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAliasAsync(string aliasName, MatchConditions matchConditions, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteAliasAsync(string aliasName, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteAlias");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-                using HttpMessage message = CreateDeleteAliasRequest(aliasName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteAliasRequest(aliasName, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1327,28 +1327,28 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="aliasName"> The name of the alias. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteAlias(string aliasName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            return DeleteAlias(aliasName, matchConditions, cancellationToken.ToRequestContext());
+            return this.DeleteAlias(aliasName, matchConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a search alias and its associated mapping to an index. This operation is permanent, with no recovery option. The mapped index is untouched by this operation. </summary>
         /// <param name="aliasName"> The name of the alias. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAliasAsync(string aliasName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteAliasAsync(string aliasName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            return await DeleteAliasAsync(aliasName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteAliasAsync(aliasName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1361,9 +1361,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="aliasName"> The name of the alias. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAlias(string aliasName, RequestContext context)
         {
@@ -1371,9 +1371,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-                using HttpMessage message = CreateGetAliasRequest(aliasName, context);
+                using HttpMessage message = this.CreateGetAliasRequest(aliasName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1393,19 +1393,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="aliasName"> The name of the alias. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAliasAsync(string aliasName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetAliasAsync(string aliasName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetAlias");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-                using HttpMessage message = CreateGetAliasRequest(aliasName, context);
+                using HttpMessage message = this.CreateGetAliasRequest(aliasName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1418,29 +1418,29 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Retrieves an alias definition. </summary>
         /// <param name="aliasName"> The name of the alias. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchAlias> GetAlias(string aliasName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchAlias> GetAlias(string aliasName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            Response result = GetAlias(aliasName, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchAlias)result, result);
+            Response result = this.GetAlias(aliasName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchAlias)result), result);
         }
 
         /// <summary> Retrieves an alias definition. </summary>
         /// <param name="aliasName"> The name of the alias. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchAlias>> GetAliasAsync(string aliasName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchAlias>> GetAliasAsync(string aliasName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
 
-            Response result = await GetAliasAsync(aliasName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchAlias)result, result);
+            Response result = await this.GetAliasAsync(aliasName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchAlias)result), result);
         }
 
         /// <summary>
@@ -1452,9 +1452,9 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetAliases(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetAliases(RequestContext context)
         {
             return new SearchIndexClientGetAliasesCollectionResult(this, context, "SearchIndexClient.GetAliases");
         }
@@ -1468,25 +1468,25 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetAliasesAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetAliasesAsync(RequestContext context)
         {
             return new SearchIndexClientGetAliasesAsyncCollectionResult(this, context, "SearchIndexClient.GetAliases");
         }
 
         /// <summary> Lists all aliases available for a search service. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<SearchAlias> GetAliases(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Search.Documents.Indexes.Models.SearchAlias> GetAliases(CancellationToken cancellationToken = default)
         {
             return new SearchIndexClientGetAliasesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetAliases");
         }
 
         /// <summary> Lists all aliases available for a search service. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<SearchAlias> GetAliasesAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Search.Documents.Indexes.Models.SearchAlias> GetAliasesAsync(CancellationToken cancellationToken = default)
         {
             return new SearchIndexClientGetAliasesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetAliases");
         }
@@ -1501,8 +1501,8 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateAlias(RequestContent content, RequestContext context = null)
         {
@@ -1510,9 +1510,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateAliasRequest(content, context);
+                using HttpMessage message = this.CreateCreateAliasRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1532,18 +1532,18 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAliasAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateAliasAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.CreateAlias");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateAliasRequest(content, context);
+                using HttpMessage message = this.CreateCreateAliasRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1556,27 +1556,27 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Creates a new search alias. </summary>
         /// <param name="alias"> The definition of the alias to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchAlias> CreateAlias(SearchAlias @alias, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchAlias> CreateAlias(SearchAlias @alias, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@alias, nameof(@alias));
+            global::Azure.Search.Documents.Argument.AssertNotNull(@alias, nameof(@alias));
 
-            Response result = CreateAlias(@alias, cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchAlias)result, result);
+            Response result = this.CreateAlias(@alias, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchAlias)result), result);
         }
 
         /// <summary> Creates a new search alias. </summary>
         /// <param name="alias"> The definition of the alias to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alias"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchAlias>> CreateAliasAsync(SearchAlias @alias, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="alias"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchAlias>> CreateAliasAsync(SearchAlias @alias, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(@alias, nameof(@alias));
+            global::Azure.Search.Documents.Argument.AssertNotNull(@alias, nameof(@alias));
 
-            Response result = await CreateAliasAsync(@alias, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchAlias)result, result);
+            Response result = await this.CreateAliasAsync(@alias, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchAlias)result), result);
         }
 
         /// <summary>
@@ -1591,7 +1591,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateOrUpdateKnowledgeBase(string knowledgeBaseName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
@@ -1599,7 +1599,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateKnowledgeBaseRequest(knowledgeBaseName, content, matchConditions, context);
+                using HttpMessage message = this.CreateCreateOrUpdateKnowledgeBaseRequest(knowledgeBaseName, content, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1621,15 +1621,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateKnowledgeBaseAsync(string knowledgeBaseName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> CreateOrUpdateKnowledgeBaseAsync(string knowledgeBaseName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.CreateOrUpdateKnowledgeBase");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateKnowledgeBaseRequest(knowledgeBaseName, content, matchConditions, context);
+                using HttpMessage message = this.CreateCreateOrUpdateKnowledgeBaseRequest(knowledgeBaseName, content, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1644,11 +1644,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="knowledgeBase"> The definition of the knowledge base to create or update. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<KnowledgeBase> CreateOrUpdateKnowledgeBase(string knowledgeBaseName, KnowledgeBase knowledgeBase, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Indexes.Models.KnowledgeBase> CreateOrUpdateKnowledgeBase(string knowledgeBaseName, KnowledgeBase knowledgeBase, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = CreateOrUpdateKnowledgeBase(knowledgeBaseName, knowledgeBase, matchConditions, cancellationToken.ToRequestContext());
-            return Response.FromValue((KnowledgeBase)result, result);
+            Response result = this.CreateOrUpdateKnowledgeBase(knowledgeBaseName, knowledgeBase, matchConditions, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((KnowledgeBase)result), result);
         }
 
         /// <summary> Creates a new knowledge base or updates a knowledge base if it already exists. </summary>
@@ -1656,11 +1656,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="knowledgeBase"> The definition of the knowledge base to create or update. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<KnowledgeBase>> CreateOrUpdateKnowledgeBaseAsync(string knowledgeBaseName, KnowledgeBase knowledgeBase, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.KnowledgeBase>> CreateOrUpdateKnowledgeBaseAsync(string knowledgeBaseName, KnowledgeBase knowledgeBase, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = await CreateOrUpdateKnowledgeBaseAsync(knowledgeBaseName, knowledgeBase, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((KnowledgeBase)result, result);
+            Response result = await this.CreateOrUpdateKnowledgeBaseAsync(knowledgeBaseName, knowledgeBase, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((KnowledgeBase)result), result);
         }
 
         /// <summary>
@@ -1674,9 +1674,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteKnowledgeBase(string knowledgeBaseName, MatchConditions matchConditions, RequestContext context)
         {
@@ -1684,9 +1684,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
 
-                using HttpMessage message = CreateDeleteKnowledgeBaseRequest(knowledgeBaseName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteKnowledgeBaseRequest(knowledgeBaseName, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1707,19 +1707,19 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteKnowledgeBaseAsync(string knowledgeBaseName, MatchConditions matchConditions, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteKnowledgeBaseAsync(string knowledgeBaseName, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteKnowledgeBase");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
 
-                using HttpMessage message = CreateDeleteKnowledgeBaseRequest(knowledgeBaseName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteKnowledgeBaseRequest(knowledgeBaseName, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1733,28 +1733,28 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteKnowledgeBase(string knowledgeBaseName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
 
-            return DeleteKnowledgeBase(knowledgeBaseName, matchConditions, cancellationToken.ToRequestContext());
+            return this.DeleteKnowledgeBase(knowledgeBaseName, matchConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a knowledge base. </summary>
         /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteKnowledgeBaseAsync(string knowledgeBaseName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteKnowledgeBaseAsync(string knowledgeBaseName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
 
-            return await DeleteKnowledgeBaseAsync(knowledgeBaseName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteKnowledgeBaseAsync(knowledgeBaseName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1767,9 +1767,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetKnowledgeBase(string knowledgeBaseName, RequestContext context)
         {
@@ -1777,9 +1777,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
 
-                using HttpMessage message = CreateGetKnowledgeBaseRequest(knowledgeBaseName, context);
+                using HttpMessage message = this.CreateGetKnowledgeBaseRequest(knowledgeBaseName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1799,19 +1799,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetKnowledgeBaseAsync(string knowledgeBaseName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetKnowledgeBaseAsync(string knowledgeBaseName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetKnowledgeBase");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
 
-                using HttpMessage message = CreateGetKnowledgeBaseRequest(knowledgeBaseName, context);
+                using HttpMessage message = this.CreateGetKnowledgeBaseRequest(knowledgeBaseName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1824,29 +1824,29 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Retrieves a knowledge base definition. </summary>
         /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeBase> GetKnowledgeBase(string knowledgeBaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.KnowledgeBase> GetKnowledgeBase(string knowledgeBaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
 
-            Response result = GetKnowledgeBase(knowledgeBaseName, cancellationToken.ToRequestContext());
-            return Response.FromValue((KnowledgeBase)result, result);
+            Response result = this.GetKnowledgeBase(knowledgeBaseName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((KnowledgeBase)result), result);
         }
 
         /// <summary> Retrieves a knowledge base definition. </summary>
         /// <param name="knowledgeBaseName"> The name of the knowledge base. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeBase>> GetKnowledgeBaseAsync(string knowledgeBaseName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="knowledgeBaseName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.KnowledgeBase>> GetKnowledgeBaseAsync(string knowledgeBaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
 
-            Response result = await GetKnowledgeBaseAsync(knowledgeBaseName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((KnowledgeBase)result, result);
+            Response result = await this.GetKnowledgeBaseAsync(knowledgeBaseName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((KnowledgeBase)result), result);
         }
 
         /// <summary>
@@ -1858,9 +1858,9 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetKnowledgeBases(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetKnowledgeBases(RequestContext context)
         {
             return new SearchIndexClientGetKnowledgeBasesCollectionResult(this, context, "SearchIndexClient.GetKnowledgeBases");
         }
@@ -1874,25 +1874,25 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetKnowledgeBasesAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetKnowledgeBasesAsync(RequestContext context)
         {
             return new SearchIndexClientGetKnowledgeBasesAsyncCollectionResult(this, context, "SearchIndexClient.GetKnowledgeBases");
         }
 
         /// <summary> Lists all knowledge bases available for a search service. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<KnowledgeBase> GetKnowledgeBases(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Search.Documents.Indexes.Models.KnowledgeBase> GetKnowledgeBases(CancellationToken cancellationToken = default)
         {
             return new SearchIndexClientGetKnowledgeBasesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeBases");
         }
 
         /// <summary> Lists all knowledge bases available for a search service. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<KnowledgeBase> GetKnowledgeBasesAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Search.Documents.Indexes.Models.KnowledgeBase> GetKnowledgeBasesAsync(CancellationToken cancellationToken = default)
         {
             return new SearchIndexClientGetKnowledgeBasesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeBases");
         }
@@ -1907,8 +1907,8 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateKnowledgeBase(RequestContent content, RequestContext context = null)
         {
@@ -1916,9 +1916,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateKnowledgeBaseRequest(content, context);
+                using HttpMessage message = this.CreateCreateKnowledgeBaseRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1938,18 +1938,18 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateKnowledgeBaseAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateKnowledgeBaseAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.CreateKnowledgeBase");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateKnowledgeBaseRequest(content, context);
+                using HttpMessage message = this.CreateCreateKnowledgeBaseRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1971,7 +1971,7 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateOrUpdateKnowledgeSource(string sourceName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
@@ -1979,7 +1979,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateKnowledgeSourceRequest(sourceName, content, matchConditions, context);
+                using HttpMessage message = this.CreateCreateOrUpdateKnowledgeSourceRequest(sourceName, content, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2001,15 +2001,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateKnowledgeSourceAsync(string sourceName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> CreateOrUpdateKnowledgeSourceAsync(string sourceName, RequestContent content, MatchConditions matchConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.CreateOrUpdateKnowledgeSource");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateKnowledgeSourceRequest(sourceName, content, matchConditions, context);
+                using HttpMessage message = this.CreateCreateOrUpdateKnowledgeSourceRequest(sourceName, content, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2024,11 +2024,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="knowledgeSource"> The definition of the knowledge source to create or update. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<KnowledgeSource> CreateOrUpdateKnowledgeSource(string sourceName, KnowledgeSource knowledgeSource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<global::Azure.Search.Documents.Indexes.Models.KnowledgeSource> CreateOrUpdateKnowledgeSource(string sourceName, KnowledgeSource knowledgeSource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = CreateOrUpdateKnowledgeSource(sourceName, knowledgeSource, matchConditions, cancellationToken.ToRequestContext());
-            return Response.FromValue((KnowledgeSource)result, result);
+            Response result = this.CreateOrUpdateKnowledgeSource(sourceName, knowledgeSource, matchConditions, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((KnowledgeSource)result), result);
         }
 
         /// <summary> Creates a new knowledge source or updates an knowledge source if it already exists. </summary>
@@ -2036,11 +2036,11 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="knowledgeSource"> The definition of the knowledge source to create or update. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<KnowledgeSource>> CreateOrUpdateKnowledgeSourceAsync(string sourceName, KnowledgeSource knowledgeSource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.KnowledgeSource>> CreateOrUpdateKnowledgeSourceAsync(string sourceName, KnowledgeSource knowledgeSource, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Response result = await CreateOrUpdateKnowledgeSourceAsync(sourceName, knowledgeSource, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((KnowledgeSource)result, result);
+            Response result = await this.CreateOrUpdateKnowledgeSourceAsync(sourceName, knowledgeSource, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((KnowledgeSource)result), result);
         }
 
         /// <summary>
@@ -2054,9 +2054,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteKnowledgeSource(string sourceName, MatchConditions matchConditions, RequestContext context)
         {
@@ -2064,9 +2064,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-                using HttpMessage message = CreateDeleteKnowledgeSourceRequest(sourceName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteKnowledgeSourceRequest(sourceName, matchConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2087,19 +2087,19 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteKnowledgeSourceAsync(string sourceName, MatchConditions matchConditions, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteKnowledgeSourceAsync(string sourceName, MatchConditions matchConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteKnowledgeSource");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-                using HttpMessage message = CreateDeleteKnowledgeSourceRequest(sourceName, matchConditions, context);
+                using HttpMessage message = this.CreateDeleteKnowledgeSourceRequest(sourceName, matchConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2113,28 +2113,28 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteKnowledgeSource(string sourceName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            return DeleteKnowledgeSource(sourceName, matchConditions, cancellationToken.ToRequestContext());
+            return this.DeleteKnowledgeSource(sourceName, matchConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes an existing knowledge source. </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteKnowledgeSourceAsync(string sourceName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteKnowledgeSourceAsync(string sourceName, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            return await DeleteKnowledgeSourceAsync(sourceName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteKnowledgeSourceAsync(sourceName, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2147,9 +2147,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetKnowledgeSource(string sourceName, RequestContext context)
         {
@@ -2157,9 +2157,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-                using HttpMessage message = CreateGetKnowledgeSourceRequest(sourceName, context);
+                using HttpMessage message = this.CreateGetKnowledgeSourceRequest(sourceName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2179,19 +2179,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetKnowledgeSourceAsync(string sourceName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetKnowledgeSourceAsync(string sourceName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetKnowledgeSource");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-                using HttpMessage message = CreateGetKnowledgeSourceRequest(sourceName, context);
+                using HttpMessage message = this.CreateGetKnowledgeSourceRequest(sourceName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2204,29 +2204,29 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Retrieves a knowledge source definition. </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeSource> GetKnowledgeSource(string sourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.KnowledgeSource> GetKnowledgeSource(string sourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            Response result = GetKnowledgeSource(sourceName, cancellationToken.ToRequestContext());
-            return Response.FromValue((KnowledgeSource)result, result);
+            Response result = this.GetKnowledgeSource(sourceName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((KnowledgeSource)result), result);
         }
 
         /// <summary> Retrieves a knowledge source definition. </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeSource>> GetKnowledgeSourceAsync(string sourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.KnowledgeSource>> GetKnowledgeSourceAsync(string sourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            Response result = await GetKnowledgeSourceAsync(sourceName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((KnowledgeSource)result, result);
+            Response result = await this.GetKnowledgeSourceAsync(sourceName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((KnowledgeSource)result), result);
         }
 
         /// <summary>
@@ -2238,9 +2238,9 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetKnowledgeSources(RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetKnowledgeSources(RequestContext context)
         {
             return new SearchIndexClientGetKnowledgeSourcesCollectionResult(this, context, "SearchIndexClient.GetKnowledgeSources");
         }
@@ -2254,25 +2254,25 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetKnowledgeSourcesAsync(RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetKnowledgeSourcesAsync(RequestContext context)
         {
             return new SearchIndexClientGetKnowledgeSourcesAsyncCollectionResult(this, context, "SearchIndexClient.GetKnowledgeSources");
         }
 
         /// <summary> Lists all knowledge sources available for a search service. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<KnowledgeSource> GetKnowledgeSources(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Search.Documents.Indexes.Models.KnowledgeSource> GetKnowledgeSources(CancellationToken cancellationToken = default)
         {
             return new SearchIndexClientGetKnowledgeSourcesCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeSources");
         }
 
         /// <summary> Lists all knowledge sources available for a search service. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<KnowledgeSource> GetKnowledgeSourcesAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Search.Documents.Indexes.Models.KnowledgeSource> GetKnowledgeSourcesAsync(CancellationToken cancellationToken = default)
         {
             return new SearchIndexClientGetKnowledgeSourcesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeSources");
         }
@@ -2287,8 +2287,8 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateKnowledgeSource(RequestContent content, RequestContext context = null)
         {
@@ -2296,9 +2296,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateKnowledgeSourceRequest(content, context);
+                using HttpMessage message = this.CreateCreateKnowledgeSourceRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2318,18 +2318,18 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateKnowledgeSourceAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateKnowledgeSourceAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.CreateKnowledgeSource");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateKnowledgeSourceRequest(content, context);
+                using HttpMessage message = this.CreateCreateKnowledgeSourceRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2349,9 +2349,9 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetKnowledgeSourceStatus(string sourceName, RequestContext context)
         {
@@ -2359,9 +2359,9 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-                using HttpMessage message = CreateGetKnowledgeSourceStatusRequest(sourceName, context);
+                using HttpMessage message = this.CreateGetKnowledgeSourceStatusRequest(sourceName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2381,19 +2381,19 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetKnowledgeSourceStatusAsync(string sourceName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetKnowledgeSourceStatusAsync(string sourceName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetKnowledgeSourceStatus");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-                using HttpMessage message = CreateGetKnowledgeSourceStatusRequest(sourceName, context);
+                using HttpMessage message = this.CreateGetKnowledgeSourceStatusRequest(sourceName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2406,29 +2406,29 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Retrieves the status of a knowledge source. </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeSourceStatus> GetKnowledgeSourceStatus(string sourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceStatus> GetKnowledgeSourceStatus(string sourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            Response result = GetKnowledgeSourceStatus(sourceName, cancellationToken.ToRequestContext());
-            return Response.FromValue((KnowledgeSourceStatus)result, result);
+            Response result = this.GetKnowledgeSourceStatus(sourceName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((KnowledgeSourceStatus)result), result);
         }
 
         /// <summary> Retrieves the status of a knowledge source. </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeSourceStatus>> GetKnowledgeSourceStatusAsync(string sourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceStatus>> GetKnowledgeSourceStatusAsync(string sourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            Response result = await GetKnowledgeSourceStatusAsync(sourceName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((KnowledgeSourceStatus)result, result);
+            Response result = await this.GetKnowledgeSourceStatusAsync(sourceName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((KnowledgeSourceStatus)result), result);
         }
 
         /// <summary>
@@ -2447,9 +2447,9 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UploadKnowledgeSourceFile(string sourceName, string contentDisposition, RequestContent content, RequestContext context = null)
         {
@@ -2457,11 +2457,11 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
-                Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUploadKnowledgeSourceFileRequest(sourceName, contentDisposition, content, context);
+                using HttpMessage message = this.CreateUploadKnowledgeSourceFileRequest(sourceName, contentDisposition, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2487,21 +2487,21 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UploadKnowledgeSourceFileAsync(string sourceName, string contentDisposition, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UploadKnowledgeSourceFileAsync(string sourceName, string contentDisposition, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UploadKnowledgeSourceFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
-                Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
+                global::Azure.Search.Documents.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUploadKnowledgeSourceFileRequest(sourceName, contentDisposition, content, context);
+                using HttpMessage message = this.CreateUploadKnowledgeSourceFileRequest(sourceName, contentDisposition, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2520,17 +2520,17 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <param name="file"> The file content to upload. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="file"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<KnowledgeSourceFile> UploadKnowledgeSourceFile(string sourceName, string contentDisposition, BinaryData @file, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="file"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile> UploadKnowledgeSourceFile(string sourceName, string contentDisposition, BinaryData @file, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
-            Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
-            Argument.AssertNotNull(@file, nameof(@file));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
+            global::Azure.Search.Documents.Argument.AssertNotNull(@file, nameof(@file));
 
-            Response result = UploadKnowledgeSourceFile(sourceName, contentDisposition, RequestContent.Create(@file), cancellationToken.ToRequestContext());
-            return Response.FromValue((KnowledgeSourceFile)result, result);
+            Response result = this.UploadKnowledgeSourceFile(sourceName, contentDisposition, global::Azure.Core.RequestContent.Create(@file), cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((KnowledgeSourceFile)result), result);
         }
 
         /// <summary> Uploads a file to a File knowledge source for processing and indexing. </summary>
@@ -2542,17 +2542,17 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <param name="file"> The file content to upload. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="file"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<KnowledgeSourceFile>> UploadKnowledgeSourceFileAsync(string sourceName, string contentDisposition, BinaryData @file, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="file"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile>> UploadKnowledgeSourceFileAsync(string sourceName, string contentDisposition, BinaryData @file, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
-            Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
-            Argument.AssertNotNull(@file, nameof(@file));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
+            global::Azure.Search.Documents.Argument.AssertNotNull(@file, nameof(@file));
 
-            Response result = await UploadKnowledgeSourceFileAsync(sourceName, contentDisposition, RequestContent.Create(@file), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((KnowledgeSourceFile)result, result);
+            Response result = await this.UploadKnowledgeSourceFileAsync(sourceName, contentDisposition, global::Azure.Core.RequestContent.Create(@file), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((KnowledgeSourceFile)result), result);
         }
 
         /// <summary>
@@ -2565,13 +2565,13 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetKnowledgeSourceFiles(string sourceName, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetKnowledgeSourceFiles(string sourceName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
             return new SearchIndexClientGetKnowledgeSourceFilesCollectionResult(this, sourceName, context, "SearchIndexClient.GetKnowledgeSourceFiles");
         }
@@ -2586,13 +2586,13 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetKnowledgeSourceFilesAsync(string sourceName, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetKnowledgeSourceFilesAsync(string sourceName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
             return new SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResult(this, sourceName, context, "SearchIndexClient.GetKnowledgeSourceFiles");
         }
@@ -2600,12 +2600,12 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Lists all files in a File knowledge source. </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<KnowledgeSourceFile> GetKnowledgeSourceFiles(string sourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile> GetKnowledgeSourceFiles(string sourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
             return new SearchIndexClientGetKnowledgeSourceFilesCollectionResultOfT(this, sourceName, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeSourceFiles");
         }
@@ -2613,12 +2613,12 @@ namespace Azure.Search.Documents.Indexes
         /// <summary> Lists all files in a File knowledge source. </summary>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<KnowledgeSourceFile> GetKnowledgeSourceFilesAsync(string sourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile> GetKnowledgeSourceFilesAsync(string sourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
             return new SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResultOfT(this, sourceName, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeSourceFiles");
         }
@@ -2634,9 +2634,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteKnowledgeSourceFile(string fileId, string sourceName, RequestContext context)
         {
@@ -2644,10 +2644,10 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(fileId, sourceName, context);
+                using HttpMessage message = this.CreateDeleteKnowledgeSourceFileRequest(fileId, sourceName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2668,20 +2668,20 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string fileId, string sourceName, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteKnowledgeSourceFileAsync(string fileId, string sourceName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteKnowledgeSourceFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+                global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(fileId, sourceName, context);
+                using HttpMessage message = this.CreateDeleteKnowledgeSourceFileRequest(fileId, sourceName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2695,30 +2695,30 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteKnowledgeSourceFile(string fileId, string sourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            return DeleteKnowledgeSourceFile(fileId, sourceName, cancellationToken.ToRequestContext());
+            return this.DeleteKnowledgeSourceFile(fileId, sourceName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a file from a File knowledge source and removes all indexed content derived from it. </summary>
         /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string fileId, string sourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteKnowledgeSourceFileAsync(string fileId, string sourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
-            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            global::Azure.Search.Documents.Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            return await DeleteKnowledgeSourceFileAsync(fileId, sourceName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteKnowledgeSourceFileAsync(fileId, sourceName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2730,7 +2730,7 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetServiceStatistics(RequestContext context)
         {
@@ -2738,7 +2738,7 @@ namespace Azure.Search.Documents.Indexes
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServiceStatisticsRequest(context);
+                using HttpMessage message = this.CreateGetServiceStatisticsRequest(context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2757,15 +2757,15 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetServiceStatisticsAsync(RequestContext context)
+        public virtual async Task<global::Azure.Response> GetServiceStatisticsAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetServiceStatistics");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetServiceStatisticsRequest(context);
+                using HttpMessage message = this.CreateGetServiceStatisticsRequest(context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2777,20 +2777,20 @@ namespace Azure.Search.Documents.Indexes
 
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SearchServiceStatistics> GetServiceStatistics(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Search.Documents.Indexes.Models.SearchServiceStatistics> GetServiceStatistics(CancellationToken cancellationToken = default)
         {
-            Response result = GetServiceStatistics(cancellationToken.ToRequestContext());
-            return Response.FromValue((SearchServiceStatistics)result, result);
+            Response result = this.GetServiceStatistics(cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((SearchServiceStatistics)result), result);
         }
 
         /// <summary> Gets service level statistics for a search service. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SearchServiceStatistics>> GetServiceStatisticsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Search.Documents.Indexes.Models.SearchServiceStatistics>> GetServiceStatisticsAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetServiceStatisticsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SearchServiceStatistics)result, result);
+            Response result = await this.GetServiceStatisticsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((SearchServiceStatistics)result), result);
         }
 
         /// <summary>
@@ -2805,9 +2805,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetIndexStatsSummary(int? top, int? skip, bool? count, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetIndexStatsSummary(int? top, int? skip, bool? count, RequestContext context)
         {
             return new SearchIndexClientGetIndexStatsSummaryCollectionResult(
                 this,
@@ -2830,9 +2830,9 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetIndexStatsSummaryAsync(int? top, int? skip, bool? count, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetIndexStatsSummaryAsync(int? top, int? skip, bool? count, RequestContext context)
         {
             return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResult(
                 this,
@@ -2848,8 +2848,8 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<IndexStatisticsSummary> GetIndexStatsSummary(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Search.Documents.Indexes.Models.IndexStatisticsSummary> GetIndexStatsSummary(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             return new SearchIndexClientGetIndexStatsSummaryCollectionResultOfT(
                 this,
@@ -2865,8 +2865,8 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<IndexStatisticsSummary> GetIndexStatsSummaryAsync(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Search.Documents.Indexes.Models.IndexStatisticsSummary> GetIndexStatsSummaryAsync(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
         {
             return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResultOfT(
                 this,
@@ -2881,10 +2881,10 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<SearchIndexResponse> GetIndexesWithSelectedProperties(IEnumerable<string> @select, CancellationToken cancellationToken)
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual Pageable<global::Azure.Search.Documents.Indexes.Models.SearchIndexResponse> GetIndexesWithSelectedProperties(IEnumerable<string> @select, CancellationToken cancellationToken)
         {
-            return GetIndexesWithSelectedProperties(@select: @select, top: default, skip: default, count: default, cancellationToken: cancellationToken);
+            return this.GetIndexesWithSelectedProperties(@select: @select, top: default, skip: default, count: default, cancellationToken: cancellationToken);
         }
 #pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
 
@@ -2892,10 +2892,10 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select, CancellationToken cancellationToken)
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual AsyncPageable<global::Azure.Search.Documents.Indexes.Models.SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select, CancellationToken cancellationToken)
         {
-            return GetIndexesWithSelectedPropertiesAsync(@select: @select, top: default, skip: default, count: default, cancellationToken: cancellationToken);
+            return this.GetIndexesWithSelectedPropertiesAsync(@select: @select, top: default, skip: default, count: default, cancellationToken: cancellationToken);
         }
 #pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }

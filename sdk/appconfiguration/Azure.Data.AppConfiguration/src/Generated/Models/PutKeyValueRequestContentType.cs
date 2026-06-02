@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal readonly partial struct PutKeyValueRequestContentType : IEquatable<PutKeyValueRequestContentType>
+    internal readonly partial struct PutKeyValueRequestContentType : IEquatable<global::Azure.Data.AppConfiguration.PutKeyValueRequestContentType>
     {
         private readonly string _value;
         private const string ApplicationVndMicrosoftAppconfigKvJsonValue = "application/vnd.microsoft.appconfig.kv+json";
@@ -20,7 +20,7 @@ namespace Azure.Data.AppConfiguration
         private const string ApplicationJsonValue0 = "application/*+json";
         private const string ApplicationJsonPatchJsonValue = "application/json-patch+json";
 
-        /// <summary> Initializes a new instance of <see cref="PutKeyValueRequestContentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Data.AppConfiguration.PutKeyValueRequestContentType"/>. </summary>
         /// <param name="value"> The value. </param>
         public PutKeyValueRequestContentType(string value)
         {
@@ -39,34 +39,34 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Gets the ApplicationJsonPatchJson. </summary>
         public static PutKeyValueRequestContentType ApplicationJsonPatchJson { get; } = new PutKeyValueRequestContentType(ApplicationJsonPatchJsonValue);
 
-        /// <summary> Determines if two <see cref="PutKeyValueRequestContentType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Data.AppConfiguration.PutKeyValueRequestContentType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PutKeyValueRequestContentType left, PutKeyValueRequestContentType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PutKeyValueRequestContentType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Data.AppConfiguration.PutKeyValueRequestContentType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PutKeyValueRequestContentType left, PutKeyValueRequestContentType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PutKeyValueRequestContentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Data.AppConfiguration.PutKeyValueRequestContentType"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator PutKeyValueRequestContentType(string value) => new PutKeyValueRequestContentType(value);
 
-        /// <summary> Converts a string to a <see cref="PutKeyValueRequestContentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Data.AppConfiguration.PutKeyValueRequestContentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PutKeyValueRequestContentType?(string value) => value == null ? null : new PutKeyValueRequestContentType(value);
+        public static implicit operator PutKeyValueRequestContentType?(string value) => (value == null) ? null : new PutKeyValueRequestContentType(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PutKeyValueRequestContentType other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is PutKeyValueRequestContentType other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(PutKeyValueRequestContentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PutKeyValueRequestContentType other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

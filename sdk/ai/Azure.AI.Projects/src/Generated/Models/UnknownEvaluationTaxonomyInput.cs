@@ -9,10 +9,10 @@ namespace Azure.AI.Projects.Evaluation
 {
     internal partial class UnknownEvaluationTaxonomyInput : EvaluationTaxonomyInput
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownEvaluationTaxonomyInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.UnknownEvaluationTaxonomyInput"/>. </summary>
         /// <param name="type"> Input type of the evaluation taxonomy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEvaluationTaxonomyInput(EvaluationTaxonomyInputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
+        internal UnknownEvaluationTaxonomyInput(EvaluationTaxonomyInputType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties) : base((@type != default) ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

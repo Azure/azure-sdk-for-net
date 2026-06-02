@@ -13,16 +13,16 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> Represents a message creation within a streaming run step delta. </summary>
     public partial class RunStepDeltaMessageCreation : RunStepDeltaDetail
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaMessageCreation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMessageCreation"/>. </summary>
         internal RunStepDeltaMessageCreation() : base("message_creation")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepDeltaMessageCreation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepDeltaMessageCreation"/>. </summary>
         /// <param name="type"> The object type for the run step detail object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="messageCreation"> The message creation data. </param>
-        internal RunStepDeltaMessageCreation(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, RunStepDeltaMessageCreationObject messageCreation) : base(@type, additionalBinaryDataProperties)
+        internal RunStepDeltaMessageCreation(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RunStepDeltaMessageCreationObject messageCreation) : base(@type, additionalBinaryDataProperties)
         {
             MessageCreation = messageCreation;
         }

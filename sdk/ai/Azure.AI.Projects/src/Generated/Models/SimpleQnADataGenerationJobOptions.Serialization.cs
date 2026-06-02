@@ -10,9 +10,9 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The options for a data generation job with SimpleQnA type. </summary>
-    public partial class SimpleQnADataGenerationJobOptions : DataGenerationJobOptions, IJsonModel<SimpleQnADataGenerationJobOptions>
+    public partial class SimpleQnADataGenerationJobOptions : DataGenerationJobOptions, IJsonModel<global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="SimpleQnADataGenerationJobOptions"/> for deserialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions"/> for deserialization. </summary>
         internal SimpleQnADataGenerationJobOptions()
         {
         }
@@ -21,48 +21,48 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataGenerationJobOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SimpleQnADataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Projects.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSimpleQnADataGenerationJobOptions(document.RootElement, options);
+                        return global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions.DeserializeSimpleQnADataGenerationJobOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SimpleQnADataGenerationJobOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SimpleQnADataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Projects.AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SimpleQnADataGenerationJobOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SimpleQnADataGenerationJobOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SimpleQnADataGenerationJobOptions IPersistableModel<SimpleQnADataGenerationJobOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => (SimpleQnADataGenerationJobOptions)PersistableModelCreateCore(data, options);
+        SimpleQnADataGenerationJobOptions IPersistableModel<global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => ((SimpleQnADataGenerationJobOptions)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SimpleQnADataGenerationJobOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SimpleQnADataGenerationJobOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -70,13 +70,13 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SimpleQnADataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SimpleQnADataGenerationJobOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(QuestionTypes))
+            if (global::Azure.AI.Projects.Optional.IsCollectionDefined(QuestionTypes))
             {
                 writer.WritePropertyName("question_types"u8);
                 writer.WriteStartArray();
@@ -90,26 +90,26 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SimpleQnADataGenerationJobOptions IJsonModel<SimpleQnADataGenerationJobOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SimpleQnADataGenerationJobOptions)JsonModelCreateCore(ref reader, options);
+        SimpleQnADataGenerationJobOptions IJsonModel<global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((SimpleQnADataGenerationJobOptions)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataGenerationJobOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SimpleQnADataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(SimpleQnADataGenerationJobOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSimpleQnADataGenerationJobOptions(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Projects.SimpleQnADataGenerationJobOptions.DeserializeSimpleQnADataGenerationJobOptions(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static SimpleQnADataGenerationJobOptions DeserializeSimpleQnADataGenerationJobOptions(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
@@ -117,8 +117,8 @@ namespace Azure.AI.Projects
             int maxSamples = default;
             float? trainSplit = default;
             DataGenerationModelOptions modelOptions = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<SimpleQnAFineTuningQuestionType> questionTypes = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.AI.Projects.SimpleQnAFineTuningQuestionType> questionTypes = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -133,7 +133,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("train_split"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
@@ -142,20 +142,20 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("model_options"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    modelOptions = DataGenerationModelOptions.DeserializeDataGenerationModelOptions(prop.Value, options);
+                    modelOptions = global::Azure.AI.Projects.DataGenerationModelOptions.DeserializeDataGenerationModelOptions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("question_types"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<SimpleQnAFineTuningQuestionType> array = new List<SimpleQnAFineTuningQuestionType>();
+                    List<global::Azure.AI.Projects.SimpleQnAFineTuningQuestionType> array = new List<global::Azure.AI.Projects.SimpleQnAFineTuningQuestionType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new SimpleQnAFineTuningQuestionType(item.GetString()));
@@ -163,9 +163,9 @@ namespace Azure.AI.Projects
                     questionTypes = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new SimpleQnADataGenerationJobOptions(
@@ -174,7 +174,7 @@ namespace Azure.AI.Projects
                 trainSplit,
                 modelOptions,
                 additionalBinaryDataProperties,
-                questionTypes ?? new ChangeTrackingList<SimpleQnAFineTuningQuestionType>());
+                (questionTypes ?? new ChangeTrackingList<global::Azure.AI.Projects.SimpleQnAFineTuningQuestionType>()));
         }
     }
 }

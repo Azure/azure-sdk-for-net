@@ -14,22 +14,22 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringExportedModelDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringExportedModelDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedModelDetails"/>. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trainedModelLabel"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="trainedModelLabel"/> is null. </exception>
         public ConversationAuthoringExportedModelDetails(string trainedModelLabel)
         {
-            Argument.AssertNotNull(trainedModelLabel, nameof(trainedModelLabel));
+            global::Azure.AI.Language.Conversations.Authoring.Argument.AssertNotNull(trainedModelLabel, nameof(trainedModelLabel));
 
             TrainedModelLabel = trainedModelLabel;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringExportedModelDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringExportedModelDetails"/>. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringExportedModelDetails(string trainedModelLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringExportedModelDetails(string trainedModelLabel, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TrainedModelLabel = trainedModelLabel;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

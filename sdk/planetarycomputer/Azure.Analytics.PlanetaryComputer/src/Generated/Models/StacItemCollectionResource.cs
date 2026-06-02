@@ -17,18 +17,18 @@ namespace Azure.Analytics.PlanetaryComputer
     /// </summary>
     public partial class StacItemCollectionResource : StacItemOrStacItemCollection
     {
-        /// <summary> Initializes a new instance of <see cref="StacItemCollectionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemCollectionResource"/>. </summary>
         /// <param name="features"> Array of STAC Items in the collection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
-        public StacItemCollectionResource(IEnumerable<StacItemResource> features) : base(StacModelType.FeatureCollection)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="features"/> is null. </exception>
+        public StacItemCollectionResource(IEnumerable<global::Azure.Analytics.PlanetaryComputer.StacItemResource> features) : base(global::Azure.Analytics.PlanetaryComputer.StacModelType.FeatureCollection)
         {
-            Argument.AssertNotNull(features, nameof(features));
+            global::Azure.Analytics.PlanetaryComputer.Argument.AssertNotNull(features, nameof(features));
 
             Features = features.ToList();
             BoundingBox = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StacItemCollectionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Analytics.PlanetaryComputer.StacItemCollectionResource"/>. </summary>
         /// <param name="type"> Discriminator property for StacItemOrStacItemCollection. </param>
         /// <param name="stacVersion"> Stac Version. </param>
         /// <param name="links"> Links to related resources and endpoints. </param>
@@ -40,7 +40,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="features"> Array of STAC Items in the collection. </param>
         /// <param name="boundingBox"> Bounding box of all items in format [west, south, east, north]. </param>
         /// <param name="context"> Context information for the search response. </param>
-        internal StacItemCollectionResource(StacModelType @type, string stacVersion, IList<StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<StacItemResource> features, IList<float> boundingBox, StacContextExtension context) : base(@type, stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
+        internal StacItemCollectionResource(StacModelType @type, string stacVersion, IList<global::Azure.Analytics.PlanetaryComputer.StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, IList<global::Azure.Analytics.PlanetaryComputer.StacItemResource> features, IList<float> boundingBox, StacContextExtension context) : base(@type, stacVersion, links, createdOn, updatedOn, shortDescription, stacExtensions, additionalBinaryDataProperties)
         {
             Features = features;
             BoundingBox = boundingBox;
@@ -48,7 +48,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Array of STAC Items in the collection. </summary>
-        public IList<StacItemResource> Features { get; }
+        public IList<global::Azure.Analytics.PlanetaryComputer.StacItemResource> Features { get; }
 
         /// <summary> Bounding box of all items in format [west, south, east, north]. </summary>
         public IList<float> BoundingBox { get; }

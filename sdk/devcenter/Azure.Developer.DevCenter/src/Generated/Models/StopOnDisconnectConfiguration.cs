@@ -14,9 +14,9 @@ namespace Azure.Developer.DevCenter.Models
     public partial class StopOnDisconnectConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StopOnDisconnectConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration"/>. </summary>
         /// <param name="status">
         /// Indicates whether the feature to stop the devbox on disconnect once the grace
         /// period has lapsed is enabled.
@@ -26,7 +26,7 @@ namespace Azure.Developer.DevCenter.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StopOnDisconnectConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration"/>. </summary>
         /// <param name="status">
         /// Indicates whether the feature to stop the devbox on disconnect once the grace
         /// period has lapsed is enabled.
@@ -36,7 +36,7 @@ namespace Azure.Developer.DevCenter.Models
         /// is detected.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StopOnDisconnectConfiguration(StopOnDisconnectStatus status, int? gracePeriodMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StopOnDisconnectConfiguration(StopOnDisconnectStatus status, int? gracePeriodMinutes, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             GracePeriodMinutes = gracePeriodMinutes;

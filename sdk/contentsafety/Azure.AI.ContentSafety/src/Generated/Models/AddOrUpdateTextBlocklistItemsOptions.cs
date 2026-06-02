@@ -15,28 +15,28 @@ namespace Azure.AI.ContentSafety
     public partial class AddOrUpdateTextBlocklistItemsOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AddOrUpdateTextBlocklistItemsOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.AddOrUpdateTextBlocklistItemsOptions"/>. </summary>
         /// <param name="blocklistItems"> Array of blocklistItems to add. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blocklistItems"/> is null. </exception>
-        public AddOrUpdateTextBlocklistItemsOptions(IEnumerable<TextBlocklistItem> blocklistItems)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="blocklistItems"/> is null. </exception>
+        public AddOrUpdateTextBlocklistItemsOptions(IEnumerable<global::Azure.AI.ContentSafety.TextBlocklistItem> blocklistItems)
         {
-            Argument.AssertNotNull(blocklistItems, nameof(blocklistItems));
+            global::Azure.AI.ContentSafety.Argument.AssertNotNull(blocklistItems, nameof(blocklistItems));
 
             BlocklistItems = blocklistItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AddOrUpdateTextBlocklistItemsOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.ContentSafety.AddOrUpdateTextBlocklistItemsOptions"/>. </summary>
         /// <param name="blocklistItems"> Array of blocklistItems to add. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddOrUpdateTextBlocklistItemsOptions(IList<TextBlocklistItem> blocklistItems, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddOrUpdateTextBlocklistItemsOptions(IList<global::Azure.AI.ContentSafety.TextBlocklistItem> blocklistItems, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BlocklistItems = blocklistItems;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of blocklistItems to add. </summary>
-        public IList<TextBlocklistItem> BlocklistItems { get; }
+        public IList<global::Azure.AI.ContentSafety.TextBlocklistItem> BlocklistItems { get; }
     }
 }

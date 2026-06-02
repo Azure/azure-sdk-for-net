@@ -14,14 +14,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class StorageBlobInventoryPolicyCompletedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StorageBlobInventoryPolicyCompletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageBlobInventoryPolicyCompletedEventData"/>. </summary>
         internal StorageBlobInventoryPolicyCompletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageBlobInventoryPolicyCompletedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.StorageBlobInventoryPolicyCompletedEventData"/>. </summary>
         /// <param name="scheduleDateTime"> The time at which inventory policy was scheduled. </param>
         /// <param name="accountName"> The account name for which inventory policy is registered. </param>
         /// <param name="ruleName"> The rule name for inventory policy. </param>
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="policyRunId"> The policy run id for inventory run. </param>
         /// <param name="manifestBlobUrl"> The blob URL for manifest file for inventory run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageBlobInventoryPolicyCompletedEventData(DateTimeOffset? scheduleDateTime, string accountName, string ruleName, string policyRunStatus, string policyRunStatusMessage, string policyRunId, string manifestBlobUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageBlobInventoryPolicyCompletedEventData(DateTimeOffset? scheduleDateTime, string accountName, string ruleName, string policyRunStatus, string policyRunStatusMessage, string policyRunId, string manifestBlobUrl, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ScheduleDateTime = scheduleDateTime;
             AccountName = accountName;

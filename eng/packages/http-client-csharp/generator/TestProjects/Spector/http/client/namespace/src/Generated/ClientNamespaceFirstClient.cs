@@ -17,23 +17,23 @@ namespace Client.Clientnamespace
 {
     public partial class ClientNamespaceFirstClient
     {
-        public ClientNamespaceFirstClient() : this(new Uri("http://localhost:3000"), new ClientClientNamespaceClientOptions()) => throw null;
+        public ClientNamespaceFirstClient() : this(new global::System.Uri("http://localhost:3000"), new ClientClientNamespaceClientOptions()) => throw null;
 
-        internal ClientNamespaceFirstClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientClientNamespaceClientOptions options) => throw null;
+        internal ClientNamespaceFirstClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ClientClientNamespaceClientOptions options) => throw null;
 
-        public ClientNamespaceFirstClient(Uri endpoint, ClientClientNamespaceClientOptions options) : this(null, endpoint, options) => throw null;
+        public ClientNamespaceFirstClient(global::System.Uri endpoint, ClientClientNamespaceClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ClientNamespaceFirstClient(ClientNamespaceFirstClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ClientNamespaceFirstClient(ClientNamespaceFirstClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response GetFirst(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetFirstAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> GetFirstAsync(RequestContext context) => throw null;
 
-        public virtual Response<FirstClientResult> GetFirst(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::Client.Clientnamespace.First.FirstClientResult> GetFirst(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<FirstClientResult>> GetFirstAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::Client.Clientnamespace.First.FirstClientResult>> GetFirstAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

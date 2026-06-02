@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
-    internal readonly partial struct ContextTagKeys : IEquatable<ContextTagKeys>
+    internal readonly partial struct ContextTagKeys : IEquatable<global::Azure.Monitor.OpenTelemetry.Exporter.Models.ContextTagKeys>
     {
         private readonly string _value;
         /// <summary> Application version. </summary>
@@ -70,7 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <summary> Internal node name. </summary>
         private const string AiInternalNodeNameValue = "ai.internal.nodeName";
 
-        /// <summary> Initializes a new instance of <see cref="ContextTagKeys"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.ContextTagKeys"/>. </summary>
         /// <param name="value"> The value. </param>
         public ContextTagKeys(string value)
         {
@@ -161,34 +161,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <summary> Internal node name. </summary>
         public static ContextTagKeys AiInternalNodeName { get; } = new ContextTagKeys(AiInternalNodeNameValue);
 
-        /// <summary> Determines if two <see cref="ContextTagKeys"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.ContextTagKeys"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContextTagKeys left, ContextTagKeys right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ContextTagKeys"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.ContextTagKeys"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContextTagKeys left, ContextTagKeys right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ContextTagKeys"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.ContextTagKeys"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ContextTagKeys(string value) => new ContextTagKeys(value);
 
-        /// <summary> Converts a string to a <see cref="ContextTagKeys"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Monitor.OpenTelemetry.Exporter.Models.ContextTagKeys"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ContextTagKeys?(string value) => value == null ? null : new ContextTagKeys(value);
+        public static implicit operator ContextTagKeys?(string value) => (value == null) ? null : new ContextTagKeys(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ContextTagKeys other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is ContextTagKeys other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(ContextTagKeys other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContextTagKeys other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

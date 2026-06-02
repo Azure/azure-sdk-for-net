@@ -15,22 +15,22 @@ namespace Azure.Communication.Messages
     public partial class RemoveParticipantsOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.RemoveParticipantsOptions"/>. </summary>
         /// <param name="participantIds"> The participant IDs to remove. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantIds"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="participantIds"/> is null. </exception>
         public RemoveParticipantsOptions(IEnumerable<string> participantIds)
         {
-            Argument.AssertNotNull(participantIds, nameof(participantIds));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(participantIds, nameof(participantIds));
 
             ParticipantIds = participantIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.RemoveParticipantsOptions"/>. </summary>
         /// <param name="participantIds"> The participant IDs to remove. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RemoveParticipantsOptions(IList<string> participantIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RemoveParticipantsOptions(IList<string> participantIds, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ParticipantIds = participantIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

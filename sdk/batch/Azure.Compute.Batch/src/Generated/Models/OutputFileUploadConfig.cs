@@ -17,19 +17,19 @@ namespace Azure.Compute.Batch
     public partial class OutputFileUploadConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OutputFileUploadConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.OutputFileUploadConfig"/>. </summary>
         /// <param name="uploadCondition"> The conditions under which the Task output file or set of files should be uploaded. The default is taskcompletion. </param>
         public OutputFileUploadConfig(OutputFileUploadCondition uploadCondition)
         {
             UploadCondition = uploadCondition;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OutputFileUploadConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.OutputFileUploadConfig"/>. </summary>
         /// <param name="uploadCondition"> The conditions under which the Task output file or set of files should be uploaded. The default is taskcompletion. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutputFileUploadConfig(OutputFileUploadCondition uploadCondition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutputFileUploadConfig(OutputFileUploadCondition uploadCondition, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             UploadCondition = uploadCondition;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

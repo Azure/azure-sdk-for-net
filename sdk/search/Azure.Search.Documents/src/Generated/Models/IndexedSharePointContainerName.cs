@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Specifies which SharePoint libraries to access. </summary>
-    public readonly partial struct IndexedSharePointContainerName : IEquatable<IndexedSharePointContainerName>
+    public readonly partial struct IndexedSharePointContainerName : IEquatable<global::Azure.Search.Documents.Indexes.Models.IndexedSharePointContainerName>
     {
         private readonly string _value;
         /// <summary> Index content from the site's default document library. </summary>
@@ -22,12 +22,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Use a query to filter SharePoint content. </summary>
         private const string UseQueryValue = "useQuery";
 
-        /// <summary> Initializes a new instance of <see cref="IndexedSharePointContainerName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.IndexedSharePointContainerName"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IndexedSharePointContainerName(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.Search.Documents.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -41,34 +41,34 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Use a query to filter SharePoint content. </summary>
         public static IndexedSharePointContainerName UseQuery { get; } = new IndexedSharePointContainerName(UseQueryValue);
 
-        /// <summary> Determines if two <see cref="IndexedSharePointContainerName"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.IndexedSharePointContainerName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IndexedSharePointContainerName left, IndexedSharePointContainerName right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="IndexedSharePointContainerName"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.Search.Documents.Indexes.Models.IndexedSharePointContainerName"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IndexedSharePointContainerName left, IndexedSharePointContainerName right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="IndexedSharePointContainerName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.IndexedSharePointContainerName"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator IndexedSharePointContainerName(string value) => new IndexedSharePointContainerName(value);
 
-        /// <summary> Converts a string to a <see cref="IndexedSharePointContainerName"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.Search.Documents.Indexes.Models.IndexedSharePointContainerName"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator IndexedSharePointContainerName?(string value) => value == null ? null : new IndexedSharePointContainerName(value);
+        public static implicit operator IndexedSharePointContainerName?(string value) => (value == null) ? null : new IndexedSharePointContainerName(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IndexedSharePointContainerName other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is IndexedSharePointContainerName other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(IndexedSharePointContainerName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IndexedSharePointContainerName other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

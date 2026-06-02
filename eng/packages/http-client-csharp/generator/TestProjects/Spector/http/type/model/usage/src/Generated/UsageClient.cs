@@ -17,39 +17,39 @@ namespace _Type.Model.Usage
 {
     public partial class UsageClient
     {
-        public UsageClient() : this(new Uri("http://localhost:3000"), new UsageClientOptions()) => throw null;
+        public UsageClient() : this(new global::System.Uri("http://localhost:3000"), new UsageClientOptions()) => throw null;
 
-        internal UsageClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, UsageClientOptions options) => throw null;
+        internal UsageClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, UsageClientOptions options) => throw null;
 
-        public UsageClient(Uri endpoint, UsageClientOptions options) : this(null, endpoint, options) => throw null;
+        public UsageClient(global::System.Uri endpoint, UsageClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public UsageClient(UsageClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public UsageClient(UsageClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response Input(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> InputAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> InputAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response Input(InputRecord input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> InputAsync(InputRecord input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> InputAsync(InputRecord input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Output(RequestContext context) => throw null;
 
-        public virtual Task<Response> OutputAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> OutputAsync(RequestContext context) => throw null;
 
-        public virtual Response<OutputRecord> Output(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Usage.OutputRecord> Output(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<OutputRecord>> OutputAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Usage.OutputRecord>> OutputAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response InputAndOutput(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> InputAndOutputAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> InputAndOutputAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response<InputOutputRecord> InputAndOutput(InputOutputRecord body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<global::_Type.Model.Usage.InputOutputRecord> InputAndOutput(InputOutputRecord body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<InputOutputRecord>> InputAndOutputAsync(InputOutputRecord body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response<global::_Type.Model.Usage.InputOutputRecord>> InputAndOutputAsync(InputOutputRecord body, CancellationToken cancellationToken = default) => throw null;
     }
 }

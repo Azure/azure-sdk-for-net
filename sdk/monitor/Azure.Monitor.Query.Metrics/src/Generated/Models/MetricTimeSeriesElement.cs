@@ -18,23 +18,23 @@ namespace Azure.Monitor.Query.Metrics.Models
     public partial class MetricTimeSeriesElement
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetricTimeSeriesElement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricTimeSeriesElement"/>. </summary>
         internal MetricTimeSeriesElement()
         {
-            Metadatavalues = new ChangeTrackingList<MetadataValue>();
-            Values = new ChangeTrackingList<MetricValue>();
+            Metadatavalues = new ChangeTrackingList<global::Azure.Monitor.Query.Metrics.Models.MetadataValue>();
+            Values = new ChangeTrackingList<global::Azure.Monitor.Query.Metrics.Models.MetricValue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricTimeSeriesElement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Monitor.Query.Metrics.Models.MetricTimeSeriesElement"/>. </summary>
         /// <param name="metadatavalues"> The metadata values returned if $filter was specified in the call. </param>
         /// <param name="values">
         /// An array of data points representing the metric values.  This is only returned
         /// if a result type of data is specified.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricTimeSeriesElement(IList<MetadataValue> metadatavalues, IList<MetricValue> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricTimeSeriesElement(IList<global::Azure.Monitor.Query.Metrics.Models.MetadataValue> metadatavalues, IList<global::Azure.Monitor.Query.Metrics.Models.MetricValue> values, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Metadatavalues = metadatavalues;
             Values = values;
@@ -45,6 +45,6 @@ namespace Azure.Monitor.Query.Metrics.Models
         /// An array of data points representing the metric values.  This is only returned
         /// if a result type of data is specified.
         /// </summary>
-        public IList<MetricValue> Values { get; }
+        public IList<global::Azure.Monitor.Query.Metrics.Models.MetricValue> Values { get; }
     }
 }

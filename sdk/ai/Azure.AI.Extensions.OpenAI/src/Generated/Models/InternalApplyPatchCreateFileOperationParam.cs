@@ -9,21 +9,21 @@ namespace Azure.AI.Extensions.OpenAI
 {
     internal partial class InternalApplyPatchCreateFileOperationParam : ApplyPatchOperationParam
     {
-        /// <summary> Initializes a new instance of <see cref="InternalApplyPatchCreateFileOperationParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalApplyPatchCreateFileOperationParam"/>. </summary>
         /// <param name="path"> Path of the file to create relative to the workspace root. </param>
         /// <param name="diff"> Unified diff content to apply when creating the file. </param>
-        public InternalApplyPatchCreateFileOperationParam(string path, string diff) : base(ApplyPatchOperationParamType.CreateFile)
+        public InternalApplyPatchCreateFileOperationParam(string path, string diff) : base(global::Azure.AI.Extensions.OpenAI.ApplyPatchOperationParamType.CreateFile)
         {
             Path = path;
             Diff = diff;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalApplyPatchCreateFileOperationParam"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Extensions.OpenAI.InternalApplyPatchCreateFileOperationParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="path"> Path of the file to create relative to the workspace root. </param>
         /// <param name="diff"> Unified diff content to apply when creating the file. </param>
-        internal InternalApplyPatchCreateFileOperationParam(ApplyPatchOperationParamType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string path, string diff) : base(@type, additionalBinaryDataProperties)
+        internal InternalApplyPatchCreateFileOperationParam(ApplyPatchOperationParamType @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string path, string diff) : base(@type, additionalBinaryDataProperties)
         {
             Path = path;
             Diff = diff;

@@ -14,14 +14,14 @@ namespace Specs.Azure.ClientGenerator.Core.ClientDoc
 {
     public partial class ClientDocClient
     {
-        public ClientDocClient() : this(new Uri("http://localhost:3000"), new ClientDocClientOptions()) => throw null;
+        public ClientDocClient() : this(new global::System.Uri("http://localhost:3000"), new ClientDocClientOptions()) => throw null;
 
-        internal ClientDocClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, ClientDocClientOptions options) => throw null;
+        internal ClientDocClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, ClientDocClientOptions options) => throw null;
 
-        public ClientDocClient(Uri endpoint, ClientDocClientOptions options) : this(null, endpoint, options) => throw null;
+        public ClientDocClient(global::System.Uri endpoint, ClientDocClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public ClientDocClient(ClientDocClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public ClientDocClient(ClientDocClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

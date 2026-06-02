@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Specs.Azure.Core.Page
 {
-    public partial class UserOrder : IJsonModel<UserOrder>
+    public partial class UserOrder : IJsonModel<global::Specs.Azure.Core.Page.UserOrder>
     {
         internal UserOrder() => throw null;
 
@@ -19,17 +19,17 @@ namespace Specs.Azure.Core.Page
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<UserOrder>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Specs.Azure.Core.Page.UserOrder>.Write(ModelReaderWriterOptions options) => throw null;
 
-        UserOrder IPersistableModel<UserOrder>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        UserOrder IPersistableModel<global::Specs.Azure.Core.Page.UserOrder>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<UserOrder>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Specs.Azure.Core.Page.UserOrder>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        void IJsonModel<UserOrder>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::Specs.Azure.Core.Page.UserOrder>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        UserOrder IJsonModel<UserOrder>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        UserOrder IJsonModel<global::Specs.Azure.Core.Page.UserOrder>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual UserOrder JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

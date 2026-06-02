@@ -18,9 +18,9 @@ namespace Azure.AI.Agents.Persistent
     public partial class ThreadMessageOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ThreadMessageOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ThreadMessageOptions"/>. </summary>
         /// <param name="role">
         /// The role of the entity that is creating the message. Allowed values include:
         /// `user`, which indicates the message is sent by an actual user (and should be
@@ -33,18 +33,18 @@ namespace Azure.AI.Agents.Persistent
         /// need text) or an array of typed content blocks (for example, text, image_file,
         /// image_url, and so on).
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public ThreadMessageOptions(MessageRole role, BinaryData content)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            global::Azure.AI.Agents.Persistent.Argument.AssertNotNull(content, nameof(content));
 
             Role = role;
             Content = content;
-            Attachments = new ChangeTrackingList<MessageAttachment>();
+            Attachments = new ChangeTrackingList<global::Azure.AI.Agents.Persistent.MessageAttachment>();
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThreadMessageOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.ThreadMessageOptions"/>. </summary>
         /// <param name="role">
         /// The role of the entity that is creating the message. Allowed values include:
         /// `user`, which indicates the message is sent by an actual user (and should be
@@ -60,7 +60,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="attachments"> A list of files attached to the message, and the tools they should be added to. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ThreadMessageOptions(MessageRole role, BinaryData content, IList<MessageAttachment> attachments, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ThreadMessageOptions(MessageRole role, BinaryData content, IList<global::Azure.AI.Agents.Persistent.MessageAttachment> attachments, IDictionary<string, string> metadata, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
@@ -82,8 +82,8 @@ namespace Azure.AI.Agents.Persistent
         /// The content of the initial message. This may be a basic string (if you only
         /// need text) or an array of typed content blocks (for example, text, image_file,
         /// image_url, and so on).
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -92,7 +92,7 @@ namespace Azure.AI.Agents.Persistent
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="MessageInputContentBlock"/>. </description>
+        /// <description> <see cref="global::System.Collections.Generic.IList{T}"/> where <c>T</c> is of type <see cref="global::Azure.AI.Agents.Persistent.MessageInputContentBlock"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -122,7 +122,7 @@ namespace Azure.AI.Agents.Persistent
         public BinaryData Content { get; }
 
         /// <summary> A list of files attached to the message, and the tools they should be added to. </summary>
-        public IList<MessageAttachment> Attachments { get; set; }
+        public IList<global::Azure.AI.Agents.Persistent.MessageAttachment> Attachments { get; set; }
 
         /// <summary> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </summary>
         public IDictionary<string, string> Metadata { get; set; }

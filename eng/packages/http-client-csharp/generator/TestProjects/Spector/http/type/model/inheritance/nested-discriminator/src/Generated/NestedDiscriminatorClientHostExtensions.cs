@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class NestedDiscriminatorClientHostExtensions
     {
         public static IClientBuilder AddNestedDiscriminatorClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddNestedDiscriminatorClient(this IHostApplicationBuilder host, string sectionName, Action<NestedDiscriminatorClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddNestedDiscriminatorClient(this IHostApplicationBuilder host, string sectionName, Action<global::_Type.Model.Inheritance.NestedDiscriminator.NestedDiscriminatorClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedNestedDiscriminatorClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedNestedDiscriminatorClient(this IHostApplicationBuilder host, string key, string sectionName, Action<NestedDiscriminatorClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedNestedDiscriminatorClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::_Type.Model.Inheritance.NestedDiscriminator.NestedDiscriminatorClientSettings> configureSettings) => throw null;
     }
 }

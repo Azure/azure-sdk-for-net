@@ -13,26 +13,26 @@ namespace Azure.Communication.Messages
     /// <summary> A request to send a template notification. </summary>
     public partial class TemplateNotificationContent : NotificationContent
     {
-        /// <summary> Initializes a new instance of <see cref="TemplateNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.TemplateNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="template"> The template object used to create templates. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="template"/> is null. </exception>
-        public TemplateNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, MessageTemplate template) : base(channelRegistrationId, to, CommunicationMessageKind.Template)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="to"/> or <paramref name="template"/> is null. </exception>
+        public TemplateNotificationContent(Guid channelRegistrationId, IEnumerable<string> to, MessageTemplate template) : base(channelRegistrationId, to, global::Azure.Communication.Messages.CommunicationMessageKind.Template)
         {
-            Argument.AssertNotNull(to, nameof(to));
-            Argument.AssertNotNull(template, nameof(template));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(to, nameof(to));
+            global::Azure.Communication.Messages.Argument.AssertNotNull(template, nameof(template));
 
             Template = template;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TemplateNotificationContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Communication.Messages.TemplateNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="template"> The template object used to create templates. </param>
-        internal TemplateNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageTemplate template) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
+        internal TemplateNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, MessageTemplate template) : base(channelRegistrationId, to, kind, additionalBinaryDataProperties)
         {
             Template = template;
         }

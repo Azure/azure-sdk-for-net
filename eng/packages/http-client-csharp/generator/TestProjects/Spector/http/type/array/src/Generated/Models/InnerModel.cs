@@ -19,6 +19,6 @@ namespace _Type._Array
             set => throw null;
         }
 
-        public IList<InnerModel> Children => throw null;
+        public IList<global::_Type._Array.InnerModel> Children => throw null;
     }
 }

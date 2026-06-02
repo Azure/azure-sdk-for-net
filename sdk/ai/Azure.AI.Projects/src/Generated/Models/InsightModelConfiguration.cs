@@ -12,22 +12,22 @@ namespace Azure.AI.Projects.Evaluation
     public partial class InsightModelConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InsightModelConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightModelConfiguration"/>. </summary>
         /// <param name="modelDeploymentName"> The model deployment to be evaluated. Accepts either the deployment name alone or with the connection name as '{connectionName}/&lt;modelDeploymentName&gt;'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelDeploymentName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="modelDeploymentName"/> is null. </exception>
         public InsightModelConfiguration(string modelDeploymentName)
         {
-            Argument.AssertNotNull(modelDeploymentName, nameof(modelDeploymentName));
+            global::Azure.AI.Projects.Argument.AssertNotNull(modelDeploymentName, nameof(modelDeploymentName));
 
             ModelDeploymentName = modelDeploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InsightModelConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.InsightModelConfiguration"/>. </summary>
         /// <param name="modelDeploymentName"> The model deployment to be evaluated. Accepts either the deployment name alone or with the connection name as '{connectionName}/&lt;modelDeploymentName&gt;'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InsightModelConfiguration(string modelDeploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InsightModelConfiguration(string modelDeploymentName, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             ModelDeploymentName = modelDeploymentName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

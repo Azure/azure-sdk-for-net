@@ -15,14 +15,14 @@ namespace Parameters.Basic
 {
     public partial class BasicClient
     {
-        public BasicClient() : this(new Uri("http://localhost:3000"), new BasicClientOptions()) => throw null;
+        public BasicClient() : this(new global::System.Uri("http://localhost:3000"), new BasicClientOptions()) => throw null;
 
-        internal BasicClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, BasicClientOptions options) => throw null;
+        internal BasicClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, BasicClientOptions options) => throw null;
 
-        public BasicClient(Uri endpoint, BasicClientOptions options) : this(null, endpoint, options) => throw null;
+        public BasicClient(global::System.Uri endpoint, BasicClientOptions options) : this(null, endpoint, options) => throw null;
 
-        [Experimental("SCME0002")]
-        public BasicClient(BasicClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
+        [ExperimentalAttribute("SCME0002")]
+        public BasicClient(BasicClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

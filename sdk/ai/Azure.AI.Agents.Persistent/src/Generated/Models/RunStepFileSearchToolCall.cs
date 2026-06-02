@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// </summary>
     public partial class RunStepFileSearchToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepFileSearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="fileSearch"> For now, this is always going to be an empty object. </param>
         internal RunStepFileSearchToolCall(string id, RunStepFileSearchToolCallResults fileSearch) : base("file_search", id)
@@ -24,12 +24,12 @@ namespace Azure.AI.Agents.Persistent
             FileSearch = fileSearch;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepFileSearchToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepFileSearchToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="fileSearch"> For now, this is always going to be an empty object. </param>
-        internal RunStepFileSearchToolCall(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, RunStepFileSearchToolCallResults fileSearch) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepFileSearchToolCall(string @type, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string id, RunStepFileSearchToolCallResults fileSearch) : base(@type, id, additionalBinaryDataProperties)
         {
             FileSearch = fileSearch;
         }

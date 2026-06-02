@@ -18,32 +18,32 @@ namespace Documentation._Lists
     {
         protected Lists() => throw null;
 
-        internal Lists(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
+        internal Lists(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, global::System.Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response BulletPointsOp(RequestContext context) => throw null;
 
-        public virtual Task<Response> BulletPointsOpAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> BulletPointsOpAsync(RequestContext context) => throw null;
 
         public virtual Response BulletPointsOp(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> BulletPointsOpAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> BulletPointsOpAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response BulletPointsModel(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<Response> BulletPointsModelAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual Task<global::Azure.Response> BulletPointsModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Response BulletPointsModel(BulletPointsModel input, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> BulletPointsModelAsync(BulletPointsModel input, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> BulletPointsModelAsync(BulletPointsModel input, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response Numbered(RequestContext context) => throw null;
 
-        public virtual Task<Response> NumberedAsync(RequestContext context) => throw null;
+        public virtual Task<global::Azure.Response> NumberedAsync(RequestContext context) => throw null;
 
         public virtual Response Numbered(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> NumberedAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<global::Azure.Response> NumberedAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

@@ -10,12 +10,12 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Code-based evaluator definition using python code. </summary>
     public partial class CodeBasedEvaluatorDefinition : EvaluatorDefinition
     {
-        /// <summary> Initializes a new instance of <see cref="CodeBasedEvaluatorDefinition"/>. </summary>
-        public CodeBasedEvaluatorDefinition() : base(EvaluatorDefinitionType.Code)
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition"/>. </summary>
+        public CodeBasedEvaluatorDefinition() : base(global::Azure.AI.Projects.Evaluation.EvaluatorDefinitionType.Code)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CodeBasedEvaluatorDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition"/>. </summary>
         /// <param name="type"> The type of evaluator definition. </param>
         /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
@@ -25,7 +25,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="entryPoint"> The entry point Python file name for the uploaded evaluator code (e.g. 'answer_length_evaluator.py'). </param>
         /// <param name="imageTag"> The container image tag to use for evaluator code execution. </param>
         /// <param name="blobUri"> The blob URI for the evaluator storage. </param>
-        internal CodeBasedEvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties, string codeText, string entryPoint, string imageTag, Uri blobUri) : base(@type, initParameters, dataSchema, metrics, additionalBinaryDataProperties)
+        internal CodeBasedEvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, global::Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, string codeText, string entryPoint, string imageTag, global::System.Uri blobUri) : base(@type, initParameters, dataSchema, metrics, additionalBinaryDataProperties)
         {
             CodeText = codeText;
             EntryPoint = entryPoint;
@@ -43,6 +43,6 @@ namespace Azure.AI.Projects.Evaluation
         public string ImageTag { get; set; }
 
         /// <summary> The blob URI for the evaluator storage. </summary>
-        public Uri BlobUri { get; set; }
+        public global::System.Uri BlobUri { get; set; }
     }
 }

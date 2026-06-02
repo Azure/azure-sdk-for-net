@@ -14,15 +14,15 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     public partial class QueryFilters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QueryFilters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.QueryFilters"/>. </summary>
         public QueryFilters()
         {
             SourceFilter = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryFilters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.QuestionAnswering.Inference.QueryFilters"/>. </summary>
         /// <param name="metadataFilter"> Find QnAs that are associated with the given list of metadata. </param>
         /// <param name="sourceFilter">
         /// Find QnAs that are associated with any of the given list of sources in
@@ -30,7 +30,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         /// </param>
         /// <param name="logicalOperation"> Logical operation used to join metadata filter with source filter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryFilters(MetadataFilter metadataFilter, IList<string> sourceFilter, LogicalOperationKind? logicalOperation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryFilters(MetadataFilter metadataFilter, IList<string> sourceFilter, LogicalOperationKind? logicalOperation, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             MetadataFilter = metadataFilter;
             SourceFilter = sourceFilter;

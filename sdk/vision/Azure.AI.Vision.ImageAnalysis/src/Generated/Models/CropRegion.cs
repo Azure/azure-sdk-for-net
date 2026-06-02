@@ -17,9 +17,9 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class CropRegion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CropRegion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.CropRegion"/>. </summary>
         /// <param name="aspectRatio">
         /// The aspect ratio of the crop region.
         /// Aspect ratio is calculated by dividing the width of the region in pixels by its height in pixels.
@@ -33,7 +33,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             BoundingBox = boundingBox;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CropRegion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.CropRegion"/>. </summary>
         /// <param name="aspectRatio">
         /// The aspect ratio of the crop region.
         /// Aspect ratio is calculated by dividing the width of the region in pixels by its height in pixels.
@@ -42,7 +42,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="boundingBox"> The bounding box of the region. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CropRegion(float aspectRatio, ImageBoundingBox boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CropRegion(float aspectRatio, ImageBoundingBox boundingBox, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             AspectRatio = aspectRatio;
             BoundingBox = boundingBox;

@@ -11,16 +11,16 @@ namespace Azure.AI.Projects.Agents
     public partial class SkillInlineContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SkillInlineContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.SkillInlineContent"/>. </summary>
         /// <param name="description"> A human-readable description of what the skill does and when to use it. </param>
         /// <param name="instructions"> The skill instructions in markdown format. This is the body content of the SKILL.md file. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="instructions"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="description"/> or <paramref name="instructions"/> is null. </exception>
         public SkillInlineContent(string description, string instructions)
         {
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(instructions, nameof(instructions));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(description, nameof(description));
+            global::Azure.AI.Projects.Agents.Argument.AssertNotNull(instructions, nameof(instructions));
 
             Description = description;
             Instructions = instructions;
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Agents
             AllowedTools = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkillInlineContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Agents.SkillInlineContent"/>. </summary>
         /// <param name="description"> A human-readable description of what the skill does and when to use it. </param>
         /// <param name="instructions"> The skill instructions in markdown format. This is the body content of the SKILL.md file. </param>
         /// <param name="license"> License name or reference to a bundled license file. </param>
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="metadata"> Arbitrary key-value metadata for additional properties. </param>
         /// <param name="allowedTools"> List of pre-approved tools the skill may use. Experimental. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkillInlineContent(string description, string instructions, string license, string compatibility, IDictionary<string, string> metadata, IList<string> allowedTools, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkillInlineContent(string description, string instructions, string license, string compatibility, IDictionary<string, string> metadata, IList<string> allowedTools, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Instructions = instructions;

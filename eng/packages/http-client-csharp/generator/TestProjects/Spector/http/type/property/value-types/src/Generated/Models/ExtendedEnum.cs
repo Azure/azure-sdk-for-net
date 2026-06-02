@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace _Type.Property.ValueTypes
 {
-    public readonly partial struct ExtendedEnum : IEquatable<ExtendedEnum>
+    public readonly partial struct ExtendedEnum : IEquatable<global::_Type.Property.ValueTypes.ExtendedEnum>
     {
         public ExtendedEnum(string value) => throw null;
 
@@ -20,20 +20,20 @@ namespace _Type.Property.ValueTypes
 
         public static bool operator !=(ExtendedEnum left, ExtendedEnum right) => throw null;
 
-        /// <summary> Converts a string to a <see cref="ExtendedEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::_Type.Property.ValueTypes.ExtendedEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ExtendedEnum(string value) => throw null;
 
-        /// <summary> Converts a string to a <see cref="ExtendedEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::_Type.Property.ValueTypes.ExtendedEnum"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator ExtendedEnum?(string value) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) => throw null;
 
         public bool Equals(ExtendedEnum other) => throw null;
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() => throw null;
 
         public override string ToString() => throw null;

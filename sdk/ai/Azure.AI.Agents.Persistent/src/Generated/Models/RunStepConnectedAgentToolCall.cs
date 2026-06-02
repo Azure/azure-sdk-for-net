@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A record of a call to the connected agent. </summary>
     public partial class RunStepConnectedAgentToolCall : RunStepToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="RunStepConnectedAgentToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepConnectedAgentToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="connectedAgent"> The connected agent step information. </param>
         internal RunStepConnectedAgentToolCall(string id, RunStepConnectedAgent connectedAgent) : base("connected_agent", id)
@@ -21,12 +21,12 @@ namespace Azure.AI.Agents.Persistent
             ConnectedAgent = connectedAgent;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunStepConnectedAgentToolCall"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.RunStepConnectedAgentToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectedAgent"> The connected agent step information. </param>
-        internal RunStepConnectedAgentToolCall(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, RunStepConnectedAgent connectedAgent) : base(@type, id, additionalBinaryDataProperties)
+        internal RunStepConnectedAgentToolCall(string @type, string id, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, RunStepConnectedAgent connectedAgent) : base(@type, id, additionalBinaryDataProperties)
         {
             ConnectedAgent = connectedAgent;
         }

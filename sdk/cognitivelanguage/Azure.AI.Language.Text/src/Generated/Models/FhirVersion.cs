@@ -11,18 +11,18 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The FHIR Spec version. </summary>
-    public readonly partial struct FhirVersion : IEquatable<FhirVersion>
+    public readonly partial struct FhirVersion : IEquatable<global::Azure.AI.Language.Text.FhirVersion>
     {
         private readonly string _value;
         /// <summary> Version 4.0.1. </summary>
         private const string _401Value = "4.0.1";
 
-        /// <summary> Initializes a new instance of <see cref="FhirVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.FhirVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FhirVersion(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.Language.Text.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -30,34 +30,34 @@ namespace Azure.AI.Language.Text
         /// <summary> Version 4.0.1. </summary>
         public static FhirVersion _401 { get; } = new FhirVersion(_401Value);
 
-        /// <summary> Determines if two <see cref="FhirVersion"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.FhirVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FhirVersion left, FhirVersion right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="FhirVersion"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.Language.Text.FhirVersion"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FhirVersion left, FhirVersion right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="FhirVersion"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.FhirVersion"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator FhirVersion(string value) => new FhirVersion(value);
 
-        /// <summary> Converts a string to a <see cref="FhirVersion"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.Language.Text.FhirVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator FhirVersion?(string value) => value == null ? null : new FhirVersion(value);
+        public static implicit operator FhirVersion?(string value) => (value == null) ? null : new FhirVersion(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is FhirVersion other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is FhirVersion other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(FhirVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(FhirVersion other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

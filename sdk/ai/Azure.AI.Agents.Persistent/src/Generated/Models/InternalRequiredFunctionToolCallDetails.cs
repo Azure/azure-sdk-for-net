@@ -13,9 +13,9 @@ namespace Azure.AI.Agents.Persistent
     internal partial class InternalRequiredFunctionToolCallDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalRequiredFunctionToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalRequiredFunctionToolCallDetails"/>. </summary>
         /// <param name="name"> The name of the function. </param>
         /// <param name="arguments"> The arguments to use when invoking the named function, as provided by the model. Arguments are presented as a JSON document that should be validated and parsed for evaluation. </param>
         internal InternalRequiredFunctionToolCallDetails(string name, string arguments)
@@ -24,11 +24,11 @@ namespace Azure.AI.Agents.Persistent
             Arguments = arguments;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalRequiredFunctionToolCallDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Agents.Persistent.InternalRequiredFunctionToolCallDetails"/>. </summary>
         /// <param name="name"> The name of the function. </param>
         /// <param name="arguments"> The arguments to use when invoking the named function, as provided by the model. Arguments are presented as a JSON document that should be validated and parsed for evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalRequiredFunctionToolCallDetails(string name, string arguments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalRequiredFunctionToolCallDetails(string name, string arguments, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Arguments = arguments;

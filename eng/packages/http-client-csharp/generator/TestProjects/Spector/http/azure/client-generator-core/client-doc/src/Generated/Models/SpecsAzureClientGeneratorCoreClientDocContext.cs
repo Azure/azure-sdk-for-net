@@ -10,7 +10,7 @@ using Specs.Azure.ClientGenerator.Core.ClientDoc._Documentation;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientDoc
 {
-    [ModelReaderWriterBuildable(typeof(Plant))]
+    [ModelReaderWriterBuildableAttribute(typeof(Plant))]
     public partial class SpecsAzureClientGeneratorCoreClientDocContext : ModelReaderWriterContext
     {
     }

@@ -12,15 +12,15 @@ using Microsoft.Extensions.Hosting;
 
 namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 {
-    [Experimental("SCME0002")]
+    [ExperimentalAttribute("SCME0002")]
     public static partial class ParamAliasClientHostExtensions
     {
         public static IClientBuilder AddParamAliasClient(this IHostApplicationBuilder host, string sectionName) => throw null;
 
-        public static IClientBuilder AddParamAliasClient(this IHostApplicationBuilder host, string sectionName, Action<ParamAliasClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddParamAliasClient(this IHostApplicationBuilder host, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.ParamAliasClientSettings> configureSettings) => throw null;
 
         public static IClientBuilder AddKeyedParamAliasClient(this IHostApplicationBuilder host, string key, string sectionName) => throw null;
 
-        public static IClientBuilder AddKeyedParamAliasClient(this IHostApplicationBuilder host, string key, string sectionName, Action<ParamAliasClientSettings> configureSettings) => throw null;
+        public static IClientBuilder AddKeyedParamAliasClient(this IHostApplicationBuilder host, string key, string sectionName, Action<global::Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.ParamAliasClientSettings> configureSettings) => throw null;
     }
 }

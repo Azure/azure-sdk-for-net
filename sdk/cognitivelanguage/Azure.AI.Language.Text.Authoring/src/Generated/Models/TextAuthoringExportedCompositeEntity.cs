@@ -14,21 +14,21 @@ namespace Azure.AI.Language.Text.Authoring
     public partial class TextAuthoringExportedCompositeEntity
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedCompositeEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity"/>. </summary>
         public TextAuthoringExportedCompositeEntity()
         {
-            Prebuilts = new ChangeTrackingList<TextAuthoringExportedPrebuiltEntity>();
+            Prebuilts = new ChangeTrackingList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedCompositeEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedCompositeEntity"/>. </summary>
         /// <param name="compositionSetting"> The behavior to follow when the entity's components overlap with each other. </param>
         /// <param name="list"> The list component of the entity. </param>
         /// <param name="prebuilts"> The prebuilt entities components. </param>
         /// <param name="category"> The entity category. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TextAuthoringExportedCompositeEntity(TextAuthoringCompositionMode? compositionSetting, TextAuthoringExportedEntityList list, IList<TextAuthoringExportedPrebuiltEntity> prebuilts, string category, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TextAuthoringExportedCompositeEntity(TextAuthoringCompositionMode? compositionSetting, TextAuthoringExportedEntityList list, IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity> prebuilts, string category, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             CompositionSetting = compositionSetting;
             List = list;
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Text.Authoring
         public TextAuthoringExportedEntityList List { get; set; }
 
         /// <summary> The prebuilt entities components. </summary>
-        public IList<TextAuthoringExportedPrebuiltEntity> Prebuilts { get; }
+        public IList<global::Azure.AI.Language.Text.Authoring.TextAuthoringExportedPrebuiltEntity> Prebuilts { get; }
 
         /// <summary> The entity category. </summary>
         public string Category { get; set; }

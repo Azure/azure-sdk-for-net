@@ -10,54 +10,54 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam. </summary>
-    public partial class ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam : ResponsesFunctionShellToolParamEnvironment, IJsonModel<ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>
+    public partial class ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam : ResponsesFunctionShellToolParamEnvironment, IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesFunctionShellToolParamEnvironment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = global::System.Text.Json.JsonDocument.Parse(data, global::Azure.AI.Extensions.OpenAI.ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(document.RootElement, options);
+                        return global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam.DeserializeResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>)this).GetFormatFromOptions(options) : options.Format;
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
+                    return global::System.ClientModel.Primitives.ModelReaderWriter.Write(this, options, global::Azure.AI.Extensions.OpenAI.AzureAIExtensionsOpenAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>.Write(ModelReaderWriterOptions options) => this.PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam IPersistableModel<ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam)PersistableModelCreateCore(data, options);
+        ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>.Create(BinaryData data, ModelReaderWriterOptions options) => ((ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam)this.PersistableModelCreateCore(data, options));
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            this.JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
 
@@ -65,19 +65,19 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Skills))
+            if (global::Azure.AI.Extensions.OpenAI.Optional.IsCollectionDefined(Skills))
             {
                 writer.WritePropertyName("skills"u8);
                 writer.WriteStartArray();
                 foreach (LocalSkillParam item in Skills)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<LocalSkillParam>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,32 +85,32 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam IJsonModel<ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam)JsonModelCreateCore(ref reader, options);
+        ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam IJsonModel<global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam)this.JsonModelCreateCore(ref reader, options));
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ResponsesFunctionShellToolParamEnvironment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = (options.Format == "W") ? ((IPersistableModel<global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam>)this).GetFormatFromOptions(options) : options.Format;
+            if ((format != "J"))
             {
-                throw new FormatException($"The model {nameof(ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam)} does not support reading '{format}' format.");
             }
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(document.RootElement, options);
+            using JsonDocument document = global::System.Text.Json.JsonDocument.ParseValue(ref reader);
+            return global::Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam.DeserializeResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam DeserializeResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(JsonElement element, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            if ((element.ValueKind == global::System.Text.Json.JsonValueKind.Null))
             {
                 return null;
             }
             FunctionShellToolParamEnvironmentType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<LocalSkillParam> skills = default;
+            IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, global::System.BinaryData>();
+            IList<global::Azure.AI.Extensions.OpenAI.LocalSkillParam> skills = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -120,24 +120,24 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("skills"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if ((prop.Value.ValueKind == global::System.Text.Json.JsonValueKind.Null))
                     {
                         continue;
                     }
-                    List<LocalSkillParam> array = new List<LocalSkillParam>();
+                    List<global::Azure.AI.Extensions.OpenAI.LocalSkillParam> array = new List<global::Azure.AI.Extensions.OpenAI.LocalSkillParam>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LocalSkillParam.DeserializeLocalSkillParam(item, options));
+                        array.Add(global::Azure.AI.Extensions.OpenAI.LocalSkillParam.DeserializeLocalSkillParam(item, options));
                     }
                     skills = array;
                     continue;
                 }
-                if (options.Format != "W")
+                if ((options.Format != "W"))
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, global::System.BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(@type, additionalBinaryDataProperties, skills ?? new ChangeTrackingList<LocalSkillParam>());
+            return new ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(@type, additionalBinaryDataProperties, (skills ?? new ChangeTrackingList<global::Azure.AI.Extensions.OpenAI.LocalSkillParam>()));
         }
     }
 }

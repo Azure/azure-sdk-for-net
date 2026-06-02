@@ -11,20 +11,20 @@ namespace Azure.AI.Projects.Evaluation
     public partial class ModelSamplingParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ModelSamplingParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ModelSamplingParams"/>. </summary>
         public ModelSamplingParams()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModelSamplingParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Projects.Evaluation.ModelSamplingParams"/>. </summary>
         /// <param name="temperature"> The temperature parameter for sampling. Defaults to 1.0. </param>
         /// <param name="topP"> The top-p parameter for nucleus sampling. Defaults to 1.0. </param>
         /// <param name="seed"> The random seed for reproducibility. Defaults to 42. </param>
         /// <param name="maxCompletionTokens"> The maximum number of tokens allowed in the completion. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelSamplingParams(float temperature, float topP, int seed, int maxCompletionTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelSamplingParams(float temperature, float topP, int seed, int maxCompletionTokens, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Temperature = temperature;
             TopP = topP;

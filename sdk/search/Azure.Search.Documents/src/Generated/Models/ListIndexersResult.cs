@@ -14,24 +14,24 @@ namespace Azure.Search.Documents.Indexes.Models
     internal partial class ListIndexersResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ListIndexersResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ListIndexersResult"/>. </summary>
         internal ListIndexersResult()
         {
-            Indexers = new ChangeTrackingList<SearchIndexer>();
+            Indexers = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchIndexer>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListIndexersResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ListIndexersResult"/>. </summary>
         /// <param name="indexers"> The indexers in the Search service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListIndexersResult(IReadOnlyList<SearchIndexer> indexers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListIndexersResult(IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndexer> indexers, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Indexers = indexers;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The indexers in the Search service. </summary>
-        public IReadOnlyList<SearchIndexer> Indexers { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndexer> Indexers { get; }
     }
 }

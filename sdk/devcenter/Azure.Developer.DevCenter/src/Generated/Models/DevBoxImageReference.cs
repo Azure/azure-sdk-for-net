@@ -14,21 +14,21 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBoxImageReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxImageReference"/>. </summary>
         internal DevBoxImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Developer.DevCenter.Models.DevBoxImageReference"/>. </summary>
         /// <param name="name"> The name of the image used. </param>
         /// <param name="version"> The version of the image. </param>
         /// <param name="operatingSystem"> The operating system of the image. </param>
         /// <param name="osBuildNumber"> The operating system build number of the image. </param>
         /// <param name="publishedDate"> The datetime that the backing image version was published, in RFC3339 format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxImageReference(string name, string version, string operatingSystem, string osBuildNumber, DateTimeOffset? publishedDate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevBoxImageReference(string name, string version, string operatingSystem, string osBuildNumber, DateTimeOffset? publishedDate, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;

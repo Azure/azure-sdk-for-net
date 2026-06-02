@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Payload.Xml
 {
-    public partial class Book : IPersistableModel<Book>, IXmlSerializable
+    public partial class Book : IPersistableModel<global::Payload.Xml.Book>, IXmlSerializable
     {
         internal Book() => throw null;
 
@@ -20,11 +20,11 @@ namespace Payload.Xml
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Book>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::Payload.Xml.Book>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Book IPersistableModel<Book>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Book IPersistableModel<global::Payload.Xml.Book>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Book>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::Payload.Xml.Book>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) => throw null;
     }

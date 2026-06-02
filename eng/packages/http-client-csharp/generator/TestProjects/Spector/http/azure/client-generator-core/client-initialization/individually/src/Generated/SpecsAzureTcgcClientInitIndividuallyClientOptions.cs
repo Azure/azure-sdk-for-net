@@ -15,7 +15,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.IndividuallyClie
     {
         public SpecsAzureTcgcClientInitIndividuallyClientOptions() => throw null;
 
-        [Experimental("SCME0002")]
+        [ExperimentalAttribute("SCME0002")]
         internal SpecsAzureTcgcClientInitIndividuallyClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

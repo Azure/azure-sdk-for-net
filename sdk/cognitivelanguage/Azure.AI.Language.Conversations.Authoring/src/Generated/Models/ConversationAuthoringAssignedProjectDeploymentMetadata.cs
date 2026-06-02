@@ -14,9 +14,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     public partial class ConversationAuthoringAssignedProjectDeploymentMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectDeploymentMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignedProjectDeploymentMetadata"/>. </summary>
         /// <param name="deploymentName"> Represents the deployment name. </param>
         /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
         /// <param name="deploymentExpiresOn"> Represents deployment expiration date in the runtime. </param>
@@ -27,12 +27,12 @@ namespace Azure.AI.Language.Conversations.Authoring
             DeploymentExpiresOn = deploymentExpiresOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationAuthoringAssignedProjectDeploymentMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Authoring.ConversationAuthoringAssignedProjectDeploymentMetadata"/>. </summary>
         /// <param name="deploymentName"> Represents the deployment name. </param>
         /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
         /// <param name="deploymentExpiresOn"> Represents deployment expiration date in the runtime. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringAssignedProjectDeploymentMetadata(string deploymentName, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringAssignedProjectDeploymentMetadata(string deploymentName, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpiresOn, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             DeploymentName = deploymentName;
             LastDeployedOn = lastDeployedOn;

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> The unit used by the width, height, and polygon properties. For images, the unit is "pixel". For PDF, the unit is "inch". </summary>
-    public readonly partial struct LengthUnit : IEquatable<LengthUnit>
+    public readonly partial struct LengthUnit : IEquatable<global::Azure.AI.DocumentIntelligence.LengthUnit>
     {
         private readonly string _value;
         /// <summary> Length unit for image files. </summary>
@@ -19,12 +19,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Length unit for PDF files. </summary>
         private const string InchValue = "inch";
 
-        /// <summary> Initializes a new instance of <see cref="LengthUnit"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.DocumentIntelligence.LengthUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LengthUnit(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            global::Azure.AI.DocumentIntelligence.Argument.AssertNotNull(value, nameof(value));
 
             _value = value;
         }
@@ -35,34 +35,34 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Length unit for PDF files. </summary>
         public static LengthUnit Inch { get; } = new LengthUnit(InchValue);
 
-        /// <summary> Determines if two <see cref="LengthUnit"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.LengthUnit"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LengthUnit left, LengthUnit right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LengthUnit"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="global::Azure.AI.DocumentIntelligence.LengthUnit"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LengthUnit left, LengthUnit right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LengthUnit"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.LengthUnit"/>. </summary>
         /// <param name="value"> The value. </param>
         public static implicit operator LengthUnit(string value) => new LengthUnit(value);
 
-        /// <summary> Converts a string to a <see cref="LengthUnit"/>. </summary>
+        /// <summary> Converts a string to a <see cref="global::Azure.AI.DocumentIntelligence.LengthUnit"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LengthUnit?(string value) => value == null ? null : new LengthUnit(value);
+        public static implicit operator LengthUnit?(string value) => (value == null) ? null : new LengthUnit(value);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LengthUnit other && Equals(other);
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => ((obj is LengthUnit other) && this.Equals(other));
 
         /// <inheritdoc/>
-        public bool Equals(LengthUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(LengthUnit other) => string.Equals(_value, other._value, global::System.StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        [EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() => (_value != null) ? global::System.StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

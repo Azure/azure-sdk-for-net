@@ -14,31 +14,31 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IndexerExecutionStatus value) => value switch
         {
-            IndexerExecutionStatus.TransientFailure => "transientFailure",
-            IndexerExecutionStatus.Success => "success",
-            IndexerExecutionStatus.InProgress => "inProgress",
-            IndexerExecutionStatus.Reset => "reset",
+            global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.TransientFailure => "transientFailure",
+            global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.Success => "success",
+            global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.InProgress => "inProgress",
+            global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.Reset => "reset",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexerExecutionStatus value.")
         };
 
         /// <param name="value"> The value to deserialize. </param>
         public static IndexerExecutionStatus ToIndexerExecutionStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "transientFailure"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "transientFailure"))
             {
-                return IndexerExecutionStatus.TransientFailure;
+                return global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.TransientFailure;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "success"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "success"))
             {
-                return IndexerExecutionStatus.Success;
+                return global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.Success;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "inProgress"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "inProgress"))
             {
-                return IndexerExecutionStatus.InProgress;
+                return global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.InProgress;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "reset"))
+            if (global::System.StringComparer.OrdinalIgnoreCase.Equals(value, "reset"))
             {
-                return IndexerExecutionStatus.Reset;
+                return global::Azure.Search.Documents.Indexes.Models.IndexerExecutionStatus.Reset;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexerExecutionStatus value.");
         }

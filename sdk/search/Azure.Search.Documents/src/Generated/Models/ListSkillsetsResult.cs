@@ -14,24 +14,24 @@ namespace Azure.Search.Documents.Indexes.Models
     internal partial class ListSkillsetsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ListSkillsetsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ListSkillsetsResult"/>. </summary>
         internal ListSkillsetsResult()
         {
-            Skillsets = new ChangeTrackingList<SearchIndexerSkillset>();
+            Skillsets = new ChangeTrackingList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListSkillsetsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ListSkillsetsResult"/>. </summary>
         /// <param name="skillsets"> The skillsets defined in the Search service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListSkillsetsResult(IReadOnlyList<SearchIndexerSkillset> skillsets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListSkillsetsResult(IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset> skillsets, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Skillsets = skillsets;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The skillsets defined in the Search service. </summary>
-        public IReadOnlyList<SearchIndexerSkillset> Skillsets { get; }
+        public IReadOnlyList<global::Azure.Search.Documents.Indexes.Models.SearchIndexerSkillset> Skillsets { get; }
     }
 }

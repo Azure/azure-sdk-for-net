@@ -15,23 +15,23 @@ namespace Azure.Compute.Batch
     public partial class BatchPublicIpAddressConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchPublicIpAddressConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPublicIpAddressConfiguration"/>. </summary>
         public BatchPublicIpAddressConfiguration()
         {
-            IpFamilies = new ChangeTrackingList<IPFamily>();
-            IpAddressIds = new ChangeTrackingList<ResourceIdentifier>();
-            IpTags = new ChangeTrackingList<IPTag>();
+            IpFamilies = new ChangeTrackingList<global::Azure.Compute.Batch.IPFamily>();
+            IpAddressIds = new ChangeTrackingList<global::Azure.Core.ResourceIdentifier>();
+            IpTags = new ChangeTrackingList<global::Azure.Compute.Batch.IPTag>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchPublicIpAddressConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.BatchPublicIpAddressConfiguration"/>. </summary>
         /// <param name="ipAddressProvisioningType"> The provisioning type for Public IP Addresses for the Pool. The default value is BatchManaged. </param>
         /// <param name="ipFamilies"> The IP families used to specify IP versions available to the pool. IP families are used to determine single-stack or dual-stack pools. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
         /// <param name="ipAddressIds"> The list of public IPs which the Batch service will use when provisioning Compute Nodes. The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/Low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </param>
         /// <param name="ipTags"> A list of IP tags associated with the public IP addresses of the Pool. IP tags are used to categorize and filter public IP addresses for billing and management purposes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchPublicIpAddressConfiguration(IpAddressProvisioningType? ipAddressProvisioningType, IList<IPFamily> ipFamilies, IList<ResourceIdentifier> ipAddressIds, IList<IPTag> ipTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchPublicIpAddressConfiguration(IpAddressProvisioningType? ipAddressProvisioningType, IList<global::Azure.Compute.Batch.IPFamily> ipFamilies, IList<global::Azure.Core.ResourceIdentifier> ipAddressIds, IList<global::Azure.Compute.Batch.IPTag> ipTags, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             IpAddressProvisioningType = ipAddressProvisioningType;
             IpFamilies = ipFamilies;
@@ -44,12 +44,12 @@ namespace Azure.Compute.Batch
         public IpAddressProvisioningType? IpAddressProvisioningType { get; set; }
 
         /// <summary> The IP families used to specify IP versions available to the pool. IP families are used to determine single-stack or dual-stack pools. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </summary>
-        public IList<IPFamily> IpFamilies { get; }
+        public IList<global::Azure.Compute.Batch.IPFamily> IpFamilies { get; }
 
         /// <summary> The list of public IPs which the Batch service will use when provisioning Compute Nodes. The number of IPs specified here limits the maximum size of the Pool - 100 dedicated nodes or 100 Spot/Low-priority nodes can be allocated for each public IP. For example, a pool needing 250 dedicated VMs would need at least 3 public IPs specified. Each element of this collection is of the form: /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/publicIPAddresses/{ip}. </summary>
-        public IList<ResourceIdentifier> IpAddressIds { get; }
+        public IList<global::Azure.Core.ResourceIdentifier> IpAddressIds { get; }
 
         /// <summary> A list of IP tags associated with the public IP addresses of the Pool. IP tags are used to categorize and filter public IP addresses for billing and management purposes. </summary>
-        public IList<IPTag> IpTags { get; }
+        public IList<global::Azure.Compute.Batch.IPTag> IpTags { get; }
     }
 }

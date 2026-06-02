@@ -17,29 +17,29 @@ namespace Azure.Compute.Batch
     public partial class UserAccount
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UserAccount"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.UserAccount"/>. </summary>
         /// <param name="name"> The name of the user Account. Names can contain any Unicode characters up to a maximum length of 20. </param>
         /// <param name="password"> The password for the user Account. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="password"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="name"/> or <paramref name="password"/> is null. </exception>
         public UserAccount(string name, string password)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(password, nameof(password));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(name, nameof(name));
+            global::Azure.Compute.Batch.Argument.AssertNotNull(password, nameof(password));
 
             Name = name;
             Password = password;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserAccount"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Compute.Batch.UserAccount"/>. </summary>
         /// <param name="name"> The name of the user Account. Names can contain any Unicode characters up to a maximum length of 20. </param>
         /// <param name="password"> The password for the user Account. </param>
         /// <param name="elevationLevel"> The elevation level of the user Account. The default value is nonAdmin. </param>
         /// <param name="linuxUserConfiguration"> The Linux-specific user configuration for the user Account. This property is ignored if specified on a Windows Pool. If not specified, the user is created with the default options. </param>
         /// <param name="windowsUserConfiguration"> The Windows-specific user configuration for the user Account. This property can only be specified if the user is on a Windows Pool. If not specified and on a Windows Pool, the user is created with the default options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserAccount(string name, string password, ElevationLevel? elevationLevel, LinuxUserConfiguration linuxUserConfiguration, WindowsUserConfiguration windowsUserConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserAccount(string name, string password, ElevationLevel? elevationLevel, LinuxUserConfiguration linuxUserConfiguration, WindowsUserConfiguration windowsUserConfiguration, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Password = password;

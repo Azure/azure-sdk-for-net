@@ -14,19 +14,19 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultRoleAssignmentProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignmentProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties"/>. </summary>
         internal KeyVaultRoleAssignmentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignmentProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties"/>. </summary>
         /// <param name="scope"> The role scope. </param>
         /// <param name="roleDefinitionId"> The role definition ID. </param>
         /// <param name="principalId"> The principal ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultRoleAssignmentProperties(KeyVaultRoleScope? scope, string roleDefinitionId, string principalId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultRoleAssignmentProperties(KeyVaultRoleScope? scope, string roleDefinitionId, string principalId, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;

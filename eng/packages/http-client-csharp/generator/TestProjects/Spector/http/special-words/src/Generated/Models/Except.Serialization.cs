@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace SpecialWords._Models
 {
-    public partial class Except : IJsonModel<Except>
+    public partial class Except : IJsonModel<global::SpecialWords._Models.Except>
     {
         internal Except() => throw null;
 
@@ -20,20 +20,20 @@ namespace SpecialWords._Models
 
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
-        BinaryData IPersistableModel<Except>.Write(ModelReaderWriterOptions options) => throw null;
+        BinaryData IPersistableModel<global::SpecialWords._Models.Except>.Write(ModelReaderWriterOptions options) => throw null;
 
-        Except IPersistableModel<Except>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+        Except IPersistableModel<global::SpecialWords._Models.Except>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        string IPersistableModel<Except>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+        string IPersistableModel<global::SpecialWords._Models.Except>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="except"> The <see cref="Except"/> to serialize into <see cref="RequestContent"/>. </param>
+        /// <param name="except"> The <see cref="global::SpecialWords._Models.Except"/> to serialize into <see cref="global::Azure.Core.RequestContent"/>. </param>
         public static implicit operator RequestContent(Except except) => throw null;
 
-        void IJsonModel<Except>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
+        void IJsonModel<global::SpecialWords._Models.Except>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        Except IJsonModel<Except>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
+        Except IJsonModel<global::SpecialWords._Models.Except>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual Except JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
     }

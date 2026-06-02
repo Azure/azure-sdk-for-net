@@ -15,18 +15,18 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class ResetSkillsOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResetSkillsOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ResetSkillsOptions"/>. </summary>
         public ResetSkillsOptions()
         {
             SkillNameList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResetSkillsOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.ResetSkillsOptions"/>. </summary>
         /// <param name="skillNameList"> the names of skills to be reset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResetSkillsOptions(IList<string> skillNameList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResetSkillsOptions(IList<string> skillNameList, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             SkillNameList = skillNameList;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

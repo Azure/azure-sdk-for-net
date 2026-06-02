@@ -19,8 +19,8 @@ namespace Azure.Developer.LoadTesting
     /// <summary> The LoadTestRunClient. </summary>
     public partial class LoadTestRunClient
     {
-        private readonly Uri _endpoint;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cnt-prod.loadtesting.azure.com/.default" };
+        private readonly global::System.Uri _endpoint;
+        private static readonly String[] AuthorizationScopes = new string[] { "https://cnt-prod.loadtesting.azure.com/.default" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of LoadTestRunClient for mocking. </summary>
@@ -32,20 +32,20 @@ namespace Azure.Developer.LoadTesting
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal LoadTestRunClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, LoadTestingClientOptions options)
+        internal LoadTestRunClient(HttpPipelinePolicy authenticationPolicy, global::System.Uri endpoint, LoadTestingClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new LoadTestingClientOptions();
 
             _endpoint = endpoint;
-            if (authenticationPolicy != null)
+            if ((authenticationPolicy != null))
             {
-                Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { authenticationPolicy });
             }
             else
             {
-                Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
+                Pipeline = global::Azure.Core.Pipeline.HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>());
             }
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -53,8 +53,8 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Initializes a new instance of LoadTestRunClient from a <see cref="LoadTestRunClientSettings"/>. </summary>
         /// <param name="settings"> The settings for LoadTestRunClient. </param>
-        [Experimental("SCME0002")]
-        public LoadTestRunClient(LoadTestRunClientSettings settings) : this(null, settings?.Endpoint, settings?.Options)
+        [ExperimentalAttribute("SCME0002")]
+        public LoadTestRunClient(LoadTestRunClientSettings settings) : this(((HttpPipelinePolicy)null), settings?.Endpoint, settings?.Options)
         {
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Developer.LoadTesting
         /// in the request body.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateOrUpdateTestRun(string testRunId, RequestContent content, string oldTestRunId = default, RequestContext context = null)
         {
@@ -89,7 +89,7 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateTestRunRequest(testRunId, content, oldTestRunId, context);
+                using HttpMessage message = this.CreateCreateOrUpdateTestRunRequest(testRunId, content, oldTestRunId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -116,15 +116,15 @@ namespace Azure.Developer.LoadTesting
         /// in the request body.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateTestRunAsync(string testRunId, RequestContent content, string oldTestRunId = default, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> CreateOrUpdateTestRunAsync(string testRunId, RequestContent content, string oldTestRunId = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateTestRun");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateTestRunRequest(testRunId, content, oldTestRunId, context);
+                using HttpMessage message = this.CreateCreateOrUpdateTestRunRequest(testRunId, content, oldTestRunId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -148,9 +148,9 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrUpdateAppComponents(string testRunId, RequestContent content, RequestContext context = null)
         {
@@ -158,10 +158,10 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(testRunId, content, context);
+                using HttpMessage message = this.CreateCreateOrUpdateAppComponentsRequest(testRunId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -185,20 +185,20 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateAppComponentsAsync(string testRunId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateOrUpdateAppComponentsAsync(string testRunId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateAppComponents");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(testRunId, content, context);
+                using HttpMessage message = this.CreateCreateOrUpdateAppComponentsRequest(testRunId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -222,9 +222,9 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateOrUpdateServerMetricsConfig(string testRunId, RequestContent content, RequestContext context = null)
         {
@@ -232,10 +232,10 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(testRunId, content, context);
+                using HttpMessage message = this.CreateCreateOrUpdateServerMetricsConfigRequest(testRunId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -259,20 +259,20 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateServerMetricsConfigAsync(string testRunId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> CreateOrUpdateServerMetricsConfigAsync(string testRunId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateServerMetricsConfig");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(testRunId, content, context);
+                using HttpMessage message = this.CreateCreateOrUpdateServerMetricsConfigRequest(testRunId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -292,9 +292,9 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteTestRun(string testRunId, RequestContext context)
         {
@@ -302,9 +302,9 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateDeleteTestRunRequest(testRunId, context);
+                using HttpMessage message = this.CreateDeleteTestRunRequest(testRunId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -324,19 +324,19 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteTestRunAsync(string testRunId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteTestRunAsync(string testRunId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.DeleteTestRun");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateDeleteTestRunRequest(testRunId, context);
+                using HttpMessage message = this.CreateDeleteTestRunRequest(testRunId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -349,27 +349,27 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Delete an existing load test run by providing the testRunId. </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteTestRun(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            return DeleteTestRun(testRunId, cancellationToken.ToRequestContext());
+            return this.DeleteTestRun(testRunId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete an existing load test run by providing the testRunId. </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteTestRunAsync(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteTestRunAsync(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            return await DeleteTestRunAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteTestRunAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -386,9 +386,9 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAppComponents(string testRunId, RequestContext context)
         {
@@ -396,9 +396,9 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateGetAppComponentsRequest(testRunId, context);
+                using HttpMessage message = this.CreateGetAppComponentsRequest(testRunId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -422,19 +422,19 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAppComponentsAsync(string testRunId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetAppComponentsAsync(string testRunId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetAppComponents");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateGetAppComponentsRequest(testRunId, context);
+                using HttpMessage message = this.CreateGetAppComponentsRequest(testRunId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -453,15 +453,15 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TestRunAppComponents> GetAppComponents(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.LoadTesting.TestRunAppComponents> GetAppComponents(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            Response result = GetAppComponents(testRunId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TestRunAppComponents)result, result);
+            Response result = this.GetAppComponents(testRunId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TestRunAppComponents)result), result);
         }
 
         /// <summary>
@@ -473,15 +473,15 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TestRunAppComponents>> GetAppComponentsAsync(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.LoadTesting.TestRunAppComponents>> GetAppComponentsAsync(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            Response result = await GetAppComponentsAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TestRunAppComponents)result, result);
+            Response result = await this.GetAppComponentsAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TestRunAppComponents)result), result);
         }
 
         /// <summary>
@@ -497,9 +497,9 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetServerMetricsConfig(string testRunId, RequestContext context)
         {
@@ -507,9 +507,9 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateGetServerMetricsConfigRequest(testRunId, context);
+                using HttpMessage message = this.CreateGetServerMetricsConfigRequest(testRunId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -532,19 +532,19 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetServerMetricsConfigAsync(string testRunId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetServerMetricsConfigAsync(string testRunId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetServerMetricsConfig");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateGetServerMetricsConfigRequest(testRunId, context);
+                using HttpMessage message = this.CreateGetServerMetricsConfigRequest(testRunId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -560,15 +560,15 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TestRunServerMetricsConfiguration> GetServerMetricsConfig(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.LoadTesting.TestRunServerMetricsConfiguration> GetServerMetricsConfig(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            Response result = GetServerMetricsConfig(testRunId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TestRunServerMetricsConfiguration)result, result);
+            Response result = this.GetServerMetricsConfig(testRunId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TestRunServerMetricsConfiguration)result), result);
         }
 
         /// <summary> Get associated server metrics configuration for the given test run. </summary>
@@ -577,15 +577,15 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TestRunServerMetricsConfiguration>> GetServerMetricsConfigAsync(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.LoadTesting.TestRunServerMetricsConfiguration>> GetServerMetricsConfigAsync(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            Response result = await GetServerMetricsConfigAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TestRunServerMetricsConfiguration)result, result);
+            Response result = await this.GetServerMetricsConfigAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TestRunServerMetricsConfiguration)result), result);
         }
 
         /// <summary>
@@ -598,9 +598,9 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTestRun(string testRunId, RequestContext context)
         {
@@ -608,9 +608,9 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateGetTestRunRequest(testRunId, context);
+                using HttpMessage message = this.CreateGetTestRunRequest(testRunId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -630,19 +630,19 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTestRunAsync(string testRunId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTestRunAsync(string testRunId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRun");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateGetTestRunRequest(testRunId, context);
+                using HttpMessage message = this.CreateGetTestRunRequest(testRunId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -655,29 +655,29 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Get test run details by test run Id. </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LoadTestRun> GetTestRun(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.LoadTesting.LoadTestRun> GetTestRun(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            Response result = GetTestRun(testRunId, cancellationToken.ToRequestContext());
-            return Response.FromValue((LoadTestRun)result, result);
+            Response result = this.GetTestRun(testRunId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((LoadTestRun)result), result);
         }
 
         /// <summary> Get test run details by test run Id. </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LoadTestRun>> GetTestRunAsync(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.LoadTesting.LoadTestRun>> GetTestRunAsync(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            Response result = await GetTestRunAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LoadTestRun)result, result);
+            Response result = await this.GetTestRunAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((LoadTestRun)result), result);
         }
 
         /// <summary>
@@ -691,9 +691,9 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Name of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTestRunFile(string testRunId, string fileName, RequestContext context)
         {
@@ -701,10 +701,10 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-                Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-                using HttpMessage message = CreateGetTestRunFileRequest(testRunId, fileName, context);
+                using HttpMessage message = this.CreateGetTestRunFileRequest(testRunId, fileName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -725,20 +725,20 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Name of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTestRunFileAsync(string testRunId, string fileName, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTestRunFileAsync(string testRunId, string fileName, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestRunFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-                Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-                using HttpMessage message = CreateGetTestRunFileRequest(testRunId, fileName, context);
+                using HttpMessage message = this.CreateGetTestRunFileRequest(testRunId, fileName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -752,32 +752,32 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Name of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TestRunFileInfo> GetTestRunFile(string testRunId, string fileName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.LoadTesting.TestRunFileInfo> GetTestRunFile(string testRunId, string fileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            Response result = GetTestRunFile(testRunId, fileName, cancellationToken.ToRequestContext());
-            return Response.FromValue((TestRunFileInfo)result, result);
+            Response result = this.GetTestRunFile(testRunId, fileName, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TestRunFileInfo)result), result);
         }
 
         /// <summary> Get test run file by file name. </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="fileName"> Name of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TestRunFileInfo>> GetTestRunFileAsync(string testRunId, string fileName, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.LoadTesting.TestRunFileInfo>> GetTestRunFileAsync(string testRunId, string fileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
 
-            Response result = await GetTestRunFileAsync(testRunId, fileName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TestRunFileInfo)result, result);
+            Response result = await this.GetTestRunFileAsync(testRunId, fileName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TestRunFileInfo)result), result);
         }
 
         /// <summary>
@@ -798,17 +798,17 @@ namespace Azure.Developer.LoadTesting
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetMetricDimensionValues(string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetMetricDimensionValues(string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
-            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
             return new LoadTestRunClientGetMetricDimensionValuesCollectionResult(
                 this,
@@ -840,17 +840,17 @@ namespace Azure.Developer.LoadTesting
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetMetricDimensionValuesAsync(string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetMetricDimensionValuesAsync(string testRunId, string name, string metricName, string metricNamespace, string timespan, string interval, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
-            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
             return new LoadTestRunClientGetMetricDimensionValuesAsyncCollectionResult(
                 this,
@@ -875,16 +875,16 @@ namespace Azure.Developer.LoadTesting
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<string> GetMetricDimensionValues(string testRunId, string name, string metricName, string metricNamespace, string timespan, TimeGrain? interval = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
-            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
             return new LoadTestRunClientGetMetricDimensionValuesCollectionResultOfT(
                 this,
@@ -909,16 +909,16 @@ namespace Azure.Developer.LoadTesting
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/>, <paramref name="name"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<string> GetMetricDimensionValuesAsync(string testRunId, string name, string metricName, string metricNamespace, string timespan, TimeGrain? interval = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
-            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(name, nameof(name));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
             return new LoadTestRunClientGetMetricDimensionValuesAsyncCollectionResultOfT(
                 this,
@@ -946,9 +946,9 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMetricDefinitions(string testRunId, string metricNamespace, RequestContext context)
         {
@@ -956,10 +956,10 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-                Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
 
-                using HttpMessage message = CreateGetMetricDefinitionsRequest(testRunId, metricNamespace, context);
+                using HttpMessage message = this.CreateGetMetricDefinitionsRequest(testRunId, metricNamespace, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -983,20 +983,20 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricDefinitions");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-                Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
 
-                using HttpMessage message = CreateGetMetricDefinitionsRequest(testRunId, metricNamespace, context);
+                using HttpMessage message = this.CreateGetMetricDefinitionsRequest(testRunId, metricNamespace, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1013,16 +1013,16 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<MetricDefinitions> GetMetricDefinitions(string testRunId, string metricNamespace, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.LoadTesting.MetricDefinitions> GetMetricDefinitions(string testRunId, string metricNamespace, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
 
-            Response result = GetMetricDefinitions(testRunId, metricNamespace, cancellationToken.ToRequestContext());
-            return Response.FromValue((MetricDefinitions)result, result);
+            Response result = this.GetMetricDefinitions(testRunId, metricNamespace, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((MetricDefinitions)result), result);
         }
 
         /// <summary> List the metric definitions for a load test run. </summary>
@@ -1032,16 +1032,16 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<MetricDefinitions>> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> or <paramref name="metricNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.LoadTesting.MetricDefinitions>> GetMetricDefinitionsAsync(string testRunId, string metricNamespace, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
 
-            Response result = await GetMetricDefinitionsAsync(testRunId, metricNamespace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((MetricDefinitions)result, result);
+            Response result = await this.GetMetricDefinitionsAsync(testRunId, metricNamespace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((MetricDefinitions)result), result);
         }
 
         /// <summary>
@@ -1057,9 +1057,9 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetMetricNamespaces(string testRunId, RequestContext context)
         {
@@ -1067,9 +1067,9 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateGetMetricNamespacesRequest(testRunId, context);
+                using HttpMessage message = this.CreateGetMetricNamespacesRequest(testRunId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1092,19 +1092,19 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMetricNamespacesAsync(string testRunId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetMetricNamespacesAsync(string testRunId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetMetricNamespaces");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateGetMetricNamespacesRequest(testRunId, context);
+                using HttpMessage message = this.CreateGetMetricNamespacesRequest(testRunId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1120,15 +1120,15 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<MetricNamespaces> GetMetricNamespaces(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.LoadTesting.MetricNamespaces> GetMetricNamespaces(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            Response result = GetMetricNamespaces(testRunId, cancellationToken.ToRequestContext());
-            return Response.FromValue((MetricNamespaces)result, result);
+            Response result = this.GetMetricNamespaces(testRunId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((MetricNamespaces)result), result);
         }
 
         /// <summary> List the metric namespaces for a load test run. </summary>
@@ -1137,15 +1137,15 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<MetricNamespaces>> GetMetricNamespacesAsync(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.LoadTesting.MetricNamespaces>> GetMetricNamespacesAsync(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            Response result = await GetMetricNamespacesAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((MetricNamespaces)result, result);
+            Response result = await this.GetMetricNamespacesAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((MetricNamespaces)result), result);
         }
 
         /// <summary>
@@ -1167,16 +1167,16 @@ namespace Azure.Developer.LoadTesting
         /// <param name="aggregation"> The aggregation. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetMetrics(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation = default, string interval = default, RequestContext context = null)
+        public virtual Pageable<global::System.BinaryData> GetMetrics(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation = default, string interval = default, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
-            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
             return new LoadTestRunClientGetMetricsCollectionResult(
                 this,
@@ -1210,16 +1210,16 @@ namespace Azure.Developer.LoadTesting
         /// <param name="aggregation"> The aggregation. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation = default, string interval = default, RequestContext context = null)
+        public virtual AsyncPageable<global::System.BinaryData> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, RequestContent content, string aggregation = default, string interval = default, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
-            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
             return new LoadTestRunClientGetMetricsAsyncCollectionResult(
                 this,
@@ -1246,15 +1246,15 @@ namespace Azure.Developer.LoadTesting
         /// <param name="aggregation"> The aggregation. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<TimeSeriesElement> GetMetrics(string testRunId, string metricName, string metricNamespace, string timespan, MetricsFilters body = default, string aggregation = default, TimeGrain? interval = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.LoadTesting.TimeSeriesElement> GetMetrics(string testRunId, string metricName, string metricNamespace, string timespan, MetricsFilters body = default, string aggregation = default, TimeGrain? interval = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
-            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
             return new LoadTestRunClientGetMetricsCollectionResultOfT(
                 this,
@@ -1281,15 +1281,15 @@ namespace Azure.Developer.LoadTesting
         /// <param name="aggregation"> The aggregation. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<TimeSeriesElement> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, MetricsFilters body = default, string aggregation = default, TimeGrain? interval = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/>, <paramref name="metricName"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.LoadTesting.TimeSeriesElement> GetMetricsAsync(string testRunId, string metricName, string metricNamespace, string timespan, MetricsFilters body = default, string aggregation = default, TimeGrain? interval = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
-            Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
 
             return new LoadTestRunClientGetMetricsAsyncCollectionResultOfT(
                 this,
@@ -1329,9 +1329,9 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdByTypes"> Comma separated list of type of entities that have created the test run. </param>
         /// <param name="testIds"> Comma-separated list of test IDs. If you are using testIds, do not send a value for testId. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTestRuns(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxPageSize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
+        public virtual Pageable<global::System.BinaryData> GetTestRuns(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxPageSize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
         {
             return new LoadTestRunClientGetTestRunsCollectionResult(
                 this,
@@ -1373,9 +1373,9 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdByTypes"> Comma separated list of type of entities that have created the test run. </param>
         /// <param name="testIds"> Comma-separated list of test IDs. If you are using testIds, do not send a value for testId. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTestRunsAsync(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxPageSize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
+        public virtual AsyncPageable<global::System.BinaryData> GetTestRunsAsync(string @orderby, string search, string testId, DateTimeOffset? executionFrom, DateTimeOffset? executionTo, string status, int? maxPageSize, IEnumerable<string> createdByTypes, IEnumerable<string> testIds, RequestContext context)
         {
             return new LoadTestRunClientGetTestRunsAsyncCollectionResult(
                 this,
@@ -1410,8 +1410,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdByTypes"> Comma separated list of type of entities that have created the test run. </param>
         /// <param name="testIds"> Comma-separated list of test IDs. If you are using testIds, do not send a value for testId. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<LoadTestRun> GetTestRuns(string @orderby = default, string search = default, string testId = default, DateTimeOffset? executionFrom = default, DateTimeOffset? executionTo = default, string status = default, int? maxPageSize = default, IEnumerable<string> createdByTypes = default, IEnumerable<string> testIds = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<global::Azure.Developer.LoadTesting.LoadTestRun> GetTestRuns(string @orderby = default, string search = default, string testId = default, DateTimeOffset? executionFrom = default, DateTimeOffset? executionTo = default, string status = default, int? maxPageSize = default, IEnumerable<string> createdByTypes = default, IEnumerable<string> testIds = default, CancellationToken cancellationToken = default)
         {
             return new LoadTestRunClientGetTestRunsCollectionResultOfT(
                 this,
@@ -1446,8 +1446,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="createdByTypes"> Comma separated list of type of entities that have created the test run. </param>
         /// <param name="testIds"> Comma-separated list of test IDs. If you are using testIds, do not send a value for testId. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<LoadTestRun> GetTestRunsAsync(string @orderby = default, string search = default, string testId = default, DateTimeOffset? executionFrom = default, DateTimeOffset? executionTo = default, string status = default, int? maxPageSize = default, IEnumerable<string> createdByTypes = default, IEnumerable<string> testIds = default, CancellationToken cancellationToken = default)
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<global::Azure.Developer.LoadTesting.LoadTestRun> GetTestRunsAsync(string @orderby = default, string search = default, string testId = default, DateTimeOffset? executionFrom = default, DateTimeOffset? executionTo = default, string status = default, int? maxPageSize = default, IEnumerable<string> createdByTypes = default, IEnumerable<string> testIds = default, CancellationToken cancellationToken = default)
         {
             return new LoadTestRunClientGetTestRunsAsyncCollectionResultOfT(
                 this,
@@ -1474,9 +1474,9 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response StopTestRun(string testRunId, RequestContext context)
         {
@@ -1484,9 +1484,9 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateStopTestRunRequest(testRunId, context);
+                using HttpMessage message = this.CreateStopTestRunRequest(testRunId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1506,19 +1506,19 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> StopTestRunAsync(string testRunId, RequestContext context)
+        public virtual async Task<global::Azure.Response> StopTestRunAsync(string testRunId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.StopTestRun");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateStopTestRunRequest(testRunId, context);
+                using HttpMessage message = this.CreateStopTestRunRequest(testRunId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1531,29 +1531,29 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Stop test run by test run Id. </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LoadTestRun> StopTestRun(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.LoadTesting.LoadTestRun> StopTestRun(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            Response result = StopTestRun(testRunId, cancellationToken.ToRequestContext());
-            return Response.FromValue((LoadTestRun)result, result);
+            Response result = this.StopTestRun(testRunId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((LoadTestRun)result), result);
         }
 
         /// <summary> Stop test run by test run Id. </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LoadTestRun>> StopTestRunAsync(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.LoadTesting.LoadTestRun>> StopTestRunAsync(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            Response result = await StopTestRunAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LoadTestRun)result, result);
+            Response result = await this.StopTestRunAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((LoadTestRun)result), result);
         }
 
         /// <summary>
@@ -1567,7 +1567,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateOrUpdateTestProfileRun(string testProfileRunId, RequestContent content, RequestContext context = null)
         {
@@ -1575,7 +1575,7 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateTestProfileRunRequest(testProfileRunId, content, context);
+                using HttpMessage message = this.CreateCreateOrUpdateTestProfileRunRequest(testProfileRunId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1596,15 +1596,15 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateOrUpdateTestProfileRunAsync(string testProfileRunId, RequestContent content, RequestContext context = null)
+        internal virtual async Task<global::Azure.Response> CreateOrUpdateTestProfileRunAsync(string testProfileRunId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.CreateOrUpdateTestProfileRun");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateTestProfileRunRequest(testProfileRunId, content, context);
+                using HttpMessage message = this.CreateCreateOrUpdateTestProfileRunRequest(testProfileRunId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1624,9 +1624,9 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteTestProfileRun(string testProfileRunId, RequestContext context)
         {
@@ -1634,9 +1634,9 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
 
-                using HttpMessage message = CreateDeleteTestProfileRunRequest(testProfileRunId, context);
+                using HttpMessage message = this.CreateDeleteTestProfileRunRequest(testProfileRunId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1656,19 +1656,19 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteTestProfileRunAsync(string testProfileRunId, RequestContext context)
+        public virtual async Task<global::Azure.Response> DeleteTestProfileRunAsync(string testProfileRunId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.DeleteTestProfileRun");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
 
-                using HttpMessage message = CreateDeleteTestProfileRunRequest(testProfileRunId, context);
+                using HttpMessage message = this.CreateDeleteTestProfileRunRequest(testProfileRunId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1681,27 +1681,27 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Delete an existing load test profile run by providing the test profile run Id. </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteTestProfileRun(string testProfileRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
 
-            return DeleteTestProfileRun(testProfileRunId, cancellationToken.ToRequestContext());
+            return this.DeleteTestProfileRun(testProfileRunId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete an existing load test profile run by providing the test profile run Id. </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteTestProfileRunAsync(string testProfileRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response> DeleteTestProfileRunAsync(string testProfileRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
 
-            return await DeleteTestProfileRunAsync(testProfileRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.DeleteTestProfileRunAsync(testProfileRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1714,9 +1714,9 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTestProfileRun(string testProfileRunId, RequestContext context)
         {
@@ -1724,9 +1724,9 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
 
-                using HttpMessage message = CreateGetTestProfileRunRequest(testProfileRunId, context);
+                using HttpMessage message = this.CreateGetTestProfileRunRequest(testProfileRunId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1746,19 +1746,19 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTestProfileRunAsync(string testProfileRunId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetTestProfileRunAsync(string testProfileRunId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetTestProfileRun");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
 
-                using HttpMessage message = CreateGetTestProfileRunRequest(testProfileRunId, context);
+                using HttpMessage message = this.CreateGetTestProfileRunRequest(testProfileRunId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1771,29 +1771,29 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Get test profile run details by test profile run Id. </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TestProfileRun> GetTestProfileRun(string testProfileRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.LoadTesting.TestProfileRun> GetTestProfileRun(string testProfileRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
 
-            Response result = GetTestProfileRun(testProfileRunId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TestProfileRun)result, result);
+            Response result = this.GetTestProfileRun(testProfileRunId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TestProfileRun)result), result);
         }
 
         /// <summary> Get test profile run details by test profile run Id. </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TestProfileRun>> GetTestProfileRunAsync(string testProfileRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.LoadTesting.TestProfileRun>> GetTestProfileRunAsync(string testProfileRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
 
-            Response result = await GetTestProfileRunAsync(testProfileRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TestProfileRun)result, result);
+            Response result = await this.GetTestProfileRunAsync(testProfileRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TestProfileRun)result), result);
         }
 
         /// <summary>
@@ -1806,9 +1806,9 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response StopTestProfileRun(string testProfileRunId, RequestContext context)
         {
@@ -1816,9 +1816,9 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
 
-                using HttpMessage message = CreateStopTestProfileRunRequest(testProfileRunId, context);
+                using HttpMessage message = this.CreateStopTestProfileRunRequest(testProfileRunId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1838,19 +1838,19 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> StopTestProfileRunAsync(string testProfileRunId, RequestContext context)
+        public virtual async Task<global::Azure.Response> StopTestProfileRunAsync(string testProfileRunId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.StopTestProfileRun");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
 
-                using HttpMessage message = CreateStopTestProfileRunRequest(testProfileRunId, context);
+                using HttpMessage message = this.CreateStopTestProfileRunRequest(testProfileRunId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1863,29 +1863,29 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Stop test profile run for the given test profile run Id. </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TestProfileRun> StopTestProfileRun(string testProfileRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.LoadTesting.TestProfileRun> StopTestProfileRun(string testProfileRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
 
-            Response result = StopTestProfileRun(testProfileRunId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TestProfileRun)result, result);
+            Response result = this.StopTestProfileRun(testProfileRunId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TestProfileRun)result), result);
         }
 
         /// <summary> Stop test profile run for the given test profile run Id. </summary>
         /// <param name="testProfileRunId"> Unique identifier for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TestProfileRun>> StopTestProfileRunAsync(string testProfileRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testProfileRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.LoadTesting.TestProfileRun>> StopTestProfileRunAsync(string testProfileRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
 
-            Response result = await StopTestProfileRunAsync(testProfileRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TestProfileRun)result, result);
+            Response result = await this.StopTestProfileRunAsync(testProfileRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TestProfileRun)result), result);
         }
 
         /// <summary>
@@ -1901,9 +1901,9 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetLatestTestRunInsights(string testRunId, RequestContext context)
         {
@@ -1911,9 +1911,9 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateGetLatestTestRunInsightsRequest(testRunId, context);
+                using HttpMessage message = this.CreateGetLatestTestRunInsightsRequest(testRunId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1936,19 +1936,19 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetLatestTestRunInsightsAsync(string testRunId, RequestContext context)
+        public virtual async Task<global::Azure.Response> GetLatestTestRunInsightsAsync(string testRunId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GetLatestTestRunInsights");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateGetLatestTestRunInsightsRequest(testRunId, context);
+                using HttpMessage message = this.CreateGetLatestTestRunInsightsRequest(testRunId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1964,15 +1964,15 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TestRunInsights> GetLatestTestRunInsights(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<global::Azure.Developer.LoadTesting.TestRunInsights> GetLatestTestRunInsights(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            Response result = GetLatestTestRunInsights(testRunId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TestRunInsights)result, result);
+            Response result = this.GetLatestTestRunInsights(testRunId, cancellationToken.ToRequestContext());
+            return global::Azure.Response.FromValue(((TestRunInsights)result), result);
         }
 
         /// <summary> Get the latest insights for the test run. </summary>
@@ -1981,15 +1981,15 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TestRunInsights>> GetLatestTestRunInsightsAsync(string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<global::Azure.Response<global::Azure.Developer.LoadTesting.TestRunInsights>> GetLatestTestRunInsightsAsync(string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            Response result = await GetLatestTestRunInsightsAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TestRunInsights)result, result);
+            Response result = await this.GetLatestTestRunInsightsAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return global::Azure.Response.FromValue(((TestRunInsights)result), result);
         }
 
         /// <summary>
@@ -2006,9 +2006,9 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateLatestTestRunInsights(string testRunId, RequestContent content, RequestContext context = null)
         {
@@ -2016,10 +2016,10 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateLatestTestRunInsightsRequest(testRunId, content, context);
+                using HttpMessage message = this.CreateUpdateLatestTestRunInsightsRequest(testRunId, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2043,20 +2043,20 @@ namespace Azure.Developer.LoadTesting
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::Azure.RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateLatestTestRunInsightsAsync(string testRunId, RequestContent content, RequestContext context = null)
+        public virtual async Task<global::Azure.Response> UpdateLatestTestRunInsightsAsync(string testRunId, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.UpdateLatestTestRunInsights");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-                Argument.AssertNotNull(content, nameof(content));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateLatestTestRunInsightsRequest(testRunId, content, context);
+                using HttpMessage message = this.CreateUpdateLatestTestRunInsightsRequest(testRunId, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2073,8 +2073,8 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation GenerateTestRunInsights(WaitUntil waitUntil, string testRunId, RequestContext context)
         {
@@ -2082,10 +2082,10 @@ namespace Azure.Developer.LoadTesting
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateGenerateTestRunInsightsRequest(testRunId, context);
-                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "LoadTestRunClient.GenerateTestRunInsights", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                using HttpMessage message = this.CreateGenerateTestRunInsightsRequest(testRunId, context);
+                return global::Azure.Core.ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "LoadTestRunClient.GenerateTestRunInsights", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2101,19 +2101,19 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation> GenerateTestRunInsightsAsync(WaitUntil waitUntil, string testRunId, RequestContext context)
+        public virtual async Task<global::Azure.Operation> GenerateTestRunInsightsAsync(WaitUntil waitUntil, string testRunId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.GenerateTestRunInsights");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-                using HttpMessage message = CreateGenerateTestRunInsightsRequest(testRunId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "LoadTestRunClient.GenerateTestRunInsightsAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = this.CreateGenerateTestRunInsightsRequest(testRunId, context);
+                return await global::Azure.Core.ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "LoadTestRunClient.GenerateTestRunInsightsAsync", global::Azure.Core.OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2129,13 +2129,13 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation GenerateTestRunInsights(WaitUntil waitUntil, string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            return GenerateTestRunInsights(waitUntil, testRunId, cancellationToken.ToRequestContext());
+            return this.GenerateTestRunInsights(waitUntil, testRunId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Generate insights for the test run. </summary>
@@ -2145,13 +2145,13 @@ namespace Azure.Developer.LoadTesting
         /// numeric, underscore or hyphen characters.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> GenerateTestRunInsightsAsync(WaitUntil waitUntil, string testRunId, CancellationToken cancellationToken = default)
+        /// <exception cref="global::System.ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<global::Azure.Operation> GenerateTestRunInsightsAsync(WaitUntil waitUntil, string testRunId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            global::Azure.Developer.LoadTesting.Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
-            return await GenerateTestRunInsightsAsync(waitUntil, testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await this.GenerateTestRunInsightsAsync(waitUntil, testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

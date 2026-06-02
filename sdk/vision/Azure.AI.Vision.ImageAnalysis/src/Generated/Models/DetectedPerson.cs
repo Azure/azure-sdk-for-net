@@ -14,21 +14,21 @@ namespace Azure.AI.Vision.ImageAnalysis
     public partial class DetectedPerson
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DetectedPerson"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedPerson"/>. </summary>
         internal DetectedPerson()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DetectedPerson"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Vision.ImageAnalysis.DetectedPerson"/>. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the person was detected. </param>
         /// <param name="confidence">
         /// A score, in the range of 0 to 1 (inclusive), representing the confidence that this detection was accurate.
         /// Higher values indicating higher confidence.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedPerson(ImageBoundingBox boundingBox, float confidence, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectedPerson(ImageBoundingBox boundingBox, float confidence, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             BoundingBox = boundingBox;
             Confidence = confidence;

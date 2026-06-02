@@ -14,9 +14,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class PolicyInsightsPolicyStateCreatedEventData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateCreatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateCreatedEventData"/>. </summary>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The resource ID of the policy definition. </param>
         /// <param name="policyDefinitionReferenceId"> The reference ID for the policy definition inside the initiative definition, if the policy assignment is for an initiative. May be empty. </param>
@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ComplianceReasonCode = complianceReasonCode;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateCreatedEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Messaging.EventGrid.SystemEvents.PolicyInsightsPolicyStateCreatedEventData"/>. </summary>
         /// <param name="timestamp"> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </param>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The resource ID of the policy definition. </param>
@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="complianceReasonCode"> The compliance reason code. May be empty. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyInsightsPolicyStateCreatedEventData(DateTimeOffset? timestamp, string policyAssignmentId, string policyDefinitionId, string policyDefinitionReferenceId, string complianceState, string subscriptionId, string complianceReasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyInsightsPolicyStateCreatedEventData(DateTimeOffset? timestamp, string policyAssignmentId, string policyDefinitionId, string policyDefinitionReferenceId, string complianceState, string subscriptionId, string complianceReasonCode, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             PolicyAssignmentId = policyAssignmentId;

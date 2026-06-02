@@ -14,9 +14,9 @@ namespace Azure.AI.AnomalyDetector
     public partial class MultivariateBatchDetectionResultSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionResultSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary"/>. </summary>
         /// <param name="status"> Status of detection results. </param>
         /// <param name="setupInfo">
         /// Detection request for batch inference. This is an asynchronous inference that
@@ -25,12 +25,12 @@ namespace Azure.AI.AnomalyDetector
         internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, MultivariateBatchDetectionOptions setupInfo)
         {
             Status = status;
-            Errors = new ChangeTrackingList<ErrorResponse>();
-            VariableStates = new ChangeTrackingList<VariableState>();
+            Errors = new ChangeTrackingList<global::Azure.AI.AnomalyDetector.ErrorResponse>();
+            VariableStates = new ChangeTrackingList<global::Azure.AI.AnomalyDetector.VariableState>();
             SetupInfo = setupInfo;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionResultSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary"/>. </summary>
         /// <param name="status"> Status of detection results. </param>
         /// <param name="errors"> Error message when detection fails. </param>
         /// <param name="variableStates"> Variable status. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.AnomalyDetector
         /// will need another API to get detection results.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, IList<ErrorResponse> errors, IList<VariableState> variableStates, MultivariateBatchDetectionOptions setupInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultivariateBatchDetectionResultSummary(MultivariateBatchDetectionStatus status, IList<global::Azure.AI.AnomalyDetector.ErrorResponse> errors, IList<global::Azure.AI.AnomalyDetector.VariableState> variableStates, MultivariateBatchDetectionOptions setupInfo, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Errors = errors;
@@ -52,10 +52,10 @@ namespace Azure.AI.AnomalyDetector
         public MultivariateBatchDetectionStatus Status { get; }
 
         /// <summary> Error message when detection fails. </summary>
-        public IList<ErrorResponse> Errors { get; }
+        public IList<global::Azure.AI.AnomalyDetector.ErrorResponse> Errors { get; }
 
         /// <summary> Variable status. </summary>
-        public IList<VariableState> VariableStates { get; }
+        public IList<global::Azure.AI.AnomalyDetector.VariableState> VariableStates { get; }
 
         /// <summary>
         /// Detection request for batch inference. This is an asynchronous inference that

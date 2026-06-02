@@ -14,14 +14,14 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class QuestionAnswersConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnswersConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig"/>. </summary>
         public QuestionAnswersConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuestionAnswersConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.AI.Language.Conversations.Models.QuestionAnswersConfig"/>. </summary>
         /// <param name="qnaId"> Exact QnA ID to fetch from the knowledge base, this field takes priority over question. </param>
         /// <param name="question"> User question to query against the knowledge base. </param>
         /// <param name="top"> Max number of answers to be returned for the question. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="shortAnswerOptions"> To configure Answer span prediction feature. </param>
         /// <param name="includeUnstructuredSources"> (Optional) Flag to enable Query over Unstructured Sources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnswersConfig(int? qnaId, string question, int? top, string userId, double? confidenceThreshold, KnowledgeBaseAnswerContext answerContext, RankerKind? rankerKind, QueryFilters filters, ShortAnswerConfig shortAnswerOptions, bool? includeUnstructuredSources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuestionAnswersConfig(int? qnaId, string question, int? top, string userId, double? confidenceThreshold, KnowledgeBaseAnswerContext answerContext, RankerKind? rankerKind, QueryFilters filters, ShortAnswerConfig shortAnswerOptions, bool? includeUnstructuredSources, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             QnaId = qnaId;
             Question = question;

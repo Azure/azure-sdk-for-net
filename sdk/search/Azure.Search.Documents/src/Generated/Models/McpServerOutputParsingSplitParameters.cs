@@ -14,21 +14,21 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class McpServerOutputParsingSplitParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected readonly IDictionary<string, global::System.BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="McpServerOutputParsingSplitParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsingSplitParameters"/>. </summary>
         public McpServerOutputParsingSplitParameters()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="McpServerOutputParsingSplitParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::Azure.Search.Documents.Indexes.Models.McpServerOutputParsingSplitParameters"/>. </summary>
         /// <param name="textSplitMode"> The text split mode to use. </param>
         /// <param name="maximumPageLength"> The maximum number of characters per page. </param>
         /// <param name="pageOverlapLength"> The number of characters to overlap between pages. </param>
         /// <param name="maximumPagesToTake"> The maximum number of pages to take from the output. </param>
         /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal McpServerOutputParsingSplitParameters(TextSplitMode? textSplitMode, int? maximumPageLength, int? pageOverlapLength, int? maximumPagesToTake, SplitSkillLanguage? defaultLanguageCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal McpServerOutputParsingSplitParameters(TextSplitMode? textSplitMode, int? maximumPageLength, int? pageOverlapLength, int? maximumPagesToTake, SplitSkillLanguage? defaultLanguageCode, IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties)
         {
             TextSplitMode = textSplitMode;
             MaximumPageLength = maximumPageLength;
