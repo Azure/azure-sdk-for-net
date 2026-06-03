@@ -1858,13 +1858,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new StorageApplianceExpansionShelf(model, version, default);
         }
 
-        /// <summary> The monitoring configuration status of the storage appliance. </summary>
         /// <param name="logLevel"> The log level for the monitoring configuration status of the storage appliance. </param>
         /// <param name="metricsLevel"> The metrics level for the monitoring configuration status of the storage appliance. </param>
         /// <returns> A new <see cref="Models.StorageApplianceMonitoringConfigurationStatus"/> instance for mocking. </returns>
         public static StorageApplianceMonitoringConfigurationStatus StorageApplianceMonitoringConfigurationStatus(StorageApplianceMetricsConfigurationStatusLogLevel? logLevel = default, StorageApplianceMetricsConfigurationStatusMetricsLevel? metricsLevel = default)
         {
-            return new StorageApplianceMonitoringConfigurationStatus(logLevel, metricsLevel, additionalBinaryDataProperties: null);
+            return new StorageApplianceMonitoringConfigurationStatus(logLevel, metricsLevel, default);
         }
 
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
