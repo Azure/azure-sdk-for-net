@@ -3,12 +3,14 @@
 ## 4.9.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added `KeyVaultEkmClient` to support External Key Management operations
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+- Updated Service Version to `2026-01-01-preview`
 
 ## 4.8.0 (2026-05-05)
 
