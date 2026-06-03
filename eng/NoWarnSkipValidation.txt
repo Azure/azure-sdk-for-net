@@ -161,7 +161,6 @@ Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
 Azure.ResourceManager.MachineLearning
 Azure.ResourceManager.Network
 Azure.ResourceManager.RecoveryServicesBackup
-Azure.ResourceManager.Storage
 Azure.Search.Documents
 Azure.Security.Attestation
 Azure.Security.CodeTransparency
