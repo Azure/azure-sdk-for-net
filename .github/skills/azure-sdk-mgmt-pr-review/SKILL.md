@@ -57,7 +57,7 @@ To determine the review scope:
    ```powershell
    pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -PackagePath <package-path>
    ```
-   The script checks all rules in the "API Review Checklist" below and outputs violations with rule IDs, line numbers, and suggested fixes. Treat those API-file line numbers as identifiers for the affected public symbol, not as final comment targets. Include every violation from the script output as an inline review comment, **after** filtering out anything already covered in step 2 and after resolving the symbol to the relevant source file as described below.
+   The script checks all rules in the "API Review Checklist" below and outputs violations with rule IDs, line numbers, and suggested fixes. Treat those API-file line numbers as identifiers for the affected public symbol, not as final comment targets. After filtering out anything already covered in step 2, resolve each remaining violation to the relevant source file as described below. Emit it as an inline review comment only when that source location is in the PR diff; otherwise include it in the review body's "Non-inline findings" section.
    If `ApiCompatVersion` is present (i.e., a prior stable version exists), pass the baseline API surface file to the script using `-BaselineApiFilePath` so it can deterministically filter out violations on unchanged API surface:
    ```powershell
    pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file>
@@ -84,7 +84,7 @@ To determine the review scope:
 
    **Step 4b — record a verdict for every `NEW` entry.** For each type ask: *"if a consumer saw this type name in IntelliSense without the namespace, would they know which Azure service/resource it belongs to?"* Assign exactly one verdict per type:
    - `OK` — name carries clear service/resource/domain context, or is a well-established term in this RP's domain.
-   - `Flag` — name is generic/ambiguous **and** lacks RP/resource/domain context. Only flag when you are confident *and* you can propose a concrete better name. Post an inline comment for these after resolving the type to the relevant generated or customization source file.
+   - `Flag` — name is generic/ambiguous **and** lacks RP/resource/domain context. Only flag when you are confident *and* you can propose a concrete better name. Resolve the type to the relevant generated or customization source file, then post an inline comment if that location is in the PR diff; otherwise include the finding in the review body's "Non-inline findings" section.
    - `OK (low confidence)` — borderline; do **not** post a comment. Recording it keeps the pass honest without adding noise.
 
    The contextual-naming pass is **not complete** until every `NEW` inventory entry has a verdict. The count of verdicts must equal the count of `NEW` entries from step 4a.
