@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> The ID associated with the cluster. </summary>
         [WirePath("properties.clusterId")]
-        public string ClusterId
+        public Guid? ClusterId
         {
             get
             {

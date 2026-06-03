@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (options.Format != "W" && Optional.IsDefined(QueryPackId))
             {
                 writer.WritePropertyName("queryPackId"u8);
-                writer.WriteStringValue(QueryPackId);
+                writer.WriteStringValue(QueryPackId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("timeCreated"u8);
-                writer.WriteStringValue(TimeCreated.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TimeModified))
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("timeModified"u8);
-                writer.WriteStringValue(TimeModified.Value, "O");
+                writer.WriteStringValue(ModifiedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -136,16 +136,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            string queryPackId = default;
-            DateTimeOffset? timeCreated = default;
-            DateTimeOffset? timeModified = default;
+            Guid? queryPackId = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? modifiedOn = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("queryPackId"u8))
                 {
-                    queryPackId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryPackId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("timeCreated"u8))
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    timeCreated = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("timeModified"u8))
@@ -163,7 +167,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    timeModified = prop.Value.GetDateTimeOffset("O");
+                    modifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -176,7 +180,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LogAnalyticsQueryPackProperties(queryPackId, timeCreated, timeModified, provisioningState, additionalBinaryDataProperties);
+            return new LogAnalyticsQueryPackProperties(queryPackId, createdOn, modifiedOn, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string gatewayId, RequestContext context)
+        internal HttpMessage CreateDeleteGatewayRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string gatewayId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

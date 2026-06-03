@@ -740,11 +740,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="intelligencePackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> DisableAsync(string intelligencePackName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DisableIntelligencePackAsync(string intelligencePackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
 
-            using DiagnosticScope scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Disable");
+            using DiagnosticScope scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.DisableIntelligencePack");
             scope.Start();
             try
             {
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _intelligencePacksRestClient.CreateDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
+                HttpMessage message = _intelligencePacksRestClient.CreateDisableIntelligencePackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -788,11 +788,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="intelligencePackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Disable(string intelligencePackName, CancellationToken cancellationToken = default)
+        public virtual Response DisableIntelligencePack(string intelligencePackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
 
-            using DiagnosticScope scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Disable");
+            using DiagnosticScope scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.DisableIntelligencePack");
             scope.Start();
             try
             {
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _intelligencePacksRestClient.CreateDisableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
+                HttpMessage message = _intelligencePacksRestClient.CreateDisableIntelligencePackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -836,11 +836,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="intelligencePackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> EnableAsync(string intelligencePackName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> EnableIntelligencePackAsync(string intelligencePackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
 
-            using DiagnosticScope scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Enable");
+            using DiagnosticScope scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.EnableIntelligencePack");
             scope.Start();
             try
             {
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _intelligencePacksRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
+                HttpMessage message = _intelligencePacksRestClient.CreateEnableIntelligencePackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -884,11 +884,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="intelligencePackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="intelligencePackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Enable(string intelligencePackName, CancellationToken cancellationToken = default)
+        public virtual Response EnableIntelligencePack(string intelligencePackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(intelligencePackName, nameof(intelligencePackName));
 
-            using DiagnosticScope scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Enable");
+            using DiagnosticScope scope = _intelligencePacksClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.EnableIntelligencePack");
             scope.Start();
             try
             {
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _intelligencePacksRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
+                HttpMessage message = _intelligencePacksRestClient.CreateEnableIntelligencePackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, intelligencePackName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1032,11 +1032,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> DeleteAsync(string gatewayId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteGatewayAsync(string gatewayId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
 
-            using DiagnosticScope scope = _gatewaysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Delete");
+            using DiagnosticScope scope = _gatewaysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.DeleteGateway");
             scope.Start();
             try
             {
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gatewayId, context);
+                HttpMessage message = _gatewaysRestClient.CreateDeleteGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gatewayId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1080,11 +1080,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Delete(string gatewayId, CancellationToken cancellationToken = default)
+        public virtual Response DeleteGateway(string gatewayId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
 
-            using DiagnosticScope scope = _gatewaysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Delete");
+            using DiagnosticScope scope = _gatewaysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.DeleteGateway");
             scope.Start();
             try
             {
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gatewayId, context);
+                HttpMessage message = _gatewaysRestClient.CreateDeleteGatewayRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, gatewayId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -1663,9 +1663,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationalInsightsWorkspaceSharedKeys>> RegenerateAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationalInsightsWorkspaceSharedKeys>> RegenerateSharedKeyAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _sharedKeysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Regenerate");
+            using DiagnosticScope scope = _sharedKeysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.RegenerateSharedKey");
             scope.Start();
             try
             {
@@ -1673,7 +1673,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedKeysRestClient.CreateRegenerateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sharedKeysRestClient.CreateRegenerateSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsWorkspaceSharedKeys> response = Response.FromValue(OperationalInsightsWorkspaceSharedKeys.FromResponse(result), result);
                 if (response.Value == null)
@@ -1711,9 +1711,9 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationalInsightsWorkspaceSharedKeys> Regenerate(CancellationToken cancellationToken = default)
+        public virtual Response<OperationalInsightsWorkspaceSharedKeys> RegenerateSharedKey(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _sharedKeysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.Regenerate");
+            using DiagnosticScope scope = _sharedKeysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.RegenerateSharedKey");
             scope.Start();
             try
             {
@@ -1721,7 +1721,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedKeysRestClient.CreateRegenerateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _sharedKeysRestClient.CreateRegenerateSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsWorkspaceSharedKeys> response = Response.FromValue(OperationalInsightsWorkspaceSharedKeys.FromResponse(result), result);
                 if (response.Value == null)

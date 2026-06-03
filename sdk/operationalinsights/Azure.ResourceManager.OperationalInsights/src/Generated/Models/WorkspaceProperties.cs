@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="replication"> workspace replication properties. </param>
         /// <param name="failover"> workspace failover properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceProperties(OperationalInsightsWorkspaceEntityStatus? provisioningState, string customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, string defaultDataCollectionRuleResourceId, OperationalInsightsWorkspaceReplicationProperties replication, OperationalInsightsWorkspaceFailoverProperties failover, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceProperties(OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId, OperationalInsightsWorkspaceReplicationProperties replication, OperationalInsightsWorkspaceFailoverProperties failover, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CustomerId = customerId;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> This is a read-only property. Represents the ID associated with the workspace. </summary>
         [WirePath("customerId")]
-        public string CustomerId { get; }
+        public Guid? CustomerId { get; }
 
         /// <summary> The SKU of the workspace. </summary>
         [WirePath("sku")]
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </summary>
         [WirePath("defaultDataCollectionRuleResourceId")]
-        public string DefaultDataCollectionRuleResourceId { get; set; }
+        public ResourceIdentifier DefaultDataCollectionRuleResourceId { get; set; }
 
         /// <summary> workspace replication properties. </summary>
         [WirePath("replication")]

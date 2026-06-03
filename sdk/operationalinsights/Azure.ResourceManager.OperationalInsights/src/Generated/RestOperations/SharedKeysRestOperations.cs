@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.OperationalInsights
             return message;
         }
 
-        internal HttpMessage CreateRegenerateRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
+        internal HttpMessage CreateRegenerateSharedKeyRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

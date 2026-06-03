@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsSearchSchemaValue"/>. </summary>
         /// <param name="name"> The name of the schema. </param>
         /// <param name="displayName"> The display name of the schema. </param>
-        /// <param name="type"> The type. </param>
+        /// <param name="searchSchemaValueType"> The type. </param>
         /// <param name="indexed"> The boolean that indicates the field is searchable as free text. </param>
         /// <param name="stored"> The boolean that indicates whether or not the field is stored. </param>
         /// <param name="facet"> The boolean that indicates whether or not the field is a facet. </param>
         /// <param name="ownerType"> The array of workflows containing the field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsSearchSchemaValue(string name, string displayName, string @type, bool indexed, bool stored, bool facet, IReadOnlyList<string> ownerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsSearchSchemaValue(string name, string displayName, string searchSchemaValueType, bool indexed, bool stored, bool facet, IReadOnlyList<string> ownerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
-            Type = @type;
+            SearchSchemaValueType = searchSchemaValueType;
             Indexed = indexed;
             Stored = stored;
             Facet = facet;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> The type. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public string SearchSchemaValueType { get; }
 
         /// <summary> The boolean that indicates the field is searchable as free text. </summary>
         [WirePath("indexed")]

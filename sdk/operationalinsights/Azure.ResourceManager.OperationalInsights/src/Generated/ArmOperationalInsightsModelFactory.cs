@@ -20,55 +20,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public static partial class ArmOperationalInsightsModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="clusterId"> The ID associated with the cluster. </param>
-        /// <param name="provisioningState"> The provisioning state of the cluster. </param>
-        /// <param name="isDoubleEncryptionEnabled"> Configures whether cluster will use double encryption. This Property can not be modified after cluster creation. Default value is 'true'. </param>
-        /// <param name="isAvailabilityZonesEnabled"> Sets whether the cluster will support availability zones. This can be set as true only in regions where Azure Data Explorer support Availability Zones. This Property can not be modified after cluster creation. Default value is 'true' if region supports Availability Zones. </param>
-        /// <param name="billingType"> The cluster's billing type. </param>
-        /// <param name="keyVaultProperties"> The associated key properties. </param>
-        /// <param name="lastModifiedOn"> The last time the cluster was updated. </param>
-        /// <param name="createdOn"> The cluster creation time. </param>
-        /// <param name="associatedWorkspaces"> The list of Log Analytics workspaces associated with the cluster. </param>
-        /// <param name="capacityReservationProperties"> Additional properties for capacity reservation. </param>
-        /// <param name="replication"> Cluster's replication properties. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="sku"> The sku properties. </param>
-        /// <returns> A new <see cref="OperationalInsights.OperationalInsightsClusterData"/> instance for mocking. </returns>
-        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string clusterId = default, OperationalInsightsClusterEntityStatus? provisioningState = default, bool? isDoubleEncryptionEnabled = default, bool? isAvailabilityZonesEnabled = default, OperationalInsightsBillingType? billingType = default, OperationalInsightsKeyVaultProperties keyVaultProperties = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = default, OperationalInsightsCapacityReservationProperties capacityReservationProperties = default, OperationalInsightsClusterReplicationProperties replication = default, ManagedServiceIdentity identity = default, OperationalInsightsClusterSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new OperationalInsightsClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                clusterId is null && provisioningState is null && isDoubleEncryptionEnabled is null && isAvailabilityZonesEnabled is null && billingType is null && keyVaultProperties is null && lastModifiedOn is null && createdOn is null && associatedWorkspaces is null && capacityReservationProperties is null && replication is null ? default : new ClusterProperties(
-                    clusterId,
-                    provisioningState,
-                    isDoubleEncryptionEnabled,
-                    isAvailabilityZonesEnabled,
-                    billingType,
-                    keyVaultProperties,
-                    lastModifiedOn,
-                    createdOn,
-                    (associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>()).ToList(),
-                    capacityReservationProperties,
-                    replication,
-                    null),
-                identity,
-                sku);
-        }
-
+        /// <summary> The list of Log Analytics workspaces associated with the cluster. </summary>
         /// <param name="workspaceId"> Associated workspace immutable id. </param>
         /// <param name="workspaceName"> Associated workspace resource name. </param>
         /// <param name="resourceId"> Associated workspace arm resource id, in the form of: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </param>
@@ -176,7 +128,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="eTag"> The etag of the workspace. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OperationalInsightsWorkspaceEntityStatus? provisioningState = default, string customerId = default, OperationalInsightsWorkspaceSku sku = default, int? retentionInDays = default, OperationalInsightsWorkspaceCapping workspaceCapping = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, bool? forceCmkForQuery = default, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default, OperationalInsightsWorkspaceFeatures features = default, string defaultDataCollectionRuleResourceId = default, OperationalInsightsWorkspaceReplicationProperties replication = default, OperationalInsightsWorkspaceFailoverProperties failover = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
+        public static OperationalInsightsWorkspaceData OperationalInsightsWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OperationalInsightsWorkspaceEntityStatus? provisioningState = default, Guid? customerId = default, OperationalInsightsWorkspaceSku sku = default, int? retentionInDays = default, OperationalInsightsWorkspaceCapping workspaceCapping = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, bool? forceCmkForQuery = default, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default, OperationalInsightsWorkspaceFeatures features = default, ResourceIdentifier defaultDataCollectionRuleResourceId = default, OperationalInsightsWorkspaceReplicationProperties replication = default, OperationalInsightsWorkspaceFailoverProperties failover = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -314,7 +266,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="tags"> Resource tags. Optional. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePatch"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default, OperationalInsightsWorkspaceEntityStatus? provisioningState = default, string customerId = default, OperationalInsightsWorkspaceSku sku = default, int? retentionInDays = default, OperationalInsightsWorkspaceCapping workspaceCapping = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, bool? forceCmkForQuery = default, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default, OperationalInsightsWorkspaceFeatures features = default, string defaultDataCollectionRuleResourceId = default, OperationalInsightsWorkspaceReplicationProperties replication = default, OperationalInsightsWorkspaceFailoverProperties failover = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
+        public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string eTag = default, OperationalInsightsWorkspaceEntityStatus? provisioningState = default, Guid? customerId = default, OperationalInsightsWorkspaceSku sku = default, int? retentionInDays = default, OperationalInsightsWorkspaceCapping workspaceCapping = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, bool? forceCmkForQuery = default, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default, OperationalInsightsWorkspaceFeatures features = default, ResourceIdentifier defaultDataCollectionRuleResourceId = default, OperationalInsightsWorkspaceReplicationProperties replication = default, OperationalInsightsWorkspaceFailoverProperties failover = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -773,6 +725,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 null), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Value object for schema results. </summary>
         /// <param name="name"> The name of the schema. </param>
         /// <param name="displayName"> The display name of the schema. </param>
         /// <param name="searchSchemaValueType"> The type. </param>
@@ -962,11 +915,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="queryPackId"> The unique ID of your application. This field cannot be changed. </param>
-        /// <param name="timeCreated"> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </param>
-        /// <param name="timeModified"> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </param>
+        /// <param name="createdOn"> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </param>
+        /// <param name="modifiedOn"> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </param>
         /// <param name="provisioningState"> Current state of this QueryPack: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
         /// <returns> A new <see cref="OperationalInsights.LogAnalyticsQueryPackData"/> instance for mocking. </returns>
-        public static LogAnalyticsQueryPackData LogAnalyticsQueryPackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string queryPackId = default, DateTimeOffset? timeCreated = default, DateTimeOffset? timeModified = default, string provisioningState = default)
+        public static LogAnalyticsQueryPackData LogAnalyticsQueryPackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? queryPackId = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string provisioningState = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -978,7 +931,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                new LogAnalyticsQueryPackProperties(queryPackId, timeCreated, timeModified, provisioningState, null));
+                new LogAnalyticsQueryPackProperties(queryPackId, createdOn, modifiedOn, provisioningState, null));
         }
 
         /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a QueryPack instance. </summary>
@@ -1140,10 +1093,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="capacityReservationProperties"> Additional properties for capacity reservation. </param>
         /// <param name="replication"> Cluster's replication properties. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsClusterData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, Guid? clusterId, OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsBillingType? billingType, OperationalInsightsKeyVaultProperties keyVaultProperties, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, OperationalInsightsCapacityReservationProperties capacityReservationProperties, OperationalInsightsClusterReplicationProperties replication)
+        public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, OperationalInsightsClusterSku sku = default, Guid? clusterId = default, OperationalInsightsClusterEntityStatus? provisioningState = default, bool? isDoubleEncryptionEnabled = default, bool? isAvailabilityZonesEnabled = default, OperationalInsightsBillingType? billingType = default, OperationalInsightsKeyVaultProperties keyVaultProperties = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = default, OperationalInsightsCapacityReservationProperties capacityReservationProperties = default, OperationalInsightsClusterReplicationProperties replication = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
+            associatedWorkspaces ??= new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>();
 
             return new OperationalInsightsClusterData(
                 id,
@@ -1153,19 +1106,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState is null && isDoubleEncryptionEnabled is null && isAvailabilityZonesEnabled is null && billingType is null && keyVaultProperties is null && lastModifiedOn is null && createdOn is null && associatedWorkspaces is null && capacityReservationProperties is null && replication is null ? default : new ClusterProperties(
-                    default,
-                    provisioningState,
-                    isDoubleEncryptionEnabled,
-                    isAvailabilityZonesEnabled,
-                    billingType,
-                    keyVaultProperties,
-                    lastModifiedOn,
-                    createdOn,
-                    (associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>()).ToList(),
-                    capacityReservationProperties,
-                    replication,
-                    default),
+                default,
                 identity,
                 sku);
         }
@@ -1192,34 +1133,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 additionalBinaryDataProperties: null,
                 default,
                 tags);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.LogAnalyticsQueryPackData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="queryPackId"> The unique ID of your application. This field cannot be changed. </param>
-        /// <param name="createdOn"> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </param>
-        /// <param name="modifiedOn"> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </param>
-        /// <param name="provisioningState"> Current state of this QueryPack: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
-        /// <returns> A new <see cref="OperationalInsights.LogAnalyticsQueryPackData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LogAnalyticsQueryPackData LogAnalyticsQueryPackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? queryPackId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string provisioningState)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new LogAnalyticsQueryPackData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                provisioningState is null ? default : new LogAnalyticsQueryPackProperties(default, default, default, provisioningState, default));
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsSavedSearchData"/>. </summary>
@@ -1324,9 +1237,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && replication is null && failover is null ? default : new WorkspaceProperties(
+                provisioningState is null && customerId is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && defaultDataCollectionRuleResourceId is null && replication is null && failover is null ? default : new WorkspaceProperties(
                     provisioningState,
-                    default,
+                    customerId,
                     sku,
                     retentionInDays,
                     workspaceCapping,
@@ -1337,7 +1250,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     forceCmkForQuery,
                     (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
                     features,
-                    default,
+                    defaultDataCollectionRuleResourceId,
                     replication,
                     failover,
                     default),
@@ -1396,9 +1309,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 default,
-                provisioningState is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && replication is null && failover is null ? default : new WorkspaceProperties(
+                provisioningState is null && customerId is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && defaultDataCollectionRuleResourceId is null && replication is null && failover is null ? default : new WorkspaceProperties(
                     provisioningState,
-                    default,
+                    customerId,
                     sku,
                     retentionInDays,
                     workspaceCapping,
@@ -1409,7 +1322,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     forceCmkForQuery,
                     (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
                     features,
-                    default,
+                    defaultDataCollectionRuleResourceId,
                     replication,
                     failover,
                     default),
@@ -1440,38 +1353,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static OperationalInsightsClusterData OperationalInsightsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, Guid? clusterId, OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsBillingType? billingType, OperationalInsightsKeyVaultProperties keyVaultProperties, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, IEnumerable<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, OperationalInsightsCapacityReservationProperties capacityReservationProperties)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new OperationalInsightsClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                provisioningState is null && isDoubleEncryptionEnabled is null && isAvailabilityZonesEnabled is null && billingType is null && keyVaultProperties is null && lastModifiedOn is null && createdOn is null && associatedWorkspaces is null && capacityReservationProperties is null && isAvailabilityZonesEnabled is null && createdOn is null && lastModifiedOn is null ? default : new ClusterProperties(
-                    default,
-                    provisioningState,
-                    isDoubleEncryptionEnabled,
-                    isAvailabilityZonesEnabled,
-                    billingType,
-                    keyVaultProperties,
-                    lastModifiedOn,
-                    createdOn,
-                    (associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>()).ToList(),
-                    capacityReservationProperties,
-                    new OperationalInsightsClusterReplicationProperties(
-                        default,
-                        default,
-                        isAvailabilityZonesEnabled,
-                        default,
-                        createdOn,
-                        lastModifiedOn,
-                        default),
-                    default),
-                identity,
-                sku);
+            return OperationalInsightsClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, sku: sku, clusterId: clusterId, provisioningState: provisioningState, isDoubleEncryptionEnabled: isDoubleEncryptionEnabled, isAvailabilityZonesEnabled: isAvailabilityZonesEnabled, billingType: billingType, keyVaultProperties: keyVaultProperties, lastModifiedOn: lastModifiedOn, createdOn: createdOn, associatedWorkspaces: associatedWorkspaces, capacityReservationProperties: capacityReservationProperties, replication: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/>. </summary>
@@ -1510,9 +1392,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                provisioningState is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && createdOn is null ? default : new WorkspaceProperties(
+                provisioningState is null && customerId is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && defaultDataCollectionRuleResourceId is null && createdOn is null ? default : new WorkspaceProperties(
                     provisioningState,
-                    default,
+                    customerId,
                     sku,
                     retentionInDays,
                     workspaceCapping,
@@ -1523,7 +1405,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     forceCmkForQuery,
                     (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
                     features,
-                    default,
+                    defaultDataCollectionRuleResourceId,
                     new OperationalInsightsWorkspaceReplicationProperties(
                         default,
                         default,
@@ -1571,9 +1453,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 default,
-                provisioningState is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && createdOn is null ? default : new WorkspaceProperties(
+                provisioningState is null && customerId is null && sku is null && retentionInDays is null && workspaceCapping is null && createdOn is null && modifiedOn is null && publicNetworkAccessForIngestion is null && publicNetworkAccessForQuery is null && forceCmkForQuery is null && privateLinkScopedResources is null && features is null && defaultDataCollectionRuleResourceId is null && createdOn is null ? default : new WorkspaceProperties(
                     provisioningState,
-                    default,
+                    customerId,
                     sku,
                     retentionInDays,
                     workspaceCapping,
@@ -1584,7 +1466,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     forceCmkForQuery,
                     (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
                     features,
-                    default,
+                    defaultDataCollectionRuleResourceId,
                     new OperationalInsightsWorkspaceReplicationProperties(
                         default,
                         default,

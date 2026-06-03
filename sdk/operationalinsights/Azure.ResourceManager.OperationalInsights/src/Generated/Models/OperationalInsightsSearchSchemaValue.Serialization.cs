@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(SearchSchemaValueType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(SearchSchemaValueType);
             }
             writer.WritePropertyName("indexed"u8);
             writer.WriteBooleanValue(Indexed);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             string name = default;
             string displayName = default;
-            string @type = default;
+            string searchSchemaValueType = default;
             bool indexed = default;
             bool stored = default;
             bool facet = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    searchSchemaValueType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("indexed"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsSearchSchemaValue(
                 name,
                 displayName,
-                @type,
+                searchSchemaValueType,
                 indexed,
                 stored,
                 facet,

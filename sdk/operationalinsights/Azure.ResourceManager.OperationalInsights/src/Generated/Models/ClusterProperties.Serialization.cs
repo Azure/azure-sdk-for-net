@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
-                writer.WriteStringValue(ClusterId);
+                writer.WriteStringValue(ClusterId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            string clusterId = default;
+            Guid? clusterId = default;
             OperationalInsightsClusterEntityStatus? provisioningState = default;
             bool? isDoubleEncryptionEnabled = default;
             bool? isAvailabilityZonesEnabled = default;
@@ -192,7 +192,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 if (prop.NameEquals("clusterId"u8))
                 {
-                    clusterId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

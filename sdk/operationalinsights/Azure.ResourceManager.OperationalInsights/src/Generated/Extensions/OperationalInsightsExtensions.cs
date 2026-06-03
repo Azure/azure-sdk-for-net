@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// The specified replication location must match the location of the enabled replication for this workspace. The failover operation is asynchronous and can take up to 30 minutes to complete. The status of the operation can be checked using the operationId returned in the response.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.FailoverAsync(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.FailoverWorkspaceAsync(WaitUntil, AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -433,11 +433,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation> FailoverAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string location, string workspaceName, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation> FailoverWorkspaceAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).FailoverAsync(waitUntil, location, workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).FailoverWorkspaceAsync(waitUntil, location, workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// The specified replication location must match the location of the enabled replication for this workspace. The failover operation is asynchronous and can take up to 30 minutes to complete. The status of the operation can be checked using the operationId returned in the response.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.Failover(WaitUntil, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.FailoverWorkspace(WaitUntil, AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -454,47 +454,47 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation Failover(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string location, string workspaceName, CancellationToken cancellationToken = default)
+        public static ArmOperation FailoverWorkspace(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, AzureLocation location, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).Failover(waitUntil, location, workspaceName, cancellationToken);
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).FailoverWorkspace(waitUntil, location, workspaceName, cancellationToken);
         }
 
         /// <summary>
         /// Creates a Log Analytics QueryPack. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameAsync(LogAnalyticsQueryPackData, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameQueryPackAsync(LogAnalyticsQueryPackData, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="data"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameAsync(this ResourceGroupResource resourceGroupResource, LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
+        public static async Task<Response<LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameQueryPackAsync(this ResourceGroupResource resourceGroupResource, LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).CreateOrUpdateWithoutNameAsync(data, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).CreateOrUpdateWithoutNameQueryPackAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Creates a Log Analytics QueryPack. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutName(LogAnalyticsQueryPackData, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameQueryPack(LogAnalyticsQueryPackData, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="data"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<LogAnalyticsQueryPackResource> CreateOrUpdateWithoutName(this ResourceGroupResource resourceGroupResource, LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
+        public static Response<LogAnalyticsQueryPackResource> CreateOrUpdateWithoutNameQueryPack(this ResourceGroupResource resourceGroupResource, LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).CreateOrUpdateWithoutName(data, cancellationToken);
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).CreateOrUpdateWithoutNameQueryPack(data, cancellationToken);
         }
 
         /// <summary>

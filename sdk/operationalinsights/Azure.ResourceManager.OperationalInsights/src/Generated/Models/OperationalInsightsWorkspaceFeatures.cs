@@ -73,8 +73,5 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> List of associations for the workspace. Indicates if the workspace is associated with any of the following experiences: MDC, Sentinel, SentinelGraph, etc. </summary>
         [WirePath("associations")]
         public IReadOnlyList<string> Associations { get; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

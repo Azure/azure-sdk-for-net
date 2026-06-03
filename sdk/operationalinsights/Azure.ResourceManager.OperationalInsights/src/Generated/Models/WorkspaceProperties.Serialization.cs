@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (options.Format != "W" && Optional.IsDefined(CustomerId))
             {
                 writer.WritePropertyName("customerId"u8);
-                writer.WriteStringValue(CustomerId);
+                writer.WriteStringValue(CustomerId.Value);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -197,7 +198,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 return null;
             }
             OperationalInsightsWorkspaceEntityStatus? provisioningState = default;
-            string customerId = default;
+            Guid? customerId = default;
             OperationalInsightsWorkspaceSku sku = default;
             int? retentionInDays = default;
             OperationalInsightsWorkspaceCapping workspaceCapping = default;
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             bool? forceCmkForQuery = default;
             IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
             OperationalInsightsWorkspaceFeatures features = default;
-            string defaultDataCollectionRuleResourceId = default;
+            ResourceIdentifier defaultDataCollectionRuleResourceId = default;
             OperationalInsightsWorkspaceReplicationProperties replication = default;
             OperationalInsightsWorkspaceFailoverProperties failover = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -225,7 +226,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 if (prop.NameEquals("customerId"u8))
                 {
-                    customerId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))
@@ -326,7 +331,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 if (prop.NameEquals("defaultDataCollectionRuleResourceId"u8))
                 {
-                    defaultDataCollectionRuleResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    defaultDataCollectionRuleResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("replication"u8))

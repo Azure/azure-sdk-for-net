@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="capacityReservationProperties"> Additional properties for capacity reservation. </param>
         /// <param name="replication"> Cluster's replication properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(string clusterId, OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsBillingType? billingType, OperationalInsightsKeyVaultProperties keyVaultProperties, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, IList<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, OperationalInsightsCapacityReservationProperties capacityReservationProperties, OperationalInsightsClusterReplicationProperties replication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(Guid? clusterId, OperationalInsightsClusterEntityStatus? provisioningState, bool? isDoubleEncryptionEnabled, bool? isAvailabilityZonesEnabled, OperationalInsightsBillingType? billingType, OperationalInsightsKeyVaultProperties keyVaultProperties, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, IList<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces, OperationalInsightsCapacityReservationProperties capacityReservationProperties, OperationalInsightsClusterReplicationProperties replication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterId = clusterId;
             ProvisioningState = provisioningState;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> The ID associated with the cluster. </summary>
         [WirePath("clusterId")]
-        public string ClusterId { get; }
+        public Guid? ClusterId { get; }
 
         /// <summary> The provisioning state of the cluster. </summary>
         [WirePath("provisioningState")]

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateDisableRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string intelligencePackName, RequestContext context)
+        internal HttpMessage CreateDisableIntelligencePackRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string intelligencePackName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.OperationalInsights
             return message;
         }
 
-        internal HttpMessage CreateEnableRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string intelligencePackName, RequestContext context)
+        internal HttpMessage CreateEnableIntelligencePackRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string intelligencePackName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

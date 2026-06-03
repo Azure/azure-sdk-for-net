@@ -126,51 +126,5 @@ namespace Azure.ResourceManager.OperationalInsights
                 Properties.LastModifiedOn = value;
             }
         }
-
-        /// <summary> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </summary>
-        [WirePath("properties.destination.resourceId")]
-        public ResourceIdentifier ResourceId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ResourceId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DataExportProperties();
-                }
-                Properties.ResourceId = value;
-            }
-        }
-
-        /// <summary> The type of the destination resource. </summary>
-        [WirePath("properties.destination.type")]
-        public OperationalInsightsDataExportDestinationType? DestinationType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DestinationType;
-            }
-        }
-
-        /// <summary> Optional. Allows to define an Event Hub name. Not applicable when destination is Storage Account. </summary>
-        [WirePath("properties.destination.metaData.eventHubName")]
-        public string EventHubName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EventHubName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DataExportProperties();
-                }
-                Properties.EventHubName = value;
-            }
-        }
     }
 }

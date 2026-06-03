@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> This is a read-only property. Represents the ID associated with the workspace. </summary>
         [WirePath("properties.customerId")]
-        public string CustomerId
+        public Guid? CustomerId
         {
             get
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </summary>
         [WirePath("properties.defaultDataCollectionRuleResourceId")]
-        public string DefaultDataCollectionRuleResourceId
+        public ResourceIdentifier DefaultDataCollectionRuleResourceId
         {
             get
             {

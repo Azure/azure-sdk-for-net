@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(AssociateOn))
+            if (options.Format != "W" && Optional.IsDefined(AssociatedOn))
             {
                 writer.WritePropertyName("associateDate"u8);
-                writer.WriteStringValue(AssociateOn.Value, "O");
+                writer.WriteStringValue(AssociatedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Guid? workspaceId = default;
             string workspaceName = default;
             ResourceIdentifier resourceId = default;
-            DateTimeOffset? associateOn = default;
+            DateTimeOffset? associatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    associateOn = prop.Value.GetDateTimeOffset("O");
+                    associatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OperationalInsightsClusterAssociatedWorkspace(workspaceId, workspaceName, resourceId, associateOn, additionalBinaryDataProperties);
+            return new OperationalInsightsClusterAssociatedWorkspace(workspaceId, workspaceName, resourceId, associatedOn, additionalBinaryDataProperties);
         }
     }
 }

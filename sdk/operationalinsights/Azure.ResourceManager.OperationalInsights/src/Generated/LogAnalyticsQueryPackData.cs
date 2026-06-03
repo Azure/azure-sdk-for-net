@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> The unique ID of your application. This field cannot be changed. </summary>
         [WirePath("properties.queryPackId")]
-        public string QueryPackId
+        public Guid? QueryPackId
         {
             get
             {
@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </summary>
         [WirePath("properties.timeCreated")]
-        public DateTimeOffset? TimeCreated
+        public DateTimeOffset? CreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.TimeCreated;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
         /// <summary> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </summary>
         [WirePath("properties.timeModified")]
-        public DateTimeOffset? TimeModified
+        public DateTimeOffset? ModifiedOn
         {
             get
             {
-                return Properties is null ? default : Properties.TimeModified;
+                return Properties is null ? default : Properties.ModifiedOn;
             }
         }
 

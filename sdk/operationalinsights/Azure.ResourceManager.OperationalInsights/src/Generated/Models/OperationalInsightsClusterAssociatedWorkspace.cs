@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="workspaceId"> Associated workspace immutable id. </param>
         /// <param name="workspaceName"> Associated workspace resource name. </param>
         /// <param name="resourceId"> Associated workspace arm resource id, in the form of: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </param>
-        /// <param name="associateOn"> The time of workspace association. </param>
+        /// <param name="associatedOn"> The time of workspace association. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsClusterAssociatedWorkspace(Guid? workspaceId, string workspaceName, ResourceIdentifier resourceId, DateTimeOffset? associateOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsClusterAssociatedWorkspace(Guid? workspaceId, string workspaceName, ResourceIdentifier resourceId, DateTimeOffset? associatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceId = workspaceId;
             WorkspaceName = workspaceName;
             ResourceId = resourceId;
-            AssociateOn = associateOn;
+            AssociatedOn = associatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> The time of workspace association. </summary>
         [WirePath("associateDate")]
-        public DateTimeOffset? AssociateOn { get; }
+        public DateTimeOffset? AssociatedOn { get; }
     }
 }

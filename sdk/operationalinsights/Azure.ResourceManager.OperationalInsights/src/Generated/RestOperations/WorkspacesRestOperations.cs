@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.OperationalInsights
             return message;
         }
 
-        internal HttpMessage CreateFailoverRequest(Guid subscriptionId, string resourceGroupName, string location, string workspaceName, RequestContext context)
+        internal HttpMessage CreateFailoverWorkspaceRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, string workspaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.OperationalInsights
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.OperationalInsights/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/workspaces/", false);
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/failover", false);

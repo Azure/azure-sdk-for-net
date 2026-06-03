@@ -268,14 +268,13 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="workspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, string location, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> FailoverWorkspaceAsync(WaitUntil waitUntil, AzureLocation location, string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = WorkspacesClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.Failover");
+            using DiagnosticScope scope = WorkspacesClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.FailoverWorkspace");
             scope.Start();
             try
             {
@@ -283,7 +282,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WorkspacesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, workspaceName, context);
+                HttpMessage message = WorkspacesRestClient.CreateFailoverWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, workspaceName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(WorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -321,14 +320,13 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <param name="location"> The location name. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="workspaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation Failover(WaitUntil waitUntil, string location, string workspaceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation FailoverWorkspace(WaitUntil waitUntil, AzureLocation location, string workspaceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using DiagnosticScope scope = WorkspacesClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.Failover");
+            using DiagnosticScope scope = WorkspacesClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.FailoverWorkspace");
             scope.Start();
             try
             {
@@ -336,7 +334,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = WorkspacesRestClient.CreateFailoverRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, workspaceName, context);
+                HttpMessage message = WorkspacesRestClient.CreateFailoverWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, location, workspaceName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(WorkspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -372,11 +370,11 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <param name="data"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameAsync(LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameQueryPackAsync(LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = QueryPacksClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutName");
+            using DiagnosticScope scope = QueryPacksClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameQueryPack");
             scope.Start();
             try
             {
@@ -384,7 +382,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = QueryPacksRestClient.CreateCreateOrUpdateWithoutNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
+                HttpMessage message = QueryPacksRestClient.CreateCreateOrUpdateWithoutNameQueryPackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LogAnalyticsQueryPackData> response = Response.FromValue(LogAnalyticsQueryPackData.FromResponse(result), result);
                 if (response.Value == null)
@@ -420,11 +418,11 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <param name="data"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<LogAnalyticsQueryPackResource> CreateOrUpdateWithoutName(LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
+        public virtual Response<LogAnalyticsQueryPackResource> CreateOrUpdateWithoutNameQueryPack(LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = QueryPacksClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutName");
+            using DiagnosticScope scope = QueryPacksClientDiagnostics.CreateScope("MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameQueryPack");
             scope.Start();
             try
             {
@@ -432,7 +430,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = QueryPacksRestClient.CreateCreateOrUpdateWithoutNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
+                HttpMessage message = QueryPacksRestClient.CreateCreateOrUpdateWithoutNameQueryPackRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, LogAnalyticsQueryPackData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LogAnalyticsQueryPackData> response = Response.FromValue(LogAnalyticsQueryPackData.FromResponse(result), result);
                 if (response.Value == null)

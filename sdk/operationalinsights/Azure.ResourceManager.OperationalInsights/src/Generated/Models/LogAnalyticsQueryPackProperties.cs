@@ -24,30 +24,30 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="LogAnalyticsQueryPackProperties"/>. </summary>
         /// <param name="queryPackId"> The unique ID of your application. This field cannot be changed. </param>
-        /// <param name="timeCreated"> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </param>
-        /// <param name="timeModified"> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </param>
+        /// <param name="createdOn"> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </param>
+        /// <param name="modifiedOn"> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </param>
         /// <param name="provisioningState"> Current state of this QueryPack: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogAnalyticsQueryPackProperties(string queryPackId, DateTimeOffset? timeCreated, DateTimeOffset? timeModified, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogAnalyticsQueryPackProperties(Guid? queryPackId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QueryPackId = queryPackId;
-            TimeCreated = timeCreated;
-            TimeModified = timeModified;
+            CreatedOn = createdOn;
+            ModifiedOn = modifiedOn;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The unique ID of your application. This field cannot be changed. </summary>
         [WirePath("queryPackId")]
-        public string QueryPackId { get; }
+        public Guid? QueryPackId { get; }
 
         /// <summary> Creation Date for the Log Analytics QueryPack, in ISO 8601 format. </summary>
         [WirePath("timeCreated")]
-        public DateTimeOffset? TimeCreated { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Last modified date of the Log Analytics QueryPack, in ISO 8601 format. </summary>
         [WirePath("timeModified")]
-        public DateTimeOffset? TimeModified { get; }
+        public DateTimeOffset? ModifiedOn { get; }
 
         /// <summary> Current state of this QueryPack: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </summary>
         [WirePath("provisioningState")]

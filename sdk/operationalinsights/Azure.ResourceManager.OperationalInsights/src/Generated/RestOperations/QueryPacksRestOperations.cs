@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.OperationalInsights
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateWithoutNameRequest(Guid subscriptionId, string resourceGroupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateWithoutNameQueryPackRequest(Guid subscriptionId, string resourceGroupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
