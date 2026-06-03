@@ -9,45 +9,38 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Describes a Virtual Machine Scale Set Extension. </summary>
-    public partial class VirtualMachineScaleSetExtensionData : ComputeSubResourceData
+    public partial class VirtualMachineScaleSetExtensionData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetExtensionData"/>. </summary>
         public VirtualMachineScaleSetExtensionData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetExtensionData"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Scale Set Extension. </param>
-        /// <param name="parentName"> The name of the parent resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="name"> Resource name. </param>
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
-        internal VirtualMachineScaleSetExtensionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualMachineScaleSetExtensionProperties properties, string parentName, string @type, string name, string vmssExtensionName) : base(id, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualMachineScaleSetExtensionProperties properties, string vmssExtensionName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            ParentName = parentName;
-            Type = @type;
-            Name = name;
             VmssExtensionName = vmssExtensionName;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes the properties of a Virtual Machine Scale Set Extension. </summary>
         internal VirtualMachineScaleSetExtensionProperties Properties { get; set; }
-
-        /// <summary> The name of the parent resource. </summary>
-        public string ParentName { get; }
-
-        /// <summary> Resource type. </summary>
-        public string Type { get; }
-
-        /// <summary> Resource name. </summary>
-        public string Name { get; set; }
 
         /// <summary> The name of the VM scale set extension. </summary>
         public string VmssExtensionName { get; }

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class VirtualMachineRunCommandOperationSource : IOperationSource<VirtualMachineRunCommandResource>
+    internal partial class GalleryScriptResourceOperationSource : IOperationSource<GalleryScriptResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal VirtualMachineRunCommandOperationSource(ArmClient client)
+        internal GalleryScriptResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        VirtualMachineRunCommandResource IOperationSource<VirtualMachineRunCommandResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GalleryScriptResource IOperationSource<GalleryScriptResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            VirtualMachineRunCommandData data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VirtualMachineRunCommandResource(_client, data);
+            GalleryScriptData data = GalleryScriptData.DeserializeGalleryScriptData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GalleryScriptResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<VirtualMachineRunCommandResource> IOperationSource<VirtualMachineRunCommandResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GalleryScriptResource> IOperationSource<GalleryScriptResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            VirtualMachineRunCommandData data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VirtualMachineRunCommandResource(_client, data);
+            GalleryScriptData data = GalleryScriptData.DeserializeGalleryScriptData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GalleryScriptResource(_client, data);
         }
     }
 }

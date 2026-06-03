@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class CapacityReservationOperationSource : IOperationSource<CapacityReservationResource>
+    internal partial class RestorePointResourceOperationSource : IOperationSource<RestorePointResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal CapacityReservationOperationSource(ArmClient client)
+        internal RestorePointResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        CapacityReservationResource IOperationSource<CapacityReservationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        RestorePointResource IOperationSource<RestorePointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            CapacityReservationData data = CapacityReservationData.DeserializeCapacityReservationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CapacityReservationResource(_client, data);
+            RestorePointData data = RestorePointData.DeserializeRestorePointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new RestorePointResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<CapacityReservationResource> IOperationSource<CapacityReservationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<RestorePointResource> IOperationSource<RestorePointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            CapacityReservationData data = CapacityReservationData.DeserializeCapacityReservationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new CapacityReservationResource(_client, data);
+            RestorePointData data = RestorePointData.DeserializeRestorePointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new RestorePointResource(_client, data);
         }
     }
 }

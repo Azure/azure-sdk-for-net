@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class GalleryInVmAccessControlProfileVersionOperationSource : IOperationSource<GalleryInVmAccessControlProfileVersionResource>
+    internal partial class GalleryInVmAccessControlProfileVersionResourceOperationSource : IOperationSource<GalleryInVmAccessControlProfileVersionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal GalleryInVmAccessControlProfileVersionOperationSource(ArmClient client)
+        internal GalleryInVmAccessControlProfileVersionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

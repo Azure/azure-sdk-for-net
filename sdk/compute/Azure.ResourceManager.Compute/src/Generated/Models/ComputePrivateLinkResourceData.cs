@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> A private link resource. </summary>
-    public partial class ComputePrivateLinkResourceData
+    public partial class ComputePrivateLinkResourceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

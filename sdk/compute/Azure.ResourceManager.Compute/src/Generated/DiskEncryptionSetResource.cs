@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _diskEncryptionSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DiskEncryptionSetPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<DiskEncryptionSetResource> operation = new ComputeArmOperation<DiskEncryptionSetResource>(
-                    new DiskEncryptionSetOperationSource(Client),
+                    new DiskEncryptionSetResourceOperationSource(Client),
                     _diskEncryptionSetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _diskEncryptionSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DiskEncryptionSetPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<DiskEncryptionSetResource> operation = new ComputeArmOperation<DiskEncryptionSetResource>(
-                    new DiskEncryptionSetOperationSource(Client),
+                    new DiskEncryptionSetResourceOperationSource(Client),
                     _diskEncryptionSetsClientDiagnostics,
                     Pipeline,
                     message.Request,

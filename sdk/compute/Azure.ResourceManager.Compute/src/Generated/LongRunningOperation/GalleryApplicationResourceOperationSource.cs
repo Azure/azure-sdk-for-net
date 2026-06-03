@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class GalleryApplicationVersionOperationSource : IOperationSource<GalleryApplicationVersionResource>
+    internal partial class GalleryApplicationResourceOperationSource : IOperationSource<GalleryApplicationResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal GalleryApplicationVersionOperationSource(ArmClient client)
+        internal GalleryApplicationResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        GalleryApplicationVersionResource IOperationSource<GalleryApplicationVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GalleryApplicationResource IOperationSource<GalleryApplicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GalleryApplicationVersionData data = GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GalleryApplicationVersionResource(_client, data);
+            GalleryApplicationData data = GalleryApplicationData.DeserializeGalleryApplicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GalleryApplicationResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<GalleryApplicationVersionResource> IOperationSource<GalleryApplicationVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GalleryApplicationResource> IOperationSource<GalleryApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GalleryApplicationVersionData data = GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GalleryApplicationVersionResource(_client, data);
+            GalleryApplicationData data = GalleryApplicationData.DeserializeGalleryApplicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GalleryApplicationResource(_client, data);
         }
     }
 }

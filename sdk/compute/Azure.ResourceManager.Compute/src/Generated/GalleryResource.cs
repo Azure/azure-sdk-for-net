@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _galleriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GalleryPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<GalleryResource> operation = new ComputeArmOperation<GalleryResource>(
-                    new GalleryOperationSource(Client),
+                    new GalleryResourceOperationSource(Client),
                     _galleriesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _galleriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GalleryPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<GalleryResource> operation = new ComputeArmOperation<GalleryResource>(
-                    new GalleryOperationSource(Client),
+                    new GalleryResourceOperationSource(Client),
                     _galleriesClientDiagnostics,
                     Pipeline,
                     message.Request,

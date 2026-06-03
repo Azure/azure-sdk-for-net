@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class GalleryApplicationOperationSource : IOperationSource<GalleryApplicationResource>
+    internal partial class CapacityReservationResourceOperationSource : IOperationSource<CapacityReservationResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal GalleryApplicationOperationSource(ArmClient client)
+        internal CapacityReservationResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        GalleryApplicationResource IOperationSource<GalleryApplicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        CapacityReservationResource IOperationSource<CapacityReservationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GalleryApplicationData data = GalleryApplicationData.DeserializeGalleryApplicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GalleryApplicationResource(_client, data);
+            CapacityReservationData data = CapacityReservationData.DeserializeCapacityReservationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CapacityReservationResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<GalleryApplicationResource> IOperationSource<GalleryApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<CapacityReservationResource> IOperationSource<CapacityReservationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GalleryApplicationData data = GalleryApplicationData.DeserializeGalleryApplicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GalleryApplicationResource(_client, data);
+            CapacityReservationData data = CapacityReservationData.DeserializeCapacityReservationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CapacityReservationResource(_client, data);
         }
     }
 }

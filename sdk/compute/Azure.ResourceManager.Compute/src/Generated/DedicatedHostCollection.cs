@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _dedicatedHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, DedicatedHostData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<DedicatedHostResource> operation = new ComputeArmOperation<DedicatedHostResource>(
-                    new DedicatedHostOperationSource(Client),
+                    new DedicatedHostResourceOperationSource(Client),
                     _dedicatedHostsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _dedicatedHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, DedicatedHostData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<DedicatedHostResource> operation = new ComputeArmOperation<DedicatedHostResource>(
-                    new DedicatedHostOperationSource(Client),
+                    new DedicatedHostResourceOperationSource(Client),
                     _dedicatedHostsClientDiagnostics,
                     Pipeline,
                     message.Request,

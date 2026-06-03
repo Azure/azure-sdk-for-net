@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _dedicatedHostsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DedicatedHostPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<DedicatedHostResource> operation = new ComputeArmOperation<DedicatedHostResource>(
-                    new DedicatedHostOperationSource(Client),
+                    new DedicatedHostResourceOperationSource(Client),
                     _dedicatedHostsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _dedicatedHostsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, DedicatedHostPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<DedicatedHostResource> operation = new ComputeArmOperation<DedicatedHostResource>(
-                    new DedicatedHostOperationSource(Client),
+                    new DedicatedHostResourceOperationSource(Client),
                     _dedicatedHostsClientDiagnostics,
                     Pipeline,
                     message.Request,

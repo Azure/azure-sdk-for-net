@@ -144,7 +144,6 @@ namespace Azure.ResourceManager.Compute
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             VirtualMachineExtensionProperties properties = default;
-            string parentName = default;
             AzureLocation? location = default;
             string @type = default;
             string name = default;
@@ -197,7 +196,6 @@ namespace Azure.ResourceManager.Compute
                 id,
                 additionalBinaryDataProperties,
                 properties,
-                parentName,
                 location,
                 @type,
                 name,

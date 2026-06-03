@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _galleryScriptVersionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GalleryScriptVersionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<GalleryScriptVersionResource> operation = new ComputeArmOperation<GalleryScriptVersionResource>(
-                    new GalleryScriptVersionOperationSource(Client),
+                    new GalleryScriptVersionResourceOperationSource(Client),
                     _galleryScriptVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _galleryScriptVersionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GalleryScriptVersionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<GalleryScriptVersionResource> operation = new ComputeArmOperation<GalleryScriptVersionResource>(
-                    new GalleryScriptVersionOperationSource(Client),
+                    new GalleryScriptVersionResourceOperationSource(Client),
                     _galleryScriptVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,

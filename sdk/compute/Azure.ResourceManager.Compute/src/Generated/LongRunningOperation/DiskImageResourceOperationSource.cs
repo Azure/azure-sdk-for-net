@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class VirtualMachineScaleSetVmRunCommandOperationSource : IOperationSource<VirtualMachineScaleSetVmRunCommandResource>
+    internal partial class DiskImageResourceOperationSource : IOperationSource<DiskImageResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal VirtualMachineScaleSetVmRunCommandOperationSource(ArmClient client)
+        internal DiskImageResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        VirtualMachineScaleSetVmRunCommandResource IOperationSource<VirtualMachineScaleSetVmRunCommandResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DiskImageResource IOperationSource<DiskImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            VirtualMachineRunCommandData data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VirtualMachineScaleSetVmRunCommandResource(_client, data);
+            DiskImageData data = DiskImageData.DeserializeDiskImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DiskImageResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<VirtualMachineScaleSetVmRunCommandResource> IOperationSource<VirtualMachineScaleSetVmRunCommandResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DiskImageResource> IOperationSource<DiskImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            VirtualMachineRunCommandData data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VirtualMachineScaleSetVmRunCommandResource(_client, data);
+            DiskImageData data = DiskImageData.DeserializeDiskImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DiskImageResource(_client, data);
         }
     }
 }

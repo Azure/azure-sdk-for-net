@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class GalleryImageOperationSource : IOperationSource<GalleryImageResource>
+    internal partial class SnapshotResourceOperationSource : IOperationSource<SnapshotResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal GalleryImageOperationSource(ArmClient client)
+        internal SnapshotResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        GalleryImageResource IOperationSource<GalleryImageResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SnapshotResource IOperationSource<SnapshotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GalleryImageData data = GalleryImageData.DeserializeGalleryImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GalleryImageResource(_client, data);
+            SnapshotData data = SnapshotData.DeserializeSnapshotData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SnapshotResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<GalleryImageResource> IOperationSource<GalleryImageResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SnapshotResource> IOperationSource<SnapshotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GalleryImageData data = GalleryImageData.DeserializeGalleryImageData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GalleryImageResource(_client, data);
+            SnapshotData data = SnapshotData.DeserializeSnapshotData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SnapshotResource(_client, data);
         }
     }
 }

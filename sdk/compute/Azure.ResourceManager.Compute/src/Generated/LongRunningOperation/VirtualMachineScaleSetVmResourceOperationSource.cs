@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class VirtualMachineOperationSource : IOperationSource<VirtualMachineResource>
+    internal partial class VirtualMachineScaleSetVmResourceOperationSource : IOperationSource<VirtualMachineScaleSetVmResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal VirtualMachineOperationSource(ArmClient client)
+        internal VirtualMachineScaleSetVmResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        VirtualMachineResource IOperationSource<VirtualMachineResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineScaleSetVmResource IOperationSource<VirtualMachineScaleSetVmResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            VirtualMachineData data = VirtualMachineData.DeserializeVirtualMachineData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VirtualMachineResource(_client, data);
+            VirtualMachineScaleSetVmData data = VirtualMachineScaleSetVmData.DeserializeVirtualMachineScaleSetVmData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VirtualMachineScaleSetVmResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<VirtualMachineResource> IOperationSource<VirtualMachineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineScaleSetVmResource> IOperationSource<VirtualMachineScaleSetVmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            VirtualMachineData data = VirtualMachineData.DeserializeVirtualMachineData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VirtualMachineResource(_client, data);
+            VirtualMachineScaleSetVmData data = VirtualMachineScaleSetVmData.DeserializeVirtualMachineScaleSetVmData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VirtualMachineScaleSetVmResource(_client, data);
         }
     }
 }

@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
     public partial class SharedGalleryImageVersionData : PirSharedGalleryResourceData
@@ -67,6 +66,15 @@ namespace Azure.ResourceManager.Compute
             get
             {
                 return Properties is null ? default : Properties.StorageProfile;
+            }
+        }
+
+        /// <summary> The artifact tags of a shared gallery resource. </summary>
+        public IDictionary<string, string> ArtifactTags
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArtifactTags;
             }
         }
     }

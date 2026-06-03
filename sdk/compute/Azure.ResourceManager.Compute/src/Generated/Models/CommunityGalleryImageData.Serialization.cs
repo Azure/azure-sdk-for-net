@@ -11,9 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Compute;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery image definition that you want to create or update. </summary>
     public partial class CommunityGalleryImageData : PirCommunityGalleryResourceData, IJsonModel<CommunityGalleryImageData>

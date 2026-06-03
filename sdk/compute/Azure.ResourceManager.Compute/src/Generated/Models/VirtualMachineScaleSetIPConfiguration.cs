@@ -14,7 +14,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set network profile's IP configuration. </summary>
-    public partial class VirtualMachineScaleSetIPConfiguration
+    public partial class VirtualMachineScaleSetIPConfiguration : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetIPConfiguration"/>. </summary>
         /// <param name="name"> The IP configuration name. </param>

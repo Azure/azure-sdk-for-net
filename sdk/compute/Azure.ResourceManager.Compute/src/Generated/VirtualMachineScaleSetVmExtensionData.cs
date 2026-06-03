@@ -24,15 +24,13 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> Resource Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Extension. </param>
-        /// <param name="parentName"> The name of the parent resource. </param>
         /// <param name="location"> The location of the extension. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="vmssExtensionName"> The name of the virtual machine extension. </param>
-        internal VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualMachineExtensionProperties properties, string parentName, AzureLocation? location, string @type, string name, string vmssExtensionName) : base(id, additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualMachineExtensionProperties properties, AzureLocation? location, string @type, string name, string vmssExtensionName) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
-            ParentName = parentName;
             Location = location;
             Type = @type;
             Name = name;
@@ -41,9 +39,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Describes the properties of a Virtual Machine Extension. </summary>
         internal VirtualMachineExtensionProperties Properties { get; set; }
-
-        /// <summary> The name of the parent resource. </summary>
-        public string ParentName { get; }
 
         /// <summary> The location of the extension. </summary>
         public AzureLocation? Location { get; set; }

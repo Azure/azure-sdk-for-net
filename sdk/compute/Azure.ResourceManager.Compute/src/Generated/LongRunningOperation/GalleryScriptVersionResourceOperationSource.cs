@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class VirtualMachineScaleSetExtensionOperationSource : IOperationSource<VirtualMachineScaleSetExtensionResource>
+    internal partial class GalleryScriptVersionResourceOperationSource : IOperationSource<GalleryScriptVersionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal VirtualMachineScaleSetExtensionOperationSource(ArmClient client)
+        internal GalleryScriptVersionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        VirtualMachineScaleSetExtensionResource IOperationSource<VirtualMachineScaleSetExtensionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GalleryScriptVersionResource IOperationSource<GalleryScriptVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            VirtualMachineScaleSetExtensionData data = VirtualMachineScaleSetExtensionData.DeserializeVirtualMachineScaleSetExtensionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VirtualMachineScaleSetExtensionResource(_client, data);
+            GalleryScriptVersionData data = GalleryScriptVersionData.DeserializeGalleryScriptVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GalleryScriptVersionResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<VirtualMachineScaleSetExtensionResource> IOperationSource<VirtualMachineScaleSetExtensionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GalleryScriptVersionResource> IOperationSource<GalleryScriptVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            VirtualMachineScaleSetExtensionData data = VirtualMachineScaleSetExtensionData.DeserializeVirtualMachineScaleSetExtensionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new VirtualMachineScaleSetExtensionResource(_client, data);
+            GalleryScriptVersionData data = GalleryScriptVersionData.DeserializeGalleryScriptVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GalleryScriptVersionResource(_client, data);
         }
     }
 }

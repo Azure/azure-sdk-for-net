@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class ManagedDiskOperationSource : IOperationSource<ManagedDiskResource>
+    internal partial class GalleryImageVersionResourceOperationSource : IOperationSource<GalleryImageVersionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ManagedDiskOperationSource(ArmClient client)
+        internal GalleryImageVersionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ManagedDiskResource IOperationSource<ManagedDiskResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        GalleryImageVersionResource IOperationSource<GalleryImageVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ManagedDiskData data = ManagedDiskData.DeserializeManagedDiskData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ManagedDiskResource(_client, data);
+            GalleryImageVersionData data = GalleryImageVersionData.DeserializeGalleryImageVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GalleryImageVersionResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ManagedDiskResource> IOperationSource<ManagedDiskResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<GalleryImageVersionResource> IOperationSource<GalleryImageVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ManagedDiskData data = ManagedDiskData.DeserializeManagedDiskData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ManagedDiskResource(_client, data);
+            GalleryImageVersionData data = GalleryImageVersionData.DeserializeGalleryImageVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GalleryImageVersionResource(_client, data);
         }
     }
 }

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, RestorePointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<RestorePointResource> operation = new ComputeArmOperation<RestorePointResource>(
-                    new RestorePointOperationSource(Client),
+                    new RestorePointResourceOperationSource(Client),
                     _restorePointsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, RestorePointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<RestorePointResource> operation = new ComputeArmOperation<RestorePointResource>(
-                    new RestorePointOperationSource(Client),
+                    new RestorePointResourceOperationSource(Client),
                     _restorePointsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _virtualMachineScaleSetVMExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vmExtensionName, VirtualMachineScaleSetVmExtensionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<VirtualMachineScaleSetVmExtensionResource> operation = new ComputeArmOperation<VirtualMachineScaleSetVmExtensionResource>(
-                    new VirtualMachineScaleSetVmExtensionOperationSource(Client),
+                    new VirtualMachineScaleSetVmExtensionResourceOperationSource(Client),
                     _virtualMachineScaleSetVMExtensionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _virtualMachineScaleSetVMExtensionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vmExtensionName, VirtualMachineScaleSetVmExtensionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<VirtualMachineScaleSetVmExtensionResource> operation = new ComputeArmOperation<VirtualMachineScaleSetVmExtensionResource>(
-                    new VirtualMachineScaleSetVmExtensionOperationSource(Client),
+                    new VirtualMachineScaleSetVmExtensionResourceOperationSource(Client),
                     _virtualMachineScaleSetVMExtensionsClientDiagnostics,
                     Pipeline,
                     message.Request,

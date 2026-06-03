@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, ComputePrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<ComputePrivateEndpointConnectionResource> operation = new ComputeArmOperation<ComputePrivateEndpointConnectionResource>(
-                    new ComputePrivateEndpointConnectionOperationSource(Client),
+                    new ComputePrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateAPrivateEndpointConnectionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, ComputePrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<ComputePrivateEndpointConnectionResource> operation = new ComputeArmOperation<ComputePrivateEndpointConnectionResource>(
-                    new ComputePrivateEndpointConnectionOperationSource(Client),
+                    new ComputePrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

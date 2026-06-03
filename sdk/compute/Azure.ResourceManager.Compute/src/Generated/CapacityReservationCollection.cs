@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _capacityReservationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, CapacityReservationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<CapacityReservationResource> operation = new ComputeArmOperation<CapacityReservationResource>(
-                    new CapacityReservationOperationSource(Client),
+                    new CapacityReservationResourceOperationSource(Client),
                     _capacityReservationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _capacityReservationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, capacityReservationName, CapacityReservationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<CapacityReservationResource> operation = new ComputeArmOperation<CapacityReservationResource>(
-                    new CapacityReservationOperationSource(Client),
+                    new CapacityReservationResourceOperationSource(Client),
                     _capacityReservationsClientDiagnostics,
                     Pipeline,
                     message.Request,

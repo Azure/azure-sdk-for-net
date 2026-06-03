@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _diskAccessesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DiskAccessPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<DiskAccessResource> operation = new ComputeArmOperation<DiskAccessResource>(
-                    new DiskAccessOperationSource(Client),
+                    new DiskAccessResourceOperationSource(Client),
                     _diskAccessesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _diskAccessesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DiskAccessPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<DiskAccessResource> operation = new ComputeArmOperation<DiskAccessResource>(
-                    new DiskAccessOperationSource(Client),
+                    new DiskAccessResourceOperationSource(Client),
                     _diskAccessesClientDiagnostics,
                     Pipeline,
                     message.Request,

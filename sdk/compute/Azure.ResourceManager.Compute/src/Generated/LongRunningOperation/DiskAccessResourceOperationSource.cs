@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class DedicatedHostOperationSource : IOperationSource<DedicatedHostResource>
+    internal partial class DiskAccessResourceOperationSource : IOperationSource<DiskAccessResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DedicatedHostOperationSource(ArmClient client)
+        internal DiskAccessResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        DedicatedHostResource IOperationSource<DedicatedHostResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DiskAccessResource IOperationSource<DiskAccessResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DedicatedHostData data = DedicatedHostData.DeserializeDedicatedHostData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DedicatedHostResource(_client, data);
+            DiskAccessData data = DiskAccessData.DeserializeDiskAccessData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DiskAccessResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<DedicatedHostResource> IOperationSource<DedicatedHostResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DiskAccessResource> IOperationSource<DiskAccessResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DedicatedHostData data = DedicatedHostData.DeserializeDedicatedHostData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DedicatedHostResource(_client, data);
+            DiskAccessData data = DiskAccessData.DeserializeDiskAccessData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DiskAccessResource(_client, data);
         }
     }
 }

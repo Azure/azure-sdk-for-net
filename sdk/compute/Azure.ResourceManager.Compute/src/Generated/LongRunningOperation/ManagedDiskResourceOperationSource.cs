@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class GalleryScriptVersionOperationSource : IOperationSource<GalleryScriptVersionResource>
+    internal partial class ManagedDiskResourceOperationSource : IOperationSource<ManagedDiskResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal GalleryScriptVersionOperationSource(ArmClient client)
+        internal ManagedDiskResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        GalleryScriptVersionResource IOperationSource<GalleryScriptVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ManagedDiskResource IOperationSource<ManagedDiskResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GalleryScriptVersionData data = GalleryScriptVersionData.DeserializeGalleryScriptVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GalleryScriptVersionResource(_client, data);
+            ManagedDiskData data = ManagedDiskData.DeserializeManagedDiskData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedDiskResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<GalleryScriptVersionResource> IOperationSource<GalleryScriptVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ManagedDiskResource> IOperationSource<ManagedDiskResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GalleryScriptVersionData data = GalleryScriptVersionData.DeserializeGalleryScriptVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GalleryScriptVersionResource(_client, data);
+            ManagedDiskData data = ManagedDiskData.DeserializeManagedDiskData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedDiskResource(_client, data);
         }
     }
 }

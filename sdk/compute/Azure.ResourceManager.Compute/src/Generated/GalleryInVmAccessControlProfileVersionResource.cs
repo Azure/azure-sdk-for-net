@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GalleryInVmAccessControlProfileVersionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<GalleryInVmAccessControlProfileVersionResource> operation = new ComputeArmOperation<GalleryInVmAccessControlProfileVersionResource>(
-                    new GalleryInVmAccessControlProfileVersionOperationSource(Client),
+                    new GalleryInVmAccessControlProfileVersionResourceOperationSource(Client),
                     _galleryInVMAccessControlProfileVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GalleryInVmAccessControlProfileVersionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<GalleryInVmAccessControlProfileVersionResource> operation = new ComputeArmOperation<GalleryInVmAccessControlProfileVersionResource>(
-                    new GalleryInVmAccessControlProfileVersionOperationSource(Client),
+                    new GalleryInVmAccessControlProfileVersionResourceOperationSource(Client),
                     _galleryInVMAccessControlProfileVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,

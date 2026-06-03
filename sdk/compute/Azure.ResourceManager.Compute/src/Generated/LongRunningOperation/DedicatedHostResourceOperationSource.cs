@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class GalleryOperationSource : IOperationSource<GalleryResource>
+    internal partial class DedicatedHostResourceOperationSource : IOperationSource<DedicatedHostResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal GalleryOperationSource(ArmClient client)
+        internal DedicatedHostResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        GalleryResource IOperationSource<GalleryResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DedicatedHostResource IOperationSource<DedicatedHostResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GalleryData data = GalleryData.DeserializeGalleryData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GalleryResource(_client, data);
+            DedicatedHostData data = DedicatedHostData.DeserializeDedicatedHostData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DedicatedHostResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<GalleryResource> IOperationSource<GalleryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DedicatedHostResource> IOperationSource<DedicatedHostResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GalleryData data = GalleryData.DeserializeGalleryData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GalleryResource(_client, data);
+            DedicatedHostData data = DedicatedHostData.DeserializeDedicatedHostData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DedicatedHostResource(_client, data);
         }
     }
 }

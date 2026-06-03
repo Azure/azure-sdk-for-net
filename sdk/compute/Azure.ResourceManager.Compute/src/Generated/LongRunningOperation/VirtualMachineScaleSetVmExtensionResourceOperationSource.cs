@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class VirtualMachineScaleSetVmExtensionOperationSource : IOperationSource<VirtualMachineScaleSetVmExtensionResource>
+    internal partial class VirtualMachineScaleSetVmExtensionResourceOperationSource : IOperationSource<VirtualMachineScaleSetVmExtensionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal VirtualMachineScaleSetVmExtensionOperationSource(ArmClient client)
+        internal VirtualMachineScaleSetVmExtensionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

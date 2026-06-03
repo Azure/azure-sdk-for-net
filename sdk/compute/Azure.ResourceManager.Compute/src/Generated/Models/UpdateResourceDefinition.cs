@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Update Resource model definition. </summary>
-    public partial class UpdateResourceDefinition
+    public partial class UpdateResourceDefinition : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

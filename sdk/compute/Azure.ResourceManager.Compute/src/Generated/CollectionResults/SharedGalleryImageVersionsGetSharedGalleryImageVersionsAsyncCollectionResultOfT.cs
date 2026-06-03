@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class SharedGalleryImageVersionsGetSharedGalleryImageVersionsAsyncCollectionResultOfT : AsyncPageable<SharedGalleryImageVersionData>
+    internal partial class SharedGalleryImageVersionsGetSharedGalleryImageVersionsAsyncCollectionResultOfT : AsyncPageable<Models.SharedGalleryImageVersionData>
     {
         private readonly SharedGalleryImageVersions _client;
         private readonly string _subscriptionId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SharedGalleryImageVersionsGetSharedGalleryImageVersionsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SharedGalleryImageVersionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<Models.SharedGalleryImageVersionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute
                     yield break;
                 }
                 SharedGalleryImageVersionList result = SharedGalleryImageVersionList.FromResponse(response);
-                yield return Page<SharedGalleryImageVersionData>.FromValues((IReadOnlyList<SharedGalleryImageVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<Models.SharedGalleryImageVersionData>.FromValues((IReadOnlyList<Models.SharedGalleryImageVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

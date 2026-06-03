@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _virtualMachineRunCommandsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualMachineRunCommandUpdate.ToRequestContent(runCommand), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<VirtualMachineRunCommandResource> operation = new ComputeArmOperation<VirtualMachineRunCommandResource>(
-                    new VirtualMachineRunCommandOperationSource(Client),
+                    new VirtualMachineRunCommandResourceOperationSource(Client),
                     _virtualMachineRunCommandsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _virtualMachineRunCommandsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualMachineRunCommandUpdate.ToRequestContent(runCommand), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<VirtualMachineRunCommandResource> operation = new ComputeArmOperation<VirtualMachineRunCommandResource>(
-                    new VirtualMachineRunCommandOperationSource(Client),
+                    new VirtualMachineRunCommandResourceOperationSource(Client),
                     _virtualMachineRunCommandsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class RestorePointOperationSource : IOperationSource<RestorePointResource>
+    internal partial class ComputePrivateEndpointConnectionResourceOperationSource : IOperationSource<ComputePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal RestorePointOperationSource(ArmClient client)
+        internal ComputePrivateEndpointConnectionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        RestorePointResource IOperationSource<RestorePointResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ComputePrivateEndpointConnectionResource IOperationSource<ComputePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            RestorePointData data = RestorePointData.DeserializeRestorePointData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new RestorePointResource(_client, data);
+            ComputePrivateEndpointConnectionData data = ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ComputePrivateEndpointConnectionResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<RestorePointResource> IOperationSource<RestorePointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ComputePrivateEndpointConnectionResource> IOperationSource<ComputePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            RestorePointData data = RestorePointData.DeserializeRestorePointData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new RestorePointResource(_client, data);
+            ComputePrivateEndpointConnectionData data = ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ComputePrivateEndpointConnectionResource(_client, data);
         }
     }
 }

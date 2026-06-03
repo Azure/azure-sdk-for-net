@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    internal partial class DiskEncryptionSetOperationSource : IOperationSource<DiskEncryptionSetResource>
+    internal partial class VirtualMachineRunCommandResourceOperationSource : IOperationSource<VirtualMachineRunCommandResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DiskEncryptionSetOperationSource(ArmClient client)
+        internal VirtualMachineRunCommandResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        DiskEncryptionSetResource IOperationSource<DiskEncryptionSetResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualMachineRunCommandResource IOperationSource<VirtualMachineRunCommandResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DiskEncryptionSetData data = DiskEncryptionSetData.DeserializeDiskEncryptionSetData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DiskEncryptionSetResource(_client, data);
+            VirtualMachineRunCommandData data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VirtualMachineRunCommandResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<DiskEncryptionSetResource> IOperationSource<DiskEncryptionSetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualMachineRunCommandResource> IOperationSource<VirtualMachineRunCommandResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DiskEncryptionSetData data = DiskEncryptionSetData.DeserializeDiskEncryptionSetData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DiskEncryptionSetResource(_client, data);
+            VirtualMachineRunCommandData data = VirtualMachineRunCommandData.DeserializeVirtualMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VirtualMachineRunCommandResource(_client, data);
         }
     }
 }

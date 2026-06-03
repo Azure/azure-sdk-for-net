@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _snapshotsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, SnapshotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeArmOperation<SnapshotResource> operation = new ComputeArmOperation<SnapshotResource>(
-                    new SnapshotOperationSource(Client),
+                    new SnapshotResourceOperationSource(Client),
                     _snapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
                 HttpMessage message = _snapshotsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, SnapshotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeArmOperation<SnapshotResource> operation = new ComputeArmOperation<SnapshotResource>(
-                    new SnapshotOperationSource(Client),
+                    new SnapshotResourceOperationSource(Client),
                     _snapshotsClientDiagnostics,
                     Pipeline,
                     message.Request,
