@@ -234,6 +234,7 @@ namespace Azure.AI.Projects
         public virtual AIProjectModels Models => GetAIProjectModelsClient();
         public virtual EvaluatorGenerationJobs EvaluatorGenerationJobs => GetEvaluatorGenerationJobsClient();
         public virtual DataGenerationJobs DataGenerationJobs => GetDataGenerationJobsClient();
+        /// <summary> Gets the client for routines operations. </summary>
         public virtual AIProjectRoutines Routines => GetAIProjectRoutinesClient();
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
