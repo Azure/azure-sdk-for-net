@@ -656,7 +656,7 @@ namespace Azure.AI.VoiceLive
     public abstract partial class InterimResponseConfigBase : System.ClientModel.Primitives.IJsonModel<Azure.AI.VoiceLive.InterimResponseConfigBase>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.VoiceLive.InterimResponseConfigBase>
     {
         internal InterimResponseConfigBase() { }
-        public int? LatencyThresholdMs { get { throw null; } set { } }
+        public System.TimeSpan LatencyThreshold { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.VoiceLive.InterimResponseTrigger> Triggers { get { throw null; } }
         protected virtual Azure.AI.VoiceLive.InterimResponseConfigBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
