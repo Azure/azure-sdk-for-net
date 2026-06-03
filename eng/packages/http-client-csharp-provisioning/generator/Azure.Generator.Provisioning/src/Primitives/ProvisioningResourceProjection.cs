@@ -22,9 +22,7 @@ namespace Azure.Generator.Provisioning.Primitives
             ResourceType = GetSameResourceType(metadata);
             ResourceName = GetSameValueOrDefault(metadata.Select(resource => resource.ResourceName), ResourceModel.Name, StringComparer.Ordinal);
             SingletonResourceName = GetSameNullableValueOrDefault(metadata.Select(resource => resource.SingletonResourceName), null, StringComparer.Ordinal);
-            // TODO: Revisit parent merging in the parent/scope PR. For now, preserve
-            // the previous behavior by using the first detected parent.
-            ParentResourceId = metadata[0].ParentResourceId;
+            ParentResourceId = GetSameNullableValueOrDefault(metadata.Select(resource => resource.ParentResourceId), null);
             NameConstraints = GetSameValueOrDefault(
                 metadata.Select(resource => resource.NameConstraints),
                 new ArmResourceNameConstraints(null, null, null));
