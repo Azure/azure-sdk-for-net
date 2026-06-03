@@ -989,13 +989,17 @@ namespace Azure.Core.Pipeline
     public partial class BearerTokenAuthenticationPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
         public BearerTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes) { }
+        public BearerTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { }
         public BearerTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, string scope) { }
+        public BearerTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, string scope, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { }
+        public event System.Action<Azure.Core.Pipeline.HttpPipelineTransportOptions>? TransportOptionsChanged { add { } remove { } }
         protected void AuthenticateAndAuthorizeRequest(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { }
         protected System.Threading.Tasks.ValueTask AuthenticateAndAuthorizeRequestAsync(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { throw null; }
         protected virtual void AuthorizeRequest(Azure.Core.HttpMessage message) { }
         protected virtual System.Threading.Tasks.ValueTask AuthorizeRequestAsync(Azure.Core.HttpMessage message) { throw null; }
         protected virtual bool AuthorizeRequestOnChallenge(Azure.Core.HttpMessage message) { throw null; }
         protected virtual System.Threading.Tasks.ValueTask<bool> AuthorizeRequestOnChallengeAsync(Azure.Core.HttpMessage message) { throw null; }
+        protected void OnTransportOptionsChanged(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { }
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }

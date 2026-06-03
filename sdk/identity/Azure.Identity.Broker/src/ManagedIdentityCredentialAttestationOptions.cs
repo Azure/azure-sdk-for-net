@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.KeyAttestation;
 
@@ -14,6 +15,7 @@ namespace Azure.Identity.Broker
     /// Microsoft.Identity.Client.KeyAttestation package) will be applied to each managed identity token request
     /// alongside the default <c>WithMtlsProofOfPossession()</c> configuration.
     /// </summary>
+    [Experimental("AZID0004")]
     public class ManagedIdentityCredentialAttestationOptions : ManagedIdentityCredentialOptions, IMsalManagedIdentityInitializerOptions
     {
         /// <summary>
