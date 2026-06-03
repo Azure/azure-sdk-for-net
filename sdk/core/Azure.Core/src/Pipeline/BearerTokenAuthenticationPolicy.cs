@@ -278,7 +278,7 @@ namespace Azure.Core.Pipeline
             _lastBindingCertificate = newCert;
             var options = _transportOptions?.Clone() ?? new HttpPipelineTransportOptions();
             options.ClientCertificates.Add(newCert);
-            AzureCoreEventSource.Singleton.TokenBinding("Updating transport options with new binding certificate. Certificate Thumbprint: " + newCert.Thumbprint);
+            AzureCoreEventSource.Singleton.TokenBinding("Updating transport options with a new binding certificate.");
 #pragma warning disable AZID0004 // Internal usage of experimental token binding API
             OnTransportOptionsChanged(options);
 #pragma warning restore AZID0004
@@ -469,7 +469,10 @@ namespace Azure.Core.Pipeline
                     false when _tokenRefreshOffset.Ticks > token.ExpiresOn.Ticks => token.ExpiresOn,
                     _ => token.ExpiresOn - _tokenRefreshOffset
                 };
-                AzureCoreEventSource.Singleton.TokenBinding($"Fetched new token with new binding certificate. Certificate Thumbprint: {token.BindingCertificate?.Thumbprint}, tokenType: {token.TokenType}, expiresOn: {token.ExpiresOn}, refreshOn: {refreshOn}");
+                if (token.BindingCertificate != null)
+                {
+                    AzureCoreEventSource.Singleton.TokenBinding("Token acquired with a binding certificate.");
+                }
                 targetTcs.SetResult(new AuthHeaderValueInfo(token.TokenType + " " + token.Token, token.ExpiresOn, refreshOn, token.BindingCertificate));
             }
 
