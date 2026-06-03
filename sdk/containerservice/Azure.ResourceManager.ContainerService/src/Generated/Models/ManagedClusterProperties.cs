@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodeResourceGroupProfile"> Profile of the node resource group configuration. </param>
         /// <param name="isRbacEnabled"> Whether to enable Kubernetes Role-Based Access Control. </param>
         /// <param name="supportPlan"> The support plan for the Managed Cluster. If unspecified, the default is 'KubernetesOfficial'. </param>
+        /// <param name="isFipsEnabled"> Whether to enable FIPS mode at the cluster level. When enabled, this setting enforces FIPS compliance for all AKS-managed components, such as the node operating system, addons, and [managed containerized components](https://aka.ms/aks/components/docs). See [Enable cluster-wide FIPS](https://aka.ms/aks/fips) for more details. When this property is enabled, all node pools in the cluster must also be FIPS-enabled. </param>
         /// <param name="isNamespaceResourcesEnabled"> Enable namespace as Azure resource. The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </param>
         /// <param name="networkProfile"> The network configuration profile. </param>
         /// <param name="aadProfile"> The Azure Active Directory configuration. </param>
@@ -78,9 +79,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="schedulerProfile"> Profile of the pod scheduler configuration. </param>
         /// <param name="hostedSystemProfile"> Settings for hosted system addons. For more information, see https://aka.ms/aks/automatic/systemcomponents. </param>
         /// <param name="healthMonitorProfile"> Health monitor profile for the managed cluster. </param>
+        /// <param name="controlPlaneScalingProfile"> Profile for providing scaled and performance guaranteed control plane capacity to deliver consistent performance under high workload. Requires Kubernetes version 1.33.0 or later. </param>
+        /// <param name="nodeDisruptionProfile"> Node disruption profile for a managed cluster. </param>
         /// <param name="status"> Contains read-only information about the Managed Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterProperties(string provisioningState, ContainerServicePowerState powerState, ContainerServiceCreationData creationData, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile, bool? isRbacEnabled, KubernetesSupportPlan? supportPlan, bool? isNamespaceResourcesEnabled, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ClusterUpgradeSettings upgradeSettings, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? isLocalAccountsDisabled, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ManagedClusterIngressProfile ingressProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterAzureMonitorProfile azureMonitorProfile, ServiceMeshProfile serviceMeshProfile, ResourceIdentifier resourceId, ManagedClusterMetricsProfile metricsProfile, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile, ManagedClusterBootstrapProfile bootstrapProfile, ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile, SchedulerProfile schedulerProfile, ManagedClusterHostedSystemProfile hostedSystemProfile, ManagedClusterHealthMonitorProfile healthMonitorProfile, ManagedClusterStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterProperties(string provisioningState, ContainerServicePowerState powerState, ContainerServiceCreationData creationData, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile, bool? isRbacEnabled, KubernetesSupportPlan? supportPlan, bool? isFipsEnabled, bool? isNamespaceResourcesEnabled, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ClusterUpgradeSettings upgradeSettings, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? isLocalAccountsDisabled, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ManagedClusterIngressProfile ingressProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterAzureMonitorProfile azureMonitorProfile, ServiceMeshProfile serviceMeshProfile, ResourceIdentifier resourceId, ManagedClusterMetricsProfile metricsProfile, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile, ManagedClusterBootstrapProfile bootstrapProfile, ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile, SchedulerProfile schedulerProfile, ManagedClusterHostedSystemProfile hostedSystemProfile, ManagedClusterHealthMonitorProfile healthMonitorProfile, ManagedClusterControlPlaneScalingProfile controlPlaneScalingProfile, NodeDisruptionProfile nodeDisruptionProfile, ManagedClusterStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PowerState = powerState;
@@ -104,6 +107,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             NodeResourceGroupProfile = nodeResourceGroupProfile;
             IsRbacEnabled = isRbacEnabled;
             SupportPlan = supportPlan;
+            IsFipsEnabled = isFipsEnabled;
             IsNamespaceResourcesEnabled = isNamespaceResourcesEnabled;
             NetworkProfile = networkProfile;
             AadProfile = aadProfile;
@@ -131,6 +135,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             SchedulerProfile = schedulerProfile;
             HostedSystemProfile = hostedSystemProfile;
             HealthMonitorProfile = healthMonitorProfile;
+            ControlPlaneScalingProfile = controlPlaneScalingProfile;
+            NodeDisruptionProfile = nodeDisruptionProfile;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -222,6 +228,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The support plan for the Managed Cluster. If unspecified, the default is 'KubernetesOfficial'. </summary>
         [WirePath("supportPlan")]
         public KubernetesSupportPlan? SupportPlan { get; set; }
+
+        /// <summary> Whether to enable FIPS mode at the cluster level. When enabled, this setting enforces FIPS compliance for all AKS-managed components, such as the node operating system, addons, and [managed containerized components](https://aka.ms/aks/components/docs). See [Enable cluster-wide FIPS](https://aka.ms/aks/fips) for more details. When this property is enabled, all node pools in the cluster must also be FIPS-enabled. </summary>
+        [WirePath("enableFIPS")]
+        public bool? IsFipsEnabled { get; set; }
 
         /// <summary> Enable namespace as Azure resource. The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </summary>
         [WirePath("enableNamespaceResources")]
@@ -325,11 +335,19 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Settings for hosted system addons. For more information, see https://aka.ms/aks/automatic/systemcomponents. </summary>
         [WirePath("hostedSystemProfile")]
-        internal ManagedClusterHostedSystemProfile HostedSystemProfile { get; set; }
+        public ManagedClusterHostedSystemProfile HostedSystemProfile { get; set; }
 
         /// <summary> Health monitor profile for the managed cluster. </summary>
         [WirePath("healthMonitorProfile")]
         public ManagedClusterHealthMonitorProfile HealthMonitorProfile { get; set; }
+
+        /// <summary> Profile for providing scaled and performance guaranteed control plane capacity to deliver consistent performance under high workload. Requires Kubernetes version 1.33.0 or later. </summary>
+        [WirePath("controlPlaneScalingProfile")]
+        internal ManagedClusterControlPlaneScalingProfile ControlPlaneScalingProfile { get; set; }
+
+        /// <summary> Node disruption profile for a managed cluster. </summary>
+        [WirePath("nodeDisruptionProfile")]
+        internal NodeDisruptionProfile NodeDisruptionProfile { get; set; }
 
         /// <summary> Contains read-only information about the Managed Cluster. </summary>
         [WirePath("status")]
@@ -453,21 +471,35 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary> Whether to enable hosted system addons for the cluster. </summary>
-        [WirePath("hostedSystemProfile.enabled")]
-        public bool? IsHostedSystemAddonsEnabled
+        /// <summary> The scaling size of the control plane. Scaling sizes offer guaranteed capacity and predictable Kubernetes performance beyond standard tier defaults. Higher H sizes provide increased performance guarantees. See https://aka.ms/aks/hyperscale for performance metrics details for each size. </summary>
+        [WirePath("controlPlaneScalingProfile.scalingSize")]
+        public ManagedClusterControlPlaneScalingSize? ScalingSize
         {
             get
             {
-                return HostedSystemProfile is null ? default : HostedSystemProfile.IsHostedSystemAddonsEnabled;
+                return ControlPlaneScalingProfile is null ? default : ControlPlaneScalingProfile.ScalingSize;
             }
             set
             {
-                if (HostedSystemProfile is null)
+                ControlPlaneScalingProfile = value.HasValue ? new ManagedClusterControlPlaneScalingProfile(value.Value) : default;
+            }
+        }
+
+        /// <summary> The policy configuration for when to allow certain operations which require node re-image and trigger redeployment. For example, some operations, such as updating the .properties.ManagedClusterSecurityProfile.customCATrustCertificates field on an existing managed cluster, trigger rolling updates of the nodes. This setting allows control over when such updates are accepted. The default is 'Allow'. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy". </summary>
+        [WirePath("nodeDisruptionProfile.nodeDisruptionPolicy")]
+        public ManagedClusterNodeDisruptionPolicy? NodeDisruptionPolicy
+        {
+            get
+            {
+                return NodeDisruptionProfile is null ? default : NodeDisruptionProfile.NodeDisruptionPolicy;
+            }
+            set
+            {
+                if (NodeDisruptionProfile is null)
                 {
-                    HostedSystemProfile = new ManagedClusterHostedSystemProfile();
+                    NodeDisruptionProfile = new NodeDisruptionProfile();
                 }
-                HostedSystemProfile.IsHostedSystemAddonsEnabled = value;
+                NodeDisruptionProfile.NodeDisruptionPolicy = value;
             }
         }
 

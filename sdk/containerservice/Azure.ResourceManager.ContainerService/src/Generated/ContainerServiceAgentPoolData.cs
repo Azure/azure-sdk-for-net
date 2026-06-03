@@ -430,6 +430,14 @@ namespace Azure.ResourceManager.ContainerService
             {
                 return Properties is null ? default : Properties.NodeImageVersion;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.NodeImageVersion = value;
+            }
         }
 
         /// <summary> Defines the upgrade strategy for the agent pool. The default is Rolling. </summary>
@@ -1040,13 +1048,13 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> The resource ID of the node customization resource to use. This can be a version. Omitting the version will use the latest version of the node customization. </summary>
-        [WirePath("properties.nodeCustomizationProfile.nodeCustomizationId")]
-        public ResourceIdentifier NodeCustomizationId
+        /// <summary> The resource ID of the prepared image specification resource to use. This can include a version. Omitting the version will use the latest version of the prepared image specification. </summary>
+        [WirePath("properties.preparedImageSpecificationProfile.preparedImageSpecificationId")]
+        public ResourceIdentifier PreparedImageSpecificationId
         {
             get
             {
-                return Properties is null ? default : Properties.NodeCustomizationId;
+                return Properties is null ? default : Properties.PreparedImageSpecificationId;
             }
             set
             {
@@ -1054,7 +1062,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.NodeCustomizationId = value;
+                Properties.PreparedImageSpecificationId = value;
             }
         }
     }

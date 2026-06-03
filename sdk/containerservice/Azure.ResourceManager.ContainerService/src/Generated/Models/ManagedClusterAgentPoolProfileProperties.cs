@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="virtualMachineNodesStatus"> The status of nodes in a VirtualMachines agent pool. </param>
         /// <param name="status"> Contains read-only information about the Agent Pool. </param>
         /// <param name="localDnsProfile"> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </param>
-        /// <param name="nodeCustomizationProfile"> Settings to determine the node customization used to provision nodes in a pool. </param>
+        /// <param name="preparedImageSpecificationProfile"> Settings to determine the prepared image specification used to provision nodes in a pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAgentPoolProfileProperties(ETag? eTag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? isAutoScalingEnabled, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeStrategy? upgradeStrategy, bool? isOSDiskFullCachingEnabled, AgentPoolUpgradeSettings upgradeSettings, AgentPoolBlueGreenUpgradeSettings upgradeSettingsBlueGreen, string provisioningState, ContainerServicePowerState powerState, IList<string> availabilityZones, bool? isNodePublicIpEnabled, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, IList<string> nodeInitializationTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? isEncryptionAtHostEnabled, bool? isUltraSsdEnabled, bool? isFipsEnabled, GpuInstanceProfile? gpuInstanceProfile, ContainerServiceCreationData creationData, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, AgentPoolWindowsProfile windowsProfile, AgentPoolSecurityProfile securityProfile, AgentPoolGpuProfile gpuProfile, AgentPoolGatewayProfile gatewayProfile, AgentPoolArtifactStreamingProfile artifactStreamingProfile, VirtualMachinesProfile virtualMachinesProfile, IList<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, AgentPoolStatus status, LocalDnsProfile localDnsProfile, NodeCustomizationProfile nodeCustomizationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterAgentPoolProfileProperties(ETag? eTag, int? count, string vmSize, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, KubeletDiskType? kubeletDiskType, WorkloadRuntime? workloadRuntime, string messageOfTheDay, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, PodIPAllocationMode? podIPAllocationMode, int? maxPods, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? maxCount, int? minCount, bool? isAutoScalingEnabled, ScaleDownMode? scaleDownMode, AgentPoolType? agentPoolType, AgentPoolMode? mode, string orchestratorVersion, string currentOrchestratorVersion, string nodeImageVersion, AgentPoolUpgradeStrategy? upgradeStrategy, bool? isOSDiskFullCachingEnabled, AgentPoolUpgradeSettings upgradeSettings, AgentPoolBlueGreenUpgradeSettings upgradeSettingsBlueGreen, string provisioningState, ContainerServicePowerState powerState, IList<string> availabilityZones, bool? isNodePublicIpEnabled, ResourceIdentifier nodePublicIPPrefixId, ScaleSetPriority? scaleSetPriority, ScaleSetEvictionPolicy? scaleSetEvictionPolicy, float? spotMaxPrice, IDictionary<string, string> tags, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, IList<string> nodeInitializationTaints, ResourceIdentifier proximityPlacementGroupId, KubeletConfig kubeletConfig, LinuxOSConfig linuxOSConfig, bool? isEncryptionAtHostEnabled, bool? isUltraSsdEnabled, bool? isFipsEnabled, GpuInstanceProfile? gpuInstanceProfile, ContainerServiceCreationData creationData, ResourceIdentifier capacityReservationGroupId, ResourceIdentifier hostGroupId, AgentPoolNetworkProfile networkProfile, AgentPoolWindowsProfile windowsProfile, AgentPoolSecurityProfile securityProfile, AgentPoolGpuProfile gpuProfile, AgentPoolGatewayProfile gatewayProfile, AgentPoolArtifactStreamingProfile artifactStreamingProfile, VirtualMachinesProfile virtualMachinesProfile, IList<AgentPoolVirtualMachineNodes> virtualMachineNodesStatus, AgentPoolStatus status, LocalDnsProfile localDnsProfile, PreparedImageSpecificationProfile preparedImageSpecificationProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ETag = eTag;
             Count = count;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             VirtualMachineNodesStatus = virtualMachineNodesStatus;
             Status = status;
             LocalDnsProfile = localDnsProfile;
-            NodeCustomizationProfile = nodeCustomizationProfile;
+            PreparedImageSpecificationProfile = preparedImageSpecificationProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The version of node image. </summary>
         [WirePath("nodeImageVersion")]
-        public string NodeImageVersion { get; }
+        public string NodeImageVersion { get; set; }
 
         /// <summary> Defines the upgrade strategy for the agent pool. The default is Rolling. </summary>
         [WirePath("upgradeStrategy")]
@@ -393,9 +393,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("localDNSProfile")]
         public LocalDnsProfile LocalDnsProfile { get; set; }
 
-        /// <summary> Settings to determine the node customization used to provision nodes in a pool. </summary>
-        [WirePath("nodeCustomizationProfile")]
-        internal NodeCustomizationProfile NodeCustomizationProfile { get; set; }
+        /// <summary> Settings to determine the prepared image specification used to provision nodes in a pool. </summary>
+        [WirePath("preparedImageSpecificationProfile")]
+        internal PreparedImageSpecificationProfile PreparedImageSpecificationProfile { get; set; }
 
         /// <summary> Tells whether the cluster is Running or Stopped. </summary>
         [WirePath("powerState.code")]
@@ -515,21 +515,21 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary> The resource ID of the node customization resource to use. This can be a version. Omitting the version will use the latest version of the node customization. </summary>
-        [WirePath("nodeCustomizationProfile.nodeCustomizationId")]
-        public ResourceIdentifier NodeCustomizationId
+        /// <summary> The resource ID of the prepared image specification resource to use. This can include a version. Omitting the version will use the latest version of the prepared image specification. </summary>
+        [WirePath("preparedImageSpecificationProfile.preparedImageSpecificationId")]
+        public ResourceIdentifier PreparedImageSpecificationId
         {
             get
             {
-                return NodeCustomizationProfile is null ? default : NodeCustomizationProfile.NodeCustomizationId;
+                return PreparedImageSpecificationProfile is null ? default : PreparedImageSpecificationProfile.PreparedImageSpecificationId;
             }
             set
             {
-                if (NodeCustomizationProfile is null)
+                if (PreparedImageSpecificationProfile is null)
                 {
-                    NodeCustomizationProfile = new NodeCustomizationProfile();
+                    PreparedImageSpecificationProfile = new PreparedImageSpecificationProfile();
                 }
-                NodeCustomizationProfile.NodeCustomizationId = value;
+                PreparedImageSpecificationProfile.PreparedImageSpecificationId = value;
             }
         }
     }

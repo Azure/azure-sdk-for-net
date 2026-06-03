@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="operator"> operator represents a key's relationship to a set of values. Valid operators are In and NotIn. </param>
         /// <param name="values"> values is an array of string values, the values array must be non-empty. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterLoadBalancerLabelSelectorRequirement(string key, Operator? @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterLoadBalancerLabelSelectorRequirement(string key, ManagedClusterLoadBalancerLabelSelectorOperator? @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Operator = @operator;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> operator represents a key's relationship to a set of values. Valid operators are In and NotIn. </summary>
         [WirePath("operator")]
-        public Operator? Operator { get; set; }
+        public ManagedClusterLoadBalancerLabelSelectorOperator? Operator { get; set; }
 
         /// <summary> values is an array of string values, the values array must be non-empty. </summary>
         [WirePath("values")]
