@@ -7,7 +7,6 @@ using System.ComponentModel;
 
 namespace Azure.AI.Extensions.OpenAI
 {
-    /// <summary> Memory item kind. </summary>
     internal readonly partial struct MemoryItemKind : IEquatable<MemoryItemKind>
     {
         private readonly string _value;
@@ -20,11 +19,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="MemoryItemKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MemoryItemKind(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             _value = value;
         }
 

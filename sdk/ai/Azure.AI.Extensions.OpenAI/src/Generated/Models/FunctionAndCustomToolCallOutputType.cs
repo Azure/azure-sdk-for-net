@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal readonly partial struct FunctionAndCustomToolCallOutputType : IEquatable<FunctionAndCustomToolCallOutputType>
+    public readonly partial struct FunctionAndCustomToolCallOutputType : IEquatable<FunctionAndCustomToolCallOutputType>
     {
         private readonly string _value;
         private const string InputTextValue = "input_text";
