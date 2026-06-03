@@ -153,44 +153,6 @@ namespace Azure.ResourceManager.ComputeBulkActions
         }
 
         /// <summary>
-        /// Get the status of a LaunchBulkInstancesOperation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetOperationStatusAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="id"> The async operation id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ComputeBulkActionsOperationStatusResult>> GetOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetOperationStatusAsync(location, id, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the status of a LaunchBulkInstancesOperation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsSubscriptionResource.GetOperationStatus(AzureLocation, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="id"> The async operation id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ComputeBulkActionsOperationStatusResult> GetOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableComputeBulkActionsSubscriptionResource(subscriptionResource).GetOperationStatus(location, id, cancellationToken);
-        }
-
-        /// <summary>
         /// VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
         /// <item>
         /// <term> Mocking. </term>

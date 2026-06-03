@@ -919,25 +919,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             return new BulkActionRetryPolicy(retryCount, retryWindowInMinutes, default);
         }
 
-        /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="name"> Name of the async operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="properties"> Additional information, if available. </param>
-        /// <param name="error"> If present, details of the operation error. </param>
-        /// <returns> A new <see cref="Models.ComputeBulkActionsOperationStatusResult"/> instance for mocking. </returns>
-        public static ComputeBulkActionsOperationStatusResult ComputeBulkActionsOperationStatusResult(string id = default, string name = default, string status = default, IDictionary<string, string> properties = default, ResponseError error = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ComputeBulkActionsOperationStatusResult(
-                id,
-                name,
-                status,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                error,
-                default);
-        }
-
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="id"> The compute RP resource id of the virtual machine. subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </param>
         /// <param name="type"> Type of the virtual machine. </param>
