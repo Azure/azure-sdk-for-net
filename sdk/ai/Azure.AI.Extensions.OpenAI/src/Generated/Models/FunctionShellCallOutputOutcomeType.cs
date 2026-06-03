@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal readonly partial struct FunctionShellCallOutputOutcomeType : IEquatable<FunctionShellCallOutputOutcomeType>
+    public readonly partial struct FunctionShellCallOutputOutcomeType : IEquatable<FunctionShellCallOutputOutcomeType>
     {
         private readonly string _value;
         private const string TimeoutValue = "timeout";

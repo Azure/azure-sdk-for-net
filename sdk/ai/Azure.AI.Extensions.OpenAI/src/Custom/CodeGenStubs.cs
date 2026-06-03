@@ -7,3 +7,6 @@ namespace Azure.AI.Extensions.OpenAI;
 
 // Public type renames
 [CodeGenType("WorkflowActionOutputItemStatus")] public readonly partial struct AgentWorkflowPreviewActionStatus { }
+
+// Internal types
+[CodeGenType("MemoryItemKind")] internal readonly partial struct MemoryItemKind { }
