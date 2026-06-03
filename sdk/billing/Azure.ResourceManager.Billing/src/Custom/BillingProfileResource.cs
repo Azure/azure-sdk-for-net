@@ -21,6 +21,19 @@ namespace Azure.ResourceManager.Billing
     // hand-written equivalents that pass null for invoiceSectionName.
     // TODO: remove the [CodeGenSuppress] attributes + replacement methods once
     //       #59540 ships and the next regen no longer emits the broken call.
+    // Back-compat overloads for GA 1.2.2 callers that pass an Options aggregate.
+    // The new MPG generator emits methods with individual query parameters and
+    // renamed scope-qualified names (Get*ByBillingProfile*); these shims forward
+    // the aggregate to the generated method so existing call sites keep working.
+    //
+    // Also: workaround for MPG generator bug #59540. The shared
+    // ProductsGetProductsCollectionResultOfT ctor expects an invoiceSectionName
+    // parameter (because the same operation is reachable from BillingInvoiceSection),
+    // but the BillingProfile call site omits it (CS7036). The [CodeGenSuppress]-ed
+    // GetProducts{Async}(filter, orderBy, ...) overloads are replaced below by
+    // hand-written equivalents that pass null for invoiceSectionName.
+    // TODO: remove the [CodeGenSuppress] attributes + replacement methods once
+    //       #59540 ships and the next regen no longer emits the broken call.
     [CodeGenSuppress("GetProductsAsync", typeof(string), typeof(string), typeof(long?), typeof(long?), typeof(bool?), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetProducts", typeof(string), typeof(string), typeof(long?), typeof(long?), typeof(bool?), typeof(string), typeof(CancellationToken))]
     public partial class BillingProfileResource

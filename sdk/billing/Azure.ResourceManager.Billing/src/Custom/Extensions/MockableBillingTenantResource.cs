@@ -13,15 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Billing.Mocking
 {
-    // Workaround for MPG generator bug that emits invalid
-    //   IEnumerable<T>.ToRequestContent(parameters)  — https://github.com/Azure/azure-sdk-for-net/issues/57716
-    // for body parameter types that are not models. The [CodeGenSuppress]-ed methods below
-    // are replaced by hand-written equivalents that call BillingRequestContentHelper.
-    // TODO: remove the [CodeGenSuppress] attributes + replacement methods once the upstream
-    //       generator fix ships and the next regen no longer emits the broken calls.
-    // NOTE: The methods are named *DownloadDocumentsByBillingSubscriptionInvoice* (with the
-    // "Invoice" suffix) to match the GA 1.2.2 API contract; the [CodeGenSuppress] still
-    // targets the no-suffix name that the broken generator emits.
+    // Back-compat shim for GA 1.2.2 callers. The DownloadDocumentsByBillingSubscription
+    // operation was renamed in GA 1.2.2 to *DownloadDocumentsByBillingSubscriptionInvoice*
+    // (note the trailing "Invoice"); the new MPG generator emits the no-suffix name.
+    // The [CodeGenSuppress] below removes the generator's no-suffix method so we can
+    // keep the GA spelling. Replacement bodies are byte-for-byte copies of the generator
+    // output with `BinaryContentHelper.FromEnumerable(parameters)` used directly.
     [CodeGenSuppress("DownloadDocumentsByBillingSubscriptionAsync", typeof(WaitUntil), typeof(string), typeof(IEnumerable<BillingDocumentDownloadRequestContent>), typeof(CancellationToken))]
     [CodeGenSuppress("DownloadDocumentsByBillingSubscription", typeof(WaitUntil), typeof(string), typeof(IEnumerable<BillingDocumentDownloadRequestContent>), typeof(CancellationToken))]
     public partial class MockableBillingTenantResource
@@ -40,7 +37,7 @@ namespace Azure.ResourceManager.Billing.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, BillingRequestContentHelper.ToRequestContent(parameters), context);
+                HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, BinaryContentHelper.FromEnumerable(parameters), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),
@@ -76,7 +73,7 @@ namespace Azure.ResourceManager.Billing.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, BillingRequestContentHelper.ToRequestContent(parameters), context);
+                HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, BinaryContentHelper.FromEnumerable(parameters), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),

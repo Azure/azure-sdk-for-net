@@ -13,29 +13,21 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Billing
 {
-    // Back-compat overloads for GA 1.2.2 callers that pass an Options aggregate.
-    // The new MPG generator emits methods with individual query parameters and
-    // renamed scope-qualified names (Get*ByBillingAccount*); these shims forward
-    // the aggregate to the generated method so existing call sites keep working.
+    // Back-compat rename: GA 1.2.2 exposed this as DownloadDocumentsByBillingAccountInvoice
+    // (note the trailing "Invoice"); the new generator emits without that suffix. The
+    // [CodeGenSuppress] below removes the generator's no-suffix method so the GA spelling
+    // (provided in the methods below) is preserved.
     //
-    // Workaround for MPG generator bugs that emit invalid request-content calls
-    //   IEnumerable<T>.ToRequestContent(parameters)  — https://github.com/Azure/azure-sdk-for-net/issues/57716
-    //   DateTimeOffset.ToRequestContent(parameters)  — https://github.com/Azure/azure-sdk-for-net/issues/59539
-    // for body parameter types that are not models. The [CodeGenSuppress]-ed methods
-    // below are replaced by hand-written equivalents that call BillingRequestContentHelper.
-    // The Download replacement is also renamed to "...ByBillingAccountInvoice" (note the
-    // trailing "Invoice") to match the GA SDK 1.2.2 method name; the new generator emits
-    // "DownloadDocumentsByBillingAccount" without that suffix.
-    // TODO: remove the [CodeGenSuppress] attributes + replacement methods once the
-    //       upstream generator fixes ship and the next regen no longer emits the broken calls.
-    [CodeGenSuppress("AddPaymentTermsAsync", typeof(WaitUntil), typeof(IEnumerable<BillingPaymentTerm>), typeof(CancellationToken))]
-    [CodeGenSuppress("AddPaymentTerms", typeof(WaitUntil), typeof(IEnumerable<BillingPaymentTerm>), typeof(CancellationToken))]
+    // CancelPaymentTerms workaround: the generator emits an invalid
+    //   DateTimeOffset.ToRequestContent(parameters)
+    // call (https://github.com/Azure/azure-sdk-for-net/issues/59539). The [CodeGenSuppress]
+    // below removes the broken method and CancelPaymentTerms{,Async} are hand-written using
+    // the BillingRequestContentHelper.ToRequestContent extension. TODO: remove the
+    // [CodeGenSuppress] + replacement once #59539 ships.
     [CodeGenSuppress("CancelPaymentTermsAsync", typeof(WaitUntil), typeof(DateTimeOffset), typeof(CancellationToken))]
     [CodeGenSuppress("CancelPaymentTerms", typeof(WaitUntil), typeof(DateTimeOffset), typeof(CancellationToken))]
     [CodeGenSuppress("DownloadDocumentsByBillingAccountAsync", typeof(WaitUntil), typeof(IEnumerable<BillingDocumentDownloadRequestContent>), typeof(CancellationToken))]
     [CodeGenSuppress("DownloadDocumentsByBillingAccount", typeof(WaitUntil), typeof(IEnumerable<BillingDocumentDownloadRequestContent>), typeof(CancellationToken))]
-    [CodeGenSuppress("ValidatePaymentTermsAsync", typeof(IEnumerable<BillingPaymentTerm>), typeof(CancellationToken))]
-    [CodeGenSuppress("ValidatePaymentTerms", typeof(IEnumerable<BillingPaymentTerm>), typeof(CancellationToken))]
     public partial class BillingAccountResource
     {
         /// <summary> Back-compat overload for GA 1.2.2 callers that pass an Options aggregate. </summary>
@@ -64,81 +56,6 @@ namespace Azure.ResourceManager.Billing
         public virtual Pageable<BillingReservationResource> GetReservations(BillingAccountResourceGetReservationsOptions options, CancellationToken cancellationToken = default)
         {
             return GetByBillingAccount(filter: options?.Filter, orderBy: options?.OrderBy, skiptoken: options?.Skiptoken, refreshSummary: options?.RefreshSummary, selectedState: options?.SelectedState, take: options?.Take, cancellationToken: cancellationToken);
-        }
-
-        // ---------- Replacements for generator-emitted methods whose body uses an invalid
-        //            <BodyType>.ToRequestContent(parameters) call (#57716, #59539).
-        //            Bodies are byte-for-byte copies of the generator output with the broken
-        //            line replaced by BillingRequestContentHelper.ToRequestContent(parameters).
-
-        /// <summary> Adds payment terms on the billing account. </summary>
-        public virtual async Task<ArmOperation<BillingAccountResource>> AddPaymentTermsAsync(WaitUntil waitUntil, IEnumerable<BillingPaymentTerm> parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
-            using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountResource.AddPaymentTerms");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _billingAccountsRestClient.CreateAddPaymentTermsRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(parameters), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BillingArmOperation<BillingAccountResource> operation = new BillingArmOperation<BillingAccountResource>(
-                    new BillingAccountResourceOperationSource(Client),
-                    _billingAccountsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Adds payment terms on the billing account. </summary>
-        public virtual ArmOperation<BillingAccountResource> AddPaymentTerms(WaitUntil waitUntil, IEnumerable<BillingPaymentTerm> parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
-            using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountResource.AddPaymentTerms");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _billingAccountsRestClient.CreateAddPaymentTermsRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(parameters), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                BillingArmOperation<BillingAccountResource> operation = new BillingArmOperation<BillingAccountResource>(
-                    new BillingAccountResourceOperationSource(Client),
-                    _billingAccountsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Cancels payment terms on a billing account. </summary>
@@ -207,6 +124,10 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
+        // Back-compat rename: GA 1.2.2 exposed this as DownloadDocumentsByBillingAccountInvoice
+        // (note the trailing "Invoice"); the new generator emits without that suffix.
+        // The [CodeGenSuppress] above removes the generated no-suffix method.
+
         /// <summary> Downloads multiple invoice documents as a zip file. </summary>
         public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingAccountInvoiceAsync(WaitUntil waitUntil, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
@@ -220,7 +141,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(arrayOfDocumentDownloadRequest), context);
+                HttpMessage message = _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, BinaryContentHelper.FromEnumerable(arrayOfDocumentDownloadRequest), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),
@@ -255,7 +176,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(arrayOfDocumentDownloadRequest), context);
+                HttpMessage message = _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, BinaryContentHelper.FromEnumerable(arrayOfDocumentDownloadRequest), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),
@@ -269,64 +190,6 @@ namespace Azure.ResourceManager.Billing
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Validates payment terms on a billing account. </summary>
-        public virtual async Task<Response<PaymentTermsEligibilityResult>> ValidatePaymentTermsAsync(IEnumerable<BillingPaymentTerm> parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
-            using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountResource.ValidatePaymentTerms");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _billingAccountsRestClient.CreateValidatePaymentTermsRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(parameters), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PaymentTermsEligibilityResult> response = Response.FromValue(PaymentTermsEligibilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Validates payment terms on a billing account. </summary>
-        public virtual Response<PaymentTermsEligibilityResult> ValidatePaymentTerms(IEnumerable<BillingPaymentTerm> parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
-            using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountResource.ValidatePaymentTerms");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _billingAccountsRestClient.CreateValidatePaymentTermsRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(parameters), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PaymentTermsEligibilityResult> response = Response.FromValue(PaymentTermsEligibilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
             }
             catch (Exception e)
             {
