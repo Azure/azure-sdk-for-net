@@ -22,16 +22,16 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="AzureSemanticVadTurnDetection"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="threshold"></param>
-        /// <param name="prefixPaddingMs"></param>
-        /// <param name="silenceDurationMs"></param>
-        /// <param name="endOfUtteranceDetection"></param>
-        /// <param name="speechDurationMs"></param>
-        /// <param name="removeFillerWords"></param>
-        /// <param name="languages"></param>
-        /// <param name="autoTruncate"></param>
-        /// <param name="createResponse"></param>
-        /// <param name="interruptResponse"></param>
+        /// <param name="threshold"> Activation threshold for VAD detection. Range: 0.0 to 1.0. </param>
+        /// <param name="prefixPaddingMs"> Amount of audio to include before speech is detected, in milliseconds. </param>
+        /// <param name="silenceDurationMs"> Duration of silence required to end speech detection, in milliseconds. </param>
+        /// <param name="endOfUtteranceDetection"> Configuration for end-of-utterance detection. </param>
+        /// <param name="speechDurationMs"> Minimum speech duration in milliseconds to trigger detection. </param>
+        /// <param name="removeFillerWords"> Whether to remove filler words (e.g., 'um', 'uh') from transcription. </param>
+        /// <param name="languages"> List of BCP-47 language codes for speech detection. </param>
+        /// <param name="autoTruncate"> Whether to automatically truncate the audio buffer when speech stops. </param>
+        /// <param name="createResponse"> Whether to automatically create a response when speech stops. </param>
+        /// <param name="interruptResponse"> Whether to allow the user's speech to interrupt the assistant's response. </param>
         internal AzureSemanticVadTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EouDetection endOfUtteranceDetection, int? speechDurationMs, bool? removeFillerWords, IList<string> languages, bool? autoTruncate, bool? createResponse, bool? interruptResponse) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
@@ -46,25 +46,25 @@ namespace Azure.AI.VoiceLive
             InterruptResponse = interruptResponse;
         }
 
-        /// <summary> Gets or sets the Threshold. </summary>
+        /// <summary> Activation threshold for VAD detection. Range: 0.0 to 1.0. </summary>
         public float? Threshold { get; set; }
 
-        /// <summary> Gets or sets the EndOfUtteranceDetection. </summary>
+        /// <summary> Configuration for end-of-utterance detection. </summary>
         public EouDetection EndOfUtteranceDetection { get; set; }
 
-        /// <summary> Gets or sets the RemoveFillerWords. </summary>
+        /// <summary> Whether to remove filler words (e.g., 'um', 'uh') from transcription. </summary>
         public bool? RemoveFillerWords { get; set; }
 
-        /// <summary> Gets the Languages. </summary>
+        /// <summary> List of BCP-47 language codes for speech detection. </summary>
         public IList<string> Languages { get; }
 
-        /// <summary> Gets or sets the AutoTruncate. </summary>
+        /// <summary> Whether to automatically truncate the audio buffer when speech stops. </summary>
         public bool? AutoTruncate { get; set; }
 
-        /// <summary> Gets or sets the CreateResponse. </summary>
+        /// <summary> Whether to automatically create a response when speech stops. </summary>
         public bool? CreateResponse { get; set; }
 
-        /// <summary> Gets or sets the InterruptResponse. </summary>
+        /// <summary> Whether to allow the user's speech to interrupt the assistant's response. </summary>
         public bool? InterruptResponse { get; set; }
     }
 }

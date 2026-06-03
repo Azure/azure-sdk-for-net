@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PatchResourceTagsAndSku.ToRequestContent(commitmentPlan), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(
-                    new CognitiveServicesCommitmentPlanOperationSource(Client),
+                    new CognitiveServicesCommitmentPlanResourceOperationSource(Client),
                     _commitmentPlanOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _commitmentPlanOperationGroupRestClient.CreateUpdatePlanRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, PatchResourceTagsAndSku.ToRequestContent(commitmentPlan), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource> operation = new CognitiveServicesArmOperation<CognitiveServicesCommitmentPlanResource>(
-                    new CognitiveServicesCommitmentPlanOperationSource(Client),
+                    new CognitiveServicesCommitmentPlanResourceOperationSource(Client),
                     _commitmentPlanOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryMigrationItemProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryMigrationItemProperties>
+    /// <summary> Migration item properties. </summary>
+    public partial class SiteRecoveryMigrationItemProperties : IJsonModel<SiteRecoveryMigrationItemProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryMigrationItemProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteRecoveryMigrationItemProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSiteRecoveryMigrationItemProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SiteRecoveryMigrationItemProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryMigrationItemProperties IPersistableModel<SiteRecoveryMigrationItemProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteRecoveryMigrationItemProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteRecoveryMigrationItemProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(MachineName))
             {
                 writer.WritePropertyName("machineName"u8);
@@ -108,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in HealthErrors)
+                foreach (SiteRecoveryHealthError item in HealthErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -118,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("allowedOperations"u8);
                 writer.WriteStartArray();
-                foreach (var item in AllowedOperations)
+                foreach (MigrationItemOperation item in AllowedOperations)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -133,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("criticalJobHistory"u8);
                 writer.WriteStartArray();
-                foreach (var item in CriticalJobHistory)
+                foreach (CriticalJobHistoryDetails item in CriticalJobHistory)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -149,15 +190,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -166,22 +207,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        SiteRecoveryMigrationItemProperties IJsonModel<SiteRecoveryMigrationItemProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryMigrationItemProperties IJsonModel<SiteRecoveryMigrationItemProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteRecoveryMigrationItemProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSiteRecoveryMigrationItemProperties(document.RootElement, options);
         }
 
-        internal static SiteRecoveryMigrationItemProperties DeserializeSiteRecoveryMigrationItemProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SiteRecoveryMigrationItemProperties DeserializeSiteRecoveryMigrationItemProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -193,9 +239,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string replicationStatus = default;
             SiteRecoveryMigrationState? migrationState = default;
             string migrationStateDescription = default;
-            DateTimeOffset? lastTestMigrationTime = default;
+            DateTimeOffset? lastTestMigrationOn = default;
             string lastTestMigrationStatus = default;
-            DateTimeOffset? lastMigrationTime = default;
+            DateTimeOffset? lastMigrationOn = default;
             string lastMigrationStatus = default;
             TestMigrationState? testMigrateState = default;
             string testMigrateStateDescription = default;
@@ -206,175 +252,173 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IReadOnlyList<CriticalJobHistoryDetails> criticalJobHistory = default;
             string eventCorrelationId = default;
             MigrationProviderSpecificSettings providerSpecificDetails = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("machineName"u8))
+                if (prop.NameEquals("machineName"u8))
                 {
-                    machineName = property.Value.GetString();
+                    machineName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyId"u8))
+                if (prop.NameEquals("policyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyId = new ResourceIdentifier(property.Value.GetString());
+                    policyId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyFriendlyName"u8))
+                if (prop.NameEquals("policyFriendlyName"u8))
                 {
-                    policyFriendlyName = property.Value.GetString();
+                    policyFriendlyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryServicesProviderId"u8))
+                if (prop.NameEquals("recoveryServicesProviderId"u8))
                 {
-                    recoveryServicesProviderId = property.Value.GetString();
+                    recoveryServicesProviderId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replicationStatus"u8))
+                if (prop.NameEquals("replicationStatus"u8))
                 {
-                    replicationStatus = property.Value.GetString();
+                    replicationStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("migrationState"u8))
+                if (prop.NameEquals("migrationState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    migrationState = new SiteRecoveryMigrationState(property.Value.GetString());
+                    migrationState = new SiteRecoveryMigrationState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("migrationStateDescription"u8))
+                if (prop.NameEquals("migrationStateDescription"u8))
                 {
-                    migrationStateDescription = property.Value.GetString();
+                    migrationStateDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastTestMigrationTime"u8))
+                if (prop.NameEquals("lastTestMigrationTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastTestMigrationTime = property.Value.GetDateTimeOffset("O");
+                    lastTestMigrationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastTestMigrationStatus"u8))
+                if (prop.NameEquals("lastTestMigrationStatus"u8))
                 {
-                    lastTestMigrationStatus = property.Value.GetString();
+                    lastTestMigrationStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastMigrationTime"u8))
+                if (prop.NameEquals("lastMigrationTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastMigrationTime = property.Value.GetDateTimeOffset("O");
+                    lastMigrationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastMigrationStatus"u8))
+                if (prop.NameEquals("lastMigrationStatus"u8))
                 {
-                    lastMigrationStatus = property.Value.GetString();
+                    lastMigrationStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testMigrateState"u8))
+                if (prop.NameEquals("testMigrateState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    testMigrateState = new TestMigrationState(property.Value.GetString());
+                    testMigrateState = new TestMigrationState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("testMigrateStateDescription"u8))
+                if (prop.NameEquals("testMigrateStateDescription"u8))
                 {
-                    testMigrateStateDescription = property.Value.GetString();
+                    testMigrateStateDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("health"u8))
+                if (prop.NameEquals("health"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    health = new SiteRecoveryProtectionHealth(property.Value.GetString());
+                    health = new SiteRecoveryProtectionHealth(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthErrors"u8))
+                if (prop.NameEquals("healthErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("allowedOperations"u8))
+                if (prop.NameEquals("allowedOperations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MigrationItemOperation> array = new List<MigrationItemOperation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new MigrationItemOperation(item.GetString()));
                     }
                     allowedOperations = array;
                     continue;
                 }
-                if (property.NameEquals("currentJob"u8))
+                if (prop.NameEquals("currentJob"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    currentJob = CurrentJobDetails.DeserializeCurrentJobDetails(property.Value, options);
+                    currentJob = CurrentJobDetails.DeserializeCurrentJobDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("criticalJobHistory"u8))
+                if (prop.NameEquals("criticalJobHistory"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CriticalJobHistoryDetails> array = new List<CriticalJobHistoryDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CriticalJobHistoryDetails.DeserializeCriticalJobHistoryDetails(item, options));
                     }
                     criticalJobHistory = array;
                     continue;
                 }
-                if (property.NameEquals("eventCorrelationId"u8))
+                if (prop.NameEquals("eventCorrelationId"u8))
                 {
-                    eventCorrelationId = property.Value.GetString();
+                    eventCorrelationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerSpecificDetails"u8))
+                if (prop.NameEquals("providerSpecificDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    providerSpecificDetails = MigrationProviderSpecificSettings.DeserializeMigrationProviderSpecificSettings(property.Value, options);
+                    providerSpecificDetails = MigrationProviderSpecificSettings.DeserializeMigrationProviderSpecificSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SiteRecoveryMigrationItemProperties(
                 machineName,
                 policyId,
@@ -383,9 +427,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 replicationStatus,
                 migrationState,
                 migrationStateDescription,
-                lastTestMigrationTime,
+                lastTestMigrationOn,
                 lastTestMigrationStatus,
-                lastMigrationTime,
+                lastMigrationOn,
                 lastMigrationStatus,
                 testMigrateState,
                 testMigrateStateDescription,
@@ -396,38 +440,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 criticalJobHistory ?? new ChangeTrackingList<CriticalJobHistoryDetails>(),
                 eventCorrelationId,
                 providerSpecificDetails,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SiteRecoveryMigrationItemProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SiteRecoveryMigrationItemProperties IPersistableModel<SiteRecoveryMigrationItemProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSiteRecoveryMigrationItemProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SiteRecoveryMigrationItemProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

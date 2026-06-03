@@ -82,6 +82,17 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("azure_ai_search"u8);
             writer.WriteObjectValue(Options, options);
         }
@@ -115,6 +126,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string description = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
             AzureAISearchToolOptions options0 = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -133,6 +145,20 @@ namespace Azure.AI.Projects.Agents
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
+                    continue;
+                }
                 if (prop.NameEquals("azure_ai_search"u8))
                 {
                     options0 = AzureAISearchToolOptions.DeserializeAzureAISearchToolOptions(prop.Value, options);
@@ -143,7 +169,13 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureAISearchTool(@type, additionalBinaryDataProperties, name, description, options0);
+            return new AzureAISearchTool(
+                @type,
+                additionalBinaryDataProperties,
+                name,
+                description,
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
+                options0);
         }
     }
 }

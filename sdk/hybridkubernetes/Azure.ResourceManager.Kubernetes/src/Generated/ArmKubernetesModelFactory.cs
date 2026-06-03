@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKubernetesModelFactory
     {
-        /// <summary> Represents a connected cluster. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -38,12 +37,12 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 identity,
-                kind);
+                kind,
+                default);
         }
 
         /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>
@@ -64,15 +63,15 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
         /// <param name="aadProfile"> AAD profile for the connected cluster. </param>
         /// <param name="arcAgentProfile"> Arc agentry configuration for the provisioned cluster. </param>
-        /// <param name="workloadIdentityEnabled"> Whether to enable or disable the workload identity Webhook. </param>
+        /// <param name="isWorkloadIdentityEnabled"> Whether to enable or disable the workload identity Webhook. </param>
         /// <param name="oidcIssuerProfile"> Open ID Connect (OIDC) Issuer Profile for the connected cluster. </param>
-        /// <param name="gatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
+        /// <param name="isGatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterProperties"/> instance for mocking. </returns>
-        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationOn = default, DateTimeOffset? lastConnectivityOn = default, ConnectivityStatus? connectivityStatus = default, PrivateLinkState? privateLinkState = default, string privateLinkScopeResourceId = default, AzureHybridBenefit? azureHybridBenefit = default, AadProfile aadProfile = default, ArcAgentProfile arcAgentProfile = default, bool? workloadIdentityEnabled = default, OidcIssuerProfile oidcIssuerProfile = default, bool? gatewayEnabled = default, IEnumerable<ArcAgentryConfigurations> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
+        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ConnectedClusterProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationOn = default, DateTimeOffset? lastConnectivityOn = default, ConnectedClusterConnectivityStatus? connectivityStatus = default, ConnectedClusterPrivateLinkState? privateLinkState = default, ResourceIdentifier privateLinkScopeResourceId = default, ConnectedClusterAzureHybridBenefit? azureHybridBenefit = default, ConnectedClusterAadProfile aadProfile = default, ConnectedClusterArcAgentProfile arcAgentProfile = default, bool? isWorkloadIdentityEnabled = default, ConnectedClusterOidcIssuerProfile oidcIssuerProfile = default, bool? isGatewayEnabled = default, IEnumerable<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
         {
-            arcAgentryConfigurations ??= new ChangeTrackingList<ArcAgentryConfigurations>();
+            arcAgentryConfigurations ??= new ChangeTrackingList<ConnectedClusterArcAgentryConfiguration>();
             miscellaneousProperties ??= new ChangeTrackingDictionary<string, string>();
 
             return new ConnectedClusterProperties(
@@ -94,80 +93,86 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 azureHybridBenefit,
                 aadProfile,
                 arcAgentProfile,
-                workloadIdentityEnabled is null ? default : new SecurityProfile(new SecurityProfileWorkloadIdentity(workloadIdentityEnabled, null), null),
+                isWorkloadIdentityEnabled is null ? default : new ConnectedClusterSecurityProfile(new ConnectedClusterWorkloadIdentityProfile(isWorkloadIdentityEnabled, default), default),
                 oidcIssuerProfile,
-                gatewayEnabled is null ? default : new Gateway(gatewayEnabled, null),
-                arcAgentryConfigurations.ToList(),
-                miscellaneousProperties,
-                additionalBinaryDataProperties: null);
+                isGatewayEnabled is null ? default : new Gateway(isGatewayEnabled, default),
+                (arcAgentryConfigurations ?? new ChangeTrackingList<ConnectedClusterArcAgentryConfiguration>()).ToList(),
+                miscellaneousProperties ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
-        /// <summary> AAD Profile specifies attributes for Azure Active Directory integration. </summary>
-        /// <param name="enableAzureRBAC"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
-        /// <param name="adminGroupObjectIDs"> The list of AAD group object IDs that will have admin role of the cluster. </param>
-        /// <param name="tenantID"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
-        /// <returns> A new <see cref="Models.AadProfile"/> instance for mocking. </returns>
-        public static AadProfile AadProfile(bool? enableAzureRBAC = default, IEnumerable<string> adminGroupObjectIDs = default, string tenantID = default)
+        /// <param name="enableAzureRbac"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
+        /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
+        /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
+        /// <returns> A new <see cref="Models.ConnectedClusterAadProfile"/> instance for mocking. </returns>
+        public static ConnectedClusterAadProfile ConnectedClusterAadProfile(bool? enableAzureRbac = default, IEnumerable<string> adminGroupObjectIds = default, string tenantId = default)
         {
-            adminGroupObjectIDs ??= new ChangeTrackingList<string>();
+            adminGroupObjectIds ??= new ChangeTrackingList<string>();
 
-            return new AadProfile(enableAzureRBAC, adminGroupObjectIDs.ToList(), tenantID, additionalBinaryDataProperties: null);
+            return new ConnectedClusterAadProfile(enableAzureRbac, (adminGroupObjectIds ?? new ChangeTrackingList<string>()).ToList(), tenantId, default);
         }
 
-        /// <summary> Defines the Arc Agent properties for the clusters. </summary>
         /// <param name="desiredAgentVersion"> Version of the Arc agents to be installed on the cluster resource. </param>
         /// <param name="agentAutoUpgrade"> Indicates whether the Arc agents on the be upgraded automatically to the latest version. Defaults to Enabled. </param>
         /// <param name="systemComponents"> List of system extensions that are installed on the cluster resource. </param>
         /// <param name="agentErrors"> List of arc agentry and system components errors on the cluster resource. </param>
         /// <param name="agentState"> Represents the current state of the Arc agentry and its dependent components. </param>
-        /// <returns> A new <see cref="Models.ArcAgentProfile"/> instance for mocking. </returns>
-        public static ArcAgentProfile ArcAgentProfile(string desiredAgentVersion = default, AutoUpgradeOptions? agentAutoUpgrade = default, IEnumerable<SystemComponent> systemComponents = default, IEnumerable<AgentError> agentErrors = default, string agentState = default)
+        /// <returns> A new <see cref="Models.ConnectedClusterArcAgentProfile"/> instance for mocking. </returns>
+        public static ConnectedClusterArcAgentProfile ConnectedClusterArcAgentProfile(string desiredAgentVersion = default, ConnectedClusterAutoUpgradeMode? agentAutoUpgrade = default, IEnumerable<ConnectedClusterSystemComponent> systemComponents = default, IEnumerable<ConnectedClusterAgentError> agentErrors = default, string agentState = default)
         {
-            systemComponents ??= new ChangeTrackingList<SystemComponent>();
-            agentErrors ??= new ChangeTrackingList<AgentError>();
+            systemComponents ??= new ChangeTrackingList<ConnectedClusterSystemComponent>();
+            agentErrors ??= new ChangeTrackingList<ConnectedClusterAgentError>();
 
-            return new ArcAgentProfile(
+            return new ConnectedClusterArcAgentProfile(
                 desiredAgentVersion,
                 agentAutoUpgrade,
-                systemComponents.ToList(),
-                agentErrors.ToList(),
+                (systemComponents ?? new ChangeTrackingList<ConnectedClusterSystemComponent>()).ToList(),
+                (agentErrors ?? new ChangeTrackingList<ConnectedClusterAgentError>()).ToList(),
                 agentState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> System extensions and its current versions installed on the cluster resource. </summary>
         /// <param name="type"> Type of the system extension. </param>
         /// <param name="userSpecifiedVersion"> Version of the system extension to be installed on the cluster resource. </param>
         /// <param name="majorVersion"> Major Version of the system extension that is currently installed on the cluster resource. </param>
         /// <param name="currentVersion"> Version of the system extension that is currently installed on the cluster resource. </param>
-        /// <returns> A new <see cref="Models.SystemComponent"/> instance for mocking. </returns>
-        public static SystemComponent SystemComponent(string @type = default, string userSpecifiedVersion = default, int? majorVersion = default, string currentVersion = default)
+        /// <returns> A new <see cref="Models.ConnectedClusterSystemComponent"/> instance for mocking. </returns>
+        public static ConnectedClusterSystemComponent ConnectedClusterSystemComponent(string @type = default, string userSpecifiedVersion = default, int? majorVersion = default, string currentVersion = default)
         {
-            return new SystemComponent(@type, userSpecifiedVersion, majorVersion, currentVersion, additionalBinaryDataProperties: null);
+            return new ConnectedClusterSystemComponent(@type, userSpecifiedVersion, majorVersion, currentVersion, default);
         }
 
-        /// <summary> Agent Errors if any during agent or system component upgrade. </summary>
         /// <param name="message"> Agent error message. </param>
         /// <param name="severity"> Severity of the error message. </param>
         /// <param name="component"> Agent component where error message occured. </param>
-        /// <param name="time"> The timestamp of error occured (UTC). </param>
-        /// <returns> A new <see cref="Models.AgentError"/> instance for mocking. </returns>
-        public static AgentError AgentError(string message = default, string severity = default, string component = default, DateTimeOffset? time = default)
+        /// <param name="occurredOn"> The timestamp of error occured (UTC). </param>
+        /// <returns> A new <see cref="Models.ConnectedClusterAgentError"/> instance for mocking. </returns>
+        public static ConnectedClusterAgentError ConnectedClusterAgentError(string message = default, string severity = default, string component = default, DateTimeOffset? occurredOn = default)
         {
-            return new AgentError(message, severity, component, time, additionalBinaryDataProperties: null);
+            return new ConnectedClusterAgentError(message, severity, component, occurredOn, default);
         }
 
-        /// <summary> OIDC Issuer Profile specifies attributes for workload identity integration. </summary>
         /// <param name="enabled"> Whether to enable oidc issuer for workload identity integration. </param>
         /// <param name="issuerUri"> The issuer url for hybrid clusters connected to Arc used for the workload identity feature. </param>
         /// <param name="selfHostedIssuerUri"> The issuer url for public cloud clusters - AKS, EKS, GKE - used for the workload identity feature. </param>
-        /// <returns> A new <see cref="Models.OidcIssuerProfile"/> instance for mocking. </returns>
-        public static OidcIssuerProfile OidcIssuerProfile(bool? enabled = default, string issuerUri = default, string selfHostedIssuerUri = default)
+        /// <returns> A new <see cref="Models.ConnectedClusterOidcIssuerProfile"/> instance for mocking. </returns>
+        public static ConnectedClusterOidcIssuerProfile ConnectedClusterOidcIssuerProfile(bool? enabled = default, string issuerUri = default, string selfHostedIssuerUri = default)
         {
-            return new OidcIssuerProfile(enabled, issuerUri, selfHostedIssuerUri, additionalBinaryDataProperties: null);
+            return new ConnectedClusterOidcIssuerProfile(enabled, issuerUri, selfHostedIssuerUri, default);
         }
 
-        /// <summary> Object containing updates for patch operations. </summary>
+        /// <param name="feature"> Specifies the name of the feature for the configuration setting. </param>
+        /// <param name="settings"> The configuration settings for the feature that do not contain any sensitive or secret information. </param>
+        /// <param name="protectedSettings"> The configuration settings for the feature that contain any sensitive or secret information. </param>
+        /// <returns> A new <see cref="Models.ConnectedClusterArcAgentryConfiguration"/> instance for mocking. </returns>
+        public static ConnectedClusterArcAgentryConfiguration ConnectedClusterArcAgentryConfiguration(string feature = default, IDictionary<string, string> settings = default, IDictionary<string, string> protectedSettings = default)
+        {
+            settings ??= new ChangeTrackingDictionary<string, string>();
+            protectedSettings ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConnectedClusterArcAgentryConfiguration(feature, settings ?? new ChangeTrackingDictionary<string, string>(), protectedSettings ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Describes the connected cluster resource properties that can be updated during PATCH operation. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterPatch"/> instance for mocking. </returns>
@@ -175,56 +180,62 @@ namespace Azure.ResourceManager.Kubernetes.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ConnectedClusterPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new ConnectedClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <summary> The ListClusterUserCredentialProperties. </summary>
-        /// <param name="authenticationMethod"> The mode of client authentication. </param>
-        /// <param name="clientProxy"> Boolean value to indicate whether the request is for client side proxy or not. </param>
-        /// <returns> A new <see cref="Models.ListClusterUserCredentialProperties"/> instance for mocking. </returns>
-        public static ListClusterUserCredentialProperties ListClusterUserCredentialProperties(AuthenticationMethod authenticationMethod = default, bool clientProxy = default)
+        /// <param name="distribution"> Represents the distribution of the connected cluster. </param>
+        /// <param name="distributionVersion"> Represents the Kubernetes distribution version on this connected cluster. </param>
+        /// <param name="azureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. </param>
+        /// <param name="isGatewayEnabled"> Indicates whether the gateway for arc router connectivity is enabled. </param>
+        /// <returns> A new <see cref="Models.ConnectedClusterPatchProperties"/> instance for mocking. </returns>
+        public static ConnectedClusterPatchProperties ConnectedClusterPatchProperties(string distribution = default, string distributionVersion = default, ConnectedClusterAzureHybridBenefit? azureHybridBenefit = default, bool? isGatewayEnabled = default)
         {
-            return new ListClusterUserCredentialProperties(authenticationMethod, clientProxy, additionalBinaryDataProperties: null);
+            return new ConnectedClusterPatchProperties(distribution, distributionVersion, azureHybridBenefit, isGatewayEnabled is null ? default : new Gateway(isGatewayEnabled, default), default);
         }
 
-        /// <summary> The list of credential result response. </summary>
+        /// <param name="authenticationMethod"> The mode of client authentication. </param>
+        /// <param name="useClientProxy"> Boolean value to indicate whether the request is for client side proxy or not. </param>
+        /// <returns> A new <see cref="Models.GetClusterUserCredentialContent"/> instance for mocking. </returns>
+        public static GetClusterUserCredentialContent GetClusterUserCredentialContent(ClusterUserCredentialAuthenticationMethod authenticationMethod = default, bool useClientProxy = default)
+        {
+            return new GetClusterUserCredentialContent(authenticationMethod, useClientProxy, default);
+        }
+
         /// <param name="hybridConnectionConfig"> Contains the REP (rendezvous endpoint) and “Sender” access token. </param>
         /// <param name="kubeconfigs"> Base64-encoded Kubernetes configuration file. </param>
-        /// <returns> A new <see cref="Models.CredentialResults"/> instance for mocking. </returns>
-        public static CredentialResults CredentialResults(HybridConnectionConfig hybridConnectionConfig = default, IEnumerable<CredentialResult> kubeconfigs = default)
+        /// <returns> A new <see cref="Models.ClusterUserCredentialsResult"/> instance for mocking. </returns>
+        public static ClusterUserCredentialsResult ClusterUserCredentialsResult(ClusterUserCredentialHybridConnectionConfig hybridConnectionConfig = default, IEnumerable<ClusterUserCredentialResult> kubeconfigs = default)
         {
-            kubeconfigs ??= new ChangeTrackingList<CredentialResult>();
+            kubeconfigs ??= new ChangeTrackingList<ClusterUserCredentialResult>();
 
-            return new CredentialResults(hybridConnectionConfig, kubeconfigs.ToList(), additionalBinaryDataProperties: null);
+            return new ClusterUserCredentialsResult(hybridConnectionConfig, (kubeconfigs ?? new ChangeTrackingList<ClusterUserCredentialResult>()).ToList(), default);
         }
 
-        /// <summary> Contains the REP (rendezvous endpoint) and “Sender” access token. </summary>
-        /// <param name="expirationTime"> Timestamp when this token will be expired. </param>
+        /// <param name="expirationTimeInSeconds"> Timestamp when this token will be expired. </param>
         /// <param name="hybridConnectionName"> Name of the connection. </param>
         /// <param name="relay"> Name of the relay. </param>
         /// <param name="token"> Sender access token. </param>
         /// <param name="relayTid"> TenantID of the relay. </param>
         /// <param name="relayType"> Type of relay. </param>
-        /// <returns> A new <see cref="Models.HybridConnectionConfig"/> instance for mocking. </returns>
-        public static HybridConnectionConfig HybridConnectionConfig(long? expirationTime = default, string hybridConnectionName = default, string relay = default, string token = default, string relayTid = default, string relayType = default)
+        /// <returns> A new <see cref="Models.ClusterUserCredentialHybridConnectionConfig"/> instance for mocking. </returns>
+        public static ClusterUserCredentialHybridConnectionConfig ClusterUserCredentialHybridConnectionConfig(long? expirationTimeInSeconds = default, string hybridConnectionName = default, string relay = default, string token = default, string relayTid = default, string relayType = default)
         {
-            return new HybridConnectionConfig(
-                expirationTime,
+            return new ClusterUserCredentialHybridConnectionConfig(
+                expirationTimeInSeconds,
                 hybridConnectionName,
                 relay,
                 token,
                 relayTid,
                 relayType,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The credential result response. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
-        /// <returns> A new <see cref="Models.CredentialResult"/> instance for mocking. </returns>
-        public static CredentialResult CredentialResult(string name = default, BinaryData value = default)
+        /// <returns> A new <see cref="Models.ClusterUserCredentialResult"/> instance for mocking. </returns>
+        public static ClusterUserCredentialResult ClusterUserCredentialResult(string name = default, BinaryData value = default)
         {
-            return new CredentialResult(name, value, additionalBinaryDataProperties: null);
+            return new ClusterUserCredentialResult(name, value, default);
         }
     }
 }

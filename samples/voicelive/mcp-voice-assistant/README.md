@@ -18,7 +18,7 @@ This sample demonstrates how to use the **Azure VoiceLive SDK** with **MCP (Mode
 
 - .NET 10.0 or later
 - An Azure subscription with VoiceLive access
-- A VoiceLive endpoint and API key (or Azure credential)
+- A VoiceLive endpoint and API key (or Azure Core credential via `DefaultAzureCredential` in the `Azure.Identity` namespace)
 - Microphone and speakers/headphones
 
 ## Setup
@@ -40,7 +40,7 @@ export AZURE_VOICELIVE_API_KEY="<your-api-key>"
 export AZURE_VOICELIVE_MODEL="gpt-realtime"
 ```
 
-**Option 2: Token credential (DefaultAzureCredential)**
+**Option 2: Token credential (`DefaultAzureCredential` from Azure Core via `Azure.Identity` namespace)**
 ```bash
 az login
 ```
@@ -79,6 +79,13 @@ dotnet run -- --verbose
 - `--voice <voice>`: Voice name (or set `AZURE_VOICELIVE_VOICE`, default: `en-US-AvaNeural`)
 - `--use-token-credential`: Use `DefaultAzureCredential` instead of API key
 - `--verbose`: Enable detailed logging
+- `--show-traces`: Print VoiceLive telemetry spans to console
+
+You can also enable tracing with environment variable:
+
+```bash
+VOICELIVE_ENABLE_CONSOLE_TRACING=true
+```
 
 ## Features
 

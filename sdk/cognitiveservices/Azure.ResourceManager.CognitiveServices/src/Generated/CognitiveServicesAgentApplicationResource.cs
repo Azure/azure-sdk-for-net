@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _agentApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CognitiveServicesAgentApplicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesAgentApplicationResource> operation = new CognitiveServicesArmOperation<CognitiveServicesAgentApplicationResource>(
-                    new CognitiveServicesAgentApplicationOperationSource(Client),
+                    new CognitiveServicesAgentApplicationResourceOperationSource(Client),
                     _agentApplicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _agentApplicationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CognitiveServicesAgentApplicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesAgentApplicationResource> operation = new CognitiveServicesArmOperation<CognitiveServicesAgentApplicationResource>(
-                    new CognitiveServicesAgentApplicationOperationSource(Client),
+                    new CognitiveServicesAgentApplicationResourceOperationSource(Client),
                     _agentApplicationsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
-                    new ContainerAppOperationSource(Client),
+                    new ContainerAppResourceOperationSource(Client),
                     _containerAppsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
-                    new ContainerAppOperationSource(Client),
+                    new ContainerAppResourceOperationSource(Client),
                     _containerAppsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
-                    new ContainerAppOperationSource(Client),
+                    new ContainerAppResourceOperationSource(Client),
                     _containerAppsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
-                    new ContainerAppOperationSource(Client),
+                    new ContainerAppResourceOperationSource(Client),
                     _containerAppsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
-                    new ContainerAppOperationSource(Client),
+                    new ContainerAppResourceOperationSource(Client),
                     _containerAppsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsRestClient.CreateStopRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppResource> operation = new AppContainersArmOperation<ContainerAppResource>(
-                    new ContainerAppOperationSource(Client),
+                    new ContainerAppResourceOperationSource(Client),
                     _containerAppsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1464,6 +1464,13 @@ namespace Azure.ResourceManager.AppContainers
             Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
 
             return GetContainerAppDetectorPropertyRevisions().Get(revisionName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ContainerAppDetectorPropertyResource"/> along with the instance operations that can be performed on it in the <see cref="ContainerAppResource"/>. </summary>
+        /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource"/> object. </returns>
+        public virtual ContainerAppDetectorPropertyResource GetContainerAppDetectorProperty()
+        {
+            return new ContainerAppDetectorPropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
         }
 
         /// <summary> Gets a collection of ContainerAppDetectors in the <see cref="ContainerAppResource"/>. </summary>

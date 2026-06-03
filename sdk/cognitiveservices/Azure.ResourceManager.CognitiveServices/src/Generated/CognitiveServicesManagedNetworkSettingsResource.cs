@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource>(
-                    new CognitiveServicesManagedNetworkSettingsOperationSource(Client),
+                    new CognitiveServicesManagedNetworkSettingsResourceOperationSource(Client),
                     _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _managedNetworkSettingsPropertiesBasicResourcesRestClient.CreatePatchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedNetworkSettingsData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedNetworkSettingsResource>(
-                    new CognitiveServicesManagedNetworkSettingsOperationSource(Client),
+                    new CognitiveServicesManagedNetworkSettingsResourceOperationSource(Client),
                     _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

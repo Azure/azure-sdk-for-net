@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     {
         private readonly ClientDiagnostics _provisioningServiceDescriptionsClientDiagnostics;
         private readonly ProvisioningServiceDescriptions _provisioningServiceDescriptionsRestClient;
-        private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
         private readonly DeviceProvisioningServiceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices";
@@ -56,8 +54,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             TryGetApiVersion(ResourceType, out string deviceProvisioningServiceApiVersion);
             _provisioningServiceDescriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
             _provisioningServiceDescriptionsRestClient = new ProvisioningServiceDescriptions(_provisioningServiceDescriptionsClientDiagnostics, Pipeline, Endpoint, deviceProvisioningServiceApiVersion ?? "2025-02-01-preview");
-            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, deviceProvisioningServiceApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -233,7 +229,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DeviceProvisioningServicePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(
-                    new DeviceProvisioningServiceOperationSource(Client),
+                    new DeviceProvisioningServiceResourceOperationSource(Client),
                     _provisioningServiceDescriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +288,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DeviceProvisioningServicePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(
-                    new DeviceProvisioningServiceOperationSource(Client),
+                    new DeviceProvisioningServiceResourceOperationSource(Client),
                     _provisioningServiceDescriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -407,82 +403,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List private endpoint connection properties
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateEndpointConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_ListPrivateEndpointConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeviceProvisioningServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetPrivateEndpointConnectionsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<DeviceProvisioningServicesPrivateEndpointConnectionData, DeviceProvisioningServicesPrivateEndpointConnectionResource>(new MicrosoftDevicesPrivateEndpointConnectionsListPrivateEndpointConnectionsAsyncCollectionResultOfT(
-                _privateEndpointConnectionsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DeviceProvisioningServiceResource.GetPrivateEndpointConnections"), data => new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, data));
-        }
-
-        /// <summary>
-        /// List private endpoint connection properties
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateEndpointConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_ListPrivateEndpointConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DeviceProvisioningServiceResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeviceProvisioningServicesPrivateEndpointConnectionResource> GetPrivateEndpointConnections(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<DeviceProvisioningServicesPrivateEndpointConnectionData, DeviceProvisioningServicesPrivateEndpointConnectionResource>(new MicrosoftDevicesPrivateEndpointConnectionsListPrivateEndpointConnectionsCollectionResultOfT(
-                _privateEndpointConnectionsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "DeviceProvisioningServiceResource.GetPrivateEndpointConnections"), data => new DeviceProvisioningServicesPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>

@@ -162,6 +162,8 @@ namespace Azure.AI.VoiceLive
                         return ClientEventResponseCancel.DeserializeClientEventResponseCancel(element, options);
                     case "conversation.item.retrieve":
                         return ClientEventConversationItemRetrieve.DeserializeClientEventConversationItemRetrieve(element, options);
+                    case "output_audio_buffer.clear":
+                        return ClientEventOutputAudioBufferClear.DeserializeClientEventOutputAudioBufferClear(element, options);
                 }
             }
             return UnknownClientEvent.DeserializeUnknownClientEvent(element, options);

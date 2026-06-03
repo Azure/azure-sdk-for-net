@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _projectCapabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, capabilityHostName, CognitiveServicesProjectScopedCapabilityHostData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CognitiveServicesProjectScopedCapabilityHostResource> operation = new CognitiveServicesArmOperation<CognitiveServicesProjectScopedCapabilityHostResource>(
-                    new CognitiveServicesProjectScopedCapabilityHostOperationSource(Client),
+                    new CognitiveServicesProjectScopedCapabilityHostResourceOperationSource(Client),
                     _projectCapabilityHostsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _projectCapabilityHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, capabilityHostName, CognitiveServicesProjectScopedCapabilityHostData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CognitiveServicesProjectScopedCapabilityHostResource> operation = new CognitiveServicesArmOperation<CognitiveServicesProjectScopedCapabilityHostResource>(
-                    new CognitiveServicesProjectScopedCapabilityHostOperationSource(Client),
+                    new CognitiveServicesProjectScopedCapabilityHostResourceOperationSource(Client),
                     _projectCapabilityHostsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -112,6 +112,37 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_LroActionReturningArrayIsArmOperationNotPageable()
+        {
+            // An LRO action that returns an array (without @list) should be surfaced as
+            // ArmOperation<IReadOnlyList<T>> rather than a pageable.
+            var (client, models) = InputResourceData.ClientWithResourceLroArrayAction();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders
+                .OfType<ResourceClientProvider>()
+                .FirstOrDefault();
+            Assert.That(resourceProvider, Is.Not.Null);
+
+            var syncMethod = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "SplitDependencies");
+            Assert.That(syncMethod, Is.Not.Null);
+            var asyncMethod = resourceProvider.Methods.FirstOrDefault(m => m.Signature.Name == "SplitDependenciesAsync");
+            Assert.That(asyncMethod, Is.Not.Null);
+
+            // Sync: ArmOperation<IReadOnlyList<T>> with a WaitUntil parameter (LRO shape), not Pageable<T>.
+            var syncSignature = syncMethod!.Signature;
+            Assert.That(syncSignature.ReturnType?.FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
+            Assert.That(syncSignature.ReturnType?.Arguments[0].IsList, Is.True);
+            Assert.That(syncSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+
+            // Async: Task<ArmOperation<IReadOnlyList<T>>>.
+            var asyncSignature = asyncMethod!.Signature;
+            Assert.That(asyncSignature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.That(asyncSignature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
+            Assert.That(asyncSignature.ReturnType?.Arguments[0].Arguments[0].IsList, Is.True);
+            Assert.That(asyncSignature.Parameters[0].Type.FrameworkType, Is.EqualTo(typeof(WaitUntil)));
+        }
+
+        [TestCase]
         public void Verify_ConstructorWithData()
         {
             var constructor = GetResourceClientProviderConstructorByName("data");
