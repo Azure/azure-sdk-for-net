@@ -166,13 +166,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteDataSourceConnection((string)null, CancellationToken.None));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteDataSourceConnection((string)null));
             Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteDataSourceConnection((SearchIndexerDataSourceConnection)null));
             Assert.AreEqual("dataSourceConnection", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteDataSourceConnectionAsync((string)null, CancellationToken.None));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteDataSourceConnectionAsync((string)null));
             Assert.AreEqual("dataSourceConnectionName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteDataSourceConnectionAsync((SearchIndexerDataSourceConnection)null));
@@ -226,7 +226,7 @@ namespace Azure.Search.Documents.Tests
             {
                 if (Recording.Mode != RecordedTestMode.Playback)
                 {
-                    await client.DeleteDataSourceConnectionAsync(connectionName, CancellationToken.None);
+                    await client.DeleteDataSourceConnectionAsync(connectionName);
                 }
                 throw;
             }
@@ -281,13 +281,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndexer((string)null, CancellationToken.None));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndexer((string)null));
             Assert.AreEqual("indexerName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndexer((SearchIndexer)null));
             Assert.AreEqual("indexer", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexerAsync((string)null, CancellationToken.None));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexerAsync((string)null));
             Assert.AreEqual("indexerName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexerAsync((SearchIndexer)null));
@@ -371,13 +371,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexerClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSkillset((string)null, CancellationToken.None));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSkillset((string)null));
             Assert.AreEqual("skillsetName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSkillset((SearchIndexerSkillset)null));
             Assert.AreEqual("skillset", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSkillsetAsync((string)null, CancellationToken.None));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSkillsetAsync((string)null));
             Assert.AreEqual("skillsetName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSkillsetAsync((SearchIndexerSkillset)null));
@@ -625,7 +625,7 @@ namespace Azure.Search.Documents.Tests
                 {
                     try
                     {
-                        await client.DeleteSkillsetAsync(skillsetName, CancellationToken.None);
+                        await client.DeleteSkillsetAsync(skillsetName);
                     }
                     catch (RequestFailedException ex) when (ex.Status == 404)
                     {
@@ -714,7 +714,7 @@ namespace Azure.Search.Documents.Tests
             {
                 if (Recording.Mode != RecordedTestMode.Playback)
                 {
-                    await client.DeleteSkillsetAsync(skillsetName, CancellationToken.None);
+                    await client.DeleteSkillsetAsync(skillsetName);
                 }
 
                 throw;

@@ -288,7 +288,7 @@ namespace Azure.Search.Documents.Tests.Samples
                     { await testIndexClient.DeleteKnowledgeSourceAsync(testSourceName, cancellationToken: CancellationToken.None); }
                     catch { }
                     try
-                    { await testIndexClient.DeleteIndexAsync(testIndexName, cancellationToken: CancellationToken.None); }
+                    { await testIndexClient.DeleteIndexAsync(testIndexName); }
                     catch { }
                 }
             }

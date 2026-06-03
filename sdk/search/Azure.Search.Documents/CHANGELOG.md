@@ -4,13 +4,13 @@
 
 ### Features Added
 
-- Added knowledge base activity record types for source-level retrieval tracking: `KnowledgeBaseSearchIndexActivityRecord`, `KnowledgeBaseAzureBlobActivityRecord`, `KnowledgeBaseIndexedOneLakeActivityRecord`, and `KnowledgeBaseWebActivityRecord`.
-- Added corresponding activity arguments types: `KnowledgeBaseSearchIndexActivityArguments`, `KnowledgeBaseAzureBlobActivityArguments`, `KnowledgeBaseIndexedOneLakeActivityArguments`, and `KnowledgeBaseWebActivityArguments`.
-- Added `KnowledgeBaseActivityRecordType` values: `SearchIndex`, `AzureBlob`, `IndexedOneLake`, and `Web`.
+- Added missing knowledge base activity record types for source-level retrieval tracking: `KnowledgeBaseSearchIndexActivityRecord`, `KnowledgeBaseAzureBlobActivityRecord`, `KnowledgeBaseIndexedOneLakeActivityRecord`, and `KnowledgeBaseWebActivityRecord`.
+- Added missing corresponding activity arguments types: `KnowledgeBaseSearchIndexActivityArguments`, `KnowledgeBaseAzureBlobActivityArguments`, `KnowledgeBaseIndexedOneLakeActivityArguments`, and `KnowledgeBaseWebActivityArguments`.
+- Added missing `KnowledgeBaseActivityRecordType` values: `SearchIndex`, `AzureBlob`, `IndexedOneLake`, and `Web`.
 
 ### Bugs Fixed
 
-- Fixed ambiguous overload resolution for `DeleteIndex`, `DeleteIndexAsync`, `DeleteSynonymMap`, `DeleteSynonymMapAsync`, `DeleteIndexer`, `DeleteIndexerAsync`, `DeleteDataSourceConnection`, `DeleteDataSourceConnectionAsync`, `DeleteSkillset`, and `DeleteSkillsetAsync` methods when called with only a name argument. The `CancellationToken` parameter on the `(string, CancellationToken)` overloads is now required to disambiguate from the generated `(string, MatchConditions, CancellationToken)` convenience overloads.
+- Fixed ambiguous overload resolution for `DeleteIndex`, `DeleteIndexAsync`, `DeleteSynonymMap`, `DeleteSynonymMapAsync`, `DeleteIndexer`, `DeleteIndexerAsync`, `DeleteDataSourceConnection`, `DeleteDataSourceConnectionAsync`, `DeleteSkillset`, and `DeleteSkillsetAsync` methods when called with only a name argument. The `CancellationToken` parameter on the `(string, CancellationToken)` overloads is now required to disambiguate from the generated `(string, MatchConditions, CancellationToken)` convenience overloads. Fixes [Issue #59559](https://github.com/Azure/azure-sdk-for-net/issues/59559).
 
 ## 12.0.0 (2026-05-01)
 

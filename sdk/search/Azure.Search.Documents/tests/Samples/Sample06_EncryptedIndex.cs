@@ -132,11 +132,11 @@ namespace Azure.Search.Documents.Tests.Samples
 #endif
                 indexerClient.CreateDataSourceConnection(dataSourceConnection);
 #if !SNIPPET
-                cleanUpTasks.Push(() => indexerClient.DeleteDataSourceConnectionAsync(dataSourceConnectionName, cancellationToken: CancellationToken.None));
+                cleanUpTasks.Push(() => indexerClient.DeleteDataSourceConnectionAsync(dataSourceConnectionName));
 #endif
                 indexerClient.CreateIndexer(indexer);
 #if !SNIPPET
-                cleanUpTasks.Push(() => indexerClient.DeleteIndexerAsync(indexerName, cancellationToken: CancellationToken.None));
+                cleanUpTasks.Push(() => indexerClient.DeleteIndexerAsync(indexerName));
 #endif
                 #endregion Snippet:Azure_Search_Tests_Sample06_EncryptedIndex_CreateDoubleEncryptedIndex_Index
 

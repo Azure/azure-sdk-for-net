@@ -63,7 +63,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                await indexClient.DeleteIndexAsync(indexName);
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                await indexClient.DeleteIndexAsync(indexName);
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                await indexClient.DeleteIndexAsync(indexName);
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                await indexClient.DeleteIndexAsync(indexName);
             }
         }
 
@@ -268,7 +268,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                await indexClient.DeleteIndexAsync(indexName);
             }
         }
 
