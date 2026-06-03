@@ -185,7 +185,8 @@ namespace Azure.Generator.Management.Snippets
 
             if (type.IsFrameworkType && type.FrameworkType == typeof(BinaryData))
             {
-                // BinaryData.FromString(element.GetRawText())
+                // This is hit for Record<unknown> values: the Record itself is a dictionary, while each
+                // dictionary value is represented as BinaryData.
                 return Static(typeof(BinaryData)).Invoke(
                     nameof(BinaryData.FromString),
                     element.Invoke(nameof(JsonElement.GetRawText)));
