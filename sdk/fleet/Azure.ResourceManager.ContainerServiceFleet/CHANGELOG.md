@@ -4,7 +4,15 @@
 
 ### Features Added
 
+- Upgraded api-version to `2026-03-02-preview`.
+- Added Cluster Mesh Profile support, including `ClusterMeshProfileResource` and the related Cilium-based mesh member status surfaced on `ContainerServiceFleetMemberResource`.
+
 ### Breaking Changes
+
+- Renamed `AutoUpgradeProfileProperties.LongTermSupport` to `IsLongTermSupport` to follow the .NET boolean property naming guideline.
+- Renamed two types to use the package-consistent `ContainerServiceFleet*` prefix:
+  - `UpdateRunGateStatus` → `ContainerServiceFleetUpdateRunGateStatus`
+  - `UpdateRunGateTargetProperties` → `ContainerServiceFleetUpdateRunGateTargetProperties`
 
 ### Bugs Fixed
 
