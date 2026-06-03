@@ -21,6 +21,38 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [Test]
+        public void CreateGenericResponsePipelineProcessing_WithListOfKnownManagementType_UsesContextModelReaderWriterPerElement()
+        {
+            // Arrange: IReadOnlyList<OperationStatusResult> — a list whose element is a *known* Azure.ResourceManager
+            // framework type (not a locally generated model). The collection itself is built inline (no MRW on the
+            // list), while each element is deserialized via the AOT-safe context ModelReaderWriter.Read<T> overload.
+            var messageVar = new VariableExpression(typeof(Azure.Core.HttpMessage), "message");
+            var contextVar = new VariableExpression(typeof(Azure.RequestContext), "context");
+            CSharpType responseType = new CSharpType(typeof(IReadOnlyList<>), typeof(OperationStatusResult));
+
+            // Act
+            var statements = ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
+                messageVar,
+                contextVar,
+                responseType,
+                isAsync: false,
+                out _);
+
+            // Assert
+            var code = string.Join("\n", statements.Select(s => s.ToDisplayString()));
+            Assert.That(code, Does.Contain("JsonDocument.Parse(result.Content"),
+                "The list response should be parsed inline with JsonDocument.");
+            Assert.That(code, Does.Contain("EnumerateArray()"),
+                "The list should be built by enumerating the JSON array.");
+            Assert.That(code, Does.Not.Contain("ModelReaderWriter.Read<global::System.Collections.Generic.IReadOnlyList"),
+                "The collection itself must not go through ModelReaderWriter.Read.");
+            Assert.That(code, Does.Contain("ModelReaderWriter.Read<global::Azure.ResourceManager.Models.OperationStatusResult>"),
+                "Each known-management-type element should be deserialized via ModelReaderWriter.Read<T>.");
+            Assert.That(code, Does.Contain("Context.Default"),
+                "Element deserialization must use the AOT-safe context overload.");
+        }
+
+        [Test]
         public void CreateGenericResponsePipelineProcessing_WithFrameworkType_DoesNotUseFromResponse()
         {
             // Arrange: OperationStatusResult is a framework/system type from Azure.ResourceManager
