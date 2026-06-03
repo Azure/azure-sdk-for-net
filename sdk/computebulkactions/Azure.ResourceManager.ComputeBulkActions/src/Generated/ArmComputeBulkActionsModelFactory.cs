@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
     public static partial class ArmComputeBulkActionsModelFactory
     {
 
-        /// <summary> Location based type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -41,16 +40,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
                 location,
-                zones.ToList(),
-                tags,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
-                plan);
+                plan,
+                default);
         }
 
-        /// <summary> Details of the LaunchBulkInstancesOperation. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="capacity"> Total capacity to achieve. It can be in terms of VMs or vCPUs. </param>
         /// <param name="capacityType"> Specifies capacity type for launching instances. It can be in terms of VMs or vCPUs. </param>
@@ -70,15 +68,35 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 capacity,
                 capacityType,
                 priorityProfile,
-                vmSizesProfile.ToList(),
+                (vmSizesProfile ?? new ChangeTrackingList<ComputeBulkActionsVmSizeProfile>()).ToList(),
                 vmAttributes,
                 computeProfile,
                 zoneAllocationPolicy,
                 retryPolicy,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> VMAttributes that will be used to filter VMSizes which will be used to launch instances. </summary>
+        /// <param name="type"> Specifies the type of Virtual Machine. </param>
+        /// <param name="maxPricePerVM"> Price per hour of each Spot VM will never exceed this. </param>
+        /// <param name="evictionPolicy"> Eviction Policy to follow when evicting Spot VMs. </param>
+        /// <param name="allocationStrategy"> Allocation strategy to follow when determining the VM sizes distribution. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsPriorityProfile"/> instance for mocking. </returns>
+        public static ComputeBulkActionsPriorityProfile ComputeBulkActionsPriorityProfile(ComputeBulkActionsVirtualMachineType? @type = default, float? maxPricePerVM = default, ComputeBulkActionsEvictionPolicy? evictionPolicy = default, ComputeBulkActionsAllocationStrategy? allocationStrategy = default)
+        {
+            return new ComputeBulkActionsPriorityProfile(@type, maxPricePerVM, evictionPolicy, allocationStrategy, default);
+        }
+
+        /// <param name="name"> The Sku name (e.g. 'Standard_DS1_v2'). </param>
+        /// <param name="rank">
+        /// The rank of the VM size. This is used with 'AllocationStrategy.Prioritized'
+        /// The lower the number, the higher the priority. Starting with 0.
+        /// </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVmSizeProfile"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVmSizeProfile ComputeBulkActionsVmSizeProfile(string name = default, int? rank = default)
+        {
+            return new ComputeBulkActionsVmSizeProfile(name, rank, default);
+        }
+
         /// <param name="vCpuCount"> The range of vCpuCount specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </param>
         /// <param name="memoryInGiB"> The range of memory specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </param>
         /// <param name="architectureTypes"> The VM architecture types specified as a list. Must be specified if VMAttributes are specified. Must be compatible with image used. </param>
@@ -145,30 +163,45 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             return new ComputeBulkActionsVMAttributes(
                 vCpuCount,
                 memoryInGiB,
-                architectureTypes.ToList(),
+                (architectureTypes ?? new ChangeTrackingList<ComputeBulkActionsArchitectureType>()).ToList(),
                 memoryInGiBPerVCpu,
                 localStorageSupport,
                 localStorageInGiB,
-                localStorageDiskTypes.ToList(),
+                (localStorageDiskTypes ?? new ChangeTrackingList<ComputeBulkActionsLocalStorageDiskType>()).ToList(),
                 dataDiskCount,
                 networkInterfaceCount,
                 networkBandwidthInMbps,
                 rdmaSupport,
                 rdmaNetworkInterfaceCount,
                 acceleratorSupport,
-                acceleratorManufacturers.ToList(),
-                acceleratorTypes.ToList(),
+                (acceleratorManufacturers ?? new ChangeTrackingList<ComputeBulkActionsAcceleratorManufacturer>()).ToList(),
+                (acceleratorTypes ?? new ChangeTrackingList<ComputeBulkActionsAcceleratorType>()).ToList(),
                 acceleratorCount,
-                vmCategories.ToList(),
-                cpuManufacturers.ToList(),
-                hyperVGenerations.ToList(),
+                (vmCategories ?? new ChangeTrackingList<ComputeBulkActionsVMCategory>()).ToList(),
+                (cpuManufacturers ?? new ChangeTrackingList<ComputeBulkActionsCpuManufacturer>()).ToList(),
+                (hyperVGenerations ?? new ChangeTrackingList<ComputeBulkActionsHyperVGeneration>()).ToList(),
                 burstableSupport,
-                allowedVMSizes.ToList(),
-                excludedVMSizes.ToList(),
-                additionalBinaryDataProperties: null);
+                (allowedVMSizes ?? new ChangeTrackingList<string>()).ToList(),
+                (excludedVMSizes ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
-        /// <summary> Compute Profile to configure the Virtual Machines. </summary>
+        /// <param name="min"> Min VMSize from CRS, Min = 0 (uint.MinValue) if not specified. </param>
+        /// <param name="max"> Max VMSize from CRS, Max = 4294967295 (uint.MaxValue) if not specified. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVMAttributeMinMaxInteger"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVMAttributeMinMaxInteger ComputeBulkActionsVMAttributeMinMaxInteger(int? min = default, int? max = default)
+        {
+            return new ComputeBulkActionsVMAttributeMinMaxInteger(min, max, default);
+        }
+
+        /// <param name="min"> Minimum value. If not specified, no minimum filter is applied. </param>
+        /// <param name="max"> Maximum value. Must be greater than zero. Double.MaxValue(1.7976931348623157E+308). </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVMAttributeMinMaxDouble"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVMAttributeMinMaxDouble ComputeBulkActionsVMAttributeMinMaxDouble(double? min = default, double? max = default)
+        {
+            return new ComputeBulkActionsVMAttributeMinMaxDouble(min, max, default);
+        }
+
         /// <param name="virtualMachineProfile"> Base Virtual Machine Profile Properties to be specified according to "specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/{computeApiVersion}/virtualMachine.json#/definitions/VirtualMachineProperties". </param>
         /// <param name="extensions"> Virtual Machine Extensions Array to be specified according to "specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/{computeApiVersion}/virtualMachine.json#/definitions/VirtualMachineExtension". </param>
         /// <param name="computeApiVersion">
@@ -180,10 +213,58 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             extensions ??= new ChangeTrackingList<ComputeBulkActionsVirtualMachineExtension>();
 
-            return new BulkActionComputeProfile(virtualMachineProfile, extensions.ToList(), computeApiVersion, additionalBinaryDataProperties: null);
+            return new BulkActionComputeProfile(virtualMachineProfile, (extensions ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineExtension>()).ToList(), computeApiVersion, default);
         }
 
-        /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
+        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. </param>
+        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
+        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine. </param>
+        /// <param name="osProfile"> Specifies the operating system settings used while creating the virtual machine. Some of the settings cannot be changed once VM is provisioned. </param>
+        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
+        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
+        /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
+        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
+        /// <param name="extensionsTimeBudget"> Specifies the time alloted for all extensions to start. The time duration should be between 15 minutes and 120 minutes (inclusive) and should be specified in ISO 8601 format. The default value is 90 minutes (PT1H30M). Minimum compute api-version: 2020-06-01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum compute api-version: 2021-03-01. </param>
+        /// <param name="capacityReservationGroupId"> The ID of the sub-resource. </param>
+        /// <param name="galleryApplications"> Specifies the gallery applications that should be made available to the VM. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVirtualMachineProfile"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVirtualMachineProfile ComputeBulkActionsVirtualMachineProfile(ComputeBulkActionsScheduledEventsPolicy scheduledEventsPolicy = default, ComputeBulkActionsStorageProfile storageProfile = default, ComputeBulkActionsAdditionalCapabilities additionalCapabilities = default, ComputeBulkActionsOSProfile osProfile = default, ComputeBulkActionsNetworkProfile networkProfile = default, ComputeBulkActionsSecurityProfile securityProfile = default, ComputeBulkActionsBootDiagnostics bootDiagnostics = default, string licenseType = default, string extensionsTimeBudget = default, ComputeBulkActionsScheduledEventsProfile scheduledEventsProfile = default, string userData = default, ResourceIdentifier capacityReservationGroupId = default, IEnumerable<ComputeBulkActionsVMGalleryApplication> galleryApplications = default)
+        {
+            return new ComputeBulkActionsVirtualMachineProfile(
+                scheduledEventsPolicy,
+                storageProfile,
+                additionalCapabilities,
+                osProfile,
+                networkProfile,
+                securityProfile,
+                bootDiagnostics is null ? default : new DiagnosticsProfile(bootDiagnostics, default),
+                licenseType,
+                extensionsTimeBudget,
+                scheduledEventsProfile,
+                userData,
+                capacityReservationGroupId is null ? default : new CapacityReservationProfile(new ComputeBulkActionsSubResource(capacityReservationGroupId, default), default),
+                galleryApplications is null ? default : new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<ComputeBulkActionsVMGalleryApplication>()).ToList(), default),
+                default);
+        }
+
+        /// <param name="automaticallyApprove"> Specifies Redeploy Scheduled Event related configurations. </param>
+        /// <param name="scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph"> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsScheduledEventsPolicy"/> instance for mocking. </returns>
+        public static ComputeBulkActionsScheduledEventsPolicy ComputeBulkActionsScheduledEventsPolicy(bool? automaticallyApprove = default, ComputeBulkActionsEventGridAndResourceGraph scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = default)
+        {
+            return new ComputeBulkActionsScheduledEventsPolicy(automaticallyApprove is null ? default : new UserInitiatedRedeploy(automaticallyApprove, default), automaticallyApprove is null ? default : new UserInitiatedReboot(automaticallyApprove, default), scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph is null ? default : new ScheduledEventsAdditionalPublishingTargets(scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph, default), automaticallyApprove is null ? default : new AllInstancesDown(automaticallyApprove, default), default);
+        }
+
+        /// <param name="isEnabled"> Specifies if event grid and resource graph is enabled for Scheduled event related configurations. </param>
+        /// <param name="scheduledEventsApiVersion"> Specifies the api-version to determine which Scheduled Events configuration schema version will be delivered. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsEventGridAndResourceGraph"/> instance for mocking. </returns>
+        public static ComputeBulkActionsEventGridAndResourceGraph ComputeBulkActionsEventGridAndResourceGraph(bool? isEnabled = default, string scheduledEventsApiVersion = default)
+        {
+            return new ComputeBulkActionsEventGridAndResourceGraph(isEnabled, scheduledEventsApiVersion, default);
+        }
+
         /// <param name="imageReference"> Specifies information about the image to use. You can specify information about platform images, marketplace images, or virtual machine images. This element is required when you want to use a platform image, marketplace image, or virtual machine image, but is not used in other creation operations. </param>
         /// <param name="osDisk"> Specifies information about the operating system disk used by the virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
         /// <param name="dataDisks"> Specifies the parameters that are used to add a data disk to a virtual machine. For more information about disks, see [About disks and VHDs for Azure virtual machines](https://docs.microsoft.com/azure/virtual-machines/managed-disks-overview). </param>
@@ -193,10 +274,167 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             dataDisks ??= new ChangeTrackingList<ComputeBulkActionsDataDisk>();
 
-            return new ComputeBulkActionsStorageProfile(imageReference, osDisk, dataDisks.ToList(), diskControllerType, additionalBinaryDataProperties: null);
+            return new ComputeBulkActionsStorageProfile(imageReference, osDisk, (dataDisks ?? new ChangeTrackingList<ComputeBulkActionsDataDisk>()).ToList(), diskControllerType, default);
         }
 
-        /// <summary> Specifies the operating system settings for the virtual machine. Some of the settings cannot be changed once VM is provisioned. </summary>
+        /// <param name="id"> The ID of the sub-resource. </param>
+        /// <param name="publisher"> The image publisher. </param>
+        /// <param name="offer"> Specifies the offer of the platform image or marketplace image used to create the virtual machine. </param>
+        /// <param name="sku"> The image SKU. </param>
+        /// <param name="version"> Specifies the version of the platform image or marketplace image used to create the virtual machine. The allowed formats are Major.Minor.Build or 'latest'. Major, Minor, and Build are decimal numbers. Specify 'latest' to use the latest version of an image available at deploy time. Even if you use 'latest', the VM image will not automatically update after deploy time even if a new version becomes available. Please do not use field 'version' for gallery image deployment, gallery image should always use 'id' field for deployment, to use 'latest' version of gallery image, just set '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageName}' in the 'id' field without version input. </param>
+        /// <param name="sharedGalleryImageId"> Specified the shared gallery image unique id for vm deployment. This can be fetched from shared gallery image GET call. </param>
+        /// <param name="communityGalleryImageId"> Specified the community gallery image unique id for vm deployment. This can be fetched from community gallery image GET call. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsImageReference"/> instance for mocking. </returns>
+        public static ComputeBulkActionsImageReference ComputeBulkActionsImageReference(ResourceIdentifier id = default, string publisher = default, string offer = default, string sku = default, string version = default, string sharedGalleryImageId = default, string communityGalleryImageId = default)
+        {
+            return new ComputeBulkActionsImageReference(
+                id,
+                default,
+                publisher,
+                offer,
+                sku,
+                version,
+                sharedGalleryImageId,
+                communityGalleryImageId);
+        }
+
+        /// <param name="id"> The ID of the sub-resource. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsSubResource"/> instance for mocking. </returns>
+        public static ComputeBulkActionsSubResource ComputeBulkActionsSubResource(ResourceIdentifier id = default)
+        {
+            return new ComputeBulkActionsSubResource(id, default);
+        }
+
+        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </param>
+        /// <param name="encryptionSettings"> Specifies the encryption settings for the OS Disk. Minimum compute api-version: 2015-06-15. </param>
+        /// <param name="name"> The disk name. </param>
+        /// <param name="vhdUri"> Specifies the virtual hard disk's uri. </param>
+        /// <param name="imageUri"> Specifies the virtual hard disk's uri. </param>
+        /// <param name="caching"> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The defaulting behavior is: None for Standard storage. ReadOnly for Premium storage. </param>
+        /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        /// <param name="diffDiskSettings"> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </param>
+        /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. </param>
+        /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </param>
+        /// <param name="managedDisk"> The managed disk parameters. </param>
+        /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. For an ephemeral OS Disk, the default value is set to Delete. The user cannot change the delete option for an ephemeral OS Disk. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsOSDisk"/> instance for mocking. </returns>
+        public static ComputeBulkActionsOSDisk ComputeBulkActionsOSDisk(ComputeBulkActionsOperatingSystemType? osType = default, ComputeBulkActionsDiskEncryptionSettings encryptionSettings = default, string name = default, string vhdUri = default, string imageUri = default, ComputeBulkActionsCachingType? caching = default, bool? isWriteAcceleratorEnabled = default, ComputeBulkActionsDiffDiskSettings diffDiskSettings = default, ComputeBulkActionsDiskCreateOptionType createOption = default, int? diskSizeGB = default, ComputeBulkActionsManagedDiskInfo managedDisk = default, ComputeBulkActionsDiskDeleteOptionType? deleteOption = default)
+        {
+            return new ComputeBulkActionsOSDisk(
+                osType,
+                encryptionSettings,
+                name,
+                vhdUri is null ? default : new VirtualHardDisk(vhdUri, default),
+                imageUri is null ? default : new VirtualHardDisk(imageUri, default),
+                caching,
+                isWriteAcceleratorEnabled,
+                diffDiskSettings,
+                createOption,
+                diskSizeGB,
+                managedDisk,
+                deleteOption,
+                default);
+        }
+
+        /// <param name="diskEncryptionKey"> Specifies the location of the disk encryption key, which is a Key Vault Secret. </param>
+        /// <param name="keyEncryptionKey"> Specifies the location of the key encryption key in Key Vault. </param>
+        /// <param name="isEnabled"> Specifies whether disk encryption should be enabled on the virtual machine. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsDiskEncryptionSettings"/> instance for mocking. </returns>
+        public static ComputeBulkActionsDiskEncryptionSettings ComputeBulkActionsDiskEncryptionSettings(ComputeBulkActionsKeyVaultSecretReference diskEncryptionKey = default, ComputeBulkActionsKeyVaultKeyReference keyEncryptionKey = default, bool? isEnabled = default)
+        {
+            return new ComputeBulkActionsDiskEncryptionSettings(diskEncryptionKey, keyEncryptionKey, isEnabled, default);
+        }
+
+        /// <param name="secretUri"> The URL referencing a secret in a Key Vault. </param>
+        /// <param name="sourceVaultId"> The ID of the sub-resource. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsKeyVaultSecretReference"/> instance for mocking. </returns>
+        public static ComputeBulkActionsKeyVaultSecretReference ComputeBulkActionsKeyVaultSecretReference(string secretUri = default, ResourceIdentifier sourceVaultId = default)
+        {
+            return new ComputeBulkActionsKeyVaultSecretReference(secretUri, sourceVaultId is null ? default : new ComputeBulkActionsSubResource(sourceVaultId, default), default);
+        }
+
+        /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
+        /// <param name="sourceVaultId"> The ID of the sub-resource. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsKeyVaultKeyReference"/> instance for mocking. </returns>
+        public static ComputeBulkActionsKeyVaultKeyReference ComputeBulkActionsKeyVaultKeyReference(string keyUri = default, ResourceIdentifier sourceVaultId = default)
+        {
+            return new ComputeBulkActionsKeyVaultKeyReference(keyUri, sourceVaultId is null ? default : new ComputeBulkActionsSubResource(sourceVaultId, default), default);
+        }
+
+        /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
+        /// <param name="placement"> Specifies the ephemeral disk placement for operating system disk. Possible values are: CacheDisk, ResourceDisk, NvmeDisk. The defaulting behavior is: CacheDisk if one is configured for the VM size otherwise ResourceDisk or NvmeDisk is used. Minimum api-version for NvmeDisk: 2024-03-01. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsDiffDiskSettings"/> instance for mocking. </returns>
+        public static ComputeBulkActionsDiffDiskSettings ComputeBulkActionsDiffDiskSettings(ComputeBulkActionsDiffDiskOption? option = default, ComputeBulkActionsDiffDiskPlacement? placement = default)
+        {
+            return new ComputeBulkActionsDiffDiskSettings(option, placement, default);
+        }
+
+        /// <param name="id"> The ID of the sub-resource. </param>
+        /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
+        /// <param name="diskEncryptionSetId"> The ID of the sub-resource. </param>
+        /// <param name="securityProfile"> Specifies the security profile for the managed disk. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsManagedDiskInfo"/> instance for mocking. </returns>
+        public static ComputeBulkActionsManagedDiskInfo ComputeBulkActionsManagedDiskInfo(ResourceIdentifier id = default, ComputeBulkActionsStorageAccountType? storageAccountType = default, ResourceIdentifier diskEncryptionSetId = default, ComputeBulkActionsVMDiskSecurityProfile securityProfile = default)
+        {
+            return new ComputeBulkActionsManagedDiskInfo(id, default, storageAccountType, diskEncryptionSetId is null ? default : new ComputeBulkActionsDiskEncryptionSetReference(diskEncryptionSetId, default), securityProfile);
+        }
+
+        /// <param name="id"> The ID of the sub-resource. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsDiskEncryptionSetReference"/> instance for mocking. </returns>
+        public static ComputeBulkActionsDiskEncryptionSetReference ComputeBulkActionsDiskEncryptionSetReference(ResourceIdentifier id = default)
+        {
+            return new ComputeBulkActionsDiskEncryptionSetReference(id, default);
+        }
+
+        /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob.. <b>Note:</b> It can be set for only Confidential VMs. </param>
+        /// <param name="diskEncryptionSetId"> The ID of the sub-resource. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVMDiskSecurityProfile"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVMDiskSecurityProfile ComputeBulkActionsVMDiskSecurityProfile(ComputeBulkActionsSecurityEncryptionType? securityEncryptionType = default, ResourceIdentifier diskEncryptionSetId = default)
+        {
+            return new ComputeBulkActionsVMDiskSecurityProfile(securityEncryptionType, diskEncryptionSetId is null ? default : new ComputeBulkActionsDiskEncryptionSetReference(diskEncryptionSetId, default), default);
+        }
+
+        /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. </param>
+        /// <param name="name"> The disk name. </param>
+        /// <param name="vhdUri"> Specifies the virtual hard disk's uri. </param>
+        /// <param name="imageUri"> Specifies the virtual hard disk's uri. </param>
+        /// <param name="caching"> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The defaulting behavior is: None for Standard storage. ReadOnly for Premium storage. </param>
+        /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        /// <param name="createOption"> Specifies how the virtual machine disk should be created. Possible values are Attach, FromImage, Empty, Copy, Restore. </param>
+        /// <param name="diskSizeGB"> Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. </param>
+        /// <param name="managedDisk"> The managed disk parameters. </param>
+        /// <param name="sourceResourceId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
+        /// <param name="isToBeDetached"> Specifies whether the data disk is in process of detachment from the VirtualMachine/VirtualMachineScaleset. </param>
+        /// <param name="detachOption"> Specifies the detach behavior to be used while detaching a disk or which is already in the process of detachment from the virtual machine. Supported values: ForceDetach. This feature is still in preview. To force-detach a data disk update toBeDetached to 'true' along with setting detachOption: 'ForceDetach'. </param>
+        /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: Delete, Detach. The default value is set to Detach. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsDataDisk"/> instance for mocking. </returns>
+        public static ComputeBulkActionsDataDisk ComputeBulkActionsDataDisk(int lun = default, string name = default, string vhdUri = default, string imageUri = default, ComputeBulkActionsCachingType? caching = default, bool? isWriteAcceleratorEnabled = default, ComputeBulkActionsDiskCreateOptionType createOption = default, int? diskSizeGB = default, ComputeBulkActionsManagedDiskInfo managedDisk = default, ResourceIdentifier sourceResourceId = default, bool? isToBeDetached = default, ComputeBulkActionsDiskDetachOptionType? detachOption = default, ComputeBulkActionsDiskDeleteOptionType? deleteOption = default)
+        {
+            return new ComputeBulkActionsDataDisk(
+                lun,
+                name,
+                vhdUri is null ? default : new VirtualHardDisk(vhdUri, default),
+                imageUri is null ? default : new VirtualHardDisk(imageUri, default),
+                caching,
+                isWriteAcceleratorEnabled,
+                createOption,
+                diskSizeGB,
+                managedDisk,
+                sourceResourceId is null ? default : new ApiEntityReference(sourceResourceId, default),
+                isToBeDetached,
+                detachOption,
+                deleteOption,
+                default);
+        }
+
+        /// <param name="isUltraSsdEnabled"> The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS. Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled. </param>
+        /// <param name="isHibernationEnabled"> The flag that enables or disables hibernation capability on the VM. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsAdditionalCapabilities"/> instance for mocking. </returns>
+        public static ComputeBulkActionsAdditionalCapabilities ComputeBulkActionsAdditionalCapabilities(bool? isUltraSsdEnabled = default, bool? isHibernationEnabled = default)
+        {
+            return new ComputeBulkActionsAdditionalCapabilities(isUltraSsdEnabled, isHibernationEnabled, default);
+        }
+
         /// <param name="computerName"> Specifies the host OS name of the virtual machine. This name cannot be updated after the VM is created. <b>Max-length (Windows):</b> 15 characters. <b>Max-length (Linux):</b> 64 characters. For naming conventions and restrictions see [Azure infrastructure services implementation guidelines](https://docs.microsoft.com/azure/azure-resource-manager/management/resource-name-rules). </param>
         /// <param name="adminUsername"> Specifies the name of the administrator account. &lt;br&gt;&lt;br&gt; This property cannot be updated after the VM is created. &lt;br&gt;&lt;br&gt; <b>Windows-only restriction:</b> Cannot end in "." &lt;br&gt;&lt;br&gt; <b>Disallowed values:</b> "administrator", "admin", "user", "user1", "test", "user2", "test1", "user3", "admin1", "1", "123", "a", "actuser", "adm", "admin2", "aspnet", "backup", "console", "david", "guest", "john", "owner", "root", "server", "sql", "support", "support_388945a0", "sys", "test2", "test3", "user4", "user5". &lt;br&gt;&lt;br&gt; <b>Minimum-length (Linux):</b> 1  character &lt;br&gt;&lt;br&gt; <b>Max-length (Linux):</b> 64 characters &lt;br&gt;&lt;br&gt; <b>Max-length (Windows):</b> 20 characters. </param>
         /// <param name="adminPassword"> Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; <b>Minimum-length (Windows):</b> 8 characters &lt;br&gt;&lt;br&gt; <b>Minimum-length (Linux):</b> 6 characters &lt;br&gt;&lt;br&gt; <b>Max-length (Windows):</b> 123 characters &lt;br&gt;&lt;br&gt; <b>Max-length (Linux):</b> 72 characters &lt;br&gt;&lt;br&gt; <b>Complexity requirements:</b> 3 out of 4 conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_]) &lt;br&gt;&lt;br&gt; <b>Disallowed values:</b> "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!" &lt;br&gt;&lt;br&gt; For resetting the password, see [How to reset the Remote Desktop service or its login password in a Windows VM](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/reset-rdp) &lt;br&gt;&lt;br&gt; For resetting root password, see [Manage users, SSH, and check or repair disks on Azure Linux VMs using the VMAccess Extension](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection). </param>
@@ -218,10 +456,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 customData,
                 windowsConfiguration,
                 linuxConfiguration,
-                secrets.ToList(),
+                (secrets ?? new ChangeTrackingList<ComputeBulkActionsVaultSecretGroup>()).ToList(),
                 isExtensionOperationsAllowed,
                 isGuestProvisionSignalRequired,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="isVMAgentProvisioned"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, it is set to true by default. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
@@ -239,10 +477,88 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 isVMAgentProvisioned,
                 enableAutomaticUpdates,
                 timeZone,
-                additionalUnattendContent.ToList(),
+                (additionalUnattendContent ?? new ChangeTrackingList<ComputeBulkActionsAdditionalUnattendContent>()).ToList(),
                 patchSettings,
-                winRMListeners is null ? default : new WinRMConfiguration((winRMListeners ?? new ChangeTrackingList<ComputeBulkActionsWinRMListener>()).ToList(), null),
-                additionalBinaryDataProperties: null);
+                winRMListeners is null ? default : new WinRMConfiguration((winRMListeners ?? new ChangeTrackingList<ComputeBulkActionsWinRMListener>()).ToList(), default),
+                default);
+        }
+
+        /// <param name="passName"> The pass name. Currently, the only allowable value is OobeSystem. </param>
+        /// <param name="componentName"> The component name. Currently, the only allowable value is Microsoft-Windows-Shell-Setup. </param>
+        /// <param name="settingName"> Specifies the name of the setting to which the content applies. Possible values are: FirstLogonCommands and AutoLogon. </param>
+        /// <param name="content"> Specifies the XML formatted content that is added to the unattend.xml file for the specified path and component. The XML must be less than 4KB and must include the root element for the setting or feature that is being inserted. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsAdditionalUnattendContent"/> instance for mocking. </returns>
+        public static ComputeBulkActionsAdditionalUnattendContent ComputeBulkActionsAdditionalUnattendContent(ComputeBulkActionsAdditionalUnattendContentPassName? passName = default, ComputeBulkActionsAdditionalUnattendContentComponentName? componentName = default, ComputeBulkActionsAdditionalUnattendContentSettingName? settingName = default, string content = default)
+        {
+            return new ComputeBulkActionsAdditionalUnattendContent(passName, componentName, settingName, content, default);
+        }
+
+        /// <param name="patchMode"> Specifies the mode of VM Guest Patching to IaaS virtual machine or virtual machines associated to virtual machine scale set with OrchestrationMode as Flexible.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>Manual</b> - You  control the application of patches to a virtual machine. You do this by applying patches manually inside the VM. In this mode, automatic updates are disabled; the property WindowsConfiguration.enableAutomaticUpdates must be false&lt;br /&gt;&lt;br /&gt; <b>AutomaticByOS</b> - The virtual machine will automatically be updated by the OS. The property WindowsConfiguration.enableAutomaticUpdates must be true. &lt;br /&gt;&lt;br /&gt; <b>AutomaticByPlatform</b> - the virtual machine will automatically updated by the platform. The properties provisionVMAgent and WindowsConfiguration.enableAutomaticUpdates must be true. </param>
+        /// <param name="isHotpatchingEnabled"> Enables customers to patch their Azure VMs without requiring a reboot. For enableHotpatching, the 'provisionVMAgent' must be set to true and 'patchMode' must be set to 'AutomaticByPlatform'. </param>
+        /// <param name="assessmentMode"> Specifies the mode of VM Guest patch assessment for the IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>ImageDefault</b> - You control the timing of patch assessments on a virtual machine.&lt;br /&gt;&lt;br /&gt; <b>AutomaticByPlatform</b> - The platform will trigger periodic patch assessments. The property provisionVMAgent must be true. </param>
+        /// <param name="automaticByPlatformSettings"> Specifies additional settings for patch mode AutomaticByPlatform in VM Guest Patching on Windows. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsPatchSettings"/> instance for mocking. </returns>
+        public static ComputeBulkActionsPatchSettings ComputeBulkActionsPatchSettings(ComputeBulkActionsWindowsVMGuestPatchMode? patchMode = default, bool? isHotpatchingEnabled = default, ComputeBulkActionsWindowsPatchAssessmentMode? assessmentMode = default, ComputeBulkActionsWindowsVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default)
+        {
+            return new ComputeBulkActionsPatchSettings(patchMode, isHotpatchingEnabled, assessmentMode, automaticByPlatformSettings, default);
+        }
+
+        /// <param name="rebootSetting"> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </param>
+        /// <param name="isBypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsWindowsVMGuestPatchAutomaticByPlatformSettings"/> instance for mocking. </returns>
+        public static ComputeBulkActionsWindowsVMGuestPatchAutomaticByPlatformSettings ComputeBulkActionsWindowsVMGuestPatchAutomaticByPlatformSettings(ComputeBulkActionsWindowsVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default, bool? isBypassPlatformSafetyChecksOnUserSchedule = default)
+        {
+            return new ComputeBulkActionsWindowsVMGuestPatchAutomaticByPlatformSettings(rebootSetting, isBypassPlatformSafetyChecksOnUserSchedule, default);
+        }
+
+        /// <param name="protocol"> Specifies the protocol of WinRM listener. Possible values are: <b>http,</b> <b>https.</b>. </param>
+        /// <param name="certificateUri"> This is the URL of a certificate that has been uploaded to Key Vault as a secret. For adding a secret to the Key Vault, see [Add a key or secret to the key vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add). In this case, your certificate needs to be the Base64 encoding of the following JSON Object which is encoded in UTF-8: &lt;br&gt;&lt;br&gt; {&lt;br&gt;  "data":"&lt;Base64-encoded-certificate&gt;",&lt;br&gt;  "dataType":"pfx",&lt;br&gt;  "password":"&lt;pfx-file-password&gt;"&lt;br&gt;} &lt;br&gt; To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsWinRMListener"/> instance for mocking. </returns>
+        public static ComputeBulkActionsWinRMListener ComputeBulkActionsWinRMListener(ComputeBulkActionsProtocolType? protocol = default, string certificateUri = default)
+        {
+            return new ComputeBulkActionsWinRMListener(protocol, certificateUri, default);
+        }
+
+        /// <param name="isPasswordAuthenticationDisabled"> Specifies whether password authentication should be disabled. </param>
+        /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
+        /// <param name="isVMAgentProvisioned"> Indicates whether virtual machine agent should be provisioned on the virtual machine. When this property is not specified in the request body, default behavior is to set it to true. This will ensure that VM Agent is installed on the VM so that extensions can be added to the VM later. </param>
+        /// <param name="patchSettings"> [Preview Feature] Specifies settings related to VM Guest Patching on Linux. </param>
+        /// <param name="isVMAgentPlatformUpdatesEnabled"> Indicates whether VMAgent Platform Updates is enabled for the Linux virtual machine. Default value is false. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsLinuxConfiguration"/> instance for mocking. </returns>
+        public static ComputeBulkActionsLinuxConfiguration ComputeBulkActionsLinuxConfiguration(bool? isPasswordAuthenticationDisabled = default, IEnumerable<ComputeBulkActionsSshPublicKey> sshPublicKeys = default, bool? isVMAgentProvisioned = default, ComputeBulkActionsLinuxPatchSettings patchSettings = default, bool? isVMAgentPlatformUpdatesEnabled = default)
+        {
+            return new ComputeBulkActionsLinuxConfiguration(
+                isPasswordAuthenticationDisabled,
+                sshPublicKeys is null ? default : new SshConfiguration((sshPublicKeys ?? new ChangeTrackingList<ComputeBulkActionsSshPublicKey>()).ToList(), default),
+                isVMAgentProvisioned,
+                patchSettings,
+                isVMAgentPlatformUpdatesEnabled,
+                default);
+        }
+
+        /// <param name="path"> Specifies the full path on the created VM where ssh public key is stored. If the file already exists, the specified key is appended to the file. Example: /home/user/.ssh/authorized_keys. </param>
+        /// <param name="keyData"> SSH public key certificate used to authenticate with the VM through ssh. The key needs to be at least 2048-bit and in ssh-rsa format. For creating ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in Azure]https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed). </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsSshPublicKey"/> instance for mocking. </returns>
+        public static ComputeBulkActionsSshPublicKey ComputeBulkActionsSshPublicKey(string path = default, string keyData = default)
+        {
+            return new ComputeBulkActionsSshPublicKey(path, keyData, default);
+        }
+
+        /// <param name="patchMode"> Specifies the mode of VM Guest Patching to IaaS virtual machine or virtual machines associated to virtual machine scale set with OrchestrationMode as Flexible.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>ImageDefault</b> - The virtual machine's default patching configuration is used. &lt;br /&gt;&lt;br /&gt; <b>AutomaticByPlatform</b> - The virtual machine will be automatically updated by the platform. The property provisionVMAgent must be true. </param>
+        /// <param name="assessmentMode"> Specifies the mode of VM Guest Patch Assessment for the IaaS virtual machine.&lt;br /&gt;&lt;br /&gt; Possible values are:&lt;br /&gt;&lt;br /&gt; <b>ImageDefault</b> - You control the timing of patch assessments on a virtual machine. &lt;br /&gt;&lt;br /&gt; <b>AutomaticByPlatform</b> - The platform will trigger periodic patch assessments. The property provisionVMAgent must be true. </param>
+        /// <param name="automaticByPlatformSettings"> Specifies additional settings for patch mode AutomaticByPlatform in VM Guest Patching on Linux. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsLinuxPatchSettings"/> instance for mocking. </returns>
+        public static ComputeBulkActionsLinuxPatchSettings ComputeBulkActionsLinuxPatchSettings(ComputeBulkActionsLinuxVMGuestPatchMode? patchMode = default, ComputeBulkActionsLinuxPatchAssessmentMode? assessmentMode = default, ComputeBulkActionsLinuxVMGuestPatchAutomaticByPlatformSettings automaticByPlatformSettings = default)
+        {
+            return new ComputeBulkActionsLinuxPatchSettings(patchMode, assessmentMode, automaticByPlatformSettings, default);
+        }
+
+        /// <param name="rebootSetting"> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </param>
+        /// <param name="isBypassPlatformSafetyChecksOnUserSchedule"> Enables customer to schedule patching without accidental upgrades. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsLinuxVMGuestPatchAutomaticByPlatformSettings"/> instance for mocking. </returns>
+        public static ComputeBulkActionsLinuxVMGuestPatchAutomaticByPlatformSettings ComputeBulkActionsLinuxVMGuestPatchAutomaticByPlatformSettings(ComputeBulkActionsLinuxVMGuestPatchAutomaticByPlatformRebootSetting? rebootSetting = default, bool? isBypassPlatformSafetyChecksOnUserSchedule = default)
+        {
+            return new ComputeBulkActionsLinuxVMGuestPatchAutomaticByPlatformSettings(rebootSetting, isBypassPlatformSafetyChecksOnUserSchedule, default);
         }
 
         /// <param name="sourceVaultId"> The ID of the sub-resource. </param>
@@ -252,10 +568,17 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             vaultCertificates ??= new ChangeTrackingList<ComputeBulkActionsVaultCertificate>();
 
-            return new ComputeBulkActionsVaultSecretGroup(sourceVaultId is null ? default : new ComputeBulkActionsSubResource(sourceVaultId, null), vaultCertificates.ToList(), additionalBinaryDataProperties: null);
+            return new ComputeBulkActionsVaultSecretGroup(sourceVaultId is null ? default : new ComputeBulkActionsSubResource(sourceVaultId, default), (vaultCertificates ?? new ChangeTrackingList<ComputeBulkActionsVaultCertificate>()).ToList(), default);
         }
 
-        /// <summary> Specifies the network interfaces or the networking configuration of the virtual machine. </summary>
+        /// <param name="certificateUri"> This is the URL of a certificate that has been uploaded to Key Vault as a secret. For adding a secret to the Key Vault, see [Add a key or secret to the key vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add). In this case, your certificate needs to be It is the Base64 encoding of the following JSON Object which is encoded in UTF-8: &lt;br&gt;&lt;br&gt; {&lt;br&gt;  'data':'&lt;Base64-encoded-certificate&gt;',&lt;br&gt;  'dataType':'pfx',&lt;br&gt;  'password':'&lt;pfx-file-password&gt;'&lt;br&gt;} &lt;br&gt; To install certificates on a virtual machine it is recommended to use the [Azure Key Vault virtual machine extension for Linux](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-linux) or the [Azure Key Vault virtual machine extension for Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows). </param>
+        /// <param name="certificateStore"> For Windows VMs, specifies the certificate store on the Virtual Machine to which the certificate should be added. The specified certificate store is implicitly in the LocalMachine account. For Linux VMs, the certificate file is placed under the /var/lib/waagent directory, with the file name &lt;UppercaseThumbprint&gt;.crt for the X509 certificate file and &lt;UppercaseThumbprint&gt;.prv for private key. Both of these files are .pem formatted. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVaultCertificate"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVaultCertificate ComputeBulkActionsVaultCertificate(string certificateUri = default, string certificateStore = default)
+        {
+            return new ComputeBulkActionsVaultCertificate(certificateUri, certificateStore, default);
+        }
+
         /// <param name="networkInterfaces"> Specifies the list of resource Ids for the network interfaces associated with the virtual machine. </param>
         /// <param name="networkApiVersion"> specifies the Microsoft.Network API version used when creating networking resources in the Network Interface Configurations. </param>
         /// <param name="networkInterfaceConfigurations"> Specifies the networking configurations that will be used to create the virtual machine networking resources. </param>
@@ -265,10 +588,25 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             networkInterfaces ??= new ChangeTrackingList<ComputeBulkActionsNetworkInterfaceReference>();
             networkInterfaceConfigurations ??= new ChangeTrackingList<ComputeBulkActionsVirtualMachineNetworkInterfaceConfiguration>();
 
-            return new ComputeBulkActionsNetworkProfile(networkInterfaces.ToList(), networkApiVersion, networkInterfaceConfigurations.ToList(), additionalBinaryDataProperties: null);
+            return new ComputeBulkActionsNetworkProfile((networkInterfaces ?? new ChangeTrackingList<ComputeBulkActionsNetworkInterfaceReference>()).ToList(), networkApiVersion, (networkInterfaceConfigurations ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineNetworkInterfaceConfiguration>()).ToList(), default);
         }
 
-        /// <summary> Describes a virtual machine network interface configurations. </summary>
+        /// <param name="id"> The ID of the sub-resource. </param>
+        /// <param name="properties"> Describes a network interface reference properties. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsNetworkInterfaceReference"/> instance for mocking. </returns>
+        public static ComputeBulkActionsNetworkInterfaceReference ComputeBulkActionsNetworkInterfaceReference(ResourceIdentifier id = default, ComputeBulkActionsNetworkInterfaceReferenceProperties properties = default)
+        {
+            return new ComputeBulkActionsNetworkInterfaceReference(id, default, properties);
+        }
+
+        /// <param name="isPrimary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
+        /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsNetworkInterfaceReferenceProperties"/> instance for mocking. </returns>
+        public static ComputeBulkActionsNetworkInterfaceReferenceProperties ComputeBulkActionsNetworkInterfaceReferenceProperties(bool? isPrimary = default, ComputeBulkActionsDeleteOption? deleteOption = default)
+        {
+            return new ComputeBulkActionsNetworkInterfaceReferenceProperties(isPrimary, deleteOption, default);
+        }
+
         /// <param name="name"> The network interface configuration name. </param>
         /// <param name="properties"> Describes a virtual machine network profile's IP configuration. </param>
         /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
@@ -277,7 +615,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ComputeBulkActionsVirtualMachineNetworkInterfaceConfiguration(name, properties, tags, additionalBinaryDataProperties: null);
+            return new ComputeBulkActionsVirtualMachineNetworkInterfaceConfiguration(name, properties, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="isPrimary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
@@ -304,13 +642,21 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 isTcpStateTrackingDisabled,
                 isFpgaEnabled,
                 isIPForwardingEnabled,
-                networkSecurityGroupId is null ? default : new ComputeBulkActionsSubResource(networkSecurityGroupId, null),
-                dnsServers is null ? default : new VirtualMachineNetworkInterfaceDnsSettingsConfiguration((dnsServers ?? new ChangeTrackingList<string>()).ToList(), null),
-                ipConfigurations.ToList(),
-                dscpConfigurationId is null ? default : new ComputeBulkActionsSubResource(dscpConfigurationId, null),
+                networkSecurityGroupId is null ? default : new ComputeBulkActionsSubResource(networkSecurityGroupId, default),
+                dnsServers is null ? default : new VirtualMachineNetworkInterfaceDnsSettingsConfiguration((dnsServers ?? new ChangeTrackingList<string>()).ToList(), default),
+                (ipConfigurations ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration>()).ToList(),
+                dscpConfigurationId is null ? default : new ComputeBulkActionsSubResource(dscpConfigurationId, default),
                 auxiliaryMode,
                 auxiliarySku,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <param name="name"> The IP configuration name. </param>
+        /// <param name="properties"> Describes a virtual machine network interface IP configuration properties. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration(string name = default, ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfigurationProperties properties = default)
+        {
+            return new ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration(name, properties, default);
         }
 
         /// <param name="subnetId"> The ID of the sub-resource. </param>
@@ -328,17 +674,16 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             loadBalancerBackendAddressPools ??= new ChangeTrackingList<ComputeBulkActionsSubResource>();
 
             return new ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfigurationProperties(
-                subnetId is null ? default : new ComputeBulkActionsSubResource(subnetId, null),
+                subnetId is null ? default : new ComputeBulkActionsSubResource(subnetId, default),
                 isPrimary,
                 publicIPAddressConfiguration,
                 privateIPAddressVersion,
-                applicationSecurityGroups.ToList(),
-                applicationGatewayBackendAddressPools.ToList(),
-                loadBalancerBackendAddressPools.ToList(),
-                additionalBinaryDataProperties: null);
+                (applicationSecurityGroups ?? new ChangeTrackingList<ComputeBulkActionsSubResource>()).ToList(),
+                (applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ComputeBulkActionsSubResource>()).ToList(),
+                (loadBalancerBackendAddressPools ?? new ChangeTrackingList<ComputeBulkActionsSubResource>()).ToList(),
+                default);
         }
 
-        /// <summary> Describes a virtual machines IP Configuration's PublicIPAddress configuration. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
         /// <param name="properties"> Describes a virtual machines IP Configuration's PublicIPAddress configuration. </param>
         /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
@@ -348,7 +693,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ComputeBulkActionsVirtualMachinePublicIPAddressConfiguration(name, properties, sku, tags, additionalBinaryDataProperties: null);
+            return new ComputeBulkActionsVirtualMachinePublicIPAddressConfiguration(name, properties, sku, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
@@ -367,14 +712,148 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 idleTimeoutInMinutes,
                 deleteOption,
                 dnsSettings,
-                ipTags.ToList(),
-                publicIPPrefixId is null ? default : new ComputeBulkActionsSubResource(publicIPPrefixId, null),
+                (ipTags ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineIpTag>()).ToList(),
+                publicIPPrefixId is null ? default : new ComputeBulkActionsSubResource(publicIPPrefixId, default),
                 publicIPAddressVersion,
                 publicIPAllocationMethod,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Describes the properties of a Virtual Machine Extension. </summary>
+        /// <param name="domainNameLabel"> The Domain name label prefix of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the domain name label and vm network profile unique ID. </param>
+        /// <param name="domainNameLabelScope"> The Domain name label scope of the PublicIPAddress resources that will be created. The generated name label is the concatenation of the hashed domain name label with policy according to the domain name label scope and vm network profile unique ID. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVirtualMachinePublicIPAddressDnsSettingsConfiguration"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVirtualMachinePublicIPAddressDnsSettingsConfiguration ComputeBulkActionsVirtualMachinePublicIPAddressDnsSettingsConfiguration(string domainNameLabel = default, ComputeBulkActionsDomainNameLabelScopeType? domainNameLabelScope = default)
+        {
+            return new ComputeBulkActionsVirtualMachinePublicIPAddressDnsSettingsConfiguration(domainNameLabel, domainNameLabelScope, default);
+        }
+
+        /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
+        /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVirtualMachineIpTag"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVirtualMachineIpTag ComputeBulkActionsVirtualMachineIpTag(string ipTagType = default, string tag = default)
+        {
+            return new ComputeBulkActionsVirtualMachineIpTag(ipTagType, tag, default);
+        }
+
+        /// <param name="name"> Specify public IP sku name. </param>
+        /// <param name="tier"> Specify public IP sku tier. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsPublicIPAddressSku"/> instance for mocking. </returns>
+        public static ComputeBulkActionsPublicIPAddressSku ComputeBulkActionsPublicIPAddressSku(ComputeBulkActionsPublicIPAddressSkuName? name = default, ComputeBulkActionsPublicIPAddressSkuTier? tier = default)
+        {
+            return new ComputeBulkActionsPublicIPAddressSku(name, tier, default);
+        }
+
+        /// <param name="uefiSettings"> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Minimum compute api-version: 2020-12-01. </param>
+        /// <param name="isEncryptionAtHostEnabled"> This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself. The default behavior is: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
+        /// <param name="securityType"> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. The default behavior is: UefiSettings will not be enabled unless this property is set. </param>
+        /// <param name="userAssignedIdentityResourceId"> Specifies ARM Resource ID of one of the user identities associated with the VM. </param>
+        /// <param name="proxyAgentSettings"> Specifies ProxyAgent settings while creating the virtual machine. Minimum compute api-version: 2023-09-01. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsSecurityProfile"/> instance for mocking. </returns>
+        public static ComputeBulkActionsSecurityProfile ComputeBulkActionsSecurityProfile(ComputeBulkActionsUefiSettings uefiSettings = default, bool? isEncryptionAtHostEnabled = default, ComputeBulkActionsSecurityType? securityType = default, ResourceIdentifier userAssignedIdentityResourceId = default, ComputeBulkActionsProxyAgentSettings proxyAgentSettings = default)
+        {
+            return new ComputeBulkActionsSecurityProfile(
+                uefiSettings,
+                isEncryptionAtHostEnabled,
+                securityType,
+                userAssignedIdentityResourceId is null ? default : new EncryptionIdentity(userAssignedIdentityResourceId, default),
+                proxyAgentSettings,
+                default);
+        }
+
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. Minimum compute api-version: 2020-12-01. </param>
+        /// <param name="isVTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. Minimum compute api-version: 2020-12-01. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsUefiSettings"/> instance for mocking. </returns>
+        public static ComputeBulkActionsUefiSettings ComputeBulkActionsUefiSettings(bool? isSecureBootEnabled = default, bool? isVTpmEnabled = default)
+        {
+            return new ComputeBulkActionsUefiSettings(isSecureBootEnabled, isVTpmEnabled, default);
+        }
+
+        /// <param name="isEnabled"> Specifies whether ProxyAgent feature should be enabled on the virtual machine or virtual machine scale set. </param>
+        /// <param name="mode"> Specifies the mode that ProxyAgent will execute on. Warning: this property has been deprecated, please specify 'mode' under particular hostendpoint setting. </param>
+        /// <param name="keyIncarnationId"> Increase the value of this property allows users to reset the key used for securing communication channel between guest and host. </param>
+        /// <param name="wireServer"> Specifies the Wire Server endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
+        /// <param name="imds"> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
+        /// <param name="shouldAddProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsProxyAgentSettings"/> instance for mocking. </returns>
+        public static ComputeBulkActionsProxyAgentSettings ComputeBulkActionsProxyAgentSettings(bool? isEnabled = default, ComputeBulkActionsProxyAgentMode? mode = default, int? keyIncarnationId = default, ComputeBulkActionsHostEndpointSettings wireServer = default, ComputeBulkActionsHostEndpointSettings imds = default, bool? shouldAddProxyAgentExtension = default)
+        {
+            return new ComputeBulkActionsProxyAgentSettings(
+                isEnabled,
+                mode,
+                keyIncarnationId,
+                wireServer,
+                imds,
+                shouldAddProxyAgentExtension,
+                default);
+        }
+
+        /// <param name="mode"> Specifies the execution mode. In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. In Enforce mode, the system will enforce the access control and it is the recommended mode of operation. </param>
+        /// <param name="inVMAccessControlProfileReferenceId"> Specifies the InVMAccessControlProfileVersion resource id in the format of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsHostEndpointSettings"/> instance for mocking. </returns>
+        public static ComputeBulkActionsHostEndpointSettings ComputeBulkActionsHostEndpointSettings(ComputeBulkActionsHostEndpointMode? mode = default, ResourceIdentifier inVMAccessControlProfileReferenceId = default)
+        {
+            return new ComputeBulkActionsHostEndpointSettings(mode, inVMAccessControlProfileReferenceId, default);
+        }
+
+        /// <param name="isEnabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
+        /// <param name="storageUri"> Uri of the storage account to use for placing the console output and screenshot. If storageUri is not specified while enabling boot diagnostics, managed storage will be used. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsBootDiagnostics"/> instance for mocking. </returns>
+        public static ComputeBulkActionsBootDiagnostics ComputeBulkActionsBootDiagnostics(bool? isEnabled = default, string storageUri = default)
+        {
+            return new ComputeBulkActionsBootDiagnostics(isEnabled, storageUri, default);
+        }
+
+        /// <param name="terminateNotificationProfile"> Specifies Terminate Scheduled Event related configurations. </param>
+        /// <param name="osImageNotificationProfile"> Specifies OS Image Scheduled Event related configurations. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsScheduledEventsProfile"/> instance for mocking. </returns>
+        public static ComputeBulkActionsScheduledEventsProfile ComputeBulkActionsScheduledEventsProfile(ComputeBulkActionsTerminateNotificationProfile terminateNotificationProfile = default, ComputeBulkActionsOSImageNotificationProfile osImageNotificationProfile = default)
+        {
+            return new ComputeBulkActionsScheduledEventsProfile(terminateNotificationProfile, osImageNotificationProfile, default);
+        }
+
+        /// <param name="notBeforeTimeout"> Configurable length of time a Virtual Machine being deleted will have to potentially approve the Terminate Scheduled Event before the event is auto approved (timed out). The configuration must be specified in ISO 8601 format, the default value is 5 minutes (PT5M). </param>
+        /// <param name="isEnabled"> Specifies whether the Terminate Scheduled event is enabled or disabled. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsTerminateNotificationProfile"/> instance for mocking. </returns>
+        public static ComputeBulkActionsTerminateNotificationProfile ComputeBulkActionsTerminateNotificationProfile(string notBeforeTimeout = default, bool? isEnabled = default)
+        {
+            return new ComputeBulkActionsTerminateNotificationProfile(notBeforeTimeout, isEnabled, default);
+        }
+
+        /// <param name="notBeforeTimeout"> Length of time a Virtual Machine being reimaged or having its OS upgraded will have to potentially approve the OS Image Scheduled Event before the event is auto approved (timed out). The configuration is specified in ISO 8601 format, and the value must be 15 minutes (PT15M). </param>
+        /// <param name="isEnabled"> Specifies whether the OS Image Scheduled event is enabled or disabled. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsOSImageNotificationProfile"/> instance for mocking. </returns>
+        public static ComputeBulkActionsOSImageNotificationProfile ComputeBulkActionsOSImageNotificationProfile(string notBeforeTimeout = default, bool? isEnabled = default)
+        {
+            return new ComputeBulkActionsOSImageNotificationProfile(notBeforeTimeout, isEnabled, default);
+        }
+
+        /// <param name="tags"> Optional, Specifies a passthrough value for more generic context. </param>
+        /// <param name="order"> Optional, Specifies the order in which the packages have to be installed. </param>
+        /// <param name="packageReferenceId"> Specifies the GalleryApplicationVersion resource id on the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{application}/versions/{version}. </param>
+        /// <param name="configurationReference"> Optional, Specifies the uri to an azure blob that will replace the default configuration for the package if provided. </param>
+        /// <param name="shouldTreatFailureAsDeploymentFailure"> Optional, If true, any failure for any operation in the VmApplication will fail the deployment. </param>
+        /// <param name="isAutomaticUpgradeEnabled"> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the VM/VMSS. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVMGalleryApplication"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVMGalleryApplication ComputeBulkActionsVMGalleryApplication(string tags = default, int? order = default, ResourceIdentifier packageReferenceId = default, string configurationReference = default, bool? shouldTreatFailureAsDeploymentFailure = default, bool? isAutomaticUpgradeEnabled = default)
+        {
+            return new ComputeBulkActionsVMGalleryApplication(
+                tags,
+                order,
+                packageReferenceId,
+                configurationReference,
+                shouldTreatFailureAsDeploymentFailure,
+                isAutomaticUpgradeEnabled,
+                default);
+        }
+
+        /// <param name="name"> The name of the virtual machine extension. </param>
+        /// <param name="properties"> Properties of the virtual machine extension. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVirtualMachineExtension"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVirtualMachineExtension ComputeBulkActionsVirtualMachineExtension(string name = default, ComputeBulkActionsVirtualMachineExtensionProperties properties = default)
+        {
+            return new ComputeBulkActionsVirtualMachineExtension(name, properties, default);
+        }
+
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="type"> Specifies the type of the extension; an example is 'CustomScriptExtension'. </param>
@@ -400,15 +879,14 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 typeHandlerVersion,
                 isAutoUpgradeMinorVersionEnabled,
                 isAutomaticUpgradeEnabled,
-                settings,
-                protectedSettings,
+                settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 isSuppressFailures,
                 protectedSettingsFromKeyVault,
-                provisionAfterExtensions.ToList(),
-                additionalBinaryDataProperties: null);
+                (provisionAfterExtensions ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
-        /// <summary> ZoneAllocationPolicy for LaunchBulkInstancesOperation. </summary>
         /// <param name="distributionStrategy"> Distribution strategy used for zone allocation policy. </param>
         /// <param name="zonePreferences"> Zone preferences, required when zone distribution strategy is Prioritized. </param>
         /// <returns> A new <see cref="Models.ComputeBulkActionsZoneAllocationPolicy"/> instance for mocking. </returns>
@@ -416,10 +894,29 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             zonePreferences ??= new ChangeTrackingList<ComputeBulkActionsZonePreference>();
 
-            return new ComputeBulkActionsZoneAllocationPolicy(distributionStrategy, zonePreferences.ToList(), additionalBinaryDataProperties: null);
+            return new ComputeBulkActionsZoneAllocationPolicy(distributionStrategy, (zonePreferences ?? new ChangeTrackingList<ComputeBulkActionsZonePreference>()).ToList(), default);
         }
 
-        /// <summary> An instant Fleet's virtual machine. </summary>
+        /// <param name="zone"> Name of the zone. </param>
+        /// <param name="rank">
+        ///     The rank of the zone. This is used with 'Prioritized' ZoneDistributionStrategy.
+        ///     The lower the number, the higher the priority, starting with 0.
+        ///     0 is the highest rank. If not specified, defaults to lowest rank.
+        /// </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsZonePreference"/> instance for mocking. </returns>
+        public static ComputeBulkActionsZonePreference ComputeBulkActionsZonePreference(string zone = default, int? rank = default)
+        {
+            return new ComputeBulkActionsZonePreference(zone, rank, default);
+        }
+
+        /// <param name="retryCount"> Retry count for user request. </param>
+        /// <param name="retryWindowInMinutes"> Retry window in minutes for user request. </param>
+        /// <returns> A new <see cref="Models.BulkActionRetryPolicy"/> instance for mocking. </returns>
+        public static BulkActionRetryPolicy BulkActionRetryPolicy(int? retryCount = default, int? retryWindowInMinutes = default)
+        {
+            return new BulkActionRetryPolicy(retryCount, retryWindowInMinutes, default);
+        }
+
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="id"> The compute RP resource id of the virtual machine. subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </param>
         /// <param name="type"> Type of the virtual machine. </param>
@@ -434,10 +931,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 @type,
                 operationStatus,
                 error,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> ApiError for Fleet. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
@@ -452,28 +948,26 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 code,
                 target,
                 message,
-                details.ToList(),
+                (details ?? new ChangeTrackingList<ComputeBulkActionsApiErrorBase>()).ToList(),
                 innerError,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> API error base. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
         /// <returns> A new <see cref="Models.ComputeBulkActionsApiErrorBase"/> instance for mocking. </returns>
         public static ComputeBulkActionsApiErrorBase ComputeBulkActionsApiErrorBase(string code = default, string target = default, string message = default)
         {
-            return new ComputeBulkActionsApiErrorBase(code, target, message, additionalBinaryDataProperties: null);
+            return new ComputeBulkActionsApiErrorBase(code, target, message, default);
         }
 
-        /// <summary> Inner error details. </summary>
         /// <param name="exceptionType"> The exception type. </param>
         /// <param name="errorDetail"> The internal error message or exception dump. </param>
         /// <returns> A new <see cref="Models.ComputeBulkActionsInnerError"/> instance for mocking. </returns>
         public static ComputeBulkActionsInnerError ComputeBulkActionsInnerError(string exceptionType = default, string errorDetail = default)
         {
-            return new ComputeBulkActionsInnerError(exceptionType, errorDetail, additionalBinaryDataProperties: null);
+            return new ComputeBulkActionsInnerError(exceptionType, errorDetail, default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -482,10 +976,17 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <returns> A new <see cref="Models.BulkActionExecuteDeallocateContent"/> instance for mocking. </returns>
         public static BulkActionExecuteDeallocateContent BulkActionExecuteDeallocateContent(BulkActionExecutionConfig executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new BulkActionExecuteDeallocateContent(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new BulkActionExecuteDeallocateContent(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), correlationId, default);
         }
 
-        /// <summary> The response from a deallocate request. </summary>
+        /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
+        /// <param name="retryPolicy"> Retry policy the user can pass. </param>
+        /// <returns> A new <see cref="Models.BulkActionExecutionConfig"/> instance for mocking. </returns>
+        public static BulkActionExecutionConfig BulkActionExecutionConfig(ComputeBulkActionsOptimizationPreference? optimizationPreference = default, BulkActionRetryPolicy retryPolicy = default)
+        {
+            return new BulkActionExecutionConfig(optimizationPreference, retryPolicy, default);
+        }
+
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="type"> The type of resources used in the request eg virtual machines. </param>
         /// <param name="location"> The location of the request eg westus. </param>
@@ -495,10 +996,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new BulkActionDeallocateResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new BulkActionDeallocateResourceOperationResult(description, @type, location, (results ?? new ChangeTrackingList<BulkActionResourceOperationInfo>()).ToList(), default);
         }
 
-        /// <summary> Top level response from an operation on a resource. </summary>
         /// <param name="resourceId"> Unique identifier for the resource involved in the operation, eg Azure Resource Manager ID. </param>
         /// <param name="errorCode"> Resource level error code if it exists. </param>
         /// <param name="errorDetails"> Resource level error details if they exist. </param>
@@ -506,10 +1006,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <returns> A new <see cref="Models.BulkActionResourceOperationInfo"/> instance for mocking. </returns>
         public static BulkActionResourceOperationInfo BulkActionResourceOperationInfo(ResourceIdentifier resourceId = default, string errorCode = default, string errorDetails = default, BulkActionResourceOperationDetails operation = default)
         {
-            return new BulkActionResourceOperationInfo(resourceId, errorCode, errorDetails, operation, additionalBinaryDataProperties: null);
+            return new BulkActionResourceOperationInfo(resourceId, errorCode, errorDetails, operation, default);
         }
 
-        /// <summary> The details of a response from an operation on a resource. </summary>
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
         /// <param name="resourceId"> Unique identifier for the resource involved in the operation, eg Azure Resource Manager ID. </param>
         /// <param name="opType"> Type of operation performed on the resources. </param>
@@ -536,16 +1035,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 resourceOperationError,
                 completedOn,
                 retryPolicy,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> These describe errors that occur at the resource level. </summary>
         /// <param name="errorCode"> Code for the error eg 404, 500. </param>
         /// <param name="errorDetails"> Detailed message about the error. </param>
         /// <returns> A new <see cref="Models.BulkActionResourceOperationError"/> instance for mocking. </returns>
         public static BulkActionResourceOperationError BulkActionResourceOperationError(string errorCode = default, string errorDetails = default)
         {
-            return new BulkActionResourceOperationError(errorCode, errorDetails, additionalBinaryDataProperties: null);
+            return new BulkActionResourceOperationError(errorCode, errorDetails, default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -554,10 +1052,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <returns> A new <see cref="Models.BulkActionExecuteHibernateContent"/> instance for mocking. </returns>
         public static BulkActionExecuteHibernateContent BulkActionExecuteHibernateContent(BulkActionExecutionConfig executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new BulkActionExecuteHibernateContent(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new BulkActionExecuteHibernateContent(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), correlationId, default);
         }
 
-        /// <summary> The response from a Hibernate request. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="type"> The type of resources used in the request eg virtual machines. </param>
         /// <param name="location"> The location of the request eg westus. </param>
@@ -567,7 +1064,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new BulkActionHibernateResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new BulkActionHibernateResourceOperationResult(description, @type, location, (results ?? new ChangeTrackingList<BulkActionResourceOperationInfo>()).ToList(), default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -576,10 +1073,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <returns> A new <see cref="Models.BulkActionExecuteStartContent"/> instance for mocking. </returns>
         public static BulkActionExecuteStartContent BulkActionExecuteStartContent(BulkActionExecutionConfig executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default)
         {
-            return new BulkActionExecuteStartContent(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, additionalBinaryDataProperties: null);
+            return new BulkActionExecuteStartContent(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), correlationId, default);
         }
 
-        /// <summary> The response from a start request. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="type"> The type of resources used in the request eg virtual machines. </param>
         /// <param name="location"> The location of the request eg westus. </param>
@@ -589,20 +1085,18 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new BulkActionStartResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new BulkActionStartResourceOperationResult(description, @type, location, (results ?? new ChangeTrackingList<BulkActionResourceOperationInfo>()).ToList(), default);
         }
 
-        /// <summary> The ExecuteCreateRequest request for create operations. </summary>
         /// <param name="resourceConfigParameters"> resource creation payload. </param>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
         /// <param name="correlationId"> CorrelationId item. </param>
         /// <returns> A new <see cref="Models.BulkActionExecuteCreateContent"/> instance for mocking. </returns>
         public static BulkActionExecuteCreateContent BulkActionExecuteCreateContent(BulkActionResourceProvisionPayload resourceConfigParameters = default, BulkActionExecutionConfig executionParameters = default, string correlationId = default)
         {
-            return new BulkActionExecuteCreateContent(resourceConfigParameters, executionParameters, correlationId, additionalBinaryDataProperties: null);
+            return new BulkActionExecuteCreateContent(resourceConfigParameters, executionParameters, correlationId, default);
         }
 
-        /// <summary> Resource creation data model. </summary>
         /// <param name="baseProfile"> JSON object that contains VM properties that are common across all VMs in this batch (if you want to create 100 VMs in this request, and they all have same vmSize, then include vmSize in baseProfile). </param>
         /// <param name="resourceOverrides"> JSON array, that contains VM properties that should to be overridden for each VM in the batch (if you want to create 100 VMs, they all need a distinct computerName property, you pass computerNames for each VM in batch in this array), service will merge baseProfile with VM specific overrides and create a merged VMProfile. </param>
         /// <param name="resourceCount"> Number of VMs to be created. </param>
@@ -613,10 +1107,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             baseProfile ??= new ChangeTrackingDictionary<string, BinaryData>();
             resourceOverrides ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
 
-            return new BulkActionResourceProvisionPayload(baseProfile, resourceOverrides.ToList(), resourceCount, resourcePrefix, additionalBinaryDataProperties: null);
+            return new BulkActionResourceProvisionPayload(baseProfile ?? new ChangeTrackingDictionary<string, BinaryData>(), (resourceOverrides ?? new ChangeTrackingList<IDictionary<string, BinaryData>>()).ToList(), resourceCount, resourcePrefix, default);
         }
 
-        /// <summary> The response from a create request. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="type"> The type of resources used in the request eg virtual machines. </param>
         /// <param name="location"> The location of the request eg westus. </param>
@@ -626,7 +1119,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new BulkActionCreateResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new BulkActionCreateResourceOperationResult(description, @type, location, (results ?? new ChangeTrackingList<BulkActionResourceOperationInfo>()).ToList(), default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -636,10 +1129,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <returns> A new <see cref="Models.BulkActionExecuteDeleteContent"/> instance for mocking. </returns>
         public static BulkActionExecuteDeleteContent BulkActionExecuteDeleteContent(BulkActionExecutionConfig executionParameters = default, IEnumerable<ResourceIdentifier> resourcesIds = default, string correlationId = default, bool? isForceDeletion = default)
         {
-            return new BulkActionExecuteDeleteContent(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), null), correlationId, isForceDeletion, additionalBinaryDataProperties: null);
+            return new BulkActionExecuteDeleteContent(executionParameters, resourcesIds is null ? default : new Resources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), correlationId, isForceDeletion, default);
         }
 
-        /// <summary> The response from a delete request. </summary>
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="type"> The type of resources used in the request eg virtual machines. </param>
         /// <param name="location"> The location of the request eg westus. </param>
@@ -649,10 +1141,9 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new BulkActionDeleteResourceOperationResult(description, @type, location, results.ToList(), additionalBinaryDataProperties: null);
+            return new BulkActionDeleteResourceOperationResult(description, @type, location, (results ?? new ChangeTrackingList<BulkActionResourceOperationInfo>()).ToList(), default);
         }
 
-        /// <summary> This is the request to get operation status using operationids. </summary>
         /// <param name="operationIds"> The list of operation ids to get the status of. </param>
         /// <param name="correlationId"> CorrelationId item. </param>
         /// <returns> A new <see cref="Models.BulkActionGetOperationStatusContent"/> instance for mocking. </returns>
@@ -660,20 +1151,18 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             operationIds ??= new ChangeTrackingList<string>();
 
-            return new BulkActionGetOperationStatusContent(operationIds.ToList(), correlationId, additionalBinaryDataProperties: null);
+            return new BulkActionGetOperationStatusContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), correlationId, default);
         }
 
-        /// <summary> This is the response from a get operations status request. </summary>
         /// <param name="results"> An array of resource operations based on their operation ids. </param>
         /// <returns> A new <see cref="Models.BulkActionGetOperationStatusResult"/> instance for mocking. </returns>
         public static BulkActionGetOperationStatusResult BulkActionGetOperationStatusResult(IEnumerable<BulkActionResourceOperationInfo> results = default)
         {
             results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new BulkActionGetOperationStatusResult(results.ToList(), additionalBinaryDataProperties: null);
+            return new BulkActionGetOperationStatusResult((results ?? new ChangeTrackingList<BulkActionResourceOperationInfo>()).ToList(), default);
         }
 
-        /// <summary> This is the request to cancel running operations in bulkactions using the operation ids. </summary>
         /// <param name="operationIds"> The list of operation ids to cancel operations on. </param>
         /// <param name="correlationId"> CorrelationId item. </param>
         /// <returns> A new <see cref="Models.BulkActionCancelOperationsContent"/> instance for mocking. </returns>
@@ -681,17 +1170,16 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             operationIds ??= new ChangeTrackingList<string>();
 
-            return new BulkActionCancelOperationsContent(operationIds.ToList(), correlationId, additionalBinaryDataProperties: null);
+            return new BulkActionCancelOperationsContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), correlationId, default);
         }
 
-        /// <summary> This is the response from a cancel operations request. </summary>
         /// <param name="results"> An array of resource operations that were successfully cancelled. </param>
         /// <returns> A new <see cref="Models.BulkActionCancelOperationsResult"/> instance for mocking. </returns>
         public static BulkActionCancelOperationsResult BulkActionCancelOperationsResult(IEnumerable<BulkActionResourceOperationInfo> results = default)
         {
             results ??= new ChangeTrackingList<BulkActionResourceOperationInfo>();
 
-            return new BulkActionCancelOperationsResult(results.ToList(), additionalBinaryDataProperties: null);
+            return new BulkActionCancelOperationsResult((results ?? new ChangeTrackingList<BulkActionResourceOperationInfo>()).ToList(), default);
         }
     }
 }

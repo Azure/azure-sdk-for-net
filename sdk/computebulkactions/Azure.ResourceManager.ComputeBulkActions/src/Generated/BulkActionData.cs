@@ -31,22 +31,22 @@ namespace Azure.ResourceManager.ComputeBulkActions
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="zones"> Zones in which the LaunchBulkInstancesOperation is available. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
-        internal BulkActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeBulkActionsLaunchBulkInstancesOperationProperties properties, AzureLocation location, IList<string> zones, IDictionary<string, string> tags, ManagedServiceIdentity identity, ArmPlan plan) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BulkActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComputeBulkActionsLaunchBulkInstancesOperationProperties properties, AzureLocation location, IList<string> zones, IDictionary<string, string> tags, ManagedServiceIdentity identity, ArmPlan plan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Location = location;
             Zones = zones;
             Tags = tags;
             Identity = identity;
             Plan = plan;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
