@@ -5,6 +5,14 @@
 ### Features Added
 - Includes all features from 12.29.0-beta.1
 
+### Breaking Changes
+
+### Bugs Fixed
+- Added validation for length-prefixed fields when parsing Blob Query responses to prevent excessive memory allocation from malformed or untrusted payloads.
+
+### Other Changes
+- Improved performance of `DownloadToAsync` by buffering each range into memory concurrently instead of streaming one range at a time. This increases throughput but also increases memory consumption, as up to `MaximumConcurrency` ranges (each up to `MaximumTransferLength` in size) may be buffered simultaneously. Use `StorageTransferOptions.MaximumConcurrency` and `StorageTransferOptions.MaximumTransferLength` to control memory usage.
+
 ## 12.28.0 (2026-05-12)
 
 ### Features Added
