@@ -460,16 +460,16 @@ namespace Azure.Storage
         }
 
         /// <summary>
-        /// ChangeFeed constant values.
+        /// ChangeFeed constant values shared by Blobs and Files Change Feed,
+        /// plus Blob-specific Avro field names.
         /// </summary>
         internal static class ChangeFeed
         {
             public const string ChangeFeedContainerName = "$blobchangefeed";
             public const string SegmentPrefix = "idx/segments/";
-            public const string InitalizationManifestPath = "/0000/";
-            public const string InitalizationSegment = "1601";
+            public const string InitializationSegment = "1601";
             public const string MetaSegmentsPath = "meta/segments.json";
-            public const long ChunkBlockDownloadSize = MB;
+            public const long ChunkBlockDownloadSize = 256 * MB;
             public const int DefaultPageSize = 5000;
             public const int LazyLoadingBlobStreamBlockSize = 3 * Constants.KB;
 
@@ -525,6 +525,48 @@ namespace Azure.Storage
                 public const string PreviousTier = "PreviousTier";
 
                 public const string BlobTagsUpdated = "blobTagsUpdated";
+            }
+        }
+
+        /// <summary>
+        /// Files ChangeFeed constant values that are unique to the Files implementation
+        /// (snapshots, container discovery header, Files Avro field names).
+        /// Path constants and download sizes shared with Blobs live in <see cref="ChangeFeed"/>.
+        /// </summary>
+        internal static class FilesChangeFeed
+        {
+            public const string SnapshotsPrefix = "idx/snapshots/";
+            public const int TimeWindowMinutes = 15;
+            public const string ChangeFeedContainerHeader = "x-ms-file-blob-container-for-xfiles-change-feed";
+
+            internal static class Event
+            {
+                public const string SchemaVersion = "SchemaVersion";
+                public const string Reason = "Reason";
+                public const string Protocol = "Protocol";
+                public const string EventTime = "EventTime";
+                public const string Id = "Id";
+                public const string Cvnt = "Cvnt";
+                public const string Data = "Data";
+            }
+
+            internal static class EventData
+            {
+                public const string FileId = "FileId";
+                public const string ParentFileId = "ParentFileId";
+                public const string Etag = "Etag";
+                public const string FileName = "FileName";
+                public const string FullFilePath = "FullFilePath";
+                public const string Identity = "Identity";
+                public const string Description = "Description";
+                public const string Initiator = "Initiator";
+                public const string IsDirectory = "IsDirectory";
+            }
+
+            internal static class EventIdentity
+            {
+                public const string EntraOID = "EntraOID";
+                public const string SID = "SID";
             }
         }
 

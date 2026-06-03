@@ -21,6 +21,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
     public partial class BlobChangeFeedClientOptions
     {
         public BlobChangeFeedClientOptions() { }
+        public bool IncludeNonFinalizedEvents { get { throw null; } set { } }
         public long? MaximumTransferSize { get { throw null; } set { } }
     }
     public partial class BlobChangeFeedEvent

@@ -4,13 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Azure.Storage.ChangeFeed.Common;
 
 namespace Azure.Storage.Blobs.ChangeFeed
 {
     /// <summary>
     /// BlobChangeFeedEvent.
     /// </summary>
-    public class BlobChangeFeedEvent
+    public class BlobChangeFeedEvent : IChangeFeedEvent
     {
         /// <summary>
         /// Internal constructor.
