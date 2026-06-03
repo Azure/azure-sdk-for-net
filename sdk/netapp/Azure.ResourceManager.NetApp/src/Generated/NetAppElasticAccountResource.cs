@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppElasticAccountPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppElasticAccountResource> operation = new NetAppArmOperation<NetAppElasticAccountResource>(
-                    new NetAppElasticAccountOperationSource(Client),
+                    new NetAppElasticAccountResourceOperationSource(Client),
                     _elasticAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticAccountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppElasticAccountPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppElasticAccountResource> operation = new NetAppArmOperation<NetAppElasticAccountResource>(
-                    new NetAppElasticAccountOperationSource(Client),
+                    new NetAppElasticAccountResourceOperationSource(Client),
                     _elasticAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,

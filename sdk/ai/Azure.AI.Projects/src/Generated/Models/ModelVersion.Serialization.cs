@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Model Version Definition. </summary>
-    public partial class ModelVersion : IJsonModel<ModelVersion>
+    internal partial class ModelVersion : IJsonModel<ModelVersion>
     {
         /// <summary> Initializes a new instance of <see cref="ModelVersion"/> for deserialization. </summary>
         internal ModelVersion()

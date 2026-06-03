@@ -1,10 +1,11 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0 (2026-06-02)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version to 2025-05-01.
+- Separated CertificateRegistration and DomainRegistration from App Service.
 
 ### Bugs Fixed
 
@@ -12,6 +13,9 @@
 - Fix deserialization when `FunctionAppStorage.Value` is not a valid URI.
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.4.1 (2025-08-11)
 

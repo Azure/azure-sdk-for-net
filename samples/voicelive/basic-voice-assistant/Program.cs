@@ -3,6 +3,7 @@
 
 using System.CommandLine;
 using System.CommandLine.Parsing;
+using System.Diagnostics;
 using Azure.AI.VoiceLive.Samples;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -34,13 +35,23 @@ namespace Azure.AI.VoiceLive.Samples
     ///
     /// REQUIREMENTS:
     ///     - Azure.AI.VoiceLive
-    ///     - Azure.Identity
+    ///     - Azure.Core (DefaultAzureCredential in Azure.Identity namespace)
     ///     - NAudio (for audio capture and playback)
     ///     - Microsoft.Extensions.Configuration
     ///     - System.CommandLine
     /// </remarks>
     public class Program
     {
+        //
+        // Telemetry/Tracing:
+        //
+        // The Azure VoiceLive SDK for .NET emits OpenTelemetry spans for all major operations automatically
+        // when an OpenTelemetry provider is present (such as Azure Monitor or Console exporter).
+        // No explicit code is required in this sample to enable tracing.
+        //
+        // For more details, see the sample README and Azure SDK telemetry docs.
+        //
+
         /// <summary>
         /// Main entry point for the Voice Assistant sample.
         /// </summary>
@@ -85,6 +96,11 @@ namespace Azure.AI.VoiceLive.Samples
                 Description = "Enable verbose logging"
             };
 
+            var showTracesOption = new Option<bool>("--show-traces")
+            {
+                Description = "Print VoiceLive telemetry spans to console"
+            };
+
             rootCommand.Add(apiKeyOption);
             rootCommand.Add(endpointOption);
             rootCommand.Add(modelOption);
@@ -92,6 +108,7 @@ namespace Azure.AI.VoiceLive.Samples
             rootCommand.Add(instructionsOption);
             rootCommand.Add(useTokenCredentialOption);
             rootCommand.Add(verboseOption);
+            rootCommand.Add(showTracesOption);
 
             var parseResult = rootCommand.Parse(args);
             if (parseResult.Errors.Count > 0)
@@ -110,8 +127,10 @@ namespace Azure.AI.VoiceLive.Samples
             var instructions = parseResult.GetValue(instructionsOption) ?? "You are a helpful AI assistant. Respond naturally and conversationally. Keep your responses concise but engaging.";
             var useTokenCredential = parseResult.GetValue(useTokenCredentialOption);
             var verbose = parseResult.GetValue(verboseOption);
+            var showTraces = parseResult.GetValue(showTracesOption)
+                || string.Equals(Environment.GetEnvironmentVariable("VOICELIVE_ENABLE_CONSOLE_TRACING"), "true", StringComparison.OrdinalIgnoreCase);
 
-            await RunVoiceAssistantAsync(apiKey, endpoint, model, voice, instructions, useTokenCredential, verbose).ConfigureAwait(false);
+            await RunVoiceAssistantAsync(apiKey, endpoint, model, voice, instructions, useTokenCredential, verbose, showTraces).ConfigureAwait(false);
             return 0;
         }
 
@@ -122,8 +141,11 @@ namespace Azure.AI.VoiceLive.Samples
                 string voice,
                 string instructions,
                 bool useTokenCredential,
-                bool verbose)
+                bool verbose,
+                bool showTraces)
         {
+            using var traceListener = EnableVoiceLiveConsoleTracing(showTraces);
+
             // Setup configuration
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true)
@@ -214,6 +236,41 @@ namespace Azure.AI.VoiceLive.Samples
                 logger.LogError(ex, "Fatal error");
                 Console.WriteLine($"❌ Error: {ex.Message}");
             }
+        }
+
+        private static IDisposable? EnableVoiceLiveConsoleTracing(bool enabled)
+        {
+            if (!enabled)
+                return null;
+
+            var listener = new ActivityListener
+            {
+                ShouldListenTo = source => source.Name == "Azure.AI.VoiceLive",
+                Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllDataAndRecorded,
+                SampleUsingParentId = (ref ActivityCreationOptions<string> _) => ActivitySamplingResult.AllDataAndRecorded,
+                ActivityStopped = activity =>
+                {
+                    Console.WriteLine($"'{activity.DisplayName}' : {FormatTags(activity.TagObjects)}");
+                    foreach (ActivityEvent evt in activity.Events)
+                    {
+                        Console.WriteLine($"  Event '{evt.Name}': {FormatTags(evt.Tags)}");
+                    }
+                }
+            };
+
+            ActivitySource.AddActivityListener(listener);
+            Console.WriteLine("VoiceLive console tracing enabled.");
+            return listener;
+        }
+
+        private static string FormatTags(IEnumerable<KeyValuePair<string, object?>> tags)
+        {
+            var parts = new List<string>();
+            foreach (KeyValuePair<string, object?> kvp in tags)
+            {
+                parts.Add($"{kvp.Key}={kvp.Value}");
+            }
+            return "{" + string.Join(", ", parts) + "}";
         }
 
         private static bool CheckAudioSystem(ILogger logger)

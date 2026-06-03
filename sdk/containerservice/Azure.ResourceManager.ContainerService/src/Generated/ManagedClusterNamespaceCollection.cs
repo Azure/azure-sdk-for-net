@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _managedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ManagedClusterNamespaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ManagedClusterNamespaceResource> operation = new ContainerServiceArmOperation<ManagedClusterNamespaceResource>(
-                    new ManagedClusterNamespaceOperationSource(Client),
+                    new ManagedClusterNamespaceResourceOperationSource(Client),
                     _managedNamespacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _managedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ManagedClusterNamespaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ManagedClusterNamespaceResource> operation = new ContainerServiceArmOperation<ManagedClusterNamespaceResource>(
-                    new ManagedClusterNamespaceOperationSource(Client),
+                    new ManagedClusterNamespaceResourceOperationSource(Client),
                     _managedNamespacesClientDiagnostics,
                     Pipeline,
                     message.Request,
