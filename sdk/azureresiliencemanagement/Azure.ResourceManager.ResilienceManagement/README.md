@@ -1,4 +1,4 @@
-# Azure.ResourceManager.ResilienceManagement management client library for .NET
+# Microsoft Azure ResilienceManagement management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
