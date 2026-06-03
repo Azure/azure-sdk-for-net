@@ -16,11 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This compatibility property is obsolete and will be removed in a future version. Use MatchConfigurationSettings instead.")]
         public IList<NetworkTapRuleMatchConfiguration> MatchConfigurations
         {
-            get
-            {
-                Properties ??= new NetworkTapRulePatchProperties();
-                return ToMatchConfigurations(Properties.MatchConfigurationSettings);
-            }
+            get => throw new NotSupportedException("This compatibility property is obsolete and will be removed in a future version. Use MatchConfigurationSettings instead.");
         }
 
         /// <summary> List of dynamic match configurations. </summary>
@@ -28,11 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This compatibility property is obsolete and will be removed in a future version. Use DynamicMatchConfigurationSettings instead.")]
         public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations
         {
-            get
-            {
-                Properties ??= new NetworkTapRulePatchProperties();
-                return ToDynamicMatchConfigurations(Properties.DynamicMatchConfigurationSettings);
-            }
+            get => throw new NotSupportedException("This compatibility property is obsolete and will be removed in a future version. Use DynamicMatchConfigurationSettings instead.");
         }
 
         internal static IList<NetworkTapRuleMatchConfiguration> ToMatchConfigurations(IList<NetworkTapRuleMatchConfigurationPatch> inner)
@@ -207,14 +199,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return result;
         }
 
-        private static PortConditionPatch ToPortConditionPatch(NetworkFabricPortCondition value)
+        private static NetworkFabricPortConditionPatch ToPortConditionPatch(NetworkFabricPortCondition value)
         {
             if (value is null)
             {
                 return null;
             }
 
-            var result = new PortConditionPatch
+            var result = new NetworkFabricPortConditionPatch
             {
                 PortType = value.PortType,
                 Layer4Protocol = value.Layer4Protocol
@@ -224,7 +216,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return result;
         }
 
-        private static NetworkFabricPortCondition ToPortCondition(PortConditionPatch value)
+        private static NetworkFabricPortCondition ToPortCondition(NetworkFabricPortConditionPatch value)
         {
             if (value is null)
             {

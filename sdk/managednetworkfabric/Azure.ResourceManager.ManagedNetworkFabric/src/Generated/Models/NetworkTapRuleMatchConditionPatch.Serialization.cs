@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IPMatchConditionPatch ipCondition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkTapEncapsulationType? encapsulationType = default;
-            PortConditionPatch portCondition = default;
+            NetworkFabricPortConditionPatch portCondition = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("protocolTypes"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    portCondition = PortConditionPatch.DeserializePortConditionPatch(prop.Value, options);
+                    portCondition = NetworkFabricPortConditionPatch.DeserializeNetworkFabricPortConditionPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

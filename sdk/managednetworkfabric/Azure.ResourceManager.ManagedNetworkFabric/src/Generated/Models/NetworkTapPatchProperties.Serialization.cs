@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
-                foreach (DestinationPatchProperties item in DestinationSettings)
+                foreach (NetworkTapDestinationPatchProperties item in DestinationSettings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkTapPollingType? pollingType = default;
-            IList<DestinationPatchProperties> destinationSettings = default;
+            IList<NetworkTapDestinationPatchProperties> destinationSettings = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("annotation"u8))
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<DestinationPatchProperties> array = new List<DestinationPatchProperties>();
+                    List<NetworkTapDestinationPatchProperties> array = new List<NetworkTapDestinationPatchProperties>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DestinationPatchProperties.DeserializeDestinationPatchProperties(item, options));
+                        array.Add(NetworkTapDestinationPatchProperties.DeserializeNetworkTapDestinationPatchProperties(item, options));
                     }
                     destinationSettings = array;
                     continue;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkTapPatchProperties(annotation, additionalBinaryDataProperties, pollingType, destinationSettings ?? new ChangeTrackingList<DestinationPatchProperties>());
+            return new NetworkTapPatchProperties(annotation, additionalBinaryDataProperties, pollingType, destinationSettings ?? new ChangeTrackingList<NetworkTapDestinationPatchProperties>());
         }
     }
 }

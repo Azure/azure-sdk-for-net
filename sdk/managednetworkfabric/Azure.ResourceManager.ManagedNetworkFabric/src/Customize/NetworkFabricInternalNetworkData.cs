@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This property is obsolete and will be removed in a future version. Use BgpSettings instead.")]
         public InternalNetworkBgpConfiguration BgpConfiguration
         {
-            get => InternalNetworkBgpConfiguration.FromBgpConfiguration(BgpSettings);
-            set => BgpSettings = value;
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use BgpSettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use BgpSettings instead.");
         }
 
         // Backward compatibility shim for the TypeSpec migration. The current generated property
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This property is obsolete and will be removed in a future version. Use StaticRouteSettings instead.")]
         public InternalNetworkStaticRouteConfiguration StaticRouteConfiguration
         {
-            get => InternalNetworkStaticRouteConfiguration.FromStaticRouteConfiguration(StaticRouteSettings);
-            set => StaticRouteSettings = value;
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use StaticRouteSettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use StaticRouteSettings instead.");
         }
 
         // Backward compatibility that adds back a previously safe flattened property.
@@ -41,13 +41,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.")]
         public ResourceIdentifier ExportRoutePolicyId
         {
-            get => ExportRoutePolicy?.ExportIPv4RoutePolicyId;
-            set
-            {
-                if (ExportRoutePolicy == null)
-                    ExportRoutePolicy = new ExportRoutePolicy();
-                ExportRoutePolicy.ExportIPv4RoutePolicyId = value;
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.");
         }
 
         // Backward compatibility that adds back a previously safe flattened property.
@@ -57,13 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.")]
         public ResourceIdentifier ImportRoutePolicyId
         {
-            get => ImportRoutePolicy?.ImportIPv4RoutePolicyId;
-            set
-            {
-                if (ImportRoutePolicy == null)
-                    ImportRoutePolicy = new ImportRoutePolicy();
-                ImportRoutePolicy.ImportIPv4RoutePolicyId = value;
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.");
         }
     }
 }

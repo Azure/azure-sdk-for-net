@@ -20,8 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use UpdateAsync(WaitUntil, NetworkBootstrapDevicePatchContent, CancellationToken) instead.")]
         public virtual Task<ArmOperation<NetworkBootstrapDeviceResource>> UpdateAsync(WaitUntil waitUntil, NetworkBootstrapDevicePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-            return UpdateAsync(waitUntil, patch.ToContent(), cancellationToken);
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use UpdateAsync(WaitUntil, NetworkBootstrapDevicePatchContent, CancellationToken) instead.");
         }
 
         /// <summary> Backward-compatible update overload accepting the shipped patch type. </summary>
@@ -29,8 +28,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use Update(WaitUntil, NetworkBootstrapDevicePatchContent, CancellationToken) instead.")]
         public virtual ArmOperation<NetworkBootstrapDeviceResource> Update(WaitUntil waitUntil, NetworkBootstrapDevicePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-            return Update(waitUntil, patch.ToContent(), cancellationToken);
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use Update(WaitUntil, NetworkBootstrapDevicePatchContent, CancellationToken) instead.");
         }
     }
 }

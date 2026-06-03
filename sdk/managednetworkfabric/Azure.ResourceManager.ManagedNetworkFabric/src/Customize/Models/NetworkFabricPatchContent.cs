@@ -15,15 +15,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use TerminalServerSettings instead.")]
         public NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration
         {
-            get => Properties is null ? default : NetworkFabricPatchablePropertiesTerminalServerConfiguration.FromNetworkFabricTerminalServerPatchConfiguration(Properties.TerminalServerSettings);
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkFabricPatchProperties();
-                }
-                Properties.TerminalServerSettings = value?.ToNetworkFabricTerminalServerPatchConfiguration();
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use TerminalServerSettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use TerminalServerSettings instead.");
         }
     }
 }

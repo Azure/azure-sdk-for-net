@@ -86,17 +86,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use DestinationSettings instead.")]
         public IList<NetworkTapPatchableParametersDestinationsItem> Destinations
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkTapPatchProperties();
-                }
-                return new ConvertingList<NetworkTapPatchableParametersDestinationsItem, DestinationPatchProperties>(Properties.DestinationSettings, FromDestinationPatchProperties, ToDestinationPatchProperties);
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use DestinationSettings instead.");
         }
 
-        private static NetworkTapPatchableParametersDestinationsItem FromDestinationPatchProperties(DestinationPatchProperties value)
+        private static NetworkTapPatchableParametersDestinationsItem FromDestinationPatchProperties(NetworkTapDestinationPatchProperties value)
             => value is null ? null : new NetworkTapPatchableParametersDestinationsItem(
                 value.Name,
                 value.DestinationType,
@@ -105,8 +98,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 value.DestinationTapRuleId,
                 additionalBinaryDataProperties: null);
 
-        private static DestinationPatchProperties ToDestinationPatchProperties(NetworkTapPatchableParametersDestinationsItem value)
-            => value is null ? null : new DestinationPatchProperties(
+        private static NetworkTapDestinationPatchProperties ToDestinationPatchProperties(NetworkTapPatchableParametersDestinationsItem value)
+            => value is null ? null : new NetworkTapDestinationPatchProperties(
                 value.Name,
                 value.DestinationType,
                 value.DestinationId,

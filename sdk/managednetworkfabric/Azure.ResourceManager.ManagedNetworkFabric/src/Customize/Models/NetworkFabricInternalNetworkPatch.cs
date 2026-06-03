@@ -20,13 +20,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.")]
         public ResourceIdentifier ExportRoutePolicyId
         {
-            get => ExportRoutePolicy?.ExportIPv4RoutePolicyId;
-            set
-            {
-                if (ExportRoutePolicy == null)
-                    ExportRoutePolicy = new ExportRoutePolicy();
-                ExportRoutePolicy.ExportIPv4RoutePolicyId = value;
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.");
         }
 
         // Backward compatibility that adds back a previously safe flattened property.
@@ -36,13 +31,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.")]
         public ResourceIdentifier ImportRoutePolicyId
         {
-            get => ImportRoutePolicy?.ImportIPv4RoutePolicyId;
-            set
-            {
-                if (ImportRoutePolicy == null)
-                    ImportRoutePolicy = new ImportRoutePolicy();
-                ImportRoutePolicy.ImportIPv4RoutePolicyId = value;
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.");
         }
 
         /// <summary> List of Connected IPv4 Subnets. </summary>
@@ -50,14 +40,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use ConnectedIPv4SubnetSettings instead.")]
         public IList<ConnectedSubnet> ConnectedIPv4Subnets
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new InternalNetworkPatchProperties();
-                }
-                return new ConvertingList<ConnectedSubnet, NetworkFabricConnectedSubnetPatch>(Properties.ConnectedIPv4SubnetSettings, ToConnectedSubnet, ToConnectedSubnetPatch);
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ConnectedIPv4SubnetSettings instead.");
         }
 
         /// <summary> List of connected IPv6 Subnets. </summary>
@@ -65,14 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use ConnectedIPv6SubnetSettings instead.")]
         public IList<ConnectedSubnet> ConnectedIPv6Subnets
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new InternalNetworkPatchProperties();
-                }
-                return new ConvertingList<ConnectedSubnet, NetworkFabricConnectedSubnetPatch>(Properties.ConnectedIPv6SubnetSettings, ToConnectedSubnet, ToConnectedSubnetPatch);
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ConnectedIPv6SubnetSettings instead.");
         }
 
         /// <summary> BGP configuration properties. </summary>
@@ -80,8 +56,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use BgpSettings instead.")]
         public BgpConfiguration BgpConfiguration
         {
-            get => ToBgpConfiguration(BgpSettings);
-            set => BgpSettings = ToBgpPatchConfiguration(value);
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use BgpSettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use BgpSettings instead.");
         }
 
         /// <summary> Static Route Configuration properties. </summary>
@@ -89,8 +65,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use StaticRouteSettings instead.")]
         public StaticRouteConfiguration StaticRouteConfiguration
         {
-            get => ToStaticRouteConfiguration(StaticRouteSettings);
-            set => StaticRouteSettings = ToStaticRoutePatchConfiguration(value);
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use StaticRouteSettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use StaticRouteSettings instead.");
         }
 
         private static BgpPatchConfiguration ToBgpPatchConfiguration(BgpConfiguration value)

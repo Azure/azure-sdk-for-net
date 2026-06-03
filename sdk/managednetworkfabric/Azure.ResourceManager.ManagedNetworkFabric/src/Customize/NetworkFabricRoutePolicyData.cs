@@ -20,8 +20,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version.")]
-        public NetworkFabricRoutePolicyData(AzureLocation location, ResourceIdentifier networkFabricId) : this(location, Array.Empty<RoutePolicyStatementProperties>(), networkFabricId)
+        public NetworkFabricRoutePolicyData(AzureLocation location, ResourceIdentifier networkFabricId)
         {
+            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version.");
         }
     }
 }

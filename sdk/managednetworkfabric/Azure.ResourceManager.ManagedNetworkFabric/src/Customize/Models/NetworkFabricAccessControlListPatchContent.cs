@@ -16,11 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This compatibility property is obsolete and will be removed in a future version. Use MatchConfigurationSettings instead.")]
         public IList<AccessControlListMatchConfiguration> MatchConfigurations
         {
-            get
-            {
-                Properties ??= new AccessControlListPatchProperties();
-                return ToMatchConfigurations(Properties.MatchConfigurationSettings);
-            }
+            get => throw new NotSupportedException("This compatibility property is obsolete and will be removed in a future version. Use MatchConfigurationSettings instead.");
         }
 
         /// <summary> List of dynamic match configurations. </summary>
@@ -28,11 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This compatibility property is obsolete and will be removed in a future version. Use DynamicMatchConfigurationSettings instead.")]
         public IList<CommonDynamicMatchConfiguration> DynamicMatchConfigurations
         {
-            get
-            {
-                Properties ??= new AccessControlListPatchProperties();
-                return ToDynamicMatchConfigurations(Properties.DynamicMatchConfigurationSettings);
-            }
+            get => throw new NotSupportedException("This compatibility property is obsolete and will be removed in a future version. Use DynamicMatchConfigurationSettings instead.");
         }
 
         internal static IList<AccessControlListMatchConfiguration> ToMatchConfigurations(IList<AccessControlListMatchConfigurationPatch> inner)

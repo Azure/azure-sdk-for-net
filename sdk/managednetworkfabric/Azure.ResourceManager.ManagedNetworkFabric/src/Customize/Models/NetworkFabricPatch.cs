@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkFabricPatchContent instead.")]
         public NetworkFabricPatch()
         {
+            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version. Use NetworkFabricPatchContent instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
@@ -155,18 +156,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use TerminalServerSettings instead.")]
         public NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration
         {
-            get
-            {
-                return Properties is null ? default : NetworkFabricPatchablePropertiesTerminalServerConfiguration.FromNetworkFabricTerminalServerPatchConfiguration(Properties.TerminalServerSettings);
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkFabricPatchProperties();
-                }
-                Properties.TerminalServerSettings = value?.ToNetworkFabricTerminalServerPatchConfiguration();
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use TerminalServerSettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use TerminalServerSettings instead.");
         }
 
         /// <summary> Configuration to be used to setup the management network. </summary>

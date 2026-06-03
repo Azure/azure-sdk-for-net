@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use the constructor with NetworkFabricTerminalServerConfiguration instead.")]
         public NetworkFabricProperties(string networkFabricSku, ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string iPv4Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration)
-            : this(networkFabricSku, networkFabricControllerId, serverCountPerRack, iPv4Prefix, fabricAsn, terminalServerConfiguration?.ToNetworkFabricTerminalServerConfiguration(), managementNetworkConfiguration)
         {
+            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version. Use the constructor with NetworkFabricTerminalServerConfiguration instead.");
         }
 
         /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use TerminalServerSettings instead.")]
         public TerminalServerConfiguration TerminalServerConfiguration
         {
-            get => TerminalServerConfiguration.FromNetworkFabricTerminalServerConfiguration(TerminalServerSettings);
-            set => TerminalServerSettings = value?.ToNetworkFabricTerminalServerConfiguration();
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use TerminalServerSettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use TerminalServerSettings instead.");
         }
     }
 }

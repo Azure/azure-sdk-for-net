@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of destination properties to send the filter traffic. </summary>
-        public IList<DestinationPatchProperties> DestinationSettings
+        public IList<NetworkTapDestinationPatchProperties> DestinationSettings
         {
             get
             {

@@ -12,7 +12,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Defines the port condition that needs to be matched. </summary>
-    public partial class AccessControlListPortConditionPatch : PortConditionPatch
+    public partial class AccessControlListPortConditionPatch : NetworkFabricPortConditionPatch
     {
         /// <summary> Initializes a new instance of <see cref="AccessControlListPortConditionPatch"/>. </summary>
         public AccessControlListPortConditionPatch()

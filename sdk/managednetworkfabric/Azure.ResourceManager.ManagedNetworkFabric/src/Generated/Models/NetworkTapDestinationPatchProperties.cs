@@ -12,24 +12,24 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The network tap destination properties. </summary>
-    public partial class DestinationPatchProperties
+    public partial class NetworkTapDestinationPatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DestinationPatchProperties"/>. </summary>
-        public DestinationPatchProperties()
+        /// <summary> Initializes a new instance of <see cref="NetworkTapDestinationPatchProperties"/>. </summary>
+        public NetworkTapDestinationPatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DestinationPatchProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapDestinationPatchProperties"/>. </summary>
         /// <param name="name"> Destination name. </param>
         /// <param name="destinationType"> Type of destination. Input can be IsolationDomain or Direct. </param>
         /// <param name="destinationId"> The destination Id. ARM Resource ID of either NNI or Internal Networks. </param>
         /// <param name="isolationDomainProperties"> Isolation Domain Properties. </param>
         /// <param name="destinationTapRuleId"> ARM Resource ID of destination Tap Rule that contains match configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DestinationPatchProperties(string name, NetworkTapDestinationType? destinationType, ResourceIdentifier destinationId, IsolationDomainPatchProperties isolationDomainProperties, ResourceIdentifier destinationTapRuleId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkTapDestinationPatchProperties(string name, NetworkTapDestinationType? destinationType, ResourceIdentifier destinationId, IsolationDomainPatchProperties isolationDomainProperties, ResourceIdentifier destinationTapRuleId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DestinationType = destinationType;

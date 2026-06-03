@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use OptionASettings instead.")]
         public VpnConfigurationPatchableOptionAProperties OptionAProperties
         {
-            get => VpnConfigurationPatchableOptionAProperties.FromGeneratedOptionAPatchProperties(OptionASettings);
-            set => OptionASettings = value?.ToVpnOptionAPatchProperties();
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use OptionASettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use OptionASettings instead.");
         }
     }
 }

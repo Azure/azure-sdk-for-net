@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="destinations"> List of destinations to send the filter traffic. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkTapDestinationProperties for destinations instead.")]
-        public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations) : this(location, networkPacketBrokerId, destinations?.Cast<NetworkTapDestinationProperties>())
+        public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations)
         {
+            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version. Use NetworkTapDestinationProperties for destinations instead.");
         }
 
         // Backward compatibility shim for the TypeSpec migration. The current generated property
@@ -33,17 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This property is obsolete and will be removed in a future version. Use DestinationSettings instead.")]
         public IList<NetworkTapPropertiesDestinationsItem> Destinations
         {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkTapProperties();
-                }
-                return new ConvertingList<NetworkTapPropertiesDestinationsItem, NetworkTapDestinationProperties>(
-                    Properties.DestinationSettings,
-                    NetworkTapPropertiesDestinationsItem.FromDestinationProperties,
-                    ToDestinationProperties);
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use DestinationSettings instead.");
         }
 
         private static NetworkTapDestinationProperties ToDestinationProperties(NetworkTapPropertiesDestinationsItem value)

@@ -24,10 +24,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeStateAsync instead.")]
-        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<UpdateAdministrativeStateResult> operation = await SetAdministrativeStateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeStateAsync instead.");
         }
 
         /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
@@ -35,17 +34,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeState instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<UpdateAdministrativeStateResult> operation = SetAdministrativeState(waitUntil, content, cancellationToken);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeState instead.");
         }
 
         /// <summary> Backward-compatible shim for UpdateBgpAdministrativeState. Use SetBgpAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This overload uses a parameter type from a previous API version. Use SetBgpAdministrativeState with InternalNetworkUpdateBgpAdministrativeStateContent instead.")]
-        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateBgpAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateBgpAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult> operation = await SetBgpAdministrativeStateAsync(waitUntil, ToBgpAdministrativeStateContent(content), cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+            throw new NotSupportedException("This overload uses a parameter type from a previous API version. Use SetBgpAdministrativeState with InternalNetworkUpdateBgpAdministrativeStateContent instead.");
         }
 
         /// <summary> Backward-compatible shim for UpdateBgpAdministrativeState. Use SetBgpAdministrativeState instead for richer result type. </summary>
@@ -53,8 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This overload uses a parameter type from a previous API version. Use SetBgpAdministrativeState with InternalNetworkUpdateBgpAdministrativeStateContent instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateBgpAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult> operation = SetBgpAdministrativeState(waitUntil, ToBgpAdministrativeStateContent(content), cancellationToken);
-            return new CompatArmOperation<InternalNetworkUpdateBgpAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+            throw new NotSupportedException("This overload uses a parameter type from a previous API version. Use SetBgpAdministrativeState with InternalNetworkUpdateBgpAdministrativeStateContent instead.");
         }
 
         private static InternalNetworkUpdateBgpAdministrativeStateContent ToBgpAdministrativeStateContent(UpdateAdministrativeStateContent content)
@@ -75,10 +71,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Backward-compatible shim for UpdateStaticRouteBfdAdministrativeState. Use SetStaticRouteBfdAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetStaticRouteBfdAdministrativeStateAsync instead.")]
-        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateStaticRouteBfdAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateStaticRouteBfdAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<UpdateAdministrativeStateResult> operation = await SetStaticRouteBfdAdministrativeStateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use SetStaticRouteBfdAdministrativeStateAsync instead.");
         }
 
         /// <summary> Backward-compatible shim for UpdateStaticRouteBfdAdministrativeState. Use SetStaticRouteBfdAdministrativeState instead for richer result type. </summary>
@@ -86,8 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetStaticRouteBfdAdministrativeState instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateStaticRouteBfdAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<UpdateAdministrativeStateResult> operation = SetStaticRouteBfdAdministrativeState(waitUntil, content, cancellationToken);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use SetStaticRouteBfdAdministrativeState instead.");
         }
 
         private static StateUpdateCommonPostActionResult ToStateUpdateResult(ResponseError error)

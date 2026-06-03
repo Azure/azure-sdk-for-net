@@ -30,38 +30,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use UpdateAsync(WaitUntil, NetworkFabricAccessControlListPatchContent, CancellationToken) instead.")]
-        public virtual async Task<ArmOperation<NetworkFabricAccessControlListResource>> UpdateAsync(WaitUntil waitUntil, NetworkFabricAccessControlListPatch patch, CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperation<NetworkFabricAccessControlListResource>> UpdateAsync(WaitUntil waitUntil, NetworkFabricAccessControlListPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = _accessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _accessControlListsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricAccessControlListPatchContent.ToRequestContent(patch.ToContent()), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<NetworkFabricAccessControlListResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricAccessControlListResource>(
-                    new NetworkFabricAccessControlListResourceOperationSource(Client),
-                    _accessControlListsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use UpdateAsync(WaitUntil, NetworkFabricAccessControlListPatchContent, CancellationToken) instead.");
         }
 
         /// <summary> Update certain properties of the Access Control List resource. </summary>
@@ -72,36 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use Update(WaitUntil, NetworkFabricAccessControlListPatchContent, CancellationToken) instead.")]
         public virtual ArmOperation<NetworkFabricAccessControlListResource> Update(WaitUntil waitUntil, NetworkFabricAccessControlListPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = _accessControlListsClientDiagnostics.CreateScope("NetworkFabricAccessControlListResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _accessControlListsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkFabricAccessControlListPatchContent.ToRequestContent(patch.ToContent()), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<NetworkFabricAccessControlListResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricAccessControlListResource>(
-                    new NetworkFabricAccessControlListResourceOperationSource(Client),
-                    _accessControlListsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use Update(WaitUntil, NetworkFabricAccessControlListPatchContent, CancellationToken) instead.");
         }
         // 1. The service API version changed action operation response models from the shipped
         //    StateUpdateCommonPostActionResult to operation-specific result models.
@@ -113,10 +55,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeStateAsync instead.")]
-        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperation<StateUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<UpdateAdministrativeStateResult> operation = await SetAdministrativeStateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeStateAsync instead.");
         }
 
         /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
@@ -124,8 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeState instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<UpdateAdministrativeStateResult> operation = SetAdministrativeState(waitUntil, content, cancellationToken);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, StateUpdateCommonPostActionResult>(operation, r => new StateUpdateCommonPostActionResult(r.Error, null, null));
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeState instead.");
         }
     }
 }

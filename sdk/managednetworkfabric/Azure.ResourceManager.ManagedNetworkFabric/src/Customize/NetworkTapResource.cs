@@ -25,38 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Backward-compatible update overload accepting the shipped patch type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use UpdateAsync(WaitUntil, NetworkTapPatchContent, CancellationToken) instead.")]
-        public virtual async Task<ArmOperation<NetworkTapResource>> UpdateAsync(WaitUntil waitUntil, NetworkTapPatch patch, CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperation<NetworkTapResource>> UpdateAsync(WaitUntil waitUntil, NetworkTapPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _networkTapsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTapPatch.ToRequestContent(patch), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ManagedNetworkFabricArmOperation<NetworkTapResource> operation = new ManagedNetworkFabricArmOperation<NetworkTapResource>(
-                    new NetworkTapResourceOperationSource(Client),
-                    _networkTapsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use UpdateAsync(WaitUntil, NetworkTapPatchContent, CancellationToken) instead.");
         }
 
         // 1. The TypeSpec patch models now keep the Swagger-compatible TagsUpdate base and the generated
@@ -70,36 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use Update(WaitUntil, NetworkTapPatchContent, CancellationToken) instead.")]
         public virtual ArmOperation<NetworkTapResource> Update(WaitUntil waitUntil, NetworkTapPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using DiagnosticScope scope = _networkTapsClientDiagnostics.CreateScope("NetworkTapResource.Update");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _networkTapsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTapPatch.ToRequestContent(patch), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ManagedNetworkFabricArmOperation<NetworkTapResource> operation = new ManagedNetworkFabricArmOperation<NetworkTapResource>(
-                    new NetworkTapResourceOperationSource(Client),
-                    _networkTapsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use Update(WaitUntil, NetworkTapPatchContent, CancellationToken) instead.");
         }
 
         // 1. The service API version changed action operation response models from shipped generic
@@ -112,10 +54,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Backward-compatible shim for Resync. Use StartResync instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartResyncAsync instead.")]
-        public virtual async Task<ArmOperation<StateUpdateCommonPostActionResult>> ResyncAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperation<StateUpdateCommonPostActionResult>> ResyncAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            ArmOperation<NetworkTapResyncResult> operation = await StartResyncAsync(waitUntil, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<NetworkTapResyncResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use StartResyncAsync instead.");
         }
 
         /// <summary> Backward-compatible shim for Resync. Use StartResync instead for richer result type. </summary>
@@ -123,8 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use StartResync instead.")]
         public virtual ArmOperation<StateUpdateCommonPostActionResult> Resync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            ArmOperation<NetworkTapResyncResult> operation = StartResync(waitUntil, cancellationToken);
-            return new CompatArmOperation<NetworkTapResyncResult, StateUpdateCommonPostActionResult>(operation, r => ToStateUpdateResult(r.Error));
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use StartResync instead.");
         }
 
         // The generated method was renamed to StartResync; keep the shipped Synchronize name as an alias.
@@ -144,10 +84,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeStateAsync instead.")]
-        public virtual async Task<ArmOperation<DeviceUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperation<DeviceUpdateCommonPostActionResult>> UpdateAdministrativeStateAsync(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<UpdateAdministrativeStateResult> operation = await SetAdministrativeStateAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, DeviceUpdateCommonPostActionResult>(operation, r => ToDeviceUpdateResult(r.Error));
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeStateAsync instead.");
         }
 
         /// <summary> Backward-compatible shim for UpdateAdministrativeState. Use SetAdministrativeState instead for richer result type. </summary>
@@ -155,8 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeState instead.")]
         public virtual ArmOperation<DeviceUpdateCommonPostActionResult> UpdateAdministrativeState(WaitUntil waitUntil, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
-            ArmOperation<UpdateAdministrativeStateResult> operation = SetAdministrativeState(waitUntil, content, cancellationToken);
-            return new CompatArmOperation<UpdateAdministrativeStateResult, DeviceUpdateCommonPostActionResult>(operation, r => ToDeviceUpdateResult(r.Error));
+            throw new NotSupportedException("This compatibility method is obsolete and will be removed in a future version. Use SetAdministrativeState instead.");
         }
 
         private static StateUpdateCommonPostActionResult ToStateUpdateResult(ResponseError error)

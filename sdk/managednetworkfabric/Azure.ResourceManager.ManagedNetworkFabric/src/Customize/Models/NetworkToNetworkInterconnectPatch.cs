@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use Layer2Settings instead.")]
         public Layer2Configuration Layer2Configuration
         {
-            get => ToLayer2Configuration(Layer2Settings);
-            set => Layer2Settings = ToLayer2ConfigurationPatch(value);
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use Layer2Settings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use Layer2Settings instead.");
         }
 
         /// <summary> Common properties for Layer3Configuration. </summary>
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use OptionBLayer3Settings instead.")]
         public OptionBLayer3Configuration OptionBLayer3Configuration
         {
-            get => ToOptionBLayer3Configuration(OptionBLayer3Settings);
-            set => OptionBLayer3Settings = ToOptionBLayer3ConfigurationPatchProperties(value);
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use OptionBLayer3Settings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use OptionBLayer3Settings instead.");
         }
 
         /// <summary> NPB Static Route Configuration properties. </summary>
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use NpbStaticRouteSettings instead.")]
         public NpbStaticRouteConfiguration NpbStaticRouteConfiguration
         {
-            get => ToNpbStaticRouteConfiguration(NpbStaticRouteSettings);
-            set => NpbStaticRouteSettings = ToNpbStaticRouteConfigurationPatch(value);
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use NpbStaticRouteSettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use NpbStaticRouteSettings instead.");
         }
 
         /// <summary> Import Route Policy information. </summary>
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use ImportRoutePolicySettings instead.")]
         public ImportRoutePolicyInformation ImportRoutePolicy
         {
-            get => ToImportRoutePolicyInformation(ImportRoutePolicySettings);
-            set => ImportRoutePolicySettings = ToImportRoutePolicyInformationPatch(value);
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicySettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicySettings instead.");
         }
 
         /// <summary> Export Route Policy information. </summary>
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.")]
         public ExportRoutePolicyInformation ExportRoutePolicy
         {
-            get => ToExportRoutePolicyInformation(ExportRoutePolicySettings);
-            set => ExportRoutePolicySettings = ToExportRoutePolicyInformationPatch(value);
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.");
         }
 
         private static Layer2Configuration ToLayer2Configuration(Layer2ConfigurationPatch value)

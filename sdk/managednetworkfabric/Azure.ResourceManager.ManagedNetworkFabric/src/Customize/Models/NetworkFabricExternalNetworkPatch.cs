@@ -19,13 +19,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.")]
         public ResourceIdentifier ExportRoutePolicyId
         {
-            get => ExportRoutePolicySettings?.ExportIPv4RoutePolicyId;
-            set
-            {
-                if (ExportRoutePolicySettings == null)
-                    ExportRoutePolicySettings = new ExportRoutePolicyPatch();
-                ExportRoutePolicySettings.ExportIPv4RoutePolicyId = value;
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicy.ExportIPv4RoutePolicyId instead.");
         }
 
         // Backward compatibility that adds back a previously safe flattened property.
@@ -35,13 +30,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.")]
         public ResourceIdentifier ImportRoutePolicyId
         {
-            get => ImportRoutePolicySettings?.ImportIPv4RoutePolicyId;
-            set
-            {
-                if (ImportRoutePolicySettings == null)
-                    ImportRoutePolicySettings = new ImportRoutePolicyPatch();
-                ImportRoutePolicySettings.ImportIPv4RoutePolicyId = value;
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicy.ImportIPv4RoutePolicyId instead.");
         }
 
         /// <summary> option B properties object. </summary>
@@ -49,8 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use OptionBSettings instead.")]
         public L3OptionBProperties OptionBProperties
         {
-            get => ToL3OptionBProperties(OptionBSettings);
-            set => OptionBSettings = ToL3OptionBPatchProperties(value);
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use OptionBSettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use OptionBSettings instead.");
         }
 
         /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
@@ -58,8 +48,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use ImportRoutePolicySettings instead.")]
         public ImportRoutePolicy ImportRoutePolicy
         {
-            get => ToImportRoutePolicy(ImportRoutePolicySettings);
-            set => ImportRoutePolicySettings = ToImportRoutePolicyPatch(value);
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicySettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ImportRoutePolicySettings instead.");
         }
 
         /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
@@ -67,8 +57,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.")]
         public ExportRoutePolicy ExportRoutePolicy
         {
-            get => ToExportRoutePolicy(ExportRoutePolicySettings);
-            set => ExportRoutePolicySettings = ToExportRoutePolicyPatch(value);
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use ExportRoutePolicySettings instead.");
         }
 
         private static L3OptionBProperties ToL3OptionBProperties(L3OptionBPatchProperties value)

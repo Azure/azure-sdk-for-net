@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="NetworkTapPatchProperties"/>. </summary>
         public NetworkTapPatchProperties()
         {
-            DestinationSettings = new ChangeTrackingList<DestinationPatchProperties>();
+            DestinationSettings = new ChangeTrackingList<NetworkTapDestinationPatchProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkTapPatchProperties"/>. </summary>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="pollingType"> Polling type. </param>
         /// <param name="destinationSettings"> List of destination properties to send the filter traffic. </param>
-        internal NetworkTapPatchProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkTapPollingType? pollingType, IList<DestinationPatchProperties> destinationSettings) : base(annotation, additionalBinaryDataProperties)
+        internal NetworkTapPatchProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkTapPollingType? pollingType, IList<NetworkTapDestinationPatchProperties> destinationSettings) : base(annotation, additionalBinaryDataProperties)
         {
             PollingType = pollingType;
             DestinationSettings = destinationSettings;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public NetworkTapPollingType? PollingType { get; set; }
 
         /// <summary> List of destination properties to send the filter traffic. </summary>
-        public IList<DestinationPatchProperties> DestinationSettings { get; } = new ChangeTrackingList<DestinationPatchProperties>();
+        public IList<NetworkTapDestinationPatchProperties> DestinationSettings { get; } = new ChangeTrackingList<NetworkTapDestinationPatchProperties>();
     }
 }

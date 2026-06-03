@@ -12,25 +12,25 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Port condition that needs to be matched. </summary>
-    public partial class PortConditionPatch
+    public partial class NetworkFabricPortConditionPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PortConditionPatch"/>. </summary>
-        public PortConditionPatch()
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPortConditionPatch"/>. </summary>
+        public NetworkFabricPortConditionPatch()
         {
             Ports = new ChangeTrackingList<string>();
             PortGroupNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PortConditionPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPortConditionPatch"/>. </summary>
         /// <param name="portType"> Port type that needs to be matched. </param>
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         /// <param name="ports"> List of the Ports that need to be matched. </param>
         /// <param name="portGroupNames"> List of the port Group Names that need to be matched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PortConditionPatch(NetworkFabricPortType? portType, Layer4Protocol? layer4Protocol, IList<string> ports, IList<string> portGroupNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkFabricPortConditionPatch(NetworkFabricPortType? portType, Layer4Protocol? layer4Protocol, IList<string> ports, IList<string> portGroupNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PortType = portType;
             Layer4Protocol = layer4Protocol;

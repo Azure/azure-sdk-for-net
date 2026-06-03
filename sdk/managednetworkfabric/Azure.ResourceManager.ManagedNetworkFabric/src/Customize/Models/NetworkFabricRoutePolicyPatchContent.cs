@@ -17,11 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This compatibility property is obsolete and will be removed in a future version. Use StatementSettings instead.")]
         public IList<RoutePolicyStatementProperties> Statements
         {
-            get
-            {
-                Properties ??= new RoutePolicyPatchableProperties();
-                return ToStatements(Properties.StatementSettings);
-            }
+            get => throw new NotSupportedException("This compatibility property is obsolete and will be removed in a future version. Use StatementSettings instead.");
         }
 
         internal static IList<RoutePolicyStatementProperties> ToStatements(IList<RoutePolicyStatementPatchProperties> inner)

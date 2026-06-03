@@ -24,15 +24,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkFabricControllerId"> Resource ID of the network fabric controller. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version.")]
-        public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId) : this(location, networkFabricControllerId)
+        public NetworkFabricInternetGatewayData(AzureLocation location, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId)
         {
-            TypePropertiesType = typePropertiesType;
+            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version.");
         }
 
         /// <summary> IPv4 Address of Internet Gateway. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("IPv4Address is deprecated, use IPV4Address instead")]
-        public IPAddress IPv4Address => IPAddress.TryParse(IPV4Address, out IPAddress address) ? address : null;
+        public IPAddress IPv4Address
+        {
+            get => throw new NotSupportedException("IPv4Address is deprecated, use IPV4Address instead.");
+        }
 
         // 1. The new API version replaced the shipped TypePropertiesType property with InternetGatewayType.
         // 2. We keep the obsolete TypePropertiesType property and redirect it to InternetGatewayType.
@@ -42,8 +45,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This property is obsolete and will be removed in a future version. Use InternetGatewayType instead.")]
         public InternetGatewayType TypePropertiesType
         {
-            get => InternetGatewayType ?? default;
-            set => InternetGatewayType = value;
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use InternetGatewayType instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use InternetGatewayType instead.");
         }
     }
 }

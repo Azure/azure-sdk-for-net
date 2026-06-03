@@ -347,13 +347,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         /// <param name="ports"> List of the Ports that need to be matched. </param>
         /// <param name="portGroupNames"> List of the port Group Names that need to be matched. </param>
-        /// <returns> A new <see cref="Models.PortConditionPatch"/> instance for mocking. </returns>
-        public static PortConditionPatch PortConditionPatch(NetworkFabricPortType? portType = default, Layer4Protocol? layer4Protocol = default, IEnumerable<string> ports = default, IEnumerable<string> portGroupNames = default)
+        /// <returns> A new <see cref="Models.NetworkFabricPortConditionPatch"/> instance for mocking. </returns>
+        public static NetworkFabricPortConditionPatch NetworkFabricPortConditionPatch(NetworkFabricPortType? portType = default, Layer4Protocol? layer4Protocol = default, IEnumerable<string> ports = default, IEnumerable<string> portGroupNames = default)
         {
             ports ??= new ChangeTrackingList<string>();
             portGroupNames ??= new ChangeTrackingList<string>();
 
-            return new PortConditionPatch(portType, layer4Protocol, ports.ToList(), portGroupNames.ToList(), additionalBinaryDataProperties: null);
+            return new NetworkFabricPortConditionPatch(portType, layer4Protocol, ports.ToList(), portGroupNames.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Defines the common match conditions of the ACL and Network Tap Rule. </summary>
@@ -2984,7 +2984,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="encapsulationType"> Encapsulation Type that needs to be matched. </param>
         /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
         /// <returns> A new <see cref="Models.NetworkTapRuleMatchConditionPatch"/> instance for mocking. </returns>
-        public static NetworkTapRuleMatchConditionPatch NetworkTapRuleMatchConditionPatch(IEnumerable<string> protocolTypes = default, VlanMatchConditionPatch vlanMatchCondition = default, IPMatchConditionPatch ipCondition = default, NetworkTapEncapsulationType? encapsulationType = default, PortConditionPatch portCondition = default)
+        public static NetworkTapRuleMatchConditionPatch NetworkTapRuleMatchConditionPatch(IEnumerable<string> protocolTypes = default, VlanMatchConditionPatch vlanMatchCondition = default, IPMatchConditionPatch ipCondition = default, NetworkTapEncapsulationType? encapsulationType = default, NetworkFabricPortConditionPatch portCondition = default)
         {
             protocolTypes ??= new ChangeTrackingList<string>();
 
@@ -3117,11 +3117,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="destinationSettings"> List of destination properties to send the filter traffic. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.NetworkTapPatchContent"/> instance for mocking. </returns>
-        public static NetworkTapPatchContent NetworkTapPatchContent(IDictionary<string, string> tags = default, string annotation = default, NetworkTapPollingType? pollingType = default, IEnumerable<DestinationPatchProperties> destinationSettings = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        public static NetworkTapPatchContent NetworkTapPatchContent(IDictionary<string, string> tags = default, string annotation = default, NetworkTapPollingType? pollingType = default, IEnumerable<NetworkTapDestinationPatchProperties> destinationSettings = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkTapPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && pollingType is null && destinationSettings is null ? default : new NetworkTapPatchProperties(annotation, null, pollingType, (destinationSettings ?? new ChangeTrackingList<DestinationPatchProperties>()).ToList()), identity);
+            return new NetworkTapPatchContent(tags, additionalBinaryDataProperties: null, annotation is null && pollingType is null && destinationSettings is null ? default : new NetworkTapPatchProperties(annotation, null, pollingType, (destinationSettings ?? new ChangeTrackingList<NetworkTapDestinationPatchProperties>()).ToList()), identity);
         }
 
         /// <summary> The Network Tap resource patch definition. </summary>
@@ -3129,9 +3129,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="pollingType"> Polling type. </param>
         /// <param name="destinationSettings"> List of destination properties to send the filter traffic. </param>
         /// <returns> A new <see cref="Models.NetworkTapPatchProperties"/> instance for mocking. </returns>
-        public static NetworkTapPatchProperties NetworkTapPatchProperties(string annotation = default, NetworkTapPollingType? pollingType = default, IEnumerable<DestinationPatchProperties> destinationSettings = default)
+        public static NetworkTapPatchProperties NetworkTapPatchProperties(string annotation = default, NetworkTapPollingType? pollingType = default, IEnumerable<NetworkTapDestinationPatchProperties> destinationSettings = default)
         {
-            destinationSettings ??= new ChangeTrackingList<DestinationPatchProperties>();
+            destinationSettings ??= new ChangeTrackingList<NetworkTapDestinationPatchProperties>();
 
             return new NetworkTapPatchProperties(annotation, additionalBinaryDataProperties: null, pollingType, destinationSettings.ToList());
         }

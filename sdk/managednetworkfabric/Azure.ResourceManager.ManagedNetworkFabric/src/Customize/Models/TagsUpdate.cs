@@ -6,6 +6,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric;
@@ -13,6 +14,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Base tracked resource type for PATCH updates. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This compatibility type is obsolete and will be removed in a future version. Use ManagedNetworkFabricResourcePatch instead.")]
     public partial class TagsUpdate : ManagedNetworkFabricResourcePatch, IJsonModel<TagsUpdate>, IPersistableModel<TagsUpdate>
     {

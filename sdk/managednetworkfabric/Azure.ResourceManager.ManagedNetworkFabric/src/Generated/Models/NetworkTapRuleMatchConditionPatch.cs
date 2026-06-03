@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encapsulationType"> Encapsulation Type that needs to be matched. </param>
         /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
-        internal NetworkTapRuleMatchConditionPatch(IList<string> protocolTypes, VlanMatchConditionPatch vlanMatchCondition, IPMatchConditionPatch ipCondition, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkTapEncapsulationType? encapsulationType, PortConditionPatch portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition, additionalBinaryDataProperties)
+        internal NetworkTapRuleMatchConditionPatch(IList<string> protocolTypes, VlanMatchConditionPatch vlanMatchCondition, IPMatchConditionPatch ipCondition, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkTapEncapsulationType? encapsulationType, NetworkFabricPortConditionPatch portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition, additionalBinaryDataProperties)
         {
             EncapsulationType = encapsulationType;
             PortCondition = portCondition;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public NetworkTapEncapsulationType? EncapsulationType { get; set; }
 
         /// <summary> Defines the port condition that needs to be matched. </summary>
-        public PortConditionPatch PortCondition { get; set; }
+        public NetworkFabricPortConditionPatch PortCondition { get; set; }
     }
 }

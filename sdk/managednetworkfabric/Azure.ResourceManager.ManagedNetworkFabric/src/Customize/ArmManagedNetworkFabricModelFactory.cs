@@ -53,7 +53,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future version. Use BgpConfiguration instead.")]
         public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IEnumerable<string> ipv4ListenRangePrefixes, IEnumerable<string> ipv6ListenRangePrefixes, IEnumerable<NeighborAddress> ipv4NeighborAddress, IEnumerable<NeighborAddress> ipv6NeighborAddress)
-            => new InternalNetworkBgpConfiguration(annotation, additionalBinaryDataProperties: null, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, (ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(), (ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(), (ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(), (ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(), bmpConfiguration: default, v4OverV6BgpSession: default, v6OverV4BgpSession: default);
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use BgpConfiguration instead.");
+        }
 
         /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkBgpConfiguration"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
@@ -74,7 +76,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future version. Use BgpConfiguration instead.")]
         public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation = default, BfdConfiguration bfdConfiguration = default, NetworkFabricBooleanValue? defaultRouteOriginate = default, int? allowAS = default, AllowASOverride? allowASOverride = default, long? fabricAsn = default, long? peerAsn = default, IEnumerable<string> iPv4ListenRangePrefixes = default, IEnumerable<string> iPv6ListenRangePrefixes = default, IEnumerable<NeighborAddress> iPv4NeighborAddress = default, IEnumerable<NeighborAddress> iPv6NeighborAddress = default, InternalNetworkBmpProperties bmpConfiguration = default, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default)
-            => new InternalNetworkBgpConfiguration(annotation, additionalBinaryDataProperties: null, bfdConfiguration, defaultRouteOriginate, allowAS, allowASOverride, fabricAsn, peerAsn, (iPv4ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(), (iPv6ListenRangePrefixes ?? new ChangeTrackingList<string>()).ToList(), (iPv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(), (iPv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>()).ToList(), bmpConfiguration, v4OverV6BgpSession, v6OverV4BgpSession);
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use BgpConfiguration instead.");
+        }
 
         /// <summary> Network and credential configuration currently applied on terminal server. </summary>
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the Network To Network Interconnect. </param>
@@ -87,13 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with VpnOptionAProperties instead.")]
         public static VpnConfigurationProperties VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId = default, NetworkFabricAdministrativeState? administrativeState = default, PeeringOption peeringOption = default, OptionBProperties optionBProperties = default, VpnConfigurationOptionAProperties optionAProperties = default)
         {
-            return new VpnConfigurationProperties(
-                networkToNetworkInterconnectId,
-                administrativeState,
-                peeringOption,
-                optionBProperties,
-                optionAProperties?.ToVpnOptionAProperties(),
-                additionalBinaryDataProperties: null);
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with VpnOptionAProperties instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkStaticRouteConfiguration"/>. </summary>
@@ -105,7 +103,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future version. Use StaticRouteConfiguration instead.")]
         public static InternalNetworkStaticRouteConfiguration InternalNetworkStaticRouteConfiguration(BfdConfiguration bfdConfiguration = default, IEnumerable<StaticRouteProperties> iPv4Routes = default, IEnumerable<StaticRouteProperties> iPv6Routes = default, StaticRouteConfigurationExtension? extension = default)
-            => new InternalNetworkStaticRouteConfiguration(bfdConfiguration, (iPv4Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), extension, additionalBinaryDataProperties: null);
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use StaticRouteConfiguration instead.");
+        }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -135,27 +135,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with BgpConfiguration bgpSettings instead.")]
         public static NetworkFabricInternalNetworkData NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IEnumerable<ConnectedSubnet> connectedIPv4Subnets, IEnumerable<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, StaticRouteConfigurationExtension? extension, int vlanId, InternalNetworkBgpConfiguration bgpConfiguration, InternalNetworkStaticRouteConfiguration staticRouteConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
-            return NetworkFabricInternalNetworkData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                annotation: annotation,
-                extension: extension,
-                mtu: mtu,
-                connectedIPv4Subnets: connectedIPv4Subnets,
-                connectedIPv6Subnets: connectedIPv6Subnets,
-                importRoutePolicy: importRoutePolicy,
-                exportRoutePolicy: exportRoutePolicy,
-                ingressAclId: ingressAclId,
-                egressAclId: egressAclId,
-                isMonitoringEnabled: isMonitoringEnabled,
-                vlanId: vlanId,
-                bgpSettings: bgpConfiguration,
-                staticRouteSettings: staticRouteConfiguration,
-                configurationState: configurationState,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState);
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with BgpConfiguration bgpSettings instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/>. </summary>
@@ -163,31 +143,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with BgpConfiguration bgpSettings instead.")]
         public static NetworkFabricInternalNetworkData NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, StaticRouteConfigurationExtension? extension, int? mtu, IEnumerable<ConnectedSubnet> connectedIPv4Subnets, IEnumerable<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, int vlanId, InternalNetworkBgpConfiguration bgpConfiguration, InternalNetworkStaticRouteConfiguration staticRouteConfiguration, IEnumerable<PrefixLimitProperties> nativeIPv4PrefixLimits, IEnumerable<PrefixLimitProperties> nativeIPv6PrefixLimits, string lastOperationDetails, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-            => NetworkFabricInternalNetworkData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                annotation: annotation,
-                extension: extension,
-                mtu: mtu,
-                connectedIPv4Subnets: connectedIPv4Subnets,
-                connectedIPv6Subnets: connectedIPv6Subnets,
-                importRoutePolicy: importRoutePolicy,
-                exportRoutePolicy: exportRoutePolicy,
-                ingressAclId: ingressAclId,
-                egressAclId: egressAclId,
-                isMonitoringEnabled: isMonitoringEnabled,
-                vlanId: vlanId,
-                bgpSettings: bgpConfiguration,
-                staticRouteSettings: staticRouteConfiguration,
-                networkFabricId: networkFabricId,
-                configurationState: configurationState,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState,
-                nativeIPv4PrefixLimits: nativeIPv4PrefixLimits,
-                nativeIPv6PrefixLimits: nativeIPv6PrefixLimits,
-                lastOperationDetails: lastOperationDetails);
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with BgpConfiguration bgpSettings instead.");
+        }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
@@ -202,18 +160,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This method is obsolete and will be removed in a future version. Use OptionBLayer3Configuration instead.")]
         public static NetworkToNetworkInterconnectOptionBLayer3Configuration NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long? peerAsn, int? vlanId, long? fabricAsn)
         {
-            return new NetworkToNetworkInterconnectOptionBLayer3Configuration(
-                primaryIPv4Prefix,
-                primaryIPv6Prefix,
-                secondaryIPv4Prefix,
-                secondaryIPv6Prefix,
-                additionalBinaryDataProperties: null,
-                peerAsn,
-                vlanId,
-                fabricAsn,
-                default,
-                default,
-                default);
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use OptionBLayer3Configuration instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
@@ -221,18 +168,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future version. Use OptionBLayer3Configuration instead.")]
         public static NetworkToNetworkInterconnectOptionBLayer3Configuration NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long? peerAsn, int? vlanId, long? fabricAsn, IEnumerable<string> peLoopbackIPAddress, BmpConfigurationState? bmpConfigurationState, IEnumerable<OptionBLayer3PrefixLimitProperties> prefixLimits)
-            => new NetworkToNetworkInterconnectOptionBLayer3Configuration(
-                primaryIPv4Prefix,
-                primaryIPv6Prefix,
-                secondaryIPv4Prefix,
-                secondaryIPv6Prefix,
-                additionalBinaryDataProperties: null,
-                peerAsn,
-                vlanId,
-                fabricAsn,
-                (peLoopbackIPAddress ?? new ChangeTrackingList<string>()).ToList(),
-                bmpConfigurationState is null ? default : new NniBmpProperties(bmpConfigurationState.Value, null),
-                (prefixLimits ?? new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>()).ToList());
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use OptionBLayer3Configuration instead.");
+        }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -256,52 +194,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with OptionBLayer3Configuration optionBLayer3Settings instead.")]
         public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NniType? nniType, IsManagementType? isManagementType, NetworkFabricBooleanValue useOptionB, Layer2Configuration layer2Configuration, NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-            => NetworkToNetworkInterconnectData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                nniType: nniType,
-                isManagementType: isManagementType,
-                useOptionB: useOptionB,
-                layer2Configuration: layer2Configuration,
-                optionBLayer3Settings: optionBLayer3Configuration,
-                npbStaticRouteConfiguration: npbStaticRouteConfiguration,
-                importRoutePolicy: importRoutePolicy,
-                exportRoutePolicy: exportRoutePolicy,
-                egressAclId: egressAclId,
-                ingressAclId: ingressAclId,
-                configurationState: configurationState,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState);
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with OptionBLayer3Configuration optionBLayer3Settings instead.");
+        }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/>. </summary>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with OptionBLayer3Configuration optionBLayer3Settings instead.")]
         public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NniType? nniType, IsManagementType? isManagementType, NetworkFabricBooleanValue useOptionB, Layer2Configuration layer2Configuration, NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRouteConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricMicroBfdState? microBfdState, ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration, string lastOperationDetails, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-            => NetworkToNetworkInterconnectData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                nniType: nniType,
-                isManagementType: isManagementType,
-                useOptionB: useOptionB,
-                layer2Configuration: layer2Configuration,
-                optionBLayer3Settings: optionBLayer3Configuration,
-                npbStaticRouteConfiguration: npbStaticRouteConfiguration,
-                staticRouteConfiguration: staticRouteConfiguration,
-                importRoutePolicy: importRoutePolicy,
-                exportRoutePolicy: exportRoutePolicy,
-                egressAclId: egressAclId,
-                ingressAclId: ingressAclId,
-                microBfdState: microBfdState,
-                conditionalDefaultRouteConfiguration: conditionalDefaultRouteConfiguration,
-                configurationState: configurationState,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState,
-                lastOperationDetails: lastOperationDetails);
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with OptionBLayer3Configuration optionBLayer3Settings instead.");
+        }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -430,8 +334,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This method is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.")]
         public static TerminalServerConfiguration TerminalServerConfiguration(string username = default, string password = default, string serialNumber = default, string primaryIpv4Prefix = default, string primaryIpv6Prefix = default, string secondaryIpv4Prefix = default, string secondaryIpv6Prefix = default, ResourceIdentifier networkDeviceId = default, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus = default)
         {
-            secretRotationStatus ??= new ChangeTrackingList<NetworkFabricSecretRotationStatus>();
-            return new TerminalServerConfiguration(username, password, serialNumber, additionalBinaryDataProperties: null, primaryIpv4Prefix, primaryIpv6Prefix, secondaryIpv4Prefix, secondaryIpv6Prefix, networkDeviceId, secretRotationStatus.ToList());
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TerminalServerConfiguration"/>. </summary>
@@ -448,7 +351,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This method is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.")]
         public static TerminalServerConfiguration TerminalServerConfiguration(string username, string password, string serialNumber, ResourceIdentifier networkDeviceId, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix)
         {
-            return TerminalServerConfiguration(username: username, password: password, serialNumber: serialNumber, primaryIpv4Prefix: primaryIPv4Prefix, primaryIpv6Prefix: primaryIPv6Prefix, secondaryIpv4Prefix: secondaryIPv4Prefix, secondaryIpv6Prefix: secondaryIPv6Prefix, networkDeviceId: networkDeviceId, secretRotationStatus: default);
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/>. </summary>
@@ -470,48 +373,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with NetworkFabricTerminalServerConfiguration instead.")]
         public static NetworkFabricData NetworkFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string networkFabricSku, string fabricVersion, IEnumerable<string> routerIds, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration, IEnumerable<string> racks, IEnumerable<string> l2IsolationDomains, IEnumerable<string> l3IsolationDomains, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
-            return new NetworkFabricData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                new NetworkFabricProperties(
-                    annotation,
-                    null,
-                    networkFabricSku,
-                    fabricVersion,
-                    (routerIds ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    networkFabricControllerId,
-                    rackCount,
-                    serverCountPerRack,
-                    ipv4Prefix,
-                    ipv6Prefix,
-                    fabricAsn,
-                    terminalServerConfiguration?.ToNetworkFabricTerminalServerConfiguration(),
-                    managementNetworkConfiguration,
-                    (racks ?? new ChangeTrackingList<string>()).ToList(),
-                    (l2IsolationDomains ?? new ChangeTrackingList<string>()).ToList(),
-                    (l3IsolationDomains ?? new ChangeTrackingList<string>()).ToList(),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    configurationState,
-                    provisioningState,
-                    administrativeState,
-                    default),
-                identity: default);
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with NetworkFabricTerminalServerConfiguration instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricData"/>. </summary>
@@ -519,45 +381,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with NetworkFabricTerminalServerConfiguration instead.")]
         public static NetworkFabricData NetworkFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, string networkFabricSku, string fabricVersion, IEnumerable<string> routerIds, StorageAccountConfiguration storageAccountConfiguration, IEnumerable<NetworkFabricLock> fabricLocks, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration, IEnumerable<string> racks, IEnumerable<string> l2IsolationDomains, IEnumerable<string> l3IsolationDomains, int? hardwareAlertThreshold, IEnumerable<ResourceIdentifier> controlPlaneAcls, IEnumerable<NetworkFabricFeatureFlag> featureFlags, IEnumerable<ResourceIdentifier> trustedIPPrefixes, UniqueRouteDistinguisherProperties uniqueRdConfiguration, int? storageArrayCount, IEnumerable<string> activeCommitBatches, long? secretRotationSummaryActivePasswordSetCount, string lastOperationDetails, AuthorizedTransceiverProperties authorizedTransceiver, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricQosConfigurationState? qosConfigurationState)
-            => NetworkFabricData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                annotation: annotation,
-                networkFabricSku: networkFabricSku,
-                fabricVersion: fabricVersion,
-                routerIds: routerIds,
-                storageAccountConfiguration: storageAccountConfiguration,
-                fabricLocks: fabricLocks,
-                networkFabricControllerId: networkFabricControllerId,
-                rackCount: rackCount,
-                serverCountPerRack: serverCountPerRack,
-                iPv4Prefix: ipv4Prefix,
-                iPv6Prefix: ipv6Prefix,
-                fabricAsn: fabricAsn,
-                terminalServerSettings: terminalServerConfiguration?.ToNetworkFabricTerminalServerConfiguration(),
-                managementNetworkConfiguration: managementNetworkConfiguration,
-                racks: racks,
-                l2IsolationDomains: l2IsolationDomains,
-                l3IsolationDomains: l3IsolationDomains,
-                hardwareAlertThreshold: hardwareAlertThreshold,
-                controlPlaneAcls: controlPlaneAcls,
-                featureFlags: featureFlags,
-                trustedIPPrefixes: trustedIPPrefixes,
-                uniqueRdConfiguration: uniqueRdConfiguration,
-                storageArrayCount: storageArrayCount,
-                activeCommitBatches: activeCommitBatches,
-                authorizedTransceiver: authorizedTransceiver,
-                configurationState: configurationState,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState,
-                secretRotationSummaryActivePasswordSetCount: secretRotationSummaryActivePasswordSetCount,
-                lastOperationDetails: lastOperationDetails,
-                qosConfigurationState: qosConfigurationState,
-                identity: identity);
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with NetworkFabricTerminalServerConfiguration instead.");
+        }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -612,16 +438,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static NetworkTapData NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations, NetworkTapPollingType? pollingType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
 #pragma warning restore CS0618
         {
-            return new NetworkTapData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                new NetworkTapProperties(annotation, null, networkPacketBrokerId, sourceTapRuleId, default, (destinations ?? new ChangeTrackingList<NetworkTapPropertiesDestinationsItem>()).Cast<NetworkTapDestinationProperties>().ToList(), pollingType, default, configurationState, provisioningState, administrativeState),
-                identity: default);
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with NetworkTapDestinationProperties destinations instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapData"/>. </summary>
@@ -631,23 +448,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with NetworkTapDestinationProperties destinations instead.")]
         public static NetworkTapData NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IEnumerable<ResourceIdentifier> networkFabricIds, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations, NetworkTapPollingType? pollingType, string lastOperationDetails, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
 #pragma warning restore CS0618
-            => NetworkTapData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                annotation: annotation,
-                networkPacketBrokerId: networkPacketBrokerId,
-                sourceTapRuleId: sourceTapRuleId,
-                networkFabricIds: networkFabricIds,
-                destinationSettings: destinations?.Cast<NetworkTapDestinationProperties>(),
-                pollingType: pollingType,
-                configurationState: configurationState,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState,
-                lastOperationDetails: lastOperationDetails,
-                identity: identity);
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with NetworkTapDestinationProperties destinations instead.");
+        }
     }
 }

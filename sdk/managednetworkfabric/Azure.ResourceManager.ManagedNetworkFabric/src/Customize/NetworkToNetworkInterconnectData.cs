@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This property is obsolete and will be removed in a future version. Use OptionBLayer3Settings instead.")]
         public NetworkToNetworkInterconnectOptionBLayer3Configuration OptionBLayer3Configuration
         {
-            get => NetworkToNetworkInterconnectOptionBLayer3Configuration.FromOptionBLayer3Configuration(OptionBLayer3Settings);
-            set => OptionBLayer3Settings = value;
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use OptionBLayer3Settings instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use OptionBLayer3Settings instead.");
         }
     }
 }

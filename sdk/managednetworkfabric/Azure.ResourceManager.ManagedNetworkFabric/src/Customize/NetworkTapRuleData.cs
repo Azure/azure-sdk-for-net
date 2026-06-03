@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The location. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This constructor is obsolete and will be removed in a future version.")]
-        public NetworkTapRuleData(AzureLocation location) : base(location)
+        public NetworkTapRuleData(AzureLocation location)
         {
-            Properties = new NetworkTapRuleProperties();
+            throw new NotSupportedException("This constructor is obsolete and will be removed in a future version.");
         }
 
         /// <summary> Input method to configure Network Tap Rule. </summary>
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This property is obsolete and will be removed in a future version. Use PollingIntervalInSecond instead.")]
         public PollingIntervalInSecond? PollingIntervalInSeconds
         {
-            get => PollingIntervalInSecond;
-            set => PollingIntervalInSecond = value.HasValue ? value.Value.ToSerialInt32() : null;
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use PollingIntervalInSecond instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use PollingIntervalInSecond instead.");
         }
     }
 }
