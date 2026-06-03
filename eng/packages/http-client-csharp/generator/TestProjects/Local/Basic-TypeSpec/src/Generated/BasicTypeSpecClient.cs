@@ -22,7 +22,7 @@ namespace BasicTypeSpec
     {
         private readonly Uri _endpoint;
         private const string AuthorizationHeader = "my-api-key";
-        private static readonly string[] AuthorizationScopes = new string[] { "https://theservice.azure.com/.default" };
+        private static readonly String[] AuthorizationScopes = new string[] { "https://theservice.azure.com/.default" };
         private PlantOperations _cachedPlantOperations;
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient for mocking. </summary>
