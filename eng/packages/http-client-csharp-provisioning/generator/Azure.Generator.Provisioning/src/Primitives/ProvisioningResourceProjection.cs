@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
+using Azure.Generator.Provisioning;
 using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Azure.Generator.Provisioning.Primitives
             ResourceType = GetSameResourceType(metadata);
             ResourceName = GetSameValueOrDefault(metadata.Select(resource => resource.ResourceName), ResourceModel.Name, StringComparer.Ordinal);
             SingletonResourceName = GetSameNullableValueOrDefault(metadata.Select(resource => resource.SingletonResourceName), null, StringComparer.Ordinal);
-            ParentResourceId = GetSameNullableValueOrDefault(metadata.Select(resource => resource.ParentResourceId), null);
+            ParentResourceId = GetConsistentParentResourceId(metadata);
             NameConstraints = GetSameValueOrDefault(
                 metadata.Select(resource => resource.NameConstraints),
                 new ArmResourceNameConstraints(null, null, null));
@@ -146,6 +147,36 @@ namespace Azure.Generator.Provisioning.Primitives
                 throw new InvalidOperationException("Collapsed provisioning resources must share the same resource type.");
             }
             return resourceType;
+        }
+
+        private static RequestPathPattern? GetConsistentParentResourceId(IReadOnlyList<ArmResourceMetadata> metadata)
+        {
+            var parentResourceId = metadata[0].ParentResourceId;
+            if (metadata.Any(resource => !EqualityComparer<RequestPathPattern?>.Default.Equals(resource.ParentResourceId, parentResourceId)))
+            {
+                ReportInconsistentParentResourceId(metadata);
+                return null;
+            }
+            return parentResourceId;
+        }
+
+        private static void ReportInconsistentParentResourceId(IReadOnlyList<ArmResourceMetadata> metadata)
+        {
+            var parents = metadata
+                .Select(resource => resource.ParentResourceId?.SerializedPath ?? "<none>")
+                .Distinct(StringComparer.Ordinal)
+                .OrderBy(parent => parent, StringComparer.Ordinal);
+
+            try
+            {
+                ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
+                    "inconsistent-parent-resource-id",
+                    $"Collapsed provisioning resource '{metadata[0].ResourceName}' ({metadata[0].ResourceType}) has inconsistent parent resource IDs [{string.Join(", ", parents)}]. Parent metadata will be omitted.");
+            }
+            catch (InvalidOperationException)
+            {
+                // Unit tests can construct projections without initializing the generator.
+            }
         }
 
         private static T GetSameValueOrDefault<T>(IEnumerable<T> values, T defaultValue, IEqualityComparer<T>? comparer = null)
