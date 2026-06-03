@@ -135,48 +135,56 @@ namespace Azure.ResourceManager.Billing.Mocking
         }
 
         /// <summary> Gets a single <see cref="BillingSubscriptionResource"/> by name under the given billing account. </summary>
+        [ForwardsClientCalls]
         public virtual Response<BillingSubscriptionResource> GetBillingSubscription(string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
             return GetBillingSubscriptions(billingAccountName).Get(billingSubscriptionName, cancellationToken);
         }
 
         /// <summary> Gets a single <see cref="BillingSubscriptionResource"/> by name under the given billing account. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BillingSubscriptionResource>> GetBillingSubscriptionAsync(string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
             return await GetBillingSubscriptions(billingAccountName).GetAsync(billingSubscriptionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a single <see cref="BillingSubscriptionAliasResource"/> by name under the given billing account. </summary>
+        [ForwardsClientCalls]
         public virtual Response<BillingSubscriptionAliasResource> GetBillingSubscriptionAlias(string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
         {
             return GetBillingSubscriptionAliases(billingAccountName).Get(aliasName, cancellationToken);
         }
 
         /// <summary> Gets a single <see cref="BillingSubscriptionAliasResource"/> by name under the given billing account. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BillingSubscriptionAliasResource>> GetBillingSubscriptionAliasAsync(string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
         {
             return await GetBillingSubscriptionAliases(billingAccountName).GetAsync(aliasName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a single <see cref="BillingAccountPaymentMethodResource"/> by name under the given billing account. </summary>
+        [ForwardsClientCalls]
         public virtual Response<BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
             return GetBillingAccountPaymentMethods(billingAccountName).Get(paymentMethodName, cancellationToken);
         }
 
         /// <summary> Gets a single <see cref="BillingAccountPaymentMethodResource"/> by name under the given billing account. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
             return await GetBillingAccountPaymentMethods(billingAccountName).GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a single <see cref="BillingPaymentMethodLinkResource"/> by name under the given billing profile. </summary>
+        [ForwardsClientCalls]
         public virtual Response<BillingPaymentMethodLinkResource> GetBillingPaymentMethodLink(string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
             return GetBillingPaymentMethodLinks(billingAccountName, billingProfileName).Get(paymentMethodName, cancellationToken);
         }
 
         /// <summary> Gets a single <see cref="BillingPaymentMethodLinkResource"/> by name under the given billing profile. </summary>
+        [ForwardsClientCalls]
         public virtual async Task<Response<BillingPaymentMethodLinkResource>> GetBillingPaymentMethodLinkAsync(string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
             return await GetBillingPaymentMethodLinks(billingAccountName, billingProfileName).GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);

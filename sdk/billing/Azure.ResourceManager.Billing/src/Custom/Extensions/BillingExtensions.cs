@@ -3,6 +3,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.ResourceManager.Billing.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Gets a <see cref="BillingSubscriptionResource"/> by name under the given billing account. </summary>
+        [ForwardsClientCalls]
         public static Response<BillingSubscriptionResource> GetBillingSubscription(this TenantResource tenantResource, string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -30,6 +32,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Gets a <see cref="BillingSubscriptionResource"/> by name under the given billing account. </summary>
+        [ForwardsClientCalls]
         public static async Task<Response<BillingSubscriptionResource>> GetBillingSubscriptionAsync(this TenantResource tenantResource, string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -44,6 +47,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Gets a <see cref="BillingSubscriptionAliasResource"/> by name under the given billing account. </summary>
+        [ForwardsClientCalls]
         public static Response<BillingSubscriptionAliasResource> GetBillingSubscriptionAlias(this TenantResource tenantResource, string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -51,6 +55,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Gets a <see cref="BillingSubscriptionAliasResource"/> by name under the given billing account. </summary>
+        [ForwardsClientCalls]
         public static async Task<Response<BillingSubscriptionAliasResource>> GetBillingSubscriptionAliasAsync(this TenantResource tenantResource, string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -65,6 +70,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Gets a <see cref="BillingAccountPaymentMethodResource"/> by name under the given billing account. </summary>
+        [ForwardsClientCalls]
         public static Response<BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(this TenantResource tenantResource, string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -72,6 +78,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Gets a <see cref="BillingAccountPaymentMethodResource"/> by name under the given billing account. </summary>
+        [ForwardsClientCalls]
         public static async Task<Response<BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(this TenantResource tenantResource, string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -86,6 +93,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Gets a <see cref="BillingPaymentMethodLinkResource"/> by name under the given billing profile. </summary>
+        [ForwardsClientCalls]
         public static Response<BillingPaymentMethodLinkResource> GetBillingPaymentMethodLink(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
@@ -93,6 +101,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Gets a <see cref="BillingPaymentMethodLinkResource"/> by name under the given billing profile. </summary>
+        [ForwardsClientCalls]
         public static async Task<Response<BillingPaymentMethodLinkResource>> GetBillingPaymentMethodLinkAsync(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
