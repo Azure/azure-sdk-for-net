@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.Storage.Models
 
         // Prior GA had a public ctor taking only virtualNetworkResourceId; generated code
         // only has an internal ctor with all params.
+        /// <summary> Initializes a new instance of <see cref="StorageAccountVirtualNetworkRule"/>. </summary>
+        /// <param name="virtualNetworkResourceId"> Resource ID of a subnet. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public StorageAccountVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId) : this(virtualNetworkResourceId, default(StorageAccountVirtualNetworkRuleAction?), default, default)
         {

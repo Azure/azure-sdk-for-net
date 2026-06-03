@@ -12,10 +12,14 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
+    /// <summary> The action of virtual network rule. </summary>
     public readonly partial struct StorageAccountVirtualNetworkRuleAction : IEquatable<StorageAccountVirtualNetworkRuleAction>
     {
         private readonly string _value;
 
+        /// <summary> Initializes a new instance of <see cref="StorageAccountVirtualNetworkRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageAccountVirtualNetworkRuleAction(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
@@ -23,20 +27,27 @@ namespace Azure.ResourceManager.Storage.Models
 
         private const string AllowValue = "Allow";
 
+        /// <summary> Allow. </summary>
         public static StorageAccountVirtualNetworkRuleAction Allow { get; } = new StorageAccountVirtualNetworkRuleAction(AllowValue);
 
-        // Backward-compatible: Implicit conversion to StorageAccountNetworkRuleAction.
+        /// <summary> Implicit conversion between the two equivalent extensible-enum representations. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageAccountNetworkRuleAction(StorageAccountVirtualNetworkRuleAction value) => new StorageAccountNetworkRuleAction(value.ToString());
 
-        // Implicit conversion from unified StorageAccountNetworkRuleAction.
+        /// <summary> Implicit conversion between the two equivalent extensible-enum representations. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageAccountVirtualNetworkRuleAction(StorageAccountNetworkRuleAction value) => new StorageAccountVirtualNetworkRuleAction(value.ToString());
 
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAccountVirtualNetworkRuleAction other && Equals(other);
+        /// <inheritdoc />
         public bool Equals(StorageAccountVirtualNetworkRuleAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
+        /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
         public override string ToString() => _value;
     }
 }

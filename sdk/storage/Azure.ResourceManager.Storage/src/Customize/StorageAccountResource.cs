@@ -32,21 +32,35 @@ namespace Azure.ResourceManager.Storage
     public partial class StorageAccountResource
     {
         // Backward-compatible overload: Failover with no failoverType parameter.
+        /// <summary> A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, CancellationToken cancellationToken) =>
             await FailoverAsync(waitUntil, (FailoverRequestFailoverType?)null, cancellationToken).ConfigureAwait(false);
 
         // Backward-compatible overload: Failover with no failoverType parameter.
+        /// <summary> A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Failover(WaitUntil waitUntil, CancellationToken cancellationToken) =>
             Failover(waitUntil, (FailoverRequestFailoverType?)null, cancellationToken);
 
         // Backward-compatible overload: Failover with StorageAccountFailoverType parameter.
+        /// <summary> A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="failoverType"> The parameter is set to 'Planned' to indicate whether a Planned failover is requested. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, StorageAccountFailoverType? failoverType, CancellationToken cancellationToken) =>
             await FailoverAsync(waitUntil, failoverType.HasValue ? new FailoverRequestFailoverType(failoverType.Value.ToString()) : (FailoverRequestFailoverType?)null, cancellationToken).ConfigureAwait(false);
 
         // Backward-compatible overload: Failover with StorageAccountFailoverType parameter.
+        /// <summary> A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="failoverType"> The parameter is set to 'Planned' to indicate whether a Planned failover is requested. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Failover(WaitUntil waitUntil, StorageAccountFailoverType? failoverType, CancellationToken cancellationToken) =>
             Failover(waitUntil, failoverType.HasValue ? new FailoverRequestFailoverType(failoverType.Value.ToString()) : (FailoverRequestFailoverType?)null, cancellationToken);
@@ -54,6 +68,10 @@ namespace Azure.ResourceManager.Storage
         // Backward-compat: prior GA returned Pageable<StorageAccountKey> instead of Response<StorageAccountListKeysResult>.
 
         // Backward-compatible overload: GetKeys with old StorageListKeyExpand parameter type.
+        /// <summary> Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account. </summary>
+        /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageAccountKey"/>. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<StorageAccountKey> GetKeys(StorageListKeyExpand? expand, CancellationToken cancellationToken = default)
         {
@@ -62,11 +80,17 @@ namespace Azure.ResourceManager.Storage
         }
 
         // Backward-compatible parameterless overload for GetKeys.
+        /// <summary> Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account. </summary>
+        /// <returns> A collection of <see cref="StorageAccountKey"/>. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<StorageAccountKey> GetKeys()
             => GetKeys((StorageListKeyExpand?)null, default);
 
         // Backward-compatible overload: GetKeysAsync with old StorageListKeyExpand parameter type.
+        /// <summary> Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account. </summary>
+        /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageAccountKey"/>. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0107 // async call wraps result, no sync alternative available
         [ForwardsClientCalls(true)]
@@ -81,6 +105,8 @@ namespace Azure.ResourceManager.Storage
 #pragma warning restore AZC0107
 
         // Backward-compatible parameterless overload for GetKeysAsync.
+        /// <summary> Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account. </summary>
+        /// <returns> A collection of <see cref="StorageAccountKey"/>. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0107 // async call wraps result, no sync alternative available
         [ForwardsClientCalls(true)]
@@ -153,6 +179,9 @@ namespace Azure.ResourceManager.Storage
 #pragma warning restore AZC0107
 
         // Backward-compatible overload: Gets the private link resources that need to be created for a storage account.
+        /// <summary> Gets the private link resources that need to be created for a storage account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StoragePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual AsyncPageable<StoragePrivateLinkResourceData> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
@@ -167,6 +196,9 @@ namespace Azure.ResourceManager.Storage
         }
 
         // Backward-compatible overload: Gets the private link resources that need to be created for a storage account.
+        /// <summary> Gets the private link resources that need to be created for a storage account. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StoragePrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual Pageable<StoragePrivateLinkResourceData> GetPrivateLinkResources(CancellationToken cancellationToken = default)

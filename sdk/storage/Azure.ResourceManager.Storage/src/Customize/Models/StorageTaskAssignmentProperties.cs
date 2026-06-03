@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         // Prior GA property name was "Enabled"; generated code renamed it.
         // Hidden alias preserves the old name for binary compat.
+        /// <summary> Whether the storage task assignment is enabled or not. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("enabled")]
         public bool IsEnabled { get; set; }
