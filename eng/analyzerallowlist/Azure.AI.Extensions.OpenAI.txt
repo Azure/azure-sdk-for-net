@@ -1,0 +1,20 @@
+# Azure.AI.Extensions.OpenAI approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# OPENAI001 is the [Experimental] marker on the OpenAI SDK types this library
+# extends (response items, streaming updates, derived clients, etc.). The whole
+# purpose of this library is to wrap and extend OpenAI's preview surface for
+# Microsoft Foundry, so the experimental opt-in is by design across both the
+# hand-written extension types and the generated client surface. The diagnostic
+# exists so external consumers explicitly acknowledge experimental usage;
+# acknowledging it once at the assembly level matches intent.
+nowarn:OPENAI001
+
+# AZC0035 fires on output model types that lack a corresponding ModelFactory
+# method. Here it fires on ResponseResult and StreamingResponseUpdate, both of
+# which originate in the external OpenAI SDK (not declared in this assembly),
+# so a ModelFactory method cannot meaningfully be added in this package. This
+# is the known AZC0035 false-positive pattern on externally-originating types
+# tracked as one of the "Big 4" analyzer fixes; remove this entry once the
+# upstream analyzer learns to skip types declared outside the current assembly.
+nowarn:AZC0035
