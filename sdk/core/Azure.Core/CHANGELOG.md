@@ -10,6 +10,7 @@
 
 - Fixed `NullReferenceException` thrown by `Operation.RehydrateAsync` / `ArmOperation.RehydrateAsync` (and the resulting operation's `UpdateStatusAsync` / `Value`) when the rehydrated long-running operation has completed with a failure. `OperationState.Failure` and `OperationState<T>.Failure` now honor their documented contract and materialize a default `RequestFailedException` from the raw response when the caller passes `null`, matching the behavior of the non-rehydration polling path.
 - Fixed `DiagnosticScope` to mark the parent `ActivityContext` as remote (`IsRemote = true`) when a traceparent is provided via `SetTraceContext` or `AddLink`. The traceparent in these paths is always extracted from an external source (e.g. a messaging broker's application properties), so samplers that distinguish local vs. remote parents — such as the `RateLimitedSampler` used by the Azure Monitor OpenTelemetry exporter — can now make correct decisions for activities started from incoming messages.
+- Fixed `AzureCliCredential` to not pass both `--tenant` and `--subscription` flags to the Azure CLI when `AzureCliCredentialOptions.Subscription` is set, as the CLI rejects this combination. When subscription is specified, `--tenant` is now omitted since the subscription already implies a specific tenant. ([#58949](https://github.com/Azure/azure-sdk-for-net/issues/58949))
 
 ### Other Changes
 
