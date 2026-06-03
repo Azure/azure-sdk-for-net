@@ -7,17 +7,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Component Policy State record. </summary>
     public partial class ComponentPolicyState
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ComponentPolicyState"/>. </summary>
         internal ComponentPolicyState()
         {
             PolicyDefinitionGroupNames = new ChangeTrackingList<string>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComponentPolicyState"/>. </summary>
@@ -53,11 +58,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="policyDefinitionVersion"> Evaluated policy definition version. </param>
         /// <param name="policySetDefinitionVersion"> Evaluated policy set definition version. </param>
         /// <param name="policyAssignmentVersion"> Evaluated policy assignment version. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal ComponentPolicyState(string odataId, string odataContext, DateTimeOffset? timestamp, string componentId, string componentType, string componentName, string resourceId, string policyAssignmentId, string policyDefinitionId, string subscriptionId, string resourceType, string resourceLocation, string resourceGroup, string policyAssignmentName, string policyAssignmentOwner, string policyAssignmentParameters, string policyAssignmentScope, string policyDefinitionName, string policyDefinitionAction, string policyDefinitionCategory, string policySetDefinitionId, string policySetDefinitionName, string policySetDefinitionOwner, string policySetDefinitionCategory, string policySetDefinitionParameters, string policyDefinitionReferenceId, string complianceState, ComponentPolicyEvaluationDetails policyEvaluationDetails, IReadOnlyList<string> policyDefinitionGroupNames, string policyDefinitionVersion, string policySetDefinitionVersion, string policyAssignmentVersion, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
-            ODataId = odataId;
-            ODataContext = odataContext;
+            OdataId = odataId;
+            OdataContext = odataContext;
             Timestamp = timestamp;
             ComponentId = componentId;
             ComponentType = componentType;
@@ -88,103 +93,106 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             PolicyDefinitionVersion = policyDefinitionVersion;
             PolicySetDefinitionVersion = policySetDefinitionVersion;
             PolicyAssignmentVersion = policyAssignmentVersion;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
         }
 
         /// <summary> OData entity ID; always set to null since component policy state records do not have an entity ID. </summary>
-        public string ODataId { get; }
+        public string OdataId { get; }
+
         /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
-        public string ODataContext { get; }
+        public string OdataContext { get; }
+
         /// <summary> Timestamp for the component policy state record. </summary>
         public DateTimeOffset? Timestamp { get; }
+
         /// <summary> Component Id. </summary>
         public string ComponentId { get; }
+
         /// <summary> Component type. </summary>
         public string ComponentType { get; }
+
         /// <summary> Component name. </summary>
         public string ComponentName { get; }
+
         /// <summary> Resource ID. </summary>
         public string ResourceId { get; }
+
         /// <summary> Policy assignment ID. </summary>
         public string PolicyAssignmentId { get; }
+
         /// <summary> Policy definition ID. </summary>
         public string PolicyDefinitionId { get; }
+
         /// <summary> Subscription ID. </summary>
         public string SubscriptionId { get; }
+
         /// <summary> Resource type. </summary>
         public string ResourceType { get; }
+
         /// <summary> Resource location. </summary>
         public string ResourceLocation { get; }
+
         /// <summary> Resource group name. </summary>
         public string ResourceGroup { get; }
+
         /// <summary> Policy assignment name. </summary>
         public string PolicyAssignmentName { get; }
+
         /// <summary> Policy assignment owner. </summary>
         public string PolicyAssignmentOwner { get; }
+
         /// <summary> Policy assignment parameters. </summary>
         public string PolicyAssignmentParameters { get; }
+
         /// <summary> Policy assignment scope. </summary>
         public string PolicyAssignmentScope { get; }
+
         /// <summary> Policy definition name. </summary>
         public string PolicyDefinitionName { get; }
+
         /// <summary> Policy definition action, i.e. effect. </summary>
         public string PolicyDefinitionAction { get; }
+
         /// <summary> Policy definition category. </summary>
         public string PolicyDefinitionCategory { get; }
+
         /// <summary> Policy set definition ID, if the policy assignment is for a policy set. </summary>
         public string PolicySetDefinitionId { get; }
+
         /// <summary> Policy set definition name, if the policy assignment is for a policy set. </summary>
         public string PolicySetDefinitionName { get; }
+
         /// <summary> Policy set definition owner, if the policy assignment is for a policy set. </summary>
         public string PolicySetDefinitionOwner { get; }
+
         /// <summary> Policy set definition category, if the policy assignment is for a policy set. </summary>
         public string PolicySetDefinitionCategory { get; }
+
         /// <summary> Policy set definition parameters, if the policy assignment is for a policy set. </summary>
         public string PolicySetDefinitionParameters { get; }
+
         /// <summary> Reference ID for the policy definition inside the policy set, if the policy assignment is for a policy set. </summary>
         public string PolicyDefinitionReferenceId { get; }
+
         /// <summary> Compliance state of the resource. </summary>
         public string ComplianceState { get; }
+
         /// <summary> Policy evaluation details. This is only included in the response if the request contains $expand=PolicyEvaluationDetails. </summary>
         public ComponentPolicyEvaluationDetails PolicyEvaluationDetails { get; }
+
         /// <summary> Policy definition group names. </summary>
         public IReadOnlyList<string> PolicyDefinitionGroupNames { get; }
+
         /// <summary> Evaluated policy definition version. </summary>
         public string PolicyDefinitionVersion { get; }
+
         /// <summary> Evaluated policy set definition version. </summary>
         public string PolicySetDefinitionVersion { get; }
+
         /// <summary> Evaluated policy assignment version. </summary>
         public string PolicyAssignmentVersion { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);
     }
 }

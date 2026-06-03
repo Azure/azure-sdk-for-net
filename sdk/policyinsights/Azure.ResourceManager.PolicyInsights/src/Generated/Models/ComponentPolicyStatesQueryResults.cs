@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Query results. </summary>
-    internal partial class ComponentPolicyStatesQueryResults
+    public partial class ComponentPolicyStatesQueryResults
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComponentPolicyStatesQueryResults"/>. </summary>
         internal ComponentPolicyStatesQueryResults()
@@ -55,20 +27,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="odataCount"> OData entity count; represents the number of policy state records returned. </param>
         /// <param name="value"> Query results. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComponentPolicyStatesQueryResults(string odataContext, int? odataCount, IReadOnlyList<ComponentPolicyState> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComponentPolicyStatesQueryResults(string odataContext, int? odataCount, IList<ComponentPolicyState> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ODataContext = odataContext;
-            ODataCount = odataCount;
+            OdataContext = odataContext;
+            OdataCount = odataCount;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
-        public string ODataContext { get; }
+        public string OdataContext { get; }
+
         /// <summary> OData entity count; represents the number of policy state records returned. </summary>
-        public int? ODataCount { get; }
+        public int? OdataCount { get; }
+
         /// <summary> Query results. </summary>
-        public IReadOnlyList<ComponentPolicyState> Value { get; }
+        public IList<ComponentPolicyState> Value { get; }
     }
 }

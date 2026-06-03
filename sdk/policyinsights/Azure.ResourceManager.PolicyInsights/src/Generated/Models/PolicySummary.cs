@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Summary results. </summary>
     public partial class PolicySummary
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PolicySummary"/>. </summary>
         internal PolicySummary()
@@ -56,22 +28,25 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="results"> Compliance summary for all policy assignments. </param>
         /// <param name="policyAssignments"> Policy assignments summary. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicySummary(string odataId, string odataContext, PolicySummaryResults results, IReadOnlyList<PolicyAssignmentSummary> policyAssignments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicySummary(string odataId, string odataContext, PolicySummaryResults results, IReadOnlyList<PolicyAssignmentSummary> policyAssignments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ODataId = odataId;
-            ODataContext = odataContext;
+            OdataId = odataId;
+            OdataContext = odataContext;
             Results = results;
             PolicyAssignments = policyAssignments;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> OData entity ID; always set to null since summaries do not have an entity ID. </summary>
-        public string ODataId { get; }
+        public string OdataId { get; }
+
         /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
-        public string ODataContext { get; }
+        public string OdataContext { get; }
+
         /// <summary> Compliance summary for all policy assignments. </summary>
         public PolicySummaryResults Results { get; }
+
         /// <summary> Policy assignments summary. </summary>
         public IReadOnlyList<PolicyAssignmentSummary> PolicyAssignments { get; }
     }

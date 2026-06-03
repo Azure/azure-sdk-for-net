@@ -7,77 +7,66 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using System.Collections.ObjectModel;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Component event details. </summary>
-    public partial class ComponentEventDetails : ResourceData
+    public partial class ComponentEventDetails
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="ComponentEventDetails"/>. </summary>
         internal ComponentEventDetails()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComponentEventDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Component Id. </param>
+        /// <param name="type"> Component type. </param>
+        /// <param name="name"> Component name. </param>
         /// <param name="timestamp"> Timestamp for component policy event record. </param>
         /// <param name="tenantId"> Tenant ID for the policy event record. </param>
         /// <param name="principalOid"> Principal object ID for the user who initiated the resource component operation that triggered the policy event. </param>
         /// <param name="policyDefinitionAction"> Policy definition action, i.e. effect. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ComponentEventDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timestamp, Guid? tenantId, string principalOid, string policyDefinitionAction, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalProperties"></param>
+        internal ComponentEventDetails(string id, string @type, string name, DateTimeOffset? timestamp, Guid? tenantId, string principalOid, string policyDefinitionAction, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
+            Id = id;
+            Type = @type;
+            Name = name;
             Timestamp = timestamp;
             TenantId = tenantId;
             PrincipalOid = principalOid;
             PolicyDefinitionAction = policyDefinitionAction;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
         }
+
+        /// <summary> Component Id. </summary>
+        public string Id { get; }
+
+        /// <summary> Component type. </summary>
+        public string Type { get; }
+
+        /// <summary> Component name. </summary>
+        public string Name { get; }
 
         /// <summary> Timestamp for component policy event record. </summary>
         public DateTimeOffset? Timestamp { get; }
+
         /// <summary> Tenant ID for the policy event record. </summary>
         public Guid? TenantId { get; }
+
         /// <summary> Principal object ID for the user who initiated the resource component operation that triggered the policy event. </summary>
         public string PrincipalOid { get; }
+
         /// <summary> Policy definition action, i.e. effect. </summary>
         public string PolicyDefinitionAction { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);
     }
 }

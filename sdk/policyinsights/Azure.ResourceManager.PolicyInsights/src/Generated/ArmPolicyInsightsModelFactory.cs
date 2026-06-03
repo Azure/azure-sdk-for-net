@@ -9,89 +9,20 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmPolicyInsightsModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyTrackedResourceRecord"/>. </summary>
-        /// <param name="trackedResourceId"> The ID of the policy tracked resource. </param>
-        /// <param name="policyDetails"> The details of the policy that require the tracked resource. </param>
-        /// <param name="createdBy"> The details of the policy triggered deployment that created the tracked resource. </param>
-        /// <param name="lastModifiedBy"> The details of the policy triggered deployment that modified the tracked resource. </param>
-        /// <param name="lastUpdateOn"> Timestamp of the last update to the tracked resource. </param>
-        /// <returns> A new <see cref="Models.PolicyTrackedResourceRecord"/> instance for mocking. </returns>
-        public static PolicyTrackedResourceRecord PolicyTrackedResourceRecord(ResourceIdentifier trackedResourceId = null, PolicyDetails policyDetails = null, TrackedResourceModificationDetails createdBy = null, TrackedResourceModificationDetails lastModifiedBy = null, DateTimeOffset? lastUpdateOn = null)
-        {
-            return new PolicyTrackedResourceRecord(
-                trackedResourceId,
-                policyDetails,
-                createdBy,
-                lastModifiedBy,
-                lastUpdateOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyDetails"/>. </summary>
-        /// <param name="policyDefinitionId"> The ID of the policy definition. </param>
-        /// <param name="policyAssignmentId"> The ID of the policy assignment. </param>
-        /// <param name="policyAssignmentDisplayName"> The display name of the policy assignment. </param>
-        /// <param name="policyAssignmentScope"> The scope of the policy assignment. </param>
-        /// <param name="policySetDefinitionId"> The ID of the policy set definition. </param>
-        /// <param name="policyDefinitionReferenceId"> The policy definition reference ID within the policy set definition. </param>
-        /// <returns> A new <see cref="Models.PolicyDetails"/> instance for mocking. </returns>
-        public static PolicyDetails PolicyDetails(ResourceIdentifier policyDefinitionId = null, ResourceIdentifier policyAssignmentId = null, string policyAssignmentDisplayName = null, string policyAssignmentScope = null, ResourceIdentifier policySetDefinitionId = null, string policyDefinitionReferenceId = null)
-        {
-            return new PolicyDetails(
-                policyDefinitionId,
-                policyAssignmentId,
-                policyAssignmentDisplayName,
-                policyAssignmentScope,
-                policySetDefinitionId,
-                policyDefinitionReferenceId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TrackedResourceModificationDetails"/>. </summary>
-        /// <param name="policyDetails"> The details of the policy that created or modified the tracked resource. </param>
-        /// <param name="deploymentId"> The ID of the deployment that created or modified the tracked resource. </param>
-        /// <param name="deploymentOn"> Timestamp of the deployment that created or modified the tracked resource. </param>
-        /// <returns> A new <see cref="Models.TrackedResourceModificationDetails"/> instance for mocking. </returns>
-        public static TrackedResourceModificationDetails TrackedResourceModificationDetails(PolicyDetails policyDetails = null, ResourceIdentifier deploymentId = null, DateTimeOffset? deploymentOn = null)
-        {
-            return new TrackedResourceModificationDetails(policyDetails, deploymentId, deploymentOn, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RemediationDeployment"/>. </summary>
-        /// <param name="remediatedResourceId"> Resource ID of the resource that is being remediated by the deployment. </param>
-        /// <param name="deploymentId"> Resource ID of the template deployment that will remediate the resource. </param>
-        /// <param name="status"> Status of the remediation deployment. </param>
-        /// <param name="resourceLocation"> Location of the resource that is being remediated. </param>
-        /// <param name="error"> Error encountered while remediated the resource. </param>
-        /// <param name="createdOn"> The time at which the remediation was created. </param>
-        /// <param name="lastUpdatedOn"> The time at which the remediation deployment was last updated. </param>
-        /// <returns> A new <see cref="Models.RemediationDeployment"/> instance for mocking. </returns>
-        public static RemediationDeployment RemediationDeployment(ResourceIdentifier remediatedResourceId = null, ResourceIdentifier deploymentId = null, string status = null, AzureLocation? resourceLocation = null, ResponseError error = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null)
-        {
-            return new RemediationDeployment(
-                remediatedResourceId,
-                deploymentId,
-                status,
-                resourceLocation,
-                error,
-                createdOn,
-                lastUpdatedOn,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PolicyInsights.PolicyRemediationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment that should be remediated. </param>
         /// <param name="policyDefinitionReferenceId"> The policy definition reference ID of the individual definition that should be remediated. Required when the policy assignment being remediated assigns a policy set definition. </param>
         /// <param name="resourceDiscoveryMode"> The way resources to remediate are discovered. Defaults to ExistingNonCompliant if not specified. </param>
@@ -104,42 +35,225 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="correlationId"> The remediation correlation Id. Can be used to find events related to the remediation in the activity log. </param>
         /// <param name="resourceCount"> Determines the max number of resources that can be remediated by the remediation job. If not provided, the default resource count is used. </param>
         /// <param name="parallelDeployments"> Determines how many resources to remediate at any given time. Can be used to increase or reduce the pace of the remediation. If not provided, the default parallel deployments value is used. </param>
-        /// <param name="failureThresholdPercentage"> The remediation failure threshold settings. </param>
+        /// <param name="failureThresholdPercentage"> A number between 0.0 to 1.0 representing the percentage failure threshold. The remediation will fail if the percentage of failed remediation operations (i.e. failed deployments) exceeds this threshold. </param>
         /// <returns> A new <see cref="PolicyInsights.PolicyRemediationData"/> instance for mocking. </returns>
-        public static PolicyRemediationData PolicyRemediationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier policyAssignmentId = null, string policyDefinitionReferenceId = null, ResourceDiscoveryMode? resourceDiscoveryMode = null, string provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, RemediationFilters filter = null, RemediationDeploymentSummary deploymentStatus = null, string statusMessage = null, string correlationId = null, int? resourceCount = null, int? parallelDeployments = null, float? failureThresholdPercentage = null)
+        public static PolicyRemediationData PolicyRemediationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier policyAssignmentId = default, string policyDefinitionReferenceId = default, ResourceDiscoveryMode? resourceDiscoveryMode = default, string provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, RemediationFilters filter = default, RemediationDeploymentSummary deploymentStatus = default, string statusMessage = default, string correlationId = default, int? resourceCount = default, int? parallelDeployments = default, float? failureThresholdPercentage = default)
         {
             return new PolicyRemediationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                policyAssignmentId,
-                policyDefinitionReferenceId,
-                resourceDiscoveryMode,
-                provisioningState,
-                createdOn,
-                lastUpdatedOn,
-                filter,
-                deploymentStatus,
-                statusMessage,
-                correlationId,
-                resourceCount,
-                parallelDeployments,
-                failureThresholdPercentage != null ? new RemediationPropertiesFailureThreshold(failureThresholdPercentage, serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                policyAssignmentId is null && policyDefinitionReferenceId is null && resourceDiscoveryMode is null && provisioningState is null && createdOn is null && lastUpdatedOn is null && filter is null && deploymentStatus is null && statusMessage is null && correlationId is null && resourceCount is null && parallelDeployments is null && failureThresholdPercentage is null ? default : new RemediationProperties(
+                    policyAssignmentId,
+                    policyDefinitionReferenceId,
+                    resourceDiscoveryMode,
+                    provisioningState,
+                    createdOn,
+                    lastUpdatedOn,
+                    filter,
+                    deploymentStatus,
+                    statusMessage,
+                    correlationId,
+                    resourceCount,
+                    parallelDeployments,
+                    new RemediationPropertiesFailureThreshold(failureThresholdPercentage, default),
+                    default),
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RemediationDeploymentSummary"/>. </summary>
+        /// <param name="locations"> The resource locations that will be remediated. </param>
+        /// <param name="resourceIds"> The IDs of the resources that will be remediated. Can specify at most 100 IDs. This filter cannot be used when ReEvaluateCompliance is set to ReEvaluateCompliance, and cannot be empty if provided. </param>
+        /// <returns> A new <see cref="Models.RemediationFilters"/> instance for mocking. </returns>
+        public static RemediationFilters RemediationFilters(IEnumerable<AzureLocation> locations = default, IEnumerable<string> resourceIds = default)
+        {
+            locations ??= new ChangeTrackingList<AzureLocation>();
+            resourceIds ??= new ChangeTrackingList<string>();
+
+            return new RemediationFilters((locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (resourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <param name="totalDeployments"> The number of deployments required by the remediation. </param>
         /// <param name="successfulDeployments"> The number of deployments required by the remediation that have succeeded. </param>
         /// <param name="failedDeployments"> The number of deployments required by the remediation that have failed. </param>
         /// <returns> A new <see cref="Models.RemediationDeploymentSummary"/> instance for mocking. </returns>
-        public static RemediationDeploymentSummary RemediationDeploymentSummary(int? totalDeployments = null, int? successfulDeployments = null, int? failedDeployments = null)
+        public static RemediationDeploymentSummary RemediationDeploymentSummary(int? totalDeployments = default, int? successfulDeployments = default, int? failedDeployments = default)
         {
-            return new RemediationDeploymentSummary(totalDeployments, successfulDeployments, failedDeployments, serializedAdditionalRawData: null);
+            return new RemediationDeploymentSummary(totalDeployments, successfulDeployments, failedDeployments, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyEvent"/>. </summary>
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.RemediationsListForResourceQueryOptions"/> instance for mocking. </returns>
+        public static RemediationsListForResourceQueryOptions RemediationsListForResourceQueryOptions(int? top = default, string filter = default)
+        {
+            return new RemediationsListForResourceQueryOptions(top, filter, default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <returns> A new <see cref="Models.RemediationsListDeploymentsAtResourceQueryOptions"/> instance for mocking. </returns>
+        public static RemediationsListDeploymentsAtResourceQueryOptions RemediationsListDeploymentsAtResourceQueryOptions(int? top = default)
+        {
+            return new RemediationsListDeploymentsAtResourceQueryOptions(top, default);
+        }
+
+        /// <param name="remediatedResourceId"> Resource ID of the resource that is being remediated by the deployment. </param>
+        /// <param name="deploymentId"> Resource ID of the template deployment that will remediate the resource. </param>
+        /// <param name="status"> Status of the remediation deployment. </param>
+        /// <param name="resourceLocation"> Location of the resource that is being remediated. </param>
+        /// <param name="error"> Error encountered while remediated the resource. </param>
+        /// <param name="createdOn"> The time at which the remediation was created. </param>
+        /// <param name="lastUpdatedOn"> The time at which the remediation deployment was last updated. </param>
+        /// <returns> A new <see cref="Models.RemediationDeployment"/> instance for mocking. </returns>
+        public static RemediationDeployment RemediationDeployment(ResourceIdentifier remediatedResourceId = default, ResourceIdentifier deploymentId = default, string status = default, AzureLocation? resourceLocation = default, ResponseError error = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default)
+        {
+            return new RemediationDeployment(
+                remediatedResourceId,
+                deploymentId,
+                status,
+                resourceLocation,
+                error,
+                createdOn,
+                lastUpdatedOn,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <returns> A new <see cref="Models.RemediationsListDeploymentsAtManagementGroupQueryOptions"/> instance for mocking. </returns>
+        public static RemediationsListDeploymentsAtManagementGroupQueryOptions RemediationsListDeploymentsAtManagementGroupQueryOptions(int? top = default)
+        {
+            return new RemediationsListDeploymentsAtManagementGroupQueryOptions(top, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="policyAssignmentId"> The resource ID of the policy assignment that the attestation is setting the state for. </param>
+        /// <param name="policyDefinitionReferenceId"> The policy definition reference ID from a policy set definition that the attestation is setting the state for. If the policy assignment assigns a policy set definition the attestation can choose a definition within the set definition with this property or omit this and set the state for the entire set definition. </param>
+        /// <param name="complianceState"> The compliance state that should be set on the resource. </param>
+        /// <param name="expireOn"> The time the compliance state should expire. </param>
+        /// <param name="owner"> The person responsible for setting the state of the resource. This value is typically an Azure Active Directory object ID. </param>
+        /// <param name="comments"> Comments describing why this attestation was created. </param>
+        /// <param name="evidence"> The evidence supporting the compliance state set in this attestation. </param>
+        /// <param name="provisioningState"> The status of the attestation. </param>
+        /// <param name="lastComplianceStateChangeOn"> The time the compliance state was last changed in this attestation. </param>
+        /// <param name="assessOn"> The time the evidence was assessed. </param>
+        /// <param name="metadata"> Additional metadata for this attestation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
+        /// <returns> A new <see cref="PolicyInsights.PolicyAttestationData"/> instance for mocking. </returns>
+        public static PolicyAttestationData PolicyAttestationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier policyAssignmentId = default, string policyDefinitionReferenceId = default, PolicyComplianceState? complianceState = default, DateTimeOffset? expireOn = default, string owner = default, string comments = default, IEnumerable<AttestationEvidence> evidence = default, string provisioningState = default, DateTimeOffset? lastComplianceStateChangeOn = default, DateTimeOffset? assessOn = default, BinaryData metadata = default)
+        {
+            return new PolicyAttestationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                default,
+                default);
+        }
+
+        /// <param name="description"> The description for this piece of evidence. </param>
+        /// <param name="sourceUri"> The URI location of the evidence. </param>
+        /// <returns> A new <see cref="Models.AttestationEvidence"/> instance for mocking. </returns>
+        public static AttestationEvidence AttestationEvidence(string description = default, Uri sourceUri = default)
+        {
+            return new AttestationEvidence(description, sourceUri, default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.AttestationsListForResourceQueryOptions"/> instance for mocking. </returns>
+        public static AttestationsListForResourceQueryOptions AttestationsListForResourceQueryOptions(int? top = default, string filter = default)
+        {
+            return new AttestationsListForResourceQueryOptions(top, filter, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="metadataId"> The policy metadata identifier. </param>
+        /// <param name="category"> The category of the policy metadata. </param>
+        /// <param name="title"> The title of the policy metadata. </param>
+        /// <param name="owner"> The owner of the policy metadata. </param>
+        /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
+        /// <param name="metadata"> Additional metadata. </param>
+        /// <param name="description"> The description of the policy metadata. </param>
+        /// <param name="requirements"> The requirements of the policy metadata. </param>
+        /// <returns> A new <see cref="PolicyInsights.PolicyMetadataData"/> instance for mocking. </returns>
+        public static PolicyMetadataData PolicyMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string metadataId = default, string category = default, string title = default, string owner = default, string additionalContentUri = default, BinaryData metadata = default, string description = default, string requirements = default)
+        {
+            return new PolicyMetadataData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                metadataId is null && category is null && title is null && owner is null && additionalContentUri is null && metadata is null && description is null && requirements is null ? default : new PolicyMetadataProperties(
+                    metadataId,
+                    category,
+                    title,
+                    owner,
+                    additionalContentUri,
+                    metadata,
+                    default,
+                    description,
+                    requirements),
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <returns> A new <see cref="Models.PolicyMetadataListQueryOptions"/> instance for mocking. </returns>
+        public static PolicyMetadataListQueryOptions PolicyMetadataListQueryOptions(int? top = default)
+        {
+            return new PolicyMetadataListQueryOptions(top, default);
+        }
+
+        /// <param name="metadataId"> The policy metadata identifier. </param>
+        /// <param name="category"> The category of the policy metadata. </param>
+        /// <param name="title"> The title of the policy metadata. </param>
+        /// <param name="owner"> The owner of the policy metadata. </param>
+        /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
+        /// <param name="metadata"> Additional metadata. </param>
+        /// <param name="id"> The ID of the policy metadata. </param>
+        /// <param name="type"> The type of the policy metadata. </param>
+        /// <param name="name"> The name of the policy metadata. </param>
+        /// <returns> A new <see cref="Models.SlimPolicyMetadata"/> instance for mocking. </returns>
+        public static SlimPolicyMetadata SlimPolicyMetadata(string metadataId = default, string category = default, string title = default, string owner = default, string additionalContentUri = default, BinaryData metadata = default, string id = default, string @type = default, string name = default)
+        {
+            return new SlimPolicyMetadata(metadataId is null && category is null && title is null && owner is null && additionalContentUri is null && metadata is null ? default : new PolicyMetadataSlimProperties(
+                metadataId,
+                category,
+                title,
+                owner,
+                additionalContentUri,
+                metadata,
+                default), id, @type, name, default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForManagementGroupQueryOptions"/> instance for mocking. </returns>
+        public static PolicyEventsListQueryResultsForManagementGroupQueryOptions PolicyEventsListQueryResultsForManagementGroupQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyEventsListQueryResultsForManagementGroupQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
         /// <param name="odataId"> OData entity ID; always set to null since policy event records do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="timestamp"> Timestamp for the policy event record. </param>
@@ -171,12 +285,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="tenantId"> Tenant ID for the policy event record. </param>
         /// <param name="principalOid"> Principal object ID for the user who initiated the resource operation that triggered the policy event. </param>
         /// <param name="components"> Components events records populated only when URL contains $expand=components clause. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.PolicyEvent"/> instance for mocking. </returns>
-        public static PolicyEvent PolicyEvent(string odataId = null, string odataContext = null, DateTimeOffset? timestamp = null, ResourceIdentifier resourceId = null, ResourceIdentifier policyAssignmentId = null, ResourceIdentifier policyDefinitionId = null, string effectiveParameters = null, bool? isCompliant = null, string subscriptionId = null, string resourceTypeString = null, AzureLocation? resourceLocation = null, string resourceGroup = null, string resourceTags = null, string policyAssignmentName = null, string policyAssignmentOwner = null, string policyAssignmentParameters = null, string policyAssignmentScope = null, string policyDefinitionName = null, string policyDefinitionAction = null, string policyDefinitionCategory = null, ResourceIdentifier policySetDefinitionId = null, string policySetDefinitionName = null, string policySetDefinitionOwner = null, string policySetDefinitionCategory = null, string policySetDefinitionParameters = null, string managementGroupIds = null, string policyDefinitionReferenceId = null, string complianceState = null, Guid? tenantId = null, string principalOid = null, IEnumerable<ComponentEventDetails> components = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static PolicyEvent PolicyEvent(string odataId = default, string odataContext = default, DateTimeOffset? timestamp = default, ResourceIdentifier resourceId = default, ResourceIdentifier policyAssignmentId = default, ResourceIdentifier policyDefinitionId = default, string effectiveParameters = default, bool? isCompliant = default, string subscriptionId = default, string resourceTypeString = default, AzureLocation? resourceLocation = default, string resourceGroup = default, string resourceTags = default, string policyAssignmentName = default, string policyAssignmentOwner = default, string policyAssignmentParameters = default, string policyAssignmentScope = default, string policyDefinitionName = default, string policyDefinitionAction = default, string policyDefinitionCategory = default, ResourceIdentifier policySetDefinitionId = default, string policySetDefinitionName = default, string policySetDefinitionOwner = default, string policySetDefinitionCategory = default, string policySetDefinitionParameters = default, string managementGroupIds = default, string policyDefinitionReferenceId = default, string complianceState = default, Guid? tenantId = default, string principalOid = default, IEnumerable<ComponentEventDetails> components = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
-            components ??= new List<ComponentEventDetails>();
-            additionalProperties ??= new Dictionary<string, BinaryData>();
+            components ??= new ChangeTrackingList<ComponentEventDetails>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new PolicyEvent(
                 odataId,
@@ -209,38 +323,220 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 complianceState,
                 tenantId,
                 principalOid,
-                components?.ToList(),
-                additionalProperties);
+                (components ?? new ChangeTrackingList<ComponentEventDetails>()).ToList(),
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComponentEventDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Component Id. </param>
+        /// <param name="type"> Component type. </param>
+        /// <param name="name"> Component name. </param>
         /// <param name="timestamp"> Timestamp for component policy event record. </param>
         /// <param name="tenantId"> Tenant ID for the policy event record. </param>
         /// <param name="principalOid"> Principal object ID for the user who initiated the resource component operation that triggered the policy event. </param>
         /// <param name="policyDefinitionAction"> Policy definition action, i.e. effect. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.ComponentEventDetails"/> instance for mocking. </returns>
-        public static ComponentEventDetails ComponentEventDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? timestamp = null, Guid? tenantId = null, string principalOid = null, string policyDefinitionAction = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static ComponentEventDetails ComponentEventDetails(string id = default, string @type = default, string name = default, DateTimeOffset? timestamp = default, Guid? tenantId = default, string principalOid = default, string policyDefinitionAction = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new ComponentEventDetails(
                 id,
+                @type,
                 name,
-                resourceType,
-                systemData,
                 timestamp,
                 tenantId,
                 principalOid,
                 policyDefinitionAction,
-                additionalProperties);
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyState"/>. </summary>
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForSubscriptionQueryOptions"/> instance for mocking. </returns>
+        public static PolicyEventsListQueryResultsForSubscriptionQueryOptions PolicyEventsListQueryResultsForSubscriptionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyEventsListQueryResultsForSubscriptionQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForResourceGroupQueryOptions"/> instance for mocking. </returns>
+        public static PolicyEventsListQueryResultsForResourceGroupQueryOptions PolicyEventsListQueryResultsForResourceGroupQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyEventsListQueryResultsForResourceGroupQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to expand components use $expand=components. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForResourceQueryOptions"/> instance for mocking. </returns>
+        public static PolicyEventsListQueryResultsForResourceQueryOptions PolicyEventsListQueryResultsForResourceQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string expand = default, string skipToken = default)
+        {
+            return new PolicyEventsListQueryResultsForResourceQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                expand,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForPolicySetDefinitionQueryOptions"/> instance for mocking. </returns>
+        public static PolicyEventsListQueryResultsForPolicySetDefinitionQueryOptions PolicyEventsListQueryResultsForPolicySetDefinitionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyEventsListQueryResultsForPolicySetDefinitionQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions"/> instance for mocking. </returns>
+        public static PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
+        public static PolicyEventsListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions PolicyEventsListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyEventsListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
+        public static PolicyEventsListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions PolicyEventsListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyEventsListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForManagementGroupQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesListQueryResultsForManagementGroupQueryOptions PolicyStatesListQueryResultsForManagementGroupQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyStatesListQueryResultsForManagementGroupQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
         /// <param name="odataId"> OData entity ID; always set to null since policy state records do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="timestamp"> Timestamp for the policy state record. </param>
@@ -275,13 +571,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="policyDefinitionVersion"> Evaluated policy definition version. </param>
         /// <param name="policySetDefinitionVersion"> Evaluated policy set definition version. </param>
         /// <param name="policyAssignmentVersion"> Evaluated policy assignment version. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.PolicyState"/> instance for mocking. </returns>
-        public static PolicyState PolicyState(string odataId = null, string odataContext = null, DateTimeOffset? timestamp = null, ResourceIdentifier resourceId = null, ResourceIdentifier policyAssignmentId = null, ResourceIdentifier policyDefinitionId = null, string effectiveParameters = null, bool? isCompliant = null, string subscriptionId = null, string resourceTypeString = null, AzureLocation? resourceLocation = null, string resourceGroup = null, string resourceTags = null, string policyAssignmentName = null, string policyAssignmentOwner = null, string policyAssignmentParameters = null, string policyAssignmentScope = null, string policyDefinitionName = null, string policyDefinitionAction = null, string policyDefinitionCategory = null, ResourceIdentifier policySetDefinitionId = null, string policySetDefinitionName = null, string policySetDefinitionOwner = null, string policySetDefinitionCategory = null, string policySetDefinitionParameters = null, string managementGroupIds = null, string policyDefinitionReferenceId = null, string complianceState = null, PolicyEvaluationDetails policyEvaluationDetails = null, IEnumerable<string> policyDefinitionGroupNames = null, IEnumerable<ComponentStateDetails> components = null, string policyDefinitionVersion = null, string policySetDefinitionVersion = null, string policyAssignmentVersion = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static PolicyState PolicyState(string odataId = default, string odataContext = default, DateTimeOffset? timestamp = default, ResourceIdentifier resourceId = default, ResourceIdentifier policyAssignmentId = default, ResourceIdentifier policyDefinitionId = default, string effectiveParameters = default, bool? isCompliant = default, string subscriptionId = default, string resourceTypeString = default, AzureLocation? resourceLocation = default, string resourceGroup = default, string resourceTags = default, string policyAssignmentName = default, string policyAssignmentOwner = default, string policyAssignmentParameters = default, string policyAssignmentScope = default, string policyDefinitionName = default, string policyDefinitionAction = default, string policyDefinitionCategory = default, ResourceIdentifier policySetDefinitionId = default, string policySetDefinitionName = default, string policySetDefinitionOwner = default, string policySetDefinitionCategory = default, string policySetDefinitionParameters = default, string managementGroupIds = default, string policyDefinitionReferenceId = default, string complianceState = default, PolicyEvaluationDetails policyEvaluationDetails = default, IEnumerable<string> policyDefinitionGroupNames = default, IEnumerable<ComponentStateDetails> components = default, string policyDefinitionVersion = default, string policySetDefinitionVersion = default, string policyAssignmentVersion = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
-            policyDefinitionGroupNames ??= new List<string>();
-            components ??= new List<ComponentStateDetails>();
-            additionalProperties ??= new Dictionary<string, BinaryData>();
+            policyDefinitionGroupNames ??= new ChangeTrackingList<string>();
+            components ??= new ChangeTrackingList<ComponentStateDetails>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new PolicyState(
                 odataId,
@@ -313,26 +609,24 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 policyDefinitionReferenceId,
                 complianceState,
                 policyEvaluationDetails,
-                policyDefinitionGroupNames?.ToList(),
-                components?.ToList(),
+                (policyDefinitionGroupNames ?? new ChangeTrackingList<string>()).ToList(),
+                (components ?? new ChangeTrackingList<ComponentStateDetails>()).ToList(),
                 policyDefinitionVersion,
                 policySetDefinitionVersion,
                 policyAssignmentVersion,
-                additionalProperties);
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyEvaluationDetails"/>. </summary>
         /// <param name="evaluatedExpressions"> Details of the evaluated expressions. </param>
         /// <param name="ifNotExistsDetails"> Evaluation details of IfNotExists effect. </param>
         /// <returns> A new <see cref="Models.PolicyEvaluationDetails"/> instance for mocking. </returns>
-        public static PolicyEvaluationDetails PolicyEvaluationDetails(IEnumerable<ExpressionEvaluationDetails> evaluatedExpressions = null, IfNotExistsEvaluationDetails ifNotExistsDetails = null)
+        public static PolicyEvaluationDetails PolicyEvaluationDetails(IEnumerable<ExpressionEvaluationDetails> evaluatedExpressions = default, IfNotExistsEvaluationDetails ifNotExistsDetails = default)
         {
-            evaluatedExpressions ??= new List<ExpressionEvaluationDetails>();
+            evaluatedExpressions ??= new ChangeTrackingList<ExpressionEvaluationDetails>();
 
-            return new PolicyEvaluationDetails(evaluatedExpressions?.ToList(), ifNotExistsDetails, serializedAdditionalRawData: null);
+            return new PolicyEvaluationDetails((evaluatedExpressions ?? new ChangeTrackingList<ExpressionEvaluationDetails>()).ToList(), ifNotExistsDetails, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExpressionEvaluationDetails"/>. </summary>
         /// <param name="result"> Evaluation result. </param>
         /// <param name="expression"> Expression evaluated. </param>
         /// <param name="expressionKind"> The kind of expression that was evaluated. </param>
@@ -341,7 +635,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="targetValue"> Target value to be compared with the expression value. </param>
         /// <param name="operator"> Operator to compare the expression value and the target value. </param>
         /// <returns> A new <see cref="Models.ExpressionEvaluationDetails"/> instance for mocking. </returns>
-        public static ExpressionEvaluationDetails ExpressionEvaluationDetails(string result = null, string expression = null, string expressionKind = null, string path = null, BinaryData expressionValue = null, BinaryData targetValue = null, string @operator = null)
+        public static ExpressionEvaluationDetails ExpressionEvaluationDetails(string result = default, string expression = default, string expressionKind = default, string path = default, BinaryData expressionValue = default, BinaryData targetValue = default, string @operator = default)
         {
             return new ExpressionEvaluationDetails(
                 result,
@@ -351,55 +645,70 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 expressionValue,
                 targetValue,
                 @operator,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.IfNotExistsEvaluationDetails"/>. </summary>
         /// <param name="resourceId"> ID of the last evaluated resource for IfNotExists effect. </param>
         /// <param name="totalResources"> Total number of resources to which the existence condition is applicable. </param>
         /// <returns> A new <see cref="Models.IfNotExistsEvaluationDetails"/> instance for mocking. </returns>
-        public static IfNotExistsEvaluationDetails IfNotExistsEvaluationDetails(ResourceIdentifier resourceId = null, int? totalResources = null)
+        public static IfNotExistsEvaluationDetails IfNotExistsEvaluationDetails(ResourceIdentifier resourceId = default, int? totalResources = default)
         {
-            return new IfNotExistsEvaluationDetails(resourceId, totalResources, serializedAdditionalRawData: null);
+            return new IfNotExistsEvaluationDetails(resourceId, totalResources, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComponentStateDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Component Id. </param>
+        /// <param name="type"> Component type. </param>
+        /// <param name="name"> Component name. </param>
         /// <param name="timestamp"> Component compliance evaluation timestamp. </param>
         /// <param name="complianceState"> Component compliance state. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.ComponentStateDetails"/> instance for mocking. </returns>
-        public static ComponentStateDetails ComponentStateDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? timestamp = null, string complianceState = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static ComponentStateDetails ComponentStateDetails(string id = default, string @type = default, string name = default, DateTimeOffset? timestamp = default, string complianceState = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new ComponentStateDetails(
                 id,
+                @type,
                 name,
-                resourceType,
-                systemData,
                 timestamp,
                 complianceState,
-                additionalProperties);
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolicySummary"/>. </summary>
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForManagementGroupQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesSummarizeForManagementGroupQueryOptions PolicyStatesSummarizeForManagementGroupQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
+        {
+            return new PolicyStatesSummarizeForManagementGroupQueryOptions(top, @from, to, filter, default);
+        }
+
+        /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
+        /// <param name="odataCount"> OData entity count; represents the number of summaries returned; always set to 1. </param>
+        /// <param name="value"> Summarize action results. </param>
+        /// <returns> A new <see cref="Models.SummarizeResults"/> instance for mocking. </returns>
+        public static SummarizeResults SummarizeResults(string odataContext = default, int? odataCount = default, IEnumerable<PolicySummary> value = default)
+        {
+            value ??= new ChangeTrackingList<PolicySummary>();
+
+            return new SummarizeResults(odataContext, odataCount, (value ?? new ChangeTrackingList<PolicySummary>()).ToList(), default);
+        }
+
         /// <param name="odataId"> OData entity ID; always set to null since summaries do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="results"> Compliance summary for all policy assignments. </param>
         /// <param name="policyAssignments"> Policy assignments summary. </param>
         /// <returns> A new <see cref="Models.PolicySummary"/> instance for mocking. </returns>
-        public static PolicySummary PolicySummary(string odataId = null, string odataContext = null, PolicySummaryResults results = null, IEnumerable<PolicyAssignmentSummary> policyAssignments = null)
+        public static PolicySummary PolicySummary(string odataId = default, string odataContext = default, PolicySummaryResults results = default, IEnumerable<PolicyAssignmentSummary> policyAssignments = default)
         {
-            policyAssignments ??= new List<PolicyAssignmentSummary>();
+            policyAssignments ??= new ChangeTrackingList<PolicyAssignmentSummary>();
 
-            return new PolicySummary(odataId, odataContext, results, policyAssignments?.ToList(), serializedAdditionalRawData: null);
+            return new PolicySummary(odataId, odataContext, results, (policyAssignments ?? new ChangeTrackingList<PolicyAssignmentSummary>()).ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolicySummaryResults"/>. </summary>
         /// <param name="queryResultsUri"> HTTP POST URI for queryResults action on Microsoft.PolicyInsights to retrieve raw results for the compliance summary. This property will not be available by default in future API versions, but could be queried explicitly. </param>
         /// <param name="nonCompliantResources"> Number of non-compliant resources. </param>
         /// <param name="nonCompliantPolicies"> Number of non-compliant policies. </param>
@@ -407,198 +716,360 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="policyDetails"> The policy artifact summary at this level. For query scope level, it represents policy assignment summary. For policy assignment level, it represents policy definitions summary. </param>
         /// <param name="policyGroupDetails"> The policy definition group summary at this level. </param>
         /// <returns> A new <see cref="Models.PolicySummaryResults"/> instance for mocking. </returns>
-        public static PolicySummaryResults PolicySummaryResults(Uri queryResultsUri = null, int? nonCompliantResources = null, int? nonCompliantPolicies = null, IEnumerable<ComplianceDetail> resourceDetails = null, IEnumerable<ComplianceDetail> policyDetails = null, IEnumerable<ComplianceDetail> policyGroupDetails = null)
+        public static PolicySummaryResults PolicySummaryResults(Uri queryResultsUri = default, int? nonCompliantResources = default, int? nonCompliantPolicies = default, IEnumerable<ComplianceDetail> resourceDetails = default, IEnumerable<ComplianceDetail> policyDetails = default, IEnumerable<ComplianceDetail> policyGroupDetails = default)
         {
-            resourceDetails ??= new List<ComplianceDetail>();
-            policyDetails ??= new List<ComplianceDetail>();
-            policyGroupDetails ??= new List<ComplianceDetail>();
+            resourceDetails ??= new ChangeTrackingList<ComplianceDetail>();
+            policyDetails ??= new ChangeTrackingList<ComplianceDetail>();
+            policyGroupDetails ??= new ChangeTrackingList<ComplianceDetail>();
 
             return new PolicySummaryResults(
                 queryResultsUri,
                 nonCompliantResources,
                 nonCompliantPolicies,
-                resourceDetails?.ToList(),
-                policyDetails?.ToList(),
-                policyGroupDetails?.ToList(),
-                serializedAdditionalRawData: null);
+                (resourceDetails ?? new ChangeTrackingList<ComplianceDetail>()).ToList(),
+                (policyDetails ?? new ChangeTrackingList<ComplianceDetail>()).ToList(),
+                (policyGroupDetails ?? new ChangeTrackingList<ComplianceDetail>()).ToList(),
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComplianceDetail"/>. </summary>
         /// <param name="complianceState"> The compliance state. </param>
         /// <param name="count"> Summarized count value for this compliance state. </param>
         /// <returns> A new <see cref="Models.ComplianceDetail"/> instance for mocking. </returns>
-        public static ComplianceDetail ComplianceDetail(string complianceState = null, int? count = null)
+        public static ComplianceDetail ComplianceDetail(string complianceState = default, int? count = default)
         {
-            return new ComplianceDetail(complianceState, count, serializedAdditionalRawData: null);
+            return new ComplianceDetail(complianceState, count, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyAssignmentSummary"/>. </summary>
         /// <param name="policyAssignmentId"> Policy assignment ID. </param>
         /// <param name="policySetDefinitionId"> Policy set definition ID, if the policy assignment is for a policy set. </param>
         /// <param name="results"> Compliance summary for the policy assignment. </param>
         /// <param name="policyDefinitions"> Policy definitions summary. </param>
         /// <param name="policyGroups"> Policy definition group summary. </param>
         /// <returns> A new <see cref="Models.PolicyAssignmentSummary"/> instance for mocking. </returns>
-        public static PolicyAssignmentSummary PolicyAssignmentSummary(ResourceIdentifier policyAssignmentId = null, ResourceIdentifier policySetDefinitionId = null, PolicySummaryResults results = null, IEnumerable<PolicyDefinitionSummary> policyDefinitions = null, IEnumerable<PolicyGroupSummary> policyGroups = null)
+        public static PolicyAssignmentSummary PolicyAssignmentSummary(ResourceIdentifier policyAssignmentId = default, ResourceIdentifier policySetDefinitionId = default, PolicySummaryResults results = default, IEnumerable<PolicyDefinitionSummary> policyDefinitions = default, IEnumerable<PolicyGroupSummary> policyGroups = default)
         {
-            policyDefinitions ??= new List<PolicyDefinitionSummary>();
-            policyGroups ??= new List<PolicyGroupSummary>();
+            policyDefinitions ??= new ChangeTrackingList<PolicyDefinitionSummary>();
+            policyGroups ??= new ChangeTrackingList<PolicyGroupSummary>();
 
             return new PolicyAssignmentSummary(
                 policyAssignmentId,
                 policySetDefinitionId,
                 results,
-                policyDefinitions?.ToList(),
-                policyGroups?.ToList(),
-                serializedAdditionalRawData: null);
+                (policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionSummary>()).ToList(),
+                (policyGroups ?? new ChangeTrackingList<PolicyGroupSummary>()).ToList(),
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyDefinitionSummary"/>. </summary>
         /// <param name="policyDefinitionId"> Policy definition ID. </param>
         /// <param name="policyDefinitionReferenceId"> Policy definition reference ID. </param>
         /// <param name="policyDefinitionGroupNames"> Policy definition group names. </param>
         /// <param name="effect"> Policy effect, i.e. policy definition action. </param>
         /// <param name="results"> Compliance summary for the policy definition. </param>
         /// <returns> A new <see cref="Models.PolicyDefinitionSummary"/> instance for mocking. </returns>
-        public static PolicyDefinitionSummary PolicyDefinitionSummary(ResourceIdentifier policyDefinitionId = null, string policyDefinitionReferenceId = null, IEnumerable<string> policyDefinitionGroupNames = null, string effect = null, PolicySummaryResults results = null)
+        public static PolicyDefinitionSummary PolicyDefinitionSummary(ResourceIdentifier policyDefinitionId = default, string policyDefinitionReferenceId = default, IEnumerable<string> policyDefinitionGroupNames = default, string effect = default, PolicySummaryResults results = default)
         {
-            policyDefinitionGroupNames ??= new List<string>();
+            policyDefinitionGroupNames ??= new ChangeTrackingList<string>();
 
             return new PolicyDefinitionSummary(
                 policyDefinitionId,
                 policyDefinitionReferenceId,
-                policyDefinitionGroupNames?.ToList(),
+                (policyDefinitionGroupNames ?? new ChangeTrackingList<string>()).ToList(),
                 effect,
                 results,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyGroupSummary"/>. </summary>
         /// <param name="policyGroupName"> Policy group name. </param>
         /// <param name="results"> Compliance summary for the policy definition group. </param>
         /// <returns> A new <see cref="Models.PolicyGroupSummary"/> instance for mocking. </returns>
-        public static PolicyGroupSummary PolicyGroupSummary(string policyGroupName = null, PolicySummaryResults results = null)
+        public static PolicyGroupSummary PolicyGroupSummary(string policyGroupName = default, PolicySummaryResults results = default)
         {
-            return new PolicyGroupSummary(policyGroupName, results, serializedAdditionalRawData: null);
+            return new PolicyGroupSummary(policyGroupName, results, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyInsights.PolicyMetadataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="metadataId"> The policy metadata identifier. </param>
-        /// <param name="category"> The category of the policy metadata. </param>
-        /// <param name="title"> The title of the policy metadata. </param>
-        /// <param name="owner"> The owner of the policy metadata. </param>
-        /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
-        /// <param name="metadata"> Additional metadata. </param>
-        /// <param name="description"> The description of the policy metadata. </param>
-        /// <param name="requirements"> The requirements of the policy metadata. </param>
-        /// <returns> A new <see cref="PolicyInsights.PolicyMetadataData"/> instance for mocking. </returns>
-        public static PolicyMetadataData PolicyMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string metadataId = null, string category = null, string title = null, string owner = null, Uri additionalContentUri = null, BinaryData metadata = null, string description = null, string requirements = null)
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForSubscriptionQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesListQueryResultsForSubscriptionQueryOptions PolicyStatesListQueryResultsForSubscriptionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
         {
-            return new PolicyMetadataData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                metadataId,
-                category,
-                title,
-                owner,
-                additionalContentUri,
-                metadata,
-                description,
-                requirements,
-                serializedAdditionalRawData: null);
+            return new PolicyStatesListQueryResultsForSubscriptionQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SlimPolicyMetadata"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="metadataId"> The policy metadata identifier. </param>
-        /// <param name="category"> The category of the policy metadata. </param>
-        /// <param name="title"> The title of the policy metadata. </param>
-        /// <param name="owner"> The owner of the policy metadata. </param>
-        /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
-        /// <param name="metadata"> Additional metadata. </param>
-        /// <returns> A new <see cref="Models.SlimPolicyMetadata"/> instance for mocking. </returns>
-        public static SlimPolicyMetadata SlimPolicyMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string metadataId = null, string category = null, string title = null, string owner = null, Uri additionalContentUri = null, BinaryData metadata = null)
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForSubscriptionQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesSummarizeForSubscriptionQueryOptions PolicyStatesSummarizeForSubscriptionQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
         {
-            return new SlimPolicyMetadata(
-                id,
-                name,
-                resourceType,
-                systemData,
-                metadataId,
-                category,
-                title,
-                owner,
-                additionalContentUri,
-                metadata,
-                serializedAdditionalRawData: null);
+            return new PolicyStatesSummarizeForSubscriptionQueryOptions(top, @from, to, filter, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckPolicyRestrictionsContent"/>. </summary>
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForResourceGroupQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesListQueryResultsForResourceGroupQueryOptions PolicyStatesListQueryResultsForResourceGroupQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyStatesListQueryResultsForResourceGroupQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForResourceGroupQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesSummarizeForResourceGroupQueryOptions PolicyStatesSummarizeForResourceGroupQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
+        {
+            return new PolicyStatesSummarizeForResourceGroupQueryOptions(top, @from, to, filter, default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to expand components use $expand=components. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForResourceQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesListQueryResultsForResourceQueryOptions PolicyStatesListQueryResultsForResourceQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string expand = default, string skipToken = default)
+        {
+            return new PolicyStatesListQueryResultsForResourceQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                expand,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForResourceQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesSummarizeForResourceQueryOptions PolicyStatesSummarizeForResourceQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
+        {
+            return new PolicyStatesSummarizeForResourceQueryOptions(top, @from, to, filter, default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForPolicySetDefinitionQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesListQueryResultsForPolicySetDefinitionQueryOptions PolicyStatesListQueryResultsForPolicySetDefinitionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyStatesListQueryResultsForPolicySetDefinitionQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForPolicySetDefinitionQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesSummarizeForPolicySetDefinitionQueryOptions PolicyStatesSummarizeForPolicySetDefinitionQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
+        {
+            return new PolicyStatesSummarizeForPolicySetDefinitionQueryOptions(top, @from, to, filter, default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForPolicyDefinitionQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesListQueryResultsForPolicyDefinitionQueryOptions PolicyStatesListQueryResultsForPolicyDefinitionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyStatesListQueryResultsForPolicyDefinitionQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForPolicyDefinitionQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesSummarizeForPolicyDefinitionQueryOptions PolicyStatesSummarizeForPolicyDefinitionQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
+        {
+            return new PolicyStatesSummarizeForPolicyDefinitionQueryOptions(top, @from, to, filter, default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions PolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForSubscriptionLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesSummarizeForSubscriptionLevelPolicyAssignmentQueryOptions PolicyStatesSummarizeForSubscriptionLevelPolicyAssignmentQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
+        {
+            return new PolicyStatesSummarizeForSubscriptionLevelPolicyAssignmentQueryOptions(top, @from, to, filter, default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions PolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
+        {
+            return new PolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                skipToken,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForResourceGroupLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
+        public static PolicyStatesSummarizeForResourceGroupLevelPolicyAssignmentQueryOptions PolicyStatesSummarizeForResourceGroupLevelPolicyAssignmentQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
+        {
+            return new PolicyStatesSummarizeForResourceGroupLevelPolicyAssignmentQueryOptions(top, @from, to, filter, default);
+        }
+
         /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
         /// <param name="pendingFields"> The list of fields and values that should be evaluated for potential restrictions. </param>
         /// <param name="includeAuditEffect"> Whether to include policies with the 'audit' effect in the results. Defaults to false. </param>
         /// <returns> A new <see cref="Models.CheckPolicyRestrictionsContent"/> instance for mocking. </returns>
-        public static CheckPolicyRestrictionsContent CheckPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails = null, IEnumerable<PendingField> pendingFields = null, bool? includeAuditEffect = null)
+        public static CheckPolicyRestrictionsContent CheckPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails = default, IEnumerable<PendingField> pendingFields = default, bool? includeAuditEffect = default)
         {
-            pendingFields ??= new List<PendingField>();
+            pendingFields ??= new ChangeTrackingList<PendingField>();
 
-            return new CheckPolicyRestrictionsContent(resourceDetails, pendingFields?.ToList(), includeAuditEffect, serializedAdditionalRawData: null);
+            return new CheckPolicyRestrictionsContent(resourceDetails, (pendingFields ?? new ChangeTrackingList<PendingField>()).ToList(), includeAuditEffect, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckRestrictionsResourceDetails"/>. </summary>
         /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
         /// <param name="apiVersion"> The api-version of the resource content. </param>
         /// <param name="scope"> The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource's resource ID. </param>
         /// <returns> A new <see cref="Models.CheckRestrictionsResourceDetails"/> instance for mocking. </returns>
-        public static CheckRestrictionsResourceDetails CheckRestrictionsResourceDetails(BinaryData resourceContent = null, string apiVersion = null, string scope = null)
+        public static CheckRestrictionsResourceDetails CheckRestrictionsResourceDetails(BinaryData resourceContent = default, string apiVersion = default, string scope = default)
         {
-            return new CheckRestrictionsResourceDetails(resourceContent, apiVersion, scope, serializedAdditionalRawData: null);
+            return new CheckRestrictionsResourceDetails(resourceContent, apiVersion, scope, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PendingField"/>. </summary>
         /// <param name="field"> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </param>
         /// <param name="values"> The list of potential values for the field that should be evaluated against Azure Policy. </param>
         /// <returns> A new <see cref="Models.PendingField"/> instance for mocking. </returns>
-        public static PendingField PendingField(string field = null, IEnumerable<string> values = null)
+        public static PendingField PendingField(string @field = default, IEnumerable<string> values = default)
         {
-            values ??= new List<string>();
+            values ??= new ChangeTrackingList<string>();
 
-            return new PendingField(field, values?.ToList(), serializedAdditionalRawData: null);
+            return new PendingField(@field, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckPolicyRestrictionsResult"/>. </summary>
         /// <param name="fieldRestrictions"> The restrictions that will be placed on various fields in the resource by policy. </param>
-        /// <param name="policyEvaluations"> Evaluation results for the provided partial resource content. </param>
+        /// <param name="policyEvaluations"> Policy evaluation results against the given resource content. This will indicate if the partial content that was provided will be denied as-is. </param>
         /// <returns> A new <see cref="Models.CheckPolicyRestrictionsResult"/> instance for mocking. </returns>
-        public static CheckPolicyRestrictionsResult CheckPolicyRestrictionsResult(IEnumerable<FieldRestrictions> fieldRestrictions = null, IEnumerable<PolicyEvaluationResult> policyEvaluations = null)
+        public static CheckPolicyRestrictionsResult CheckPolicyRestrictionsResult(IEnumerable<FieldRestrictions> fieldRestrictions = default, IEnumerable<PolicyEvaluationResult> policyEvaluations = default)
         {
-            fieldRestrictions ??= new List<FieldRestrictions>();
-            policyEvaluations ??= new List<PolicyEvaluationResult>();
+            fieldRestrictions ??= new ChangeTrackingList<FieldRestrictions>();
 
-            return new CheckPolicyRestrictionsResult(fieldRestrictions?.ToList(), policyEvaluations != null ? new CheckRestrictionsResultContentEvaluationResult(policyEvaluations?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new CheckPolicyRestrictionsResult((fieldRestrictions ?? new ChangeTrackingList<FieldRestrictions>()).ToList(), policyEvaluations is null ? default : new CheckRestrictionsResultContentEvaluationResult((policyEvaluations ?? new ChangeTrackingList<PolicyEvaluationResult>()).ToList(), default), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FieldRestrictions"/>. </summary>
         /// <param name="field"> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </param>
         /// <param name="restrictions"> The restrictions placed on that field by policy. </param>
         /// <returns> A new <see cref="Models.FieldRestrictions"/> instance for mocking. </returns>
-        public static FieldRestrictions FieldRestrictions(string field = null, IEnumerable<FieldRestriction> restrictions = null)
+        public static FieldRestrictions FieldRestrictions(string @field = default, IEnumerable<FieldRestriction> restrictions = default)
         {
-            restrictions ??= new List<FieldRestriction>();
+            restrictions ??= new ChangeTrackingList<FieldRestriction>();
 
-            return new FieldRestrictions(field, restrictions?.ToList(), serializedAdditionalRawData: null);
+            return new FieldRestrictions(@field, (restrictions ?? new ChangeTrackingList<FieldRestriction>()).ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FieldRestriction"/>. </summary>
         /// <param name="result"> The type of restriction that is imposed on the field. </param>
         /// <param name="defaultValue"> The value that policy will set for the field if the user does not provide a value. </param>
         /// <param name="values"> The values that policy either requires or denies for the field. </param>
@@ -606,55 +1077,93 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="policyEffect"> The effect of the policy that is causing the field restriction. http://aka.ms/policyeffects. </param>
         /// <param name="reason"> The reason for the restriction. </param>
         /// <returns> A new <see cref="Models.FieldRestriction"/> instance for mocking. </returns>
-        public static FieldRestriction FieldRestriction(FieldRestrictionResult? result = null, string defaultValue = null, IEnumerable<string> values = null, PolicyReference policy = null, string policyEffect = null, string reason = null)
+        public static FieldRestriction FieldRestriction(FieldRestrictionResult? result = default, string defaultValue = default, IEnumerable<string> values = default, PolicyReference policy = default, string policyEffect = default, string reason = default)
         {
-            values ??= new List<string>();
+            values ??= new ChangeTrackingList<string>();
 
             return new FieldRestriction(
                 result,
                 defaultValue,
-                values?.ToList(),
+                (values ?? new ChangeTrackingList<string>()).ToList(),
                 policy,
                 policyEffect,
                 reason,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyReference"/>. </summary>
         /// <param name="policyDefinitionId"> The resource identifier of the policy definition. </param>
         /// <param name="policySetDefinitionId"> The resource identifier of the policy set definition. </param>
         /// <param name="policyDefinitionReferenceId"> The reference identifier of a specific policy definition within a policy set definition. </param>
         /// <param name="policyAssignmentId"> The resource identifier of the policy assignment. </param>
         /// <returns> A new <see cref="Models.PolicyReference"/> instance for mocking. </returns>
-        public static PolicyReference PolicyReference(ResourceIdentifier policyDefinitionId = null, ResourceIdentifier policySetDefinitionId = null, string policyDefinitionReferenceId = null, ResourceIdentifier policyAssignmentId = null)
+        public static PolicyReference PolicyReference(ResourceIdentifier policyDefinitionId = default, ResourceIdentifier policySetDefinitionId = default, string policyDefinitionReferenceId = default, ResourceIdentifier policyAssignmentId = default)
         {
-            return new PolicyReference(policyDefinitionId, policySetDefinitionId, policyDefinitionReferenceId, policyAssignmentId, serializedAdditionalRawData: null);
+            return new PolicyReference(policyDefinitionId, policySetDefinitionId, policyDefinitionReferenceId, policyAssignmentId, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyEvaluationResult"/>. </summary>
         /// <param name="policyInfo"> The details of the policy that was evaluated. </param>
         /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </param>
         /// <param name="checkRestrictionEvaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
-        /// <param name="policyEffect"> The details of the effect that was applied to the resource. </param>
+        /// <param name="policyEffect"> The effect that was applied to the resource. http://aka.ms/policyeffects. </param>
         /// <returns> A new <see cref="Models.PolicyEvaluationResult"/> instance for mocking. </returns>
-        public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = null, string evaluationResult = null, CheckRestrictionEvaluationDetails checkRestrictionEvaluationDetails = null, string policyEffect = null)
+        public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = default, string evaluationResult = default, CheckRestrictionEvaluationDetails checkRestrictionEvaluationDetails = default, string policyEffect = default)
         {
-            return new PolicyEvaluationResult(policyInfo, evaluationResult, checkRestrictionEvaluationDetails, policyEffect != null ? new PolicyEffectDetails(policyEffect, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new PolicyEvaluationResult(policyInfo, evaluationResult, checkRestrictionEvaluationDetails, policyEffect is null ? default : new PolicyEffectDetails(policyEffect, default), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckRestrictionEvaluationDetails"/>. </summary>
         /// <param name="evaluatedExpressions"> Details of the evaluated expressions. </param>
         /// <param name="ifNotExistsDetails"> Evaluation details of IfNotExists effect. </param>
         /// <param name="reason"> The reason for the evaluation result. </param>
         /// <returns> A new <see cref="Models.CheckRestrictionEvaluationDetails"/> instance for mocking. </returns>
-        public static CheckRestrictionEvaluationDetails CheckRestrictionEvaluationDetails(IEnumerable<ExpressionEvaluationDetails> evaluatedExpressions = null, IfNotExistsEvaluationDetails ifNotExistsDetails = null, string reason = null)
+        public static CheckRestrictionEvaluationDetails CheckRestrictionEvaluationDetails(IEnumerable<ExpressionEvaluationDetails> evaluatedExpressions = default, IfNotExistsEvaluationDetails ifNotExistsDetails = default, string reason = default)
         {
-            evaluatedExpressions ??= new List<ExpressionEvaluationDetails>();
+            evaluatedExpressions ??= new ChangeTrackingList<ExpressionEvaluationDetails>();
 
-            return new CheckRestrictionEvaluationDetails(evaluatedExpressions?.ToList(), ifNotExistsDetails, reason, serializedAdditionalRawData: null);
+            return new CheckRestrictionEvaluationDetails((evaluatedExpressions ?? new ChangeTrackingList<ExpressionEvaluationDetails>()).ToList(), ifNotExistsDetails, reason, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComponentPolicyState"/>. </summary>
+        /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
+        /// <param name="pendingFields"> The list of fields and values that should be evaluated for potential restrictions. </param>
+        /// <returns> A new <see cref="Models.CheckManagementGroupPolicyRestrictionsContent"/> instance for mocking. </returns>
+        public static CheckManagementGroupPolicyRestrictionsContent CheckManagementGroupPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails = default, IEnumerable<PendingField> pendingFields = default)
+        {
+            pendingFields ??= new ChangeTrackingList<PendingField>();
+
+            return new CheckManagementGroupPolicyRestrictionsContent(resourceDetails, (pendingFields ?? new ChangeTrackingList<PendingField>()).ToList(), default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <returns> A new <see cref="Models.ComponentPolicyStatesListQueryResultsForSubscriptionQueryOptions"/> instance for mocking. </returns>
+        public static ComponentPolicyStatesListQueryResultsForSubscriptionQueryOptions ComponentPolicyStatesListQueryResultsForSubscriptionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default)
+        {
+            return new ComponentPolicyStatesListQueryResultsForSubscriptionQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                default);
+        }
+
+        /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
+        /// <param name="odataCount"> OData entity count; represents the number of policy state records returned. </param>
+        /// <param name="value"> Query results. </param>
+        /// <returns> A new <see cref="Models.ComponentPolicyStatesQueryResults"/> instance for mocking. </returns>
+        public static ComponentPolicyStatesQueryResults ComponentPolicyStatesQueryResults(string odataContext = default, int? odataCount = default, IEnumerable<ComponentPolicyState> value = default)
+        {
+            value ??= new ChangeTrackingList<ComponentPolicyState>();
+
+            return new ComponentPolicyStatesQueryResults(odataContext, odataCount, (value ?? new ChangeTrackingList<ComponentPolicyState>()).ToList(), default);
+        }
+
         /// <param name="odataId"> OData entity ID; always set to null since component policy state records do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="timestamp"> Timestamp for the component policy state record. </param>
@@ -687,12 +1196,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="policyDefinitionVersion"> Evaluated policy definition version. </param>
         /// <param name="policySetDefinitionVersion"> Evaluated policy set definition version. </param>
         /// <param name="policyAssignmentVersion"> Evaluated policy assignment version. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.ComponentPolicyState"/> instance for mocking. </returns>
-        public static ComponentPolicyState ComponentPolicyState(string odataId = null, string odataContext = null, DateTimeOffset? timestamp = null, string componentId = null, string componentType = null, string componentName = null, string resourceId = null, string policyAssignmentId = null, string policyDefinitionId = null, string subscriptionId = null, string resourceType = null, string resourceLocation = null, string resourceGroup = null, string policyAssignmentName = null, string policyAssignmentOwner = null, string policyAssignmentParameters = null, string policyAssignmentScope = null, string policyDefinitionName = null, string policyDefinitionAction = null, string policyDefinitionCategory = null, string policySetDefinitionId = null, string policySetDefinitionName = null, string policySetDefinitionOwner = null, string policySetDefinitionCategory = null, string policySetDefinitionParameters = null, string policyDefinitionReferenceId = null, string complianceState = null, ComponentPolicyEvaluationDetails policyEvaluationDetails = null, IEnumerable<string> policyDefinitionGroupNames = null, string policyDefinitionVersion = null, string policySetDefinitionVersion = null, string policyAssignmentVersion = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        public static ComponentPolicyState ComponentPolicyState(string odataId = default, string odataContext = default, DateTimeOffset? timestamp = default, string componentId = default, string componentType = default, string componentName = default, string resourceId = default, string policyAssignmentId = default, string policyDefinitionId = default, string subscriptionId = default, string resourceType = default, string resourceLocation = default, string resourceGroup = default, string policyAssignmentName = default, string policyAssignmentOwner = default, string policyAssignmentParameters = default, string policyAssignmentScope = default, string policyDefinitionName = default, string policyDefinitionAction = default, string policyDefinitionCategory = default, string policySetDefinitionId = default, string policySetDefinitionName = default, string policySetDefinitionOwner = default, string policySetDefinitionCategory = default, string policySetDefinitionParameters = default, string policyDefinitionReferenceId = default, string complianceState = default, ComponentPolicyEvaluationDetails policyEvaluationDetails = default, IEnumerable<string> policyDefinitionGroupNames = default, string policyDefinitionVersion = default, string policySetDefinitionVersion = default, string policyAssignmentVersion = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
-            policyDefinitionGroupNames ??= new List<string>();
-            additionalProperties ??= new Dictionary<string, BinaryData>();
+            policyDefinitionGroupNames ??= new ChangeTrackingList<string>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new ComponentPolicyState(
                 odataId,
@@ -723,25 +1232,23 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 policyDefinitionReferenceId,
                 complianceState,
                 policyEvaluationDetails,
-                policyDefinitionGroupNames?.ToList(),
+                (policyDefinitionGroupNames ?? new ChangeTrackingList<string>()).ToList(),
                 policyDefinitionVersion,
                 policySetDefinitionVersion,
                 policyAssignmentVersion,
-                additionalProperties);
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComponentPolicyEvaluationDetails"/>. </summary>
         /// <param name="evaluatedExpressions"> Details of the evaluated expressions. </param>
         /// <param name="reason"> Additional textual reason for the evaluation outcome. </param>
         /// <returns> A new <see cref="Models.ComponentPolicyEvaluationDetails"/> instance for mocking. </returns>
-        public static ComponentPolicyEvaluationDetails ComponentPolicyEvaluationDetails(IEnumerable<ComponentExpressionEvaluationDetails> evaluatedExpressions = null, string reason = null)
+        public static ComponentPolicyEvaluationDetails ComponentPolicyEvaluationDetails(IEnumerable<ComponentExpressionEvaluationDetails> evaluatedExpressions = default, string reason = default)
         {
-            evaluatedExpressions ??= new List<ComponentExpressionEvaluationDetails>();
+            evaluatedExpressions ??= new ChangeTrackingList<ComponentExpressionEvaluationDetails>();
 
-            return new ComponentPolicyEvaluationDetails(evaluatedExpressions?.ToList(), reason, serializedAdditionalRawData: null);
+            return new ComponentPolicyEvaluationDetails((evaluatedExpressions ?? new ChangeTrackingList<ComponentExpressionEvaluationDetails>()).ToList(), reason, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComponentExpressionEvaluationDetails"/>. </summary>
         /// <param name="result"> Evaluation result. </param>
         /// <param name="expression"> Expression evaluated. </param>
         /// <param name="expressionKind"> The kind of expression that was evaluated. </param>
@@ -750,7 +1257,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="targetValue"> Target value to be compared with the expression value. </param>
         /// <param name="operator"> Operator to compare the expression value and the target value. </param>
         /// <returns> A new <see cref="Models.ComponentExpressionEvaluationDetails"/> instance for mocking. </returns>
-        public static ComponentExpressionEvaluationDetails ComponentExpressionEvaluationDetails(string result = null, string expression = null, string expressionKind = null, string path = null, BinaryData expressionValue = null, BinaryData targetValue = null, string @operator = null)
+        public static ComponentExpressionEvaluationDetails ComponentExpressionEvaluationDetails(string result = default, string expression = default, string expressionKind = default, string path = default, BinaryData expressionValue = default, BinaryData targetValue = default, string @operator = default)
         {
             return new ComponentExpressionEvaluationDetails(
                 result,
@@ -760,69 +1267,382 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 expressionValue,
                 targetValue,
                 @operator,
-                serializedAdditionalRawData: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyInsights.PolicyAttestationData"/>. </summary>
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <returns> A new <see cref="Models.ComponentPolicyStatesListQueryResultsForResourceGroupQueryOptions"/> instance for mocking. </returns>
+        public static ComponentPolicyStatesListQueryResultsForResourceGroupQueryOptions ComponentPolicyStatesListQueryResultsForResourceGroupQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default)
+        {
+            return new ComponentPolicyStatesListQueryResultsForResourceGroupQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to expand components use $expand=components. </param>
+        /// <returns> A new <see cref="Models.ComponentPolicyStatesListQueryResultsForResourceQueryOptions"/> instance for mocking. </returns>
+        public static ComponentPolicyStatesListQueryResultsForResourceQueryOptions ComponentPolicyStatesListQueryResultsForResourceQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string expand = default)
+        {
+            return new ComponentPolicyStatesListQueryResultsForResourceQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                expand,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <returns> A new <see cref="Models.ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions"/> instance for mocking. </returns>
+        public static ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default)
+        {
+            return new ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <returns> A new <see cref="Models.ComponentPolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
+        public static ComponentPolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions ComponentPolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default)
+        {
+            return new ComponentPolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <returns> A new <see cref="Models.ComponentPolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
+        public static ComponentPolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions ComponentPolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default)
+        {
+            return new ComponentPolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.PolicyTrackedResourcesListQueryResultsForManagementGroupQueryOptions"/> instance for mocking. </returns>
+        public static PolicyTrackedResourcesListQueryResultsForManagementGroupQueryOptions PolicyTrackedResourcesListQueryResultsForManagementGroupQueryOptions(int? top = default, string filter = default)
+        {
+            return new PolicyTrackedResourcesListQueryResultsForManagementGroupQueryOptions(top, filter, default);
+        }
+
+        /// <param name="trackedResourceId"> The ID of the policy tracked resource. </param>
+        /// <param name="policyDetails"> The details of the policy that require the tracked resource. </param>
+        /// <param name="createdBy"> The details of the policy triggered deployment that created the tracked resource. </param>
+        /// <param name="lastModifiedBy"> The details of the policy triggered deployment that modified the tracked resource. </param>
+        /// <param name="lastUpdateOn"> Timestamp of the last update to the tracked resource. </param>
+        /// <returns> A new <see cref="Models.PolicyTrackedResourceRecord"/> instance for mocking. </returns>
+        public static PolicyTrackedResourceRecord PolicyTrackedResourceRecord(ResourceIdentifier trackedResourceId = default, PolicyDetails policyDetails = default, TrackedResourceModificationDetails createdBy = default, TrackedResourceModificationDetails lastModifiedBy = default, DateTimeOffset? lastUpdateOn = default)
+        {
+            return new PolicyTrackedResourceRecord(
+                trackedResourceId,
+                policyDetails,
+                createdBy,
+                lastModifiedBy,
+                lastUpdateOn,
+                default);
+        }
+
+        /// <param name="policyDefinitionId"> The ID of the policy definition. </param>
+        /// <param name="policyAssignmentId"> The ID of the policy assignment. </param>
+        /// <param name="policyAssignmentDisplayName"> The display name of the policy assignment. </param>
+        /// <param name="policyAssignmentScope"> The scope of the policy assignment. </param>
+        /// <param name="policySetDefinitionId"> The ID of the policy set definition. </param>
+        /// <param name="policyDefinitionReferenceId"> The policy definition reference ID within the policy set definition. </param>
+        /// <returns> A new <see cref="Models.PolicyDetails"/> instance for mocking. </returns>
+        public static PolicyDetails PolicyDetails(ResourceIdentifier policyDefinitionId = default, ResourceIdentifier policyAssignmentId = default, string policyAssignmentDisplayName = default, string policyAssignmentScope = default, ResourceIdentifier policySetDefinitionId = default, string policyDefinitionReferenceId = default)
+        {
+            return new PolicyDetails(
+                policyDefinitionId,
+                policyAssignmentId,
+                policyAssignmentDisplayName,
+                policyAssignmentScope,
+                policySetDefinitionId,
+                policyDefinitionReferenceId,
+                default);
+        }
+
+        /// <param name="policyDetails"> The details of the policy that created or modified the tracked resource. </param>
+        /// <param name="deploymentId"> The ID of the deployment that created or modified the tracked resource. </param>
+        /// <param name="deploymentOn"> Timestamp of the deployment that created or modified the tracked resource. </param>
+        /// <returns> A new <see cref="Models.TrackedResourceModificationDetails"/> instance for mocking. </returns>
+        public static TrackedResourceModificationDetails TrackedResourceModificationDetails(PolicyDetails policyDetails = default, ResourceIdentifier deploymentId = default, DateTimeOffset? deploymentOn = default)
+        {
+            return new TrackedResourceModificationDetails(policyDetails, deploymentId, deploymentOn, default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.PolicyTrackedResourcesListQueryResultsForSubscriptionQueryOptions"/> instance for mocking. </returns>
+        public static PolicyTrackedResourcesListQueryResultsForSubscriptionQueryOptions PolicyTrackedResourcesListQueryResultsForSubscriptionQueryOptions(int? top = default, string filter = default)
+        {
+            return new PolicyTrackedResourcesListQueryResultsForSubscriptionQueryOptions(top, filter, default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.PolicyTrackedResourcesListQueryResultsForResourceGroupQueryOptions"/> instance for mocking. </returns>
+        public static PolicyTrackedResourcesListQueryResultsForResourceGroupQueryOptions PolicyTrackedResourcesListQueryResultsForResourceGroupQueryOptions(int? top = default, string filter = default)
+        {
+            return new PolicyTrackedResourcesListQueryResultsForResourceGroupQueryOptions(top, filter, default);
+        }
+
+        /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="filter"> OData filter expression. </param>
+        /// <returns> A new <see cref="Models.PolicyTrackedResourcesListQueryResultsForResourceQueryOptions"/> instance for mocking. </returns>
+        public static PolicyTrackedResourcesListQueryResultsForResourceQueryOptions PolicyTrackedResourcesListQueryResultsForResourceQueryOptions(int? top = default, string filter = default)
+        {
+            return new PolicyTrackedResourcesListQueryResultsForResourceQueryOptions(top, filter, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PolicyInsights.PolicyRemediationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="policyAssignmentId"> The resource ID of the policy assignment that the attestation is setting the state for. </param>
-        /// <param name="policyDefinitionReferenceId"> The policy definition reference ID from a policy set definition that the attestation is setting the state for. If the policy assignment assigns a policy set definition the attestation can choose a definition within the set definition with this property or omit this and set the state for the entire set definition. </param>
-        /// <param name="complianceState"> The compliance state that should be set on the resource. </param>
-        /// <param name="expireOn"> The time the compliance state should expire. </param>
-        /// <param name="owner"> The person responsible for setting the state of the resource. This value is typically an Azure Active Directory object ID. </param>
-        /// <param name="comments"> Comments describing why this attestation was created. </param>
-        /// <param name="evidence"> The evidence supporting the compliance state set in this attestation. </param>
-        /// <param name="provisioningState"> The status of the attestation. </param>
-        /// <param name="lastComplianceStateChangeOn"> The time the compliance state was last changed in this attestation. </param>
-        /// <param name="assessOn"> The time the evidence was assessed. </param>
-        /// <param name="metadata"> Additional metadata for this attestation. </param>
-        /// <returns> A new <see cref="PolicyInsights.PolicyAttestationData"/> instance for mocking. </returns>
-        public static PolicyAttestationData PolicyAttestationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier policyAssignmentId = null, string policyDefinitionReferenceId = null, PolicyComplianceState? complianceState = null, DateTimeOffset? expireOn = null, string owner = null, string comments = null, IEnumerable<AttestationEvidence> evidence = null, string provisioningState = null, DateTimeOffset? lastComplianceStateChangeOn = null, DateTimeOffset? assessOn = null, BinaryData metadata = null)
+        /// <param name="policyAssignmentId"> The resource ID of the policy assignment that should be remediated. </param>
+        /// <param name="policyDefinitionReferenceId"> The policy definition reference ID of the individual definition that should be remediated. Required when the policy assignment being remediated assigns a policy set definition. </param>
+        /// <param name="resourceDiscoveryMode"> The way resources to remediate are discovered. Defaults to ExistingNonCompliant if not specified. </param>
+        /// <param name="provisioningState"> The status of the remediation. </param>
+        /// <param name="createdOn"> The time at which the remediation was created. </param>
+        /// <param name="lastUpdatedOn"> The time at which the remediation was last updated. </param>
+        /// <param name="filterLocations"> The filters that will be applied to determine which resources to remediate. </param>
+        /// <param name="deploymentStatus"> The deployment status summary for all deployments created by the remediation. </param>
+        /// <param name="statusMessage"> The remediation status message. Provides additional details regarding the state of the remediation. </param>
+        /// <param name="correlationId"> The remediation correlation Id. Can be used to find events related to the remediation in the activity log. </param>
+        /// <param name="resourceCount"> Determines the max number of resources that can be remediated by the remediation job. If not provided, the default resource count is used. </param>
+        /// <param name="parallelDeployments"> Determines how many resources to remediate at any given time. Can be used to increase or reduce the pace of the remediation. If not provided, the default parallel deployments value is used. </param>
+        /// <param name="failureThresholdPercentage"> The remediation failure threshold settings. </param>
+        /// <returns> A new <see cref="PolicyInsights.PolicyRemediationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PolicyRemediationData PolicyRemediationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier policyAssignmentId = default, string policyDefinitionReferenceId = default, ResourceDiscoveryMode? resourceDiscoveryMode = default, string provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, IEnumerable<AzureLocation> filterLocations = default, RemediationDeploymentSummary deploymentStatus = default, string statusMessage = default, string correlationId = default, int? resourceCount = default, int? parallelDeployments = default, float? failureThresholdPercentage = default)
         {
-            evidence ??= new List<AttestationEvidence>();
-
-            return new PolicyAttestationData(
+            return new PolicyRemediationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                policyAssignmentId,
-                policyDefinitionReferenceId,
-                complianceState,
-                expireOn,
-                owner,
-                comments,
-                evidence?.ToList(),
-                provisioningState,
-                lastComplianceStateChangeOn,
-                assessOn,
-                metadata,
-                serializedAdditionalRawData: null);
+                policyAssignmentId is null && policyDefinitionReferenceId is null && resourceDiscoveryMode is null && provisioningState is null && createdOn is null && lastUpdatedOn is null && filterLocations is null && deploymentStatus is null && statusMessage is null && correlationId is null && resourceCount is null && parallelDeployments is null && failureThresholdPercentage is null ? default : new RemediationProperties(
+                    policyAssignmentId,
+                    policyDefinitionReferenceId,
+                    resourceDiscoveryMode,
+                    provisioningState,
+                    createdOn,
+                    lastUpdatedOn,
+                    new RemediationFilters((filterLocations ?? new ChangeTrackingList<AzureLocation>()).ToList(), default, default),
+                    deploymentStatus,
+                    statusMessage,
+                    correlationId,
+                    resourceCount,
+                    parallelDeployments,
+                    new RemediationPropertiesFailureThreshold(failureThresholdPercentage, default),
+                    default),
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyEvaluationResult"/>. </summary>
+        /// <param name="policyInfo"> The details of the policy that was evaluated. </param>
+        /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </param>
+        /// <param name="evaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
+        /// <returns> A new <see cref="Models.PolicyEvaluationResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = default, string evaluationResult = default, PolicyEvaluationDetails evaluationDetails = default)
+        {
+            return new PolicyEvaluationResult(policyInfo, evaluationResult, default, default, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ComponentEventDetails"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="timestamp"> Timestamp for component policy event record. </param>
+        /// <param name="tenantId"> Tenant ID for the policy event record. </param>
+        /// <param name="principalOid"> Principal object ID for the user who initiated the resource component operation that triggered the policy event. </param>
+        /// <param name="policyDefinitionAction"> Policy definition action, i.e. effect. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.ComponentEventDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ComponentEventDetails ComponentEventDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timestamp = default, Guid? tenantId = default, string principalOid = default, string policyDefinitionAction = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            return new ComponentEventDetails(
+                default,
+                default,
+                name,
+                timestamp,
+                tenantId,
+                principalOid,
+                policyDefinitionAction,
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ComponentStateDetails"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="timestamp"> Component compliance evaluation timestamp. </param>
+        /// <param name="complianceState"> Component compliance state. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.ComponentStateDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ComponentStateDetails ComponentStateDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timestamp = default, string complianceState = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            return new ComponentStateDetails(
+                default,
+                default,
+                name,
+                timestamp,
+                complianceState,
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PolicyInsights.PolicyMetadataData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="metadataId"> The policy metadata identifier. </param>
+        /// <param name="category"> The category of the policy metadata. </param>
+        /// <param name="title"> The title of the policy metadata. </param>
+        /// <param name="owner"> The owner of the policy metadata. </param>
+        /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
+        /// <param name="metadata"> Additional metadata. </param>
+        /// <param name="description"> The description of the policy metadata. </param>
+        /// <param name="requirements"> The requirements of the policy metadata. </param>
+        /// <returns> A new <see cref="PolicyInsights.PolicyMetadataData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PolicyMetadataData PolicyMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string metadataId = default, string category = default, string title = default, string owner = default, Uri additionalContentUri = default, BinaryData metadata = default, string description = default, string requirements = default)
+        {
+            return new PolicyMetadataData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                metadataId is null && category is null && title is null && owner is null && metadata is null && description is null && requirements is null ? default : new PolicyMetadataProperties(
+                    metadataId,
+                    category,
+                    title,
+                    owner,
+                    default,
+                    metadata,
+                    default,
+                    description,
+                    requirements),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SlimPolicyMetadata"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="metadataId"> The policy metadata identifier. </param>
+        /// <param name="category"> The category of the policy metadata. </param>
+        /// <param name="title"> The title of the policy metadata. </param>
+        /// <param name="owner"> The owner of the policy metadata. </param>
+        /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
+        /// <param name="metadata"> Additional metadata. </param>
+        /// <returns> A new <see cref="Models.SlimPolicyMetadata"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SlimPolicyMetadata SlimPolicyMetadata(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string metadataId = default, string category = default, string title = default, string owner = default, Uri additionalContentUri = default, BinaryData metadata = default)
+        {
+            return new SlimPolicyMetadata(metadataId is null && category is null && title is null && owner is null && metadata is null ? default : new PolicyMetadataSlimProperties(
+                metadataId,
+                category,
+                title,
+                owner,
+                default,
+                metadata,
+                default), default, default, name, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CheckPolicyRestrictionsContent"/>. </summary>
         /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
         /// <param name="pendingFields"> The list of fields and values that should be evaluated for potential restrictions. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.PolicyInsights.Models.CheckPolicyRestrictionsContent" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.CheckPolicyRestrictionsContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CheckPolicyRestrictionsContent CheckPolicyRestrictionsContent(CheckRestrictionsResourceDetails resourceDetails, IEnumerable<PendingField> pendingFields)
         {
-            return CheckPolicyRestrictionsContent(resourceDetails: resourceDetails, pendingFields: pendingFields, includeAuditEffect: default);
+            return new CheckPolicyRestrictionsContent(resourceDetails, (pendingFields ?? new ChangeTrackingList<PendingField>()).ToList(), default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.PolicyInsights.Models.FieldRestriction" />. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FieldRestriction"/>. </summary>
         /// <param name="result"> The type of restriction that is imposed on the field. </param>
         /// <param name="defaultValue"> The value that policy will set for the field if the user does not provide a value. </param>
         /// <param name="values"> The values that policy either requires or denies for the field. </param>
         /// <param name="policy"> The details of the policy that is causing the field restriction. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.PolicyInsights.Models.FieldRestriction" /> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.FieldRestriction"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FieldRestriction FieldRestriction(FieldRestrictionResult? result, string defaultValue, IEnumerable<string> values, PolicyReference policy)
         {
-            return FieldRestriction(result: result, defaultValue: defaultValue, values: values, policy: policy, policyEffect: default, reason: default);
+            return new FieldRestriction(
+                result,
+                defaultValue,
+                (values ?? new ChangeTrackingList<string>()).ToList(),
+                policy,
+                default,
+                default,
+                default);
         }
     }
 }

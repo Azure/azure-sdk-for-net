@@ -8,15 +8,58 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicyState : IUtf8JsonSerializable, IJsonModel<PolicyState>
+    /// <summary> Policy state record. </summary>
+    public partial class PolicyState : IJsonModel<PolicyState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PolicyState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePolicyState(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicyState)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPolicyInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PolicyState)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PolicyState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicyState IPersistableModel<PolicyState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PolicyState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PolicyState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,21 +71,20 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicyState)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(ODataId))
+            if (Optional.IsDefined(OdataId))
             {
                 writer.WritePropertyName("@odata.id"u8);
-                writer.WriteStringValue(ODataId);
+                writer.WriteStringValue(OdataId);
             }
-            if (Optional.IsDefined(ODataContext))
+            if (Optional.IsDefined(OdataContext))
             {
                 writer.WritePropertyName("@odata.context"u8);
-                writer.WriteStringValue(ODataContext);
+                writer.WriteStringValue(OdataContext);
             }
             if (Optional.IsDefined(Timestamp))
             {
@@ -183,8 +225,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 writer.WritePropertyName("policyDefinitionGroupNames"u8);
                 writer.WriteStartArray();
-                foreach (var item in PolicyDefinitionGroupNames)
+                foreach (string item in PolicyDefinitionGroupNames)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -193,7 +240,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 writer.WritePropertyName("components"u8);
                 writer.WriteStartArray();
-                foreach (var item in Components)
+                foreach (ComponentStateDetails item in Components)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -218,9 +265,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -228,22 +275,27 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
         }
 
-        PolicyState IJsonModel<PolicyState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicyState IJsonModel<PolicyState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PolicyState JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicyState)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePolicyState(document.RootElement, options);
         }
 
-        internal static PolicyState DeserializePolicyState(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PolicyState DeserializePolicyState(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -257,7 +309,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             string effectiveParameters = default;
             bool? isCompliant = default;
             string subscriptionId = default;
-            string resourceType = default;
+            string resourceTypeString = default;
             AzureLocation? resourceLocation = default;
             string resourceGroup = default;
             string resourceTags = default;
@@ -282,233 +334,238 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             string policyDefinitionVersion = default;
             string policySetDefinitionVersion = default;
             string policyAssignmentVersion = default;
-            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.id"u8))
+                if (prop.NameEquals("@odata.id"u8))
                 {
-                    odataId = property.Value.GetString();
+                    odataId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.context"u8))
+                if (prop.NameEquals("@odata.context"u8))
                 {
-                    odataContext = property.Value.GetString();
+                    odataContext = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timestamp"u8))
+                if (prop.NameEquals("timestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timestamp = property.Value.GetDateTimeOffset("O");
+                    timestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentId"u8))
+                if (prop.NameEquals("policyAssignmentId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyAssignmentId = new ResourceIdentifier(property.Value.GetString());
+                    policyAssignmentId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionId"u8))
+                if (prop.NameEquals("policyDefinitionId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
+                    policyDefinitionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("effectiveParameters"u8))
+                if (prop.NameEquals("effectiveParameters"u8))
                 {
-                    effectiveParameters = property.Value.GetString();
+                    effectiveParameters = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isCompliant"u8))
+                if (prop.NameEquals("isCompliant"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isCompliant = property.Value.GetBoolean();
+                    isCompliant = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("subscriptionId"u8))
+                if (prop.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    subscriptionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"u8))
+                if (prop.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    resourceTypeString = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceLocation"u8))
+                if (prop.NameEquals("resourceLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceLocation = new AzureLocation(property.Value.GetString());
+                    resourceLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceGroup"u8))
+                if (prop.NameEquals("resourceGroup"u8))
                 {
-                    resourceGroup = property.Value.GetString();
+                    resourceGroup = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceTags"u8))
+                if (prop.NameEquals("resourceTags"u8))
                 {
-                    resourceTags = property.Value.GetString();
+                    resourceTags = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentName"u8))
+                if (prop.NameEquals("policyAssignmentName"u8))
                 {
-                    policyAssignmentName = property.Value.GetString();
+                    policyAssignmentName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentOwner"u8))
+                if (prop.NameEquals("policyAssignmentOwner"u8))
                 {
-                    policyAssignmentOwner = property.Value.GetString();
+                    policyAssignmentOwner = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentParameters"u8))
+                if (prop.NameEquals("policyAssignmentParameters"u8))
                 {
-                    policyAssignmentParameters = property.Value.GetString();
+                    policyAssignmentParameters = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentScope"u8))
+                if (prop.NameEquals("policyAssignmentScope"u8))
                 {
-                    policyAssignmentScope = property.Value.GetString();
+                    policyAssignmentScope = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionName"u8))
+                if (prop.NameEquals("policyDefinitionName"u8))
                 {
-                    policyDefinitionName = property.Value.GetString();
+                    policyDefinitionName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionAction"u8))
+                if (prop.NameEquals("policyDefinitionAction"u8))
                 {
-                    policyDefinitionAction = property.Value.GetString();
+                    policyDefinitionAction = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionCategory"u8))
+                if (prop.NameEquals("policyDefinitionCategory"u8))
                 {
-                    policyDefinitionCategory = property.Value.GetString();
+                    policyDefinitionCategory = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionId"u8))
+                if (prop.NameEquals("policySetDefinitionId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policySetDefinitionId = new ResourceIdentifier(property.Value.GetString());
+                    policySetDefinitionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionName"u8))
+                if (prop.NameEquals("policySetDefinitionName"u8))
                 {
-                    policySetDefinitionName = property.Value.GetString();
+                    policySetDefinitionName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionOwner"u8))
+                if (prop.NameEquals("policySetDefinitionOwner"u8))
                 {
-                    policySetDefinitionOwner = property.Value.GetString();
+                    policySetDefinitionOwner = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionCategory"u8))
+                if (prop.NameEquals("policySetDefinitionCategory"u8))
                 {
-                    policySetDefinitionCategory = property.Value.GetString();
+                    policySetDefinitionCategory = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionParameters"u8))
+                if (prop.NameEquals("policySetDefinitionParameters"u8))
                 {
-                    policySetDefinitionParameters = property.Value.GetString();
+                    policySetDefinitionParameters = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managementGroupIds"u8))
+                if (prop.NameEquals("managementGroupIds"u8))
                 {
-                    managementGroupIds = property.Value.GetString();
+                    managementGroupIds = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionReferenceId"u8))
+                if (prop.NameEquals("policyDefinitionReferenceId"u8))
                 {
-                    policyDefinitionReferenceId = property.Value.GetString();
+                    policyDefinitionReferenceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("complianceState"u8))
+                if (prop.NameEquals("complianceState"u8))
                 {
-                    complianceState = property.Value.GetString();
+                    complianceState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyEvaluationDetails"u8))
+                if (prop.NameEquals("policyEvaluationDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyEvaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(property.Value, options);
+                    policyEvaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionGroupNames"u8))
+                if (prop.NameEquals("policyDefinitionGroupNames"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     policyDefinitionGroupNames = array;
                     continue;
                 }
-                if (property.NameEquals("components"u8))
+                if (prop.NameEquals("components"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ComponentStateDetails> array = new List<ComponentStateDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ComponentStateDetails.DeserializeComponentStateDetails(item, options));
                     }
                     components = array;
                     continue;
                 }
-                if (property.NameEquals("policyDefinitionVersion"u8))
+                if (prop.NameEquals("policyDefinitionVersion"u8))
                 {
-                    policyDefinitionVersion = property.Value.GetString();
+                    policyDefinitionVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policySetDefinitionVersion"u8))
+                if (prop.NameEquals("policySetDefinitionVersion"u8))
                 {
-                    policySetDefinitionVersion = property.Value.GetString();
+                    policySetDefinitionVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("policyAssignmentVersion"u8))
+                if (prop.NameEquals("policyAssignmentVersion"u8))
                 {
-                    policyAssignmentVersion = property.Value.GetString();
+                    policyAssignmentVersion = prop.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new PolicyState(
                 odataId,
                 odataContext,
@@ -519,7 +576,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 effectiveParameters,
                 isCompliant,
                 subscriptionId,
-                resourceType,
+                resourceTypeString,
                 resourceLocation,
                 resourceGroup,
                 resourceTags,
@@ -544,38 +601,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 policyDefinitionVersion,
                 policySetDefinitionVersion,
                 policyAssignmentVersion,
-                additionalProperties);
+                new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
         }
-
-        BinaryData IPersistableModel<PolicyState>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPolicyInsightsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PolicyState)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PolicyState IPersistableModel<PolicyState>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePolicyState(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PolicyState)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PolicyState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
