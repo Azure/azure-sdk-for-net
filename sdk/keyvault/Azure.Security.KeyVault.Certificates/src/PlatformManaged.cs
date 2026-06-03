@@ -12,6 +12,10 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary>
     /// Properties of the platform managed certificate. This feature is currently intended for internal use only.
     /// </summary>
+    /// <remarks>
+    /// Experimental, Azure Key Vault internal usage only. Any calls using this type will fail and it is not
+    /// recommended to be used at this point.
+    /// </remarks>
     public class PlatformManaged
     {
         private const string CertificateUsagePropertyName = "certificateUsage";

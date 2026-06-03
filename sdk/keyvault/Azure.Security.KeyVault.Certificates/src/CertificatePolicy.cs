@@ -271,6 +271,10 @@ namespace Azure.Security.KeyVault.Certificates
         /// Gets or sets the configuration that enables the platform to manage the certificate on behalf of the user.
         /// This feature is currently intended for internal use only.
         /// </summary>
+        /// <remarks>
+        /// Experimental, Azure Key Vault internal usage only. Any calls using this property will fail and it is not
+        /// recommended to be used at this point.
+        /// </remarks>
         public PlatformManaged PlatformManaged { get; set; }
 
         void IJsonDeserializable.ReadProperties(JsonElement json)

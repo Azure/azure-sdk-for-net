@@ -1,14 +1,10 @@
 # Release History
 
-## 4.10.0-beta.1 (2026-06-04)
+## 4.10.0-beta.2 (2026-06-03)
 
 ### Features Added
 
-- Added an experimental PlatformManaged property on CertificatePolicy for Azure Key Vault internal usage. Any calls using this property will fail and it is not recommended to be used at this point. [#59537](https://github.com/Azure/azure-sdk-for-net/pull/59537)
-
-### Other Changes
-
-- Upgraded to API service version `2026-03-01-preview`
+- we added an experimental feature for azure key vault internal usage. Any calls using this property will fail and is not recommended to be used at this point.
 
 ## 4.9.0 (2026-05-26)
 

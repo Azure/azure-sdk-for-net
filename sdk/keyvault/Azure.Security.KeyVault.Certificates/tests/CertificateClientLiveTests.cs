@@ -258,7 +258,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             };
             CertificateClient previewClient = InstrumentClient(new CertificateClient(
                 VaultUri,
-                Mode == RecordedTestMode.Record ? new Azure.Identity.AzureCliCredential() : TestEnvironment.Credential,
+                TestEnvironment.Credential,
                 InstrumentClientOptions(options)));
 
             string certName = Recording.GenerateId();
