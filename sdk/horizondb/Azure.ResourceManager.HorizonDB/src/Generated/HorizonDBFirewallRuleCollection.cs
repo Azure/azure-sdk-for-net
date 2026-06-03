@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HorizonDB
                 HttpMessage message = _horizonDBFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, HorizonDBFirewallRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBFirewallRuleResource> operation = new HorizonDBArmOperation<HorizonDBFirewallRuleResource>(
-                    new HorizonDBFirewallRuleOperationSource(Client),
+                    new HorizonDBFirewallRuleResourceOperationSource(Client),
                     _horizonDBFirewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HorizonDB
                 HttpMessage message = _horizonDBFirewallRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, firewallRuleName, HorizonDBFirewallRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBFirewallRuleResource> operation = new HorizonDBArmOperation<HorizonDBFirewallRuleResource>(
-                    new HorizonDBFirewallRuleOperationSource(Client),
+                    new HorizonDBFirewallRuleResourceOperationSource(Client),
                     _horizonDBFirewallRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

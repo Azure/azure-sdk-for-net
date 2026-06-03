@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.HorizonDB
     {
         private readonly ClientDiagnostics _horizonDBClustersClientDiagnostics;
         private readonly HorizonDBClusters _horizonDBClustersRestClient;
-        private readonly ClientDiagnostics _horizonDBPrivateEndpointConnectionsClientDiagnostics;
-        private readonly HorizonDBPrivateEndpointConnections _horizonDBPrivateEndpointConnectionsRestClient;
 
         /// <summary> Initializes a new instance of HorizonDBClusterCollection for mocking. </summary>
         protected HorizonDBClusterCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.HorizonDB
             TryGetApiVersion(HorizonDBClusterResource.ResourceType, out string horizonDBClusterApiVersion);
             _horizonDBClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBClusterResource.ResourceType.Namespace, Diagnostics);
             _horizonDBClustersRestClient = new HorizonDBClusters(_horizonDBClustersClientDiagnostics, Pipeline, Endpoint, horizonDBClusterApiVersion ?? "2026-01-20-preview");
-            _horizonDBPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HorizonDB", HorizonDBClusterResource.ResourceType.Namespace, Diagnostics);
-            _horizonDBPrivateEndpointConnectionsRestClient = new HorizonDBPrivateEndpointConnections(_horizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, horizonDBClusterApiVersion ?? "2026-01-20-preview");
             ValidateResourceId(id);
         }
 
@@ -98,7 +94,7 @@ namespace Azure.ResourceManager.HorizonDB
                 HttpMessage message = _horizonDBClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, HorizonDBClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBClusterResource> operation = new HorizonDBArmOperation<HorizonDBClusterResource>(
-                    new HorizonDBClusterOperationSource(Client),
+                    new HorizonDBClusterResourceOperationSource(Client),
                     _horizonDBClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.HorizonDB
                 HttpMessage message = _horizonDBClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, HorizonDBClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBClusterResource> operation = new HorizonDBArmOperation<HorizonDBClusterResource>(
-                    new HorizonDBClusterOperationSource(Client),
+                    new HorizonDBClusterResourceOperationSource(Client),
                     _horizonDBClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

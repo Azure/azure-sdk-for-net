@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HorizonDB
                 HttpMessage message = _horizonDBParameterGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, HorizonDBParameterGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDBParameterGroupResource>(
-                    new HorizonDBParameterGroupOperationSource(Client),
+                    new HorizonDBParameterGroupResourceOperationSource(Client),
                     _horizonDBParameterGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HorizonDB
                 HttpMessage message = _horizonDBParameterGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, parameterGroupName, HorizonDBParameterGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBParameterGroupResource> operation = new HorizonDBArmOperation<HorizonDBParameterGroupResource>(
-                    new HorizonDBParameterGroupOperationSource(Client),
+                    new HorizonDBParameterGroupResourceOperationSource(Client),
                     _horizonDBParameterGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

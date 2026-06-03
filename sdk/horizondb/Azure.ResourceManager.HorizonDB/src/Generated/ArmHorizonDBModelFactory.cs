@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
     public static partial class ArmHorizonDBModelFactory
     {
 
-        /// <summary> Represents the HorizonDb cluster. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -37,10 +36,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
         /// <param name="administratorLogin"> The administrator login name. </param>
@@ -74,38 +73,44 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 replicaCount,
                 vCores,
                 processorType,
-                publicNetworkAccess is null ? default : new Network(publicNetworkAccess, null),
+                publicNetworkAccess is null ? default : new Network(publicNetworkAccess, default),
                 state,
                 fullyQualifiedDomainName,
                 readonlyEndpoint,
                 provisioningState,
                 zonePlacementPolicy,
                 parameterGroup,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Connection information for HorizonDb parameter group. </summary>
         /// <param name="id"> The resource ID of the connected parameter group. </param>
         /// <param name="syncStatus"> Indication of if parameter group is applied on HorizonDb resource. </param>
         /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterParameterGroupConnectionProperties"/> instance for mocking. </returns>
         public static HorizonDBClusterParameterGroupConnectionProperties HorizonDBClusterParameterGroupConnectionProperties(ResourceIdentifier id = default, string syncStatus = default, bool? shouldApplyImmediately = default)
         {
-            return new HorizonDBClusterParameterGroupConnectionProperties(id, syncStatus, shouldApplyImmediately, additionalBinaryDataProperties: null);
+            return new HorizonDBClusterParameterGroupConnectionProperties(id, syncStatus, shouldApplyImmediately, default);
         }
 
-        /// <summary> HorizonDb cluster for update operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDb cluster. </param>
-        /// <returns> A new <see cref="Models.HorizonDBClusterPatch"/> instance for mocking. </returns>
-        public static HorizonDBClusterPatch HorizonDBClusterPatch(IDictionary<string, string> tags = default, HorizonDBClusterPatchProperties properties = default)
+        /// <returns> A new <see cref="Models.HorizonDBClusterForPatchUpdate"/> instance for mocking. </returns>
+        public static HorizonDBClusterForPatchUpdate HorizonDBClusterForPatchUpdate(IDictionary<string, string> tags = default, HorizonDBClusterPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HorizonDBClusterPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new HorizonDBClusterForPatchUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <summary> Represents the HorizonDb pool. </summary>
+        /// <param name="administratorLoginPassword"> The administrator login password. </param>
+        /// <param name="vCores"> Number of vCores. </param>
+        /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
+        /// <returns> A new <see cref="Models.HorizonDBClusterPatchProperties"/> instance for mocking. </returns>
+        public static HorizonDBClusterPatchProperties HorizonDBClusterPatchProperties(string administratorLoginPassword = default, int? vCores = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default)
+        {
+            return new HorizonDBClusterPatchProperties(administratorLoginPassword, vCores, parameterGroup, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -122,12 +127,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
-        /// <summary> Properties of a HorizonDb pool. </summary>
         /// <param name="location"> The location of the HorizonDb pool. </param>
         /// <param name="state"> Current state of the pool. </param>
         /// <param name="replicaCount"> Number of replicas in the pool. </param>
@@ -144,10 +148,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 version,
                 createMode,
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Represents the HorizonDb replica. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -161,11 +164,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Properties of a HorizonDb replica. </summary>
         /// <param name="role"> Role of the replica. </param>
         /// <param name="status"> Current status of the replica. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the replica. </param>
@@ -180,10 +182,16 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 fullyQualifiedDomainName,
                 availabilityZone,
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Represents the HorizonDb firewall rule. </summary>
+        /// <param name="horizonDBReplicaPropertiesForPatchUpdateRole"> Role of the replica. </param>
+        /// <returns> A new <see cref="Models.HorizonDBReplicaPatch"/> instance for mocking. </returns>
+        public static HorizonDBReplicaPatch HorizonDBReplicaPatch(HorizonDBReplicaRole? horizonDBReplicaPropertiesForPatchUpdateRole = default)
+        {
+            return new HorizonDBReplicaPatch(horizonDBReplicaPropertiesForPatchUpdateRole is null ? default : new HorizonDBReplicaPropertiesForPatchUpdate(horizonDBReplicaPropertiesForPatchUpdateRole, default), default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -197,11 +205,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Properties of a HorizonDb firewall rule. </summary>
         /// <param name="startIpAddress"> The start IP address of the firewall rule (IPv4). </param>
         /// <param name="endIpAddress"> The end IP address of the firewall rule (IPv4). </param>
         /// <param name="description"> The description of the HorizonDb firewall rule. </param>
@@ -209,10 +216,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <returns> A new <see cref="Models.HorizonDBFirewallRuleProperties"/> instance for mocking. </returns>
         public static HorizonDBFirewallRuleProperties HorizonDBFirewallRuleProperties(string startIpAddress = default, string endIpAddress = default, string description = default, HorizonDBProvisioningState? provisioningState = default)
         {
-            return new HorizonDBFirewallRuleProperties(startIpAddress, endIpAddress, description, provisioningState, additionalBinaryDataProperties: null);
+            return new HorizonDBFirewallRuleProperties(startIpAddress, endIpAddress, description, provisioningState, default);
         }
 
-        /// <summary> A private endpoint connection resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -226,8 +232,8 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
@@ -239,10 +245,33 @@ namespace Azure.ResourceManager.HorizonDB.Models
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new HorizonDBPrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
+            return new HorizonDBPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
         }
 
-        /// <summary> The private endpoint connection resource. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.HorizonDBPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static HorizonDBPrivateLinkServiceConnectionState HorizonDBPrivateLinkServiceConnectionState(HorizonDBPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new HorizonDBPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <param name="properties"> The private endpoint connection properties. </param>
+        /// <returns> A new <see cref="Models.HorizonDBPrivateEndpointConnectionPatch"/> instance for mocking. </returns>
+        public static HorizonDBPrivateEndpointConnectionPatch HorizonDBPrivateEndpointConnectionPatch(HorizonDBPrivateEndpointConnectionPatchProperties properties = default)
+        {
+            return new HorizonDBPrivateEndpointConnectionPatch(properties, default);
+        }
+
+        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <returns> A new <see cref="Models.HorizonDBPrivateEndpointConnectionPatchProperties"/> instance for mocking. </returns>
+        public static HorizonDBPrivateEndpointConnectionPatchProperties HorizonDBPrivateEndpointConnectionPatchProperties(ResourceIdentifier privateEndpointId = default, HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default)
+        {
+            return new HorizonDBPrivateEndpointConnectionPatchProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -256,11 +285,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Represents the HorizonDb private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -274,11 +302,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
@@ -288,10 +315,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
             requiredMembers ??= new ChangeTrackingList<string>();
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
-            return new HorizonDBPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
+            return new HorizonDBPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> Represents the HorizonDb parameter group. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -309,13 +335,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Properties of a HorizonDb parameter group. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
         /// <param name="description"> Description of the parameter group. </param>
         /// <param name="pgVersion"> PostgreSQL version for the parameter group. </param>
@@ -328,16 +353,15 @@ namespace Azure.ResourceManager.HorizonDB.Models
             parameters ??= new ChangeTrackingList<HorizonDBParameterProperties>();
 
             return new HorizonDBParameterGroupProperties(
-                parameters.ToList(),
+                (parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>()).ToList(),
                 description,
                 pgVersion,
                 version,
                 shouldApplyImmediately,
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Properties of a HorizonDb parameters. </summary>
         /// <param name="name"> The name of the parameter. </param>
         /// <param name="description"> The description of the parameter. </param>
         /// <param name="value"> The value of the configuration. </param>
@@ -360,21 +384,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 isReadOnly,
                 documentationLink,
                 unit,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> HorizonDb parameter group for update operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDb parameter group. </param>
-        /// <returns> A new <see cref="Models.HorizonDBParameterGroupPatch"/> instance for mocking. </returns>
-        public static HorizonDBParameterGroupPatch HorizonDBParameterGroupPatch(IDictionary<string, string> tags = default, HorizonDBParameterGroupPatchProperties properties = default)
+        /// <returns> A new <see cref="Models.HorizonDBParameterGroupForPatchUpdate"/> instance for mocking. </returns>
+        public static HorizonDBParameterGroupForPatchUpdate HorizonDBParameterGroupForPatchUpdate(IDictionary<string, string> tags = default, HorizonDBParameterGroupPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HorizonDBParameterGroupPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new HorizonDBParameterGroupForPatchUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <summary> Properties of a HorizonDb parameter group for update operations. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
         /// <param name="description"> Description of the parameter group. </param>
         /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
@@ -383,17 +405,16 @@ namespace Azure.ResourceManager.HorizonDB.Models
         {
             parameters ??= new ChangeTrackingList<HorizonDBParameterProperties>();
 
-            return new HorizonDBParameterGroupPatchProperties(parameters.ToList(), description, shouldApplyImmediately, additionalBinaryDataProperties: null);
+            return new HorizonDBParameterGroupPatchProperties((parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>()).ToList(), description, shouldApplyImmediately, default);
         }
 
-        /// <summary> Connection information for HorizonDb parameter group. </summary>
         /// <param name="name"> The name of the connected resource. </param>
         /// <param name="id"> The resource ID of the connected resource. </param>
         /// <param name="type"> The type of the resource. </param>
         /// <returns> A new <see cref="Models.HorizonDBParameterGroupConnectionProperties"/> instance for mocking. </returns>
         public static HorizonDBParameterGroupConnectionProperties HorizonDBParameterGroupConnectionProperties(string name = default, ResourceIdentifier id = default, string @type = default)
         {
-            return new HorizonDBParameterGroupConnectionProperties(name, id, @type, additionalBinaryDataProperties: null);
+            return new HorizonDBParameterGroupConnectionProperties(name, id, @type, default);
         }
     }
 }
