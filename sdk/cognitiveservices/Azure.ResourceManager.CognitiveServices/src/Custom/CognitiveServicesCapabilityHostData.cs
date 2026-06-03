@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.CognitiveServices
                 capabilityHostData.Name,
                 capabilityHostData.ResourceType,
                 capabilityHostData.SystemData,
-                capabilityHostData._additionalBinaryDataProperties,
-                CognitiveServicesCapabilityHostProperties.ToProjectCapabilityHostProperties(capabilityHostData.Properties));
+                CognitiveServicesCapabilityHostProperties.ToProjectCapabilityHostProperties(capabilityHostData.Properties),
+                capabilityHostData._additionalBinaryDataProperties);
         }
     }
 }

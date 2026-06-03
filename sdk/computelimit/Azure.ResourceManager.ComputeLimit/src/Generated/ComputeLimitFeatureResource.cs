@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ComputeLimit.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             TryGetApiVersion(ResourceType, out string computeLimitFeatureApiVersion);
             _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, computeLimitFeatureApiVersion ?? "2026-06-01");
+            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, computeLimitFeatureApiVersion ?? "2026-04-30");
             ValidateResourceId(id);
         }
 
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -257,7 +256,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -321,9 +320,8 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<OperationStatusResult>> EnableAsync(WaitUntil waitUntil, ComputeLimitFeatureEnableContent content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OperationStatusResult>> EnableAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureResource.Enable");
             scope.Start();
@@ -333,7 +331,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitFeatureEnableContent.ToRequestContent(content), context);
+                HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ComputeLimitArmOperation<OperationStatusResult> operation = new ComputeLimitArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),
@@ -368,7 +366,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -377,9 +375,8 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<OperationStatusResult> Enable(WaitUntil waitUntil, ComputeLimitFeatureEnableContent content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OperationStatusResult> Enable(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _featuresClientDiagnostics.CreateScope("ComputeLimitFeatureResource.Enable");
             scope.Start();
@@ -389,7 +386,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitFeatureEnableContent.ToRequestContent(content), context);
+                HttpMessage message = _featuresRestClient.CreateEnableRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ComputeLimitArmOperation<OperationStatusResult> operation = new ComputeLimitArmOperation<OperationStatusResult>(
                     new OperationStatusResultOperationSource(),
