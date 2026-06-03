@@ -167,16 +167,9 @@ namespace Azure.Generator.Provisioning.Primitives
                 .Distinct(StringComparer.Ordinal)
                 .OrderBy(parent => parent, StringComparer.Ordinal);
 
-            try
-            {
-                ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
-                    "inconsistent-parent-resource-id",
-                    $"Collapsed provisioning resource '{metadata[0].ResourceName}' ({metadata[0].ResourceType}) has inconsistent parent resource IDs [{string.Join(", ", parents)}]. Parent metadata will be omitted.");
-            }
-            catch (InvalidOperationException)
-            {
-                // Unit tests can construct projections without initializing the generator.
-            }
+            ProvisioningGenerator.Instance.Emitter.ReportDiagnostic(
+                "inconsistent-parent-resource-id",
+                $"Collapsed provisioning resource '{metadata[0].ResourceName}' ({metadata[0].ResourceType}) has inconsistent parent resource IDs [{string.Join(", ", parents)}]. Parent metadata will be omitted.");
         }
 
         private static T GetSameValueOrDefault<T>(IEnumerable<T> values, T defaultValue, IEqualityComparer<T>? comparer = null)

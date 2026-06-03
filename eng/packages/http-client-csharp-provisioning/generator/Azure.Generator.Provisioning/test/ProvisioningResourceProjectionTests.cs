@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Primitives;
+using Azure.Generator.Provisioning.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Input;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -12,6 +13,12 @@ namespace Azure.Generator.Provisioning.Tests
 {
     public class ProvisioningResourceProjectionTests
     {
+        [SetUp]
+        public void SetUp()
+        {
+            ProvisioningMockHelpers.LoadMockGenerator();
+        }
+
         [Test]
         public void SameResourceTypeAndModelCollapse()
         {
