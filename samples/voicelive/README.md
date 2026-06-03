@@ -32,6 +32,18 @@ Demonstrates using the Azure VoiceLive SDK with **MCP (Model Context Protocol) s
 - VoiceLive endpoint and API key (or Azure credentials)
 - API version 2026-01-01-preview or later
 
+### [Telemetry Tracing Sample](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/voicelive/telemetry-tracing)
+
+Demonstrates the VoiceLive telemetry experience with OpenTelemetry tracing in .NET. This sample shows how to:
+
+- Register an OpenTelemetry tracer provider with console exporter
+- Run a short VoiceLive session and emit trace spans for connect/send/receive/close
+- Validate the built-in telemetry behavior without any VoiceLive-specific telemetry configuration
+
+**Prerequisites:**
+- Azure subscription with VoiceLive access
+- VoiceLive endpoint and API key, or Azure credential authentication
+
 ## Getting Started
 
 1. Choose the sample that matches your use case:

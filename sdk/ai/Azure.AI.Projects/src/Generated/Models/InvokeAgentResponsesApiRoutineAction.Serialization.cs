@@ -81,10 +81,22 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("agent_endpoint_id"u8);
                 writer.WriteStringValue(AgentEndpointId);
             }
-            if (Optional.IsDefined(ConversationId))
+            if (Optional.IsDefined(Input))
             {
-                writer.WritePropertyName("conversation_id"u8);
-                writer.WriteStringValue(ConversationId);
+                writer.WritePropertyName("input"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Input);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Input))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(Conversation))
+            {
+                writer.WritePropertyName("conversation"u8);
+                writer.WriteStringValue(Conversation);
             }
         }
 
@@ -117,7 +129,8 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string agentName = default;
             string agentEndpointId = default;
-            string conversationId = default;
+            BinaryData input = default;
+            string conversation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -135,9 +148,18 @@ namespace Azure.AI.Projects
                     agentEndpointId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("conversation_id"u8))
+                if (prop.NameEquals("input"u8))
                 {
-                    conversationId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    input = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
+                if (prop.NameEquals("conversation"u8))
+                {
+                    conversation = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +167,13 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InvokeAgentResponsesApiRoutineAction(@type, additionalBinaryDataProperties, agentName, agentEndpointId, conversationId);
+            return new InvokeAgentResponsesApiRoutineAction(
+                @type,
+                additionalBinaryDataProperties,
+                agentName,
+                agentEndpointId,
+                input,
+                conversation);
         }
     }
 }

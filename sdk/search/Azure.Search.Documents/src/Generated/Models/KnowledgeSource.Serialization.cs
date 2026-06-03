@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Represents a knowledge source definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSource"/>, <see cref="AzureBlobKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, and <see cref="WebKnowledgeSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchIndexKnowledgeSource"/>, <see cref="AzureBlobKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="IndexedSqlKnowledgeSource"/>, <see cref="FileKnowledgeSource"/>, <see cref="WebKnowledgeSource"/>, <see cref="RemoteSharePointKnowledgeSource"/>, <see cref="WorkIQKnowledgeSource"/>, <see cref="McpServerKnowledgeSource"/>, <see cref="FabricDataAgentKnowledgeSource"/>, and <see cref="FabricOntologyKnowledgeSource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeSource))]
     public abstract partial class KnowledgeSource : IJsonModel<KnowledgeSource>
@@ -170,10 +170,26 @@ namespace Azure.Search.Documents.Indexes.Models
                         return SearchIndexKnowledgeSource.DeserializeSearchIndexKnowledgeSource(element, options);
                     case "azureBlob":
                         return AzureBlobKnowledgeSource.DeserializeAzureBlobKnowledgeSource(element, options);
+                    case "indexedSharePoint":
+                        return IndexedSharePointKnowledgeSource.DeserializeIndexedSharePointKnowledgeSource(element, options);
                     case "indexedOneLake":
                         return IndexedOneLakeKnowledgeSource.DeserializeIndexedOneLakeKnowledgeSource(element, options);
+                    case "indexedSql":
+                        return IndexedSqlKnowledgeSource.DeserializeIndexedSqlKnowledgeSource(element, options);
+                    case "file":
+                        return FileKnowledgeSource.DeserializeFileKnowledgeSource(element, options);
                     case "web":
                         return WebKnowledgeSource.DeserializeWebKnowledgeSource(element, options);
+                    case "remoteSharePoint":
+                        return RemoteSharePointKnowledgeSource.DeserializeRemoteSharePointKnowledgeSource(element, options);
+                    case "workIQ":
+                        return WorkIQKnowledgeSource.DeserializeWorkIQKnowledgeSource(element, options);
+                    case "mcpServer":
+                        return McpServerKnowledgeSource.DeserializeMcpServerKnowledgeSource(element, options);
+                    case "fabricDataAgent":
+                        return FabricDataAgentKnowledgeSource.DeserializeFabricDataAgentKnowledgeSource(element, options);
+                    case "fabricOntology":
+                        return FabricOntologyKnowledgeSource.DeserializeFabricOntologyKnowledgeSource(element, options);
                 }
             }
             return UnknownKnowledgeSource.DeserializeUnknownKnowledgeSource(element, options);

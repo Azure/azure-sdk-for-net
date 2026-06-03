@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, RecoveryServicesVaultData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesArmOperation<RecoveryServicesVaultResource> operation = new RecoveryServicesArmOperation<RecoveryServicesVaultResource>(
-                    new RecoveryServicesVaultOperationSource(Client),
+                    new RecoveryServicesVaultResourceOperationSource(Client),
                     _vaultsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 HttpMessage message = _vaultsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, RecoveryServicesVaultData.ToRequestContent(data), xMsAuthorizationAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesArmOperation<RecoveryServicesVaultResource> operation = new RecoveryServicesArmOperation<RecoveryServicesVaultResource>(
-                    new RecoveryServicesVaultOperationSource(Client),
+                    new RecoveryServicesVaultResourceOperationSource(Client),
                     _vaultsClientDiagnostics,
                     Pipeline,
                     message.Request,

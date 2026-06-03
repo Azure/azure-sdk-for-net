@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _archiveVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource> operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource>(
-                    new ContainerRegistryArchiveVersionOperationSource(Client),
+                    new ContainerRegistryArchiveVersionResourceOperationSource(Client),
                     _archiveVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 HttpMessage message = _archiveVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource> operation = new ContainerRegistryArmOperation<ContainerRegistryArchiveVersionResource>(
-                    new ContainerRegistryArchiveVersionOperationSource(Client),
+                    new ContainerRegistryArchiveVersionResourceOperationSource(Client),
                     _archiveVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,

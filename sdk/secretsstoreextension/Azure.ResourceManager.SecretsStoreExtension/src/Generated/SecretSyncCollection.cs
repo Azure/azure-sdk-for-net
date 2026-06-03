@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 HttpMessage message = _secretSyncsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, SecretSyncData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecretsStoreExtensionArmOperation<SecretSyncResource> operation = new SecretsStoreExtensionArmOperation<SecretSyncResource>(
-                    new SecretSyncOperationSource(Client),
+                    new SecretSyncResourceOperationSource(Client),
                     _secretSyncsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 HttpMessage message = _secretSyncsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, secretSyncName, SecretSyncData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecretsStoreExtensionArmOperation<SecretSyncResource> operation = new SecretsStoreExtensionArmOperation<SecretSyncResource>(
-                    new SecretSyncOperationSource(Client),
+                    new SecretSyncResourceOperationSource(Client),
                     _secretSyncsClientDiagnostics,
                     Pipeline,
                     message.Request,

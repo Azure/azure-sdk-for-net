@@ -119,12 +119,12 @@ namespace Azure.Generator.Provisioning
                 ProvisioningResourceProvider? canonical = null;
                 foreach (var candidate in resources)
                 {
-                    if (string.Equals(candidate.ResourceMetadata?.ResourceName, model.Name, StringComparison.Ordinal))
+                    if (string.Equals(candidate.ResourceProjection?.ResourceName, model.Name, StringComparison.Ordinal))
                     {
                         return candidate;
                     }
                     if (canonical == null
-                        || string.CompareOrdinal(candidate.ResourceMetadata?.ResourceName, canonical.ResourceMetadata?.ResourceName) < 0)
+                        || string.CompareOrdinal(candidate.ResourceProjection?.ResourceName, canonical.ResourceProjection?.ResourceName) < 0)
                     {
                         canonical = candidate;
                     }

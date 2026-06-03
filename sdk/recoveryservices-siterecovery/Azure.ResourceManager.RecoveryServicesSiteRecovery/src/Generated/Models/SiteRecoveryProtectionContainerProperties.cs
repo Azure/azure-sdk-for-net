@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Protection profile custom data details. </summary>
     public partial class SiteRecoveryProtectionContainerProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectionContainerProperties"/>. </summary>
         internal SiteRecoveryProtectionContainerProperties()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="pairingStatus"> The pairing status of this cloud. </param>
         /// <param name="role"> The role of this cloud. </param>
         /// <param name="fabricSpecificDetails"> Fabric specific details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryProtectionContainerProperties(string fabricFriendlyName, string friendlyName, string fabricType, int? protectedItemCount, string pairingStatus, string role, ProtectionContainerFabricSpecificDetails fabricSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryProtectionContainerProperties(string fabricFriendlyName, string friendlyName, string fabricType, int? protectedItemCount, string pairingStatus, string role, ProtectionContainerFabricSpecificDetails fabricSpecificDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FabricFriendlyName = fabricFriendlyName;
             FriendlyName = friendlyName;
@@ -68,27 +39,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             PairingStatus = pairingStatus;
             Role = role;
             FabricSpecificDetails = fabricSpecificDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Fabric friendly name. </summary>
         public string FabricFriendlyName { get; }
+
         /// <summary> The name. </summary>
         public string FriendlyName { get; }
+
         /// <summary> The fabric type. </summary>
         public string FabricType { get; }
+
         /// <summary> Number of protected PEs. </summary>
         public int? ProtectedItemCount { get; }
+
         /// <summary> The pairing status of this cloud. </summary>
         public string PairingStatus { get; }
+
         /// <summary> The role of this cloud. </summary>
         public string Role { get; }
+
         /// <summary> Fabric specific details. </summary>
         internal ProtectionContainerFabricSpecificDetails FabricSpecificDetails { get; }
+
         /// <summary> Gets the class type. Overridden in derived classes. </summary>
         public string FabricSpecificDetailsInstanceType
         {
-            get => FabricSpecificDetails?.InstanceType;
+            get
+            {
+                return FabricSpecificDetails is null ? default : FabricSpecificDetails.InstanceType;
+            }
         }
     }
 }

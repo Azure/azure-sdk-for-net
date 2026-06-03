@@ -108,6 +108,10 @@ namespace Azure.Generator.Management
                 {
                     return systemType;
                 }
+                if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
+                {
+                    return CreateModel(model)?.Type;
+                }
             }
 
             if (inputType is InputEnumType enumType && KnownManagementTypes.TryGetSystemType(enumType.CrossLanguageDefinitionId, out var replacedType))
@@ -148,7 +152,7 @@ namespace Azure.Generator.Management
             {
                 return new ResourceDataModelProvider(model);
             }
-            return base.CreateModelCore(model);
+            return new ManagementModelProvider(model);
         }
 
         /// <inheritdoc/>

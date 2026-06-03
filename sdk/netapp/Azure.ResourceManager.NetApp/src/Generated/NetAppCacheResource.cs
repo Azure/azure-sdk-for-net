@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppCachePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppCachePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreatePoolChangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppVolumePoolChangeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreatePoolChangeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppVolumePoolChangeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreateResetSmbPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreateResetSmbPasswordRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,

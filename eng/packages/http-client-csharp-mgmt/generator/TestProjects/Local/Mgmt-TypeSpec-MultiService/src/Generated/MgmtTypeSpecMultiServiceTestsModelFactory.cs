@@ -18,24 +18,21 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class MgmtTypeSpecMultiServiceTestsModelFactory
     {
-        /// <summary> The CheckAvailabilityRequest. </summary>
         /// <param name="name"> The name to check availability for. </param>
         /// <returns> A new <see cref="Models.CheckAvailabilityRequest"/> instance for mocking. </returns>
         public static CheckAvailabilityRequest CheckAvailabilityRequest(string name = default)
         {
-            return new CheckAvailabilityRequest(name, additionalBinaryDataProperties: null);
+            return new CheckAvailabilityRequest(name, default);
         }
 
-        /// <summary> The CheckAvailabilityResponse. </summary>
         /// <param name="isAvailable"> Whether the name is available. </param>
         /// <param name="reason"> Reason the name is not available. </param>
         /// <returns> A new <see cref="Models.CheckAvailabilityResponse"/> instance for mocking. </returns>
         public static CheckAvailabilityResponse CheckAvailabilityResponse(bool isAvailable = default, string reason = default)
         {
-            return new CheckAvailabilityResponse(isAvailable, reason, additionalBinaryDataProperties: null);
+            return new CheckAvailabilityResponse(isAvailable, reason, default);
         }
 
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -53,13 +50,20 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="displayName"></param>
+        /// <param name="provisioningState"></param>
+        /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
+        public static FooProperties FooProperties(string displayName = default, ResourceProvisioningState? provisioningState = default)
+        {
+            return new FooProperties(displayName, provisioningState, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -77,10 +81,18 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <param name="description"></param>
+        /// <param name="provisioningState"></param>
+        /// <returns> A new <see cref="Models.BarProperties"/> instance for mocking. </returns>
+        public static BarProperties BarProperties(string description = default, ResourceProvisioningState? provisioningState = default)
+        {
+            return new BarProperties(description, provisioningState, default);
         }
     }
 }

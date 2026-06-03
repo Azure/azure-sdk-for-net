@@ -17,6 +17,7 @@ namespace Azure.AI.Projects.Agents
             FoundryFeaturesOptInKeys.InsightsV1Preview => "Insights=V1Preview",
             FoundryFeaturesOptInKeys.MemoryStoresV1Preview => "MemoryStores=V1Preview",
             FoundryFeaturesOptInKeys.RoutinesV1Preview => "Routines=V1Preview",
+            FoundryFeaturesOptInKeys.ToolboxesV1Preview => "Toolboxes=V1Preview",
             FoundryFeaturesOptInKeys.SkillsV1Preview => "Skills=V1Preview",
             FoundryFeaturesOptInKeys.DataGenerationJobsV1Preview => "DataGenerationJobs=V1Preview",
             FoundryFeaturesOptInKeys.ModelsV1Preview => "Models=V1Preview",
@@ -50,6 +51,10 @@ namespace Azure.AI.Projects.Agents
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Routines=V1Preview"))
             {
                 return FoundryFeaturesOptInKeys.RoutinesV1Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Toolboxes=V1Preview"))
+            {
+                return FoundryFeaturesOptInKeys.ToolboxesV1Preview;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skills=V1Preview"))
             {

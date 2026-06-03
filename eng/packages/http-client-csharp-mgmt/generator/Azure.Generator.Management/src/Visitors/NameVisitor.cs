@@ -64,14 +64,22 @@ internal class NameVisitor : ScmLibraryVisitor
             return null;
         }
 
-        if (TryTransformUrlToUri(model.Name, out var newName))
+        type = base.PreVisitModel(model, type);
+        if (type is null)
+        {
+            return null;
+        }
+
+        if (TryTransformUrlToUri(type.Name, out var newName))
         {
             type.Update(name: newName);
         }
 
         if (_knownTypes.Contains(model.Name))
         {
-            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
+            // Compose with type.Name (not model.Name) so any prior provider-level rename
+            // (e.g. ResourceDataModelProvider's "Data" suffix) is preserved.
+            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{type.Name}";
             type.Update(name: newName);
         }
 
@@ -88,11 +96,12 @@ internal class NameVisitor : ScmLibraryVisitor
             }
             else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
             {
+                // PATCH-only payloads use {Resource}Patch unless the service provided an explicit clientName.
                 newName = $"{enclosingResourceName}Patch";
                 type.Update(name: newName);
             }
         }
-        return base.PreVisitModel(model, type);
+        return type;
     }
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
