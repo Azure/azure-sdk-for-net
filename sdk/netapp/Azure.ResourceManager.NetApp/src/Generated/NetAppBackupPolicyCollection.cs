@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _backupPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, NetAppBackupPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppBackupPolicyResource> operation = new NetAppArmOperation<NetAppBackupPolicyResource>(
-                    new NetAppBackupPolicyOperationSource(Client),
+                    new NetAppBackupPolicyResourceOperationSource(Client),
                     _backupPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _backupPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, backupPolicyName, NetAppBackupPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppBackupPolicyResource> operation = new NetAppArmOperation<NetAppBackupPolicyResource>(
-                    new NetAppBackupPolicyOperationSource(Client),
+                    new NetAppBackupPolicyResourceOperationSource(Client),
                     _backupPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _extensionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, ArcExtensionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<ArcExtensionResource> operation = new HciArmOperation<ArcExtensionResource>(
-                    new ArcExtensionOperationSource(Client),
+                    new ArcExtensionResourceOperationSource(Client),
                     _extensionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _extensionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, extensionName, ArcExtensionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<ArcExtensionResource> operation = new HciArmOperation<ArcExtensionResource>(
-                    new ArcExtensionOperationSource(Client),
+                    new ArcExtensionResourceOperationSource(Client),
                     _extensionsClientDiagnostics,
                     Pipeline,
                     message.Request,

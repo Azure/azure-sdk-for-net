@@ -184,7 +184,7 @@ private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
         memory: "1Gi"
     )
     {
-        Image = dockerImage,
+        ContainerConfiguration = new(dockerImage),
     };
     return agentDefinition;
 }
@@ -239,7 +239,7 @@ private static CreateAgentVersionFromCodeMetadata GetAgentMetadata()
         memory: "1Gi"
     )
     {
-        ProtocolVersions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
+        Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
         CodeConfiguration = new(
             runtime: "python_3_14",
             entryPoint: ["python", "main.py"],
@@ -411,16 +411,20 @@ The skills can be used to provide the portable packages of instructions for Agen
 to manage skills in Microsoft foundry. Skills may be created from the folder with instructions or on-the-fly.
 
 ```C# Snippet:Sample_CreateSkill_SkillsCRUD_Async
-AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDirectory("roll-dice"));
-Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
-AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
-    To calculate the sum  run
-    bash:
-    echo $((<first> + <second>))
-    powershell:
-    (<first> + <second>)
-    Replace <first> and <second> by the actual summation arguments.
-""");
+AgentsSkill skillFromFile = await skillsClient.CreateSkillVersionFromFilesAsync("roll-dice", GetDirectory("roll-dice"));
+Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.Id}");
+SkillInlineContent content = new(
+    description: "Calculates the sum of two numbers.",
+    instructions: """
+        To calculate the sum  run
+        bash:
+        echo $((<first> + <second>))
+        powershell:
+        (<first> + <second>)
+        Replace <first> and <second> by the actual summation arguments.
+    """
+);
+SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: "simple-skill", inlineContent: content);
 Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
 ```
 
@@ -445,14 +449,18 @@ Console.WriteLine($"Retrieved agent {agentVersion.Name}, v. {agentVersion.Versio
 2. Create the skill.
 
 ```C# Snippet:Sample_CreateSkill_AgentsEndpoint_Async
-AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
-    To calculate the sum  run
-    bash:
-    echo $((<first> + <second>))
-    powershell:
-    (<first> + <second>)
-    Replace <first> and <second> by the actual summation arguments.
-    """);
+SkillInlineContent content = new(
+    description: "Calculates the sum of two numbers.",
+    instructions: """
+        To calculate the sum  run
+        bash:
+        echo $((<first> + <second>))
+        powershell:
+        (<first> + <second>)
+        Replace <first> and <second> by the actual summation arguments.
+        """
+);
+SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: "simpleSkill", inlineContent: content);
 ```
 
 3. We will create configure hosted agent so that it will use the 100% of traffic to the endpoint and will also
@@ -464,7 +472,7 @@ AgentEndpointConfiguration config = new()
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
     Protocols = {AgentEndpointProtocol.Responses}
 };
-AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.SkillId, name: SKILL)]);
+AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
 PatchAgentOptions patchOptions = new()
 {
     AgentEndpoint = config,

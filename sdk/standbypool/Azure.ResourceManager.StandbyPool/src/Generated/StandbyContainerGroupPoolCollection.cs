@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StandbyPool
                 HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, StandbyContainerGroupPoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StandbyPoolArmOperation<StandbyContainerGroupPoolResource> operation = new StandbyPoolArmOperation<StandbyContainerGroupPoolResource>(
-                    new StandbyContainerGroupPoolOperationSource(Client),
+                    new StandbyContainerGroupPoolResourceOperationSource(Client),
                     _standbyContainerGroupPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.StandbyPool
                 HttpMessage message = _standbyContainerGroupPoolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, standbyContainerGroupPoolName, StandbyContainerGroupPoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StandbyPoolArmOperation<StandbyContainerGroupPoolResource> operation = new StandbyPoolArmOperation<StandbyContainerGroupPoolResource>(
-                    new StandbyContainerGroupPoolOperationSource(Client),
+                    new StandbyContainerGroupPoolResourceOperationSource(Client),
                     _standbyContainerGroupPoolsClientDiagnostics,
                     Pipeline,
                     message.Request,

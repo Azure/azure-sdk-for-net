@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _fleetManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ContainerServiceFleetManagedNamespaceData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetManagedNamespaceResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetManagedNamespaceResource>(
-                    new ContainerServiceFleetManagedNamespaceOperationSource(Client),
+                    new ContainerServiceFleetManagedNamespaceResourceOperationSource(Client),
                     _fleetManagedNamespacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _fleetManagedNamespacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, managedNamespaceName, ContainerServiceFleetManagedNamespaceData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetManagedNamespaceResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetManagedNamespaceResource>(
-                    new ContainerServiceFleetManagedNamespaceOperationSource(Client),
+                    new ContainerServiceFleetManagedNamespaceResourceOperationSource(Client),
                     _fleetManagedNamespacesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 HttpMessage message = _watchersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, DatabaseWatcherData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabaseWatcherArmOperation<DatabaseWatcherResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherResource>(
-                    new DatabaseWatcherOperationSource(Client),
+                    new DatabaseWatcherResourceOperationSource(Client),
                     _watchersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 HttpMessage message = _watchersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, watcherName, DatabaseWatcherData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabaseWatcherArmOperation<DatabaseWatcherResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherResource>(
-                    new DatabaseWatcherOperationSource(Client),
+                    new DatabaseWatcherResourceOperationSource(Client),
                     _watchersClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, CloudExadataInfrastructureData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudExadataInfrastructureResource> operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(
-                    new CloudExadataInfrastructureOperationSource(Client),
+                    new CloudExadataInfrastructureResourceOperationSource(Client),
                     _cloudExadataInfrastructuresClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _cloudExadataInfrastructuresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, cloudexadatainfrastructurename, CloudExadataInfrastructureData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudExadataInfrastructureResource> operation = new OracleDatabaseArmOperation<CloudExadataInfrastructureResource>(
-                    new CloudExadataInfrastructureOperationSource(Client),
+                    new CloudExadataInfrastructureResourceOperationSource(Client),
                     _cloudExadataInfrastructuresClientDiagnostics,
                     Pipeline,
                     message.Request,

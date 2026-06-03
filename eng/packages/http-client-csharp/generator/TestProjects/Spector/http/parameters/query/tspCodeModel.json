@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "constantValue",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "constantValue",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [],
@@ -42,6 +44,7 @@
       "$id": "5",
       "kind": "client",
       "name": "QueryClient",
+      "isExactName": false,
       "namespace": "Parameters.Query",
       "doc": "Test for query parameter cases.",
       "methods": [],
@@ -74,7 +77,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Parameters.Query.endpoint"
+          "crossLanguageDefinitionId": "Parameters.Query.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -86,6 +90,7 @@
           "$id": "9",
           "kind": "client",
           "name": "Constant",
+          "isExactName": false,
           "namespace": "Parameters.Query",
           "doc": "Constant query parameter verification",
           "methods": [
@@ -93,12 +98,14 @@
               "$id": "10",
               "kind": "basic",
               "name": "post",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "post constant query value",
               "operation": {
                 "$id": "11",
                 "name": "post",
+                "isExactName": false,
                 "resourceName": "Constant",
                 "doc": "post constant query value",
                 "accessibility": "public",
@@ -134,9 +141,11 @@
                         "crossLanguageDefinitionId": "Parameters.Query.Constant.post.queryParam",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -200,7 +209,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Parameters.Query.Constant.endpoint"
+              "crossLanguageDefinitionId": "Parameters.Query.Constant.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _identityBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, ManagedClusterIdentityBindingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ManagedClusterIdentityBindingResource> operation = new ContainerServiceArmOperation<ManagedClusterIdentityBindingResource>(
-                    new ManagedClusterIdentityBindingOperationSource(Client),
+                    new ManagedClusterIdentityBindingResourceOperationSource(Client),
                     _identityBindingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _identityBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, identityBindingName, ManagedClusterIdentityBindingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ManagedClusterIdentityBindingResource> operation = new ContainerServiceArmOperation<ManagedClusterIdentityBindingResource>(
-                    new ManagedClusterIdentityBindingOperationSource(Client),
+                    new ManagedClusterIdentityBindingResourceOperationSource(Client),
                     _identityBindingsClientDiagnostics,
                     Pipeline,
                     message.Request,

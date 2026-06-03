@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _javaComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, JavaComponentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<JavaComponentResource> operation = new AppContainersArmOperation<JavaComponentResource>(
-                    new JavaComponentOperationSource(Client),
+                    new JavaComponentResourceOperationSource(Client),
                     _javaComponentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _javaComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, JavaComponentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<JavaComponentResource> operation = new AppContainersArmOperation<JavaComponentResource>(
-                    new JavaComponentOperationSource(Client),
+                    new JavaComponentResourceOperationSource(Client),
                     _javaComponentsClientDiagnostics,
                     Pipeline,
                     message.Request,

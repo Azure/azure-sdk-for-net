@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutoUpgradeProfileData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<AutoUpgradeProfileResource> operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileResource>(
-                    new AutoUpgradeProfileOperationSource(Client),
+                    new AutoUpgradeProfileResourceOperationSource(Client),
                     _autoUpgradeProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _autoUpgradeProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutoUpgradeProfileData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<AutoUpgradeProfileResource> operation = new ContainerServiceFleetArmOperation<AutoUpgradeProfileResource>(
-                    new AutoUpgradeProfileOperationSource(Client),
+                    new AutoUpgradeProfileResourceOperationSource(Client),
                     _autoUpgradeProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,

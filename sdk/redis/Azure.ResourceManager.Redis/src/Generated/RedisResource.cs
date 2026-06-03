@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Redis
                 HttpMessage message = _redisResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisArmOperation<RedisResource> operation = new RedisArmOperation<RedisResource>(
-                    new RedisOperationSource(Client),
+                    new RedisResourceOperationSource(Client),
                     _redisResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Redis
                 HttpMessage message = _redisResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RedisPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisArmOperation<RedisResource> operation = new RedisArmOperation<RedisResource>(
-                    new RedisOperationSource(Client),
+                    new RedisResourceOperationSource(Client),
                     _redisResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

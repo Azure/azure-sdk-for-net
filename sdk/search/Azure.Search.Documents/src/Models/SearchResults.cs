@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -96,6 +96,18 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         private protected SearchClient _pagingClient;
 
+        /// <summary>
+        /// The query source authorization token to send on subsequent page
+        /// requests.  This is only used when paging with per-user security.
+        /// </summary>
+        private protected string _querySourceAuthorization;
+
+        /// <summary>
+        /// Whether to enable elevated read on subsequent page requests.
+        /// This is only used when paging with per-user security.
+        /// </summary>
+        private protected bool? _enableElevatedRead;
+
         internal SearchResults() { }
 
         /// <summary>
@@ -121,12 +133,24 @@ namespace Azure.Search.Documents.Models
         /// <param name="rawResponse">
         /// The raw response that obtained these results.
         /// </param>
-        internal void ConfigurePaging(SearchClient client, Response rawResponse)
+        /// <param name="querySourceAuthorization">
+        /// Optional query source authorization token.
+        /// </param>
+        /// <param name="enableElevatedRead">
+        /// Optional flag to enable elevated read access.
+        /// </param>
+        internal void ConfigurePaging(
+            SearchClient client,
+            Response rawResponse,
+            string querySourceAuthorization = null,
+            bool? enableElevatedRead = null)
         {
             Debug.Assert(client != null);
             Debug.Assert(rawResponse != null);
             _pagingClient = client;
             RawResponse = rawResponse;
+            _querySourceAuthorization = querySourceAuthorization;
+            _enableElevatedRead = enableElevatedRead;
         }
 
         /// <summary>

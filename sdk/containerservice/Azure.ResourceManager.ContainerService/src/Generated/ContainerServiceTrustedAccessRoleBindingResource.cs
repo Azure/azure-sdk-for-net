@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceTrustedAccessRoleBindingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource> operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(
-                    new ContainerServiceTrustedAccessRoleBindingOperationSource(Client),
+                    new ContainerServiceTrustedAccessRoleBindingResourceOperationSource(Client),
                     _trustedAccessRoleBindingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _trustedAccessRoleBindingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerServiceTrustedAccessRoleBindingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource> operation = new ContainerServiceArmOperation<ContainerServiceTrustedAccessRoleBindingResource>(
-                    new ContainerServiceTrustedAccessRoleBindingOperationSource(Client),
+                    new ContainerServiceTrustedAccessRoleBindingResourceOperationSource(Client),
                     _trustedAccessRoleBindingsClientDiagnostics,
                     Pipeline,
                     message.Request,

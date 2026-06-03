@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _clusterMeshProfilesRestClient.CreateApplyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ClusterMeshProfileResource> operation = new ContainerServiceFleetArmOperation<ClusterMeshProfileResource>(
-                    new ClusterMeshProfileOperationSource(Client),
+                    new ClusterMeshProfileResourceOperationSource(Client),
                     _clusterMeshProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _clusterMeshProfilesRestClient.CreateApplyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ClusterMeshProfileResource> operation = new ContainerServiceFleetArmOperation<ClusterMeshProfileResource>(
-                    new ClusterMeshProfileOperationSource(Client),
+                    new ClusterMeshProfileResourceOperationSource(Client),
                     _clusterMeshProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _clusterMeshProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ClusterMeshProfileData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ClusterMeshProfileResource> operation = new ContainerServiceFleetArmOperation<ClusterMeshProfileResource>(
-                    new ClusterMeshProfileOperationSource(Client),
+                    new ClusterMeshProfileResourceOperationSource(Client),
                     _clusterMeshProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _clusterMeshProfilesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ClusterMeshProfileData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ClusterMeshProfileResource> operation = new ContainerServiceFleetArmOperation<ClusterMeshProfileResource>(
-                    new ClusterMeshProfileOperationSource(Client),
+                    new ClusterMeshProfileResourceOperationSource(Client),
                     _clusterMeshProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
