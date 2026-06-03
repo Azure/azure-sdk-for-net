@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.Storage
     {
         // Backward-compatible overload: 4-param CreateResourceIdentifier (old GA took ManagementPolicyName).
         /// <summary> Generates the resource identifier of a <see cref="StorageAccountManagementPolicyResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        /// <param name="managementPolicyName"> The managementPolicyName. </param>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="accountName"> The account name. </param>
+        /// <param name="managementPolicyName"> The management policy name. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, ManagementPolicyName managementPolicyName)
         {

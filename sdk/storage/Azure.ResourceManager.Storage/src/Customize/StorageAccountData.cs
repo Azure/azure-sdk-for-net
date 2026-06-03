@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Storage
         public bool? IsIPv6EndpointToBePublished { get => Properties?.IsIPv6EndpointToBePublished; set { } }
 
         // Backward-compatible alias for IsNfsV3Enabled.
-        /// <summary> Account NFSv3 protocol enabled if set to true. </summary>
+        /// <summary> Indicates whether the account NFSv3 protocol is enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.isNfsV3Enabled")]
         public bool? IsNfsV3Enabled { get => Properties?.IsNfsV3Enabled; set { } }

@@ -12,7 +12,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The action of virtual network rule. </summary>
+    /// <summary> The action of a virtual network rule. </summary>
     public readonly partial struct StorageAccountVirtualNetworkRuleAction : IEquatable<StorageAccountVirtualNetworkRuleAction>
     {
         private readonly string _value;

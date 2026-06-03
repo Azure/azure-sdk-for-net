@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary> Gets the Kerb. </summary>
+        /// <summary> Kerb. </summary>
         public static ListKeysRequestExpand Kerb { get; } = new ListKeysRequestExpand(KerbValue);
 
         /// <inheritdoc />
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static implicit operator ListKeysRequestExpand(StorageListKeyExpand value) => new ListKeysRequestExpand(value.ToString());
     }
 
-    /// <summary> Specifies type of the key to be listed. </summary>
+    /// <summary> Specifies the type of key to list. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct StorageListKeyExpand : IEquatable<StorageListKeyExpand>
     {

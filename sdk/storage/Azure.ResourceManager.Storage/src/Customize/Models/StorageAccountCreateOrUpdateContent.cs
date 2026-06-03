@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        /// <summary> Account NFSv3 protocol enabled if set to true. </summary>
+        /// <summary> Indicates whether the account NFSv3 protocol is enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.isNfsV3Enabled")]
         public bool? IsNfsV3Enabled
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountCreateOrUpdateContent"/>. </summary>
-        /// <param name="sku"> Required. Gets or sets the SKU name. </param>
-        /// <param name="kind"> Required. Indicates the type of storage account. </param>
-        /// <param name="location"> Required. Gets or sets the location of the resource. </param>
+        /// <param name="sku"> Required. The SKU name. </param>
+        /// <param name="kind"> Required. The type of storage account. </param>
+        /// <param name="location"> Required. The location of the resource. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location) : this(sku, kind, location.ToString(), default, new ChangeTrackingList<string>(), default, new ChangeTrackingDictionary<string, string>(), default, default, default)
         {

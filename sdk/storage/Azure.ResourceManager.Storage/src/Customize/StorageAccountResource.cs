@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage
     public partial class StorageAccountResource
     {
         // Backward-compatible overload: Failover with no failoverType parameter.
-        /// <summary> A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. </summary>
+        /// <summary> A failover request can be triggered for a storage account if a primary endpoint becomes unavailable for any reason. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage
             await FailoverAsync(waitUntil, (FailoverRequestFailoverType?)null, cancellationToken).ConfigureAwait(false);
 
         // Backward-compatible overload: Failover with no failoverType parameter.
-        /// <summary> A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. </summary>
+        /// <summary> A failover request can be triggered for a storage account if a primary endpoint becomes unavailable for any reason. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -48,18 +48,18 @@ namespace Azure.ResourceManager.Storage
             Failover(waitUntil, (FailoverRequestFailoverType?)null, cancellationToken);
 
         // Backward-compatible overload: Failover with StorageAccountFailoverType parameter.
-        /// <summary> A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. </summary>
+        /// <summary> A failover request can be triggered for a storage account if a primary endpoint becomes unavailable for any reason. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="failoverType"> The parameter is set to 'Planned' to indicate whether a Planned failover is requested. </param>
+        /// <param name="failoverType"> Set to 'Planned' to request a planned failover. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> FailoverAsync(WaitUntil waitUntil, StorageAccountFailoverType? failoverType, CancellationToken cancellationToken) =>
             await FailoverAsync(waitUntil, failoverType.HasValue ? new FailoverRequestFailoverType(failoverType.Value.ToString()) : (FailoverRequestFailoverType?)null, cancellationToken).ConfigureAwait(false);
 
         // Backward-compatible overload: Failover with StorageAccountFailoverType parameter.
-        /// <summary> A failover request can be triggered for a storage account in the event a primary endpoint becomes unavailable for any reason. </summary>
+        /// <summary> A failover request can be triggered for a storage account if a primary endpoint becomes unavailable for any reason. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="failoverType"> The parameter is set to 'Planned' to indicate whether a Planned failover is requested. </param>
+        /// <param name="failoverType"> Set to 'Planned' to request a planned failover. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Failover(WaitUntil waitUntil, StorageAccountFailoverType? failoverType, CancellationToken cancellationToken) =>
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.Storage
         // Backward-compat: prior GA returned Pageable<StorageAccountKey> instead of Response<StorageAccountListKeysResult>.
 
         // Backward-compatible overload: GetKeys with old StorageListKeyExpand parameter type.
-        /// <summary> Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account. </summary>
-        /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
+        /// <summary> Lists the access keys for the specified storage account, or the Kerberos keys if Active Directory is enabled. </summary>
+        /// <param name="expand"> Specifies the type of key to list. The possible value is 'kerb'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageAccountKey"/>. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.Storage
         }
 
         // Backward-compatible parameterless overload for GetKeys.
-        /// <summary> Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account. </summary>
+        /// <summary> Lists the access keys for the specified storage account, or the Kerberos keys if Active Directory is enabled. </summary>
         /// <returns> A collection of <see cref="StorageAccountKey"/>. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<StorageAccountKey> GetKeys()
             => GetKeys((StorageListKeyExpand?)null, default);
 
         // Backward-compatible overload: GetKeysAsync with old StorageListKeyExpand parameter type.
-        /// <summary> Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account. </summary>
-        /// <param name="expand"> Specifies type of the key to be listed. Possible value is kerb. </param>
+        /// <summary> Lists the access keys for the specified storage account, or the Kerberos keys if Active Directory is enabled. </summary>
+        /// <param name="expand"> Specifies the type of key to list. The possible value is 'kerb'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StorageAccountKey"/>. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Storage
 #pragma warning restore AZC0107
 
         // Backward-compatible parameterless overload for GetKeysAsync.
-        /// <summary> Lists the access keys or Kerberos keys (if active directory enabled) for the specified storage account. </summary>
+        /// <summary> Lists the access keys for the specified storage account, or the Kerberos keys if Active Directory is enabled. </summary>
         /// <returns> A collection of <see cref="StorageAccountKey"/>. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0107 // async call wraps result, no sync alternative available
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary>
         /// Regenerates one of the access keys or Kerberos keys for the specified storage account.
         /// </summary>
-        /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
+        /// <param name="content"> Specifies the name of the key to regenerate: key1, key2, kerb1, or kerb2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Pageable<StorageAccountKey> RegenerateKey(StorageAccountRegenerateKeyContent content, CancellationToken cancellationToken = default)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary>
         /// Regenerates one of the access keys or Kerberos keys for the specified storage account.
         /// </summary>
-        /// <param name="content"> Specifies name of the key which should be regenerated -- key1, key2, kerb1, kerb2. </param>
+        /// <param name="content"> Specifies the name of the key to regenerate: key1, key2, kerb1, or kerb2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
 #pragma warning disable AZC0107 // async wrapper with pageable return
@@ -213,18 +213,18 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Restore blobs in the specified blob ranges
+        /// Restores blobs in the specified blob ranges.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/restoreBlobRanges</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
+        /// <term>Operation ID</term>
         /// <description>StorageAccounts_RestoreBlobRanges</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
+        /// <term>Default API Version</term>
         /// <description>2022-09-01</description>
         /// </item>
         /// <item>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Storage
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The parameters to provide for restore blob ranges. </param>
+        /// <param name="content"> The parameters to provide for restoring blob ranges. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<StorageAccountRestoreBlobRangesOperation> RestoreBlobRangesAsync(WaitUntil waitUntil, BlobRestoreContent content, CancellationToken cancellationToken = default)
@@ -261,18 +261,18 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Restore blobs in the specified blob ranges
+        /// Restores blobs in the specified blob ranges.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
         /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/restoreBlobRanges</description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
+        /// <term>Operation ID</term>
         /// <description>StorageAccounts_RestoreBlobRanges</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
+        /// <term>Default API Version</term>
         /// <description>2022-09-01</description>
         /// </item>
         /// <item>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Storage
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The parameters to provide for restore blob ranges. </param>
+        /// <param name="content"> The parameters to provide for restoring blob ranges. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual StorageAccountRestoreBlobRangesOperation RestoreBlobRanges(WaitUntil waitUntil, BlobRestoreContent content, CancellationToken cancellationToken = default)

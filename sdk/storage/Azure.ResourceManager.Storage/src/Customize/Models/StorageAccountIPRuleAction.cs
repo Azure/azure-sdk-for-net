@@ -12,7 +12,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> The action of IP ACL rule. </summary>
+    /// <summary> The action of an IP ACL rule. </summary>
     public readonly partial struct StorageAccountIPRuleAction : IEquatable<StorageAccountIPRuleAction>
     {
         private readonly string _value;

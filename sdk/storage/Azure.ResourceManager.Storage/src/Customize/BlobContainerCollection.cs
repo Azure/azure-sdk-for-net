@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.Storage
     {
         // Backward-compatible overload with int maxpagesize: Lists all containers.
         /// <summary> Lists all containers in the storage account via the Storage management API. Unlike the data-plane blob service, this management API does not support prefix-based filtering and the response is returned as a single page (no continuation token). </summary>
-        /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
-        /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
-        /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
+        /// <param name="maxpagesize"> Optional. The maximum number of containers that can be included in the list. </param>
+        /// <param name="filter"> Optional. When specified, only container names starting with the filter are listed. </param>
+        /// <param name="include"> Optional. Used to include properties for soft-deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Storage
 
         // Backward-compatible overload with int maxpagesize: Lists all containers.
         /// <summary> Lists all containers in the storage account via the Storage management API. Unlike the data-plane blob service, this management API does not support prefix-based filtering and the response is returned as a single page (no continuation token). </summary>
-        /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
-        /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
-        /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
+        /// <param name="maxpagesize"> Optional. The maximum number of containers that can be included in the list. </param>
+        /// <param name="filter"> Optional. When specified, only container names starting with the filter are listed. </param>
+        /// <param name="include"> Optional. Used to include properties for soft-deleted blob containers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
