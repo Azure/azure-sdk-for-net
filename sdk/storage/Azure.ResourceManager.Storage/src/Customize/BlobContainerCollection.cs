@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage
     public partial class BlobContainerCollection
     {
         // Backward-compatible overload with int maxpagesize: Lists all containers.
-        /// <summary> Lists all containers and does not support a prefix like data plane. Also SRP today does not return continuation token. </summary>
+        /// <summary> Lists all containers in the storage account via the Storage management API. Unlike the data-plane blob service, this management API does not support prefix-based filtering and the response is returned as a single page (no continuation token). </summary>
         /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage
             => GetAll(maxpagesize?.ToString(), filter, include, cancellationToken);
 
         // Backward-compatible overload with int maxpagesize: Lists all containers.
-        /// <summary> Lists all containers and does not support a prefix like data plane. Also SRP today does not return continuation token. </summary>
+        /// <summary> Lists all containers in the storage account via the Storage management API. Unlike the data-plane blob service, this management API does not support prefix-based filtering and the response is returned as a single page (no continuation token). </summary>
         /// <param name="maxpagesize"> Optional. Specified maximum number of containers that can be included in the list. </param>
         /// <param name="filter"> Optional. When specified, only container names starting with the filter will be listed. </param>
         /// <param name="include"> Optional, used to include the properties for soft deleted blob containers. </param>
