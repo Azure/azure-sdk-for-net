@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesSecurityProfileUefiSettings"/>. </summary>
-        /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine instance. </param>
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstancePropertiesSecurityProfileUefiSettings(bool? secureBootEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineInstancePropertiesSecurityProfileUefiSettings(bool? isSecureBootEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SecureBootEnabled = secureBootEnabled;
+            IsSecureBootEnabled = isSecureBootEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether secure boot should be enabled on the virtual machine instance. </summary>
-        public bool? SecureBootEnabled { get; set; }
+        public bool? IsSecureBootEnabled { get; set; }
     }
 }

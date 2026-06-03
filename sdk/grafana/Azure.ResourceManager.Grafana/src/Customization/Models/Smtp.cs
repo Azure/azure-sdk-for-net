@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// Name to be used when sending out emails. Default is "Azure Managed Grafana Notification"
         /// https://pkg.go.dev/net/mail#Address
         /// </param>
-        /// <param name="startTLSPolicy">
+        /// <param name="startTlsPolicy">
         /// The StartTLSPolicy setting of the SMTP configuration
         /// https://pkg.go.dev/github.com/go-mail/mail#StartTLSPolicy
         /// </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// https://pkg.go.dev/crypto/tls#Config
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Smtp(bool? enabled, string host, string user, string password, string fromAddress, string fromName, StartTLSPolicy? startTLSPolicy, bool? skipVerify, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Smtp(bool? enabled, string host, string user, string password, string fromAddress, string fromName, GrafanaStartTlsPolicy? startTlsPolicy, bool? skipVerify, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             Host = host;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Grafana.Models
             Password = password;
             FromAddress = fromAddress;
             FromName = fromName;
-            StartTLSPolicy = startTLSPolicy;
+            StartTlsPolicy = startTlsPolicy;
             SkipVerify = skipVerify;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// The StartTLSPolicy setting of the SMTP configuration
         /// https://pkg.go.dev/github.com/go-mail/mail#StartTLSPolicy
         /// </summary>
-        public StartTLSPolicy? StartTLSPolicy { get; set; }
+        public GrafanaStartTlsPolicy? StartTlsPolicy { get; set; }
         /// <summary>
         /// Verify SSL for SMTP server. Default is false
         /// https://pkg.go.dev/crypto/tls#Config

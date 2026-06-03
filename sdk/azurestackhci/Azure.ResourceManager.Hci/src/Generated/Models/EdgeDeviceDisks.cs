@@ -26,12 +26,18 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="id"> The unique identifier of the disk. </param>
         /// <param name="sizeInBytes"> The size of the disk in bytes. </param>
         /// <param name="type"> The type of the disk. For example, S2D or SAN. </param>
+        /// <param name="model"> Model number of the hardware. </param>
+        /// <param name="manufacturer"> The manufacturer of the disk. </param>
+        /// <param name="isSupported"> Indicates whether the manufacturer is supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeDeviceDisks(string id, string sizeInBytes, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeDeviceDisks(string id, string sizeInBytes, string @type, string model, string manufacturer, bool? isSupported, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SizeInBytes = sizeInBytes;
             Type = @type;
+            Model = model;
+            Manufacturer = manufacturer;
+            IsSupported = isSupported;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,5 +52,17 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> The type of the disk. For example, S2D or SAN. </summary>
         [WirePath("type")]
         public string Type { get; }
+
+        /// <summary> Model number of the hardware. </summary>
+        [WirePath("model")]
+        public string Model { get; }
+
+        /// <summary> The manufacturer of the disk. </summary>
+        [WirePath("manufacturer")]
+        public string Manufacturer { get; }
+
+        /// <summary> Indicates whether the manufacturer is supported. </summary>
+        [WirePath("isSupported")]
+        public bool? IsSupported { get; }
     }
 }

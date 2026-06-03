@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="routes"> Collection of routes contained within a route table. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkingRouteTable"/> instance for mocking. </returns>
-        public static HciVmNetworkingRouteTable HciVmNetworkingRouteTable(string eTag = default, string name = default, string @type = default, IEnumerable<HciVmNetworkingRoute> routes = default)
+        public static HciVmNetworkingRouteTable HciVmNetworkingRouteTable(ETag? eTag = default, string name = default, string @type = default, IEnumerable<HciVmNetworkingRoute> routes = default)
         {
             return new HciVmNetworkingRouteTable(eTag, name, @type, routes is null ? default : new RouteTableProperties((routes ?? new ChangeTrackingList<HciVmNetworkingRoute>()).ToList(), default), default);
         }
@@ -427,13 +427,13 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="ipConfigurations"> IPConfigurations - A list of IPConfigurations of the network interface. </param>
         /// <param name="macAddress"> MacAddress - The MAC address of the network interface. </param>
         /// <param name="dnsServers"> List of DNS server IP Addresses for the interface. </param>
-        /// <param name="createFromLocal"> Boolean indicating whether this is a existing local network interface or if one should be created. </param>
+        /// <param name="isCreatingFromLocal"> Boolean indicating whether this is a existing local network interface or if one should be created. </param>
         /// <param name="provisioningState"> Provisioning state of the network interface. </param>
         /// <param name="status"> The observed state of network interfaces. </param>
         /// <param name="networkSecurityGroupId"> The Azure Resource ID for a Network Security Group. </param>
         /// <param name="isSdnPoliciesBypassed"> This setting is applicable only when SDN is supported and enabled in the environment. Indicates whether SDN policies should be bypassed for this network interface. By default, SDN is enabled. Set this value to true only if you want to disable SDN for the network interface. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkInterfaceProperties"/> instance for mocking. </returns>
-        public static HciVmNetworkInterfaceProperties HciVmNetworkInterfaceProperties(IEnumerable<HciVmIPConfiguration> ipConfigurations = default, string macAddress = default, IEnumerable<string> dnsServers = default, bool? createFromLocal = default, HciVmProvisioningState? provisioningState = default, HciVmNetworkInterfaceStatus status = default, ResourceIdentifier networkSecurityGroupId = default, bool? isSdnPoliciesBypassed = default)
+        public static HciVmNetworkInterfaceProperties HciVmNetworkInterfaceProperties(IEnumerable<HciVmIPConfiguration> ipConfigurations = default, string macAddress = default, IEnumerable<string> dnsServers = default, bool? isCreatingFromLocal = default, HciVmProvisioningState? provisioningState = default, HciVmNetworkInterfaceStatus status = default, ResourceIdentifier networkSecurityGroupId = default, bool? isSdnPoliciesBypassed = default)
         {
             ipConfigurations ??= new ChangeTrackingList<HciVmIPConfiguration>();
 
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 (ipConfigurations ?? new ChangeTrackingList<HciVmIPConfiguration>()).ToList(),
                 macAddress,
                 dnsServers is null ? default : new HciVmInterfaceDnsSettings((dnsServers ?? new ChangeTrackingList<string>()).ToList(), default),
-                createFromLocal,
+                isCreatingFromLocal,
                 provisioningState,
                 status,
                 networkSecurityGroupId is null ? default : new NetworkSecurityGroupArmReference(networkSecurityGroupId, default),
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="Vm.HciVmNetworkSecurityGroupData"/> instance for mocking. </returns>
-        public static HciVmNetworkSecurityGroupData HciVmNetworkSecurityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkSecurityGroupProperties properties = default, HciVmExtendedLocation extendedLocation = default, string eTag = default)
+        public static HciVmNetworkSecurityGroupData HciVmNetworkSecurityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkSecurityGroupProperties properties = default, HciVmExtendedLocation extendedLocation = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <param name="blockSizeInBytes"> Block size in bytes. </param>
         /// <param name="diskSizeInGB"> Size of the disk in GB. </param>
-        /// <param name="dynamic"> Boolean for enabling dynamic sizing on the virtual hard disk. </param>
+        /// <param name="isDynamic"> Boolean for enabling dynamic sizing on the virtual hard disk. </param>
         /// <param name="logicalSectorInBytes"> Logical sector in bytes. </param>
         /// <param name="physicalSectorInBytes"> Physical sector in bytes. </param>
         /// <param name="downloadUri"> URL for downloading or accessing the virtual hard disk. This URL points to a secure link from where the VHD can be downloaded or accessed directly. </param>
@@ -742,12 +742,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The observed state of virtual hard disks. </param>
         /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualHardDiskProperties"/> instance for mocking. </returns>
-        public static HciVmVirtualHardDiskProperties HciVmVirtualHardDiskProperties(int? blockSizeInBytes = default, long? diskSizeInGB = default, bool? dynamic = default, int? logicalSectorInBytes = default, int? physicalSectorInBytes = default, Uri downloadUri = default, HciVmHyperVGeneration? hyperVGeneration = default, HciVmDiskFileFormat? diskFileFormat = default, bool? isCreatingFromLocal = default, string localVhdPath = default, HciVmProvisioningState? provisioningState = default, ResourceIdentifier containerId = default, HciVmVirtualHardDiskStatus status = default, long? maxShares = default)
+        public static HciVmVirtualHardDiskProperties HciVmVirtualHardDiskProperties(int? blockSizeInBytes = default, long? diskSizeInGB = default, bool? isDynamic = default, int? logicalSectorInBytes = default, int? physicalSectorInBytes = default, Uri downloadUri = default, HciVmHyperVGeneration? hyperVGeneration = default, HciVmDiskFileFormat? diskFileFormat = default, bool? isCreatingFromLocal = default, string localVhdPath = default, HciVmProvisioningState? provisioningState = default, ResourceIdentifier containerId = default, HciVmVirtualHardDiskStatus status = default, long? maxShares = default)
         {
             return new HciVmVirtualHardDiskProperties(
                 blockSizeInBytes,
                 diskSizeInGB,
-                dynamic,
+                isDynamic,
                 logicalSectorInBytes,
                 physicalSectorInBytes,
                 downloadUri,
@@ -946,11 +946,11 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <param name="zone"> The zone in which the VM should be placed in. </param>
-        /// <param name="strictPlacementPolicy"> Specifies whether VM can only failover strictly within the zone it was placed in. </param>
+        /// <param name="isStrictPlacementPolicyEnabled"> Specifies whether VM can only failover strictly within the zone it was placed in. </param>
         /// <returns> A new <see cref="Models.HciVmInstancePlacementProfile"/> instance for mocking. </returns>
-        public static HciVmInstancePlacementProfile HciVmInstancePlacementProfile(string zone = default, bool? strictPlacementPolicy = default)
+        public static HciVmInstancePlacementProfile HciVmInstancePlacementProfile(string zone = default, bool? isStrictPlacementPolicyEnabled = default)
         {
-            return new HciVmInstancePlacementProfile(zone, strictPlacementPolicy, default);
+            return new HciVmInstancePlacementProfile(zone, isStrictPlacementPolicyEnabled, default);
         }
 
         /// <param name="adminPassword"> AdminPassword - admin password. </param>
@@ -972,12 +972,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <param name="disablePasswordAuthentication"> DisablePasswordAuthentication - whether password authentication should be disabled. </param>
         /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
-        /// <param name="provisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
-        /// <param name="provisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
+        /// <param name="shouldProvisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
+        /// <param name="shouldProvisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
         /// <returns> A new <see cref="Models.HciVmInstanceOSProfileLinuxConfiguration"/> instance for mocking. </returns>
-        public static HciVmInstanceOSProfileLinuxConfiguration HciVmInstanceOSProfileLinuxConfiguration(bool? disablePasswordAuthentication = default, IEnumerable<HciVmOSProfileSshPublicKey> sshPublicKeys = default, bool? provisionVmAgent = default, bool? provisionVmConfigAgent = default)
+        public static HciVmInstanceOSProfileLinuxConfiguration HciVmInstanceOSProfileLinuxConfiguration(bool? disablePasswordAuthentication = default, IEnumerable<HciVmOSProfileSshPublicKey> sshPublicKeys = default, bool? shouldProvisionVmAgent = default, bool? shouldProvisionVmConfigAgent = default)
         {
-            return new HciVmInstanceOSProfileLinuxConfiguration(disablePasswordAuthentication, sshPublicKeys is null ? default : new HciVmOSProfileSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<HciVmOSProfileSshPublicKey>()).ToList(), default), provisionVmAgent, provisionVmConfigAgent, default);
+            return new HciVmInstanceOSProfileLinuxConfiguration(disablePasswordAuthentication, sshPublicKeys is null ? default : new HciVmOSProfileSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<HciVmOSProfileSshPublicKey>()).ToList(), default), shouldProvisionVmAgent, shouldProvisionVmConfigAgent, default);
         }
 
         /// <param name="path"> Specifies the full path on the created VM where ssh public key is stored. If the file already exists, the specified key is appended to the file. Example: /home/user/.ssh/authorized_keys. </param>
@@ -991,27 +991,27 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="enableAutomaticUpdates"> Whether to EnableAutomaticUpdates on the machine. </param>
         /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
         /// <param name="timeZone"> TimeZone for the virtual machine instance. </param>
-        /// <param name="provisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
-        /// <param name="provisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
+        /// <param name="shouldProvisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
+        /// <param name="shouldProvisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
         /// <returns> A new <see cref="Models.HciVmInstanceOSProfileWindowsConfiguration"/> instance for mocking. </returns>
-        public static HciVmInstanceOSProfileWindowsConfiguration HciVmInstanceOSProfileWindowsConfiguration(bool? enableAutomaticUpdates = default, IEnumerable<HciVmOSProfileSshPublicKey> sshPublicKeys = default, string timeZone = default, bool? provisionVmAgent = default, bool? provisionVmConfigAgent = default)
+        public static HciVmInstanceOSProfileWindowsConfiguration HciVmInstanceOSProfileWindowsConfiguration(bool? enableAutomaticUpdates = default, IEnumerable<HciVmOSProfileSshPublicKey> sshPublicKeys = default, string timeZone = default, bool? shouldProvisionVmAgent = default, bool? shouldProvisionVmConfigAgent = default)
         {
             return new HciVmInstanceOSProfileWindowsConfiguration(
                 enableAutomaticUpdates,
                 sshPublicKeys is null ? default : new HciVmOSProfileSshConfiguration((sshPublicKeys ?? new ChangeTrackingList<HciVmOSProfileSshPublicKey>()).ToList(), default),
                 timeZone,
-                provisionVmAgent,
-                provisionVmConfigAgent,
+                shouldProvisionVmAgent,
+                shouldProvisionVmConfigAgent,
                 default);
         }
 
         /// <param name="isTpmEnabled"> Enable TPM flag. </param>
-        /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine instance. </param>
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine instance. </param>
         /// <param name="securityType"> Specifies the SecurityType of the virtual machine. EnableTPM and SecureBootEnabled must be set to true for SecurityType to function. </param>
         /// <returns> A new <see cref="Models.HciVmInstanceSecurityProfile"/> instance for mocking. </returns>
-        public static HciVmInstanceSecurityProfile HciVmInstanceSecurityProfile(bool? isTpmEnabled = default, bool? secureBootEnabled = default, HciVmSecurityType? securityType = default)
+        public static HciVmInstanceSecurityProfile HciVmInstanceSecurityProfile(bool? isTpmEnabled = default, bool? isSecureBootEnabled = default, HciVmSecurityType? securityType = default)
         {
-            return new HciVmInstanceSecurityProfile(isTpmEnabled, secureBootEnabled is null ? default : new VirtualMachineInstancePropertiesSecurityProfileUefiSettings(secureBootEnabled, default), securityType, default);
+            return new HciVmInstanceSecurityProfile(isTpmEnabled, isSecureBootEnabled is null ? default : new VirtualMachineInstancePropertiesSecurityProfileUefiSettings(isSecureBootEnabled, default), securityType, default);
         }
 
         /// <param name="dataDisks"> adds data disks to the virtual machine instance. </param>
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="networkInterfaces"> NetworkInterfaces - list of network interfaces to be attached to the virtual machine instance. </param>
         /// <param name="osProfile"> OsProfile - describes the update configuration of the operating system. </param>
         /// <returns> A new <see cref="Models.HciVmInstancePatchProperties"/> instance for mocking. </returns>
-        public static HciVmInstancePatchProperties HciVmInstancePatchProperties(HciVmInstanceHardwareProfileUpdate hardwareProfile = default, IEnumerable<HciVmVirtualHardDiskArmReference> storageDataDisks = default, IEnumerable<HciVmNetworkInterfaceArmReference> networkInterfaces = default, HciVmOSProfile osProfile = default)
+        public static HciVmInstancePatchProperties HciVmInstancePatchProperties(HciVmInstanceHardwareProfilePatch hardwareProfile = default, IEnumerable<HciVmVirtualHardDiskArmReference> storageDataDisks = default, IEnumerable<HciVmNetworkInterfaceArmReference> networkInterfaces = default, HciVmOSProfile osProfile = default)
         {
             return new HciVmInstancePatchProperties(hardwareProfile, storageDataDisks is null ? default : new StorageProfileUpdate((storageDataDisks ?? new ChangeTrackingList<HciVmVirtualHardDiskArmReference>()).ToList(), default), networkInterfaces is null ? default : new NetworkProfileUpdate((networkInterfaces ?? new ChangeTrackingList<HciVmNetworkInterfaceArmReference>()).ToList(), default), osProfile, default);
         }
@@ -1140,12 +1140,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="processors"> number of processors for the virtual machine instance. </param>
         /// <param name="memoryInMB"> RAM in MB for the virtual machine instance. </param>
         /// <param name="virtualMachineGPUs"> virtualMachineGPUs - updated list of GPUs on the virtual machine instance. </param>
-        /// <returns> A new <see cref="Models.HciVmInstanceHardwareProfileUpdate"/> instance for mocking. </returns>
-        public static HciVmInstanceHardwareProfileUpdate HciVmInstanceHardwareProfileUpdate(HciVmSize? vmSize = default, int? processors = default, long? memoryInMB = default, IEnumerable<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs = default)
+        /// <returns> A new <see cref="Models.HciVmInstanceHardwareProfilePatch"/> instance for mocking. </returns>
+        public static HciVmInstanceHardwareProfilePatch HciVmInstanceHardwareProfilePatch(HciVmSize? vmSize = default, int? processors = default, long? memoryInMB = default, IEnumerable<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs = default)
         {
             virtualMachineGPUs ??= new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>();
 
-            return new HciVmInstanceHardwareProfileUpdate(vmSize, processors, memoryInMB, (virtualMachineGPUs ?? new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>()).ToList(), default);
+            return new HciVmInstanceHardwareProfilePatch(vmSize, processors, memoryInMB, (virtualMachineGPUs ?? new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>()).ToList(), default);
         }
 
         /// <param name="computerName"> ComputerName - name of the computer. </param>
@@ -1157,20 +1157,20 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmOSProfile(computerName, linuxConfiguration, windowsConfiguration, default);
         }
 
-        /// <param name="provisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
-        /// <param name="provisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
+        /// <param name="shouldProvisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
+        /// <param name="shouldProvisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
         /// <returns> A new <see cref="Models.HciVmOSProfileLinuxConfiguration"/> instance for mocking. </returns>
-        public static HciVmOSProfileLinuxConfiguration HciVmOSProfileLinuxConfiguration(bool? provisionVmAgent = default, bool? provisionVmConfigAgent = default)
+        public static HciVmOSProfileLinuxConfiguration HciVmOSProfileLinuxConfiguration(bool? shouldProvisionVmAgent = default, bool? shouldProvisionVmConfigAgent = default)
         {
-            return new HciVmOSProfileLinuxConfiguration(provisionVmAgent, provisionVmConfigAgent, default);
+            return new HciVmOSProfileLinuxConfiguration(shouldProvisionVmAgent, shouldProvisionVmConfigAgent, default);
         }
 
-        /// <param name="provisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
-        /// <param name="provisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
+        /// <param name="shouldProvisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
+        /// <param name="shouldProvisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
         /// <returns> A new <see cref="Models.HciVmOSProfileWindowsConfiguration"/> instance for mocking. </returns>
-        public static HciVmOSProfileWindowsConfiguration HciVmOSProfileWindowsConfiguration(bool? provisionVmAgent = default, bool? provisionVmConfigAgent = default)
+        public static HciVmOSProfileWindowsConfiguration HciVmOSProfileWindowsConfiguration(bool? shouldProvisionVmAgent = default, bool? shouldProvisionVmConfigAgent = default)
         {
-            return new HciVmOSProfileWindowsConfiguration(provisionVmAgent, provisionVmConfigAgent, default);
+            return new HciVmOSProfileWindowsConfiguration(shouldProvisionVmAgent, shouldProvisionVmConfigAgent, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

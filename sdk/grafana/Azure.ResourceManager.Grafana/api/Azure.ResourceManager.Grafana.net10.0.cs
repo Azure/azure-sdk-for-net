@@ -485,8 +485,8 @@ namespace Azure.ResourceManager.Grafana.Models
         public static Azure.ResourceManager.Grafana.GrafanaPrivateEndpointConnectionData GrafanaPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Grafana.Models.GrafanaPrivateLinkServiceConnectionState connectionState = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointConnectionProvisioningState?), Azure.Core.ResourceIdentifier privateEndpointId = null) { throw null; }
         public static Azure.ResourceManager.Grafana.GrafanaPrivateLinkResourceData GrafanaPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState? provisioningState = default(Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState?), string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.Grafana.Models.GrafanaPrivateLinkServiceConnectionState GrafanaPrivateLinkServiceConnectionState(Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointServiceConnectionStatus? status = default(Azure.ResourceManager.Grafana.Models.GrafanaPrivateEndpointServiceConnectionStatus?), string description = null, string actionsRequired = null) { throw null; }
-        public static Azure.ResourceManager.Grafana.Models.GrafanaSmtpSettings GrafanaSmtpSettings(bool? isEnabled = default(bool?), string host = null, string user = null, string password = null, string fromAddress = null, string fromName = null, Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy? startTLSPolicy = default(Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy?), bool? skipVerify = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.Grafana.Models.GrafanaUserSettings GrafanaUserSettings(bool? viewersCanEdit = default(bool?), bool? editorsCanAdmin = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Grafana.Models.GrafanaSmtpSettings GrafanaSmtpSettings(bool? isEnabled = default(bool?), string host = null, string user = null, string password = null, string fromAddress = null, string fromName = null, Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy? startTlsPolicy = default(Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy?), bool? skipVerify = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Grafana.Models.GrafanaUserSettings GrafanaUserSettings(bool? canViewersEdit = default(bool?), bool? canEditorsAdmin = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Grafana.ManagedDashboardData ManagedDashboardData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState? provisioningState = default(Azure.ResourceManager.Grafana.Models.GrafanaProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Grafana.Models.ManagedDashboardPatch ManagedDashboardPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Grafana.ManagedGrafanaData ManagedGrafanaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Grafana.Models.ManagedGrafanaProperties properties = null, Azure.ResourceManager.Grafana.Models.ManagedGrafanaSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public bool? SkipVerify { get { throw null; } set { } }
-        public Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy? StartTLSPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy? StartTlsPolicy { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Grafana.Models.GrafanaSmtpSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -868,8 +868,8 @@ namespace Azure.ResourceManager.Grafana.Models
     public partial class GrafanaUserSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Grafana.Models.GrafanaUserSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.GrafanaUserSettings>
     {
         public GrafanaUserSettings() { }
-        public bool? EditorsCanAdmin { get { throw null; } set { } }
-        public bool? ViewersCanEdit { get { throw null; } set { } }
+        public bool? CanEditorsAdmin { get { throw null; } set { } }
+        public bool? CanViewersEdit { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Grafana.Models.GrafanaUserSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Grafana.Models.GrafanaUserSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public string Host { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public bool? SkipVerify { get { throw null; } set { } }
-        public Azure.ResourceManager.Grafana.Models.StartTLSPolicy? StartTLSPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.Grafana.Models.GrafanaStartTlsPolicy? StartTlsPolicy { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Grafana.Models.Smtp System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Grafana.Models.Smtp>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1131,24 +1131,6 @@ namespace Azure.ResourceManager.Grafana.Models
         Azure.ResourceManager.Grafana.Models.Smtp System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.Smtp>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.Smtp>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.Smtp>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.ObsoleteAttribute("This struct is obsolete and will be removed in a future release", false)]
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StartTLSPolicy : System.IEquatable<Azure.ResourceManager.Grafana.Models.StartTLSPolicy>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StartTLSPolicy(string value) { throw null; }
-        public static Azure.ResourceManager.Grafana.Models.StartTLSPolicy MandatoryStartTLS { get { throw null; } }
-        public static Azure.ResourceManager.Grafana.Models.StartTLSPolicy NoStartTLS { get { throw null; } }
-        public static Azure.ResourceManager.Grafana.Models.StartTLSPolicy OpportunisticStartTLS { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Grafana.Models.StartTLSPolicy other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Grafana.Models.StartTLSPolicy left, Azure.ResourceManager.Grafana.Models.StartTLSPolicy right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Grafana.Models.StartTLSPolicy (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Grafana.Models.StartTLSPolicy left, Azure.ResourceManager.Grafana.Models.StartTLSPolicy right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class SubscriptionTerm : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Grafana.Models.SubscriptionTerm>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Grafana.Models.SubscriptionTerm>
     {
