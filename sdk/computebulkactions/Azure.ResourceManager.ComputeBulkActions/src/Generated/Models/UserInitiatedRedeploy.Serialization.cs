@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 throw new FormatException($"The model {nameof(UserInitiatedRedeploy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutomaticallyApprove))
+            if (Optional.IsDefined(IsRedeployAutomaticallyApproved))
             {
                 writer.WritePropertyName("automaticallyApprove"u8);
-                writer.WriteBooleanValue(AutomaticallyApprove.Value);
+                writer.WriteBooleanValue(IsRedeployAutomaticallyApproved.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            bool? automaticallyApprove = default;
+            bool? isRedeployAutomaticallyApproved = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    automaticallyApprove = prop.Value.GetBoolean();
+                    isRedeployAutomaticallyApproved = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserInitiatedRedeploy(automaticallyApprove, additionalBinaryDataProperties);
+            return new UserInitiatedRedeploy(isRedeployAutomaticallyApproved, additionalBinaryDataProperties);
         }
     }
 }

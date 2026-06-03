@@ -48,6 +48,40 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <summary> The configuration parameters used while creating AllInstancesDown scheduled event setting creation. </summary>
         internal AllInstancesDown AllInstancesDown { get; set; }
 
+        /// <summary> Specifies Redeploy Scheduled Event related configurations. </summary>
+        public bool? IsRedeployAutomaticallyApproved
+        {
+            get
+            {
+                return UserInitiatedRedeploy is null ? default : UserInitiatedRedeploy.IsRedeployAutomaticallyApproved;
+            }
+            set
+            {
+                if (UserInitiatedRedeploy is null)
+                {
+                    UserInitiatedRedeploy = new UserInitiatedRedeploy();
+                }
+                UserInitiatedRedeploy.IsRedeployAutomaticallyApproved = value;
+            }
+        }
+
+        /// <summary> Specifies Reboot Scheduled Event related configurations. </summary>
+        public bool? IsRebootAutomaticallyApproved
+        {
+            get
+            {
+                return UserInitiatedReboot is null ? default : UserInitiatedReboot.IsRebootAutomaticallyApproved;
+            }
+            set
+            {
+                if (UserInitiatedReboot is null)
+                {
+                    UserInitiatedReboot = new UserInitiatedReboot();
+                }
+                UserInitiatedReboot.IsRebootAutomaticallyApproved = value;
+            }
+        }
+
         /// <summary> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </summary>
         public ComputeBulkActionsEventGridAndResourceGraph ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph
         {
@@ -62,6 +96,23 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     ScheduledEventsAdditionalPublishingTargets = new ScheduledEventsAdditionalPublishingTargets();
                 }
                 ScheduledEventsAdditionalPublishingTargets.EventGridAndResourceGraph = value;
+            }
+        }
+
+        /// <summary> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </summary>
+        public bool? IsAllInstancesDownAutomaticallyApproved
+        {
+            get
+            {
+                return AllInstancesDown is null ? default : AllInstancesDown.IsAllInstancesDownAutomaticallyApproved;
+            }
+            set
+            {
+                if (AllInstancesDown is null)
+                {
+                    AllInstancesDown = new AllInstancesDown();
+                }
+                AllInstancesDown.IsAllInstancesDownAutomaticallyApproved = value;
             }
         }
     }

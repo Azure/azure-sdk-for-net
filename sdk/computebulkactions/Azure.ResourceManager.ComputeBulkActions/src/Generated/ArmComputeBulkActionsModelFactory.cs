@@ -249,12 +249,14 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 default);
         }
 
-        /// <param name="automaticallyApprove"> Specifies Redeploy Scheduled Event related configurations. </param>
+        /// <param name="isRedeployAutomaticallyApproved"> Specifies Redeploy Scheduled Event related configurations. </param>
+        /// <param name="isRebootAutomaticallyApproved"> Specifies Reboot Scheduled Event related configurations. </param>
         /// <param name="scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph"> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </param>
+        /// <param name="isAllInstancesDownAutomaticallyApproved"> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </param>
         /// <returns> A new <see cref="Models.ComputeBulkActionsScheduledEventsPolicy"/> instance for mocking. </returns>
-        public static ComputeBulkActionsScheduledEventsPolicy ComputeBulkActionsScheduledEventsPolicy(bool? automaticallyApprove = default, ComputeBulkActionsEventGridAndResourceGraph scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = default)
+        public static ComputeBulkActionsScheduledEventsPolicy ComputeBulkActionsScheduledEventsPolicy(bool? isRedeployAutomaticallyApproved = default, bool? isRebootAutomaticallyApproved = default, ComputeBulkActionsEventGridAndResourceGraph scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph = default, bool? isAllInstancesDownAutomaticallyApproved = default)
         {
-            return new ComputeBulkActionsScheduledEventsPolicy(automaticallyApprove is null ? default : new UserInitiatedRedeploy(automaticallyApprove, default), automaticallyApprove is null ? default : new UserInitiatedReboot(automaticallyApprove, default), scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph is null ? default : new ScheduledEventsAdditionalPublishingTargets(scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph, default), automaticallyApprove is null ? default : new AllInstancesDown(automaticallyApprove, default), default);
+            return new ComputeBulkActionsScheduledEventsPolicy(isRedeployAutomaticallyApproved is null ? default : new UserInitiatedRedeploy(isRedeployAutomaticallyApproved, default), isRebootAutomaticallyApproved is null ? default : new UserInitiatedReboot(isRebootAutomaticallyApproved, default), scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph is null ? default : new ScheduledEventsAdditionalPublishingTargets(scheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph, default), isAllInstancesDownAutomaticallyApproved is null ? default : new AllInstancesDown(isAllInstancesDownAutomaticallyApproved, default), default);
         }
 
         /// <param name="isEnabled"> Specifies if event grid and resource graph is enabled for Scheduled event related configurations. </param>
@@ -915,6 +917,25 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static BulkActionRetryPolicy BulkActionRetryPolicy(int? retryCount = default, int? retryWindowInMinutes = default)
         {
             return new BulkActionRetryPolicy(retryCount, retryWindowInMinutes, default);
+        }
+
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="properties"> Additional information, if available. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <returns> A new <see cref="Models.ComputeBulkActionsOperationStatusResult"/> instance for mocking. </returns>
+        public static ComputeBulkActionsOperationStatusResult ComputeBulkActionsOperationStatusResult(string id = default, string name = default, string status = default, IDictionary<string, string> properties = default, ResponseError error = default)
+        {
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ComputeBulkActionsOperationStatusResult(
+                id,
+                name,
+                status,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                error,
+                default);
         }
 
         /// <param name="name"> The name of the virtual machine. </param>

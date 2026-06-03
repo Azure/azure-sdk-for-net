@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 throw new FormatException($"The model {nameof(AllInstancesDown)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AutomaticallyApprove))
+            if (Optional.IsDefined(IsAllInstancesDownAutomaticallyApproved))
             {
                 writer.WritePropertyName("automaticallyApprove"u8);
-                writer.WriteBooleanValue(AutomaticallyApprove.Value);
+                writer.WriteBooleanValue(IsAllInstancesDownAutomaticallyApproved.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             {
                 return null;
             }
-            bool? automaticallyApprove = default;
+            bool? isAllInstancesDownAutomaticallyApproved = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     {
                         continue;
                     }
-                    automaticallyApprove = prop.Value.GetBoolean();
+                    isAllInstancesDownAutomaticallyApproved = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AllInstancesDown(automaticallyApprove, additionalBinaryDataProperties);
+            return new AllInstancesDown(isAllInstancesDownAutomaticallyApproved, additionalBinaryDataProperties);
         }
     }
 }

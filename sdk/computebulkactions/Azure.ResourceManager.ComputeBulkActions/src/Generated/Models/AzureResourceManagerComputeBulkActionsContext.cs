@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.ComputeBulkActions
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsNetworkInterfaceReference))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsNetworkInterfaceReferenceProperties))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsNetworkProfile))]
+    [ModelReaderWriterBuildable(typeof(ComputeBulkActionsOperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsOSDisk))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsOSImageNotificationProfile))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkActionsOSProfile))]

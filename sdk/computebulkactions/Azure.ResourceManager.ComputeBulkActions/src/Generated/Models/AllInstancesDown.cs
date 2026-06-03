@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AllInstancesDown"/>. </summary>
-        /// <param name="automaticallyApprove"> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </param>
+        /// <param name="isAllInstancesDownAutomaticallyApproved"> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AllInstancesDown(bool? automaticallyApprove, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AllInstancesDown(bool? isAllInstancesDownAutomaticallyApproved, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AutomaticallyApprove = automaticallyApprove;
+            IsAllInstancesDownAutomaticallyApproved = isAllInstancesDownAutomaticallyApproved;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies if Scheduled Events should be auto-approved when all instances are down. Its default value is true. </summary>
-        public bool? AutomaticallyApprove { get; set; }
+        public bool? IsAllInstancesDownAutomaticallyApproved { get; set; }
     }
 }
