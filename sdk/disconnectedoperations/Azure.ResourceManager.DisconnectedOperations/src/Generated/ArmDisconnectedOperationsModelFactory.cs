@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDisconnectedOperationsModelFactory
     {
-        /// <summary> Disconnected operation resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -36,13 +35,12 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The disconnected operation properties. </summary>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="stampId"> The unique GUID of the stamp. </param>
         /// <param name="billingModel"> The billing model. </param>
@@ -65,10 +63,9 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 deviceVersion,
                 billingConfiguration,
                 benefitPlans,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The billing configuration. </summary>
         /// <param name="autoRenew"> The auto renew setting. </param>
         /// <param name="billingStatus"> The billing status. </param>
         /// <param name="current"> The current billing configuration. </param>
@@ -76,10 +73,9 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <returns> A new <see cref="Models.DisconnectedOperationsBillingConfiguration"/> instance for mocking. </returns>
         public static DisconnectedOperationsBillingConfiguration DisconnectedOperationsBillingConfiguration(DisconnectedOperationsAutoRenew autoRenew = default, DisconnectedOperationsBillingStatus billingStatus = default, DisconnectedOperationsBillingPeriod current = default, DisconnectedOperationsBillingPeriod upcoming = default)
         {
-            return new DisconnectedOperationsBillingConfiguration(autoRenew, billingStatus, current, upcoming, additionalBinaryDataProperties: null);
+            return new DisconnectedOperationsBillingConfiguration(autoRenew, billingStatus, current, upcoming, default);
         }
 
-        /// <summary> The billing period. </summary>
         /// <param name="cores"> The number of cores. </param>
         /// <param name="pricingModel"> The pricing model. </param>
         /// <param name="startOn"> The billing start date. </param>
@@ -87,10 +83,17 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <returns> A new <see cref="Models.DisconnectedOperationsBillingPeriod"/> instance for mocking. </returns>
         public static DisconnectedOperationsBillingPeriod DisconnectedOperationsBillingPeriod(int cores = default, DisconnectedOperationsPricingModel pricingModel = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
         {
-            return new DisconnectedOperationsBillingPeriod(cores, pricingModel, startOn, endOn, additionalBinaryDataProperties: null);
+            return new DisconnectedOperationsBillingPeriod(cores, pricingModel, startOn, endOn, default);
         }
 
-        /// <summary> The type used for update operations of the DisconnectedOperation. </summary>
+        /// <param name="azureHybridWindowsServerBenefit"> Azure Hybrid Windows Server Benefit plan. </param>
+        /// <param name="windowsServerVmCount"> Number of Windows Server VMs to license under the Azure Hybrid Benefit plan. </param>
+        /// <returns> A new <see cref="Models.DisconnectedOperationsBenefitPlans"/> instance for mocking. </returns>
+        public static DisconnectedOperationsBenefitPlans DisconnectedOperationsBenefitPlans(DisconnectedOperationsBenefitPlanStatus? azureHybridWindowsServerBenefit = default, int? windowsServerVmCount = default)
+        {
+            return new DisconnectedOperationsBenefitPlans(azureHybridWindowsServerBenefit, windowsServerVmCount, default);
+        }
+
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.DisconnectedOperationPatch"/> instance for mocking. </returns>
@@ -98,10 +101,26 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DisconnectedOperationPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new DisconnectedOperationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <summary> The disconnected operation manifest. </summary>
+        /// <param name="connectionIntent"> The connection intent. </param>
+        /// <param name="registrationStatus"> The registration intent. </param>
+        /// <param name="deviceVersion"> The device version. </param>
+        /// <param name="billingConfiguration"> The billing configuration. </param>
+        /// <param name="benefitPlans"> The benefit plans. </param>
+        /// <returns> A new <see cref="Models.DisconnectedOperationUpdateProperties"/> instance for mocking. </returns>
+        public static DisconnectedOperationUpdateProperties DisconnectedOperationUpdateProperties(DisconnectedOperationsConnectionIntent? connectionIntent = default, DisconnectedOperationsRegistrationStatus? registrationStatus = default, string deviceVersion = default, DisconnectedOperationsBillingConfiguration billingConfiguration = default, DisconnectedOperationsBenefitPlans benefitPlans = default)
+        {
+            return new DisconnectedOperationUpdateProperties(
+                connectionIntent,
+                registrationStatus,
+                deviceVersion,
+                billingConfiguration,
+                benefitPlans,
+                default);
+        }
+
         /// <param name="resourceId"> The resource identifier of the disconnected operations resource. </param>
         /// <param name="resourceName"> The resource name. </param>
         /// <param name="stampId"> The unique GUID of the stamp. </param>
@@ -124,10 +143,9 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 cloud,
                 billingConfiguration,
                 benefitPlans,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Holds the release information of a disconnected operations image. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -141,11 +159,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The image properties. </summary>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="releaseVersion"> The version of the package in the format 1.1.1. </param>
         /// <param name="releaseDisplayName"> The release name. </param>
@@ -166,12 +183,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 releaseNotes,
                 releaseOn,
                 releaseType,
-                compatibleVersions.ToList(),
+                (compatibleVersions ?? new ChangeTrackingList<string>()).ToList(),
                 updateProperties,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The update properties of the Update Release type Image. </summary>
         /// <param name="systemReboot"> Indicates if a system reboot is required after applying the update. </param>
         /// <param name="securityUpdates"> Details of security updates included in this image release. </param>
         /// <param name="osVersion"> The operating system version provided by this image update. </param>
@@ -186,10 +202,9 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 osVersion,
                 agentVersion,
                 featureUpdates,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The image download properties. </summary>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="releaseVersion"> The version of the package in the format 1.1.1. </param>
         /// <param name="releaseDisplayName"> The release name. </param>
@@ -213,15 +228,14 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 releaseNotes,
                 releaseOn,
                 releaseType,
-                compatibleVersions.ToList(),
+                (compatibleVersions ?? new ChangeTrackingList<string>()).ToList(),
                 updateProperties,
                 transactionId,
                 downloadLink,
                 linkExpiresOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Disconnected operations artifact resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -235,11 +249,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The artifact properties. </summary>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="artifactOrder"> The artifact display order. </param>
         /// <param name="title"> The artifact title. </param>
@@ -254,10 +267,9 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 title,
                 description,
                 size,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The artifact download properties. </summary>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="artifactOrder"> The artifact display order. </param>
         /// <param name="title"> The artifact title. </param>
@@ -276,10 +288,9 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 size,
                 downloadLink,
                 linkExpiresOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Hardware settings resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -293,11 +304,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The hardware setting properties. </summary>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="totalCores"> The total number of cores. </param>
         /// <param name="diskSpaceInGb"> The disk space in GB. </param>
@@ -322,7 +332,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 versionAtRegistration,
                 solutionBuilderExtension,
                 deviceId,
-                additionalBinaryDataProperties: null);
+                default);
         }
     }
 }

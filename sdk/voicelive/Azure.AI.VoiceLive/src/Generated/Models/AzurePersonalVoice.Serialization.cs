@@ -88,15 +88,15 @@ namespace Azure.AI.VoiceLive
             }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model.ToString());
-            if (Optional.IsDefined(CustomLexiconUrl))
+            if (Optional.IsDefined(CustomLexiconUri))
             {
                 writer.WritePropertyName("custom_lexicon_url"u8);
-                writer.WriteStringValue(CustomLexiconUrl);
+                writer.WriteStringValue(CustomLexiconUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(CustomTextNormalizationUrl))
+            if (Optional.IsDefined(CustomTextNormalizationUri))
             {
                 writer.WritePropertyName("custom_text_normalization_url"u8);
-                writer.WriteStringValue(CustomTextNormalizationUrl);
+                writer.WriteStringValue(CustomTextNormalizationUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(PreferLocales))
             {
@@ -170,8 +170,8 @@ namespace Azure.AI.VoiceLive
             string name = default;
             float? temperature = default;
             PersonalVoiceModels model = default;
-            string customLexiconUrl = default;
-            string customTextNormalizationUrl = default;
+            Uri customLexiconUri = default;
+            Uri customTextNormalizationUri = default;
             IList<string> preferLocales = default;
             string locale = default;
             string style = default;
@@ -206,12 +206,20 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("custom_lexicon_url"u8))
                 {
-                    customLexiconUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customLexiconUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("custom_text_normalization_url"u8))
                 {
-                    customTextNormalizationUrl = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customTextNormalizationUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("prefer_locales"u8))
@@ -271,8 +279,8 @@ namespace Azure.AI.VoiceLive
                 name,
                 temperature,
                 model,
-                customLexiconUrl,
-                customTextNormalizationUrl,
+                customLexiconUri,
+                customTextNormalizationUri,
                 preferLocales ?? new ChangeTrackingList<string>(),
                 locale,
                 style,
