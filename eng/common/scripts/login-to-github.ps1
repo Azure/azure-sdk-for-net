@@ -131,7 +131,7 @@ function Get-GitHubInstallationId {
     $resp | Foreach-Object { Write-Host "  $($_.id): $($_.account.login) [$($_.target_type)]" }
 
     $resp = $resp | Where-Object { $_.account.login -ieq $InstallationTokenOwner }
-    if (!$resp.id) { throw "No installations found for this App." }
+    if ($null -eq $resp -or !$resp.id) { throw "No installation found for '$InstallationTokenOwner' in this App. Verify the App is installed on that org/user." }
     return $resp.id
 }
 
@@ -154,8 +154,10 @@ $jwt = New-GitHubAppJwt -VaultName $KeyVaultName -KeyName $KeyName -AppId $GitHu
 
 foreach ($InstallationTokenOwner in $InstallationTokenOwners) 
 {
-  Write-Host "Fetching installation ID for $InstallationTokenOwner ..."
-  $installationId = Get-GitHubInstallationId -Jwt $jwt -ApiBase $GitHubApiBaseUrl -ApiVersion $GitHubApiVersion -InstallationTokenOwner $InstallationTokenOwner
+  # Token owners can be provided as either "owner" or "owner/repo". Normalize to owner.
+  $normalizedOwner = ($InstallationTokenOwner -split '/')[0]
+  Write-Host "Fetching installation ID for $InstallationTokenOwner (normalized owner: $normalizedOwner) ..."
+  $installationId = Get-GitHubInstallationId -Jwt $jwt -ApiBase $GitHubApiBaseUrl -ApiVersion $GitHubApiVersion -InstallationTokenOwner $normalizedOwner
 
   Write-Host "Installation ID resolved: $installationId"
 
@@ -165,7 +167,7 @@ foreach ($InstallationTokenOwner in $InstallationTokenOwners)
   $variableName = $VariableNamePrefix
   if ($InstallationTokenOwners.Count -gt 1)
   {
-    $variableName = $VariableNamePrefix + "_" + $InstallationTokenOwner
+    $variableName = $VariableNamePrefix + "_" + $normalizedOwner
   }
 
   Set-Item -Path Env:$variableName -Value $installationToken

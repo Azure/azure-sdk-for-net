@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _storageSyncServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageSyncServiceName, StorageSyncServiceCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation<StorageSyncServiceResource> operation = new StorageSyncArmOperation<StorageSyncServiceResource>(
-                    new StorageSyncServiceOperationSource(Client),
+                    new StorageSyncServiceResourceOperationSource(Client),
                     _storageSyncServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _storageSyncServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storageSyncServiceName, StorageSyncServiceCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation<StorageSyncServiceResource> operation = new StorageSyncArmOperation<StorageSyncServiceResource>(
-                    new StorageSyncServiceOperationSource(Client),
+                    new StorageSyncServiceResourceOperationSource(Client),
                     _storageSyncServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
