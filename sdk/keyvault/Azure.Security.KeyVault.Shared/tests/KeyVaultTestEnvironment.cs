@@ -82,6 +82,29 @@ namespace Azure.Security.KeyVault.Tests
         public string EkmExternalId => GetRecordedOptionalVariable("EKM_EXTERNAL_ID");
 
         /// <summary>
+        /// A value indicating whether EKM is enabled.
+        /// </summary>
+        public bool IsEkmEnabled =>
+            !string.IsNullOrEmpty(GetOptionalVariable("EKM_PROXY_HOST")) &&
+            !string.IsNullOrEmpty(GetOptionalVariable("EKM_SERVER_CA_CERTIFICATE"));
+
+        /// <summary>
+        /// EKM proxy FQDN. Recorded so playback works without the real proxy.
+        /// </summary>
+        public string EkmHost => GetRecordedOptionalVariable("EKM_PROXY_HOST", options => options.IsSecret("ekm.contoso.com"));
+
+        /// <summary>
+        /// EKM proxy path prefix. Defaults to "/api/v1" if not specified.
+        /// </summary>
+        public string EkmPathPrefix => GetRecordedOptionalVariable("EKM_PROXY_PATH_PREFIX") ?? "/api/v1";
+
+        /// <summary>
+        /// Base64-encoded DER bytes of the EKM server CA certificate.
+        /// Not recorded — only read during Record/Live on the developer's machine.
+        /// </summary>
+        public string EkmServerCaCertBase64 => GetOptionalVariable("EKM_SERVER_CA_CERTIFICATE");
+
+        /// <summary>
         /// Gets the value of the "AZURE_KEYVAULT_ATTESTATION_URL" variable.
         /// </summary>
         public Uri AttestationUri => Uri.TryCreate(GetRecordedOptionalVariable("AZURE_KEYVAULT_ATTESTATION_URL"), UriKind.Absolute, out Uri attestationUri)
@@ -97,6 +120,19 @@ namespace Azure.Security.KeyVault.Tests
             if (string.IsNullOrEmpty(ManagedHsmUrl))
             {
                 throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
+            }
+        }
+
+        /// <summary>
+        /// Throws <see cref="IgnoreException"/> in Live/Record modes when EKM is not enabled.
+        /// Playback always proceeds and uses recordings.
+        /// </summary>
+        public void AssertEkmEnabled()
+        {
+            if (Mode != RecordedTestMode.Playback && !IsEkmEnabled)
+            {
+                throw new IgnoreException(
+                    "EKM live tests require EKM_PROXY_HOST and EKM_SERVER_CA_CERTIFICATE to be defined");
             }
         }
 

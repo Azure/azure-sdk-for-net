@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -904,8 +905,7 @@ namespace Azure.Generator.Mgmt.Tests
         public void PopulateArguments_StringBodyParameter_UsesRequestContentCreate()
         {
             // When the body parameter is a string (framework type), should generate
-            // RequestContent.Create(BinaryData.FromObjectAsJson(body)) instead of
-            // string.ToRequestContent(body) which doesn't exist.
+            // RequestContent.Create(body) instead of string.ToRequestContent(body) which doesn't exist.
             var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
 
             var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
@@ -928,6 +928,58 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(displayString, Does.Not.Contain("string.ToRequestContent"));
             Assert.That(displayString, Does.Contain("RequestContent"));
             Assert.That(displayString, Does.Not.Contain("FromObjectAsJson"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_CollectionBodyParameter_UsesBinaryContentHelper()
+        {
+            ManagementMockHelpers.LoadMockPlugin();
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(IEnumerable<>), typeof(string)));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.That(arguments.Count, Is.EqualTo(1));
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Not.Contain("IEnumerable<string>.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("BinaryContentHelper.FromEnumerable"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_DictionaryBodyParameter_UsesBinaryContentHelper()
+        {
+            ManagementMockHelpers.LoadMockPlugin();
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(IDictionary<,>), typeof(string), typeof(string)));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.That(arguments.Count, Is.EqualTo(1));
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Not.Contain("IDictionary<string, string>.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("BinaryContentHelper.FromDictionary"));
         }
 
         [TestCase]

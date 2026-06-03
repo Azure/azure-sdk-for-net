@@ -6,6 +6,7 @@
 
 - Added experimental `FileBinaryContent` type for representing a file part within an HTTP request payload, typically as part of a `multipart/form-data` request.
 - Added experimental `MultiPartFormContent` type for building `multipart/form-data` request payloads.
+- Added a chain-aware `CredentialResolver.TryResolve(IConfigurationSection, Func<IConfigurationSection, AuthenticationTokenProvider?>, out AuthenticationTokenProvider?)` virtual overload. The callback lets a chain-owning resolver resolve child sections back through the active engine — preserving caching, normalization, and ordering — without needing to know about credential sources owned by other packages. The default implementation forwards to the existing two-arg overload (experimental `SCME0002`).
 
 ### Breaking Changes
 

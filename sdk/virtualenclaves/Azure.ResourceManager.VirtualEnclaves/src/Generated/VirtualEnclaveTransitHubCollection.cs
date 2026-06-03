@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
                 HttpMessage message = _transitHubRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, VirtualEnclaveTransitHubData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VirtualEnclavesArmOperation<VirtualEnclaveTransitHubResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveTransitHubResource>(
-                    new VirtualEnclaveTransitHubOperationSource(Client),
+                    new VirtualEnclaveTransitHubResourceOperationSource(Client),
                     _transitHubClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
                 HttpMessage message = _transitHubRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, transitHubName, VirtualEnclaveTransitHubData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VirtualEnclavesArmOperation<VirtualEnclaveTransitHubResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveTransitHubResource>(
-                    new VirtualEnclaveTransitHubOperationSource(Client),
+                    new VirtualEnclaveTransitHubResourceOperationSource(Client),
                     _transitHubClientDiagnostics,
                     Pipeline,
                     message.Request,

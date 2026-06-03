@@ -503,7 +503,7 @@ private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
         memory: "1Gi"
     )
     {
-        Image = dockerImage,
+        ContainerConfiguration = new(dockerImage)
     };
     return agentDefinition;
 }

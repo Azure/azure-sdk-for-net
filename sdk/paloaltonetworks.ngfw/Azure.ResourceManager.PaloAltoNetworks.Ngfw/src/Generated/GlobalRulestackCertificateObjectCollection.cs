@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackCertificateObjectData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<GlobalRulestackCertificateObjectResource> operation = new NgfwArmOperation<GlobalRulestackCertificateObjectResource>(
-                    new GlobalRulestackCertificateObjectOperationSource(Client),
+                    new GlobalRulestackCertificateObjectResourceOperationSource(Client),
                     _certificateObjectGlobalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _certificateObjectGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackCertificateObjectData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<GlobalRulestackCertificateObjectResource> operation = new NgfwArmOperation<GlobalRulestackCertificateObjectResource>(
-                    new GlobalRulestackCertificateObjectOperationSource(Client),
+                    new GlobalRulestackCertificateObjectResourceOperationSource(Client),
                     _certificateObjectGlobalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,

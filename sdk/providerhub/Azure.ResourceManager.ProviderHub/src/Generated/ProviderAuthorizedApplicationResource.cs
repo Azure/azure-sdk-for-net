@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Guid.Parse(Id.Name), ProviderAuthorizedApplicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<ProviderAuthorizedApplicationResource> operation = new ProviderHubArmOperation<ProviderAuthorizedApplicationResource>(
-                    new ProviderAuthorizedApplicationOperationSource(Client),
+                    new ProviderAuthorizedApplicationResourceOperationSource(Client),
                     _authorizedApplicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Guid.Parse(Id.Name), ProviderAuthorizedApplicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<ProviderAuthorizedApplicationResource> operation = new ProviderHubArmOperation<ProviderAuthorizedApplicationResource>(
-                    new ProviderAuthorizedApplicationOperationSource(Client),
+                    new ProviderAuthorizedApplicationResourceOperationSource(Client),
                     _authorizedApplicationsClientDiagnostics,
                     Pipeline,
                     message.Request,

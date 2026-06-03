@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 HttpMessage message = _sapApplicationServerInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, applicationInstanceName, SapApplicationServerInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadsSapVirtualInstanceArmOperation<SapApplicationServerInstanceResource> operation = new WorkloadsSapVirtualInstanceArmOperation<SapApplicationServerInstanceResource>(
-                    new SapApplicationServerInstanceOperationSource(Client),
+                    new SapApplicationServerInstanceResourceOperationSource(Client),
                     _sapApplicationServerInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
                 HttpMessage message = _sapApplicationServerInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, applicationInstanceName, SapApplicationServerInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadsSapVirtualInstanceArmOperation<SapApplicationServerInstanceResource> operation = new WorkloadsSapVirtualInstanceArmOperation<SapApplicationServerInstanceResource>(
-                    new SapApplicationServerInstanceOperationSource(Client),
+                    new SapApplicationServerInstanceResourceOperationSource(Client),
                     _sapApplicationServerInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,

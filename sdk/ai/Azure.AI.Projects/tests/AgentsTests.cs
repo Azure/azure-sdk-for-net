@@ -1550,7 +1550,7 @@ public class AgentsTests : AgentsTestBase
             memory: "2Gi"
         )
         {
-            Image = TestEnvironment.AGENT_DOCKER_IMAGE,
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE),
             EnvironmentVariables = {
                 { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
                 { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.FOUNDRY_MODEL_NAME },
@@ -1581,7 +1581,7 @@ public class AgentsTests : AgentsTestBase
             memory: "1Gi"
         )
         {
-            Image = TestEnvironment.AGENT_DOCKER_IMAGE,
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE),
         };
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";

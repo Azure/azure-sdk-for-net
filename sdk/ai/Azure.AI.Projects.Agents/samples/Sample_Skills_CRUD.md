@@ -53,31 +53,39 @@ protected static string GetDirectory(string fileName, [CallerFilePath] string pt
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateSkill_SkillsCRUD_Sync
-AgentsSkill skillFromFile = skillsClient.CreateSkillFromPackage(GetDirectory("roll-dice"));
-Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
-AgentsSkill simpleSkill = skillsClient.CreateSkill(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
-    To calculate the sum  run
-    bash:
-    echo $((<first> + <second>))
-    powershell:
-    (<first> + <second>)
-    Replace <first> and <second> by the actual summation arguments.
-""");
+AgentsSkill skillFromFile = skillsClient.CreateSkillVersionFromFiles("roll-dice", GetDirectory("roll-dice"));
+Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.Id}");
+SkillInlineContent content = new(
+    description: "Calculates the sum of two numbers.",
+    instructions: """
+        To calculate the sum  run
+        bash:
+        echo $((<first> + <second>))
+        powershell:
+        (<first> + <second>)
+        Replace <first> and <second> by the actual summation arguments.
+    """
+);
+SkillVersion simpleSkill = skillsClient.CreateSkillVersion(name: "simple-skill", inlineContent: content);
 Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateSkill_SkillsCRUD_Async
-AgentsSkill skillFromFile = await skillsClient.CreateSkillFromPackageAsync(GetDirectory("roll-dice"));
-Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.SkillId}");
-AgentsSkill simpleSkill = await skillsClient.CreateSkillAsync(name: "simpleSkill", description: "Calculates the sum of two numbers.", instructions: """
-    To calculate the sum  run
-    bash:
-    echo $((<first> + <second>))
-    powershell:
-    (<first> + <second>)
-    Replace <first> and <second> by the actual summation arguments.
-""");
+AgentsSkill skillFromFile = await skillsClient.CreateSkillVersionFromFilesAsync("roll-dice", GetDirectory("roll-dice"));
+Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.Id}");
+SkillInlineContent content = new(
+    description: "Calculates the sum of two numbers.",
+    instructions: """
+        To calculate the sum  run
+        bash:
+        echo $((<first> + <second>))
+        powershell:
+        (<first> + <second>)
+        Replace <first> and <second> by the actual summation arguments.
+    """
+);
+SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: "simple-skill", inlineContent: content);
 Console.WriteLine($"Created skill {simpleSkill.Name}: {simpleSkill.Description}");
 ```
 
@@ -100,14 +108,14 @@ Console.WriteLine($"Retrieved skill: {skill.Name}, Id: {skill.Description}");
 Synchronous sample:
 ```C# Snippet:Sample_DownloadSkill_SkillsCRUD_Sync
 string savePath = Path.GetFullPath("saved_skill");
-skillsClient.DownloadSkill(skillFromFile.Name, savePath);
+skillsClient.GetSkillContent(skillFromFile.Name, savePath);
 Console.WriteLine($"The skill was saved to the path {savePath}.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DownloadSkill_SkillsCRUD_Async
 string savePath = Path.GetFullPath("saved_skill");
-await skillsClient.DownloadSkillAsync(skillFromFile.Name, savePath);
+await skillsClient.GetSkillContentAsync(skillFromFile.Name, savePath);
 Console.WriteLine($"The skill was saved to the path {savePath}.");
 ```
 
@@ -115,27 +123,37 @@ Console.WriteLine($"The skill was saved to the path {savePath}.");
 
 Synchronous sample:
 ```C# Snippet:Sample_UpdateToolbox_SkillsCRUD_Sync
-skill = skillsClient.UpdateSkill(name: "simpleSkill", description: "Calculates the product of two numbers.", instructions: """
-    To calculate the sum  run
-    bash:
-    echo $((<first> * <second>))
-    powershell
-    (<first> * <second>)
-    Replace <first> and <second> by the actual summation arguments.
-""");
+content = new(
+    description: "Calculates the product of two numbers.",
+    instructions: """
+        To calculate the sum  run
+        bash:
+        echo $((<first> * <second>))
+        powershell:
+        (<first> * <second>)
+        Replace <first> and <second> by the actual summation arguments.
+    """
+);
+SkillVersion newVersion = skillsClient.CreateSkillVersion(name: "simple-skill", inlineContent: content);
+skill = skillsClient.UpdateSkill(name: "simple-skill", defaultVersion: newVersion.Version);
 Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_UpdateToolbox_SkillsCRUD_Async
-skill = await skillsClient.UpdateSkillAsync(name: "simpleSkill", description: "Calculates the product of two numbers.", instructions: """
-    To calculate the sum  run
-    bash:
-    echo $((<first> * <second>))
-    powershell:
-    (<first> * <second>)
-    Replace <first> and <second> by the actual summation arguments.
-""");
+content = new(
+    description: "Calculates the product of two numbers.",
+    instructions: """
+        To calculate the sum  run
+        bash:
+        echo $((<first> * <second>))
+        powershell:
+        (<first> * <second>)
+        Replace <first> and <second> by the actual summation arguments.
+    """
+);
+SkillVersion newVersion = await skillsClient.CreateSkillVersionAsync(name: "simple-skill", inlineContent: content);
+skill = await skillsClient.UpdateSkillAsync(name: "simple-skill", defaultVersion: newVersion.Version);
 Console.WriteLine($"The skill {skill.Name} now has the following description: {skill.Description}");
 ```
 
@@ -147,7 +165,7 @@ List<AgentsSkill> skills = [.. skillsClient.GetSkills()];
 Console.WriteLine($"Found {skills.Count} skills.");
 foreach (AgentsSkill item in skills)
 {
-    Console.WriteLine($"  - {item.SkillId} ({item.Name})");
+    Console.WriteLine($"  - {item.Id} ({item.Name})");
 }
 ```
 
@@ -157,7 +175,7 @@ List<AgentsSkill> skills = await skillsClient.GetSkillsAsync().ToListAsync();
 Console.WriteLine($"Found {skills.Count} skills.");
 foreach (AgentsSkill item in skills)
 {
-    Console.WriteLine($"  - {item.SkillId} ({item.Name})");
+    Console.WriteLine($"  - {item.Id} ({item.Name})");
 }
 ```
 

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 HttpMessage message = _accessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, AccessPolicyAssignmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation<AccessPolicyAssignmentResource> operation = new RedisEnterpriseArmOperation<AccessPolicyAssignmentResource>(
-                    new AccessPolicyAssignmentOperationSource(Client),
+                    new AccessPolicyAssignmentResourceOperationSource(Client),
                     _accessPolicyAssignmentClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 HttpMessage message = _accessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, AccessPolicyAssignmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation<AccessPolicyAssignmentResource> operation = new RedisEnterpriseArmOperation<AccessPolicyAssignmentResource>(
-                    new AccessPolicyAssignmentOperationSource(Client),
+                    new AccessPolicyAssignmentResourceOperationSource(Client),
                     _accessPolicyAssignmentClientDiagnostics,
                     Pipeline,
                     message.Request,
