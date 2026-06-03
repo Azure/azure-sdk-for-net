@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The status of the Gate, as represented in the Update Run. </summary>
-    public partial class UpdateRunGateStatus
+    public partial class FleetUpdateRunGateStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpdateRunGateStatus"/>. </summary>
-        internal UpdateRunGateStatus()
+        /// <summary> Initializes a new instance of <see cref="FleetUpdateRunGateStatus"/>. </summary>
+        internal FleetUpdateRunGateStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateRunGateStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FleetUpdateRunGateStatus"/>. </summary>
         /// <param name="displayName"> The human-readable display name of the Gate. </param>
         /// <param name="gateId"> The resource id of the Gate. </param>
         /// <param name="status"> The status of the Gate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateRunGateStatus(string displayName, ResourceIdentifier gateId, ContainerServiceFleetUpdateStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetUpdateRunGateStatus(string displayName, ResourceIdentifier gateId, ContainerServiceFleetUpdateStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             GateId = gateId;

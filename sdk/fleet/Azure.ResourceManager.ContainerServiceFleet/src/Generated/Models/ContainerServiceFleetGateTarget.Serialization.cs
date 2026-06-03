@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            UpdateRunGateTargetProperties updateRunProperties = default;
+            FleetUpdateRunGateTargetProperties updateRunProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    updateRunProperties = UpdateRunGateTargetProperties.DeserializeUpdateRunGateTargetProperties(prop.Value, options);
+                    updateRunProperties = FleetUpdateRunGateTargetProperties.DeserializeFleetUpdateRunGateTargetProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

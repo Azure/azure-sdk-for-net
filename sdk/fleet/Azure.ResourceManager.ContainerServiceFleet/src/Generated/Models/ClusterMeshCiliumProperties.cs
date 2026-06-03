@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The Cilium specific properties of the member cluster. </summary>
-    public partial class CiliumProperties
+    public partial class ClusterMeshCiliumProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CiliumProperties"/>. </summary>
-        internal CiliumProperties()
+        /// <summary> Initializes a new instance of <see cref="ClusterMeshCiliumProperties"/>. </summary>
+        internal ClusterMeshCiliumProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CiliumProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterMeshCiliumProperties"/>. </summary>
         /// <param name="id"> Cilium requires each cluster to be assigned a unique numeric cluster id from 1 - 255. The id is managed by Fleet and cannot be set by the user. </param>
         /// <param name="name"> Cilium requires each cluster to be assigned a unique human-readable name. The name is managed by Fleet, based on the Fleet Member name, and cannot be set by the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CiliumProperties(int id, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterMeshCiliumProperties(int id, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

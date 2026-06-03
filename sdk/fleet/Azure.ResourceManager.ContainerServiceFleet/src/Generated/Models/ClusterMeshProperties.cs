@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The Mesh Member data for a Fleet Member resource. </summary>
-    public partial class MeshProperties
+    public partial class ClusterMeshProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MeshProperties"/>. </summary>
-        internal MeshProperties()
+        /// <summary> Initializes a new instance of <see cref="ClusterMeshProperties"/>. </summary>
+        internal ClusterMeshProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MeshProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterMeshProperties"/>. </summary>
         /// <param name="ciliumProperties"> The Cilium cluster properties. </param>
         /// <param name="status"> The status of the mesh member. </param>
         /// <param name="clusterMeshProfileResourceId"> Resource id of the cluster mesh profile associated with this mesh member. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MeshProperties(CiliumProperties ciliumProperties, MeshMemberStatus status, ResourceIdentifier clusterMeshProfileResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterMeshProperties(ClusterMeshCiliumProperties ciliumProperties, ClusterMeshMemberStatus status, ResourceIdentifier clusterMeshProfileResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CiliumProperties = ciliumProperties;
             Status = status;
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The Cilium cluster properties. </summary>
-        public CiliumProperties CiliumProperties { get; }
+        public ClusterMeshCiliumProperties CiliumProperties { get; }
 
         /// <summary> The status of the mesh member. </summary>
-        public MeshMemberStatus Status { get; }
+        public ClusterMeshMemberStatus Status { get; }
 
         /// <summary> Resource id of the cluster mesh profile associated with this mesh member. </summary>
         public ResourceIdentifier ClusterMeshProfileResourceId { get; }

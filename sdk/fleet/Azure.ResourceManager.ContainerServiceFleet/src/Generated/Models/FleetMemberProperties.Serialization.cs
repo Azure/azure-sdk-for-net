@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             FleetMemberProvisioningState? provisioningState = default;
             IDictionary<string, string> labels = default;
             ContainerServiceFleetMemberStatus status = default;
-            MeshProperties meshProperties = default;
+            ClusterMeshProperties meshProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    meshProperties = MeshProperties.DeserializeMeshProperties(prop.Value, options);
+                    meshProperties = ClusterMeshProperties.DeserializeClusterMeshProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

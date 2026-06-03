@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 writer.WritePropertyName("beforeGates"u8);
                 writer.WriteStartArray();
-                foreach (UpdateRunGateStatus item in BeforeGates)
+                foreach (FleetUpdateRunGateStatus item in BeforeGates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 writer.WritePropertyName("afterGates"u8);
                 writer.WriteStartArray();
-                foreach (UpdateRunGateStatus item in AfterGates)
+                foreach (FleetUpdateRunGateStatus item in AfterGates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             string name = default;
             int? maxConcurrency = default;
             IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups = default;
-            IReadOnlyList<UpdateRunGateStatus> beforeGates = default;
-            IReadOnlyList<UpdateRunGateStatus> afterGates = default;
+            IReadOnlyList<FleetUpdateRunGateStatus> beforeGates = default;
+            IReadOnlyList<FleetUpdateRunGateStatus> afterGates = default;
             ContainerServiceFleetWaitStatus afterStageWaitStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -219,10 +219,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    List<UpdateRunGateStatus> array = new List<UpdateRunGateStatus>();
+                    List<FleetUpdateRunGateStatus> array = new List<FleetUpdateRunGateStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UpdateRunGateStatus.DeserializeUpdateRunGateStatus(item, options));
+                        array.Add(FleetUpdateRunGateStatus.DeserializeFleetUpdateRunGateStatus(item, options));
                     }
                     beforeGates = array;
                     continue;
@@ -233,10 +233,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    List<UpdateRunGateStatus> array = new List<UpdateRunGateStatus>();
+                    List<FleetUpdateRunGateStatus> array = new List<FleetUpdateRunGateStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UpdateRunGateStatus.DeserializeUpdateRunGateStatus(item, options));
+                        array.Add(FleetUpdateRunGateStatus.DeserializeFleetUpdateRunGateStatus(item, options));
                     }
                     afterGates = array;
                     continue;
@@ -260,8 +260,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 name,
                 maxConcurrency,
                 groups ?? new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>(),
-                beforeGates ?? new ChangeTrackingList<UpdateRunGateStatus>(),
-                afterGates ?? new ChangeTrackingList<UpdateRunGateStatus>(),
+                beforeGates ?? new ChangeTrackingList<FleetUpdateRunGateStatus>(),
+                afterGates ?? new ChangeTrackingList<FleetUpdateRunGateStatus>(),
                 afterStageWaitStatus,
                 additionalBinaryDataProperties);
         }
