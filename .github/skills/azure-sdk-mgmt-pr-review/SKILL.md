@@ -198,13 +198,15 @@ The following table applies to the **generated C# API surface** (public types/pr
 | Property Pattern | Expected Type |
 |------------------|---------------|
 | Ends with `Id`/`Guid` with UUID value | `Guid` |
-| Ends with `Id` with ARM resource ID | `ResourceIdentifier` |
+| String property ending with `Id` / `ResourceId` that holds an ARM resource ID | `ResourceIdentifier` |
 | Named `ResourceType` or ends with `Type` for resource types | `ResourceType` |
 | Named `etag` | `ETag` |
 | Contains `location`/`locations` | Consider `AzureLocation` |
 | Contains `size` | Consider `int`/`long` instead of string |
 
 For **TypeSpec**, UUID-valued properties should use the `uuid` scalar and map to `Guid` in the generated .NET SDK.
+
+Only flag `*Id` / `*ResourceId` properties for `ResourceIdentifier` when the generated C# type is `string`. Numeric (`int`/`long`) and `Guid` ID properties are not subject to the `ResourceIdentifier` rule and must not be flagged as needing a type change.
 
 #### Duration/Interval Format
 - ISO 8601 duration (P1DT2H59M59S): use `duration` scalar in TypeSpec
