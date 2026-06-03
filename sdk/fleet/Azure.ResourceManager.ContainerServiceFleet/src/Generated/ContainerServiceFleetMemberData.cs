@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> The Mesh Member Properties associated with this Fleet Member. </summary>
-        public ClusterMeshProperties MeshProperties
+        public ContainerServiceFleetMeshMemberProperties MeshProperties
         {
             get
             {

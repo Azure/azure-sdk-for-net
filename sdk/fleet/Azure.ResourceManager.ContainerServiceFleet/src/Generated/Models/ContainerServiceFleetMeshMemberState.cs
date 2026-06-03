@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> Mesh member state. </summary>
-    public readonly partial struct ClusterMeshMemberState : IEquatable<ClusterMeshMemberState>
+    public readonly partial struct ContainerServiceFleetMeshMemberState : IEquatable<ContainerServiceFleetMeshMemberState>
     {
         private readonly string _value;
         /// <summary> The member is connecting to the mesh. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> The member failed to connect due to an error. </summary>
         private const string FailedValue = "Failed";
 
-        /// <summary> Initializes a new instance of <see cref="ClusterMeshMemberState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMeshMemberState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ClusterMeshMemberState(string value)
+        public ContainerServiceFleetMeshMemberState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The member is connecting to the mesh. </summary>
-        public static ClusterMeshMemberState Connecting { get; } = new ClusterMeshMemberState(ConnectingValue);
+        public static ContainerServiceFleetMeshMemberState Connecting { get; } = new ContainerServiceFleetMeshMemberState(ConnectingValue);
 
         /// <summary> The member is connected to the mesh. </summary>
-        public static ClusterMeshMemberState Connected { get; } = new ClusterMeshMemberState(ConnectedValue);
+        public static ContainerServiceFleetMeshMemberState Connected { get; } = new ContainerServiceFleetMeshMemberState(ConnectedValue);
 
         /// <summary> The member is disconnecting from the mesh. </summary>
-        public static ClusterMeshMemberState Disconnecting { get; } = new ClusterMeshMemberState(DisconnectingValue);
+        public static ContainerServiceFleetMeshMemberState Disconnecting { get; } = new ContainerServiceFleetMeshMemberState(DisconnectingValue);
 
         /// <summary> The member failed to connect due to an error. </summary>
-        public static ClusterMeshMemberState Failed { get; } = new ClusterMeshMemberState(FailedValue);
+        public static ContainerServiceFleetMeshMemberState Failed { get; } = new ContainerServiceFleetMeshMemberState(FailedValue);
 
-        /// <summary> Determines if two <see cref="ClusterMeshMemberState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerServiceFleetMeshMemberState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ClusterMeshMemberState left, ClusterMeshMemberState right) => left.Equals(right);
+        public static bool operator ==(ContainerServiceFleetMeshMemberState left, ContainerServiceFleetMeshMemberState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ClusterMeshMemberState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerServiceFleetMeshMemberState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ClusterMeshMemberState left, ClusterMeshMemberState right) => !left.Equals(right);
+        public static bool operator !=(ContainerServiceFleetMeshMemberState left, ContainerServiceFleetMeshMemberState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ClusterMeshMemberState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetMeshMemberState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterMeshMemberState(string value) => new ClusterMeshMemberState(value);
+        public static implicit operator ContainerServiceFleetMeshMemberState(string value) => new ContainerServiceFleetMeshMemberState(value);
 
-        /// <summary> Converts a string to a <see cref="ClusterMeshMemberState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetMeshMemberState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ClusterMeshMemberState?(string value) => value == null ? null : new ClusterMeshMemberState(value);
+        public static implicit operator ContainerServiceFleetMeshMemberState?(string value) => value == null ? null : new ContainerServiceFleetMeshMemberState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ClusterMeshMemberState other && Equals(other);
+        public override bool Equals(object obj) => obj is ContainerServiceFleetMeshMemberState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ClusterMeshMemberState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerServiceFleetMeshMemberState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

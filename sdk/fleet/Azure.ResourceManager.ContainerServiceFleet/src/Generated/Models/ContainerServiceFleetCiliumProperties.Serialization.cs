@@ -14,51 +14,51 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The Cilium specific properties of the member cluster. </summary>
-    public partial class ClusterMeshCiliumProperties : IJsonModel<ClusterMeshCiliumProperties>
+    public partial class ContainerServiceFleetCiliumProperties : IJsonModel<ContainerServiceFleetCiliumProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterMeshCiliumProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceFleetCiliumProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterMeshCiliumProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetCiliumProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClusterMeshCiliumProperties(document.RootElement, options);
+                        return DeserializeContainerServiceFleetCiliumProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterMeshCiliumProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetCiliumProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterMeshCiliumProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetCiliumProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterMeshCiliumProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetCiliumProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterMeshCiliumProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerServiceFleetCiliumProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterMeshCiliumProperties IPersistableModel<ClusterMeshCiliumProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerServiceFleetCiliumProperties IPersistableModel<ContainerServiceFleetCiliumProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterMeshCiliumProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceFleetCiliumProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClusterMeshCiliumProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceFleetCiliumProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterMeshCiliumProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetCiliumProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterMeshCiliumProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetCiliumProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterMeshCiliumProperties IJsonModel<ClusterMeshCiliumProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerServiceFleetCiliumProperties IJsonModel<ContainerServiceFleetCiliumProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterMeshCiliumProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceFleetCiliumProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterMeshCiliumProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetCiliumProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterMeshCiliumProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetCiliumProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterMeshCiliumProperties(document.RootElement, options);
+            return DeserializeContainerServiceFleetCiliumProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClusterMeshCiliumProperties DeserializeClusterMeshCiliumProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerServiceFleetCiliumProperties DeserializeContainerServiceFleetCiliumProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterMeshCiliumProperties(id, name, additionalBinaryDataProperties);
+            return new ContainerServiceFleetCiliumProperties(id, name, additionalBinaryDataProperties);
         }
     }
 }

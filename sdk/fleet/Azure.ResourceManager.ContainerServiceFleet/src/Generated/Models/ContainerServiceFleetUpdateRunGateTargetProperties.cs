@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The properties of the Update Run that the Gate is targeting. </summary>
-    public partial class FleetUpdateRunGateTargetProperties
+    public partial class ContainerServiceFleetUpdateRunGateTargetProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FleetUpdateRunGateTargetProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunGateTargetProperties"/>. </summary>
         /// <param name="timing"> Whether the Gate is placed before or after the update itself. </param>
-        public FleetUpdateRunGateTargetProperties(ContainerServiceFleetGateTiming timing)
+        public ContainerServiceFleetUpdateRunGateTargetProperties(ContainerServiceFleetGateTiming timing)
         {
             Timing = timing;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FleetUpdateRunGateTargetProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateRunGateTargetProperties"/>. </summary>
         /// <param name="name"> The name of the Update Run. </param>
         /// <param name="stage"> The Update Stage of the Update Run. </param>
         /// <param name="group"> The Update Group of the Update Run. </param>
         /// <param name="timing"> Whether the Gate is placed before or after the update itself. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetUpdateRunGateTargetProperties(string name, string stage, string @group, ContainerServiceFleetGateTiming timing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetUpdateRunGateTargetProperties(string name, string stage, string @group, ContainerServiceFleetGateTiming timing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Stage = stage;

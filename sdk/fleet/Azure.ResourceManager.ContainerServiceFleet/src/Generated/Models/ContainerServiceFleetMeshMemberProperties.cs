@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The Mesh Member data for a Fleet Member resource. </summary>
-    public partial class ClusterMeshProperties
+    public partial class ContainerServiceFleetMeshMemberProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterMeshProperties"/>. </summary>
-        internal ClusterMeshProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMeshMemberProperties"/>. </summary>
+        internal ContainerServiceFleetMeshMemberProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterMeshProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMeshMemberProperties"/>. </summary>
         /// <param name="ciliumProperties"> The Cilium cluster properties. </param>
         /// <param name="status"> The status of the mesh member. </param>
         /// <param name="clusterMeshProfileResourceId"> Resource id of the cluster mesh profile associated with this mesh member. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterMeshProperties(ClusterMeshCiliumProperties ciliumProperties, ClusterMeshMemberStatus status, ResourceIdentifier clusterMeshProfileResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetMeshMemberProperties(ContainerServiceFleetCiliumProperties ciliumProperties, ContainerServiceFleetMeshMemberStatus status, ResourceIdentifier clusterMeshProfileResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CiliumProperties = ciliumProperties;
             Status = status;
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The Cilium cluster properties. </summary>
-        public ClusterMeshCiliumProperties CiliumProperties { get; }
+        public ContainerServiceFleetCiliumProperties CiliumProperties { get; }
 
         /// <summary> The status of the mesh member. </summary>
-        public ClusterMeshMemberStatus Status { get; }
+        public ContainerServiceFleetMeshMemberStatus Status { get; }
 
         /// <summary> Resource id of the cluster mesh profile associated with this mesh member. </summary>
         public ResourceIdentifier ClusterMeshProfileResourceId { get; }

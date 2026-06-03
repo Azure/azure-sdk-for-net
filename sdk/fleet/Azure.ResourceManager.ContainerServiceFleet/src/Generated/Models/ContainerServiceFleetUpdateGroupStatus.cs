@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         internal ContainerServiceFleetUpdateGroupStatus()
         {
             Members = new ChangeTrackingList<MemberUpdateStatus>();
-            BeforeGates = new ChangeTrackingList<FleetUpdateRunGateStatus>();
-            AfterGates = new ChangeTrackingList<FleetUpdateRunGateStatus>();
+            BeforeGates = new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>();
+            AfterGates = new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroupStatus"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="beforeGates"> The list of Gates that will run before this UpdateGroup. </param>
         /// <param name="afterGates"> The list of Gates that will run after this UpdateGroup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, int? maxConcurrency, IReadOnlyList<MemberUpdateStatus> members, IReadOnlyList<FleetUpdateRunGateStatus> beforeGates, IReadOnlyList<FleetUpdateRunGateStatus> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, int? maxConcurrency, IReadOnlyList<MemberUpdateStatus> members, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> beforeGates, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Name = name;
@@ -57,9 +57,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public IReadOnlyList<MemberUpdateStatus> Members { get; }
 
         /// <summary> The list of Gates that will run before this UpdateGroup. </summary>
-        public IReadOnlyList<FleetUpdateRunGateStatus> BeforeGates { get; }
+        public IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> BeforeGates { get; }
 
         /// <summary> The list of Gates that will run after this UpdateGroup. </summary>
-        public IReadOnlyList<FleetUpdateRunGateStatus> AfterGates { get; }
+        public IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> AfterGates { get; }
     }
 }

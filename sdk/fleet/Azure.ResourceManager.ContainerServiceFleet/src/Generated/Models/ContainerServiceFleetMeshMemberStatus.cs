@@ -12,23 +12,23 @@ using Azure;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> Status of the mesh member. </summary>
-    public partial class ClusterMeshMemberStatus
+    public partial class ContainerServiceFleetMeshMemberStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterMeshMemberStatus"/>. </summary>
-        internal ClusterMeshMemberStatus()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMeshMemberStatus"/>. </summary>
+        internal ContainerServiceFleetMeshMemberStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterMeshMemberStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetMeshMemberStatus"/>. </summary>
         /// <param name="state"> The mesh member state. </param>
         /// <param name="lastUpdatedOn"> When the status was last updated. </param>
         /// <param name="lastOperationId"> The last operation ID that affected the mesh properties of the fleet member. </param>
         /// <param name="error"> The error affecting this member. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterMeshMemberStatus(ClusterMeshMemberState state, DateTimeOffset? lastUpdatedOn, string lastOperationId, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetMeshMemberStatus(ContainerServiceFleetMeshMemberState state, DateTimeOffset? lastUpdatedOn, string lastOperationId, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             LastUpdatedOn = lastUpdatedOn;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The mesh member state. </summary>
-        public ClusterMeshMemberState State { get; }
+        public ContainerServiceFleetMeshMemberState State { get; }
 
         /// <summary> When the status was last updated. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         internal ContainerServiceFleetUpdateStageStatus()
         {
             Groups = new ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus>();
-            BeforeGates = new ChangeTrackingList<FleetUpdateRunGateStatus>();
-            AfterGates = new ChangeTrackingList<FleetUpdateRunGateStatus>();
+            BeforeGates = new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>();
+            AfterGates = new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStageStatus"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="afterGates"> The list of Gates that will run after this UpdateStage. </param>
         /// <param name="afterStageWaitStatus"> The status of the wait period configured on the UpdateStage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status, string name, int? maxConcurrency, IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups, IReadOnlyList<FleetUpdateRunGateStatus> beforeGates, IReadOnlyList<FleetUpdateRunGateStatus> afterGates, ContainerServiceFleetWaitStatus afterStageWaitStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status, string name, int? maxConcurrency, IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> beforeGates, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> afterGates, ContainerServiceFleetWaitStatus afterStageWaitStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Name = name;
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> Groups { get; }
 
         /// <summary> The list of Gates that will run before this UpdateStage. </summary>
-        public IReadOnlyList<FleetUpdateRunGateStatus> BeforeGates { get; }
+        public IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> BeforeGates { get; }
 
         /// <summary> The list of Gates that will run after this UpdateStage. </summary>
-        public IReadOnlyList<FleetUpdateRunGateStatus> AfterGates { get; }
+        public IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> AfterGates { get; }
 
         /// <summary> The status of the wait period configured on the UpdateStage. </summary>
         public ContainerServiceFleetWaitStatus AfterStageWaitStatus { get; }
