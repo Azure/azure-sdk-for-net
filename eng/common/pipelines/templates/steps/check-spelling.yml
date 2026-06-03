@@ -15,7 +15,8 @@
 #                       npm commands in the context of this step. If specified, this
 #                       will be set as the npm_config_userconfig environment variable
 #                       so that npm uses the provided config file instead of the default
-#                       user config.
+#                       user config. If not specified, this template creates and
+#                       authenticates a temporary .npmrc and uses that file.
 # This check recognizes the setting of variable "Skip.SpellCheck"
 # if set to 'true', spellchecking will not be invoked.
 
@@ -35,6 +36,11 @@ parameters:
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    - ${{ if eq(parameters.NpmConfigUserConfig, '') }}:
+      - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+        parameters:
+          npmrcPath: $(Agent.TempDirectory)/check-spelling/.npmrc
+
     - task: PowerShell@2
       displayName: Check spelling (cspell)
       condition: and(succeeded(), ne(variables['Skip.SpellCheck'],'true'))
@@ -49,6 +55,8 @@ steps:
       env:
         ${{ if ne(parameters.NpmConfigUserConfig, '') }}:
           npm_config_userconfig: ${{ parameters.NpmConfigUserConfig }}
+        ${{ if eq(parameters.NpmConfigUserConfig, '') }}:
+          npm_config_userconfig: "$(Agent.TempDirectory)/check-spelling/.npmrc"
     - ${{ if ne('', parameters.ScriptToValidateUpgrade) }}:
       - pwsh: |
           $changedFiles = ./eng/common/scripts/get-changedfiles.ps1
