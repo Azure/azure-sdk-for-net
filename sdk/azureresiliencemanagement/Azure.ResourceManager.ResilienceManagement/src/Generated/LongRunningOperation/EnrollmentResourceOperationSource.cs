@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ResilienceManagement
 {
     /// <summary></summary>
-    internal partial class UsagePlanOperationSource : IOperationSource<UsagePlanResource>
+    internal partial class EnrollmentResourceOperationSource : IOperationSource<EnrollmentResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal UsagePlanOperationSource(ArmClient client)
+        internal EnrollmentResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        UsagePlanResource IOperationSource<UsagePlanResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        EnrollmentResource IOperationSource<EnrollmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            UsagePlanData data = UsagePlanData.DeserializeUsagePlanData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new UsagePlanResource(_client, data);
+            EnrollmentData data = EnrollmentData.DeserializeEnrollmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EnrollmentResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<UsagePlanResource> IOperationSource<UsagePlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EnrollmentResource> IOperationSource<EnrollmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            UsagePlanData data = UsagePlanData.DeserializeUsagePlanData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new UsagePlanResource(_client, data);
+            EnrollmentData data = EnrollmentData.DeserializeEnrollmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EnrollmentResource(_client, data);
         }
     }
 }

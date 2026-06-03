@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _usagePlansRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, usagePlanName, UsagePlanData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<UsagePlanResource> operation = new ResilienceManagementArmOperation<UsagePlanResource>(
-                    new UsagePlanOperationSource(Client),
+                    new UsagePlanResourceOperationSource(Client),
                     _usagePlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _usagePlansRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, usagePlanName, UsagePlanData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<UsagePlanResource> operation = new ResilienceManagementArmOperation<UsagePlanResource>(
-                    new UsagePlanOperationSource(Client),
+                    new UsagePlanResourceOperationSource(Client),
                     _usagePlansClientDiagnostics,
                     Pipeline,
                     message.Request,

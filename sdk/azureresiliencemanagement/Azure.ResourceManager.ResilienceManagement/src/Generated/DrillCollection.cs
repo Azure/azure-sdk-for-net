@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _drillsRestClient.CreateCreateRequest(Id.Name, drillName, DrillData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<DrillResource> operation = new ResilienceManagementArmOperation<DrillResource>(
-                    new DrillOperationSource(Client),
+                    new DrillResourceOperationSource(Client),
                     _drillsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _drillsRestClient.CreateCreateRequest(Id.Name, drillName, DrillData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<DrillResource> operation = new ResilienceManagementArmOperation<DrillResource>(
-                    new DrillOperationSource(Client),
+                    new DrillResourceOperationSource(Client),
                     _drillsClientDiagnostics,
                     Pipeline,
                     message.Request,

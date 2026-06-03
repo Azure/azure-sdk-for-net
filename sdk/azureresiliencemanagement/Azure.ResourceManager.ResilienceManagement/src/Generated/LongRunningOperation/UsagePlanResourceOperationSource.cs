@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ResilienceManagement
 {
     /// <summary></summary>
-    internal partial class RecoveryPlanOperationSource : IOperationSource<RecoveryPlanResource>
+    internal partial class UsagePlanResourceOperationSource : IOperationSource<UsagePlanResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal RecoveryPlanOperationSource(ArmClient client)
+        internal UsagePlanResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        RecoveryPlanResource IOperationSource<RecoveryPlanResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        UsagePlanResource IOperationSource<UsagePlanResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            RecoveryPlanData data = RecoveryPlanData.DeserializeRecoveryPlanData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new RecoveryPlanResource(_client, data);
+            UsagePlanData data = UsagePlanData.DeserializeUsagePlanData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new UsagePlanResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<RecoveryPlanResource> IOperationSource<RecoveryPlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<UsagePlanResource> IOperationSource<UsagePlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            RecoveryPlanData data = RecoveryPlanData.DeserializeRecoveryPlanData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new RecoveryPlanResource(_client, data);
+            UsagePlanData data = UsagePlanData.DeserializeUsagePlanData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new UsagePlanResource(_client, data);
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _goalTemplatesRestClient.CreateCreateOrUpdateRequest(Id.Name, goalTemplateName, GoalTemplateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<GoalTemplateResource> operation = new ResilienceManagementArmOperation<GoalTemplateResource>(
-                    new GoalTemplateOperationSource(Client),
+                    new GoalTemplateResourceOperationSource(Client),
                     _goalTemplatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _goalTemplatesRestClient.CreateCreateOrUpdateRequest(Id.Name, goalTemplateName, GoalTemplateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<GoalTemplateResource> operation = new ResilienceManagementArmOperation<GoalTemplateResource>(
-                    new GoalTemplateOperationSource(Client),
+                    new GoalTemplateResourceOperationSource(Client),
                     _goalTemplatesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ResilienceManagement
 {
     /// <summary></summary>
-    internal partial class GoalTemplateOperationSource : IOperationSource<GoalTemplateResource>
+    internal partial class GoalTemplateResourceOperationSource : IOperationSource<GoalTemplateResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal GoalTemplateOperationSource(ArmClient client)
+        internal GoalTemplateResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _recoveryPlansRestClient.CreateCreateOrUpdateRequest(Id.Name, recoveryPlanName, RecoveryPlanData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<RecoveryPlanResource> operation = new ResilienceManagementArmOperation<RecoveryPlanResource>(
-                    new RecoveryPlanOperationSource(Client),
+                    new RecoveryPlanResourceOperationSource(Client),
                     _recoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _recoveryPlansRestClient.CreateCreateOrUpdateRequest(Id.Name, recoveryPlanName, RecoveryPlanData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<RecoveryPlanResource> operation = new ResilienceManagementArmOperation<RecoveryPlanResource>(
-                    new RecoveryPlanOperationSource(Client),
+                    new RecoveryPlanResourceOperationSource(Client),
                     _recoveryPlansClientDiagnostics,
                     Pipeline,
                     message.Request,

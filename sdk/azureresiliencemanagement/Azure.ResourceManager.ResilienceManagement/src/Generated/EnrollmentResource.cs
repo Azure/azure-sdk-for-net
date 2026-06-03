@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _enrollmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnrollmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ResilienceManagementArmOperation<EnrollmentResource> operation = new ResilienceManagementArmOperation<EnrollmentResource>(
-                    new EnrollmentOperationSource(Client),
+                    new EnrollmentResourceOperationSource(Client),
                     _enrollmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ResilienceManagement
                 HttpMessage message = _enrollmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EnrollmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ResilienceManagementArmOperation<EnrollmentResource> operation = new ResilienceManagementArmOperation<EnrollmentResource>(
-                    new EnrollmentOperationSource(Client),
+                    new EnrollmentResourceOperationSource(Client),
                     _enrollmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
