@@ -23,12 +23,6 @@ const diags: { [code: string]: DiagnosticDefinition<DiagnosticMessages> } = {
     messages: {
       default: paramMessage`${"message"}`
     }
-  },
-  "inconsistent-parent-resource-id": {
-    severity: "warning",
-    messages: {
-      default: paramMessage`${"message"}`
-    }
   }
 };
 
