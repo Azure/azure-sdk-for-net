@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.ServiceGroups.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmServiceGroupsModelFactory
     {
-        /// <summary> The serviceGroup details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -36,10 +35,10 @@ namespace Azure.ResourceManager.ServiceGroups.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
                 kind,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="provisioningState"> The provisioning state of the serviceGroup. For example, Running. </param>
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.ServiceGroups.Models
         /// <returns> A new <see cref="Models.ServiceGroupProperties"/> instance for mocking. </returns>
         public static ServiceGroupProperties ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState = default, string displayName = default, ResourceIdentifier parentResourceId = default)
         {
-            return new ServiceGroupProperties(provisioningState, displayName, parentResourceId is null ? default : new ParentServiceGroupProperties(parentResourceId, null), additionalBinaryDataProperties: null);
+            return new ServiceGroupProperties(provisioningState, displayName, parentResourceId is null ? default : new ParentServiceGroupProperties(parentResourceId, default), default);
         }
     }
 }

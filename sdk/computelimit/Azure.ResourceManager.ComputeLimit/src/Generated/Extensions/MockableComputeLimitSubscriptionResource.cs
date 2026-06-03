@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ComputeLimit.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-04-30. </description>
         /// </item>
         /// </list>
         /// </summary>
