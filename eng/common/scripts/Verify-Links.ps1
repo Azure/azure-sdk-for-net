@@ -167,28 +167,60 @@ function ProcessCratesIoLink([System.Uri]$linkUri, $path) {
 }
 
 function ProcessNpmLink([System.Uri]$linkUri) {
-  # npmjs.com started using Cloudflare which returns 403 and we need to instead check the registry api for existence checks
-  # https://github.com/orgs/community/discussions/174098#discussioncomment-14461226
-  
-  # Handle versioned URLs: https://www.npmjs.com/package/@azure/ai-agents/v/1.1.0 -> https://registry.npmjs.org/@azure/ai-agents/1.1.0
-  # Handle non-versioned URLs: https://www.npmjs.com/package/@azure/ai-agents -> https://registry.npmjs.org/@azure/ai-agents
-  # The regex captures the package name (which may contain a slash for scoped packages) and optionally the version.
-  # Query parameters and URL fragments are excluded from the transformation.
+  # npmjs.com links are verified via the Azure DevOps public feed upstream API to avoid
+  # direct calls to registry.npmjs.org or npmjs.com under CFS network isolation.
+  # Upstream versions reflect what npmjs.org publishes, not just what the feed has cached.
+  #
+  # Handle versioned URLs:   https://www.npmjs.com/package/@azure/ai-agents/v/1.1.0
+  #   -> checks that version 1.1.0 is present in upstream via ADO feed API
+  # Handle non-versioned URLs: https://www.npmjs.com/package/@azure/ai-agents
+  #   -> checks that at least one upstream version exists via ADO feed API
+  #
+  # ADO feed upstream API: https://pkgs.dev.azure.com/azure-sdk/public/_apis/packaging/feeds/azure-sdk-for-js/npm/packages/{package}/upstreamVersions
   $urlString = $linkUri.ToString()
+  $packageName = $null
+  $version = $null
+
   if ($urlString -match '^https?://(?:www\.)?npmjs\.com/package/([^?#]+)/v/([^?#]+)') {
-    # Versioned URL: remove the /v/ segment but keep the version
-    $apiUrl = "https://registry.npmjs.org/$($matches[1])/$($matches[2])"
+    # Versioned URL: e.g. https://www.npmjs.com/package/@azure/ai-agents/v/1.1.0
+    $packageName = $matches[1]
+    $version = $matches[2]
   }
   elseif ($urlString -match '^https?://(?:www\.)?npmjs\.com/package/([^?#]+)') {
-    # Non-versioned URL: just replace the domain
-    $apiUrl = "https://registry.npmjs.org/$($matches[1])"
+    # Non-versioned URL: e.g. https://www.npmjs.com/package/@azure/ai-agents
+    $packageName = $matches[1]
   }
   else {
-    # Fallback: use the original URL if it doesn't match expected patterns
-    $apiUrl = $urlString
+    Write-Verbose "Could not parse npm package name from $linkUri, skipping network verification"
+    return $true
   }
 
-  return ProcessStandardLink ([System.Uri]$apiUrl)
+  # Scoped package names (e.g. @azure/ai-agents) must be percent-encoded for the path segment
+  $encodedPackageName = [System.Uri]::EscapeDataString($packageName)
+  $upstreamApiUrl = "https://pkgs.dev.azure.com/azure-sdk/public/_apis/packaging/feeds/azure-sdk-for-js/npm/packages/$encodedPackageName/upstreamVersions?api-version=7.1-preview.1"
+
+  Write-Verbose "Checking npm package '$packageName' via ADO upstream feed: $upstreamApiUrl"
+
+  # Invoke-RestMethod throws on non-2xx (e.g. 404 for unknown package); CheckLink's catch block handles it
+  $response = Invoke-RestMethod -Uri $upstreamApiUrl -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
+
+  if ($version) {
+    # Versioned: the specific version must exist in upstream
+    $versionExists = $response.value | Where-Object { $_.version -eq $version }
+    if (!$versionExists) {
+      Write-Host "Version '$version' of npm package '$packageName' not found in ADO upstream"
+      return $false
+    }
+  }
+  else {
+    # Non-versioned: at least one upstream version must exist
+    if (!$response.value -or $response.value.Count -eq 0) {
+      Write-Host "npm package '$packageName' has no upstream versions in ADO feed"
+      return $false
+    }
+  }
+
+  return $true
 }
 
 function ProcessStandardLink([System.Uri]$linkUri) {
