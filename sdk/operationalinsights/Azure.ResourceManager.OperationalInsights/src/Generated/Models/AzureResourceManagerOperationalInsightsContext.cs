@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.OperationalInsights
     [ModelReaderWriterBuildable(typeof(AccessRule))]
     [ModelReaderWriterBuildable(typeof(AccessRuleProperties))]
     [ModelReaderWriterBuildable(typeof(AccessRulePropertiesSubscription))]
-    [ModelReaderWriterBuildable(typeof(AzureEntityResource))]
     [ModelReaderWriterBuildable(typeof(ClusterListResult))]
     [ModelReaderWriterBuildable(typeof(ClusterPatchProperties))]
     [ModelReaderWriterBuildable(typeof(ClusterProperties))]
