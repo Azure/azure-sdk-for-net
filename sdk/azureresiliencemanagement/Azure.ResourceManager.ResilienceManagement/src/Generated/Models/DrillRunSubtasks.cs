@@ -19,10 +19,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         private const string FaultInjectionValue = "FaultInjection";
         /// <summary> Failover Subtasks. </summary>
         private const string FailoverValue = "Failover";
-        /// <summary> TestFailover Subtasks. </summary>
-        private const string TestFailoverValue = "TestFailover";
-        /// <summary> TestFailoverCleanup Subtasks. </summary>
-        private const string TestFailoverCleanupValue = "TestFailoverCleanup";
         /// <summary> Reprotect Subtasks. </summary>
         private const string ReprotectValue = "Reprotect";
         /// <summary> FailoverReverse Subtasks. </summary>
@@ -45,12 +41,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Failover Subtasks. </summary>
         public static DrillRunSubtasks Failover { get; } = new DrillRunSubtasks(FailoverValue);
-
-        /// <summary> TestFailover Subtasks. </summary>
-        public static DrillRunSubtasks TestFailover { get; } = new DrillRunSubtasks(TestFailoverValue);
-
-        /// <summary> TestFailoverCleanup Subtasks. </summary>
-        public static DrillRunSubtasks TestFailoverCleanup { get; } = new DrillRunSubtasks(TestFailoverCleanupValue);
 
         /// <summary> Reprotect Subtasks. </summary>
         public static DrillRunSubtasks Reprotect { get; } = new DrillRunSubtasks(ReprotectValue);

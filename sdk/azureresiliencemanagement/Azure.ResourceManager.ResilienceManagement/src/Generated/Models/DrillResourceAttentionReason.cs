@@ -24,26 +24,19 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DrillResourceAttentionReason"/>. </summary>
-        /// <param name="faultRbacOnTarget"> Experiment MSI does not have the desired RBAC on the resource. </param>
         /// <param name="faultRbacOnTargetResource"> Chaos Resource MSI does not have the desired RBAC on the resource. </param>
         /// <param name="runbookFaultRbacOnTargets"> RBAC required by AutomationAccount for runbook MSI not setup on the target resources. </param>
         /// <param name="monitoringRbacOnTargets"> RBAC required by Drill MSI on the target resource for monitoring. </param>
-        /// <param name="target"> Target extension resource is missing on the resource. </param>
         /// <param name="resourceState"> Drill Resource State (wrt SG and RO). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillResourceAttentionReason(RBACState? faultRbacOnTarget, RBACState? faultRbacOnTargetResource, RBACState? runbookFaultRbacOnTargets, RBACState? monitoringRbacOnTargets, ExtensionObjectState? target, IList<DrillResourceState> resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillResourceAttentionReason(RBACState? faultRbacOnTargetResource, RBACState? runbookFaultRbacOnTargets, RBACState? monitoringRbacOnTargets, IList<DrillResourceState> resourceState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            FaultRbacOnTarget = faultRbacOnTarget;
             FaultRbacOnTargetResource = faultRbacOnTargetResource;
             RunbookFaultRbacOnTargets = runbookFaultRbacOnTargets;
             MonitoringRbacOnTargets = monitoringRbacOnTargets;
-            Target = target;
             ResourceState = resourceState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Experiment MSI does not have the desired RBAC on the resource. </summary>
-        public RBACState? FaultRbacOnTarget { get; }
 
         /// <summary> Chaos Resource MSI does not have the desired RBAC on the resource. </summary>
         public RBACState? FaultRbacOnTargetResource { get; }
@@ -53,9 +46,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> RBAC required by Drill MSI on the target resource for monitoring. </summary>
         public RBACState? MonitoringRbacOnTargets { get; }
-
-        /// <summary> Target extension resource is missing on the resource. </summary>
-        public ExtensionObjectState? Target { get; }
 
         /// <summary> Drill Resource State (wrt SG and RO). </summary>
         public IList<DrillResourceState> ResourceState { get; }

@@ -81,16 +81,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("drillId"u8);
                 writer.WriteStringValue(DrillId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MetricValue))
-            {
-                writer.WritePropertyName("metricValue"u8);
-                writer.WriteStringValue(MetricValue);
-            }
-            if (options.Format != "W" && Optional.IsDefined(HealthStatus))
-            {
-                writer.WritePropertyName("healthStatus"u8);
-                writer.WriteStringValue(HealthStatus.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(DrillMode))
             {
                 writer.WritePropertyName("drillMode"u8);
@@ -173,8 +163,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             JobTriggeredBy? triggeredBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier drillId = default;
-            string metricValue = default;
-            HealthStatus? healthStatus = default;
             DrillMode? drillMode = default;
             DrillAttestation? attestation = default;
             IReadOnlyList<string> notes = default;
@@ -314,20 +302,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     drillId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("metricValue"u8))
-                {
-                    metricValue = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("healthStatus"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    healthStatus = new HealthStatus(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("drillMode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -407,8 +381,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 triggeredBy,
                 additionalBinaryDataProperties,
                 drillId,
-                metricValue,
-                healthStatus,
                 drillMode,
                 attestation,
                 notes ?? new ChangeTrackingList<string>(),

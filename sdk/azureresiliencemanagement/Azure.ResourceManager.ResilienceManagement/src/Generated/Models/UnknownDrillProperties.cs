@@ -17,12 +17,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="UnknownDrillProperties"/>. </summary>
         /// <param name="provisioningState"> Status of the last operation. </param>
         /// <param name="serviceGroupId"> Parent SG resource. </param>
-        /// <param name="metricsProperties"> Metric properties. </param>
-        /// <param name="healthModelProperties"> HealthModel properties. </param>
         /// <param name="recoveryPlanProperties"> ROPlan properties. </param>
         /// <param name="drillAssetProperties"> Properties for internal resources that are created for the Drill. </param>
         /// <param name="chaosResourceProperties"> Chaos Resource properties. </param>
-        /// <param name="chaosExperimentProperties"> Chaos Experiment properties. </param>
         /// <param name="executionState"> Execution state of the Drill. Whether it is currently running or not. </param>
         /// <param name="executionReadinessState"> Readiness state of the Drill. </param>
         /// <param name="rbacSetupMode"> RBAC setup mode. </param>
@@ -36,7 +33,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDrillProperties(ProvisioningState? provisioningState, ResourceIdentifier serviceGroupId, MetricsPropertiesOfDrill metricsProperties, HealthModelPropertiesOfDrill healthModelProperties, RecoveryPlanPropertiesOfDrill recoveryPlanProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, ChaosExperimentPropertiesOfDrill chaosExperimentProperties, ExecutionState? executionState, ExecutionReadinessState? executionReadinessState, RBACSetupMode? rbacSetupMode, AttentionReason attentionReason, SystemMetadata systemMetadata, LastRunProperties lastRunProperties, DateTimeOffset? lastSyncOn, DateTimeOffset? lastResyncReadinessCheckOn, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, DrillType drillType, MonitoringPropertiesOfDrill monitoringProperties, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(provisioningState, serviceGroupId, metricsProperties, healthModelProperties, recoveryPlanProperties, drillAssetProperties, chaosResourceProperties, chaosExperimentProperties, executionState, executionReadinessState, rbacSetupMode, attentionReason, systemMetadata, lastRunProperties, lastSyncOn, lastResyncReadinessCheckOn, managedOnBehalfOfConfiguration, drillType != default ? drillType : "unknown", monitoringProperties, errorDetails, additionalBinaryDataProperties)
+        internal UnknownDrillProperties(ProvisioningState? provisioningState, ResourceIdentifier serviceGroupId, RecoveryPlanPropertiesOfDrill recoveryPlanProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, ExecutionState? executionState, ExecutionReadinessState? executionReadinessState, RBACSetupMode? rbacSetupMode, AttentionReason attentionReason, SystemMetadata systemMetadata, LastRunProperties lastRunProperties, DateTimeOffset? lastSyncOn, DateTimeOffset? lastResyncReadinessCheckOn, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, DrillType drillType, MonitoringPropertiesOfDrill monitoringProperties, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(provisioningState, serviceGroupId, recoveryPlanProperties, drillAssetProperties, chaosResourceProperties, executionState, executionReadinessState, rbacSetupMode, attentionReason, systemMetadata, lastRunProperties, lastSyncOn, lastResyncReadinessCheckOn, managedOnBehalfOfConfiguration, drillType != default ? drillType : "unknown", monitoringProperties, errorDetails, additionalBinaryDataProperties)
         {
         }
     }

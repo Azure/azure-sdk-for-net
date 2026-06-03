@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         private readonly string _value;
         /// <summary> Failover mode. </summary>
         private const string FailoverValue = "Failover";
-        /// <summary> TestFailover mode. </summary>
-        private const string TestFailoverValue = "TestFailover";
 
         /// <summary> Initializes a new instance of <see cref="DrillMode"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,9 +30,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Failover mode. </summary>
         public static DrillMode Failover { get; } = new DrillMode(FailoverValue);
-
-        /// <summary> TestFailover mode. </summary>
-        public static DrillMode TestFailover { get; } = new DrillMode(TestFailoverValue);
 
         /// <summary> Determines if two <see cref="DrillMode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

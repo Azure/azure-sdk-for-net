@@ -74,26 +74,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 throw new FormatException($"The model {nameof(AttentionReason)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DrillRbacOnExperiment))
-            {
-                writer.WritePropertyName("drillRbacOnExperiment"u8);
-                writer.WriteStringValue(DrillRbacOnExperiment.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(RbacNeededForDrillOnExperiment))
-            {
-                writer.WritePropertyName("rbacNeededForDrillOnExperiment"u8);
-                writer.WriteStartArray();
-                foreach (string item in RbacNeededForDrillOnExperiment)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(DrillRbacOnChaosResource))
             {
                 writer.WritePropertyName("drillRbacOnChaosResource"u8);
@@ -134,75 +114,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DrillRbacOnAzureMonitoringWorkspace))
-            {
-                writer.WritePropertyName("drillRbacOnAzureMonitoringWorkspace"u8);
-                writer.WriteStringValue(DrillRbacOnAzureMonitoringWorkspace.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(RbacNeededForDrillOnAzureMonitoringWorkspace))
-            {
-                writer.WritePropertyName("rbacNeededForDrillOnAzureMonitoringWorkspace"u8);
-                writer.WriteStartArray();
-                foreach (string item in RbacNeededForDrillOnAzureMonitoringWorkspace)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DrillRbacOnSlo))
-            {
-                writer.WritePropertyName("drillRbacOnSlo"u8);
-                writer.WriteStringValue(DrillRbacOnSlo.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(RbacNeededForDrillOnSlo))
-            {
-                writer.WritePropertyName("rbacNeededForDrillOnSlo"u8);
-                writer.WriteStartArray();
-                foreach (string item in RbacNeededForDrillOnSlo)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(DrillRbacOnAzureHealthModel))
-            {
-                writer.WritePropertyName("drillRbacOnAzureHealthModel"u8);
-                writer.WriteStringValue(DrillRbacOnAzureHealthModel.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(RbacNeededForDrillOnAzureHealthModel))
-            {
-                writer.WritePropertyName("rbacNeededForDrillOnAzureHealthModel"u8);
-                writer.WriteStartArray();
-                foreach (string item in RbacNeededForDrillOnAzureHealthModel)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(RoReadiness))
             {
                 writer.WritePropertyName("roReadiness"u8);
                 writer.WriteStringValue(RoReadiness.Value.ToString());
-            }
-            if (Optional.IsDefined(FaultRbacOnTargets))
-            {
-                writer.WritePropertyName("faultRbacOnTargets"u8);
-                writer.WriteStringValue(FaultRbacOnTargets.Value.ToString());
             }
             if (Optional.IsDefined(RbacOnTargetResources))
             {
@@ -213,11 +128,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("runbookFaultRbacOnTargets"u8);
                 writer.WriteStringValue(RunbookFaultRbacOnTargets.Value.ToString());
-            }
-            if (Optional.IsDefined(Targets))
-            {
-                writer.WritePropertyName("targets"u8);
-                writer.WriteStringValue(Targets.Value.ToString());
             }
             if (Optional.IsDefined(ChaosResource))
             {
@@ -253,11 +163,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("drillUserMsi"u8);
                 writer.WriteStringValue(DrillUserMsi.Value.ToString());
-            }
-            if (Optional.IsDefined(ChaosExperimentUserMsi))
-            {
-                writer.WritePropertyName("chaosExperimentUserMsi"u8);
-                writer.WriteStringValue(ChaosExperimentUserMsi.Value.ToString());
             }
             if (Optional.IsDefined(ChaosResourceUserMsi))
             {
@@ -381,29 +286,18 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            RBACState? drillRbacOnExperiment = default;
-            IList<string> rbacNeededForDrillOnExperiment = default;
             RBACState? drillRbacOnChaosResource = default;
             IList<string> rbacNeededForDrillOnChaosResource = default;
             RBACState? drillRbacOnRecoveryPlan = default;
             IList<string> rbacNeededForDrillOnRecoveryPlan = default;
-            RBACState? drillRbacOnAzureMonitoringWorkspace = default;
-            IList<string> rbacNeededForDrillOnAzureMonitoringWorkspace = default;
-            RBACState? drillRbacOnSlo = default;
-            IList<string> rbacNeededForDrillOnSlo = default;
-            RBACState? drillRbacOnAzureHealthModel = default;
-            IList<string> rbacNeededForDrillOnAzureHealthModel = default;
             RecoveryPlanState? roReadiness = default;
-            RBACState? faultRbacOnTargets = default;
             RBACState? rbacOnTargetResources = default;
             RBACState? runbookFaultRbacOnTargets = default;
-            ExtensionObjectState? targets = default;
             ExtensionObjectState? chaosResource = default;
             IList<string> chaosResourceCreationFailureReasons = default;
             RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState = default;
             RelativeResourceCompositionState? serviceGroupAndDrillResourcesState = default;
             ExtensionObjectState? drillUserMsi = default;
-            ExtensionObjectState? chaosExperimentUserMsi = default;
             ExtensionObjectState? chaosResourceUserMsi = default;
             ExtensionObjectState? includedResourceInDrill = default;
             RBACState? drillRbacOnMonitoringResources = default;
@@ -416,36 +310,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("drillRbacOnExperiment"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    drillRbacOnExperiment = new RBACState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("rbacNeededForDrillOnExperiment"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    rbacNeededForDrillOnExperiment = array;
-                    continue;
-                }
                 if (prop.NameEquals("drillRbacOnChaosResource"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -506,96 +370,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     rbacNeededForDrillOnRecoveryPlan = array;
                     continue;
                 }
-                if (prop.NameEquals("drillRbacOnAzureMonitoringWorkspace"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    drillRbacOnAzureMonitoringWorkspace = new RBACState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("rbacNeededForDrillOnAzureMonitoringWorkspace"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    rbacNeededForDrillOnAzureMonitoringWorkspace = array;
-                    continue;
-                }
-                if (prop.NameEquals("drillRbacOnSlo"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    drillRbacOnSlo = new RBACState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("rbacNeededForDrillOnSlo"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    rbacNeededForDrillOnSlo = array;
-                    continue;
-                }
-                if (prop.NameEquals("drillRbacOnAzureHealthModel"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    drillRbacOnAzureHealthModel = new RBACState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("rbacNeededForDrillOnAzureHealthModel"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    rbacNeededForDrillOnAzureHealthModel = array;
-                    continue;
-                }
                 if (prop.NameEquals("roReadiness"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -603,15 +377,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         continue;
                     }
                     roReadiness = new RecoveryPlanState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("faultRbacOnTargets"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    faultRbacOnTargets = new RBACState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rbacOnTargetResources"u8))
@@ -630,15 +395,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         continue;
                     }
                     runbookFaultRbacOnTargets = new RBACState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("targets"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targets = new ExtensionObjectState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("chaosResource"u8))
@@ -696,15 +452,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         continue;
                     }
                     drillUserMsi = new ExtensionObjectState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("chaosExperimentUserMsi"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    chaosExperimentUserMsi = new ExtensionObjectState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("chaosResourceUserMsi"u8))
@@ -835,29 +582,18 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
             }
             return new AttentionReason(
-                drillRbacOnExperiment,
-                rbacNeededForDrillOnExperiment ?? new ChangeTrackingList<string>(),
                 drillRbacOnChaosResource,
                 rbacNeededForDrillOnChaosResource ?? new ChangeTrackingList<string>(),
                 drillRbacOnRecoveryPlan,
                 rbacNeededForDrillOnRecoveryPlan ?? new ChangeTrackingList<string>(),
-                drillRbacOnAzureMonitoringWorkspace,
-                rbacNeededForDrillOnAzureMonitoringWorkspace ?? new ChangeTrackingList<string>(),
-                drillRbacOnSlo,
-                rbacNeededForDrillOnSlo ?? new ChangeTrackingList<string>(),
-                drillRbacOnAzureHealthModel,
-                rbacNeededForDrillOnAzureHealthModel ?? new ChangeTrackingList<string>(),
                 roReadiness,
-                faultRbacOnTargets,
                 rbacOnTargetResources,
                 runbookFaultRbacOnTargets,
-                targets,
                 chaosResource,
                 chaosResourceCreationFailureReasons ?? new ChangeTrackingList<string>(),
                 recoveryPlanAndDrillResourcesState,
                 serviceGroupAndDrillResourcesState,
                 drillUserMsi,
-                chaosExperimentUserMsi,
                 chaosResourceUserMsi,
                 includedResourceInDrill,
                 drillRbacOnMonitoringResources,

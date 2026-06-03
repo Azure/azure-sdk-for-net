@@ -704,15 +704,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="executionConfigurationsUserConsent"> User consent for performing recovery action. </param>
         /// <param name="triggeredBy"> Indicates whether the job was triggered by the system or a user. </param>
         /// <param name="drillId"> Parent Drill resource. </param>
-        /// <param name="metricValue"> Measured aggregated Metric value through the drill run. </param>
-        /// <param name="healthStatus"> Measured health status through the drill run. </param>
         /// <param name="drillMode"> Drill mode. </param>
         /// <param name="attestation"> Attestation of this Drill Run. </param>
         /// <param name="notes"> Notes for this Drill. </param>
         /// <param name="supportedVerbsForStage"> Matrix of Actions supported on Operations. </param>
         /// <param name="currentActiveOperationId"> The currently active operationID on this Drill Run. There can be only one active. </param>
         /// <returns> A new <see cref="Models.DrillRunProperties"/> instance for mocking. </returns>
-        public static DrillRunProperties DrillRunProperties(JobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, UserConsent? executionConfigurationsUserConsent = default, JobTriggeredBy? triggeredBy = default, ResourceIdentifier drillId = default, string metricValue = default, HealthStatus? healthStatus = default, DrillMode? drillMode = default, DrillAttestation? attestation = default, IEnumerable<string> notes = default, IEnumerable<SupportedVerbsForStage> supportedVerbsForStage = default, string currentActiveOperationId = default)
+        public static DrillRunProperties DrillRunProperties(JobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, UserConsent? executionConfigurationsUserConsent = default, JobTriggeredBy? triggeredBy = default, ResourceIdentifier drillId = default, DrillMode? drillMode = default, DrillAttestation? attestation = default, IEnumerable<string> notes = default, IEnumerable<SupportedVerbsForStage> supportedVerbsForStage = default, string currentActiveOperationId = default)
         {
             retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
             userComments ??= new ChangeTrackingList<JobUserComment>();
@@ -735,8 +733,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 triggeredBy,
                 additionalBinaryDataProperties: null,
                 drillId,
-                metricValue,
-                healthStatus,
                 drillMode,
                 attestation,
                 notes.ToList(),
@@ -753,241 +749,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             supportedVerbs ??= new ChangeTrackingList<DrillRunOperationVerbs>();
 
             return new SupportedVerbsForStage(drillRunStage, supportedVerbs.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
-        /// <param name="duration"> The time elapsed during the execution of this job. </param>
-        /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
-        /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
-        /// <param name="operation"> The operation that this job is intended to perform. </param>
-        /// <param name="retryDetails"> Details of any retries that have been attempted for this job. </param>
-        /// <param name="jobExtendedInfo"> Additional information about the job. </param>
-        /// <param name="userComments"> User Comments. </param>
-        /// <param name="executionConfigurationsUserConsent"> User consent for performing recovery action. </param>
-        /// <param name="triggeredBy"> Indicates whether the job was triggered by the system or a user. </param>
-        /// <param name="provisioningState"> The provisioning state of the recovery child job. </param>
-        /// <returns> A new <see cref="Models.ChaosJobProperties"/> instance for mocking. </returns>
-        public static ChaosJobProperties ChaosJobProperties(JobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, UserConsent? executionConfigurationsUserConsent = default, JobTriggeredBy? triggeredBy = default, ProvisioningState? provisioningState = default)
-        {
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
-
-            return new ChaosJobProperties(
-                status,
-                startOn,
-                endOn,
-                duration,
-                errorDetails,
-                resourceId,
-                operation,
-                retryDetails.ToList(),
-                jobExtendedInfo,
-                userComments.ToList(),
-                JobType.ChaosExperiment,
-                executionConfigurationsUserConsent is null ? default : new ExecutionConfigurations(executionConfigurationsUserConsent.GetValueOrDefault(), null),
-                triggeredBy,
-                additionalBinaryDataProperties: null,
-                provisioningState);
-        }
-
-        /// <summary> RecoveryPlan Child Job a AzureResilienceProviderHub resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.RecoveryChildJobData"/> instance for mocking. </returns>
-        public static RecoveryChildJobData RecoveryChildJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecoveryChildJobProperties properties = default)
-        {
-            return new RecoveryChildJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <summary> Definition of recovery child job associated with Recovery Orchestration Plan. </summary>
-        /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
-        /// <param name="duration"> The time elapsed during the execution of this job. </param>
-        /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
-        /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
-        /// <param name="operation"> The operation that this job is intended to perform. </param>
-        /// <param name="retryDetails"> Details of any retries that have been attempted for this job. </param>
-        /// <param name="jobExtendedInfo"> Additional information about the job. </param>
-        /// <param name="userComments"> User Comments. </param>
-        /// <param name="parentJobId"> The unique identifier of the parent job under which this child job exists. </param>
-        /// <param name="parentJobTaskId"> The unique identifier of the task within the parent job for which this child job is created. </param>
-        /// <param name="parentJobTaskName"> The friendly name of the task within the parent job for which this child job is created. </param>
-        /// <param name="parentJobResourceId"> The resource identifier of the parent job's job resource for which this child job is created. </param>
-        /// <param name="parentJobRetryAttempt"> The retry count of the task within the parent job for which this child job is created. </param>
-        /// <param name="provisioningState"> The provisioning state of the recovery child job. </param>
-        /// <param name="protectionSolutionType"> A setting that indicates the protection solution selected. </param>
-        /// <returns> A new <see cref="Models.RecoveryChildJobProperties"/> instance for mocking. </returns>
-        public static RecoveryChildJobProperties RecoveryChildJobProperties(JobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, ResourceIdentifier parentJobId = default, string parentJobTaskId = default, string parentJobTaskName = default, ResourceIdentifier parentJobResourceId = default, int? parentJobRetryAttempt = default, ProvisioningState? provisioningState = default, ResourceProtectionSolutionType? protectionSolutionType = default)
-        {
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
-
-            return new RecoveryChildJobProperties(
-                status,
-                startOn,
-                endOn,
-                duration,
-                errorDetails,
-                resourceId,
-                operation,
-                retryDetails.ToList(),
-                jobExtendedInfo,
-                userComments.ToList(),
-                parentJobId,
-                parentJobTaskId,
-                parentJobTaskName,
-                parentJobResourceId,
-                parentJobRetryAttempt,
-                JobType.RecoveryPlanChild,
-                additionalBinaryDataProperties: null,
-                provisioningState,
-                protectionSolutionType);
-        }
-
-        /// <summary>
-        /// Represents the properties of a child job within the Resiliency Hub.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RecoveryChildJobProperties"/>, <see cref="Models.DrillRunChildJobProperties"/>, and <see cref="Models.ChaosJobChildJobProperties"/>.
-        /// </summary>
-        /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
-        /// <param name="duration"> The time elapsed during the execution of this job. </param>
-        /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
-        /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
-        /// <param name="operation"> The operation that this job is intended to perform. </param>
-        /// <param name="retryDetails"> Details of any retries that have been attempted for this job. </param>
-        /// <param name="jobExtendedInfo"> Additional information about the job. </param>
-        /// <param name="userComments"> User Comments. </param>
-        /// <param name="parentJobId"> The unique identifier of the parent job under which this child job exists. </param>
-        /// <param name="parentJobTaskId"> The unique identifier of the task within the parent job for which this child job is created. </param>
-        /// <param name="parentJobTaskName"> The friendly name of the task within the parent job for which this child job is created. </param>
-        /// <param name="parentJobResourceId"> The resource identifier of the parent job's job resource for which this child job is created. </param>
-        /// <param name="parentJobRetryAttempt"> The retry count of the task within the parent job for which this child job is created. </param>
-        /// <param name="jobType"> The discriminator for the Job Type hierarchy. </param>
-        /// <returns> A new <see cref="Models.ChildJobProperties"/> instance for mocking. </returns>
-        public static ChildJobProperties ChildJobProperties(JobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, ResourceIdentifier parentJobId = default, string parentJobTaskId = default, string parentJobTaskName = default, ResourceIdentifier parentJobResourceId = default, int? parentJobRetryAttempt = default, string jobType = default)
-        {
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
-
-            return new UnknownChildJobProperties(
-                status,
-                startOn,
-                endOn,
-                duration,
-                errorDetails,
-                resourceId,
-                operation,
-                retryDetails.ToList(),
-                jobExtendedInfo,
-                userComments.ToList(),
-                parentJobId,
-                parentJobTaskId,
-                parentJobTaskName,
-                parentJobResourceId,
-                parentJobRetryAttempt,
-                new JobType(jobType),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Definition of Drill Run child job properties. </summary>
-        /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
-        /// <param name="duration"> The time elapsed during the execution of this job. </param>
-        /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
-        /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
-        /// <param name="operation"> The operation that this job is intended to perform. </param>
-        /// <param name="retryDetails"> Details of any retries that have been attempted for this job. </param>
-        /// <param name="jobExtendedInfo"> Additional information about the job. </param>
-        /// <param name="userComments"> User Comments. </param>
-        /// <param name="parentJobId"> The unique identifier of the parent job under which this child job exists. </param>
-        /// <param name="parentJobTaskId"> The unique identifier of the task within the parent job for which this child job is created. </param>
-        /// <param name="parentJobTaskName"> The friendly name of the task within the parent job for which this child job is created. </param>
-        /// <param name="parentJobResourceId"> The resource identifier of the parent job's job resource for which this child job is created. </param>
-        /// <param name="parentJobRetryAttempt"> The retry count of the task within the parent job for which this child job is created. </param>
-        /// <param name="provisioningState"> The provisioning state of the recovery child job. </param>
-        /// <returns> A new <see cref="Models.DrillRunChildJobProperties"/> instance for mocking. </returns>
-        public static DrillRunChildJobProperties DrillRunChildJobProperties(JobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, ResourceIdentifier parentJobId = default, string parentJobTaskId = default, string parentJobTaskName = default, ResourceIdentifier parentJobResourceId = default, int? parentJobRetryAttempt = default, ProvisioningState? provisioningState = default)
-        {
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
-
-            return new DrillRunChildJobProperties(
-                status,
-                startOn,
-                endOn,
-                duration,
-                errorDetails,
-                resourceId,
-                operation,
-                retryDetails.ToList(),
-                jobExtendedInfo,
-                userComments.ToList(),
-                parentJobId,
-                parentJobTaskId,
-                parentJobTaskName,
-                parentJobResourceId,
-                parentJobRetryAttempt,
-                JobType.DrillRunChild,
-                additionalBinaryDataProperties: null,
-                provisioningState);
-        }
-
-        /// <summary> Definition of Chaos job child job properties. </summary>
-        /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
-        /// <param name="duration"> The time elapsed during the execution of this job. </param>
-        /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
-        /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
-        /// <param name="operation"> The operation that this job is intended to perform. </param>
-        /// <param name="retryDetails"> Details of any retries that have been attempted for this job. </param>
-        /// <param name="jobExtendedInfo"> Additional information about the job. </param>
-        /// <param name="userComments"> User Comments. </param>
-        /// <param name="parentJobId"> The unique identifier of the parent job under which this child job exists. </param>
-        /// <param name="parentJobTaskId"> The unique identifier of the task within the parent job for which this child job is created. </param>
-        /// <param name="parentJobTaskName"> The friendly name of the task within the parent job for which this child job is created. </param>
-        /// <param name="parentJobResourceId"> The resource identifier of the parent job's job resource for which this child job is created. </param>
-        /// <param name="parentJobRetryAttempt"> The retry count of the task within the parent job for which this child job is created. </param>
-        /// <param name="provisioningState"> The provisioning state of the recovery child job. </param>
-        /// <returns> A new <see cref="Models.ChaosJobChildJobProperties"/> instance for mocking. </returns>
-        public static ChaosJobChildJobProperties ChaosJobChildJobProperties(JobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, ResourceIdentifier parentJobId = default, string parentJobTaskId = default, string parentJobTaskName = default, ResourceIdentifier parentJobResourceId = default, int? parentJobRetryAttempt = default, ProvisioningState? provisioningState = default)
-        {
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
-
-            return new ChaosJobChildJobProperties(
-                status,
-                startOn,
-                endOn,
-                duration,
-                errorDetails,
-                resourceId,
-                operation,
-                retryDetails.ToList(),
-                jobExtendedInfo,
-                userComments.ToList(),
-                parentJobId,
-                parentJobTaskId,
-                parentJobTaskName,
-                parentJobResourceId,
-                parentJobRetryAttempt,
-                JobType.ChaosExperimentChild,
-                additionalBinaryDataProperties: null,
-                provisioningState);
         }
 
         /// <summary> Represents a recovery orchestration job resource in the Azure Resilience Management provider namespace. </summary>
@@ -1072,7 +833,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary>
         /// Definition of job-resource.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RecoveryJobResourceProperties"/>, <see cref="Models.DrillRunResourceProperties"/>, and <see cref="Models.ChaosJobResourceProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RecoveryJobResourceProperties"/> and <see cref="Models.DrillRunResourceProperties"/>.
         /// </summary>
         /// <param name="status"> The current status of the job execution. </param>
         /// <param name="startOn"> The start time of the job execution. </param>
@@ -1152,46 +913,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 provisioningState);
         }
 
-        /// <summary> Properties of a Chaos job resource. </summary>
-        /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
-        /// <param name="duration"> The time elapsed during the execution of this job. </param>
-        /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
-        /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
-        /// <param name="operation"> The operation that this job is intended to perform. </param>
-        /// <param name="retryDetails"> Details of any retries that have been attempted for this job. </param>
-        /// <param name="jobExtendedInfo"> Additional information about the job. </param>
-        /// <param name="userComments"> User Comments. </param>
-        /// <param name="jobId"> Id of the Job under which this job-resource exists. </param>
-        /// <param name="taskId"> Id of the job-task to which this job resource is associated. </param>
-        /// <param name="taskName"> Friendly name of the job-task to which this job resource is associated. </param>
-        /// <param name="provisioningState"> The provisioning state of the Drill Run Resource. </param>
-        /// <returns> A new <see cref="Models.ChaosJobResourceProperties"/> instance for mocking. </returns>
-        public static ChaosJobResourceProperties ChaosJobResourceProperties(JobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, ProvisioningState? provisioningState = default)
-        {
-            retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
-            userComments ??= new ChangeTrackingList<JobUserComment>();
-
-            return new ChaosJobResourceProperties(
-                status,
-                startOn,
-                endOn,
-                duration,
-                errorDetails,
-                resourceId,
-                operation,
-                retryDetails.ToList(),
-                jobExtendedInfo,
-                userComments.ToList(),
-                jobId,
-                taskId,
-                taskName,
-                JobResourceType.ChaosExperiment,
-                additionalBinaryDataProperties: null,
-                provisioningState);
-        }
-
         /// <summary> Drill resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -1214,12 +935,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <param name="provisioningState"> Status of the last operation. </param>
         /// <param name="serviceGroupId"> Parent SG resource. </param>
-        /// <param name="metricsProperties"> Metric properties. </param>
-        /// <param name="healthModelProperties"> HealthModel properties. </param>
         /// <param name="recoveryPlanProperties"> ROPlan properties. </param>
         /// <param name="drillAssetProperties"> Properties for internal resources that are created for the Drill. </param>
         /// <param name="chaosResourceProperties"> Chaos Resource properties. </param>
-        /// <param name="chaosExperimentProperties"> Chaos Experiment properties. </param>
         /// <param name="executionState"> Execution state of the Drill. Whether it is currently running or not. </param>
         /// <param name="executionReadinessState"> Readiness state of the Drill. </param>
         /// <param name="rbacSetupMode"> RBAC setup mode. </param>
@@ -1233,17 +951,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <returns> A new <see cref="Models.DrillProperties"/> instance for mocking. </returns>
-        public static DrillProperties DrillProperties(ProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, MetricsPropertiesOfDrill metricsProperties = default, HealthModelPropertiesOfDrill healthModelProperties = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ChaosExperimentPropertiesOfDrill chaosExperimentProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, RBACSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, SystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<MoboBrokerTarget> managedOnBehalfOfMoboBrokerResources = default, string drillType = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default)
+        public static DrillProperties DrillProperties(ProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, RBACSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, SystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<MoboBrokerTarget> managedOnBehalfOfMoboBrokerResources = default, string drillType = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default)
         {
             return new UnknownDrillProperties(
                 provisioningState,
                 serviceGroupId,
-                metricsProperties,
-                healthModelProperties,
                 recoveryPlanProperties,
                 drillAssetProperties,
                 chaosResourceProperties,
-                chaosExperimentProperties,
                 executionState,
                 executionReadinessState,
                 rbacSetupMode,
@@ -1257,17 +972,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 monitoringProperties,
                 errorDetails,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Metrics properties. </summary>
-        /// <param name="identity"> Identity to use for metrics operations. </param>
-        /// <param name="metricsToTrack"> Metrics associated with this Drill. These will be tracked through the Drill Run. </param>
-        /// <returns> A new <see cref="Models.MetricsPropertiesOfDrill"/> instance for mocking. </returns>
-        public static MetricsPropertiesOfDrill MetricsPropertiesOfDrill(AssociatedIdentity identity = default, IEnumerable<MetricsToTrack> metricsToTrack = default)
-        {
-            metricsToTrack ??= new ChangeTrackingList<MetricsToTrack>();
-
-            return new MetricsPropertiesOfDrill(identity, metricsToTrack.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> RecoveryPlan properties. </summary>
@@ -1291,50 +995,19 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new ChaosResourcePropertiesOfDrill(identity, chaosResourceIdentityForFaults, chaosResourceId, faultDurationInMin, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Chaos Experiment properties. </summary>
-        /// <param name="subscription"> Subscription for chaosExperiment resource. </param>
-        /// <param name="region"> Region for chaosExperiment resource. </param>
-        /// <param name="identity"> Identity to use for Chaos Experiment operations. </param>
-        /// <param name="chaosExperimentIdentityForFaults"> Identity to be used by the Chaos Experiment for invoking faults on resources. </param>
-        /// <param name="chaosExperimentId"> Chaos Experiment resource created for this Drill. </param>
-        /// <param name="faultDurationInMin"> Duration of faults. </param>
-        /// <returns> A new <see cref="Models.ChaosExperimentPropertiesOfDrill"/> instance for mocking. </returns>
-        public static ChaosExperimentPropertiesOfDrill ChaosExperimentPropertiesOfDrill(string subscription = default, string region = default, AssociatedIdentity identity = default, AssociatedIdentity chaosExperimentIdentityForFaults = default, ResourceIdentifier chaosExperimentId = default, int? faultDurationInMin = default)
-        {
-            return new ChaosExperimentPropertiesOfDrill(
-                subscription,
-                region,
-                identity,
-                chaosExperimentIdentityForFaults,
-                chaosExperimentId,
-                faultDurationInMin,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Reason why the Drill is in NeedsAttention state, and not ready to run. </summary>
-        /// <param name="drillRbacOnExperiment"> Drill object does not have the necessary RBAC to run the chaos experiment. </param>
-        /// <param name="rbacNeededForDrillOnExperiment"> Permissions needed by the Drill MSI to run the chaos experiment. </param>
         /// <param name="drillRbacOnChaosResource"> Drill object does not have the necessary RBAC to run the chaos resource. </param>
         /// <param name="rbacNeededForDrillOnChaosResource"> Permissions needed by the Drill MSI to run the chaos resource. </param>
         /// <param name="drillRbacOnRecoveryPlan"> Drill object does not have the necessary RBAC to run the Recovery Plan. </param>
         /// <param name="rbacNeededForDrillOnRecoveryPlan"> Permissions needed by the Drill MSI to run the Recovery Plan. </param>
-        /// <param name="drillRbacOnAzureMonitoringWorkspace"> Drill object does not have the necessary RBAC to read the Azure Monitoring Workspace account. </param>
-        /// <param name="rbacNeededForDrillOnAzureMonitoringWorkspace"> Permissions needed by the Drill MSI to read Azure Monitoring Workspace account. </param>
-        /// <param name="drillRbacOnSlo"> Drill object does not have the necessary RBAC to read the SLO object. </param>
-        /// <param name="rbacNeededForDrillOnSlo"> Permissions needed by the Drill MSI to read SLO object. </param>
-        /// <param name="drillRbacOnAzureHealthModel"> Drill object does not have the necessary RBAC to read the Azure Health Model. </param>
-        /// <param name="rbacNeededForDrillOnAzureHealthModel"> Permissions needed by the Drill MSI to read Azure Health Model. </param>
         /// <param name="roReadiness"> Associated RO ready or not. </param>
-        /// <param name="faultRbacOnTargets"> RBAC required by Experiment MSI not setup on the target resources. </param>
         /// <param name="rbacOnTargetResources"> RBAC required by Chaos Resource MSI not setup on the target resources. </param>
         /// <param name="runbookFaultRbacOnTargets"> RBAC required by AutomationAccount for runbook MSI not setup on the target resources. </param>
-        /// <param name="targets"> One or more Target or Capability object is deleted. </param>
         /// <param name="chaosResource"> Chaos resource for faulting exists or not. </param>
         /// <param name="chaosResourceCreationFailureReasons"> Reason for Chaos Resource Creation failure. </param>
         /// <param name="recoveryPlanAndDrillResourcesState"> Resources associated in Recovery Plan and Drill are out of sync. </param>
         /// <param name="serviceGroupAndDrillResourcesState"> Resources in Service Group and Drill are out of sync. </param>
         /// <param name="drillUserMsi"> User MSI associated with Drill object is deleted. </param>
-        /// <param name="chaosExperimentUserMsi"> User MSI associated with chaos experiment object is deleted. </param>
         /// <param name="chaosResourceUserMsi"> User MSI associated with chaos resource object is deleted. </param>
         /// <param name="includedResourceInDrill"> Included resource in Drill. </param>
         /// <param name="drillRbacOnMonitoringResources"> Drill MSI does not have the necessary RBAC to read the Drill Monitoring resources. </param>
@@ -1345,14 +1018,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="rbacNeededForDrillOnDrillResources"> Permissions needed by the Drill MSI to read health metrics data for resources in service group. </param>
         /// <param name="missingRequiredResourceProviders"> List of required required Azure resource providers that are not registered in the subscription specified for chaos resource. </param>
         /// <returns> A new <see cref="Models.AttentionReason"/> instance for mocking. </returns>
-        public static AttentionReason AttentionReason(RBACState? drillRbacOnExperiment = default, IEnumerable<string> rbacNeededForDrillOnExperiment = default, RBACState? drillRbacOnChaosResource = default, IEnumerable<string> rbacNeededForDrillOnChaosResource = default, RBACState? drillRbacOnRecoveryPlan = default, IEnumerable<string> rbacNeededForDrillOnRecoveryPlan = default, RBACState? drillRbacOnAzureMonitoringWorkspace = default, IEnumerable<string> rbacNeededForDrillOnAzureMonitoringWorkspace = default, RBACState? drillRbacOnSlo = default, IEnumerable<string> rbacNeededForDrillOnSlo = default, RBACState? drillRbacOnAzureHealthModel = default, IEnumerable<string> rbacNeededForDrillOnAzureHealthModel = default, RecoveryPlanState? roReadiness = default, RBACState? faultRbacOnTargets = default, RBACState? rbacOnTargetResources = default, RBACState? runbookFaultRbacOnTargets = default, ExtensionObjectState? targets = default, ExtensionObjectState? chaosResource = default, IEnumerable<string> chaosResourceCreationFailureReasons = default, RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState = default, RelativeResourceCompositionState? serviceGroupAndDrillResourcesState = default, ExtensionObjectState? drillUserMsi = default, ExtensionObjectState? chaosExperimentUserMsi = default, ExtensionObjectState? chaosResourceUserMsi = default, ExtensionObjectState? includedResourceInDrill = default, RBACState? drillRbacOnMonitoringResources = default, IEnumerable<ErrorDetails> drillMonitoringErrors = default, ExtensionObjectState? drillMonitoringResources = default, RBACState? monitoringRbacOnDrillResources = default, IEnumerable<string> rbacNeededForDrillOnDrillMonitoringResources = default, IEnumerable<string> rbacNeededForDrillOnDrillResources = default, IEnumerable<string> missingRequiredResourceProviders = default)
+        public static AttentionReason AttentionReason(RBACState? drillRbacOnChaosResource = default, IEnumerable<string> rbacNeededForDrillOnChaosResource = default, RBACState? drillRbacOnRecoveryPlan = default, IEnumerable<string> rbacNeededForDrillOnRecoveryPlan = default, RecoveryPlanState? roReadiness = default, RBACState? rbacOnTargetResources = default, RBACState? runbookFaultRbacOnTargets = default, ExtensionObjectState? chaosResource = default, IEnumerable<string> chaosResourceCreationFailureReasons = default, RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState = default, RelativeResourceCompositionState? serviceGroupAndDrillResourcesState = default, ExtensionObjectState? drillUserMsi = default, ExtensionObjectState? chaosResourceUserMsi = default, ExtensionObjectState? includedResourceInDrill = default, RBACState? drillRbacOnMonitoringResources = default, IEnumerable<ErrorDetails> drillMonitoringErrors = default, ExtensionObjectState? drillMonitoringResources = default, RBACState? monitoringRbacOnDrillResources = default, IEnumerable<string> rbacNeededForDrillOnDrillMonitoringResources = default, IEnumerable<string> rbacNeededForDrillOnDrillResources = default, IEnumerable<string> missingRequiredResourceProviders = default)
         {
-            rbacNeededForDrillOnExperiment ??= new ChangeTrackingList<string>();
             rbacNeededForDrillOnChaosResource ??= new ChangeTrackingList<string>();
             rbacNeededForDrillOnRecoveryPlan ??= new ChangeTrackingList<string>();
-            rbacNeededForDrillOnAzureMonitoringWorkspace ??= new ChangeTrackingList<string>();
-            rbacNeededForDrillOnSlo ??= new ChangeTrackingList<string>();
-            rbacNeededForDrillOnAzureHealthModel ??= new ChangeTrackingList<string>();
             chaosResourceCreationFailureReasons ??= new ChangeTrackingList<string>();
             drillMonitoringErrors ??= new ChangeTrackingList<ErrorDetails>();
             rbacNeededForDrillOnDrillMonitoringResources ??= new ChangeTrackingList<string>();
@@ -1360,29 +1029,18 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             missingRequiredResourceProviders ??= new ChangeTrackingList<string>();
 
             return new AttentionReason(
-                drillRbacOnExperiment,
-                rbacNeededForDrillOnExperiment.ToList(),
                 drillRbacOnChaosResource,
                 rbacNeededForDrillOnChaosResource.ToList(),
                 drillRbacOnRecoveryPlan,
                 rbacNeededForDrillOnRecoveryPlan.ToList(),
-                drillRbacOnAzureMonitoringWorkspace,
-                rbacNeededForDrillOnAzureMonitoringWorkspace.ToList(),
-                drillRbacOnSlo,
-                rbacNeededForDrillOnSlo.ToList(),
-                drillRbacOnAzureHealthModel,
-                rbacNeededForDrillOnAzureHealthModel.ToList(),
                 roReadiness,
-                faultRbacOnTargets,
                 rbacOnTargetResources,
                 runbookFaultRbacOnTargets,
-                targets,
                 chaosResource,
                 chaosResourceCreationFailureReasons.ToList(),
                 recoveryPlanAndDrillResourcesState,
                 serviceGroupAndDrillResourcesState,
                 drillUserMsi,
-                chaosExperimentUserMsi,
                 chaosResourceUserMsi,
                 includedResourceInDrill,
                 drillRbacOnMonitoringResources,
@@ -1460,12 +1118,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <param name="provisioningState"> Status of the last operation. </param>
         /// <param name="serviceGroupId"> Parent SG resource. </param>
-        /// <param name="metricsProperties"> Metric properties. </param>
-        /// <param name="healthModelProperties"> HealthModel properties. </param>
         /// <param name="recoveryPlanProperties"> ROPlan properties. </param>
         /// <param name="drillAssetProperties"> Properties for internal resources that are created for the Drill. </param>
         /// <param name="chaosResourceProperties"> Chaos Resource properties. </param>
-        /// <param name="chaosExperimentProperties"> Chaos Experiment properties. </param>
         /// <param name="executionState"> Execution state of the Drill. Whether it is currently running or not. </param>
         /// <param name="executionReadinessState"> Readiness state of the Drill. </param>
         /// <param name="rbacSetupMode"> RBAC setup mode. </param>
@@ -1479,17 +1134,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <param name="vmsPresent"> An indication whether a VM is included in this Zonal Drill. If not, RO is not needed. </param>
         /// <returns> A new <see cref="Models.ZonalDrillProperties"/> instance for mocking. </returns>
-        public static ZonalDrillProperties ZonalDrillProperties(ProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, MetricsPropertiesOfDrill metricsProperties = default, HealthModelPropertiesOfDrill healthModelProperties = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ChaosExperimentPropertiesOfDrill chaosExperimentProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, RBACSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, SystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<MoboBrokerTarget> managedOnBehalfOfMoboBrokerResources = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default, VMPresent? vmsPresent = default)
+        public static ZonalDrillProperties ZonalDrillProperties(ProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, RBACSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, SystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<MoboBrokerTarget> managedOnBehalfOfMoboBrokerResources = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default, VMPresent? vmsPresent = default)
         {
             return new ZonalDrillProperties(
                 provisioningState,
                 serviceGroupId,
-                metricsProperties,
-                healthModelProperties,
                 recoveryPlanProperties,
                 drillAssetProperties,
                 chaosResourceProperties,
-                chaosExperimentProperties,
                 executionState,
                 executionReadinessState,
                 rbacSetupMode,
@@ -1508,12 +1160,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <param name="provisioningState"> Status of the last operation. </param>
         /// <param name="serviceGroupId"> Parent SG resource. </param>
-        /// <param name="metricsProperties"> Metric properties. </param>
-        /// <param name="healthModelProperties"> HealthModel properties. </param>
         /// <param name="recoveryPlanProperties"> ROPlan properties. </param>
         /// <param name="drillAssetProperties"> Properties for internal resources that are created for the Drill. </param>
         /// <param name="chaosResourceProperties"> Chaos Resource properties. </param>
-        /// <param name="chaosExperimentProperties"> Chaos Experiment properties. </param>
         /// <param name="executionState"> Execution state of the Drill. Whether it is currently running or not. </param>
         /// <param name="executionReadinessState"> Readiness state of the Drill. </param>
         /// <param name="rbacSetupMode"> RBAC setup mode. </param>
@@ -1526,17 +1175,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <returns> A new <see cref="Models.RegionalDrillProperties"/> instance for mocking. </returns>
-        public static RegionalDrillProperties RegionalDrillProperties(ProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, MetricsPropertiesOfDrill metricsProperties = default, HealthModelPropertiesOfDrill healthModelProperties = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ChaosExperimentPropertiesOfDrill chaosExperimentProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, RBACSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, SystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<MoboBrokerTarget> managedOnBehalfOfMoboBrokerResources = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default)
+        public static RegionalDrillProperties RegionalDrillProperties(ProvisioningState? provisioningState = default, ResourceIdentifier serviceGroupId = default, RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default, AssetPropertiesOfDrill drillAssetProperties = default, ChaosResourcePropertiesOfDrill chaosResourceProperties = default, ExecutionState? executionState = default, ExecutionReadinessState? executionReadinessState = default, RBACSetupMode? rbacSetupMode = default, AttentionReason attentionReason = default, SystemMetadata systemMetadata = default, LastRunProperties lastRunProperties = default, DateTimeOffset? lastSyncOn = default, DateTimeOffset? lastResyncReadinessCheckOn = default, IEnumerable<MoboBrokerTarget> managedOnBehalfOfMoboBrokerResources = default, MonitoringPropertiesOfDrill monitoringProperties = default, ResponseError errorDetails = default)
         {
             return new RegionalDrillProperties(
                 provisioningState,
                 serviceGroupId,
-                metricsProperties,
-                healthModelProperties,
                 recoveryPlanProperties,
                 drillAssetProperties,
                 chaosResourceProperties,
-                chaosExperimentProperties,
                 executionState,
                 executionReadinessState,
                 rbacSetupMode,
@@ -1565,12 +1211,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new FaultProperties(availableFaults.ToList(), defaultFault, overriddenDefaultFault, customFault, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Request body of the Start Action of Drill. </summary>
         /// <param name="mode"> Mode of starting the Drill. </param>
-        /// <param name="recoveryPlanInputsFailoverDirection"> Direction of the failover. </param>
         /// <returns> A new <see cref="Models.DrillStartContent"/> instance for mocking. </returns>
-        public static DrillStartContent DrillStartContent(DrillMode mode = default, string recoveryPlanInputsFailoverDirection = default)
+        public static DrillStartContent DrillStartContent(DrillMode mode = default)
         {
-            return new DrillStartContent(mode, new DrillStartRequestRecoveryPlanInputs(recoveryPlanInputsFailoverDirection, null), additionalBinaryDataProperties: null);
+            return new DrillStartContent(mode, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request body of the End Action of Drill. </summary>
@@ -1652,13 +1298,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="attentionReason"> Attention reason if the Status is 'NeedsAttention'. </param>
         /// <param name="advisorRecommendationTypeId"> Recommendation Type Id for the recommendation. </param>
         /// <param name="advisorHaRecommendationId"> Associated Advisor Recommendation link, if HA is not enabled on this resource. </param>
-        /// <param name="targetAndCapabilityAssignmentError"> Last Target and Capability assignment error, if any. </param>
-        /// <param name="targetResourceAssignmentError"> Last Target Resource RBAC assignment error, if any. </param>
         /// <param name="rbacAssignmentError"> Last RBAC assignment error, if any. </param>
         /// <param name="monitoringRbacAssignmentError"> Monitoring RBAC assignment error, if any. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.DrillResourceProperties"/> instance for mocking. </returns>
-        public static DrillResourceProperties DrillResourceProperties(ResourceIdentifier resourceId = default, string resourceType = default, IEnumerable<string> activeLocations = default, IEnumerable<string> recoveryLocations = default, IEnumerable<string> activePhysicalZones = default, IEnumerable<string> recoveryPhysicalZones = default, DrillResourceInclusionState? inclusionState = default, ResourceInclusionState? recoveryPlanInclusionState = default, RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default, ResourceProtectionSolutionType? resourceProtectionSolutionType = default, DrillResourceReadinessState? readinessState = default, DrillResourceFaultState? faultState = default, FaultProperties faultProperties = default, ForceInclusionAndUpdate? forceInclusionState = default, HAStatus? haStatus = default, DrillResourceAttentionReason attentionReason = default, string advisorRecommendationTypeId = default, ResourceIdentifier advisorHaRecommendationId = default, ErrorDetails targetAndCapabilityAssignmentError = default, ErrorDetails targetResourceAssignmentError = default, ErrorDetails rbacAssignmentError = default, ErrorDetails monitoringRbacAssignmentError = default, ProvisioningState? provisioningState = default)
+        public static DrillResourceProperties DrillResourceProperties(ResourceIdentifier resourceId = default, string resourceType = default, IEnumerable<string> activeLocations = default, IEnumerable<string> recoveryLocations = default, IEnumerable<string> activePhysicalZones = default, IEnumerable<string> recoveryPhysicalZones = default, DrillResourceInclusionState? inclusionState = default, ResourceInclusionState? recoveryPlanInclusionState = default, RecoveryPlanExclusionReason? recoveryPlanExclusionReason = default, ResourceProtectionSolutionType? resourceProtectionSolutionType = default, DrillResourceReadinessState? readinessState = default, DrillResourceFaultState? faultState = default, FaultProperties faultProperties = default, ForceInclusionAndUpdate? forceInclusionState = default, HAStatus? haStatus = default, DrillResourceAttentionReason attentionReason = default, string advisorRecommendationTypeId = default, ResourceIdentifier advisorHaRecommendationId = default, ErrorDetails rbacAssignmentError = default, ErrorDetails monitoringRbacAssignmentError = default, ProvisioningState? provisioningState = default)
         {
             activeLocations ??= new ChangeTrackingList<string>();
             recoveryLocations ??= new ChangeTrackingList<string>();
@@ -1684,8 +1328,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 attentionReason,
                 advisorRecommendationTypeId,
                 advisorHaRecommendationId,
-                targetAndCapabilityAssignmentError,
-                targetResourceAssignmentError,
                 rbacAssignmentError,
                 monitoringRbacAssignmentError,
                 provisioningState,
@@ -1693,25 +1335,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Reason why the Drill resource is in NeedsAttention state. </summary>
-        /// <param name="faultRbacOnTarget"> Experiment MSI does not have the desired RBAC on the resource. </param>
         /// <param name="faultRbacOnTargetResource"> Chaos Resource MSI does not have the desired RBAC on the resource. </param>
         /// <param name="runbookFaultRbacOnTargets"> RBAC required by AutomationAccount for runbook MSI not setup on the target resources. </param>
         /// <param name="monitoringRbacOnTargets"> RBAC required by Drill MSI on the target resource for monitoring. </param>
-        /// <param name="target"> Target extension resource is missing on the resource. </param>
         /// <param name="resourceState"> Drill Resource State (wrt SG and RO). </param>
         /// <returns> A new <see cref="Models.DrillResourceAttentionReason"/> instance for mocking. </returns>
-        public static DrillResourceAttentionReason DrillResourceAttentionReason(RBACState? faultRbacOnTarget = default, RBACState? faultRbacOnTargetResource = default, RBACState? runbookFaultRbacOnTargets = default, RBACState? monitoringRbacOnTargets = default, ExtensionObjectState? target = default, IEnumerable<DrillResourceState> resourceState = default)
+        public static DrillResourceAttentionReason DrillResourceAttentionReason(RBACState? faultRbacOnTargetResource = default, RBACState? runbookFaultRbacOnTargets = default, RBACState? monitoringRbacOnTargets = default, IEnumerable<DrillResourceState> resourceState = default)
         {
             resourceState ??= new ChangeTrackingList<DrillResourceState>();
 
-            return new DrillResourceAttentionReason(
-                faultRbacOnTarget,
-                faultRbacOnTargetResource,
-                runbookFaultRbacOnTargets,
-                monitoringRbacOnTargets,
-                target,
-                resourceState.ToList(),
-                additionalBinaryDataProperties: null);
+            return new DrillResourceAttentionReason(faultRbacOnTargetResource, runbookFaultRbacOnTargets, monitoringRbacOnTargets, resourceState.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> DrillRun resource. </summary>
@@ -1741,14 +1374,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new DrillRunFailoverContent(autoFailover, failoverProperties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Request body for TestFailover API. </summary>
-        /// <param name="failoverProperties"> The failover properties. </param>
-        /// <returns> A new <see cref="Models.DrillRunTestFailoverContent"/> instance for mocking. </returns>
-        public static DrillRunTestFailoverContent DrillRunTestFailoverContent(ResilienceManagementFailoverContent failoverProperties = default)
-        {
-            return new DrillRunTestFailoverContent(failoverProperties, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Request body for AddNotes API. </summary>
         /// <param name="notes"> The notes string. </param>
         /// <param name="timestamp"> System generated current Timestamp. </param>
@@ -1767,24 +1392,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new MarkAsCompleteContent(drillRunStage, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> DrillRun Child Job a AzureResilienceProviderHub resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.DrillRunChildJobData"/> instance for mocking. </returns>
-        public static DrillRunChildJobData DrillRunChildJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DrillRunChildJobProperties properties = default)
-        {
-            return new DrillRunChildJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
         /// <summary> Represents a Drill Run job resource in the Azure Resilience Management provider namespace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -1795,60 +1402,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static DrillRunTargetData DrillRunTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DrillRunResourceProperties properties = default)
         {
             return new DrillRunTargetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <summary> ChaosJob a AzureResilienceProviderHub resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.ChaosJobData"/> instance for mocking. </returns>
-        public static ChaosJobData ChaosJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ChaosJobProperties properties = default)
-        {
-            return new ChaosJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <summary> Represents a chaos job resource in the Azure Resilience Management provider namespace. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.ChaosJobTargetData"/> instance for mocking. </returns>
-        public static ChaosJobTargetData ChaosJobTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ChaosJobResourceProperties properties = default)
-        {
-            return new ChaosJobTargetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <summary> Chaos job Child job a AzureResilienceProviderHub resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.ChaosJobChildJobData"/> instance for mocking. </returns>
-        public static ChaosJobChildJobData ChaosJobChildJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ChaosJobChildJobProperties properties = default)
-        {
-            return new ChaosJobChildJobData(
                 id,
                 name,
                 resourceType,

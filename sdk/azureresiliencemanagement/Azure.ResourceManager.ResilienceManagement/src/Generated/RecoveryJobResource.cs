@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(ResourceType, out string recoveryJobApiVersion);
             _recoveryJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", ResourceType.Namespace, Diagnostics);
-            _recoveryJobsRestClient = new RecoveryJobs(_recoveryJobsClientDiagnostics, Pipeline, Endpoint, recoveryJobApiVersion ?? "2026-03-01-preview");
+            _recoveryJobsRestClient = new RecoveryJobs(_recoveryJobsClientDiagnostics, Pipeline, Endpoint, recoveryJobApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -553,39 +553,6 @@ namespace Azure.ResourceManager.ResilienceManagement
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of RecoveryChildJobs in the <see cref="RecoveryJobResource"/>. </summary>
-        /// <returns> An object representing collection of RecoveryChildJobs and their operations over a RecoveryChildJobResource. </returns>
-        public virtual RecoveryChildJobCollection GetRecoveryChildJobs()
-        {
-            return GetCachedClient(client => new RecoveryChildJobCollection(client, Id));
-        }
-
-        /// <summary> Get a RecoveryChildJob. </summary>
-        /// <param name="recoveryChildJobName"> The unique name (Guid) of the recovery child job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recoveryChildJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryChildJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RecoveryChildJobResource>> GetRecoveryChildJobAsync(string recoveryChildJobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recoveryChildJobName, nameof(recoveryChildJobName));
-
-            return await GetRecoveryChildJobs().GetAsync(recoveryChildJobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a RecoveryChildJob. </summary>
-        /// <param name="recoveryChildJobName"> The unique name (Guid) of the recovery child job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recoveryChildJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryChildJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RecoveryChildJobResource> GetRecoveryChildJob(string recoveryChildJobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recoveryChildJobName, nameof(recoveryChildJobName));
-
-            return GetRecoveryChildJobs().Get(recoveryChildJobName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RecoveryJobTargets in the <see cref="RecoveryJobResource"/>. </summary>

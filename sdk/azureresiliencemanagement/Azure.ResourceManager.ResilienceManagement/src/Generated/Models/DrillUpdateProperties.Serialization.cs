@@ -74,11 +74,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 throw new FormatException($"The model {nameof(DrillUpdateProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MetricsProperties))
-            {
-                writer.WritePropertyName("metricsProperties"u8);
-                writer.WriteObjectValue(MetricsProperties, options);
-            }
             if (Optional.IsDefined(RecoveryPlanProperties))
             {
                 writer.WritePropertyName("recoveryPlanProperties"u8);
@@ -89,20 +84,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("drillAssetProperties"u8);
                 writer.WriteObjectValue(DrillAssetProperties, options);
             }
-            if (Optional.IsDefined(ChaosExperimentProperties))
-            {
-                writer.WritePropertyName("chaosExperimentProperties"u8);
-                writer.WriteObjectValue(ChaosExperimentProperties, options);
-            }
             if (Optional.IsDefined(ChaosResourceProperties))
             {
                 writer.WritePropertyName("chaosResourceProperties"u8);
                 writer.WriteObjectValue(ChaosResourceProperties, options);
-            }
-            if (Optional.IsDefined(HealthModelProperties))
-            {
-                writer.WritePropertyName("healthModelProperties"u8);
-                writer.WriteObjectValue(HealthModelProperties, options);
             }
             if (Optional.IsDefined(RbacSetupMode))
             {
@@ -156,26 +141,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            MetricsPropertiesOfDrill metricsProperties = default;
             RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default;
             AssetPropertiesOfDrill drillAssetProperties = default;
-            ChaosExperimentPropertiesOfDrill chaosExperimentProperties = default;
             ChaosResourcePropertiesOfDrill chaosResourceProperties = default;
-            HealthModelPropertiesOfDrill healthModelProperties = default;
             RBACSetupMode? rbacSetupMode = default;
             MonitoringPropertiesOfDrill monitoringProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("metricsProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    metricsProperties = MetricsPropertiesOfDrill.DeserializeMetricsPropertiesOfDrill(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("recoveryPlanProperties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -194,15 +167,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     drillAssetProperties = AssetPropertiesOfDrill.DeserializeAssetPropertiesOfDrill(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("chaosExperimentProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    chaosExperimentProperties = ChaosExperimentPropertiesOfDrill.DeserializeChaosExperimentPropertiesOfDrill(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("chaosResourceProperties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -210,15 +174,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         continue;
                     }
                     chaosResourceProperties = ChaosResourcePropertiesOfDrill.DeserializeChaosResourcePropertiesOfDrill(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("healthModelProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    healthModelProperties = HealthModelPropertiesOfDrill.DeserializeHealthModelPropertiesOfDrill(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("rbacSetupMode"u8))
@@ -245,12 +200,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
             }
             return new DrillUpdateProperties(
-                metricsProperties,
                 recoveryPlanProperties,
                 drillAssetProperties,
-                chaosExperimentProperties,
                 chaosResourceProperties,
-                healthModelProperties,
                 rbacSetupMode,
                 monitoringProperties,
                 additionalBinaryDataProperties);

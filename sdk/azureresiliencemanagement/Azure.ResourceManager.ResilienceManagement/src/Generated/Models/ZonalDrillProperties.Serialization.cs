@@ -112,12 +112,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             ProvisioningState? provisioningState = default;
             ResourceIdentifier serviceGroupId = default;
-            MetricsPropertiesOfDrill metricsProperties = default;
-            HealthModelPropertiesOfDrill healthModelProperties = default;
             RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default;
             AssetPropertiesOfDrill drillAssetProperties = default;
             ChaosResourcePropertiesOfDrill chaosResourceProperties = default;
-            ChaosExperimentPropertiesOfDrill chaosExperimentProperties = default;
             ExecutionState? executionState = default;
             ExecutionReadinessState? executionReadinessState = default;
             RBACSetupMode? rbacSetupMode = default;
@@ -152,24 +149,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     serviceGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("metricsProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    metricsProperties = MetricsPropertiesOfDrill.DeserializeMetricsPropertiesOfDrill(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("healthModelProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    healthModelProperties = HealthModelPropertiesOfDrill.DeserializeHealthModelPropertiesOfDrill(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("recoveryPlanProperties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -195,15 +174,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         continue;
                     }
                     chaosResourceProperties = ChaosResourcePropertiesOfDrill.DeserializeChaosResourcePropertiesOfDrill(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("chaosExperimentProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    chaosExperimentProperties = ChaosExperimentPropertiesOfDrill.DeserializeChaosExperimentPropertiesOfDrill(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("executionState"u8))
@@ -327,12 +297,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new ZonalDrillProperties(
                 provisioningState,
                 serviceGroupId,
-                metricsProperties,
-                healthModelProperties,
                 recoveryPlanProperties,
                 drillAssetProperties,
                 chaosResourceProperties,
-                chaosExperimentProperties,
                 executionState,
                 executionReadinessState,
                 rbacSetupMode,

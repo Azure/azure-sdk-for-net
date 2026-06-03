@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(ResourceType, out string drillRunApiVersion);
             _drillRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", ResourceType.Namespace, Diagnostics);
-            _drillRunsRestClient = new DrillRuns(_drillRunsClientDiagnostics, Pipeline, Endpoint, drillRunApiVersion ?? "2026-03-01-preview");
+            _drillRunsRestClient = new DrillRuns(_drillRunsClientDiagnostics, Pipeline, Endpoint, drillRunApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -739,263 +739,6 @@ namespace Azure.ResourceManager.ResilienceManagement
             }
         }
 
-        /// <summary>
-        /// This initiates a new Test-Failover operation on this Drill Run.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/testFailOver. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DrillRuns_TestFailOver. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DrillRunResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationId"> A GUID that represents the Long Running OperationId. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> TestFailOverAsync(WaitUntil waitUntil, string operationId, DrillRunTestFailoverContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _drillRunsClientDiagnostics.CreateScope("DrillRunResource.TestFailOver");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _drillRunsRestClient.CreateTestFailOverRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, DrillRunTestFailoverContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This initiates a new Test-Failover operation on this Drill Run.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/testFailOver. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DrillRuns_TestFailOver. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DrillRunResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationId"> A GUID that represents the Long Running OperationId. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation TestFailOver(WaitUntil waitUntil, string operationId, DrillRunTestFailoverContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _drillRunsClientDiagnostics.CreateScope("DrillRunResource.TestFailOver");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _drillRunsRestClient.CreateTestFailOverRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, DrillRunTestFailoverContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This initiates a new Test-Failover Cleanup operation on this Drill Run.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/testFailOverCleanup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DrillRuns_TestFailOverCleanup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DrillRunResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationId"> A GUID that represents the Long Running OperationId. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> TestFailOverCleanupAsync(WaitUntil waitUntil, string operationId, DrillRunTestFailoverCleanupContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _drillRunsClientDiagnostics.CreateScope("DrillRunResource.TestFailOverCleanup");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _drillRunsRestClient.CreateTestFailOverCleanupRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, DrillRunTestFailoverCleanupContent.ToRequestContent(content), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This initiates a new Test-Failover Cleanup operation on this Drill Run.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/Microsoft.Management/serviceGroups/{serviceGroupName}/providers/Microsoft.AzureResilienceManagement/drills/{drillName}/drillRuns/{drillRunName}/testFailOverCleanup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DrillRuns_TestFailOverCleanup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="DrillRunResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationId"> A GUID that represents the Long Running OperationId. </param>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation TestFailOverCleanup(WaitUntil waitUntil, string operationId, DrillRunTestFailoverCleanupContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = _drillRunsClientDiagnostics.CreateScope("DrillRunResource.TestFailOverCleanup");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _drillRunsRestClient.CreateTestFailOverCleanupRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, DrillRunTestFailoverCleanupContent.ToRequestContent(content), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a collection of DrillRunChildJobs in the <see cref="DrillRunResource"/>. </summary>
-        /// <returns> An object representing collection of DrillRunChildJobs and their operations over a DrillRunChildJobResource. </returns>
-        public virtual DrillRunChildJobCollection GetDrillRunChildJobs()
-        {
-            return GetCachedClient(client => new DrillRunChildJobCollection(client, Id));
-        }
-
-        /// <summary> Get a DrillRunChildJob. </summary>
-        /// <param name="drillRunChildJobName"> The unique name (Guid) of the DrillRun child job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="drillRunChildJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="drillRunChildJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DrillRunChildJobResource>> GetDrillRunChildJobAsync(string drillRunChildJobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(drillRunChildJobName, nameof(drillRunChildJobName));
-
-            return await GetDrillRunChildJobs().GetAsync(drillRunChildJobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a DrillRunChildJob. </summary>
-        /// <param name="drillRunChildJobName"> The unique name (Guid) of the DrillRun child job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="drillRunChildJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="drillRunChildJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DrillRunChildJobResource> GetDrillRunChildJob(string drillRunChildJobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(drillRunChildJobName, nameof(drillRunChildJobName));
-
-            return GetDrillRunChildJobs().Get(drillRunChildJobName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of DrillRunTargets in the <see cref="DrillRunResource"/>. </summary>
         /// <returns> An object representing collection of DrillRunTargets and their operations over a DrillRunTargetResource. </returns>
         public virtual DrillRunTargetCollection GetDrillRunTargets()
@@ -1027,39 +770,6 @@ namespace Azure.ResourceManager.ResilienceManagement
             Argument.AssertNotNullOrEmpty(drillRunResourceName, nameof(drillRunResourceName));
 
             return GetDrillRunTargets().Get(drillRunResourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ChaosJobs in the <see cref="DrillRunResource"/>. </summary>
-        /// <returns> An object representing collection of ChaosJobs and their operations over a ChaosJobResource. </returns>
-        public virtual ChaosJobCollection GetChaosJobs()
-        {
-            return GetCachedClient(client => new ChaosJobCollection(client, Id));
-        }
-
-        /// <summary> Get a ChaosJob. </summary>
-        /// <param name="chaosJobName"> The unique name of the chaos job (GUID). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chaosJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="chaosJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ChaosJobResource>> GetChaosJobAsync(string chaosJobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(chaosJobName, nameof(chaosJobName));
-
-            return await GetChaosJobs().GetAsync(chaosJobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Get a ChaosJob. </summary>
-        /// <param name="chaosJobName"> The unique name of the chaos job (GUID). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chaosJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="chaosJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ChaosJobResource> GetChaosJob(string chaosJobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(chaosJobName, nameof(chaosJobName));
-
-            return GetChaosJobs().Get(chaosJobName, cancellationToken);
         }
     }
 }

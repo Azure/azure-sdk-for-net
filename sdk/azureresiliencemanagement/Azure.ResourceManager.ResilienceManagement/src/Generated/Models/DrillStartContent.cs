@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
@@ -19,40 +18,21 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="DrillStartContent"/>. </summary>
         /// <param name="mode"> Mode of starting the Drill. </param>
-        /// <param name="recoveryPlanInputsFailoverDirection"> Direction of the failover. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPlanInputsFailoverDirection"/> is null. </exception>
-        public DrillStartContent(DrillMode mode, string recoveryPlanInputsFailoverDirection)
+        public DrillStartContent(DrillMode mode)
         {
-            Argument.AssertNotNull(recoveryPlanInputsFailoverDirection, nameof(recoveryPlanInputsFailoverDirection));
-
             Mode = mode;
-            RecoveryPlanInputs = new DrillStartRequestRecoveryPlanInputs(recoveryPlanInputsFailoverDirection);
         }
 
         /// <summary> Initializes a new instance of <see cref="DrillStartContent"/>. </summary>
         /// <param name="mode"> Mode of starting the Drill. </param>
-        /// <param name="recoveryPlanInputs"> Inputs needed for the Recovery Orchestration Plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DrillStartContent(DrillMode mode, DrillStartRequestRecoveryPlanInputs recoveryPlanInputs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DrillStartContent(DrillMode mode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
-            RecoveryPlanInputs = recoveryPlanInputs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Mode of starting the Drill. </summary>
         public DrillMode Mode { get; }
-
-        /// <summary> Inputs needed for the Recovery Orchestration Plan. </summary>
-        internal DrillStartRequestRecoveryPlanInputs RecoveryPlanInputs { get; }
-
-        /// <summary> Direction of the failover. </summary>
-        public string RecoveryPlanInputsFailoverDirection
-        {
-            get
-            {
-                return RecoveryPlanInputs.FailoverDirection;
-            }
-        }
     }
 }

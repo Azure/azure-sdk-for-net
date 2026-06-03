@@ -19,16 +19,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         private const string InvalidValue = "Invalid";
         /// <summary> Recovery Orchestration Plan created job. </summary>
         private const string RecoveryPlanValue = "RecoveryPlan";
-        /// <summary> Recovery Orchestration Plan child created job. </summary>
-        private const string RecoveryPlanChildValue = "RecoveryPlanChild";
         /// <summary> Drill Oober job which represents a given instance of Drill. </summary>
         private const string DrillRunValue = "DrillRun";
-        /// <summary> Drill Run child job. </summary>
-        private const string DrillRunChildValue = "DrillRunChild";
-        /// <summary> Chaos job created by Drill to represent a Experiment Run. </summary>
-        private const string ChaosExperimentValue = "ChaosExperiment";
-        /// <summary> Chaos job's child job. </summary>
-        private const string ChaosExperimentChildValue = "ChaosExperimentChild";
 
         /// <summary> Initializes a new instance of <see cref="JobType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -46,20 +38,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Recovery Orchestration Plan created job. </summary>
         public static JobType RecoveryPlan { get; } = new JobType(RecoveryPlanValue);
 
-        /// <summary> Recovery Orchestration Plan child created job. </summary>
-        public static JobType RecoveryPlanChild { get; } = new JobType(RecoveryPlanChildValue);
-
         /// <summary> Drill Oober job which represents a given instance of Drill. </summary>
         public static JobType DrillRun { get; } = new JobType(DrillRunValue);
-
-        /// <summary> Drill Run child job. </summary>
-        public static JobType DrillRunChild { get; } = new JobType(DrillRunChildValue);
-
-        /// <summary> Chaos job created by Drill to represent a Experiment Run. </summary>
-        public static JobType ChaosExperiment { get; } = new JobType(ChaosExperimentValue);
-
-        /// <summary> Chaos job's child job. </summary>
-        public static JobType ChaosExperimentChild { get; } = new JobType(ChaosExperimentChildValue);
 
         /// <summary> Determines if two <see cref="JobType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

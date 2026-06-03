@@ -74,11 +74,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 throw new FormatException($"The model {nameof(DrillResourceAttentionReason)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(FaultRbacOnTarget))
-            {
-                writer.WritePropertyName("faultRbacOnTarget"u8);
-                writer.WriteStringValue(FaultRbacOnTarget.Value.ToString());
-            }
             if (Optional.IsDefined(FaultRbacOnTargetResource))
             {
                 writer.WritePropertyName("faultRbacOnTargetResource"u8);
@@ -93,11 +88,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("monitoringRbacOnTargets"u8);
                 writer.WriteStringValue(MonitoringRbacOnTargets.Value.ToString());
-            }
-            if (Optional.IsDefined(Target))
-            {
-                writer.WritePropertyName("target"u8);
-                writer.WriteStringValue(Target.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ResourceState))
             {
@@ -151,24 +141,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            RBACState? faultRbacOnTarget = default;
             RBACState? faultRbacOnTargetResource = default;
             RBACState? runbookFaultRbacOnTargets = default;
             RBACState? monitoringRbacOnTargets = default;
-            ExtensionObjectState? target = default;
             IList<DrillResourceState> resourceState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("faultRbacOnTarget"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    faultRbacOnTarget = new RBACState(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("faultRbacOnTargetResource"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -196,15 +175,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     monitoringRbacOnTargets = new RBACState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("target"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    target = new ExtensionObjectState(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("resourceState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -224,14 +194,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DrillResourceAttentionReason(
-                faultRbacOnTarget,
-                faultRbacOnTargetResource,
-                runbookFaultRbacOnTargets,
-                monitoringRbacOnTargets,
-                target,
-                resourceState ?? new ChangeTrackingList<DrillResourceState>(),
-                additionalBinaryDataProperties);
+            return new DrillResourceAttentionReason(faultRbacOnTargetResource, runbookFaultRbacOnTargets, monitoringRbacOnTargets, resourceState ?? new ChangeTrackingList<DrillResourceState>(), additionalBinaryDataProperties);
         }
     }
 }

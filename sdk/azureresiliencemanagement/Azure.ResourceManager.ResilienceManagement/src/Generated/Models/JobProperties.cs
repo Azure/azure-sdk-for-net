@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary>
     /// Definition of a job, including its type, status, timing, and additional details.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryJobProperties"/>, <see cref="DrillRunProperties"/>, and <see cref="ChaosJobProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryJobProperties"/> and <see cref="DrillRunProperties"/>.
     /// </summary>
     public abstract partial class JobProperties
     {
