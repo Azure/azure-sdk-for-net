@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -66,8 +67,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
         /// <param name="authConfigAllowedModes"> Allowed authentication modes for data access on the cluster. </param>
         /// <param name="customerManagedKeyEncryption"> Customer managed key encryption settings. </param>
+        /// <param name="networkBypassMode"> The network bypass mode for the cluster. Setting to 'AzureCosmosDB' allows Azure Cosmos DB service to bypass network restrictions. </param>
         /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
-        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = default, MongoClusterRestoreContent restoreParameters = default, MongoClusterReplicaContent replicaParameters = default, MongoClusterAdministratorProperties administrator = default, string serverVersion = default, string connectionString = default, MongoClusterProvisioningState? provisioningState = default, MongoClusterStatus? clusterStatus = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, MongoClusterReplicationProperties replica = default, string infrastructureVersion = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default)
+        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = default, MongoClusterRestoreContent restoreParameters = default, MongoClusterReplicaContent replicaParameters = default, MongoClusterAdministratorProperties administrator = default, string serverVersion = default, string connectionString = default, MongoClusterProvisioningState? provisioningState = default, MongoClusterStatus? clusterStatus = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, MongoClusterReplicationProperties replica = default, string infrastructureVersion = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default, MongoClusterNetworkBypassMode? networkBypassMode = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<MongoClusterPrivateEndpointConnection>();
             previewFeatures ??= new ChangeTrackingList<MongoClusterPreviewFeature>();
@@ -94,6 +96,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 infrastructureVersion,
                 authConfigAllowedModes is null ? default : new AuthConfigProperties((authConfigAllowedModes ?? new ChangeTrackingList<MongoClusterAuthenticationMode>()).ToList(), default),
                 customerManagedKeyEncryption is null ? default : new EncryptionProperties(customerManagedKeyEncryption, default),
+                networkBypassMode,
                 default);
         }
 
@@ -215,8 +218,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="previewFeatures"> List of private endpoint connections. </param>
         /// <param name="authConfigAllowedModes"> Allowed authentication modes for data access on the cluster. </param>
         /// <param name="customerManagedKeyEncryption"> Customer managed key encryption settings. </param>
+        /// <param name="networkBypassMode"> The network bypass mode for the cluster. Setting to 'AzureCosmosDB' allows Azure Cosmos DB service to bypass network restrictions. </param>
         /// <returns> A new <see cref="Models.MongoClusterUpdateProperties"/> instance for mocking. </returns>
-        public static MongoClusterUpdateProperties MongoClusterUpdateProperties(MongoClusterAdministratorProperties administrator = default, string serverVersion = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default)
+        public static MongoClusterUpdateProperties MongoClusterUpdateProperties(MongoClusterAdministratorProperties administrator = default, string serverVersion = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default, MongoClusterNetworkBypassMode? networkBypassMode = default)
         {
             previewFeatures ??= new ChangeTrackingList<MongoClusterPreviewFeature>();
 
@@ -233,6 +237,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 (previewFeatures ?? new ChangeTrackingList<MongoClusterPreviewFeature>()).ToList(),
                 authConfigAllowedModes is null ? default : new AuthConfigProperties((authConfigAllowedModes ?? new ChangeTrackingList<MongoClusterAuthenticationMode>()).ToList(), default),
                 customerManagedKeyEncryption is null ? default : new EncryptionProperties(customerManagedKeyEncryption, default),
+                networkBypassMode,
                 default);
         }
 
@@ -423,6 +428,58 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static MongoClusterDatabaseRole MongoClusterDatabaseRole(string db = default, MongoClusterUserRole role = default)
         {
             return new MongoClusterDatabaseRole(db, role, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterProperties"/>. </summary>
+        /// <param name="createMode"> The mode to create a mongo cluster. </param>
+        /// <param name="restoreParameters"> The parameters to create a point-in-time restore mongo cluster. </param>
+        /// <param name="replicaParameters"> The parameters to create a replica mongo cluster. </param>
+        /// <param name="administrator"> The local administrator properties for the mongo cluster. </param>
+        /// <param name="serverVersion"> The Mongo DB server version. Defaults to the latest available version if not specified. </param>
+        /// <param name="connectionString"> The default mongo connection string for the cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the mongo cluster. </param>
+        /// <param name="clusterStatus"> The status of the mongo cluster. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this mongo cluster. </param>
+        /// <param name="highAvailabilityTargetMode"> The high availability properties of the mongo cluster. </param>
+        /// <param name="storage"> The storage properties of the mongo cluster. </param>
+        /// <param name="shardingShardCount"> The sharding properties of the mongo cluster. </param>
+        /// <param name="computeTier"> The compute properties of the mongo cluster. </param>
+        /// <param name="backupEarliestRestoreTime"> The backup properties of the mongo cluster. </param>
+        /// <param name="dataApiMode"> The Data API properties of the mongo cluster. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="previewFeatures"> List of private endpoint connections. </param>
+        /// <param name="replica"> The replication properties for the mongo cluster. </param>
+        /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
+        /// <param name="authConfigAllowedModes"> The authentication configuration for the cluster. </param>
+        /// <param name="customerManagedKeyEncryption"> The encryption configuration for the cluster. Depends on identity being configured. </param>
+        /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = default, MongoClusterRestoreContent restoreParameters = default, MongoClusterReplicaContent replicaParameters = default, MongoClusterAdministratorProperties administrator = default, string serverVersion = default, string connectionString = default, MongoClusterProvisioningState? provisioningState = default, MongoClusterStatus? clusterStatus = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, MongoClusterReplicationProperties replica = default, string infrastructureVersion = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default)
+        {
+            return new MongoClusterProperties(
+                createMode,
+                restoreParameters,
+                replicaParameters,
+                administrator,
+                serverVersion,
+                connectionString,
+                provisioningState,
+                clusterStatus,
+                publicNetworkAccess,
+                highAvailabilityTargetMode is null ? default : new HighAvailabilityProperties(highAvailabilityTargetMode, default),
+                storage,
+                shardingShardCount is null ? default : new ShardingProperties(shardingShardCount, default),
+                computeTier is null ? default : new ComputeProperties(computeTier, default),
+                backupEarliestRestoreTime is null ? default : new BackupProperties(backupEarliestRestoreTime, default),
+                dataApiMode is null ? default : new DataApiProperties(dataApiMode, default),
+                (privateEndpointConnections ?? new ChangeTrackingList<MongoClusterPrivateEndpointConnection>()).ToList(),
+                (previewFeatures ?? new ChangeTrackingList<MongoClusterPreviewFeature>()).ToList(),
+                replica,
+                infrastructureVersion,
+                authConfigAllowedModes is null ? default : new AuthConfigProperties((authConfigAllowedModes ?? new ChangeTrackingList<MongoClusterAuthenticationMode>()).ToList(), default),
+                customerManagedKeyEncryption is null ? default : new EncryptionProperties(customerManagedKeyEncryption, default),
+                default,
+                default);
         }
     }
 }
