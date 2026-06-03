@@ -86,6 +86,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
 
         private static OperationStatusResult ReadOperationStatusResult(Response result)
         {
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/59433
             // Work around a management generator issue: framework response types are emitted with the
             // contextless ModelReaderWriter.Read<T>(BinaryData) overload, which fails AOT/trimming analysis.
             return ModelReaderWriter.Read<OperationStatusResult>(
