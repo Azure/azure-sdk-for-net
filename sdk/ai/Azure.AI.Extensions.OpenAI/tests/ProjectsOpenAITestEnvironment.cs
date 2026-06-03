@@ -43,8 +43,6 @@ namespace Azure.AI.Extensions.OpenAI.Tests
         public string FOUNDRY_AGENT_CONTAINER_IMAGE => GetRecordedVariable(nameof(FOUNDRY_AGENT_CONTAINER_IMAGE));
         public string WORKIQ_CONNECTION_NAME => GetRecordedVariable(nameof(WORKIQ_CONNECTION_NAME));
         public string RAI_POLICY_NAME => GetRecordedVariable(nameof(RAI_POLICY_NAME));
-        public string SUBSCRIPTION_ID => GetRecordedVariable(nameof(SUBSCRIPTION_ID));
-        public string RESOURCE_GROUP_NAME => GetRecordedVariable(nameof(RESOURCE_GROUP_NAME));
         public string WrappedGetRecordedVariable(string key, bool isSecret = true)
         {
             try
