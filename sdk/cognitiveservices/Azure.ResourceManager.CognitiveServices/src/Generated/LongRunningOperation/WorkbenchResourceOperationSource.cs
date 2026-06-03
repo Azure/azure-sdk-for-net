@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary></summary>
-    internal partial class ComputeOperationSource : IOperationSource<ComputeResource>
+    internal partial class WorkbenchResourceOperationSource : IOperationSource<WorkbenchResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ComputeOperationSource(ArmClient client)
+        internal WorkbenchResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ComputeResource IOperationSource<ComputeResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        WorkbenchResource IOperationSource<WorkbenchResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ComputeData data = ComputeData.DeserializeComputeData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ComputeResource(_client, data);
+            WorkbenchData data = WorkbenchData.DeserializeWorkbenchData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new WorkbenchResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ComputeResource> IOperationSource<ComputeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<WorkbenchResource> IOperationSource<WorkbenchResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ComputeData data = ComputeData.DeserializeComputeData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ComputeResource(_client, data);
+            WorkbenchData data = WorkbenchData.DeserializeWorkbenchData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new WorkbenchResource(_client, data);
         }
     }
 }

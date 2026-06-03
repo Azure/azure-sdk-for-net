@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _managedComputeDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedComputeDeploymentPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<ManagedComputeDeploymentResource> operation = new CognitiveServicesArmOperation<ManagedComputeDeploymentResource>(
-                    new ManagedComputeDeploymentOperationSource(Client),
+                    new ManagedComputeDeploymentResourceOperationSource(Client),
                     _managedComputeDeploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _managedComputeDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedComputeDeploymentPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<ManagedComputeDeploymentResource> operation = new CognitiveServicesArmOperation<ManagedComputeDeploymentResource>(
-                    new ManagedComputeDeploymentOperationSource(Client),
+                    new ManagedComputeDeploymentResourceOperationSource(Client),
                     _managedComputeDeploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary></summary>
-    internal partial class ManagedComputeDeploymentOperationSource : IOperationSource<ManagedComputeDeploymentResource>
+    internal partial class ManagedComputeDeploymentResourceOperationSource : IOperationSource<ManagedComputeDeploymentResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ManagedComputeDeploymentOperationSource(ArmClient client)
+        internal ManagedComputeDeploymentResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

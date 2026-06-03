@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _workbenchesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workbenchName, WorkbenchData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<WorkbenchResource> operation = new CognitiveServicesArmOperation<WorkbenchResource>(
-                    new WorkbenchOperationSource(Client),
+                    new WorkbenchResourceOperationSource(Client),
                     _workbenchesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _workbenchesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, workbenchName, WorkbenchData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<WorkbenchResource> operation = new CognitiveServicesArmOperation<WorkbenchResource>(
-                    new WorkbenchOperationSource(Client),
+                    new WorkbenchResourceOperationSource(Client),
                     _workbenchesClientDiagnostics,
                     Pipeline,
                     message.Request,
