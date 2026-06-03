@@ -17,7 +17,8 @@ namespace Azure.ResourceManager.NetworkCloud
             get
             {
                 var baseLoc = Properties?.ManagerExtendedLocation;
-                if (baseLoc == null) return null;
+                if (baseLoc == null)
+                    return null;
                 return new Models.ExtendedLocation(baseLoc.Name, baseLoc.ExtendedLocationType?.ToString());
             }
         }
