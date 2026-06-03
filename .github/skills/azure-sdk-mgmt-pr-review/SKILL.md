@@ -172,6 +172,8 @@ The following table applies to the **generated C# API surface** (public types/pr
 | Contains `location`/`locations` | Consider `AzureLocation` |
 | Contains `size` | Consider `int`/`long` instead of string |
 
+**Important — only flag `*Id` properties when the underlying type is `string`.** The `Guid`/`ResourceIdentifier` rules apply to properties that surface as `string` in `api/*.cs` and would lose semantics by remaining a string. Do **not** flag a property whose generated type is already a numeric type (`int`, `long`, `byte`, etc.) or any non-string type — a numeric `Id` is by definition neither a UUID nor an ARM resource ID, and the spec author has deliberately chosen a numeric domain identifier (e.g., a small-range cluster/node id, port, index). Asking the author to "confirm this is intentional" in that case is noise; skip the finding entirely.
+
 For **TypeSpec**, UUID-valued properties should use the `uuid` scalar and map to `Guid` in the generated .NET SDK.
 
 #### Duration/Interval Format
