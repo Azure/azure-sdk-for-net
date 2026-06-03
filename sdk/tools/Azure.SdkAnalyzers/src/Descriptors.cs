@@ -34,5 +34,14 @@ namespace Azure.SdkAnalyzers
             DiagnosticSeverity.Warning,
             true,
             "Methods that accept a CancellationToken should propagate it to RequestContext parameters in Azure SDK method calls to ensure proper cancellation support.");
+
+        public static readonly DiagnosticDescriptor AZC0035 = new(
+            nameof(AZC0035),
+            "Output model type should have a corresponding model factory method",
+            "Output model type '{0}' should have a corresponding method in a model factory class. Add a static method that returns '{0}' to a class ending with 'ModelFactory'.",
+            DiagnosticCategory.Usage,
+            DiagnosticSeverity.Warning,
+            true,
+            "Output model types returned from client methods should have corresponding model factory methods for mocking support.");
     }
 }
