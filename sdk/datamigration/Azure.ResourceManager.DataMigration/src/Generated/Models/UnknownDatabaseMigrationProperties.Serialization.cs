@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseMigrationProperties IPersistableModel<DatabaseMigrationProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownDatabaseMigrationProperties)PersistableModelCreateCore(data, options);
+        DatabaseMigrationProperties IPersistableModel<DatabaseMigrationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (DatabaseMigrationProperties)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DatabaseMigrationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -84,7 +87,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseMigrationProperties IJsonModel<DatabaseMigrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownDatabaseMigrationProperties)JsonModelCreateCore(ref reader, options);
+        DatabaseMigrationProperties IJsonModel<DatabaseMigrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (DatabaseMigrationProperties)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
