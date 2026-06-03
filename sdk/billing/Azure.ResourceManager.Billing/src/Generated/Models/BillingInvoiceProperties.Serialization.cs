@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 throw new FormatException($"The model {nameof(BillingInvoiceProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(AmountDue))
+            if (Optional.IsDefined(AmountDue))
             {
                 writer.WritePropertyName("amountDue"u8);
                 writer.WriteObjectValue(AmountDue, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzurePrepaymentApplied))
+            if (Optional.IsDefined(AzurePrepaymentApplied))
             {
                 writer.WritePropertyName("azurePrepaymentApplied"u8);
                 writer.WriteObjectValue(AzurePrepaymentApplied, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(BilledAmount))
+            if (Optional.IsDefined(BilledAmount))
             {
                 writer.WritePropertyName("billedAmount"u8);
                 writer.WriteObjectValue(BilledAmount, options);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreditAmount))
+            if (Optional.IsDefined(CreditAmount))
             {
                 writer.WritePropertyName("creditAmount"u8);
                 writer.WriteObjectValue(CreditAmount, options);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(FreeAzureCreditApplied))
+            if (Optional.IsDefined(FreeAzureCreditApplied))
             {
                 writer.WritePropertyName("freeAzureCreditApplied"u8);
                 writer.WriteObjectValue(FreeAzureCreditApplied, options);
@@ -215,17 +215,17 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("specialTaxationType"u8);
                 writer.WriteStringValue(SpecialTaxationType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SubTotal))
+            if (Optional.IsDefined(SubTotal))
             {
                 writer.WritePropertyName("subTotal"u8);
                 writer.WriteObjectValue(SubTotal, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(TaxAmount))
+            if (Optional.IsDefined(TaxAmount))
             {
                 writer.WritePropertyName("taxAmount"u8);
                 writer.WriteObjectValue(TaxAmount, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalAmount))
+            if (Optional.IsDefined(TotalAmount))
             {
                 writer.WritePropertyName("totalAmount"u8);
                 writer.WriteObjectValue(TotalAmount, options);

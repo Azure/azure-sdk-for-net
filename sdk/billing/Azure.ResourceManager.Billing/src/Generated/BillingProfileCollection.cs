@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingProfilesRestClient.CreateCreateOrUpdateRequest(Id.Name, billingProfileName, BillingProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingProfileResource> operation = new BillingArmOperation<BillingProfileResource>(
-                    new BillingProfileOperationSource(Client),
+                    new BillingProfileResourceOperationSource(Client),
                     _billingProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingProfilesRestClient.CreateCreateOrUpdateRequest(Id.Name, billingProfileName, BillingProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingProfileResource> operation = new BillingArmOperation<BillingProfileResource>(
-                    new BillingProfileOperationSource(Client),
+                    new BillingProfileResourceOperationSource(Client),
                     _billingProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,

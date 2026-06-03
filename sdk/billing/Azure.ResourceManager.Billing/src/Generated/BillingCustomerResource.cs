@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Billing
         private readonly BillingSubscriptions _billingSubscriptionsRestClient;
         private readonly ClientDiagnostics _productsClientDiagnostics;
         private readonly Products _productsRestClient;
-        private readonly ClientDiagnostics _billingPermissionsClientDiagnostics;
-        private readonly BillingPermissions _billingPermissionsRestClient;
+        private readonly ClientDiagnostics _customerOperationGroupClientDiagnostics;
+        private readonly CustomerOperationGroup _customerOperationGroupRestClient;
         private readonly BillingCustomerData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/customers";
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Billing
             _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
             _productsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
-            _billingPermissionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingPermissionsRestClient = new BillingPermissions(_billingPermissionsClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
+            _customerOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _customerOperationGroupRestClient = new CustomerOperationGroup(_customerOperationGroupClientDiagnostics, Pipeline, Endpoint, billingCustomerApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -425,13 +425,13 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingPermission> GetByCustomerAtBillingAccountAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingPermission> GetBillingPermissionsByCustomerAtBillingAccountAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingPermissionsGetByCustomerAtBillingAccountAsyncCollectionResultOfT(_billingPermissionsRestClient, Id.Parent.Name, Id.Name, context, "BillingCustomerResource.GetByCustomerAtBillingAccount");
+            return new CustomerOperationGroupGetBillingPermissionsByCustomerAtBillingAccountAsyncCollectionResultOfT(_customerOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingCustomerResource.GetBillingPermissionsByCustomerAtBillingAccount");
         }
 
         /// <summary>
@@ -457,13 +457,13 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingPermission> GetByCustomerAtBillingAccount(CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingPermission> GetBillingPermissionsByCustomerAtBillingAccount(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingPermissionsGetByCustomerAtBillingAccountCollectionResultOfT(_billingPermissionsRestClient, Id.Parent.Name, Id.Name, context, "BillingCustomerResource.GetByCustomerAtBillingAccount");
+            return new CustomerOperationGroupGetBillingPermissionsByCustomerAtBillingAccountCollectionResultOfT(_customerOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingCustomerResource.GetBillingPermissionsByCustomerAtBillingAccount");
         }
 
         /// <summary> Gets an object representing a <see cref="BillingCustomerPolicyResource"/> along with the instance operations that can be performed on it in the <see cref="BillingCustomerResource"/>. </summary>

@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _productsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingProductResource> operation = new BillingArmOperation<BillingProductResource>(
-                    new BillingProductOperationSource(Client),
+                    new BillingProductResourceOperationSource(Client),
                     _productsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _productsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingProductResource> operation = new BillingArmOperation<BillingProductResource>(
-                    new BillingProductOperationSource(Client),
+                    new BillingProductResourceOperationSource(Client),
                     _productsClientDiagnostics,
                     Pipeline,
                     message.Request,

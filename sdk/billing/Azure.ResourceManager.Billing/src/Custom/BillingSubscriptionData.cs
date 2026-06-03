@@ -5,31 +5,51 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    // Back-compat shims for GA 1.2.2 API surface. New gen renamed
-    // BeneficiaryTenantId (string) -> SubscriptionBeneficiaryTenantId (Guid?)
-    // and CustomerId (string) -> SubscriptionCustomerId (string). Restore the
-    // [Obsolete] back-compat aliases so existing callers keep compiling.
+    // Back-compat shims for GA 1.2.2 API surface.
+    //
+    // GA exposed the inner BillingSubscriptionProperties fields beneficiaryTenantId/customerId
+    // both as outer flatten proxies on the read-only Data wrapper (SubscriptionBeneficiaryTenantId,
+    // SubscriptionCustomerId) AND as obsolete short-name aliases (BeneficiaryTenantId, CustomerId).
+    // MPG's FlattenPropertyVisitor only emits inner {get;} fields as outer proxies on Resource
+    // Data wrappers; the inner fields are {get;set;} so they are dropped from the Resource shape
+    // and only surface on the Patch wrapper. Restore the GA Data shape via these forwarders.
     public partial class BillingSubscriptionData
     {
-        /// <summary> The tenant id of the customer for whom the subscription is created. The field is required for MCA Individual (Pay-as-you-go) and Microsoft Partner Agreement accounts. It is also required for some Enterprise Agreement accounts. </summary>
-        [Obsolete("This property is now deprecated. Please use the new property `SubscriptionBeneficiaryTenantId` moving forward.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string BeneficiaryTenantId
+        /// <summary> The provisioning tenant of the subscription. </summary>
+        [WirePath("properties.beneficiaryTenantId")]
+        public Guid? SubscriptionBeneficiaryTenantId
         {
-            get => SubscriptionBeneficiaryTenantId?.ToString();
-            set => SubscriptionBeneficiaryTenantId = string.IsNullOrEmpty(value) ? null : Guid.Parse(value);
+            get => Properties?.BeneficiaryTenantId;
+            set
+            {
+                Properties ??= new BillingSubscriptionProperties();
+                Properties.BeneficiaryTenantId = value;
+            }
         }
 
+        /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
+        [WirePath("properties.customerId")]
+        public string SubscriptionCustomerId
+        {
+            get => Properties?.CustomerId;
+            set
+            {
+                Properties ??= new BillingSubscriptionProperties();
+                Properties.CustomerId = value;
+            }
+        }
+
+        /// <summary> The provisioning tenant of the subscription. </summary>
+        [Obsolete("This property is now deprecated. Please use the new property `SubscriptionBeneficiaryTenantId` moving forward.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string BeneficiaryTenantId { get; set; }
         /// <summary> The ID of the customer for whom the subscription was created. The field is applicable only for Microsoft Partner Agreement billing accounts. </summary>
         [Obsolete("This property is now deprecated. Please use the new property `SubscriptionCustomerId` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string CustomerId
-        {
-            get => SubscriptionCustomerId;
-            set => SubscriptionCustomerId = value;
-        }
+        public string CustomerId { get; set; }
     }
 }

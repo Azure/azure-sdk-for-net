@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
         /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
         /// <param name="reservedResourceProperties"> Properties specific to each reserved resource type. Not required if not applicable. </param>
-        /// <param name="instanceFlexibility"> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </param>
+        /// <param name="instanceFlexibilityPropertiesInstanceFlexibility"> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </param>
         /// <param name="reviewOn"> This is the date-time when the Azure hybrid benefit needs to be reviewed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationPurchaseRequestProperties(string reservedResourceType, string billingScopeId, string term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, BillingAppliedScopeType? appliedScopeType, IList<string> appliedScopes, ReservationAppliedScopeProperties appliedScopeProperties, bool? isRenewed, ReservationPurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties, InstanceFlexibility? instanceFlexibility, DateTimeOffset? reviewOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReservationPurchaseRequestProperties(string reservedResourceType, string billingScopeId, string term, ReservationBillingPlan? billingPlan, int? quantity, string displayName, BillingAppliedScopeType? appliedScopeType, IList<string> appliedScopes, ReservationAppliedScopeProperties appliedScopeProperties, bool? isRenewed, ReservationPurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties, InstanceFlexibility? instanceFlexibilityPropertiesInstanceFlexibility, DateTimeOffset? reviewOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReservedResourceType = reservedResourceType;
             BillingScopeId = billingScopeId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Billing.Models
             AppliedScopeProperties = appliedScopeProperties;
             IsRenewed = isRenewed;
             ReservedResourceProperties = reservedResourceProperties;
-            InstanceFlexibility = instanceFlexibility;
+            InstanceFlexibilityPropertiesInstanceFlexibility = instanceFlexibilityPropertiesInstanceFlexibility;
             ReviewOn = reviewOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </summary>
         [WirePath("instanceFlexibility")]
-        public InstanceFlexibility? InstanceFlexibility { get; set; }
+        public InstanceFlexibility? InstanceFlexibilityPropertiesInstanceFlexibility { get; set; }
 
         /// <summary> This is the date-time when the Azure hybrid benefit needs to be reviewed. </summary>
         [WirePath("reviewDateTime")]
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
         [WirePath("reservedResourceProperties.instanceFlexibility")]
-        public InstanceFlexibility? ReservedInstanceFlexibility
+        public InstanceFlexibility? InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility
         {
             get
             {
-                return ReservedResourceProperties is null ? default : ReservedResourceProperties.ReservedInstanceFlexibility;
+                return ReservedResourceProperties is null ? default : ReservedResourceProperties.InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility;
             }
             set
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Billing.Models
                 {
                     ReservedResourceProperties = new ReservationPurchaseRequestPropertiesReservedResourceProperties();
                 }
-                ReservedResourceProperties.ReservedInstanceFlexibility = value;
+                ReservedResourceProperties.InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility = value;
             }
         }
     }

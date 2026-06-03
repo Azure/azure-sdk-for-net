@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Billing
         private readonly EnrollmentAccounts _enrollmentAccountsRestClient;
         private readonly ClientDiagnostics _billingSubscriptionsClientDiagnostics;
         private readonly BillingSubscriptions _billingSubscriptionsRestClient;
-        private readonly ClientDiagnostics _billingPermissionsClientDiagnostics;
-        private readonly BillingPermissions _billingPermissionsRestClient;
+        private readonly ClientDiagnostics _enrollmentAccountOperationGroupClientDiagnostics;
+        private readonly EnrollmentAccountOperationGroup _enrollmentAccountOperationGroupRestClient;
         private readonly BillingEnrollmentAccountData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/enrollmentAccounts";
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Billing
             _enrollmentAccountsRestClient = new EnrollmentAccounts(_enrollmentAccountsClientDiagnostics, Pipeline, Endpoint, billingEnrollmentAccountApiVersion ?? "2024-04-01");
             _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Endpoint, billingEnrollmentAccountApiVersion ?? "2024-04-01");
-            _billingPermissionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingPermissionsRestClient = new BillingPermissions(_billingPermissionsClientDiagnostics, Pipeline, Endpoint, billingEnrollmentAccountApiVersion ?? "2024-04-01");
+            _enrollmentAccountOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _enrollmentAccountOperationGroupRestClient = new EnrollmentAccountOperationGroup(_enrollmentAccountOperationGroupClientDiagnostics, Pipeline, Endpoint, billingEnrollmentAccountApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingCheckAccessResult> CheckAccessByEnrollmentAccountAsync(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingCheckAccessResult> CheckAccessBillingPermissionsAsync(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.Billing
                 CancellationToken = cancellationToken
             };
             return new MicrosoftBillingEnrollmentAccountOperationGroupCheckAccessByEnrollmentAccountAsyncCollectionResultOfT(
-                _billingPermissionsRestClient,
+                _enrollmentAccountOperationGroupRestClient,
                 Id.Parent.Name,
                 Id.Name,
                 BillingCheckAccessContent.ToRequestContent(content),
                 context,
-                "BillingEnrollmentAccountResource.CheckAccessByEnrollmentAccount");
+                "BillingEnrollmentAccountResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingCheckAccessResult> CheckAccessByEnrollmentAccount(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingCheckAccessResult> CheckAccessBillingPermissions(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -368,12 +368,12 @@ namespace Azure.ResourceManager.Billing
                 CancellationToken = cancellationToken
             };
             return new MicrosoftBillingEnrollmentAccountOperationGroupCheckAccessByEnrollmentAccountCollectionResultOfT(
-                _billingPermissionsRestClient,
+                _enrollmentAccountOperationGroupRestClient,
                 Id.Parent.Name,
                 Id.Name,
                 BillingCheckAccessContent.ToRequestContent(content),
                 context,
-                "BillingEnrollmentAccountResource.CheckAccessByEnrollmentAccount");
+                "BillingEnrollmentAccountResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>
@@ -399,13 +399,13 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingPermission> GetByEnrollmentAccountAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingPermission> GetBillingPermissionsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingPermissionsGetByEnrollmentAccountAsyncCollectionResultOfT(_billingPermissionsRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountResource.GetByEnrollmentAccount");
+            return new EnrollmentAccountOperationGroupGetBillingPermissionsAsyncCollectionResultOfT(_enrollmentAccountOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountResource.GetBillingPermissions");
         }
 
         /// <summary>
@@ -431,13 +431,13 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingPermission> GetByEnrollmentAccount(CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingPermission> GetBillingPermissions(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingPermissionsGetByEnrollmentAccountCollectionResultOfT(_billingPermissionsRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountResource.GetByEnrollmentAccount");
+            return new EnrollmentAccountOperationGroupGetBillingPermissionsCollectionResultOfT(_enrollmentAccountOperationGroupRestClient, Id.Parent.Name, Id.Name, context, "BillingEnrollmentAccountResource.GetBillingPermissions");
         }
 
         /// <summary> Gets a collection of BillingEnrollmentAccountRoleAssignments in the <see cref="BillingEnrollmentAccountResource"/>. </summary>

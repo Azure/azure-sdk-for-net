@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class TransactionPropertiesConsumptionCommitmentDecremented : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="TransactionPropertiesConsumptionCommitmentDecremented"/>. </summary>
-        internal TransactionPropertiesConsumptionCommitmentDecremented()
+        public TransactionPropertiesConsumptionCommitmentDecremented()
         {
         }
 

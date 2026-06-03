@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 throw new FormatException($"The model {nameof(BillingAvailableBalanceProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Amount))
+            if (Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteObjectValue(Amount, options);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalPaymentsOnAccount))
+            if (Optional.IsDefined(TotalPaymentsOnAccount))
             {
                 writer.WritePropertyName("totalPaymentsOnAccount"u8);
                 writer.WriteObjectValue(TotalPaymentsOnAccount, options);

@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateCreateByBillingAccountRequest(string billingAccountName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateByBillingAccountBillingRoleAssignmentRequest(string billingAccountName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateResolveByBillingAccountRequest(string billingAccountName, bool? resolveScopeDisplayNames, string filter, RequestContext context)
+        internal HttpMessage CreateResolveByBillingAccountBillingRoleAssignmentRequest(string billingAccountName, bool? resolveScopeDisplayNames, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateCreateByBillingProfileRequest(string billingAccountName, string billingProfileName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateByBillingProfileBillingRoleAssignmentRequest(string billingAccountName, string billingProfileName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateResolveByBillingProfileRequest(string billingAccountName, string billingProfileName, bool? resolveScopeDisplayNames, string filter, RequestContext context)
+        internal HttpMessage CreateResolveByBillingProfileBillingRoleAssignmentRequest(string billingAccountName, string billingProfileName, bool? resolveScopeDisplayNames, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateCreateByCustomerRequest(string billingAccountName, string billingProfileName, string customerName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateByCustomerBillingRoleAssignmentRequest(string billingAccountName, string billingProfileName, string customerName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateResolveByCustomerRequest(string billingAccountName, string billingProfileName, string customerName, bool? resolveScopeDisplayNames, string filter, RequestContext context)
+        internal HttpMessage CreateResolveByCustomerBillingRoleAssignmentRequest(string billingAccountName, string billingProfileName, string customerName, bool? resolveScopeDisplayNames, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateCreateByInvoiceSectionRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateByInvoiceSectionBillingRoleAssignmentRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateResolveByInvoiceSectionRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, bool? resolveScopeDisplayNames, string filter, RequestContext context)
+        internal HttpMessage CreateResolveByInvoiceSectionBillingRoleAssignmentRequest(string billingAccountName, string billingProfileName, string invoiceSectionName, bool? resolveScopeDisplayNames, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

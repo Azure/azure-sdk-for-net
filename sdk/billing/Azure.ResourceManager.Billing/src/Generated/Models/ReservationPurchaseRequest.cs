@@ -220,11 +220,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Allows reservation discount to be applied across skus within the same auto fit group. Not all skus support instance size flexibility. </summary>
         [WirePath("properties.instanceFlexibility")]
-        public InstanceFlexibility? InstanceFlexibility
+        public InstanceFlexibility? InstanceFlexibilityPropertiesInstanceFlexibility
         {
             get
             {
-                return Properties is null ? default : Properties.InstanceFlexibility;
+                return Properties is null ? default : Properties.InstanceFlexibilityPropertiesInstanceFlexibility;
             }
             set
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Billing.Models
                 {
                     Properties = new ReservationPurchaseRequestProperties();
                 }
-                Properties.InstanceFlexibility = value;
+                Properties.InstanceFlexibilityPropertiesInstanceFlexibility = value;
             }
         }
 
@@ -256,11 +256,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
         [WirePath("properties.reservedResourceProperties.instanceFlexibility")]
-        public InstanceFlexibility? ReservedInstanceFlexibility
+        public InstanceFlexibility? InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility
         {
             get
             {
-                return Properties is null ? default : Properties.ReservedInstanceFlexibility;
+                return Properties is null ? default : Properties.InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility;
             }
             set
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Billing.Models
                 {
                     Properties = new ReservationPurchaseRequestProperties();
                 }
-                Properties.ReservedInstanceFlexibility = value;
+                Properties.InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility = value;
             }
         }
     }

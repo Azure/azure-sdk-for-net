@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateByCustomerRequest(string billingAccountName, string billingProfileName, string customerName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateByCustomerPolicyRequest(string billingAccountName, string billingProfileName, string customerName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

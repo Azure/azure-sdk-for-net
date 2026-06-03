@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingSubscriptionsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingSubscriptionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
-                    new BillingSubscriptionOperationSource(Client),
+                    new BillingSubscriptionResourceOperationSource(Client),
                     _billingSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingSubscriptionsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingSubscriptionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
-                    new BillingSubscriptionOperationSource(Client),
+                    new BillingSubscriptionResourceOperationSource(Client),
                     _billingSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingSubscriptionsRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMergeRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
-                    new BillingSubscriptionOperationSource(Client),
+                    new BillingSubscriptionResourceOperationSource(Client),
                     _billingSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingSubscriptionsRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMergeRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
-                    new BillingSubscriptionOperationSource(Client),
+                    new BillingSubscriptionResourceOperationSource(Client),
                     _billingSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingSubscriptionsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMoveContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
-                    new BillingSubscriptionOperationSource(Client),
+                    new BillingSubscriptionResourceOperationSource(Client),
                     _billingSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingSubscriptionsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMoveContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
-                    new BillingSubscriptionOperationSource(Client),
+                    new BillingSubscriptionResourceOperationSource(Client),
                     _billingSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingSubscriptionsRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, BillingSubscriptionSplitRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
-                    new BillingSubscriptionOperationSource(Client),
+                    new BillingSubscriptionResourceOperationSource(Client),
                     _billingSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingSubscriptionsRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, BillingSubscriptionSplitRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
-                    new BillingSubscriptionOperationSource(Client),
+                    new BillingSubscriptionResourceOperationSource(Client),
                     _billingSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,

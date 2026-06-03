@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Billing
 {
     internal partial class MicrosoftBillingBillingAccountsCheckAccessByBillingAccountAsyncCollectionResultOfT : AsyncPageable<BillingCheckAccessResult>
     {
-        private readonly BillingPermissions _client;
+        private readonly BillingAccounts _client;
         private readonly string _billingAccountName;
         private readonly RequestContent _content;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of MicrosoftBillingBillingAccountsCheckAccessByBillingAccountAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The BillingPermissions client used to send requests. </param>
+        /// <param name="client"> The BillingAccounts client used to send requests. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftBillingBillingAccountsCheckAccessByBillingAccountAsyncCollectionResultOfT(BillingPermissions client, string billingAccountName, RequestContent content, RequestContext context, string diagnosticScope)
+        public MicrosoftBillingBillingAccountsCheckAccessByBillingAccountAsyncCollectionResultOfT(BillingAccounts client, string billingAccountName, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _billingAccountName = billingAccountName;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateCheckAccessByBillingAccountRequest(_billingAccountName, _content, _context);
+            HttpMessage message = _client.CreateCheckAccessBillingPermissionsRequest(_billingAccountName, _content, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

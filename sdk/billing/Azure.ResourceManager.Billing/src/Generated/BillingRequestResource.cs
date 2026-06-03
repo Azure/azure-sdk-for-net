@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingRequestsRestClient.CreateCreateOrUpdateRequest(Id.Name, BillingRequestData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingRequestResource> operation = new BillingArmOperation<BillingRequestResource>(
-                    new BillingRequestOperationSource(Client),
+                    new BillingRequestResourceOperationSource(Client),
                     _billingRequestsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingRequestsRestClient.CreateCreateOrUpdateRequest(Id.Name, BillingRequestData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingRequestResource> operation = new BillingArmOperation<BillingRequestResource>(
-                    new BillingRequestOperationSource(Client),
+                    new BillingRequestResourceOperationSource(Client),
                     _billingRequestsClientDiagnostics,
                     Pipeline,
                     message.Request,

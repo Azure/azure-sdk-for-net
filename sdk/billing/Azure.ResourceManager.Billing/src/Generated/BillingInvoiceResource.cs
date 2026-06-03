@@ -534,9 +534,9 @@ namespace Azure.ResourceManager.Billing
         /// <param name="filter"> The filter query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
         /// <param name="search"> The search query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BillingTransactionSummary>> GetTransactionSummaryByInvoiceAsync(string filter = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingTransactionSummary>> GetTransactionSummaryByInvoiceTransactionAsync(string filter = default, string search = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.GetTransactionSummaryByInvoice");
+            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.GetTransactionSummaryByInvoiceTransaction");
             scope.Start();
             try
             {
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transactionsRestClient.CreateGetTransactionSummaryByInvoiceRequest(Id.Parent.Name, Id.Name, filter, search, context);
+                HttpMessage message = _transactionsRestClient.CreateGetTransactionSummaryByInvoiceTransactionRequest(Id.Parent.Name, Id.Name, filter, search, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingTransactionSummary> response = Response.FromValue(BillingTransactionSummary.FromResponse(result), result);
                 if (response.Value == null)
@@ -584,9 +584,9 @@ namespace Azure.ResourceManager.Billing
         /// <param name="filter"> The filter query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
         /// <param name="search"> The search query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BillingTransactionSummary> GetTransactionSummaryByInvoice(string filter = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual Response<BillingTransactionSummary> GetTransactionSummaryByInvoiceTransaction(string filter = default, string search = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.GetTransactionSummaryByInvoice");
+            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.GetTransactionSummaryByInvoiceTransaction");
             scope.Start();
             try
             {
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transactionsRestClient.CreateGetTransactionSummaryByInvoiceRequest(Id.Parent.Name, Id.Name, filter, search, context);
+                HttpMessage message = _transactionsRestClient.CreateGetTransactionSummaryByInvoiceTransactionRequest(Id.Parent.Name, Id.Name, filter, search, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingTransactionSummary> response = Response.FromValue(BillingTransactionSummary.FromResponse(result), result);
                 if (response.Value == null)
@@ -731,9 +731,9 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> TransactionsDownloadByInvoiceAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> TransactionsDownloadByInvoiceTransactionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.TransactionsDownloadByInvoice");
+            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.TransactionsDownloadByInvoiceTransaction");
             scope.Start();
             try
             {
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transactionsRestClient.CreateTransactionsDownloadByInvoiceRequest(Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _transactionsRestClient.CreateTransactionsDownloadByInvoiceTransactionRequest(Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),
@@ -786,9 +786,9 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BillingDocumentDownloadResult> TransactionsDownloadByInvoice(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingDocumentDownloadResult> TransactionsDownloadByInvoiceTransaction(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.TransactionsDownloadByInvoice");
+            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.TransactionsDownloadByInvoiceTransaction");
             scope.Start();
             try
             {
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transactionsRestClient.CreateTransactionsDownloadByInvoiceRequest(Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _transactionsRestClient.CreateTransactionsDownloadByInvoiceTransactionRequest(Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),

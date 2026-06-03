@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _savingsPlansRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingSavingsPlanModelPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingSavingsPlanModelResource> operation = new BillingArmOperation<BillingSavingsPlanModelResource>(
-                    new BillingSavingsPlanModelOperationSource(Client),
+                    new BillingSavingsPlanModelResourceOperationSource(Client),
                     _savingsPlansClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _savingsPlansRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingSavingsPlanModelPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingSavingsPlanModelResource> operation = new BillingArmOperation<BillingSavingsPlanModelResource>(
-                    new BillingSavingsPlanModelOperationSource(Client),
+                    new BillingSavingsPlanModelResourceOperationSource(Client),
                     _savingsPlansClientDiagnostics,
                     Pipeline,
                     message.Request,

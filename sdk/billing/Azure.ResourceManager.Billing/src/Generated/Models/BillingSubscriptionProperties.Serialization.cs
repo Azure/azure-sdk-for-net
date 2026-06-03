@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteStringValue(AutoRenew.Value.ToString());
             }
-            if (Optional.IsDefined(SubscriptionBeneficiaryTenantId))
+            if (Optional.IsDefined(BeneficiaryTenantId))
             {
                 writer.WritePropertyName("beneficiaryTenantId"u8);
-                writer.WriteStringValue(SubscriptionBeneficiaryTenantId.Value);
+                writer.WriteStringValue(BeneficiaryTenantId.Value);
             }
             if (Optional.IsDefined(Beneficiary))
             {
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("consumptionCostCenter"u8);
                 writer.WriteStringValue(ConsumptionCostCenter);
             }
-            if (Optional.IsDefined(SubscriptionCustomerId))
+            if (Optional.IsDefined(CustomerId))
             {
                 writer.WritePropertyName("customerId"u8);
-                writer.WriteStringValue(SubscriptionCustomerId);
+                writer.WriteStringValue(CustomerId);
             }
             if (options.Format != "W" && Optional.IsDefined(CustomerDisplayName))
             {
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             BillingSubscriptionAutoRenewState? autoRenew = default;
-            Guid? subscriptionBeneficiaryTenantId = default;
+            Guid? beneficiaryTenantId = default;
             BillingBeneficiary beneficiary = default;
             string billingFrequency = default;
             ResourceIdentifier billingProfileId = default;
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Billing.Models
             string billingProfileDisplayName = default;
             string billingProfileName = default;
             string consumptionCostCenter = default;
-            string subscriptionCustomerId = default;
+            string customerId = default;
             string customerDisplayName = default;
             string customerName = default;
             string displayName = default;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    subscriptionBeneficiaryTenantId = new Guid(prop.Value.GetString());
+                    beneficiaryTenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("beneficiary"u8))
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("customerId"u8))
                 {
-                    subscriptionCustomerId = prop.Value.GetString();
+                    customerId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("customerDisplayName"u8))
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
             return new BillingSubscriptionProperties(
                 autoRenew,
-                subscriptionBeneficiaryTenantId,
+                beneficiaryTenantId,
                 beneficiary,
                 billingFrequency,
                 billingProfileId,
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.Billing.Models
                 billingProfileDisplayName,
                 billingProfileName,
                 consumptionCostCenter,
-                subscriptionCustomerId,
+                customerId,
                 customerDisplayName,
                 customerName,
                 displayName,

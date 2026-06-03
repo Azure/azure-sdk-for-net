@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="requestScope"> The billing scope for which the request was submitted (ex. '/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}'). </param>
         /// <param name="billingScope"> The billing scope for which the request will be applied. This is a read only property derived by the service. </param>
         /// <param name="status"> Status of billing request. </param>
-        /// <param name="type"> Type of billing request. </param>
+        /// <param name="requestType"> Type of billing request. </param>
         /// <param name="lastUpdatedBy"> The principal of the entity who last updated the request. </param>
         /// <param name="lastUpdatedOn"> Date and time of last update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingRequestProperties(BillingProvisioningState? provisioningState, IDictionary<string, string> additionalInformation, BillingPrincipal reviewedBy, DateTimeOffset? reviewalOn, ResourceIdentifier billingAccountId, string billingAccountName, string billingAccountDisplayName, Guid? billingAccountPrimaryBillingTenantId, ResourceIdentifier billingProfileId, string billingProfileName, string billingProfileDisplayName, BillingPrincipal createdBy, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string decisionReason, ResourceIdentifier invoiceSectionId, string invoiceSectionName, string invoiceSectionDisplayName, ResourceIdentifier customerId, string customerName, string customerDisplayName, string subscriptionId, string subscriptionName, string subscriptionDisplayName, string justification, IList<BillingPrincipal> recipients, string requestScope, string billingScope, BillingRequestStatus? status, BillingRequestType? @type, BillingPrincipal lastUpdatedBy, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingRequestProperties(BillingProvisioningState? provisioningState, IDictionary<string, string> additionalInformation, BillingPrincipal reviewedBy, DateTimeOffset? reviewalOn, ResourceIdentifier billingAccountId, string billingAccountName, string billingAccountDisplayName, Guid? billingAccountPrimaryBillingTenantId, ResourceIdentifier billingProfileId, string billingProfileName, string billingProfileDisplayName, BillingPrincipal createdBy, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string decisionReason, ResourceIdentifier invoiceSectionId, string invoiceSectionName, string invoiceSectionDisplayName, ResourceIdentifier customerId, string customerName, string customerDisplayName, string subscriptionId, string subscriptionName, string subscriptionDisplayName, string justification, IList<BillingPrincipal> recipients, string requestScope, string billingScope, BillingRequestStatus? status, BillingRequestType? requestType, BillingPrincipal lastUpdatedBy, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AdditionalInformation = additionalInformation;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Billing.Models
             RequestScope = requestScope;
             BillingScope = billingScope;
             Status = status;
-            Type = @type;
+            RequestType = requestType;
             LastUpdatedBy = lastUpdatedBy;
             LastUpdatedOn = lastUpdatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Type of billing request. </summary>
         [WirePath("type")]
-        public BillingRequestType? Type { get; set; }
+        public BillingRequestType? RequestType { get; set; }
 
         /// <summary> The principal of the entity who last updated the request. </summary>
         [WirePath("lastUpdatedBy")]

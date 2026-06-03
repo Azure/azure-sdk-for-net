@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Initializes a new instance of <see cref="BillingSubscriptionProperties"/>. </summary>
         /// <param name="autoRenew"> Indicates whether auto renewal is turned on or off for a product. </param>
-        /// <param name="subscriptionBeneficiaryTenantId"> The provisioning tenant of the subscription. </param>
+        /// <param name="beneficiaryTenantId"> The provisioning tenant of the subscription. </param>
         /// <param name="beneficiary"> The beneficiary of the billing subscription. </param>
         /// <param name="billingFrequency"> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </param>
         /// <param name="billingProfileId"> The fully qualified ID that uniquely identifies a billing profile. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingProfileDisplayName"> The name of the billing profile. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="consumptionCostCenter"> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement or Enterprise Agreement Type billing accounts. </param>
-        /// <param name="subscriptionCustomerId"> The fully qualified ID that uniquely identifies a customer. </param>
+        /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
         /// <param name="displayName"> The name of the billing subscription. </param>
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="suspensionReasons"> The suspension reason for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
         /// <param name="suspensionReasonDetails"> The suspension details for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingSubscriptionProperties(BillingSubscriptionAutoRenewState? autoRenew, Guid? subscriptionBeneficiaryTenantId, BillingBeneficiary beneficiary, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string subscriptionCustomerId, string customerDisplayName, string customerName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, EnrollmentAccountSubscriptionDetails enrollmentAccountSubscriptionDetails, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuId, string skuDescription, BillingSystemOverrides systemOverrides, Uri resourceUri, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, Guid? provisioningTenantId, BillingSubscriptionStatus? status, BillingSubscriptionOperationStatus? operationStatus, BillingProvisioningState? provisioningState, string subscriptionId, IReadOnlyList<string> suspensionReasons, IReadOnlyList<BillingSubscriptionStatusDetails> suspensionReasonDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingSubscriptionProperties(BillingSubscriptionAutoRenewState? autoRenew, Guid? beneficiaryTenantId, BillingBeneficiary beneficiary, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string customerName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, EnrollmentAccountSubscriptionDetails enrollmentAccountSubscriptionDetails, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuId, string skuDescription, BillingSystemOverrides systemOverrides, Uri resourceUri, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, Guid? provisioningTenantId, BillingSubscriptionStatus? status, BillingSubscriptionOperationStatus? operationStatus, BillingProvisioningState? provisioningState, string subscriptionId, IReadOnlyList<string> suspensionReasons, IReadOnlyList<BillingSubscriptionStatusDetails> suspensionReasonDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoRenew = autoRenew;
-            SubscriptionBeneficiaryTenantId = subscriptionBeneficiaryTenantId;
+            BeneficiaryTenantId = beneficiaryTenantId;
             Beneficiary = beneficiary;
             BillingFrequency = billingFrequency;
             BillingProfileId = billingProfileId;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Billing.Models
             BillingProfileDisplayName = billingProfileDisplayName;
             BillingProfileName = billingProfileName;
             ConsumptionCostCenter = consumptionCostCenter;
-            SubscriptionCustomerId = subscriptionCustomerId;
+            CustomerId = customerId;
             CustomerDisplayName = customerDisplayName;
             CustomerName = customerName;
             DisplayName = displayName;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The provisioning tenant of the subscription. </summary>
         [WirePath("beneficiaryTenantId")]
-        public Guid? SubscriptionBeneficiaryTenantId { get; set; }
+        public Guid? BeneficiaryTenantId { get; set; }
 
         /// <summary> The beneficiary of the billing subscription. </summary>
         [WirePath("beneficiary")]
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
         [WirePath("customerId")]
-        public string SubscriptionCustomerId { get; set; }
+        public string CustomerId { get; set; }
 
         /// <summary> The name of the customer. </summary>
         [WirePath("customerDisplayName")]

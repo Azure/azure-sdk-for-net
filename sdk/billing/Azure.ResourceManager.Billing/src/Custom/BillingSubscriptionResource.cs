@@ -74,7 +74,8 @@ namespace Azure.ResourceManager.Billing
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, CancelSubscriptionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null) throw new System.ArgumentNullException(nameof(content));
+            if (content == null)
+                throw new System.ArgumentNullException(nameof(content));
             var request = new CancelSubscriptionRequest(content.CancellationReason)
             {
                 CustomerId = content.CustomerId?.ToString(),
@@ -86,7 +87,8 @@ namespace Azure.ResourceManager.Billing
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Cancel(WaitUntil waitUntil, CancelSubscriptionContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null) throw new System.ArgumentNullException(nameof(content));
+            if (content == null)
+                throw new System.ArgumentNullException(nameof(content));
             var request = new CancelSubscriptionRequest(content.CancellationReason)
             {
                 CustomerId = content.CustomerId?.ToString(),
@@ -106,6 +108,47 @@ namespace Azure.ResourceManager.Billing
         public virtual Response<BillingSubscriptionResource> Get(CancellationToken cancellationToken)
         {
             return Get(expand: default, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Back-compat Update overload for GA 1.2.2 callers that pass <see cref="BillingSubscriptionData"/>.
+        /// The new MPG generator emits Update with a <see cref="BillingSubscriptionPatch"/> parameter to
+        /// reflect the PATCH HTTP verb. GA exposed a Data-based overload; we forward to the Patch
+        /// overload by transferring the inner Properties (same internal type) and Tags.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<BillingSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, BillingSubscriptionData data, CancellationToken cancellationToken)
+        {
+            if (data == null)
+                throw new System.ArgumentNullException(nameof(data));
+            var patch = new BillingSubscriptionPatch { Properties = data.Properties };
+            if (data.Tags != null)
+            {
+                foreach (var kv in data.Tags)
+                {
+                    patch.Tags[kv.Key] = kv.Value;
+                }
+            }
+            return await UpdateAsync(waitUntil, patch, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Back-compat Update overload for GA 1.2.2 callers that pass <see cref="BillingSubscriptionData"/>.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<BillingSubscriptionResource> Update(WaitUntil waitUntil, BillingSubscriptionData data, CancellationToken cancellationToken)
+        {
+            if (data == null)
+                throw new System.ArgumentNullException(nameof(data));
+            var patch = new BillingSubscriptionPatch { Properties = data.Properties };
+            if (data.Tags != null)
+            {
+                foreach (var kv in data.Tags)
+                {
+                    patch.Tags[kv.Key] = kv.Value;
+                }
+            }
+            return Update(waitUntil, patch, cancellationToken);
         }
     }
 }

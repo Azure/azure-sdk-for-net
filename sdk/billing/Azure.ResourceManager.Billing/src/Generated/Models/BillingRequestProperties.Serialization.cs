@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(RequestType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(RequestType.Value.ToString());
             }
             if (Optional.IsDefined(LastUpdatedBy))
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Billing.Models
             string requestScope = default;
             string billingScope = default;
             BillingRequestStatus? status = default;
-            BillingRequestType? @type = default;
+            BillingRequestType? requestType = default;
             BillingPrincipal lastUpdatedBy = default;
             DateTimeOffset? lastUpdatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    @type = new BillingRequestType(prop.Value.GetString());
+                    requestType = new BillingRequestType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedBy"u8))
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Billing.Models
                 requestScope,
                 billingScope,
                 status,
-                @type,
+                requestType,
                 lastUpdatedBy,
                 lastUpdatedOn,
                 additionalBinaryDataProperties);

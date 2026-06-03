@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="productId"> The product id for which this result applies. </param>
         /// <param name="results"> The array of validation results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateTransferResponseProperties(string status, string productId, IReadOnlyList<BillingTransferValidationResultProperties> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidateTransferResponseProperties(string status, string productId, IList<BillingTransferValidationResultProperties> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ProductId = productId;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The array of validation results. </summary>
         [WirePath("results")]
-        public IReadOnlyList<BillingTransferValidationResultProperties> Results { get; } = new ChangeTrackingList<BillingTransferValidationResultProperties>();
+        public IList<BillingTransferValidationResultProperties> Results { get; } = new ChangeTrackingList<BillingTransferValidationResultProperties>();
     }
 }

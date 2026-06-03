@@ -3,9 +3,7 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Billing.Models
@@ -25,19 +23,5 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The tenant id of the customer for whom the subscription is created. </summary>
-        public Guid? BeneficiaryTenantId
-        {
-            get => SubscriptionBeneficiaryTenantId;
-            set => SubscriptionBeneficiaryTenantId = value;
-        }
-
-        /// <summary> The ID of the customer for whom the subscription was created. </summary>
-        public string CustomerId
-        {
-            get => SubscriptionCustomerId;
-            set => SubscriptionCustomerId = value;
-        }
     }
 }

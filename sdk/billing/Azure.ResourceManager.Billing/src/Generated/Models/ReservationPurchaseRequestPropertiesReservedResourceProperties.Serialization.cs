@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 throw new FormatException($"The model {nameof(ReservationPurchaseRequestPropertiesReservedResourceProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ReservedInstanceFlexibility))
+            if (Optional.IsDefined(InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility))
             {
                 writer.WritePropertyName("instanceFlexibility"u8);
-                writer.WriteStringValue(ReservedInstanceFlexibility.Value.ToString());
+                writer.WriteStringValue(InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            InstanceFlexibility? reservedInstanceFlexibility = default;
+            InstanceFlexibility? instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    reservedInstanceFlexibility = new InstanceFlexibility(prop.Value.GetString());
+                    instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility = new InstanceFlexibility(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReservationPurchaseRequestPropertiesReservedResourceProperties(reservedInstanceFlexibility, additionalBinaryDataProperties);
+            return new ReservationPurchaseRequestPropertiesReservedResourceProperties(instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility, additionalBinaryDataProperties);
         }
     }
 }

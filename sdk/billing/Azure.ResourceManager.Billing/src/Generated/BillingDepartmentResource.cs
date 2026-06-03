@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.Billing
     {
         private readonly ClientDiagnostics _departmentsClientDiagnostics;
         private readonly Departments _departmentsRestClient;
-        private readonly ClientDiagnostics _billingPermissionsClientDiagnostics;
-        private readonly BillingPermissions _billingPermissionsRestClient;
         private readonly BillingDepartmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/departments";
@@ -54,8 +52,6 @@ namespace Azure.ResourceManager.Billing
             TryGetApiVersion(ResourceType, out string billingDepartmentApiVersion);
             _departmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _departmentsRestClient = new Departments(_departmentsClientDiagnostics, Pipeline, Endpoint, billingDepartmentApiVersion ?? "2024-04-01");
-            _billingPermissionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingPermissionsRestClient = new BillingPermissions(_billingPermissionsClientDiagnostics, Pipeline, Endpoint, billingDepartmentApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -215,7 +211,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingCheckAccessResult> CheckAccessByDepartmentAsync(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingCheckAccessResult> CheckAccessBillingPermissionsAsync(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -224,12 +220,12 @@ namespace Azure.ResourceManager.Billing
                 CancellationToken = cancellationToken
             };
             return new MicrosoftBillingDepartmentsCheckAccessByDepartmentAsyncCollectionResultOfT(
-                _billingPermissionsRestClient,
+                _departmentsRestClient,
                 Id.Parent.Name,
                 Id.Name,
                 BillingCheckAccessContent.ToRequestContent(content),
                 context,
-                "BillingDepartmentResource.CheckAccessByDepartment");
+                "BillingDepartmentResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>
@@ -257,7 +253,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingCheckAccessResult> CheckAccessByDepartment(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingCheckAccessResult> CheckAccessBillingPermissions(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -266,12 +262,12 @@ namespace Azure.ResourceManager.Billing
                 CancellationToken = cancellationToken
             };
             return new MicrosoftBillingDepartmentsCheckAccessByDepartmentCollectionResultOfT(
-                _billingPermissionsRestClient,
+                _departmentsRestClient,
                 Id.Parent.Name,
                 Id.Name,
                 BillingCheckAccessContent.ToRequestContent(content),
                 context,
-                "BillingDepartmentResource.CheckAccessByDepartment");
+                "BillingDepartmentResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>
@@ -297,13 +293,13 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingPermission> GetByDepartmentAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingPermission> GetBillingPermissionsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingPermissionsGetByDepartmentAsyncCollectionResultOfT(_billingPermissionsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetByDepartment");
+            return new DepartmentsGetBillingPermissionsAsyncCollectionResultOfT(_departmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetBillingPermissions");
         }
 
         /// <summary>
@@ -329,13 +325,13 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingPermission> GetByDepartment(CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingPermission> GetBillingPermissions(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingPermissionsGetByDepartmentCollectionResultOfT(_billingPermissionsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetByDepartment");
+            return new DepartmentsGetBillingPermissionsCollectionResultOfT(_departmentsRestClient, Id.Parent.Name, Id.Name, context, "BillingDepartmentResource.GetBillingPermissions");
         }
 
         /// <summary> Gets a collection of BillingDepartmentRoleAssignments in the <see cref="BillingDepartmentResource"/>. </summary>

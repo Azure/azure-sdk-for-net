@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingAccountsRestClient.CreateAddPaymentTermsRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(parameters), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingAccountResource> operation = new BillingArmOperation<BillingAccountResource>(
-                    new BillingAccountOperationSource(Client),
+                    new BillingAccountResourceOperationSource(Client),
                     _billingAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingAccountsRestClient.CreateAddPaymentTermsRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(parameters), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingAccountResource> operation = new BillingArmOperation<BillingAccountResource>(
-                    new BillingAccountOperationSource(Client),
+                    new BillingAccountResourceOperationSource(Client),
                     _billingAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingAccountsRestClient.CreateCancelPaymentTermsRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(parameters), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingAccountResource> operation = new BillingArmOperation<BillingAccountResource>(
-                    new BillingAccountOperationSource(Client),
+                    new BillingAccountResourceOperationSource(Client),
                     _billingAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingAccountsRestClient.CreateCancelPaymentTermsRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(parameters), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingAccountResource> operation = new BillingArmOperation<BillingAccountResource>(
-                    new BillingAccountOperationSource(Client),
+                    new BillingAccountResourceOperationSource(Client),
                     _billingAccountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Downloads multiple invoice documents as a zip file. </summary>
-        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingAccountAsync(WaitUntil waitUntil, IEnumerable<BillingDocumentDownloadRequestContent> parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingAccountInvoiceAsync(WaitUntil waitUntil, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
 
-            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingAccountResource.DownloadDocumentsByBillingAccount");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingAccountResource.DownloadDocumentsByBillingAccountInvoice");
             scope.Start();
             try
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(parameters), context);
+                HttpMessage message = _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(arrayOfDocumentDownloadRequest), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),
@@ -240,11 +240,11 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary> Downloads multiple invoice documents as a zip file. </summary>
-        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadDocumentsByBillingAccount(WaitUntil waitUntil, IEnumerable<BillingDocumentDownloadRequestContent> parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadDocumentsByBillingAccountInvoice(WaitUntil waitUntil, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
 
-            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingAccountResource.DownloadDocumentsByBillingAccount");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingAccountResource.DownloadDocumentsByBillingAccountInvoice");
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(parameters), context);
+                HttpMessage message = _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, BillingRequestContentHelper.ToRequestContent(arrayOfDocumentDownloadRequest), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),

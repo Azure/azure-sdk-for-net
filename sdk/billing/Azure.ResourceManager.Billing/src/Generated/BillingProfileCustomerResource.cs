@@ -30,8 +30,6 @@ namespace Azure.ResourceManager.Billing
         private readonly BillingRequests _billingRequestsRestClient;
         private readonly ClientDiagnostics _billingSubscriptionsClientDiagnostics;
         private readonly BillingSubscriptions _billingSubscriptionsRestClient;
-        private readonly ClientDiagnostics _billingPermissionsClientDiagnostics;
-        private readonly BillingPermissions _billingPermissionsRestClient;
         private readonly ClientDiagnostics _billingRoleAssignmentsClientDiagnostics;
         private readonly BillingRoleAssignments _billingRoleAssignmentsRestClient;
         private readonly ClientDiagnostics _policiesClientDiagnostics;
@@ -68,8 +66,6 @@ namespace Azure.ResourceManager.Billing
             _billingRequestsRestClient = new BillingRequests(_billingRequestsClientDiagnostics, Pipeline, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
             _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
-            _billingPermissionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingPermissionsRestClient = new BillingPermissions(_billingPermissionsClientDiagnostics, Pipeline, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
             _billingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
             _policiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
@@ -444,7 +440,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingCheckAccessResult> CheckAccessByCustomerAsync(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingCheckAccessResult> CheckAccessBillingPermissionsAsync(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -453,13 +449,13 @@ namespace Azure.ResourceManager.Billing
                 CancellationToken = cancellationToken
             };
             return new MicrosoftBillingCustomersCheckAccessByCustomerAsyncCollectionResultOfT(
-                _billingPermissionsRestClient,
+                _customersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
                 BillingCheckAccessContent.ToRequestContent(content),
                 context,
-                "BillingProfileCustomerResource.CheckAccessByCustomer");
+                "BillingProfileCustomerResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>
@@ -487,7 +483,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="BillingCheckAccessResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingCheckAccessResult> CheckAccessByCustomer(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingCheckAccessResult> CheckAccessBillingPermissions(BillingCheckAccessContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -496,13 +492,13 @@ namespace Azure.ResourceManager.Billing
                 CancellationToken = cancellationToken
             };
             return new MicrosoftBillingCustomersCheckAccessByCustomerCollectionResultOfT(
-                _billingPermissionsRestClient,
+                _customersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
                 BillingCheckAccessContent.ToRequestContent(content),
                 context,
-                "BillingProfileCustomerResource.CheckAccessByCustomer");
+                "BillingProfileCustomerResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>
@@ -530,11 +526,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingRoleAssignmentProperties"> The properties of the billing role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentProperties"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingRoleAssignmentData>> CreateByCustomerAsync(WaitUntil waitUntil, BillingRoleAssignmentProperties billingRoleAssignmentProperties, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingRoleAssignmentData>> CreateByCustomerBillingRoleAssignmentAsync(WaitUntil waitUntil, BillingRoleAssignmentProperties billingRoleAssignmentProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(billingRoleAssignmentProperties, nameof(billingRoleAssignmentProperties));
 
-            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingProfileCustomerResource.CreateByCustomer");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingProfileCustomerResource.CreateByCustomerBillingRoleAssignment");
             scope.Start();
             try
             {
@@ -542,7 +538,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentProperties.ToRequestContent(billingRoleAssignmentProperties), context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateByCustomerBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentProperties.ToRequestContent(billingRoleAssignmentProperties), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingRoleAssignmentData> operation = new BillingArmOperation<BillingRoleAssignmentData>(
                     new BillingRoleAssignmentDataOperationSource(),
@@ -589,11 +585,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingRoleAssignmentProperties"> The properties of the billing role assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="billingRoleAssignmentProperties"/> is null. </exception>
-        public virtual ArmOperation<BillingRoleAssignmentData> CreateByCustomer(WaitUntil waitUntil, BillingRoleAssignmentProperties billingRoleAssignmentProperties, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingRoleAssignmentData> CreateByCustomerBillingRoleAssignment(WaitUntil waitUntil, BillingRoleAssignmentProperties billingRoleAssignmentProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(billingRoleAssignmentProperties, nameof(billingRoleAssignmentProperties));
 
-            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingProfileCustomerResource.CreateByCustomer");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingProfileCustomerResource.CreateByCustomerBillingRoleAssignment");
             scope.Start();
             try
             {
@@ -601,7 +597,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentProperties.ToRequestContent(billingRoleAssignmentProperties), context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateByCustomerBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentProperties.ToRequestContent(billingRoleAssignmentProperties), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingRoleAssignmentData> operation = new BillingArmOperation<BillingRoleAssignmentData>(
                     new BillingRoleAssignmentDataOperationSource(),
@@ -648,11 +644,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="data"> A policy at customer scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingCustomerPolicyData>> CreateOrUpdateByCustomerAsync(WaitUntil waitUntil, BillingCustomerPolicyData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingCustomerPolicyData>> CreateOrUpdateByCustomerPolicyAsync(WaitUntil waitUntil, BillingCustomerPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _policiesClientDiagnostics.CreateScope("BillingProfileCustomerResource.CreateOrUpdateByCustomer");
+            using DiagnosticScope scope = _policiesClientDiagnostics.CreateScope("BillingProfileCustomerResource.CreateOrUpdateByCustomerPolicy");
             scope.Start();
             try
             {
@@ -660,7 +656,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingCustomerPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByCustomerPolicyRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingCustomerPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingCustomerPolicyData> operation = new BillingArmOperation<BillingCustomerPolicyData>(
                     new BillingCustomerPolicyDataOperationSource(),
@@ -707,11 +703,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="data"> A policy at customer scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BillingCustomerPolicyData> CreateOrUpdateByCustomer(WaitUntil waitUntil, BillingCustomerPolicyData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingCustomerPolicyData> CreateOrUpdateByCustomerPolicy(WaitUntil waitUntil, BillingCustomerPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _policiesClientDiagnostics.CreateScope("BillingProfileCustomerResource.CreateOrUpdateByCustomer");
+            using DiagnosticScope scope = _policiesClientDiagnostics.CreateScope("BillingProfileCustomerResource.CreateOrUpdateByCustomerPolicy");
             scope.Start();
             try
             {
@@ -719,7 +715,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingCustomerPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByCustomerPolicyRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingCustomerPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingCustomerPolicyData> operation = new BillingArmOperation<BillingCustomerPolicyData>(
                     new BillingCustomerPolicyDataOperationSource(),
@@ -764,19 +760,19 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingPermission> GetByCustomerAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingPermission> GetBillingPermissionsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingPermissionsGetByCustomerAsyncCollectionResultOfT(
-                _billingPermissionsRestClient,
+            return new CustomersGetBillingPermissionsAsyncCollectionResultOfT(
+                _customersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "BillingProfileCustomerResource.GetByCustomer");
+                "BillingProfileCustomerResource.GetBillingPermissions");
         }
 
         /// <summary>
@@ -802,19 +798,19 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingPermission> GetByCustomer(CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingPermission> GetBillingPermissions(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new BillingPermissionsGetByCustomerCollectionResultOfT(
-                _billingPermissionsRestClient,
+            return new CustomersGetBillingPermissionsCollectionResultOfT(
+                _customersRestClient,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "BillingProfileCustomerResource.GetByCustomer");
+                "BillingProfileCustomerResource.GetBillingPermissions");
         }
 
         /// <summary>
@@ -842,9 +838,9 @@ namespace Azure.ResourceManager.Billing
         /// <param name="resolveScopeDisplayNames"> Resolves the scope display name for each of the role assignments. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BillingRoleAssignmentListResult>> ResolveByCustomerAsync(WaitUntil waitUntil, bool? resolveScopeDisplayNames = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingRoleAssignmentListResult>> ResolveByCustomerBillingRoleAssignmentAsync(WaitUntil waitUntil, bool? resolveScopeDisplayNames = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingProfileCustomerResource.ResolveByCustomer");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingProfileCustomerResource.ResolveByCustomerBillingRoleAssignment");
             scope.Start();
             try
             {
@@ -852,7 +848,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateResolveByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter, context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateResolveByCustomerBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingRoleAssignmentListResult> operation = new BillingArmOperation<BillingRoleAssignmentListResult>(
                     new BillingRoleAssignmentListResultOperationSource(),
@@ -899,9 +895,9 @@ namespace Azure.ResourceManager.Billing
         /// <param name="resolveScopeDisplayNames"> Resolves the scope display name for each of the role assignments. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BillingRoleAssignmentListResult> ResolveByCustomer(WaitUntil waitUntil, bool? resolveScopeDisplayNames = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingRoleAssignmentListResult> ResolveByCustomerBillingRoleAssignment(WaitUntil waitUntil, bool? resolveScopeDisplayNames = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingProfileCustomerResource.ResolveByCustomer");
+            using DiagnosticScope scope = _billingRoleAssignmentsClientDiagnostics.CreateScope("BillingProfileCustomerResource.ResolveByCustomerBillingRoleAssignment");
             scope.Start();
             try
             {
@@ -909,7 +905,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingRoleAssignmentsRestClient.CreateResolveByCustomerRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter, context);
+                HttpMessage message = _billingRoleAssignmentsRestClient.CreateResolveByCustomerBillingRoleAssignmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, resolveScopeDisplayNames, filter, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingRoleAssignmentListResult> operation = new BillingArmOperation<BillingRoleAssignmentListResult>(
                     new BillingRoleAssignmentListResultOperationSource(),

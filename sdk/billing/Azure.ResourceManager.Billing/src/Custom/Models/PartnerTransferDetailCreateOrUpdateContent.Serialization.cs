@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.Billing.Models
             switch (format)
             {
                 case "J":
-                {
-                    using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                    return DeserializePartnerTransferDetailCreateOrUpdateContent(document.RootElement, options);
-                }
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializePartnerTransferDetailCreateOrUpdateContent(document.RootElement, options);
+                    }
                 default:
                     throw new FormatException($"The model {nameof(PartnerTransferDetailCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }

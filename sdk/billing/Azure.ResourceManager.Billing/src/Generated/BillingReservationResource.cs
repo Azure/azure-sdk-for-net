@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _reservationsRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingReservationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingReservationResource> operation = new BillingArmOperation<BillingReservationResource>(
-                    new BillingReservationOperationSource(Client),
+                    new BillingReservationResourceOperationSource(Client),
                     _reservationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _reservationsRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingReservationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingReservationResource> operation = new BillingArmOperation<BillingReservationResource>(
-                    new BillingReservationOperationSource(Client),
+                    new BillingReservationResourceOperationSource(Client),
                     _reservationsClientDiagnostics,
                     Pipeline,
                     message.Request,

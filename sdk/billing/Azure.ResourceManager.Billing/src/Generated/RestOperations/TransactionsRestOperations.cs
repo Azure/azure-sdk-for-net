@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateTransactionsDownloadByInvoiceRequest(string billingAccountName, string invoiceName, RequestContext context)
+        internal HttpMessage CreateTransactionsDownloadByInvoiceTransactionRequest(string billingAccountName, string invoiceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateGetTransactionSummaryByInvoiceRequest(string billingAccountName, string invoiceName, string filter, string search, RequestContext context)
+        internal HttpMessage CreateGetTransactionSummaryByInvoiceTransactionRequest(string billingAccountName, string invoiceName, string filter, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

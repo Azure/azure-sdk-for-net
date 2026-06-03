@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("completedOn"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(AmountRequested))
+            if (Optional.IsDefined(AmountRequested))
             {
                 writer.WritePropertyName("amountRequested"u8);
                 writer.WriteObjectValue(AmountRequested, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(AmountRefunded))
+            if (Optional.IsDefined(AmountRefunded))
             {
                 writer.WritePropertyName("amountRefunded"u8);
                 writer.WriteObjectValue(AmountRefunded, options);

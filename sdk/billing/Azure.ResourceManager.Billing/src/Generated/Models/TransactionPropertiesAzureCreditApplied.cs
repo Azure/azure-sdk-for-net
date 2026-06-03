@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class TransactionPropertiesAzureCreditApplied : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="TransactionPropertiesAzureCreditApplied"/>. </summary>
-        internal TransactionPropertiesAzureCreditApplied()
+        public TransactionPropertiesAzureCreditApplied()
         {
         }
 

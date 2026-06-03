@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _associatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Name, associatedTenantName, BillingAssociatedTenantData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingAssociatedTenantResource> operation = new BillingArmOperation<BillingAssociatedTenantResource>(
-                    new BillingAssociatedTenantOperationSource(Client),
+                    new BillingAssociatedTenantResourceOperationSource(Client),
                     _associatedTenantsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _associatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Name, associatedTenantName, BillingAssociatedTenantData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingAssociatedTenantResource> operation = new BillingArmOperation<BillingAssociatedTenantResource>(
-                    new BillingAssociatedTenantOperationSource(Client),
+                    new BillingAssociatedTenantResourceOperationSource(Client),
                     _associatedTenantsClientDiagnostics,
                     Pipeline,
                     message.Request,

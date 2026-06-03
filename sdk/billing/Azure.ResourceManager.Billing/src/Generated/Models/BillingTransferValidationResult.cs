@@ -54,15 +54,5 @@ namespace Azure.ResourceManager.Billing.Models
                 return Properties is null ? default : Properties.ProductId;
             }
         }
-
-        /// <summary> The array of validation results. </summary>
-        [WirePath("properties.results")]
-        public IReadOnlyList<BillingTransferValidationResultProperties> Results
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Results;
-            }
-        }
     }
 }

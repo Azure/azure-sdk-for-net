@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("reservedResourceProperties"u8);
                 writer.WriteObjectValue(ReservedResourceProperties, options);
             }
-            if (Optional.IsDefined(InstanceFlexibility))
+            if (Optional.IsDefined(InstanceFlexibilityPropertiesInstanceFlexibility))
             {
                 writer.WritePropertyName("instanceFlexibility"u8);
-                writer.WriteStringValue(InstanceFlexibility.Value.ToString());
+                writer.WriteStringValue(InstanceFlexibilityPropertiesInstanceFlexibility.Value.ToString());
             }
             if (Optional.IsDefined(ReviewOn))
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Billing.Models
             ReservationAppliedScopeProperties appliedScopeProperties = default;
             bool? isRenewed = default;
             ReservationPurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties = default;
-            InstanceFlexibility? instanceFlexibility = default;
+            InstanceFlexibility? instanceFlexibilityPropertiesInstanceFlexibility = default;
             DateTimeOffset? reviewOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    instanceFlexibility = new InstanceFlexibility(prop.Value.GetString());
+                    instanceFlexibilityPropertiesInstanceFlexibility = new InstanceFlexibility(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("reviewDateTime"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Billing.Models
                 appliedScopeProperties,
                 isRenewed,
                 reservedResourceProperties,
-                instanceFlexibility,
+                instanceFlexibilityPropertiesInstanceFlexibility,
                 reviewOn,
                 additionalBinaryDataProperties);
         }

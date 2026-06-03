@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByCustomerAtBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, BillingCustomerPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingCustomerPolicyResource> operation = new BillingArmOperation<BillingCustomerPolicyResource>(
-                    new BillingCustomerPolicyOperationSource(Client),
+                    new BillingCustomerPolicyResourceOperationSource(Client),
                     _policiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _policiesRestClient.CreateCreateOrUpdateByCustomerAtBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, BillingCustomerPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingCustomerPolicyResource> operation = new BillingArmOperation<BillingCustomerPolicyResource>(
-                    new BillingCustomerPolicyOperationSource(Client),
+                    new BillingCustomerPolicyResourceOperationSource(Client),
                     _policiesClientDiagnostics,
                     Pipeline,
                     message.Request,

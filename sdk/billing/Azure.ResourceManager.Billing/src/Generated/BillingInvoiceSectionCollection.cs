@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _invoiceSectionsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, invoiceSectionName, BillingInvoiceSectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingInvoiceSectionResource> operation = new BillingArmOperation<BillingInvoiceSectionResource>(
-                    new BillingInvoiceSectionOperationSource(Client),
+                    new BillingInvoiceSectionResourceOperationSource(Client),
                     _invoiceSectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _invoiceSectionsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, invoiceSectionName, BillingInvoiceSectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingInvoiceSectionResource> operation = new BillingArmOperation<BillingInvoiceSectionResource>(
-                    new BillingInvoiceSectionOperationSource(Client),
+                    new BillingInvoiceSectionResourceOperationSource(Client),
                     _invoiceSectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

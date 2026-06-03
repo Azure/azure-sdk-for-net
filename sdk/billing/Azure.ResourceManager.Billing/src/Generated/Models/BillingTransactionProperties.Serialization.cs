@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 throw new FormatException($"The model {nameof(BillingTransactionProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureCreditApplied))
+            if (Optional.IsDefined(AzureCreditApplied))
             {
                 writer.WritePropertyName("azureCreditApplied"u8);
                 writer.WriteObjectValue(AzureCreditApplied, options);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConsumptionCommitmentDecremented))
+            if (Optional.IsDefined(ConsumptionCommitmentDecremented))
             {
                 writer.WritePropertyName("consumptionCommitmentDecremented"u8);
                 writer.WriteObjectValue(ConsumptionCommitmentDecremented, options);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("discount"u8);
                 writer.WriteNumberValue(Discount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EffectivePrice))
+            if (Optional.IsDefined(EffectivePrice))
             {
                 writer.WritePropertyName("effectivePrice"u8);
                 writer.WriteObjectValue(EffectivePrice, options);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(MarketPrice))
+            if (Optional.IsDefined(MarketPrice))
             {
                 writer.WritePropertyName("marketPrice"u8);
                 writer.WriteObjectValue(MarketPrice, options);
@@ -232,17 +232,17 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("servicePeriodEndDate"u8);
                 writer.WriteStringValue(ServicePeriodEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SubTotal))
+            if (Optional.IsDefined(SubTotal))
             {
                 writer.WritePropertyName("subTotal"u8);
                 writer.WriteObjectValue(SubTotal, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Tax))
+            if (Optional.IsDefined(Tax))
             {
                 writer.WritePropertyName("tax"u8);
                 writer.WriteObjectValue(Tax, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(TransactionAmount))
+            if (Optional.IsDefined(TransactionAmount))
             {
                 writer.WritePropertyName("transactionAmount"u8);
                 writer.WriteObjectValue(TransactionAmount, options);

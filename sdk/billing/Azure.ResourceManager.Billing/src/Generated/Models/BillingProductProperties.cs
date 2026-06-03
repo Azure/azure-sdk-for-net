@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The last month charges. </summary>
         [WirePath("lastCharge")]
-        public BillingAmount LastCharge { get; }
+        public BillingAmount LastCharge { get; set; }
 
         /// <summary> The date of the last charge. </summary>
         [WirePath("lastChargeDate")]

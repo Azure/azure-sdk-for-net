@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ReservationPurchaseRequestPropertiesReservedResourceProperties"/>. </summary>
-        /// <param name="reservedInstanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </param>
+        /// <param name="instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility"> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationPurchaseRequestPropertiesReservedResourceProperties(InstanceFlexibility? reservedInstanceFlexibility, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReservationPurchaseRequestPropertiesReservedResourceProperties(InstanceFlexibility? instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ReservedInstanceFlexibility = reservedInstanceFlexibility;
+            InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility = instanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Turning this on will apply the reservation discount to other VMs in the same VM size group. Only specify for VirtualMachines reserved resource type. </summary>
         [WirePath("instanceFlexibility")]
-        public InstanceFlexibility? ReservedInstanceFlexibility { get; set; }
+        public InstanceFlexibility? InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility { get; set; }
     }
 }

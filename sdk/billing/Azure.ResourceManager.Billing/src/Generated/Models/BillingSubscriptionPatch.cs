@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The provisioning tenant of the subscription. </summary>
         [WirePath("properties.beneficiaryTenantId")]
-        public Guid? SubscriptionBeneficiaryTenantId
+        public Guid? BeneficiaryTenantId
         {
             get
             {
-                return Properties is null ? default : Properties.SubscriptionBeneficiaryTenantId;
+                return Properties is null ? default : Properties.BeneficiaryTenantId;
             }
             set
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Billing.Models
                 {
                     Properties = new BillingSubscriptionProperties();
                 }
-                Properties.SubscriptionBeneficiaryTenantId = value;
+                Properties.BeneficiaryTenantId = value;
             }
         }
 
@@ -188,11 +188,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
         [WirePath("properties.customerId")]
-        public string SubscriptionCustomerId
+        public string CustomerId
         {
             get
             {
-                return Properties is null ? default : Properties.SubscriptionCustomerId;
+                return Properties is null ? default : Properties.CustomerId;
             }
             set
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Billing.Models
                 {
                     Properties = new BillingSubscriptionProperties();
                 }
-                Properties.SubscriptionCustomerId = value;
+                Properties.CustomerId = value;
             }
         }
 

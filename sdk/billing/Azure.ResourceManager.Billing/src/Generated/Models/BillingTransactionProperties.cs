@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The amount of any Azure credits automatically applied to this transaction. </summary>
         [WirePath("azureCreditApplied")]
-        public BillingAmount AzureCreditApplied { get; }
+        public BillingAmount AzureCreditApplied { get; set; }
 
         /// <summary> Details of the Azure plan. </summary>
         [WirePath("azurePlan")]
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The amount of Microsoft Azure Consumption Commitment(MACC) decrement through the transaction. </summary>
         [WirePath("consumptionCommitmentDecremented")]
-        public BillingAmount ConsumptionCommitmentDecremented { get; }
+        public BillingAmount ConsumptionCommitmentDecremented { get; set; }
 
         /// <summary> The name of the customer. </summary>
         [WirePath("customerDisplayName")]
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The price of the product after applying any discounts. </summary>
         [WirePath("effectivePrice")]
-        public BillingAmount EffectivePrice { get; }
+        public BillingAmount EffectivePrice { get; set; }
 
         /// <summary> The exchange rate used to convert charged amount to billing currency, if applicable. </summary>
         [WirePath("exchangeRate")]
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The retail price of the product. </summary>
         [WirePath("marketPrice")]
-        public BillingAmount MarketPrice { get; }
+        public BillingAmount MarketPrice { get; set; }
 
         /// <summary> The part number of the product for which the transaction took place. The field is only applicable for Enterprise Agreement invoices. </summary>
         [WirePath("partNumber")]
@@ -256,15 +256,15 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The pre-tax charged amount for the transaction. </summary>
         [WirePath("subTotal")]
-        public BillingAmount SubTotal { get; }
+        public BillingAmount SubTotal { get; set; }
 
         /// <summary> The tax amount applied to the transaction. </summary>
         [WirePath("tax")]
-        public BillingAmount Tax { get; }
+        public BillingAmount Tax { get; set; }
 
         /// <summary> The charge associated with the transaction. </summary>
         [WirePath("transactionAmount")]
-        public BillingAmount TransactionAmount { get; }
+        public BillingAmount TransactionAmount { get; set; }
 
         /// <summary> The type of transaction. </summary>
         [WirePath("transactionType")]

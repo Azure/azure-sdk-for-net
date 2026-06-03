@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingEnrollmentAccountRoleAssignmentResource> operation = new BillingArmOperation<BillingEnrollmentAccountRoleAssignmentResource>(
-                    new BillingEnrollmentAccountRoleAssignmentOperationSource(Client),
+                    new BillingEnrollmentAccountRoleAssignmentResourceOperationSource(Client),
                     _billingRoleAssignmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _billingRoleAssignmentsRestClient.CreateCreateOrUpdateByEnrollmentAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingRoleAssignmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingEnrollmentAccountRoleAssignmentResource> operation = new BillingArmOperation<BillingEnrollmentAccountRoleAssignmentResource>(
-                    new BillingEnrollmentAccountRoleAssignmentOperationSource(Client),
+                    new BillingEnrollmentAccountRoleAssignmentResourceOperationSource(Client),
                     _billingRoleAssignmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
