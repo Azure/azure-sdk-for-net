@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="bmcConnectionString"/>, <paramref name="bmcCredentials"/>, <paramref name="bmcMacAddress"/>, <paramref name="bootMacAddress"/>, <paramref name="machineDetails"/>, <paramref name="machineName"/>, <paramref name="machineSkuId"/>, <paramref name="rackId"/> or <paramref name="serialNumber"/> is null. </exception>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudBareMetalMachineData"/> instance for mocking. </returns>
-        public static NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string bmcConnectionString = default, AdministrativeCredentials bmcCredentials = default, string bmcMacAddress = default, string bootMacAddress = default, string machineDetails = default, string machineName = default, string machineSkuId = default, ResourceIdentifier rackId = default, long rackSlot = default, string serialNumber = default, IEnumerable<NetworkCloudActionState> actionStates = default, IEnumerable<ResourceIdentifier> associatedResourceIds = default, string bmcIpv4Address = default, string bmcIpv6Address = default, NetworkCloudCertificateInfo caCertificate = default, ResourceIdentifier clusterId = default, BareMetalMachineCordonStatus? cordonStatus = default, BareMetalMachineDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, HardwareInventory hardwareInventory = default, HardwareValidationStatus hardwareValidationStatus = default, IEnumerable<string> hybridAksClustersAssociatedIds = default, string kubernetesNodeName = default, string kubernetesVersion = default, string machineClusterVersion = default, IEnumerable<string> machineRoles = default, IPAddress oamIPv4Address = default, string oamIPv6Address = default, string osImage = default, BareMetalMachinePowerState? powerState = default, BareMetalMachineReadyState? readyState = default, RuntimeProtectionStatus runtimeProtectionStatus = default, IEnumerable<SecretRotationStatus> secretRotationStatus = default, string serviceTag = default, IEnumerable<string> virtualMachinesAssociatedIds = default, BareMetalMachineProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
+        public static NetworkCloudBareMetalMachineData NetworkCloudBareMetalMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string bmcConnectionString = default, AdministrativeCredentials bmcCredentials = default, string bmcMacAddress = default, string bootMacAddress = default, string machineDetails = default, string machineName = default, string machineSkuId = default, ResourceIdentifier rackId = default, long rackSlot = default, string serialNumber = default, IEnumerable<NetworkCloudActionState> actionStates = default, IEnumerable<ResourceIdentifier> associatedResourceIds = default, string bmcIpv4Address = default, string bmcIpv6Address = default, NetworkCloudCertificateInfo caCertificate = default, ResourceIdentifier clusterId = default, BareMetalMachineCordonStatus? cordonStatus = default, BareMetalMachineDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, HardwareInventory hardwareInventory = default, HardwareValidationStatus hardwareValidationStatus = default, IEnumerable<string> hybridAksClustersAssociatedIds = default, string kubernetesNodeName = default, string kubernetesVersion = default, string machineClusterVersion = default, IEnumerable<string> machineRoles = default, BareMetalMachineMonitoringConfigurationStatus monitoringConfigurationStatus = default, IPAddress oamIPv4Address = default, string oamIPv6Address = default, string osImage = default, BareMetalMachinePowerState? powerState = default, BareMetalMachineReadyState? readyState = default, RuntimeProtectionStatus runtimeProtectionStatus = default, IEnumerable<SecretRotationStatus> secretRotationStatus = default, string serviceTag = default, IEnumerable<string> virtualMachinesAssociatedIds = default, BareMetalMachineProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -215,6 +215,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     default,
                     machineClusterVersion,
                     (machineRoles ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
                     default,
                     default,
                     default,
@@ -336,6 +337,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new HardwareValidationStatus(lastValidationOn, result, default);
         }
 
+        /// <param name="logLevel"> The log level for the monitoring configuration status of the bare metal machine. </param>
+        /// <param name="metricsLevel"> The metrics level for the monitoring configuration status of the bare metal machine. </param>
+        /// <returns> A new <see cref="Models.BareMetalMachineMonitoringConfigurationStatus"/> instance for mocking. </returns>
+        public static BareMetalMachineMonitoringConfigurationStatus BareMetalMachineMonitoringConfigurationStatus(BareMetalMachineMetricsConfigurationStatusLogLevel? logLevel = default, BareMetalMachineMetricsConfigurationStatusMetricsLevel? metricsLevel = default)
+        {
+            return new BareMetalMachineMonitoringConfigurationStatus(logLevel, metricsLevel, default);
+        }
+
         /// <param name="agentHealthStatus"> The runtime protection agent health status. </param>
         /// <param name="agentHealthStatusIssues"> The runtime protection agent health status issues, if present. </param>
         /// <param name="agentLicenseStatus"> The runtime protection agent license status. </param>
@@ -414,6 +423,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static BareMetalMachinePowerOffContent BareMetalMachinePowerOffContent(BareMetalMachineSkipShutdown? skipShutdown = default)
         {
             return new BareMetalMachinePowerOffContent(skipShutdown, default);
+        }
+
+        /// <param name="safeguardMode"> The safeguard mode to use for the reimage action, where None indicates to bypass safeguards and All indicates to utilize all safeguards. If not specified, the default is All. </param>
+        /// <returns> A new <see cref="Models.BareMetalMachineReimageParameters"/> instance for mocking. </returns>
+        public static BareMetalMachineReimageParameters BareMetalMachineReimageParameters(BareMetalMachineReimageSafeguardMode? safeguardMode = default)
+        {
+            return new BareMetalMachineReimageParameters(safeguardMode, default);
         }
 
         /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </param>
@@ -728,7 +744,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="kind"> The type (kind) of the cluster. When specified, the value must exactly match the kind configured on the cluster manager that manages the cluster. If omitted, the service will default the value to the kind value of the cluster manager. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="clusterVersion"/> or <paramref name="networkFabricId"/> is null. </exception>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudClusterData"/> instance for mocking. </returns>
-        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default, AnalyticsOutputSettings analyticsOutputSettings = default, ResourceIdentifier analyticsWorkspaceId = default, string clusterLocation = default, ServicePrincipalInformation clusterServicePrincipal = default, ClusterType clusterType = default, string clusterVersion = default, CommandOutputSettings commandOutputSettings = default, ValidationThreshold computeDeploymentThreshold = default, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, ResourceIdentifier networkFabricId = default, RuntimeProtectionConfiguration runtimeProtectionConfiguration = default, ClusterSecretArchive secretArchive = default, SecretArchiveSettings secretArchiveSettings = default, ClusterUpdateStrategy updateStrategy = default, IEnumerable<NetworkCloudActionState> actionStates = default, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions = default, ClusterCapacity clusterCapacity = default, ClusterConnectionStatus? clusterConnectionStatus = default, Resources.Models.ExtendedLocation clusterExtendedLocation = default, ClusterManagerConnectionStatus? clusterManagerConnectionStatus = default, ResourceIdentifier clusterManagerId = default, ClusterDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, Resources.Models.ExtendedLocation hybridAksExtendedLocation = default, long? manualActionCount = default, DateTimeOffset? supportExpireOn = default, IEnumerable<ResourceIdentifier> workloadResourceIds = default, ClusterProvisioningState? provisioningState = default, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default, ETag? eTag = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, NetworkCloudDeploymentType? kind = default)
+        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default, AnalyticsOutputSettings analyticsOutputSettings = default, ResourceIdentifier analyticsWorkspaceId = default, string clusterLocation = default, ServicePrincipalInformation clusterServicePrincipal = default, ClusterType clusterType = default, string clusterVersion = default, CommandOutputSettings commandOutputSettings = default, ValidationThreshold computeDeploymentThreshold = default, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, ResourceIdentifier networkFabricId = default, RuntimeProtectionConfiguration runtimeProtectionConfiguration = default, ClusterSecretArchive secretArchive = default, SecretArchiveSettings secretArchiveSettings = default, ClusterUpdateStrategy updateStrategy = default, IEnumerable<NetworkCloudActionState> actionStates = default, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions = default, ClusterCapacity clusterCapacity = default, ClusterConnectionStatus? clusterConnectionStatus = default, Resources.Models.ExtendedLocation clusterExtendedLocation = default, ClusterManagerConnectionStatus? clusterManagerConnectionStatus = default, ResourceIdentifier clusterManagerId = default, ClusterDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, Resources.Models.ExtendedLocation hybridAksExtendedLocation = default, DateTimeOffset? lastSuccessfulVersionUpdateOn = default, IEnumerable<string> managedCredentials = default, long? manualActionCount = default, DateTimeOffset? supportExpireOn = default, IEnumerable<ResourceIdentifier> workloadResourceIds = default, ClusterProvisioningState? provisioningState = default, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default, ETag? eTag = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, NetworkCloudDeploymentType? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -764,6 +780,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     clusterExtendedLocation,
                     clusterManagerConnectionStatus,
                     clusterManagerId,
+                    default,
+                    default,
                     default,
                     default,
                     default,
@@ -1010,10 +1028,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <param name="machineGroupTargetingMode"> The mode by which the cluster will target the next grouping of servers to continue the update. </param>
+        /// <param name="safeguardMode"> Specifies how safeguards are applied during the continue update version operation. Use All to run all pre‑operation validation checks. Use None to bypass safeguards. If not specified, the default is All. </param>
         /// <returns> A new <see cref="Models.ClusterContinueUpdateVersionContent"/> instance for mocking. </returns>
-        public static ClusterContinueUpdateVersionContent ClusterContinueUpdateVersionContent(ClusterContinueUpdateVersionMachineGroupTargetingMode? machineGroupTargetingMode = default)
+        public static ClusterContinueUpdateVersionContent ClusterContinueUpdateVersionContent(ClusterContinueUpdateVersionMachineGroupTargetingMode? machineGroupTargetingMode = default, ClusterContinueUpdateVersionSafeguardMode? safeguardMode = default)
         {
-            return new ClusterContinueUpdateVersionContent(machineGroupTargetingMode, default);
+            return new ClusterContinueUpdateVersionContent(machineGroupTargetingMode, safeguardMode, default);
         }
 
         /// <param name="skipValidationsForMachines"> The names of bare metal machines in the cluster that should be skipped during environment validation. </param>
@@ -1046,6 +1065,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new NetworkCloudFilterDevices((bareMetalMachineNames ?? new ChangeTrackingList<string>()).ToList(), (rackNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <param name="credentials"> The list of credential names for the credentials to rotate. </param>
+        /// <returns> A new <see cref="Models.ClusterRotateCredentialParameters"/> instance for mocking. </returns>
+        public static ClusterRotateCredentialParameters ClusterRotateCredentialParameters(IEnumerable<string> credentials = default)
+        {
+            credentials ??= new ChangeTrackingList<string>();
+
+            return new ClusterRotateCredentialParameters((credentials ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <param name="scanActivity"> The choice of if the scan operation should run the scan. </param>
         /// <returns> A new <see cref="Models.ClusterScanRuntimeContent"/> instance for mocking. </returns>
         public static ClusterScanRuntimeContent ClusterScanRuntimeContent(ClusterScanRuntimeParametersScanActivity? scanActivity = default)
@@ -1053,11 +1081,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new ClusterScanRuntimeContent(scanActivity, default);
         }
 
+        /// <param name="safeguardMode"> Specifies how safeguards are applied during the update version operation. Use All to run all pre‑operation validation checks. Use None to bypass safeguards. If not specified, the default is All. </param>
         /// <param name="targetClusterVersion"> The version to be applied to the cluster during update. </param>
         /// <returns> A new <see cref="Models.ClusterUpdateVersionContent"/> instance for mocking. </returns>
         public static ClusterUpdateVersionContent ClusterUpdateVersionContent(ClusterUpdateVersionSafeguardMode? safeguardMode = default, string targetClusterVersion = default)
         {
-            return new ClusterUpdateVersionContent(targetClusterVersion, default);
+            return new ClusterUpdateVersionContent(safeguardMode, targetClusterVersion, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1812,7 +1841,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="administratorCredentials"/>, <paramref name="rackId"/>, <paramref name="serialNumber"/> or <paramref name="storageApplianceSkuId"/> is null. </exception>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudStorageApplianceData"/> instance for mocking. </returns>
-        public static NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier rackId = default, string storageApplianceSkuId = default, long rackSlot = default, string serialNumber = default, AdministrativeCredentials administratorCredentials = default, NetworkCloudCertificateInfo caCertificate = default, long? capacity = default, long? capacityUsed = default, ResourceIdentifier clusterId = default, StorageApplianceDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<StorageApplianceExpansionShelf> expansionShelves = default, IPAddress managementIPv4Address = default, string manufacturer = default, string model = default, RemoteVendorManagementFeature? remoteVendorManagementFeature = default, RemoteVendorManagementStatus? remoteVendorManagementStatus = default, IEnumerable<SecretRotationStatus> secretRotationStatus = default, string version = default, StorageApplianceProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
+        public static NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AdministrativeCredentials administratorCredentials = default, ResourceIdentifier rackId = default, long rackSlot = default, string serialNumber = default, string storageApplianceSkuId = default, NetworkCloudCertificateInfo caCertificate = default, long? capacity = default, long? capacityUsed = default, ResourceIdentifier clusterId = default, StorageApplianceDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<StorageApplianceExpansionShelf> expansionShelves = default, IPAddress managementIPv4Address = default, string manufacturer = default, string model = default, StorageApplianceMonitoringConfigurationStatus monitoringConfigurationStatus = default, RemoteVendorManagementFeature? remoteVendorManagementFeature = default, RemoteVendorManagementStatus? remoteVendorManagementStatus = default, IEnumerable<SecretRotationStatus> secretRotationStatus = default, string version = default, StorageApplianceProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1825,9 +1854,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 location,
                 storageApplianceSkuId is null ? default : new StorageApplianceProperties(
                     default,
+                    default,
+                    default,
+                    default,
                     storageApplianceSkuId,
-                    default,
-                    default,
                     default,
                     default,
                     default,
@@ -2109,6 +2139,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="sizeInMiB"> The requested storage allocation for the volume in Mebibytes. </param>
         /// <param name="storageApplianceId"> The resource ID of the storage appliance that hosts the volume. </param>
         /// <param name="allocatedInSizeMiB"> The allocated size of the volume in Mebibytes. </param>
+        /// <param name="assignedStorageApplianceId"> The assigned resource ID of the storage appliance that hosts the volume. </param>
         /// <param name="attachedTo"> The list of resource IDs that attach the volume. It may include virtual machines and Hybrid AKS clusters. </param>
         /// <param name="detailedStatus"> The more detailed status of the volume. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
@@ -2117,7 +2148,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudVolumeData"/> instance for mocking. </returns>
-        public static NetworkCloudVolumeData NetworkCloudVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, long sizeInMiB = default, ResourceIdentifier storageApplianceId = default, long? allocatedInSizeMiB = default, IEnumerable<string> attachedTo = default, VolumeDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, string serialNumber = default, VolumeProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
+        public static NetworkCloudVolumeData NetworkCloudVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, long sizeInMiB = default, ResourceIdentifier storageApplianceId = default, long? allocatedInSizeMiB = default, ResourceIdentifier assignedStorageApplianceId = default, IEnumerable<string> attachedTo = default, VolumeDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, string serialNumber = default, VolumeProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2573,6 +2604,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     kubernetesVersion,
                     machineClusterVersion,
                     (machineRoles ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
                     oamIPv4Address,
                     oamIPv6Address,
                     osImage,
@@ -2794,6 +2826,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     clusterManagerId,
                     detailedStatus,
                     detailedStatusMessage,
+                    default,
+                    default,
                     default,
                     manualActionCount,
                     supportExpireOn,
@@ -3133,12 +3167,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                rackId is null && storageApplianceSkuId is null && serialNumber is null && administratorCredentials is null && caCertificate is null && capacity is null && capacityUsed is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && managementIPv4Address is null && manufacturer is null && model is null && remoteVendorManagementFeature is null && remoteVendorManagementStatus is null && secretRotationStatus is null && version is null && provisioningState is null ? default : new StorageApplianceProperties(
+                administratorCredentials is null && rackId is null && serialNumber is null && storageApplianceSkuId is null && caCertificate is null && capacity is null && capacityUsed is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && managementIPv4Address is null && manufacturer is null && model is null && remoteVendorManagementFeature is null && remoteVendorManagementStatus is null && secretRotationStatus is null && version is null && provisioningState is null ? default : new StorageApplianceProperties(
+                    administratorCredentials,
                     rackId,
-                    storageApplianceSkuId,
                     rackSlot,
                     serialNumber,
-                    administratorCredentials,
+                    storageApplianceSkuId,
                     caCertificate,
                     capacity,
                     capacityUsed,
@@ -3149,6 +3183,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     managementIPv4Address,
                     manufacturer,
                     model,
+                    default,
                     remoteVendorManagementFeature,
                     remoteVendorManagementStatus,
                     (secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>()).ToList(),
@@ -3324,6 +3359,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     sizeInMiB,
                     storageApplianceId,
                     allocatedInSizeMiB,
+                    default,
                     (attachedTo ?? new ChangeTrackingList<string>()).ToList(),
                     detailedStatus,
                     detailedStatusMessage,
@@ -3718,6 +3754,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     kubernetesVersion,
                     machineClusterVersion,
                     (machineRoles ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
                     oamIPv4Address,
                     oamIPv6Address,
                     osImage,
@@ -3827,6 +3864,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     detailedStatus,
                     detailedStatusMessage,
                     default,
+                    default,
+                    default,
                     manualActionCount,
                     supportExpireOn,
                     (workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
@@ -3877,12 +3916,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                rackId is null && storageApplianceSkuId is null && serialNumber is null && administratorCredentials is null && capacity is null && capacityUsed is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && managementIPv4Address is null && manufacturer is null && model is null && remoteVendorManagementFeature is null && remoteVendorManagementStatus is null && secretRotationStatus is null && version is null && provisioningState is null ? default : new StorageApplianceProperties(
+                administratorCredentials is null && rackId is null && serialNumber is null && storageApplianceSkuId is null && capacity is null && capacityUsed is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && managementIPv4Address is null && manufacturer is null && model is null && remoteVendorManagementFeature is null && remoteVendorManagementStatus is null && secretRotationStatus is null && version is null && provisioningState is null ? default : new StorageApplianceProperties(
+                    administratorCredentials,
                     rackId,
-                    storageApplianceSkuId,
                     rackSlot,
                     serialNumber,
-                    administratorCredentials,
+                    storageApplianceSkuId,
                     default,
                     capacity,
                     capacityUsed,
@@ -3893,6 +3932,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     managementIPv4Address,
                     manufacturer,
                     model,
+                    default,
                     remoteVendorManagementFeature,
                     remoteVendorManagementStatus,
                     (secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>()).ToList(),
@@ -3982,6 +4022,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     kubernetesVersion,
                     machineClusterVersion,
                     (machineRoles ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
                     oamIPv4Address,
                     oamIPv6Address,
                     osImage,
@@ -4124,6 +4165,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     detailedStatus,
                     detailedStatusMessage,
                     default,
+                    default,
+                    default,
                     manualActionCount,
                     supportExpireOn,
                     (workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
@@ -4235,12 +4278,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                rackId is null && storageApplianceSkuId is null && serialNumber is null && administratorCredentials is null && capacity is null && capacityUsed is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && managementIPv4Address is null && manufacturer is null && model is null && remoteVendorManagementFeature is null && remoteVendorManagementStatus is null && secretRotationStatus is null && version is null && provisioningState is null ? default : new StorageApplianceProperties(
+                administratorCredentials is null && rackId is null && serialNumber is null && storageApplianceSkuId is null && capacity is null && capacityUsed is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && managementIPv4Address is null && manufacturer is null && model is null && remoteVendorManagementFeature is null && remoteVendorManagementStatus is null && secretRotationStatus is null && version is null && provisioningState is null ? default : new StorageApplianceProperties(
+                    administratorCredentials,
                     rackId,
-                    storageApplianceSkuId,
                     rackSlot,
                     serialNumber,
-                    administratorCredentials,
+                    storageApplianceSkuId,
                     default,
                     capacity,
                     capacityUsed,
@@ -4251,6 +4294,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     managementIPv4Address,
                     manufacturer,
                     model,
+                    default,
                     remoteVendorManagementFeature,
                     remoteVendorManagementStatus,
                     (secretRotationStatus ?? new ChangeTrackingList<SecretRotationStatus>()).ToList(),
@@ -4334,6 +4378,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     (hybridAksClustersAssociatedIds ?? new ChangeTrackingList<string>()).ToList(),
                     kubernetesNodeName,
                     kubernetesVersion,
+                    default,
                     default,
                     default,
                     oamIPv4Address,
@@ -4472,6 +4517,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     detailedStatus,
                     detailedStatusMessage,
                     default,
+                    default,
+                    default,
                     manualActionCount,
                     supportExpireOn,
                     (workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
@@ -4517,12 +4564,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                rackId is null && storageApplianceSkuId is null && serialNumber is null && administratorCredentials is null && capacity is null && capacityUsed is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && managementIPv4Address is null && remoteVendorManagementFeature is null && remoteVendorManagementStatus is null && provisioningState is null ? default : new StorageApplianceProperties(
+                administratorCredentials is null && rackId is null && serialNumber is null && storageApplianceSkuId is null && capacity is null && capacityUsed is null && clusterId is null && detailedStatus is null && detailedStatusMessage is null && managementIPv4Address is null && remoteVendorManagementFeature is null && remoteVendorManagementStatus is null && provisioningState is null ? default : new StorageApplianceProperties(
+                    administratorCredentials,
                     rackId,
-                    storageApplianceSkuId,
                     rackSlot,
                     serialNumber,
-                    administratorCredentials,
+                    storageApplianceSkuId,
                     default,
                     capacity,
                     capacityUsed,
@@ -4531,6 +4578,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     detailedStatusMessage,
                     default,
                     managementIPv4Address,
+                    default,
                     default,
                     default,
                     remoteVendorManagementFeature,
