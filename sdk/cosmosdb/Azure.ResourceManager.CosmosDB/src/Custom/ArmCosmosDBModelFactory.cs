@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                properties: new FleetResourceProperties { ProvisioningState = provisioningState });
+                properties: new FleetResourceProperties { ProvisioningState = provisioningState },
+                additionalBinaryDataProperties: null);
         }
     }
 }
