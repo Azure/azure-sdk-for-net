@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _bmcKeySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, NetworkCloudBmcKeySetData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudBmcKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBmcKeySetResource>(
-                    new NetworkCloudBmcKeySetOperationSource(Client),
+                    new NetworkCloudBmcKeySetResourceOperationSource(Client),
                     _bmcKeySetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _bmcKeySetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, bmcKeySetName, NetworkCloudBmcKeySetData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudBmcKeySetResource> operation = new NetworkCloudArmOperation<NetworkCloudBmcKeySetResource>(
-                    new NetworkCloudBmcKeySetOperationSource(Client),
+                    new NetworkCloudBmcKeySetResourceOperationSource(Client),
                     _bmcKeySetsClientDiagnostics,
                     Pipeline,
                     message.Request,

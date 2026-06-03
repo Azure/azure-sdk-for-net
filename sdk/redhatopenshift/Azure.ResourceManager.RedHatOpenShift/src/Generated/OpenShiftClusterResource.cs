@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 HttpMessage message = _openShiftClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OpenShiftClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedHatOpenShiftArmOperation<OpenShiftClusterResource> operation = new RedHatOpenShiftArmOperation<OpenShiftClusterResource>(
-                    new OpenShiftClusterOperationSource(Client),
+                    new OpenShiftClusterResourceOperationSource(Client),
                     _openShiftClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.RedHatOpenShift
                 HttpMessage message = _openShiftClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OpenShiftClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedHatOpenShiftArmOperation<OpenShiftClusterResource> operation = new RedHatOpenShiftArmOperation<OpenShiftClusterResource>(
-                    new OpenShiftClusterOperationSource(Client),
+                    new OpenShiftClusterResourceOperationSource(Client),
                     _openShiftClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

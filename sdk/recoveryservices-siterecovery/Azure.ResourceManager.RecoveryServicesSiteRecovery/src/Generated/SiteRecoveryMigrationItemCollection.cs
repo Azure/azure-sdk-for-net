@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationMigrationItemsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, SiteRecoveryMigrationItemCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
-                    new SiteRecoveryMigrationItemOperationSource(Client),
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
                     _replicationMigrationItemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 HttpMessage message = _replicationMigrationItemsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, migrationItemName, SiteRecoveryMigrationItemCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryMigrationItemResource>(
-                    new SiteRecoveryMigrationItemOperationSource(Client),
+                    new SiteRecoveryMigrationItemResourceOperationSource(Client),
                     _replicationMigrationItemsClientDiagnostics,
                     Pipeline,
                     message.Request,
