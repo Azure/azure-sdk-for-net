@@ -22,7 +22,6 @@ Azure.AI.AgentServer.Responses
 Azure.AI.AnomalyDetector
 Azure.AI.ContentSafety
 Azure.AI.DocumentIntelligence
-Azure.AI.Extensions.OpenAI
 Azure.AI.FormRecognizer
 Azure.AI.Inference
 Azure.AI.Language.Conversations
