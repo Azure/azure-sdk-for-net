@@ -18,11 +18,14 @@ namespace Azure.ResourceManager.Billing
     // renamed scope-qualified names (Get*ByBillingAccount*); these shims forward
     // the aggregate to the generated method so existing call sites keep working.
     //
-    // Also: workaround for MPG generator bugs that emit invalid
+    // Workaround for MPG generator bugs that emit invalid request-content calls
     //   IEnumerable<T>.ToRequestContent(parameters)  — https://github.com/Azure/azure-sdk-for-net/issues/57716
     //   DateTimeOffset.ToRequestContent(parameters)  — https://github.com/Azure/azure-sdk-for-net/issues/59539
     // for body parameter types that are not models. The [CodeGenSuppress]-ed methods
     // below are replaced by hand-written equivalents that call BillingRequestContentHelper.
+    // The Download replacement is also renamed to "...ByBillingAccountInvoice" (note the
+    // trailing "Invoice") to match the GA SDK 1.2.2 method name; the new generator emits
+    // "DownloadDocumentsByBillingAccount" without that suffix.
     // TODO: remove the [CodeGenSuppress] attributes + replacement methods once the
     //       upstream generator fixes ship and the next regen no longer emits the broken calls.
     [CodeGenSuppress("AddPaymentTermsAsync", typeof(WaitUntil), typeof(IEnumerable<BillingPaymentTerm>), typeof(CancellationToken))]

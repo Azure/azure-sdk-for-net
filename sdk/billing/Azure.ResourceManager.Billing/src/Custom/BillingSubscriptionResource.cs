@@ -9,11 +9,16 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    // Back-compat overloads for GA 1.2.2 callers that pass GA Content payloads.
-    // The new MPG generator renamed Merge/Split/Cancel payloads to *Request
-    // (with different property types in some cases, e.g. TermDuration: TimeSpan? -> string,
-    // CustomerId: ResourceIdentifier -> string). These shims preserve the GA shape and
-    // translate the values to the generated Request before forwarding to the new overload.
+    // Back-compat overloads for GA 1.2.2 callers. Three distinct root causes:
+    //   - Merge/Split/Cancel: the new MPG generator renamed payloads to *Request (with
+    //     different property types in some cases, e.g. TermDuration TimeSpan?->string,
+    //     CustomerId ResourceIdentifier->string). Shims translate GA Content into the
+    //     generated Request before forwarding to the new overload.
+    //   - Update(BillingSubscriptionData): the new generator emits Update(BillingSubscriptionPatch)
+    //     to reflect the PATCH HTTP verb. GA exposed Update(Data); shim transfers Properties +
+    //     Tags from Data to Patch then forwards.
+    //   - Get(CancellationToken): the new generator added an optional `expand` parameter; explicit
+    //     parameterless overload required for binary/source compat with GA call sites.
     public partial class BillingSubscriptionResource
     {
         /// <summary> Back-compat overload for GA 1.2.2 callers that pass <see cref="BillingSubscriptionMergeContent"/>. </summary>
@@ -96,7 +101,7 @@ namespace Azure.ResourceManager.Billing
             return Cancel(waitUntil, request, cancellationToken);
         }
 
-        /// <summary> Back-compat parameterless Get for GA 1.2.2 callers. New MPG generator added optional `expand`; explicit overload required for source compat. </summary>
+        /// <summary> Back-compat parameterless Get for GA 1.2.2 callers. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<BillingSubscriptionResource>> GetAsync(CancellationToken cancellationToken)
         {
@@ -110,12 +115,7 @@ namespace Azure.ResourceManager.Billing
             return Get(expand: default, cancellationToken: cancellationToken);
         }
 
-        /// <summary>
-        /// Back-compat Update overload for GA 1.2.2 callers that pass <see cref="BillingSubscriptionData"/>.
-        /// The new MPG generator emits Update with a <see cref="BillingSubscriptionPatch"/> parameter to
-        /// reflect the PATCH HTTP verb. GA exposed a Data-based overload; we forward to the Patch
-        /// overload by transferring the inner Properties (same internal type) and Tags.
-        /// </summary>
+        /// <summary> Back-compat Update overload for GA 1.2.2 callers that pass <see cref="BillingSubscriptionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<BillingSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, BillingSubscriptionData data, CancellationToken cancellationToken)
         {
