@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Avatar config types. </summary>
-    public readonly partial struct AvatarConfigTypes : IEquatable<AvatarConfigTypes>
+    public readonly partial struct AvatarConfigKind : IEquatable<AvatarConfigKind>
     {
         private readonly string _value;
         /// <summary> Video avatar. </summary>
@@ -19,10 +19,10 @@ namespace Azure.AI.VoiceLive
         /// <summary> Photo avatar. </summary>
         private const string PhotoAvatarValue = "photo-avatar";
 
-        /// <summary> Initializes a new instance of <see cref="AvatarConfigTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvatarConfigKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AvatarConfigTypes(string value)
+        public AvatarConfigKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,35 +30,35 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Video avatar. </summary>
-        public static AvatarConfigTypes VideoAvatar { get; } = new AvatarConfigTypes(VideoAvatarValue);
+        public static AvatarConfigKind VideoAvatar { get; } = new AvatarConfigKind(VideoAvatarValue);
 
         /// <summary> Photo avatar. </summary>
-        public static AvatarConfigTypes PhotoAvatar { get; } = new AvatarConfigTypes(PhotoAvatarValue);
+        public static AvatarConfigKind PhotoAvatar { get; } = new AvatarConfigKind(PhotoAvatarValue);
 
-        /// <summary> Determines if two <see cref="AvatarConfigTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AvatarConfigKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AvatarConfigTypes left, AvatarConfigTypes right) => left.Equals(right);
+        public static bool operator ==(AvatarConfigKind left, AvatarConfigKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AvatarConfigTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AvatarConfigKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AvatarConfigTypes left, AvatarConfigTypes right) => !left.Equals(right);
+        public static bool operator !=(AvatarConfigKind left, AvatarConfigKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AvatarConfigTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AvatarConfigKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvatarConfigTypes(string value) => new AvatarConfigTypes(value);
+        public static implicit operator AvatarConfigKind(string value) => new AvatarConfigKind(value);
 
-        /// <summary> Converts a string to a <see cref="AvatarConfigTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AvatarConfigKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AvatarConfigTypes?(string value) => value == null ? null : new AvatarConfigTypes(value);
+        public static implicit operator AvatarConfigKind?(string value) => value == null ? null : new AvatarConfigKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AvatarConfigTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is AvatarConfigKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AvatarConfigTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AvatarConfigKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

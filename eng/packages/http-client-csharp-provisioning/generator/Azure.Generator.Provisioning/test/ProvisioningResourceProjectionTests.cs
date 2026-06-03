@@ -164,7 +164,7 @@ namespace Azure.Generator.Provisioning.Tests
                 rbacRoles ?? [new ArmResourceRbacRole("FirstRole", "11111111-1111-1111-1111-111111111111")]);
         }
 
-        private static InputModelType CreateModel(string name)
+        private static InputModelType CreateModel(string name, IReadOnlyList<InputModelProperty>? properties = null)
             => new(
                 name,
                 "Sample.Models",
@@ -174,7 +174,7 @@ namespace Azure.Generator.Provisioning.Tests
                 string.Empty,
                 "Test model.",
                 InputModelTypeUsage.Input | InputModelTypeUsage.Output,
-                [],
+                properties ?? [],
                 null,
                 [],
                 null,
