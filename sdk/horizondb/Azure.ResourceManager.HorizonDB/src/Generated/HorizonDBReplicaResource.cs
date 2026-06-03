@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HorizonDB
                 HttpMessage message = _horizonDBReplicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDBReplicaPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBReplicaResource> operation = new HorizonDBArmOperation<HorizonDBReplicaResource>(
-                    new HorizonDBReplicaOperationSource(Client),
+                    new HorizonDBReplicaResourceOperationSource(Client),
                     _horizonDBReplicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.HorizonDB
                 HttpMessage message = _horizonDBReplicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, HorizonDBReplicaPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBReplicaResource> operation = new HorizonDBArmOperation<HorizonDBReplicaResource>(
-                    new HorizonDBReplicaOperationSource(Client),
+                    new HorizonDBReplicaResourceOperationSource(Client),
                     _horizonDBReplicasClientDiagnostics,
                     Pipeline,
                     message.Request,

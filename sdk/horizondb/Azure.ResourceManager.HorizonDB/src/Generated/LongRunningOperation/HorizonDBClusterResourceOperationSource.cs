@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HorizonDB
 {
     /// <summary></summary>
-    internal partial class HorizonDBParameterGroupOperationSource : IOperationSource<HorizonDBParameterGroupResource>
+    internal partial class HorizonDBClusterResourceOperationSource : IOperationSource<HorizonDBClusterResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal HorizonDBParameterGroupOperationSource(ArmClient client)
+        internal HorizonDBClusterResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        HorizonDBParameterGroupResource IOperationSource<HorizonDBParameterGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HorizonDBClusterResource IOperationSource<HorizonDBClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HorizonDBParameterGroupData data = HorizonDBParameterGroupData.DeserializeHorizonDBParameterGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HorizonDBParameterGroupResource(_client, data);
+            HorizonDBClusterData data = HorizonDBClusterData.DeserializeHorizonDBClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HorizonDBClusterResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<HorizonDBParameterGroupResource> IOperationSource<HorizonDBParameterGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HorizonDBClusterResource> IOperationSource<HorizonDBClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HorizonDBParameterGroupData data = HorizonDBParameterGroupData.DeserializeHorizonDBParameterGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HorizonDBParameterGroupResource(_client, data);
+            HorizonDBClusterData data = HorizonDBClusterData.DeserializeHorizonDBClusterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HorizonDBClusterResource(_client, data);
         }
     }
 }
