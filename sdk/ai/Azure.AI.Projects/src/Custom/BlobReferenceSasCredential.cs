@@ -14,6 +14,7 @@ namespace Azure.AI.Projects
     [CodeGenType("BlobReferenceSasCredential")]
     public partial class BlobReferenceSasCredential
     {
+        /// <summary> The SAS URI used to authenticate access to the referenced blob. </summary>
         public Uri SasUri { get; }
     }
 }

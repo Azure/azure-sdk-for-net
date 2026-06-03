@@ -37,23 +37,23 @@ namespace Azure.ResourceManager.Qumulo.Models
         public static QumuloFileSystemResourceData QumuloFileSystemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MarketplaceDetails marketplaceDetails = null, QumuloProvisioningState? provisioningState = null, StorageSku storageSku = default, string userDetailsEmail = null, string delegatedSubnetId = null, Uri clusterLoginUri = null, IEnumerable<IPAddress> privateIPs = null, string adminPassword = null, int initialCapacity = default, string availabilityZone = null)
         {
             return QumuloFileSystemResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                marketplaceDetails,
-                provisioningState != null ? new QumuloArmProvisioningState(provisioningState.Value.ToSerialString()) : null,
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                marketplaceDetails: marketplaceDetails,
+                armProvisioningState: provisioningState != null ? new QumuloArmProvisioningState(provisioningState.Value.ToSerialString()) : null,
                 storageSkuName: storageSku.ToSerialString(),
-                delegatedSubnetId,
-                clusterLoginUri,
-                privateIPs,
-                adminPassword,
-                availabilityZone,
-                userDetailsEmail,
-                identity,
-                initialCapacity);
+                delegatedSubnetId: delegatedSubnetId,
+                clusterLoginUri: clusterLoginUri,
+                privateIPs: privateIPs,
+                adminPassword: adminPassword,
+                availabilityZone: availabilityZone,
+                userDetailsEmail: userDetailsEmail,
+                identity: identity,
+                initialCapacity: initialCapacity);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -77,23 +77,23 @@ namespace Azure.ResourceManager.Qumulo.Models
         public static QumuloFileSystemResourceData QumuloFileSystemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MarketplaceDetails marketplaceDetails, QumuloArmProvisioningState? armProvisioningState, string storageSkuName, string userDetailsEmail, string delegatedSubnetId = default, Uri clusterLoginUri = default, IEnumerable<IPAddress> privateIPs = default, string adminPassword = default, string availabilityZone = default, ManagedServiceIdentity identity = default, int initialCapacity = default)
         {
             return QumuloFileSystemResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                marketplaceDetails,
-                armProvisioningState,
-                storageSkuName,
-                delegatedSubnetId,
-                clusterLoginUri,
-                privateIPs,
-                adminPassword,
-                availabilityZone,
-                userDetailsEmail,
-                identity,
-                initialCapacity);
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                marketplaceDetails: marketplaceDetails,
+                armProvisioningState: armProvisioningState,
+                storageSkuName: storageSkuName,
+                delegatedSubnetId: delegatedSubnetId,
+                clusterLoginUri: clusterLoginUri,
+                privateIPs: privateIPs,
+                adminPassword: adminPassword,
+                availabilityZone: availabilityZone,
+                userDetailsEmail: userDetailsEmail,
+                identity: identity,
+                initialCapacity: initialCapacity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceDetails"/>. </summary>
