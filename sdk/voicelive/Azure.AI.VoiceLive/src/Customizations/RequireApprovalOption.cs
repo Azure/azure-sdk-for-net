@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// The approval type applied to all tools (e.g. "never" or "always").
         /// </summary>
-        public MCPApprovalType? ApprovalType { get; }
+        public McpApprovalKind? ApprovalType { get; }
 
         /// <summary>
         /// List of tool names that always require approval.
@@ -33,7 +33,7 @@ namespace Azure.AI.VoiceLive
         /// Creates an option that applies a single approval type to all tools.
         /// </summary>
         /// <param name="approvalType">The approval type ("never" or "always").</param>
-        public RequireApprovalOption(MCPApprovalType approvalType)
+        public RequireApprovalOption(McpApprovalKind approvalType)
         {
             ApprovalType = approvalType;
         }
@@ -52,10 +52,10 @@ namespace Azure.AI.VoiceLive
         internal RequireApprovalOption() { }
 
         /// <summary>
-        /// Implicitly converts an <see cref="MCPApprovalType"/> to a <see cref="RequireApprovalOption"/>.
+        /// Implicitly converts an <see cref="McpApprovalKind"/> to a <see cref="RequireApprovalOption"/>.
         /// </summary>
         /// <param name="approvalType">The approval type.</param>
-        public static implicit operator RequireApprovalOption(MCPApprovalType approvalType)
+        public static implicit operator RequireApprovalOption(McpApprovalKind approvalType)
             => new(approvalType);
     }
 }

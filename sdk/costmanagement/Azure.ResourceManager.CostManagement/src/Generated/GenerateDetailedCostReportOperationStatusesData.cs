@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the usage file generated. </param>
         /// <param name="status"> The status of the long running operation. </param>
         /// <param name="startTime"> The startTime of the operation. </param>
         /// <param name="endTime"> The endTime of the operation. </param>
         /// <param name="error"> The details of the error. </param>
-        internal GenerateDetailedCostReportOperationStatusesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DownloadURL properties, ReportOperationStatus status, string startTime, string endTime, ExportRunErrorDetails error) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GenerateDetailedCostReportOperationStatusesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DownloadURL properties, ReportOperationStatus status, string startTime, string endTime, ExportRunErrorDetails error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Status = status;
             StartTime = startTime;
             EndTime = endTime;
             Error = error;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the usage file generated. </summary>
