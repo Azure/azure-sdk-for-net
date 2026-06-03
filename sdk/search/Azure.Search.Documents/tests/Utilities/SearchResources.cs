@@ -474,7 +474,7 @@ namespace Azure.Search.Documents.Tests
                 SearchIndexClient client = GetIndexClient();
                 try
                 {
-                    await client.DeleteIndexAsync(IndexName, cancellationToken: CancellationToken.None);
+                    await client.DeleteIndexAsync(IndexName);
                 }
                 catch (RequestFailedException ex) when (ex.Status == 404)
                 {

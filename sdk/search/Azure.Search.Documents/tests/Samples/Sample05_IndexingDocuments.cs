@@ -152,7 +152,7 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 if (searchClient != null)
                 {
-                    await resources.GetIndexClient().DeleteIndexAsync(searchClient.IndexName, cancellationToken: CancellationToken.None);
+                    await resources.GetIndexClient().DeleteIndexAsync(searchClient.IndexName);
                 }
             }
         }
@@ -193,7 +193,7 @@ namespace Azure.Search.Documents.Tests.Samples
             {
                 if (searchClient != null)
                 {
-                    await resources.GetIndexClient().DeleteIndexAsync(searchClient.IndexName, cancellationToken: CancellationToken.None);
+                    await resources.GetIndexClient().DeleteIndexAsync(searchClient.IndexName);
                 }
             }
         }

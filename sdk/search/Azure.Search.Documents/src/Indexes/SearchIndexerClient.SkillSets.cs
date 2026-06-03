@@ -88,9 +88,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to disambiguate from (string, MatchConditions, CancellationToken) overload
         public virtual Response DeleteSkillset(
             string skillsetName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
+#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(skillsetName, nameof(skillsetName));
 
@@ -106,9 +108,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="skillsetName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         [ForwardsClientCalls]
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to disambiguate from (string, MatchConditions, CancellationToken) overload
         public virtual async Task<Response> DeleteSkillsetAsync(
             string skillsetName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
+#pragma warning restore AZC0002
         {
             Argument.AssertNotNull(skillsetName, nameof(skillsetName));
 

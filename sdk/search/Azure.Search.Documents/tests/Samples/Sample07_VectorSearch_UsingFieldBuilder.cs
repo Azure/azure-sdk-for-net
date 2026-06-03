@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await resources.GetIndexClient().DeleteIndexAsync(resources.IndexName, cancellationToken: CancellationToken.None);
+                await resources.GetIndexClient().DeleteIndexAsync(resources.IndexName);
             }
         }
 

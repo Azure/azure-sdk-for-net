@@ -344,13 +344,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((string)null, CancellationToken.None));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((string)null));
             Assert.AreEqual("indexName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteIndex((SearchIndex)null));
             Assert.AreEqual("index", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((string)null, CancellationToken.None));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((string)null));
             Assert.AreEqual("indexName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteIndexAsync((SearchIndex)null));
@@ -406,13 +406,13 @@ namespace Azure.Search.Documents.Tests
             var endpoint = new Uri($"https://my-svc-name.search.windows.net");
             var service = new SearchIndexClient(endpoint, new AzureKeyCredential("fake"));
 
-            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((string)null, CancellationToken.None));
+            ArgumentException ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((string)null));
             Assert.AreEqual("synonymMapName", ex.ParamName);
 
             ex = Assert.Throws<ArgumentNullException>(() => service.DeleteSynonymMap((SynonymMap)null));
             Assert.AreEqual("synonymMap", ex.ParamName);
 
-            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((string)null, CancellationToken.None));
+            ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((string)null));
             Assert.AreEqual("synonymMapName", ex.ParamName);
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(() => service.DeleteSynonymMapAsync((SynonymMap)null));
