@@ -25,7 +25,7 @@ To register an external key, build an `ExternalKey` with the identifier of the k
 string externalKeyName = $"ExternalKey-{Guid.NewGuid()}";
 ExternalKey externalKey = new ExternalKey(externalId);
 
-KeyVaultKey createdKey = client.CreateExternalKey(externalKeyName, externalKey);
+KeyVaultKey createdKey = client.CreateExternalKey(new CreateExternalKeyOptions(externalKeyName, externalKey));
 Debug.WriteLine($"External key created with name {createdKey.Name} referencing external id {createdKey.Properties.ExternalKey.Id}");
 ```
 
@@ -60,18 +60,6 @@ while (!operation.HasCompleted)
 }
 
 client.PurgeDeletedKey(externalKeyName);
-```
-
-## Purging a deleted external key asynchronously
-
-When writing asynchronous code, you can instead await `WaitForCompletionAsync` to wait indefinitely.
-You can optionally pass in a `CancellationToken` to cancel waiting after a certain period of time or any other trigger you require.
-
-```C# Snippet:KeysSample9PurgeExternalKeyAsync
-// You only need to wait for completion if you want to purge or recover the key.
-await operation.WaitForCompletionAsync();
-
-await client.PurgeDeletedKeyAsync(externalKeyName);
 ```
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

@@ -132,31 +132,28 @@ namespace Azure.Security.KeyVault.Keys
             }
         }
 
-        internal KeyRequestParameters(ExternalKey externalKey, CreateKeyOptions options)
+        internal KeyRequestParameters(CreateExternalKeyOptions externalKeyOptions)
         {
-            _attributes.ExternalKey = externalKey;
+            _attributes.ExternalKey = externalKeyOptions.ExternalKey;
 
-            if (options != null)
+            if (externalKeyOptions.Enabled.HasValue)
             {
-                if (options.Enabled.HasValue)
-                {
-                    Enabled = options.Enabled.Value;
-                }
-                if (options.ExpiresOn.HasValue)
-                {
-                    Expires = options.ExpiresOn.Value;
-                }
-                if (options.NotBefore.HasValue)
-                {
-                    NotBefore = options.NotBefore.Value;
-                }
-                if (options.Tags != null && options.Tags.Count > 0)
-                {
-                    Tags = new Dictionary<string, string>(options.Tags);
-                }
-
-                ReleasePolicy = options.ReleasePolicy;
+                Enabled = externalKeyOptions.Enabled.Value;
             }
+            if (externalKeyOptions.ExpiresOn.HasValue)
+            {
+                Expires = externalKeyOptions.ExpiresOn.Value;
+            }
+            if (externalKeyOptions.NotBefore.HasValue)
+            {
+                NotBefore = externalKeyOptions.NotBefore.Value;
+            }
+            if (externalKeyOptions.Tags != null && externalKeyOptions.Tags.Count > 0)
+            {
+                Tags = new Dictionary<string, string>(externalKeyOptions.Tags);
+            }
+
+            ReleasePolicy = externalKeyOptions.ReleasePolicy;
         }
 
         void IJsonSerializable.WriteProperties(Utf8JsonWriter json)

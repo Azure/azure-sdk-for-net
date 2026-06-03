@@ -173,7 +173,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             string keyName = Recording.GenerateId();
             ExternalKey externalKey = new ExternalKey(externalId);
 
-            KeyVaultKey created = await Client.CreateExternalKeyAsync(keyName, externalKey);
+            KeyVaultKey created = await Client.CreateExternalKeyAsync(new CreateExternalKeyOptions(keyName, externalKey));
             RegisterForCleanup(created.Name);
 
             Assert.AreEqual(keyName, created.Name);
@@ -184,6 +184,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
             KeyVaultKey fetched = await Client.GetKeyAsync(keyName);
             Assert.IsNotNull(fetched.Properties.ExternalKey);
             Assert.AreEqual(externalId, fetched.Properties.ExternalKey.Id);
+
+            // The service must report a kty for the registered external key.
+            Assert.That(fetched.KeyType.ToString(), Is.Not.Null.And.Not.Empty);
+
+            DeleteKeyOperation deleteOperation = await Client.StartDeleteKeyAsync(keyName);
+            DeletedKey deleted = deleteOperation.Value;
+
+            Assert.AreEqual(keyName, deleted.Name);
+            Assert.IsNotNull(deleted.Properties.ExternalKey);
         }
     }
 }

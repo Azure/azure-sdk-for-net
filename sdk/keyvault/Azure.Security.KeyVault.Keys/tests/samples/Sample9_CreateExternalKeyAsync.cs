@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             string externalKeyName = $"ExternalKey-{Guid.NewGuid()}";
             ExternalKey externalKey = new ExternalKey(externalId);
 
-            KeyVaultKey createdKey = await client.CreateExternalKeyAsync(externalKeyName, externalKey);
+            KeyVaultKey createdKey = await client.CreateExternalKeyAsync(new CreateExternalKeyOptions(externalKeyName, externalKey));
             Debug.WriteLine($"External key created with name {createdKey.Name} referencing external id {createdKey.Properties.ExternalKey.Id}");
 
             // Get the external key back from Managed HSM and confirm the external_key reference round-trips.
@@ -50,12 +50,10 @@ namespace Azure.Security.KeyVault.Keys.Samples
             // The external key reference is no longer needed; delete it from Managed HSM.
             DeleteKeyOperation operation = await client.StartDeleteKeyAsync(externalKeyName);
 
-            #region Snippet:KeysSample9PurgeExternalKeyAsync
             // You only need to wait for completion if you want to purge or recover the key.
             await operation.WaitForCompletionAsync();
 
             await client.PurgeDeletedKeyAsync(externalKeyName);
-            #endregion
         }
     }
 }

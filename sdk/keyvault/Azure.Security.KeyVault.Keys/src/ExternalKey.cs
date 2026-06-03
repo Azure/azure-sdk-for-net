@@ -7,7 +7,7 @@ namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
     /// A reference to a key whose material is held in an external HSM, used with
-    /// <see cref="KeyClient.CreateExternalKey(string, ExternalKey, CreateKeyOptions, System.Threading.CancellationToken)"/>
+    /// <see cref="KeyClient.CreateExternalKey(CreateExternalKeyOptions, System.Threading.CancellationToken)"/>
     /// (and its async equivalent) to register a Managed HSM key that points at material managed by an external HSM.
     /// Only available with service version <c>2026-01-01-preview</c> and newer, and only supported on Managed HSM.
     /// </summary>

@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
             string externalKeyName = $"ExternalKey-{Guid.NewGuid()}";
             ExternalKey externalKey = new ExternalKey(externalId);
 
-            KeyVaultKey createdKey = client.CreateExternalKey(externalKeyName, externalKey);
+            KeyVaultKey createdKey = client.CreateExternalKey(new CreateExternalKeyOptions(externalKeyName, externalKey));
             Debug.WriteLine($"External key created with name {createdKey.Name} referencing external id {createdKey.Properties.ExternalKey.Id}");
             #endregion
 
