@@ -56,6 +56,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private readonly ParameterContextRegistry _parameterMappings;
 
+        private bool IsHeadAsBooleanOperation => _originalBodyType?.Equals(typeof(bool)) == true
+            && _serviceMethod.Operation.HttpMethod.Equals("HEAD", StringComparison.OrdinalIgnoreCase);
+
         /// <summary>
         /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client
         /// </summary>
@@ -301,6 +304,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
         {
+            if (IsHeadAsBooleanOperation)
+            {
+                return ResourceMethodSnippets.CreateNonGenericResponsePipelineProcessing(
+                    messageVariable,
+                    contextVariable,
+                    _isAsync,
+                    out responseVariable);
+            }
+
             if (_originalBodyType != null && !IsLongRunningOperation)
             {
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
@@ -524,6 +536,16 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         // TODO: re-examine if this method need to be virtual or not after tags related method providers are implmented.
         protected virtual IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ScopedApi<Response> responseVariable, MethodSignature signature)
         {
+            if (IsHeadAsBooleanOperation)
+            {
+                return [
+                    Return(
+                        ResponseSnippets.FromValue(
+                            responseVariable.Property(nameof(Response.Status)).Equal(Literal(200)),
+                            responseVariable))
+                ];
+            }
+
             var nullCheckStatement = new IfStatement(
                 responseVariable.Value().Equal(Null))
             {
@@ -535,7 +557,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             // if the return type is Response with no content, no need to check null.
             List<MethodBodyStatement> statements =
-                CheckIfReturnTypeIsResponseWithNoContent()
+                CheckIfReturnTypeIsResponseWithNoContent() || CheckIfReturnBodyTypeIsNonNullableValueType()
                 ? []
                 : [nullCheckStatement];
 
@@ -564,6 +586,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 var returnType = signature.ReturnType;
                 return returnType != null && (returnType.Equals(typeof(Response)) || returnType.Equals(typeof(Task<Response>)));
             }
+
+            bool CheckIfReturnBodyTypeIsNonNullableValueType()
+                => _returnBodyType is { IsValueType: true, IsNullable: false };
         }
     }
 }
