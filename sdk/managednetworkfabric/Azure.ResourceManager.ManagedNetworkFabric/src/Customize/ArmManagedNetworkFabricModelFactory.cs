@@ -297,7 +297,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags,
                 location,
                 new NetworkFabricControllerProperties(
@@ -316,7 +315,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     new LastOperationProperties(lastOperationDetails, null),
                     provisioningState,
                     null),
-                identity);
+                identity,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TerminalServerConfiguration"/>. </summary>
@@ -363,9 +363,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 new NetworkInterfaceProperties(annotation, null, physicalIdentifier, connectedTo, interfaceType, ipv4Address, ipv6Address, default, default, default, default, provisioningState, administrativeState, default),
-                identity: default);
+                identity: default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricData"/>. </summary>
@@ -394,10 +394,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                new InternetGatewayRuleProperties(annotation, null, ruleProperties, default, provisioningState, (internetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>()).Select(id => id?.ToString()).ToList()));
+                new InternetGatewayRuleProperties(annotation, null, ruleProperties, default, provisioningState, (internetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>()).Select(id => id?.ToString()).ToList()),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricL2IsolationDomainData"/>. </summary>
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 new L2IsolationDomainProperties(annotation, null, networkFabricId, vlanId, mtu, default, default, default, configurationState, provisioningState, administrativeState),
-                identity: default);
+                identity: default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkRackData"/>. </summary>
@@ -425,10 +425,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                new NetworkRackProperties(annotation, null, networkRackType, networkFabricId, (networkDevices ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default, provisioningState, default));
+                new NetworkRackProperties(annotation, null, networkRackType, networkFabricId, (networkDevices ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default, provisioningState, default),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapData"/>. </summary>
