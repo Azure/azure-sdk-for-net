@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Astro.Models
     public static partial class ArmAstroModelFactory
     {
 
-        /// <summary> Organization Resource by Astronomer. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -38,14 +37,13 @@ namespace Azure.ResourceManager.Astro.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
+                identity,
+                default);
         }
 
-        /// <summary> Properties specific to Data Organization resource. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -53,10 +51,18 @@ namespace Azure.ResourceManager.Astro.Models
         /// <returns> A new <see cref="Models.AstroOrganizationProperties"/> instance for mocking. </returns>
         public static AstroOrganizationProperties AstroOrganizationProperties(AstroMarketplaceDetails marketplace = default, AstroUserDetails user = default, AstroResourceProvisioningState? provisioningState = default, AstroPartnerOrganizationProperties partnerOrganizationProperties = default)
         {
-            return new AstroOrganizationProperties(marketplace, user, provisioningState, partnerOrganizationProperties, additionalBinaryDataProperties: null);
+            return new AstroOrganizationProperties(marketplace, user, provisioningState, partnerOrganizationProperties, default);
         }
 
-        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
+        /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
+        /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
+        /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
+        /// <returns> A new <see cref="Models.AstroMarketplaceDetails"/> instance for mocking. </returns>
+        public static AstroMarketplaceDetails AstroMarketplaceDetails(string subscriptionId = default, MarketplaceSubscriptionStatus? subscriptionStatus = default, AstroOfferDetails offerDetails = default)
+        {
+            return new AstroMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, default);
+        }
+
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
         /// <param name="offerId"> Offer Id for the marketplace offer. </param>
         /// <param name="planId"> Plan Id for the marketplace offer. </param>
@@ -77,10 +83,43 @@ namespace Azure.ResourceManager.Astro.Models
                 termId,
                 renewalMode,
                 endOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Properties specific to Single Sign On Resource. </summary>
+        /// <param name="firstName"> First name of the user. </param>
+        /// <param name="lastName"> Last name of the user. </param>
+        /// <param name="emailAddress"> Email address of the user. </param>
+        /// <param name="upn"> User's principal name. </param>
+        /// <param name="phoneNumber"> User's phone number. </param>
+        /// <returns> A new <see cref="Models.AstroUserDetails"/> instance for mocking. </returns>
+        public static AstroUserDetails AstroUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
+        {
+            return new AstroUserDetails(
+                firstName,
+                lastName,
+                emailAddress,
+                upn,
+                phoneNumber,
+                default);
+        }
+
+        /// <param name="organizationId"> Organization Id in partner's system. </param>
+        /// <param name="workspaceId"> Workspace Id in partner's system. </param>
+        /// <param name="organizationName"> Organization name in partner's system. </param>
+        /// <param name="workspaceName"> Workspace name in partner's system. </param>
+        /// <param name="singleSignOnProperties"> Single Sign On properties for the organization. </param>
+        /// <returns> A new <see cref="Models.AstroPartnerOrganizationProperties"/> instance for mocking. </returns>
+        public static AstroPartnerOrganizationProperties AstroPartnerOrganizationProperties(string organizationId = default, string workspaceId = default, string organizationName = default, string workspaceName = default, AstroSingleSignOnProperties singleSignOnProperties = default)
+        {
+            return new AstroPartnerOrganizationProperties(
+                organizationId,
+                workspaceId,
+                organizationName,
+                workspaceName,
+                singleSignOnProperties,
+                default);
+        }
+
         /// <param name="singleSignOnState"> State of the Single Sign On for the organization. </param>
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
         /// <param name="singleSignOnUri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
@@ -95,12 +134,11 @@ namespace Azure.ResourceManager.Astro.Models
                 singleSignOnState,
                 enterpriseAppId,
                 singleSignOnUri,
-                aadDomains.ToList(),
+                (aadDomains ?? new ChangeTrackingList<string>()).ToList(),
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The type used for update operations of the OrganizationResource. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -109,7 +147,16 @@ namespace Azure.ResourceManager.Astro.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AstroOrganizationPatch(identity, tags, properties, additionalBinaryDataProperties: null);
+            return new AstroOrganizationPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <param name="marketplace"> Marketplace details of the resource. </param>
+        /// <param name="user"> Details of the user. </param>
+        /// <param name="partnerOrganizationProperties"> Organization properties. </param>
+        /// <returns> A new <see cref="Models.AstroOrganizationUpdateProperties"/> instance for mocking. </returns>
+        public static AstroOrganizationUpdateProperties AstroOrganizationUpdateProperties(AstroMarketplaceDetails marketplace = default, AstroUserDetails user = default, AstroPartnerOrganizationProperties partnerOrganizationProperties = default)
+        {
+            return new AstroOrganizationUpdateProperties(marketplace, user, partnerOrganizationProperties, default);
         }
     }
 }

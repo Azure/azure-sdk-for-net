@@ -22,7 +22,6 @@ Azure.AI.AgentServer.Responses
 Azure.AI.AnomalyDetector
 Azure.AI.ContentSafety
 Azure.AI.DocumentIntelligence
-Azure.AI.Extensions.OpenAI
 Azure.AI.FormRecognizer
 Azure.AI.Inference
 Azure.AI.Language.Conversations
@@ -35,7 +34,6 @@ Azure.AI.Language.Text.Authoring
 Azure.AI.OpenAI
 Azure.AI.OpenAI.Assistants
 Azure.AI.Personalizer
-Azure.AI.Projects
 Azure.AI.Projects.Agents
 Azure.AI.Speech.Transcription
 Azure.AI.TextAnalytics
@@ -162,7 +160,6 @@ Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
 Azure.ResourceManager.MachineLearning
 Azure.ResourceManager.Network
 Azure.ResourceManager.RecoveryServicesBackup
-Azure.ResourceManager.Storage
 Azure.Search.Documents
 Azure.Security.Attestation
 Azure.Security.CodeTransparency

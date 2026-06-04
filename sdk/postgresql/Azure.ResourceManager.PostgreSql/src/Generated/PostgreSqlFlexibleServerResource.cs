@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlFlexibleServerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(
-                    new PostgreSqlFlexibleServerOperationSource(Client),
+                    new PostgreSqlFlexibleServerResourceOperationSource(Client),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlFlexibleServerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(
-                    new PostgreSqlFlexibleServerOperationSource(Client),
+                    new PostgreSqlFlexibleServerResourceOperationSource(Client),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,

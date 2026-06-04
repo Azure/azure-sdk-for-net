@@ -12,6 +12,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// Represents the response of an MQTT connection failure.
 /// </summary>
 [DataContract]
+[JsonConverter(typeof(MqttDisconnectedEventRequestJsonConverter))]
 public class MqttDisconnectedEventRequest : DisconnectedEventRequest
 {
     internal const string MqttProperty = "mqtt";
