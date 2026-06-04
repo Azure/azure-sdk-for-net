@@ -39,13 +39,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                pricesheets is null && nextLink is null && download is null ? default : new PriceSheetModel((pricesheets ?? new ChangeTrackingList<PriceSheetProperties>()).ToList(), nextLink, download, null),
+                pricesheets is null && nextLink is null && download is null ? default : new PriceSheetModel((pricesheets ?? new ChangeTrackingList<PriceSheetProperties>()).ToList(), nextLink, download, default),
                 eTag,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
-        /// <summary> The properties of the price sheet. </summary>
         /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
         /// <param name="meterId"> The meter id (GUID). </param>
         /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it's specified in $expand. </param>
@@ -70,10 +69,9 @@ namespace Azure.ResourceManager.Consumption.Models
                 currencyCode,
                 offerId,
                 savingsPlan,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The properties of the meter detail. </summary>
         /// <param name="meterName"> The name of the meter, within the given meter category. </param>
         /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
         /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>
@@ -96,17 +94,16 @@ namespace Azure.ResourceManager.Consumption.Models
                 pretaxStandardRate,
                 serviceName,
                 serviceTier,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The properties of the SavingsPlan. </summary>
         /// <param name="term"> SavingsPlan term. </param>
         /// <param name="marketPrice"> SavingsPlan Market Price. </param>
         /// <param name="effectivePrice"> SavingsPlan Effective Price. </param>
         /// <returns> A new <see cref="Models.SavingsPlan"/> instance for mocking. </returns>
         public static SavingsPlan SavingsPlan(string term = default, decimal? marketPrice = default, decimal? effectivePrice = default)
         {
-            return new SavingsPlan(term, marketPrice, effectivePrice, additionalBinaryDataProperties: null);
+            return new SavingsPlan(term, marketPrice, effectivePrice, default);
         }
 
         /// <param name="status"> The status of the long running operation. </param>
@@ -115,7 +112,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
         public static OperationStatus OperationStatus(OperationStatusType? status = default, string downloadUri = default, DateTimeOffset? expiresOn = default)
         {
-            return new OperationStatus(status, downloadUri is null && expiresOn is null ? default : new PricesheetDownloadProperties(downloadUri, expiresOn, null), additionalBinaryDataProperties: null);
+            return new OperationStatus(status, downloadUri is null && expiresOn is null ? default : new PricesheetDownloadProperties(downloadUri, expiresOn, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -139,7 +136,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 category is null && amount is null && timeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
                     category,
                     amount,
@@ -147,13 +143,21 @@ namespace Azure.ResourceManager.Consumption.Models
                     timePeriod,
                     filter,
                     currentSpend,
-                    notifications,
+                    notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(),
                     forecastSpend,
-                    null),
-                etag);
+                    default),
+                etag,
+                default);
         }
 
-        /// <summary> May be used to filter budgets by resource group, resource, or meter. </summary>
+        /// <param name="startOn"> The start date for the budget. </param>
+        /// <param name="endOn"> The end date for the budget. If not provided, we default this to 10 years from the start date. </param>
+        /// <returns> A new <see cref="Models.BudgetTimePeriod"/> instance for mocking. </returns>
+        public static BudgetTimePeriod BudgetTimePeriod(DateTimeOffset startOn = default, DateTimeOffset? endOn = default)
+        {
+            return new BudgetTimePeriod(startOn, endOn, default);
+        }
+
         /// <param name="and"> The logical "AND" expression. Must have at least 2 items. </param>
         /// <param name="dimensions"> Has comparison expression for a dimension. </param>
         /// <param name="tags"> Has comparison expression for a tag. </param>
@@ -162,10 +166,17 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             @and ??= new ChangeTrackingList<BudgetFilterProperties>();
 
-            return new ConsumptionBudgetFilter(@and.ToList(), dimensions, tags, additionalBinaryDataProperties: null);
+            return new ConsumptionBudgetFilter((@and ?? new ChangeTrackingList<BudgetFilterProperties>()).ToList(), dimensions, tags, default);
         }
 
-        /// <summary> The comparison expression to be used in the budgets. </summary>
+        /// <param name="dimensions"> Has comparison expression for a dimension. </param>
+        /// <param name="tags"> Has comparison expression for a tag. </param>
+        /// <returns> A new <see cref="Models.BudgetFilterProperties"/> instance for mocking. </returns>
+        public static BudgetFilterProperties BudgetFilterProperties(BudgetComparisonExpression dimensions = default, BudgetComparisonExpression tags = default)
+        {
+            return new BudgetFilterProperties(dimensions, tags, default);
+        }
+
         /// <param name="name"> The name of the column to use in comparison. </param>
         /// <param name="operator"> The operator to use for comparison. </param>
         /// <param name="values"> Array of values to use for comparison. </param>
@@ -174,19 +185,17 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new BudgetComparisonExpression(name, @operator, values.ToList(), additionalBinaryDataProperties: null);
+            return new BudgetComparisonExpression(name, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The current amount of cost which is being tracked for a budget. </summary>
         /// <param name="amount"> The total amount of cost which is being tracked by the budget. </param>
         /// <param name="unit"> The unit of measure for the budget amount. </param>
         /// <returns> A new <see cref="Models.BudgetCurrentSpend"/> instance for mocking. </returns>
         public static BudgetCurrentSpend BudgetCurrentSpend(decimal? amount = default, string unit = default)
         {
-            return new BudgetCurrentSpend(amount, unit, additionalBinaryDataProperties: null);
+            return new BudgetCurrentSpend(amount, unit, default);
         }
 
-        /// <summary> The notification associated with a budget. </summary>
         /// <param name="isEnabled"> The notification is enabled or not. </param>
         /// <param name="operator"> The comparison operator. </param>
         /// <param name="threshold"> Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000. </param>
@@ -206,21 +215,20 @@ namespace Azure.ResourceManager.Consumption.Models
                 isEnabled,
                 @operator,
                 threshold,
-                contactEmails.ToList(),
-                contactRoles.ToList(),
-                contactGroups.ToList(),
+                (contactEmails ?? new ChangeTrackingList<string>()).ToList(),
+                (contactRoles ?? new ChangeTrackingList<string>()).ToList(),
+                (contactGroups ?? new ChangeTrackingList<string>()).ToList(),
                 thresholdType,
                 locale,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The forecasted cost which is being tracked for a budget. </summary>
         /// <param name="amount"> The forecasted cost for the total time period which is being tracked by the budget. This value is only provided if the budget contains a forecast alert type. </param>
         /// <param name="unit"> The unit of measure for the budget amount. </param>
         /// <returns> A new <see cref="Models.BudgetForecastSpend"/> instance for mocking. </returns>
         public static BudgetForecastSpend BudgetForecastSpend(decimal? amount = default, string unit = default)
         {
-            return new BudgetForecastSpend(amount, unit, additionalBinaryDataProperties: null);
+            return new BudgetForecastSpend(amount, unit, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -248,7 +256,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 balanceSummary is null && pendingCreditAdjustments is null && expiredCredit is null && pendingEligibleCharges is null && creditCurrency is null && billingCurrency is null && reseller is null && isEstimatedBalance is null && propertiesETag is null ? default : new CreditSummaryProperties(
                     balanceSummary,
                     pendingCreditAdjustments,
@@ -259,31 +266,29 @@ namespace Azure.ResourceManager.Consumption.Models
                     reseller,
                     isEstimatedBalance,
                     propertiesETag,
-                    null),
+                    default),
                 eTag,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
-        /// <summary> Summary of credit balances. </summary>
         /// <param name="estimatedBalance"> Estimated balance. </param>
         /// <param name="currentBalance"> Current balance. </param>
         /// <param name="estimatedBalanceInBillingCurrency"> Estimated balance in billing currency. </param>
         /// <returns> A new <see cref="Models.CreditBalanceSummary"/> instance for mocking. </returns>
         public static CreditBalanceSummary CreditBalanceSummary(ConsumptionAmount estimatedBalance = default, ConsumptionAmount currentBalance = default, ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency = default)
         {
-            return new CreditBalanceSummary(estimatedBalance, currentBalance, estimatedBalanceInBillingCurrency, additionalBinaryDataProperties: null);
+            return new CreditBalanceSummary(estimatedBalance, currentBalance, estimatedBalanceInBillingCurrency, default);
         }
 
-        /// <summary> The amount plus currency . </summary>
         /// <param name="currency"> Amount currency. </param>
         /// <param name="value"> Amount. </param>
         /// <returns> A new <see cref="Models.ConsumptionAmount"/> instance for mocking. </returns>
         public static ConsumptionAmount ConsumptionAmount(string currency = default, decimal? value = default)
         {
-            return new ConsumptionAmount(currency, value, additionalBinaryDataProperties: null);
+            return new ConsumptionAmount(currency, value, default);
         }
 
-        /// <summary> The amount with exchange rate. </summary>
         /// <param name="currency"> Amount currency. </param>
         /// <param name="value"> Amount. </param>
         /// <param name="exchangeRate"> The exchange rate. </param>
@@ -291,16 +296,15 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionAmountWithExchangeRate"/> instance for mocking. </returns>
         public static ConsumptionAmountWithExchangeRate ConsumptionAmountWithExchangeRate(string currency = default, decimal? value = default, decimal? exchangeRate = default, int? exchangeRateMonth = default)
         {
-            return new ConsumptionAmountWithExchangeRate(currency, value, additionalBinaryDataProperties: null, exchangeRate, exchangeRateMonth);
+            return new ConsumptionAmountWithExchangeRate(currency, value, default, exchangeRate, exchangeRateMonth);
         }
 
-        /// <summary> The reseller properties. </summary>
         /// <param name="resellerId"> The reseller property ID. </param>
         /// <param name="resellerDescription"> The reseller property description. </param>
         /// <returns> A new <see cref="Models.ConsumptionReseller"/> instance for mocking. </returns>
         public static ConsumptionReseller ConsumptionReseller(ResourceIdentifier resellerId = default, string resellerDescription = default)
         {
-            return new ConsumptionReseller(resellerId, resellerDescription, additionalBinaryDataProperties: null);
+            return new ConsumptionReseller(resellerId, resellerDescription, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -365,61 +369,60 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                UsageDetailsKind.Legacy,
+                default,
                 etag,
-                tags,
-                new LegacyUsageDetailProperties(
-                    billingAccountId,
-                    billingAccountName,
-                    billingPeriodStartOn,
-                    billingPeriodEndOn,
-                    billingProfileId,
-                    billingProfileName,
-                    accountOwnerId,
-                    accountName,
-                    subscriptionId,
-                    subscriptionName,
-                    @on,
-                    product,
-                    partNumber,
-                    meterId,
-                    meterDetails,
-                    quantity,
-                    effectivePrice,
-                    cost,
-                    unitPrice,
-                    billingCurrency,
-                    resourceLocation,
-                    consumedService,
-                    resourceId,
-                    resourceName,
-                    serviceInfo1,
-                    serviceInfo2,
-                    additionalInfo,
-                    invoiceSection,
-                    costCenter,
-                    resourceGroup,
-                    reservationId,
-                    reservationName,
-                    productOrderId,
-                    productOrderName,
-                    offerId,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                isAzureCreditEligible is null ? default : new LegacyUsageDetailProperties(
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
                     isAzureCreditEligible,
-                    term,
-                    publisherName,
-                    publisherType,
-                    planName,
-                    chargeType,
-                    frequency,
-                    payGPrice,
-                    benefitId,
-                    benefitName,
-                    pricingModel,
-                    null));
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default));
         }
 
-        /// <summary> The properties of the meter detail. </summary>
         /// <param name="meterName"> The name of the meter, within the given meter category. </param>
         /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
         /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>
@@ -434,7 +437,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 meterSubCategory,
                 unitOfMeasure,
                 serviceFamily,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -525,84 +528,84 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                UsageDetailsKind.Modern,
+                default,
                 etag,
-                tags,
-                new ModernUsageDetailProperties(
-                    billingAccountId,
-                    effectivePrice,
-                    pricingModel,
-                    billingAccountName,
-                    billingPeriodStartOn,
-                    billingPeriodEndOn,
-                    billingProfileId,
-                    billingProfileName,
-                    subscriptionGuid,
-                    subscriptionName,
-                    @on,
-                    product,
-                    meterId,
-                    meterName,
-                    meterRegion,
-                    meterCategory,
-                    meterSubCategory,
-                    serviceFamily,
-                    quantity,
-                    unitOfMeasure,
-                    instanceName,
-                    costInUSD,
-                    unitPrice,
-                    billingCurrencyCode,
-                    resourceLocation,
-                    consumedService,
-                    serviceInfo1,
-                    serviceInfo2,
-                    additionalInfo,
-                    invoiceSectionId,
-                    invoiceSectionName,
-                    costCenter,
-                    resourceGroup,
-                    reservationId,
-                    reservationName,
-                    productOrderId,
-                    productOrderName,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                isAzureCreditEligible is null ? default : new ModernUsageDetailProperties(
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
                     isAzureCreditEligible,
-                    term,
-                    publisherName,
-                    publisherType,
-                    chargeType,
-                    frequency,
-                    costInBillingCurrency,
-                    costInPricingCurrency,
-                    exchangeRate,
-                    exchangeRateOn,
-                    invoiceId,
-                    previousInvoiceId,
-                    pricingCurrencyCode,
-                    productIdentifier,
-                    resourceLocationNormalized,
-                    servicePeriodStartOn,
-                    servicePeriodEndOn,
-                    customerTenantId,
-                    customerName,
-                    partnerTenantId,
-                    partnerName,
-                    resellerMpnId,
-                    resellerName,
-                    publisherId,
-                    marketPrice,
-                    exchangeRatePricingToBilling,
-                    paygCostInBillingCurrency,
-                    paygCostInUSD,
-                    partnerEarnedCreditRate,
-                    partnerEarnedCreditApplied,
-                    payGPrice,
-                    benefitId,
-                    benefitName,
-                    provider,
-                    costAllocationRuleName,
-                    null));
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -647,7 +650,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 billingPeriodId is null && usageStartOn is null && usageEndOn is null && resourceRate is null && offerName is null && resourceGroup is null && additionalInfo is null && orderNumber is null && instanceName is null && instanceId is null && currency is null && consumedQuantity is null && unitOfMeasure is null && pretaxCost is null && isEstimated is null && meterId is null && subscriptionGuid is null && subscriptionName is null && accountName is null && departmentName is null && consumedService is null && costCenter is null && additionalProperties is null && publisherName is null && planName is null && isRecurringCharge is null ? default : new MarketplaceProperties(
                     billingPeriodId,
                     usageStartOn,
@@ -675,12 +677,12 @@ namespace Azure.ResourceManager.Consumption.Models
                     publisherName,
                     planName,
                     isRecurringCharge,
-                    null),
+                    default),
                 etag,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
-        /// <summary> The tag resource. </summary>
         /// <param name="key"> Tag key. </param>
         /// <param name="value"> Tag values. </param>
         /// <returns> A new <see cref="Models.ConsumptionTag"/> instance for mocking. </returns>
@@ -688,17 +690,16 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             value ??= new ChangeTrackingList<string>();
 
-            return new ConsumptionTag(key, value.ToList(), additionalBinaryDataProperties: null);
+            return new ConsumptionTag(key, (value ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> Result of listing charge summary. </summary>
         /// <param name="value"> The list of charge summary. </param>
         /// <returns> A new <see cref="Models.ChargesListResult"/> instance for mocking. </returns>
         public static ChargesListResult ChargesListResult(IEnumerable<ConsumptionChargeSummary> value = default)
         {
             value ??= new ChangeTrackingList<ConsumptionChargeSummary>();
 
-            return new ChargesListResult(value.ToList(), additionalBinaryDataProperties: null);
+            return new ChargesListResult((value ?? new ChangeTrackingList<ConsumptionChargeSummary>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -721,18 +722,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                ChargeSummaryKind.Legacy,
+                default,
                 etag,
-                new LegacyChargeSummaryProperties(
-                    billingPeriodId,
-                    usageStart,
-                    usageEnd,
-                    azureCharges,
-                    chargesBilledSeparately,
-                    marketplaceCharges,
-                    currency,
-                    null));
+                default,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -760,23 +753,23 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                ChargeSummaryKind.Modern,
+                default,
                 eTag,
-                new ModernChargeSummaryProperties(
-                    billingPeriodId,
-                    usageStart,
-                    usageEnd,
-                    azureCharges,
-                    chargesBilledSeparately,
-                    marketplaceCharges,
-                    billingAccountId,
-                    billingProfileId,
-                    invoiceSectionId,
-                    customerId,
+                default,
+                isInvoiced is null ? default : new ModernChargeSummaryProperties(
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
                     isInvoiced,
-                    subscriptionId,
-                    null));
+                    default,
+                    default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -811,7 +804,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 currency is null && beginningBalance is null && endingBalance is null && newPurchases is null && adjustments is null && utilized is null && serviceOverage is null && chargesBilledSeparately is null && totalOverage is null && totalUsage is null && azureMarketplaceServiceCharges is null && billingFrequency is null && isPriceHidden is null && overageRefund is null && newPurchasesDetails is null && adjustmentDetails is null ? default : new BalanceProperties(
                     currency,
                     beginningBalance,
@@ -829,27 +821,26 @@ namespace Azure.ResourceManager.Consumption.Models
                     overageRefund,
                     (newPurchasesDetails ?? new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>()).ToList(),
                     (adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>()).ToList(),
-                    null),
+                    default),
                 eTag,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
-        /// <summary> The ConsumptionBalanceNewPurchasesDetail. </summary>
         /// <param name="name"> the name of new purchase. </param>
         /// <param name="value"> the value of new purchase. </param>
         /// <returns> A new <see cref="Models.ConsumptionBalanceNewPurchasesDetail"/> instance for mocking. </returns>
         public static ConsumptionBalanceNewPurchasesDetail ConsumptionBalanceNewPurchasesDetail(string name = default, decimal? value = default)
         {
-            return new ConsumptionBalanceNewPurchasesDetail(name, value, additionalBinaryDataProperties: null);
+            return new ConsumptionBalanceNewPurchasesDetail(name, value, default);
         }
 
-        /// <summary> The ConsumptionBalanceAdjustmentDetail. </summary>
         /// <param name="name"> the name of new adjustment. </param>
         /// <param name="value"> the value of new adjustment. </param>
         /// <returns> A new <see cref="Models.ConsumptionBalanceAdjustmentDetail"/> instance for mocking. </returns>
         public static ConsumptionBalanceAdjustmentDetail ConsumptionBalanceAdjustmentDetail(string name = default, decimal? value = default)
         {
-            return new ConsumptionBalanceAdjustmentDetail(name, value, additionalBinaryDataProperties: null);
+            return new ConsumptionBalanceAdjustmentDetail(name, value, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -883,7 +874,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 reservationOrderId is null && reservationId is null && skuName is null && reservedHours is null && useOn is null && usedHours is null && minUtilizationPercentage is null && avgUtilizationPercentage is null && maxUtilizationPercentage is null && kind is null && purchasedQuantity is null && remainingQuantity is null && totalReservedQuantity is null && usedQuantity is null && utilizedPercentage is null ? default : new ReservationSummaryProperties(
                     reservationOrderId,
                     reservationId,
@@ -900,9 +890,10 @@ namespace Azure.ResourceManager.Consumption.Models
                     totalReservedQuantity,
                     usedQuantity,
                     utilizedPercentage,
-                    null),
+                    default),
                 etag,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -932,7 +923,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 reservationOrderId is null && instanceFlexibilityRatio is null && instanceFlexibilityGroup is null && reservationId is null && skuName is null && reservedHours is null && consumptionOccurredOn is null && usedHours is null && instanceId is null && totalReservedQuantity is null && kind is null ? default : new ReservationDetailProperties(
                     reservationOrderId,
                     instanceFlexibilityRatio,
@@ -945,15 +935,12 @@ namespace Azure.ResourceManager.Consumption.Models
                     instanceId,
                     totalReservedQuantity,
                     kind,
-                    null),
+                    default),
                 etag,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
-        /// <summary>
-        /// The ConsumptionReservationRecommendation.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConsumptionLegacyReservationRecommendation"/> and <see cref="Models.ConsumptionModernReservationRecommendation"/>.
-        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -973,15 +960,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 location,
                 sku,
                 eTag,
-                tags,
-                new ReservationRecommendationKind(kind));
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                default);
         }
 
-        /// <summary> The ConsumptionLegacyReservationRecommendation. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1001,19 +987,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 location,
                 sku,
                 eTag,
-                tags,
-                ReservationRecommendationKind.Legacy,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                default,
                 properties);
         }
 
-        /// <summary>
-        /// The properties of the reservation recommendation.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LegacySingleScopeReservationRecommendationProperties"/> and <see cref="Models.LegacySharedScopeReservationRecommendationProperties"/>.
-        /// </summary>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
         /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
@@ -1051,22 +1033,20 @@ namespace Azure.ResourceManager.Consumption.Models
                 netSavings,
                 firstUsageOn,
                 scope,
-                skuProperties.ToList(),
+                (skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>()).ToList(),
                 lastUsageOn,
                 totalHours,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The Sku property. </summary>
         /// <param name="name"> The name of sku property. </param>
         /// <param name="value"> The value of sku property. </param>
         /// <returns> A new <see cref="Models.ConsumptionSkuProperty"/> instance for mocking. </returns>
         public static ConsumptionSkuProperty ConsumptionSkuProperty(string name = default, string value = default)
         {
-            return new ConsumptionSkuProperty(name, value, additionalBinaryDataProperties: null);
+            return new ConsumptionSkuProperty(name, value, default);
         }
 
-        /// <summary> The properties of the legacy reservation recommendation for single scope. </summary>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
         /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
@@ -1103,15 +1083,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 totalCostWithReservedInstances,
                 netSavings,
                 firstUsageOn,
-                "Single",
-                skuProperties.ToList(),
+                default,
+                (skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>()).ToList(),
                 lastUsageOn,
                 totalHours,
-                additionalBinaryDataProperties: null,
+                default,
                 subscriptionId);
         }
 
-        /// <summary> The properties of the legacy reservation recommendation for shared scope. </summary>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
         /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
@@ -1147,14 +1126,13 @@ namespace Azure.ResourceManager.Consumption.Models
                 totalCostWithReservedInstances,
                 netSavings,
                 firstUsageOn,
-                "Shared",
-                skuProperties.ToList(),
+                default,
+                (skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>()).ToList(),
                 lastUsageOn,
                 totalHours,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The ConsumptionModernReservationRecommendation. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1174,19 +1152,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 location,
                 sku,
                 eTag,
-                tags,
-                ReservationRecommendationKind.Modern,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                default,
                 properties);
         }
 
-        /// <summary>
-        /// The properties of the reservation recommendation.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ModernSingleScopeReservationRecommendationProperties"/> and <see cref="Models.ModernSharedScopeReservationRecommendationProperties"/>.
-        /// </summary>
         /// <param name="location"> Resource Location. </param>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
@@ -1227,14 +1201,13 @@ namespace Azure.ResourceManager.Consumption.Models
                 netSavings,
                 firstUsageOn,
                 scope,
-                skuProperties.ToList(),
+                (skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>()).ToList(),
                 skuName,
                 lastUsageOn,
                 totalHours,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The properties of the modern reservation recommendation for single scope. </summary>
         /// <param name="location"> Resource Location. </param>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
@@ -1274,16 +1247,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 totalCostWithReservedInstances,
                 netSavings,
                 firstUsageOn,
-                "Single",
-                skuProperties.ToList(),
+                default,
+                (skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>()).ToList(),
                 skuName,
                 lastUsageOn,
                 totalHours,
-                additionalBinaryDataProperties: null,
+                default,
                 subscriptionId);
         }
 
-        /// <summary> The properties of the modern reservation recommendation for shared scope. </summary>
         /// <param name="location"> Resource Location. </param>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
@@ -1322,12 +1294,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 totalCostWithReservedInstances,
                 netSavings,
                 firstUsageOn,
-                "Shared",
-                skuProperties.ToList(),
+                default,
+                (skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>()).ToList(),
                 skuName,
                 lastUsageOn,
                 totalHours,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1354,7 +1326,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 location,
                 sku,
                 currency is null && properties is null && resourceGroup is null && savings is null && scope is null && usage is null ? default : new ReservationRecommendationDetailsProperties(
@@ -1364,12 +1335,12 @@ namespace Azure.ResourceManager.Consumption.Models
                     savings,
                     scope,
                     usage,
-                    null),
+                    default),
                 etag,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
-        /// <summary> Details of the resource. </summary>
         /// <param name="appliedScopes"> List of subscriptions for which the reservation is applied. </param>
         /// <param name="onDemandRate"> On-demand rate of the resource. Most resources use hourly rates, except for BlockBlob, ManagedDisk, Backup, and Azure Files, which use monthly rates. Only hardware rates are included; software rates are excluded.  Note: there could be new resources that use hourly rates in the future. </param>
         /// <param name="product"> Azure product ex: Standard_E8s_v3 etc. </param>
@@ -1382,16 +1353,15 @@ namespace Azure.ResourceManager.Consumption.Models
             appliedScopes ??= new ChangeTrackingList<string>();
 
             return new ConsumptionResourceProperties(
-                appliedScopes.ToList(),
+                (appliedScopes ?? new ChangeTrackingList<string>()).ToList(),
                 onDemandRate,
                 product,
                 region,
                 reservationRate,
                 resourceType,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Details of the estimated savings. </summary>
         /// <param name="calculatedSavings"> List of calculated savings. </param>
         /// <param name="lookBackPeriod"> Number of days of usage to look back used for computing the recommendation. </param>
         /// <param name="recommendedQuantity"> Number of recommended units of the resource. </param>
@@ -1404,16 +1374,15 @@ namespace Azure.ResourceManager.Consumption.Models
             calculatedSavings ??= new ChangeTrackingList<ConsumptionCalculatedSavingsProperties>();
 
             return new ConsumptionSavingsProperties(
-                calculatedSavings.ToList(),
+                (calculatedSavings ?? new ChangeTrackingList<ConsumptionCalculatedSavingsProperties>()).ToList(),
                 lookBackPeriod,
                 recommendedQuantity,
                 reservationOrderTerm,
                 savingsType,
                 unitOfMeasure,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Details of estimated savings. The costs and savings are estimated for the term. </summary>
         /// <param name="onDemandCost"> The cost without reservation. Includes hardware and software cost. </param>
         /// <param name="overageCost"> The estimated cost for resource meters that are not covered by the reservation and are billed at pay-as-you-go rates. </param>
         /// <param name="quantity"> The quantity for calculated savings. </param>
@@ -1432,10 +1401,9 @@ namespace Azure.ResourceManager.Consumption.Models
                 totalReservationCost,
                 reservedUnitCount,
                 savings,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Details about historical usage data that has been used for computing the recommendation. </summary>
         /// <param name="firstConsumptionDate"> The first usage date used for looking back for computing the recommendation. </param>
         /// <param name="lastConsumptionDate"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="lookBackUnitType"> What the usage data values represent ex: virtual machine instance. </param>
@@ -1450,9 +1418,9 @@ namespace Azure.ResourceManager.Consumption.Models
                 firstConsumptionDate,
                 lastConsumptionDate,
                 lookBackUnitType,
-                usageData.ToList(),
+                (usageData ?? new ChangeTrackingList<float>()).ToList(),
                 usageGrain,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1493,7 +1461,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 transactOn is null && reservationOrderId is null && description is null && eventType is null && quantity is null && amount is null && currency is null && reservationOrderName is null && purchasingEnrollment is null && purchasingSubscriptionGuid is null && purchasingSubscriptionName is null && armSkuName is null && term is null && region is null && accountName is null && accountOwnerEmail is null && departmentName is null && costCenter is null && currentEnrollment is null && billingFrequency is null && billingMonth is null && monetaryCommitment is null && overage is null ? default : new LegacyReservationTransactionProperties(
                     transactOn,
                     reservationOrderId,
@@ -1518,8 +1485,9 @@ namespace Azure.ResourceManager.Consumption.Models
                     billingMonth,
                     monetaryCommitment,
                     overage,
-                    null),
-                tags.ToList());
+                    default),
+                (tags ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1557,30 +1525,30 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                new ModernReservationTransactionProperties(
-                    amount,
-                    armSkuName,
-                    billingFrequency,
-                    billingProfileId,
-                    billingProfileName,
-                    currency,
-                    description,
-                    transactOn,
-                    eventType,
-                    invoice,
-                    invoiceId,
-                    invoiceSectionId,
-                    invoiceSectionName,
-                    purchasingSubscriptionGuid,
-                    purchasingSubscriptionName,
-                    quantity,
-                    region,
+                reservationOrderId is null && reservationOrderName is null ? default : new ModernReservationTransactionProperties(
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
                     reservationOrderId,
                     reservationOrderName,
-                    term,
-                    null),
-                tags.ToList());
+                    default,
+                    default),
+                (tags ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1609,7 +1577,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 billingPeriodId is null && usageStartOn is null && usageEndOn is null && azureCharges is null && marketplaceCharges is null && chargesBilledSeparately is null && currency is null && children is null && includedSubscriptions is null && excludedSubscriptions is null ? default : new ManagementGroupAggregatedCostProperties(
                     billingPeriodId,
                     usageStartOn,
@@ -1621,9 +1588,10 @@ namespace Azure.ResourceManager.Consumption.Models
                     (children ?? new ChangeTrackingList<ConsumptionAggregatedCostResult>()).ToList(),
                     (includedSubscriptions ?? new ChangeTrackingList<string>()).ToList(),
                     (excludedSubscriptions ?? new ChangeTrackingList<string>()).ToList(),
-                    null),
+                    default),
                 etag,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1665,7 +1633,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 transactOn is null && description is null && newCredit is null && adjustments is null && creditExpired is null && charges is null && closedBalance is null && billingAccountId is null && billingAccountDisplayName is null && eventType is null && invoiceNumber is null && billingProfileId is null && billingProfileDisplayName is null && lotId is null && lotSource is null && canceledCredit is null && creditCurrency is null && billingCurrency is null && reseller is null && creditExpiredInBillingCurrency is null && newCreditInBillingCurrency is null && adjustmentsInBillingCurrency is null && chargesInBillingCurrency is null && closedBalanceInBillingCurrency is null && isEstimatedBalance is null && propertiesETag is null ? default : new EventProperties(
                     transactOn,
                     description,
@@ -1693,8 +1660,9 @@ namespace Azure.ResourceManager.Consumption.Models
                     closedBalanceInBillingCurrency,
                     isEstimatedBalance,
                     propertiesETag,
-                    null),
-                internalETag);
+                    default),
+                internalETag,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1727,7 +1695,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 originalAmount is null && closedBalance is null && source is null && startOn is null && expireOn is null && poNumber is null && purchasedOn is null && status is null && creditCurrency is null && billingCurrency is null && originalAmountInBillingCurrency is null && closedBalanceInBillingCurrency is null && reseller is null && isEstimatedBalance is null && propertiesETag is null && organizationType is null && usedAmount is null ? default : new LotProperties(
                     originalAmount,
                     closedBalance,
@@ -1746,8 +1713,9 @@ namespace Azure.ResourceManager.Consumption.Models
                     propertiesETag,
                     organizationType,
                     usedAmount,
-                    null),
-                eTag);
+                    default),
+                eTag,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceResult"/>. </summary>
@@ -1774,16 +1742,13 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ConsumptionBalanceResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConsumptionBalanceResult ConsumptionBalanceResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string currency, decimal? beginningBalance, decimal? endingBalance, decimal? newPurchases, decimal? adjustments, decimal? utilized, decimal? serviceOverage, decimal? chargesBilledSeparately, decimal? totalOverage, decimal? totalUsage, decimal? azureMarketplaceServiceCharges, ConsumptionBillingFrequency? billingFrequency, bool? isPriceHidden, IEnumerable<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails, IEnumerable<ConsumptionBalanceAdjustmentDetail> adjustmentDetails, ETag? etag, IReadOnlyDictionary<string, string> tags)
+        public static ConsumptionBalanceResult ConsumptionBalanceResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string currency = default, decimal? beginningBalance = default, decimal? endingBalance = default, decimal? newPurchases = default, decimal? adjustments = default, decimal? utilized = default, decimal? serviceOverage = default, decimal? chargesBilledSeparately = default, decimal? totalOverage = default, decimal? totalUsage = default, decimal? azureMarketplaceServiceCharges = default, ConsumptionBillingFrequency? billingFrequency = default, bool? isPriceHidden = default, IEnumerable<ConsumptionBalanceNewPurchasesDetail> newPurchasesDetails = default, IEnumerable<ConsumptionBalanceAdjustmentDetail> adjustmentDetails = default, ETag? etag = default, IReadOnlyDictionary<string, string> tags = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
             return new ConsumptionBalanceResult(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 currency is null && beginningBalance is null && endingBalance is null && newPurchases is null && adjustments is null && utilized is null && serviceOverage is null && chargesBilledSeparately is null && totalOverage is null && totalUsage is null && azureMarketplaceServiceCharges is null && billingFrequency is null && isPriceHidden is null && newPurchasesDetails is null && adjustmentDetails is null ? default : new BalanceProperties(
                     currency,
                     beginningBalance,
@@ -1803,7 +1768,8 @@ namespace Azure.ResourceManager.Consumption.Models
                     (adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>()).ToList(),
                     default),
                 etag,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PriceSheetProperties"/>. </summary>
@@ -1818,9 +1784,20 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="offerId"> Offer Id. </param>
         /// <returns> A new <see cref="Models.PriceSheetProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PriceSheetProperties PriceSheetProperties(ResourceIdentifier billingPeriodId, Guid? meterId, ConsumptionMeterDetails meterDetails, string unitOfMeasure, decimal? includedQuantity, string partNumber, decimal? unitPrice, string currencyCode, string offerId)
+        public static PriceSheetProperties PriceSheetProperties(ResourceIdentifier billingPeriodId = default, Guid? meterId = default, ConsumptionMeterDetails meterDetails = default, string unitOfMeasure = default, decimal? includedQuantity = default, string partNumber = default, decimal? unitPrice = default, string currencyCode = default, string offerId = default)
         {
-            return PriceSheetProperties(billingPeriodId: billingPeriodId, meterId: meterId, meterDetails: meterDetails, unitOfMeasure: unitOfMeasure, includedQuantity: includedQuantity, partNumber: partNumber, unitPrice: unitPrice, currencyCode: currencyCode, offerId: offerId, savingsPlan: default);
+            return new PriceSheetProperties(
+                billingPeriodId,
+                meterId,
+                meterDetails,
+                unitOfMeasure,
+                includedQuantity,
+                partNumber,
+                unitPrice,
+                currencyCode,
+                offerId,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionEventSummary"/>. </summary>
@@ -1853,14 +1830,13 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ConsumptionEventSummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConsumptionEventSummary ConsumptionEventSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? transactOn, string description, ConsumptionAmount newCredit, ConsumptionAmount adjustments, ConsumptionAmount creditExpired, ConsumptionAmount charges, ConsumptionAmount closedBalance, ConsumptionEventType? eventType, string invoiceNumber, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier lotId, string lotSource, ConsumptionAmount canceledCredit, string creditCurrency, string billingCurrency, ConsumptionReseller reseller, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency, ConsumptionAmountWithExchangeRate chargesInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ETag? etag)
+        public static ConsumptionEventSummary ConsumptionEventSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? transactOn = default, string description = default, ConsumptionAmount newCredit = default, ConsumptionAmount adjustments = default, ConsumptionAmount creditExpired = default, ConsumptionAmount charges = default, ConsumptionAmount closedBalance = default, ConsumptionEventType? eventType = default, string invoiceNumber = default, ResourceIdentifier billingProfileId = default, string billingProfileDisplayName = default, ResourceIdentifier lotId = default, string lotSource = default, ConsumptionAmount canceledCredit = default, string creditCurrency = default, string billingCurrency = default, ConsumptionReseller reseller = default, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = default, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = default, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = default, ConsumptionAmountWithExchangeRate chargesInBillingCurrency = default, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default, ETag? etag = default)
         {
             return new ConsumptionEventSummary(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 transactOn is null && description is null && newCredit is null && adjustments is null && creditExpired is null && charges is null && closedBalance is null && eventType is null && invoiceNumber is null && billingProfileId is null && billingProfileDisplayName is null && lotId is null && lotSource is null && canceledCredit is null && creditCurrency is null && billingCurrency is null && reseller is null && creditExpiredInBillingCurrency is null && newCreditInBillingCurrency is null && adjustmentsInBillingCurrency is null && chargesInBillingCurrency is null && closedBalanceInBillingCurrency is null ? default : new EventProperties(
                     transactOn,
                     description,
@@ -1889,6 +1865,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     default,
                     default,
                     default),
+                default,
                 default);
         }
 
@@ -1913,14 +1890,13 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ConsumptionLotSummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConsumptionAmount originalAmount, ConsumptionAmount closedBalance, ConsumptionLotSource? source, DateTimeOffset? startOn, DateTimeOffset? expireOn, string poNumber, DateTimeOffset? purchasedOn, ConsumptionLotStatus? status, string creditCurrency, string billingCurrency, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency, ConsumptionReseller reseller, ETag? etag)
+        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConsumptionAmount originalAmount = default, ConsumptionAmount closedBalance = default, ConsumptionLotSource? source = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, string poNumber = default, DateTimeOffset? purchasedOn = default, ConsumptionLotStatus? status = default, string creditCurrency = default, string billingCurrency = default, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = default, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default, ConsumptionReseller reseller = default, ETag? etag = default)
         {
             return new ConsumptionLotSummary(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 originalAmount is null && closedBalance is null && source is null && startOn is null && expireOn is null && poNumber is null && purchasedOn is null && status is null && creditCurrency is null && billingCurrency is null && originalAmountInBillingCurrency is null && closedBalanceInBillingCurrency is null && reseller is null ? default : new LotProperties(
                     originalAmount,
                     closedBalance,
@@ -1940,7 +1916,8 @@ namespace Azure.ResourceManager.Consumption.Models
                     default,
                     default,
                     default),
-                etag);
+                etag,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernChargeSummary"/>. </summary>
@@ -1962,16 +1939,16 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="isInvoiced"> Is charge Invoiced. </param>
         /// <returns> A new <see cref="Models.ConsumptionModernChargeSummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConsumptionModernChargeSummary ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string billingPeriodId, string usageStart, string usageEnd, ConsumptionAmount azureCharges, ConsumptionAmount chargesBilledSeparately, ConsumptionAmount marketplaceCharges, string billingAccountId, string billingProfileId, string invoiceSectionId, string customerId, bool? isInvoiced)
+        public static ConsumptionModernChargeSummary ConsumptionModernChargeSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string billingPeriodId = default, string usageStart = default, string usageEnd = default, ConsumptionAmount azureCharges = default, ConsumptionAmount chargesBilledSeparately = default, ConsumptionAmount marketplaceCharges = default, string billingAccountId = default, string billingProfileId = default, string invoiceSectionId = default, string customerId = default, bool? isInvoiced = default)
         {
             return new ConsumptionModernChargeSummary(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                ChargeSummaryKind.Modern,
+                default,
                 etag,
+                default,
                 billingPeriodId is null && usageStart is null && usageEnd is null && azureCharges is null && chargesBilledSeparately is null && marketplaceCharges is null && billingAccountId is null && billingProfileId is null && invoiceSectionId is null && customerId is null && isInvoiced is null ? default : new ModernChargeSummaryProperties(
                     billingPeriodId,
                     usageStart,

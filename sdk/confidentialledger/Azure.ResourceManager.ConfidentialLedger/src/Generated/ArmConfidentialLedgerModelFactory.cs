@@ -18,17 +18,23 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmConfidentialLedgerModelFactory
     {
-        /// <summary> The check availability result. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.ConfidentialLedgerNameAvailabilityContent"/> instance for mocking. </returns>
+        public static ConfidentialLedgerNameAvailabilityContent ConfidentialLedgerNameAvailabilityContent(string name = default, ResourceType? resourceType = default)
+        {
+            return new ConfidentialLedgerNameAvailabilityContent(name, resourceType, default);
+        }
+
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <returns> A new <see cref="Models.ConfidentialLedgerNameAvailabilityResult"/> instance for mocking. </returns>
         public static ConfidentialLedgerNameAvailabilityResult ConfidentialLedgerNameAvailabilityResult(bool? isNameAvailable = default, ConfidentialLedgerNameUnavailableReason? reason = default, string message = default)
         {
-            return new ConfidentialLedgerNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new ConfidentialLedgerNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
-        /// <summary> Confidential Ledger. Contains the properties of Confidential Ledger Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -46,13 +52,12 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Additional Confidential Ledger properties. </summary>
         /// <param name="ledgerName"> Unique name for the Confidential Ledger. </param>
         /// <param name="ledgerUri"> Endpoint for calling Ledger Service. </param>
         /// <param name="identityServiceUri"> Endpoint for accessing network identity. </param>
@@ -87,8 +92,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 ledgerType,
                 provisioningState,
                 ledgerSku,
-                aadBasedSecurityPrincipals.ToList(),
-                certBasedSecurityPrincipals.ToList(),
+                (aadBasedSecurityPrincipals ?? new ChangeTrackingList<AadBasedSecurityPrincipal>()).ToList(),
+                (certBasedSecurityPrincipals ?? new ChangeTrackingList<CertBasedSecurityPrincipal>()).ToList(),
                 hostLevel,
                 maxBodySizeInMb,
                 subjectName,
@@ -98,24 +103,39 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 enclavePlatform,
                 applicationType,
                 scittConfiguration,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Object representing Files Export properties of a Confidential Ledger Resource. </summary>
+        /// <param name="principalId"> UUID/GUID based Principal Id of the Security Principal. </param>
+        /// <param name="tenantId"> UUID/GUID based Tenant Id of the Security Principal. </param>
+        /// <param name="ledgerRoleName"> LedgerRole associated with the Security Principal of Ledger. </param>
+        /// <returns> A new <see cref="Models.AadBasedSecurityPrincipal"/> instance for mocking. </returns>
+        public static AadBasedSecurityPrincipal AadBasedSecurityPrincipal(Guid? principalId = default, Guid? tenantId = default, ConfidentialLedgerRoleName? ledgerRoleName = default)
+        {
+            return new AadBasedSecurityPrincipal(principalId, tenantId, ledgerRoleName, default);
+        }
+
+        /// <param name="cert"> Public key of the user cert (.pem or .cer). </param>
+        /// <param name="ledgerRoleName"> LedgerRole associated with the Security Principal of Ledger. </param>
+        /// <returns> A new <see cref="Models.CertBasedSecurityPrincipal"/> instance for mocking. </returns>
+        public static CertBasedSecurityPrincipal CertBasedSecurityPrincipal(string cert = default, ConfidentialLedgerRoleName? ledgerRoleName = default)
+        {
+            return new CertBasedSecurityPrincipal(cert, ledgerRoleName, default);
+        }
+
         /// <param name="restoreRegion"> The region where the exported ledger files will eventually be restored to. </param>
         /// <param name="uri"> SAS URI used to access the Fileshare for exporting ledger files. </param>
         /// <returns> A new <see cref="Models.ConfidentialLedgerFilesExportContent"/> instance for mocking. </returns>
         public static ConfidentialLedgerFilesExportContent ConfidentialLedgerFilesExportContent(string restoreRegion = default, Uri uri = default)
         {
-            return new ConfidentialLedgerFilesExportContent(restoreRegion, uri, additionalBinaryDataProperties: null);
+            return new ConfidentialLedgerFilesExportContent(restoreRegion, uri, default);
         }
 
-        /// <summary> Object representing the files export response of a Confidential Ledger Resource. </summary>
         /// <param name="message"> Response body stating if the ledger files are being exported. </param>
         /// <returns> A new <see cref="Models.ConfidentialLedgerFilesExportResult"/> instance for mocking. </returns>
         public static ConfidentialLedgerFilesExportResult ConfidentialLedgerFilesExportResult(string message = default)
         {
-            return new ConfidentialLedgerFilesExportResult(message, additionalBinaryDataProperties: null);
+            return new ConfidentialLedgerFilesExportResult(message, default);
         }
     }
 }

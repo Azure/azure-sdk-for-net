@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-05-21 00:06:20 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-06-02 08:08:56 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -18,16 +18,16 @@
 
 - Total libraries: 406
 - Management Plane (MPG): 235
-  - Autorest/Swagger: 77
-  - New Emitter (TypeSpec): 158
+  - Autorest/Swagger: 75
+  - New Emitter (TypeSpec): 160
   - Old TypeSpec: 0
 - Data Plane (DPG): 128
   - Autorest/Swagger: 37
   - New Emitter (TypeSpec): 43
   - Old TypeSpec: 0
 - Provisioning: 43
-  - Reflection-based generator: 35
-  - TypeSpec-based generator: 6
+  - Reflection-based generator: 34
+  - TypeSpec-based generator: 7
   - No generator: 2
 - No generator: 48
 
@@ -134,12 +134,13 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 37
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 158 / 158 (100%)
+**Migration Status**: 160 / 160 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
 | advisor | Azure.ResourceManager.Advisor | ✅ |
 | agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
+| alertsmanagement | Azure.ResourceManager.AlertProcessingRules | ✅ |
 | apicenter | Azure.ResourceManager.ApiCenter | ✅ |
 | appcomplianceautomation | Azure.ResourceManager.AppComplianceAutomation | ✅ |
 | appconfiguration | Azure.ResourceManager.AppConfiguration | ✅ |
@@ -258,12 +259,14 @@ Libraries that provide resource management APIs for Azure services and have been
 | recoveryservices | Azure.ResourceManager.RecoveryServices | ✅ |
 | recoveryservices-backup | Azure.ResourceManager.RecoveryServicesBackup | ✅ |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication | ✅ |
+| recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery | ✅ |
 | redhatopenshift | Azure.ResourceManager.RedHatOpenShift | ✅ |
 | redis | Azure.ResourceManager.Redis | ✅ |
 | redisenterprise | Azure.ResourceManager.RedisEnterprise | ✅ |
 | relationships | Azure.ResourceManager.Relationships | ✅ |
 | relay | Azure.ResourceManager.Relay | ✅ |
 | resourceconnector | Azure.ResourceManager.ResourceConnector | ✅ |
+| resourcegraph | Azure.ResourceManager.ResourceGraph | ✅ |
 | resources | Azure.ResourceManager.Resources.Bicep | ✅ |
 | resources | Azure.ResourceManager.Resources.Deployments | ✅ |
 | resources | Azure.ResourceManager.Resources.DeploymentStacks | ✅ |
@@ -290,7 +293,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | support | Azure.ResourceManager.Support | ✅ |
 | terraform | Azure.ResourceManager.Terraform | ✅ |
 | trafficmanager | Azure.ResourceManager.TrafficManager | ✅ |
-| trustedsigning | Azure.ResourceManager.TrustedSigning | ✅ |
 | virtualenclaves | Azure.ResourceManager.VirtualEnclaves | ✅ |
 | webpubsub | Azure.ResourceManager.WebPubSub | ✅ |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
@@ -300,7 +302,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 77
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 75
 
 | Service | Library |
 | ------- | ------- |
@@ -360,9 +362,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 77
 | orbital | Azure.ResourceManager.Orbital |
 | policyinsights | Azure.ResourceManager.PolicyInsights |
 | privatedns | Azure.ResourceManager.PrivateDns |
-| recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery |
 | reservations | Azure.ResourceManager.Reservations |
-| resourcegraph | Azure.ResourceManager.ResourceGraph |
 | resourcehealth | Azure.ResourceManager.ResourceHealth |
 | resourcemanager | Azure.ResourceManager |
 | resourcemover | Azure.ResourceManager.ResourceMover |
@@ -387,7 +387,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 77
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 6 / 43 migrated to TypeSpec-based generator
+**Migration Status**: 7 / 43 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
@@ -409,7 +409,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | eventgrid | Azure.Provisioning.EventGrid | Azure.ResourceManager.EventGrid | Reflection |
 | eventhub | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs ✅ | Reflection |
 | frontdoor | Azure.Provisioning.FrontDoor | Azure.ResourceManager.FrontDoor ✅ | Reflection |
-| hybridkubernetes | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes ✅ | Reflection |
+| hybridkubernetes | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes ✅ | TypeSpec ✅ |
 | keyvault | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | TypeSpec ✅ |
 | kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
 | kusto | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto | Reflection |
@@ -424,7 +424,7 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager<br>Azure.ResourceManager.Resources | None |
 | redis | Azure.Provisioning.Redis | Azure.ResourceManager.Redis ✅ | Reflection |
 | redisenterprise | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | Reflection |
-| resourcegraph | Azure.Provisioning.ResourceGraph | Azure.ResourceManager.ResourceGraph | Reflection |
+| resourcegraph | Azure.Provisioning.ResourceGraph | Azure.ResourceManager.ResourceGraph ✅ | Reflection |
 | search | Azure.Provisioning.Search | Azure.ResourceManager.Search ✅ | Reflection |
 | securitycenter | Azure.Provisioning.SecurityCenter | Azure.ResourceManager.SecurityCenter | Reflection |
 | servicebus | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus ✅ | Reflection |

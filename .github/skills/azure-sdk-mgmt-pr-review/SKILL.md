@@ -57,7 +57,7 @@ To determine the review scope:
    ```powershell
    pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -PackagePath <package-path>
    ```
-   The script checks all rules in the "API Review Checklist" below and outputs violations with rule IDs, line numbers, and suggested fixes. Include every violation from the script output as an inline review comment, **after** filtering out anything already covered in step 2.
+   The script checks all rules in the "API Review Checklist" below and outputs violations with rule IDs, line numbers, and suggested fixes. Treat those API-file line numbers as identifiers for the affected public symbol, not as final comment targets. After filtering out anything already covered in step 2, resolve each remaining violation to the relevant source file as described below. Emit it as an inline review comment only when that source location is in the PR diff; otherwise include it in the review body's "Non-inline findings" section.
    If `ApiCompatVersion` is present (i.e., a prior stable version exists), pass the baseline API surface file to the script using `-BaselineApiFilePath` so it can deterministically filter out violations on unchanged API surface:
    ```powershell
    pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -ApiFilePath <current-api-file> -BaselineApiFilePath <baseline-api-file>
@@ -84,7 +84,7 @@ To determine the review scope:
 
    **Step 4b — record a verdict for every `NEW` entry.** For each type ask: *"if a consumer saw this type name in IntelliSense without the namespace, would they know which Azure service/resource it belongs to?"* Assign exactly one verdict per type:
    - `OK` — name carries clear service/resource/domain context, or is a well-established term in this RP's domain.
-   - `Flag` — name is generic/ambiguous **and** lacks RP/resource/domain context. Only flag when you are confident *and* you can propose a concrete better name. Post an inline comment for these.
+   - `Flag` — name is generic/ambiguous **and** lacks RP/resource/domain context. Only flag when you are confident *and* you can propose a concrete better name. Resolve the type to the relevant generated or customization source file, then post an inline comment if that location is in the PR diff; otherwise include the finding in the review body's "Non-inline findings" section.
    - `OK (low confidence)` — borderline; do **not** post a comment. Recording it keeps the pass honest without adding noise.
 
    The contextual-naming pass is **not complete** until every `NEW` inventory entry has a verdict. The count of verdicts must equal the count of `NEW` entries from step 4a.
@@ -99,7 +99,20 @@ To determine the review scope:
 5. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface. Check for any additional issues not covered by the script (e.g., contextual judgment calls, domain-specific naming).
 6. Check Generated models and resources in src/Generated/.
 7. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
-8. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment. **Always target the current TFM API file** (e.g., `*.net10.0.cs`) – earlier reviewers may have commented on a previous TFM mirror; do not blindly copy their line numbers.
+8. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment. **Do not target `api/*.cs` files for inline comments.** API listings can be too large for GitHub to resolve review-comment positions, which causes the entire review submission to fail.
+
+### Resolving API findings to commentable source files
+
+Use `api/*.cs` files for analysis only. Before emitting any inline comment found from API-surface scanning, resolve the affected public symbol to a source file that appears in the PR diff:
+
+1. Prefer the generated source file that declares the affected type/member:
+   - Models: `src/Generated/Models/<TypeName>.cs`
+   - Resource or data types: `src/Generated/<TypeName>.cs`
+   - Serialization-only findings: `src/Generated/**/<TypeName>.Serialization.cs`
+2. If the affected symbol is customized or preserved for compatibility, target the customization file instead, such as `src/Customize/**/<TypeName>.cs`, `src/Customization*/**`, or another file with `[CodeGenType]`, `[CodeGenSuppress]`, or the custom member declaration.
+3. For TypeSpec customization fixes, target the relevant `client.tsp`, `main.tsp`, or `tspconfig.yaml` line when that file is in the PR diff.
+4. Only emit inline comments for paths and lines that are in the PR diff. If the correct source file is not in the diff, do **not** fall back to an `api/*.cs` inline comment. Put that finding in the review body under a "Non-inline findings" section and explain that GitHub cannot attach an inline comment because the source file is not part of the diff.
+5. When an API scanner line maps to a type, comment on the class/struct/enum declaration line in the source file. When it maps to a member, comment on the property/method/constructor declaration line.
 
 ### API Review Checklist
 
@@ -185,13 +198,15 @@ The following table applies to the **generated C# API surface** (public types/pr
 | Property Pattern | Expected Type |
 |------------------|---------------|
 | Ends with `Id`/`Guid` with UUID value | `Guid` |
-| Ends with `Id` with ARM resource ID | `ResourceIdentifier` |
+| String property ending with `Id` / `ResourceId` that holds an ARM resource ID | `ResourceIdentifier` |
 | Named `ResourceType` or ends with `Type` for resource types | `ResourceType` |
 | Named `etag` | `ETag` |
 | Contains `location`/`locations` | Consider `AzureLocation` |
 | Contains `size` | Consider `int`/`long` instead of string |
 
 For **TypeSpec**, UUID-valued properties should use the `uuid` scalar and map to `Guid` in the generated .NET SDK.
+
+Only flag `*Id` / `*ResourceId` properties for `ResourceIdentifier` when the generated C# type is `string`. Numeric (`int`/`long`) and `Guid` ID properties are not subject to the `ResourceIdentifier` rule and must not be flagged as needing a type change.
 
 #### Duration/Interval Format
 - ISO 8601 duration (P1DT2H59M59S): use `duration` scalar in TypeSpec
@@ -231,7 +246,7 @@ If `ApiCompatVersion` is not present in the `.csproj`, skip this phase — there
 
 ## Output Format
 
-Submit a single **pull request review** with all findings as **inline comments** attached to the relevant file and line. Do not post findings as general PR comments.
+Submit a single **pull request review** with findings attached as inline comments on commentable source files whenever possible. Do not post findings as general PR comments. If a finding cannot be attached inline because the relevant source file/line is not in the PR diff, include it in the review body under "Non-inline findings" instead of targeting `api/*.cs`.
 
 ### Agentic workflow mode
 
@@ -246,10 +261,11 @@ For `pull_request_target` workflows, treat PR contents as untrusted. Do not chec
 
 ### How to submit the review
 
-1. Collect all review findings across all phases. For each finding, record:
+1. Collect all review findings across all phases. For each inline finding, record:
    - **file path** (relative to repo root)
    - **line number** (in the PR diff, use the last line of the relevant range)
    - **comment body** (the review feedback)
+   Do not use `api/*.cs` as the inline comment path. Resolve API-surface findings to generated/customization/TypeSpec source files first, and move unresolvable findings to the review body.
 2. Submit **one** pull request review that includes all findings as inline review comments. Outside Agentic Workflow mode, use the `gh` CLI:
    ```
    gh api repos/{owner}/{repo}/pulls/{pull_number}/reviews \
@@ -280,7 +296,7 @@ For `pull_request_target` workflows, treat PR contents as untrusted. Do not chec
 2. If Phase 1 fails, the overall review must be submitted as **"Request Changes"** — but still continue through Phase 2 (and Phase 3 where applicable) and include those findings in the same review, unless the versioning problem prevents determining the review scope (see Phase 1 instructions).
 3. Include Phase 2 (API Review) results:
    - Summarize what passes review in the review body.
-   - Each issue becomes an inline comment on the relevant file and line.
+   - Each issue becomes an inline comment on the relevant source file and line when that location is in the PR diff; otherwise include it in "Non-inline findings" in the review body.
    - Include the contextual-naming coverage count (`evaluated N new public types, flagged M`).
 4. If `ApiCompatVersion` exists, include Phase 3 (Breaking Change Detection) results:
    - Build the project and check for `ApiCompat` errors.
