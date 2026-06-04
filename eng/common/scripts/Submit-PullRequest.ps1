@@ -115,9 +115,6 @@ if ($resp.Count -gt 0) {
       $existingTitle = $PRTitle
       LogDebug "Updated existing pull request $existingUrl title and body"
     }
-    else {
-      LogDebug "Skipping existing pull request title/body update because UpdateExistingPullRequest is false"
-    }
 
     # setting variable to reference the pull request by number
     Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$existingNumber"
