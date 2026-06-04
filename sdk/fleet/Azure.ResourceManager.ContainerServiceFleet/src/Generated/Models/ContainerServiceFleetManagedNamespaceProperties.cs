@@ -12,25 +12,25 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The namespace properties for the fleet managed namespace. </summary>
-    public partial class ManagedNamespaceProperties
+    public partial class ContainerServiceFleetManagedNamespaceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNamespaceProperties"/>. </summary>
-        public ManagedNamespaceProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedNamespaceProperties"/>. </summary>
+        public ContainerServiceFleetManagedNamespaceProperties()
         {
             Labels = new ChangeTrackingDictionary<string, string>();
             Annotations = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNamespaceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedNamespaceProperties"/>. </summary>
         /// <param name="labels"> The labels for the fleet managed namespace. </param>
         /// <param name="annotations"> The annotations for the fleet managed namespace. </param>
         /// <param name="defaultResourceQuota"> The default resource quota for the fleet managed namespace. </param>
         /// <param name="defaultNetworkPolicy"> The default network policy for the fleet managed namespace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedNamespaceProperties(IDictionary<string, string> labels, IDictionary<string, string> annotations, ContainerServiceFleetResourceQuota defaultResourceQuota, ContainerServiceFleetNetworkPolicy defaultNetworkPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetManagedNamespaceProperties(IDictionary<string, string> labels, IDictionary<string, string> annotations, ContainerServiceFleetResourceQuota defaultResourceQuota, ContainerServiceFleetNetworkPolicy defaultNetworkPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Labels = labels;
             Annotations = annotations;

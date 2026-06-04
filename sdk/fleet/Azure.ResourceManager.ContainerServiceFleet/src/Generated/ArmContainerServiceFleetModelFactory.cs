@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="portalFqdn"> The Azure Portal FQDN of the Fleet hub. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetManagedNamespaceData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetManagedNamespaceData ContainerServiceFleetManagedNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetManagedNamespaceProvisioningState? provisioningState = default, ManagedNamespaceProperties managedNamespaceProperties = default, ContainerServiceFleetAdoptionPolicy? adoptionPolicy = default, ContainerServiceFleetDeletePolicy? deletePolicy = default, ContainerServiceFleetPropagationPolicy propagationPolicy = default, FleetManagedNamespaceStatus status = default, string portalFqdn = default, ETag? eTag = default)
+        public static ContainerServiceFleetManagedNamespaceData ContainerServiceFleetManagedNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetManagedNamespaceProvisioningState? provisioningState = default, ContainerServiceFleetManagedNamespaceProperties managedNamespaceProperties = default, ContainerServiceFleetAdoptionPolicy? adoptionPolicy = default, ContainerServiceFleetDeletePolicy? deletePolicy = default, ContainerServiceFleetPropagationPolicy propagationPolicy = default, FleetManagedNamespaceStatus status = default, string portalFqdn = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -268,13 +268,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="annotations"> The annotations for the fleet managed namespace. </param>
         /// <param name="defaultResourceQuota"> The default resource quota for the fleet managed namespace. </param>
         /// <param name="defaultNetworkPolicy"> The default network policy for the fleet managed namespace. </param>
-        /// <returns> A new <see cref="Models.ManagedNamespaceProperties"/> instance for mocking. </returns>
-        public static ManagedNamespaceProperties ManagedNamespaceProperties(IDictionary<string, string> labels = default, IDictionary<string, string> annotations = default, ContainerServiceFleetResourceQuota defaultResourceQuota = default, ContainerServiceFleetNetworkPolicy defaultNetworkPolicy = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetManagedNamespaceProperties"/> instance for mocking. </returns>
+        public static ContainerServiceFleetManagedNamespaceProperties ContainerServiceFleetManagedNamespaceProperties(IDictionary<string, string> labels = default, IDictionary<string, string> annotations = default, ContainerServiceFleetResourceQuota defaultResourceQuota = default, ContainerServiceFleetNetworkPolicy defaultNetworkPolicy = default)
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
             annotations ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ManagedNamespaceProperties(labels ?? new ChangeTrackingDictionary<string, string>(), annotations ?? new ChangeTrackingDictionary<string, string>(), defaultResourceQuota, defaultNetworkPolicy, default);
+            return new ContainerServiceFleetManagedNamespaceProperties(labels ?? new ChangeTrackingDictionary<string, string>(), annotations ?? new ChangeTrackingDictionary<string, string>(), defaultResourceQuota, defaultNetworkPolicy, default);
         }
 
         /// <param name="cpuRequest"> The CPU request for the managed namespace. See more at https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#meaning-of-cpu. </param>

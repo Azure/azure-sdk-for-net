@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
                         PlacementType = ContainerServiceFleetPlacementType.PickAll
                     }
                 },
-                ManagedNamespaceProperties = new ManagedNamespaceProperties
+                ManagedNamespaceProperties = new ContainerServiceFleetManagedNamespaceProperties
                 {
                     DefaultResourceQuota = new ContainerServiceFleetResourceQuota
                     {

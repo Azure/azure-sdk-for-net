@@ -10,7 +10,8 @@
 ### Breaking Changes
 
 - Renamed `AutoUpgradeProfileProperties.LongTermSupport` to `IsLongTermSupport` to follow the .NET boolean property naming guideline.
-- Renamed two types to use the package-consistent `ContainerServiceFleet*` prefix:
+- Renamed three types to use the package-consistent `ContainerServiceFleet*` prefix:
+  - `ManagedNamespaceProperties` → `ContainerServiceFleetManagedNamespaceProperties`
   - `UpdateRunGateStatus` → `ContainerServiceFleetUpdateRunGateStatus`
   - `UpdateRunGateTargetProperties` → `ContainerServiceFleetUpdateRunGateTargetProperties`
 
