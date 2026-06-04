@@ -662,7 +662,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="allowedTools"></param>
         /// <param name="requireApproval"></param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveMcpServerDefinition"/> instance for mocking. </returns>
-        public static VoiceLiveMcpServerDefinition VoiceLiveMcpServerDefinition(string serverLabel = default, string serverUrl = default, string authorization = default, IDictionary<string, string> headers = default, IEnumerable<string> allowedTools = default, BinaryData requireApproval = default)
+        public static VoiceLiveMcpServerDefinition VoiceLiveMcpServerDefinition(string serverLabel = default, Uri serverUrl = default, string authorization = default, IDictionary<string, string> headers = default, IEnumerable<string> allowedTools = default, BinaryData requireApproval = default)
         {
             headers ??= new ChangeTrackingDictionary<string, string>();
             allowedTools ??= new ChangeTrackingList<string>();
