@@ -12,7 +12,7 @@ Hosted agents simplify the custom agent deployment on fully controlled environme
 
 In this example we will build the docker image for hosted Agent based of the simple [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py). The service defined in this file just gets the request, adds "Echo: " to it and sends it back using the responses protocol.
 
-## Run the sample
+## Hosted agent deployment
 `Azure.AI.Projects` can be used only to create an `ProjectsAgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API.
 1. Create Azure Container registry in the same resource group and region as Microsoft Foundry project. Find the docker login at Settings>Access keys section at the left panel of created container registry in the Azure portal. Check the box "Admin user" to generate the password for the default user account marked as `<DOCKER_USERNAME>` below.
 2. Assign the `AcrPull` role to the project's Managed Identity for the Azure Container Registry.
@@ -57,7 +57,7 @@ docker login <DOCKER_USERNAME>.azurecr.io
 docker push <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
 ```
 
-# Run the sample.
+## Run the sample.
 
 1. Read the environment variables, which will be used in the next steps.
 
