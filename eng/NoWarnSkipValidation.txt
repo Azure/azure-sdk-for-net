@@ -34,7 +34,6 @@ Azure.AI.Language.Text.Authoring
 Azure.AI.OpenAI
 Azure.AI.OpenAI.Assistants
 Azure.AI.Personalizer
-Azure.AI.Projects.Agents
 Azure.AI.Speech.Transcription
 Azure.AI.TextAnalytics
 Azure.AI.TextAnalytics.Legacy
