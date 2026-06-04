@@ -16,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The List operation response, that contains the Gremlin resource events and their properties. </summary>
+    /// <summary> Specific Databases to restore. </summary>
     public partial class RestorableGremlinResourceData : ResourceData, IJsonModel<RestorableGremlinResourceData>
     {
         /// <param name="data"> The data to parse. </param>
@@ -98,6 +98,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -129,9 +144,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string databaseName = default;
             IReadOnlyList<string> graphNames = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -202,9 +217,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 databaseName,
-                graphNames ?? new ChangeTrackingList<string>());
+                graphNames ?? new ChangeTrackingList<string>(),
+                additionalBinaryDataProperties);
         }
     }
 }

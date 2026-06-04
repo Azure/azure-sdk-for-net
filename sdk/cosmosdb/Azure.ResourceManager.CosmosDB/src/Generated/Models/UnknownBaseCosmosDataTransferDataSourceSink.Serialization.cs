@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BaseCosmosDataTransferDataSourceSink IPersistableModel<BaseCosmosDataTransferDataSourceSink>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownBaseCosmosDataTransferDataSourceSink)PersistableModelCreateCore(data, options);
+        BaseCosmosDataTransferDataSourceSink IPersistableModel<BaseCosmosDataTransferDataSourceSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (BaseCosmosDataTransferDataSourceSink)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BaseCosmosDataTransferDataSourceSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BaseCosmosDataTransferDataSourceSink IJsonModel<BaseCosmosDataTransferDataSourceSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownBaseCosmosDataTransferDataSourceSink)JsonModelCreateCore(ref reader, options);
+        BaseCosmosDataTransferDataSourceSink IJsonModel<BaseCosmosDataTransferDataSourceSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (BaseCosmosDataTransferDataSourceSink)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
