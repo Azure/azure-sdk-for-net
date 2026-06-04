@@ -151,14 +151,26 @@ namespace Azure.Generator.Provisioning.Primitives
         private static T GetSameValueOrDefault<T>(IEnumerable<T> values, T defaultValue, IEqualityComparer<T>? comparer = null)
             where T : notnull
         {
-            var distinctValues = values.Distinct(comparer).Take(2).ToArray();
-            return distinctValues.Length == 1 ? distinctValues[0] : defaultValue;
+            comparer ??= EqualityComparer<T>.Default;
+            var firstValue = values.FirstOrDefault();
+            return firstValue is not null && values.All(value => comparer.Equals(firstValue, value))
+                ? firstValue
+                : defaultValue;
         }
 
         private static T? GetSameNullableValueOrDefault<T>(IEnumerable<T?> values, T? defaultValue, IEqualityComparer<T?>? comparer = null)
         {
-            var distinctValues = values.Distinct(comparer).Take(2).ToArray();
-            return distinctValues.Length == 1 ? distinctValues[0] : defaultValue;
+            comparer ??= EqualityComparer<T?>.Default;
+            var valueList = values.ToArray();
+            if (valueList.Length == 0)
+            {
+                return defaultValue;
+            }
+
+            var firstValue = valueList[0];
+            return valueList.All(value => comparer.Equals(firstValue, value))
+                ? firstValue
+                : defaultValue;
         }
 
         private static IEnumerable<RequestPathPattern> CollectResourceIdPatterns(IReadOnlyList<ArmResourceMetadata> metadata)

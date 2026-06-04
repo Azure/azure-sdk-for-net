@@ -145,6 +145,34 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void CollapsedProjectionComparesParentResourceIdByEqualityNotHashCode()
+        {
+            var model = CreateModel("TestResourceData");
+            var firstParent = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}");
+            var secondParent = new RequestPathPattern(firstParent.AsEnumerable());
+            var firstResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/first",
+                "Microsoft.Test/widgets/children",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                parentResourceIdPattern: firstParent);
+            var secondResource = CreateMetadata(
+                model,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/children/second",
+                "Microsoft.Test/widgets/children",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                parentResourceIdPattern: secondParent);
+
+            var projection = ProvisioningResourceProjection.Create([firstResource, secondResource])[0];
+
+            Assert.That(firstParent, Is.EqualTo(secondParent));
+            Assert.That(firstParent.GetHashCode(), Is.Not.EqualTo(secondParent.GetHashCode()));
+            Assert.That(projection.ParentResourceId, Is.EqualTo(firstParent));
+        }
+
+        [Test]
         public void CollapsedProjectionKeepsOnlyConsistentSingletonResourceName()
         {
             var model = CreateModel("TestResourceData");
@@ -186,6 +214,7 @@ namespace Azure.Generator.Provisioning.Tests
             string? resourceName = null,
             string? singletonResourceName = null,
             string? parentResourceId = null,
+            RequestPathPattern? parentResourceIdPattern = null,
             ArmResourceNameConstraints? nameConstraints = null)
         {
             var path = new RequestPathPattern(resourceIdPattern);
@@ -197,7 +226,7 @@ namespace Azure.Generator.Provisioning.Tests
                 new ArmScopeInfo(scope, RequestPathPattern.GetFromScope(scope, path), null),
                 [],
                 singletonResourceName,
-                parentResourceId is null ? null : new RequestPathPattern(parentResourceId),
+                parentResourceIdPattern ?? (parentResourceId is null ? null : new RequestPathPattern(parentResourceId)),
                 [],
                 nameConstraints ?? new ArmResourceNameConstraints(null, null, null),
                 apiVersions,
