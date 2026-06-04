@@ -8,163 +8,113 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the DeletedSite data model.
-    /// A deleted app.
-    /// Serialized Name: DeletedSite
-    /// </summary>
+    /// <summary> A deleted app. </summary>
     public partial class DeletedSiteData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeletedSiteData"/>. </summary>
-        public DeletedSiteData()
+        internal DeletedSiteData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DeletedSiteData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: DeletedSite.kind
-        /// </param>
-        /// <param name="deletedSiteId">
-        /// Numeric id for the deleted site
-        /// Serialized Name: DeletedSite.properties.deletedSiteId
-        /// </param>
-        /// <param name="deletedTimestamp">
-        /// Time in UTC when the app was deleted.
-        /// Serialized Name: DeletedSite.properties.deletedTimestamp
-        /// </param>
-        /// <param name="subscription">
-        /// Subscription containing the deleted site
-        /// Serialized Name: DeletedSite.properties.subscription
-        /// </param>
-        /// <param name="resourceGroup">
-        /// ResourceGroup that contained the deleted site
-        /// Serialized Name: DeletedSite.properties.resourceGroup
-        /// </param>
-        /// <param name="deletedSiteName">
-        /// Name of the deleted site
-        /// Serialized Name: DeletedSite.properties.deletedSiteName
-        /// </param>
-        /// <param name="slot">
-        /// Slot of the deleted site
-        /// Serialized Name: DeletedSite.properties.slot
-        /// </param>
-        /// <param name="kindPropertiesKind">
-        /// Kind of site that was deleted
-        /// Serialized Name: DeletedSite.properties.kind
-        /// </param>
-        /// <param name="geoRegionName">
-        /// Geo Region of the deleted site
-        /// Serialized Name: DeletedSite.properties.geoRegionName
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string kindPropertiesKind, string geoRegionName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> DeletedSite resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeletedSiteProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            DeletedSiteId = deletedSiteId;
-            DeletedTimestamp = deletedTimestamp;
-            Subscription = subscription;
-            ResourceGroup = resourceGroup;
-            DeletedSiteName = deletedSiteName;
-            Slot = slot;
-            KindPropertiesKind = kindPropertiesKind;
-            GeoRegionName = geoRegionName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: DeletedSite.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
-        /// <summary>
-        /// Numeric id for the deleted site
-        /// Serialized Name: DeletedSite.properties.deletedSiteId
-        /// </summary>
-        [WirePath("properties.deletedSiteId")]
-        public int? DeletedSiteId { get; }
-        /// <summary>
-        /// Time in UTC when the app was deleted.
-        /// Serialized Name: DeletedSite.properties.deletedTimestamp
-        /// </summary>
-        [WirePath("properties.deletedTimestamp")]
-        public string DeletedTimestamp { get; }
-        /// <summary>
-        /// Subscription containing the deleted site
-        /// Serialized Name: DeletedSite.properties.subscription
-        /// </summary>
-        [WirePath("properties.subscription")]
-        public string Subscription { get; }
-        /// <summary>
-        /// ResourceGroup that contained the deleted site
-        /// Serialized Name: DeletedSite.properties.resourceGroup
-        /// </summary>
-        [WirePath("properties.resourceGroup")]
-        public string ResourceGroup { get; }
-        /// <summary>
-        /// Name of the deleted site
-        /// Serialized Name: DeletedSite.properties.deletedSiteName
-        /// </summary>
-        [WirePath("properties.deletedSiteName")]
-        public string DeletedSiteName { get; }
-        /// <summary>
-        /// Slot of the deleted site
-        /// Serialized Name: DeletedSite.properties.slot
-        /// </summary>
-        [WirePath("properties.slot")]
-        public string Slot { get; }
-        /// <summary>
-        /// Kind of site that was deleted
-        /// Serialized Name: DeletedSite.properties.kind
-        /// </summary>
-        [WirePath("properties.kind")]
-        public string KindPropertiesKind { get; }
-        /// <summary>
-        /// Geo Region of the deleted site
-        /// Serialized Name: DeletedSite.properties.geoRegionName
-        /// </summary>
-        [WirePath("properties.geoRegionName")]
-        public string GeoRegionName { get; }
+        /// <summary> DeletedSite resource specific properties. </summary>
+        internal DeletedSiteProperties Properties { get; }
+
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; }
+
+        /// <summary> Numeric id for the deleted site. </summary>
+        public int? DeletedSiteId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeletedSiteId;
+            }
+        }
+
+        /// <summary> Time in UTC when the app was deleted. </summary>
+        public string DeletedTimestamp
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeletedTimestamp;
+            }
+        }
+
+        /// <summary> Subscription containing the deleted site. </summary>
+        public string Subscription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subscription;
+            }
+        }
+
+        /// <summary> ResourceGroup that contained the deleted site. </summary>
+        public string ResourceGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGroup;
+            }
+        }
+
+        /// <summary> Name of the deleted site. </summary>
+        public string DeletedSiteName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeletedSiteName;
+            }
+        }
+
+        /// <summary> Slot of the deleted site. </summary>
+        public string Slot
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Slot;
+            }
+        }
+
+        /// <summary> Kind of site that was deleted. </summary>
+        public string Kind
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Kind;
+            }
+        }
+
+        /// <summary> Geo Region of the deleted site. </summary>
+        public string GeoRegionName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GeoRegionName;
+            }
+        }
     }
 }

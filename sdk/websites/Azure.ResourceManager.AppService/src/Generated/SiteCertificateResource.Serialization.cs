@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class SiteCertificateResource : IJsonModel<AppCertificateData>
+    /// <summary></summary>
+    public partial class SiteCertificateResource : IJsonModel<CertificateData>
     {
-        private static AppCertificateData s_dataDeserializationInstance;
-        private static AppCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CertificateData> s_dataDeserializationInstance;
 
-        void IJsonModel<AppCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppCertificateData>)Data).Write(writer, options);
+        private static IJsonModel<CertificateData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CertificateData();
 
-        AppCertificateData IJsonModel<AppCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppCertificateData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<CertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CertificateData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<AppCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppCertificateData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CertificateData IJsonModel<CertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        AppCertificateData IPersistableModel<AppCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppCertificateData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CertificateData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<AppCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CertificateData IPersistableModel<CertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CertificateData>(data, options, AzureResourceManagerAppServiceContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

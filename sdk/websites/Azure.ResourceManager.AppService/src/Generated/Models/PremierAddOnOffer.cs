@@ -7,185 +7,120 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Premier add-on offer.
-    /// Serialized Name: PremierAddOnOffer
-    /// </summary>
-    public partial class PremierAddOnOffer : ResourceData
+    /// <summary> Premier add-on offer. </summary>
+    public partial class PremierAddOnOffer : ProxyOnlyResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="PremierAddOnOffer"/>. </summary>
-        public PremierAddOnOffer()
+        internal PremierAddOnOffer()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PremierAddOnOffer"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku">
-        /// Premier add on SKU.
-        /// Serialized Name: PremierAddOnOffer.properties.sku
-        /// </param>
-        /// <param name="product">
-        /// Premier add on offer Product.
-        /// Serialized Name: PremierAddOnOffer.properties.product
-        /// </param>
-        /// <param name="vendor">
-        /// Premier add on offer Vendor.
-        /// Serialized Name: PremierAddOnOffer.properties.vendor
-        /// </param>
-        /// <param name="isPromoCodeRequired">
-        /// &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: PremierAddOnOffer.properties.promoCodeRequired
-        /// </param>
-        /// <param name="quota">
-        /// Premier add on offer Quota.
-        /// Serialized Name: PremierAddOnOffer.properties.quota
-        /// </param>
-        /// <param name="webHostingPlanRestrictions">
-        /// App Service plans this offer is restricted to.
-        /// Serialized Name: PremierAddOnOffer.properties.webHostingPlanRestrictions
-        /// </param>
-        /// <param name="privacyPolicyUri">
-        /// Privacy policy URL.
-        /// Serialized Name: PremierAddOnOffer.properties.privacyPolicyUrl
-        /// </param>
-        /// <param name="legalTermsUri">
-        /// Legal terms URL.
-        /// Serialized Name: PremierAddOnOffer.properties.legalTermsUrl
-        /// </param>
-        /// <param name="marketplacePublisher">
-        /// Marketplace publisher.
-        /// Serialized Name: PremierAddOnOffer.properties.marketplacePublisher
-        /// </param>
-        /// <param name="marketplaceOffer">
-        /// Marketplace offer.
-        /// Serialized Name: PremierAddOnOffer.properties.marketplaceOffer
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PremierAddOnOffer(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sku, string product, string vendor, bool? isPromoCodeRequired, int? quota, AppServicePlanRestriction? webHostingPlanRestrictions, Uri privacyPolicyUri, Uri legalTermsUri, string marketplacePublisher, string marketplaceOffer, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource Name. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> PremierAddOnOffer resource specific properties. </param>
+        internal PremierAddOnOffer(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, PremierAddOnOfferProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
-            Sku = sku;
-            Product = product;
-            Vendor = vendor;
-            IsPromoCodeRequired = isPromoCodeRequired;
-            Quota = quota;
-            WebHostingPlanRestrictions = webHostingPlanRestrictions;
-            PrivacyPolicyUri = privacyPolicyUri;
-            LegalTermsUri = legalTermsUri;
-            MarketplacePublisher = marketplacePublisher;
-            MarketplaceOffer = marketplaceOffer;
-            Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// Premier add on SKU.
-        /// Serialized Name: PremierAddOnOffer.properties.sku
-        /// </summary>
-        [WirePath("properties.sku")]
-        public string Sku { get; set; }
-        /// <summary>
-        /// Premier add on offer Product.
-        /// Serialized Name: PremierAddOnOffer.properties.product
-        /// </summary>
-        [WirePath("properties.product")]
-        public string Product { get; set; }
-        /// <summary>
-        /// Premier add on offer Vendor.
-        /// Serialized Name: PremierAddOnOffer.properties.vendor
-        /// </summary>
-        [WirePath("properties.vendor")]
-        public string Vendor { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: PremierAddOnOffer.properties.promoCodeRequired
-        /// </summary>
-        [WirePath("properties.promoCodeRequired")]
-        public bool? IsPromoCodeRequired { get; set; }
-        /// <summary>
-        /// Premier add on offer Quota.
-        /// Serialized Name: PremierAddOnOffer.properties.quota
-        /// </summary>
-        [WirePath("properties.quota")]
-        public int? Quota { get; set; }
-        /// <summary>
-        /// App Service plans this offer is restricted to.
-        /// Serialized Name: PremierAddOnOffer.properties.webHostingPlanRestrictions
-        /// </summary>
-        [WirePath("properties.webHostingPlanRestrictions")]
-        public AppServicePlanRestriction? WebHostingPlanRestrictions { get; set; }
-        /// <summary>
-        /// Privacy policy URL.
-        /// Serialized Name: PremierAddOnOffer.properties.privacyPolicyUrl
-        /// </summary>
-        [WirePath("properties.privacyPolicyUrl")]
-        public Uri PrivacyPolicyUri { get; set; }
-        /// <summary>
-        /// Legal terms URL.
-        /// Serialized Name: PremierAddOnOffer.properties.legalTermsUrl
-        /// </summary>
-        [WirePath("properties.legalTermsUrl")]
-        public Uri LegalTermsUri { get; set; }
-        /// <summary>
-        /// Marketplace publisher.
-        /// Serialized Name: PremierAddOnOffer.properties.marketplacePublisher
-        /// </summary>
-        [WirePath("properties.marketplacePublisher")]
-        public string MarketplacePublisher { get; set; }
-        /// <summary>
-        /// Marketplace offer.
-        /// Serialized Name: PremierAddOnOffer.properties.marketplaceOffer
-        /// </summary>
-        [WirePath("properties.marketplaceOffer")]
-        public string MarketplaceOffer { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        /// <summary> PremierAddOnOffer resource specific properties. </summary>
+        internal PremierAddOnOfferProperties Properties { get; }
+
+        /// <summary> Premier add on SKU. </summary>
+        public string Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+        }
+
+        /// <summary> Premier add on offer Product. </summary>
+        public string Product
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Product;
+            }
+        }
+
+        /// <summary> Premier add on offer Vendor. </summary>
+        public string Vendor
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Vendor;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        public bool? PromoCodeRequired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PromoCodeRequired;
+            }
+        }
+
+        /// <summary> Premier add on offer Quota. </summary>
+        public int? Quota
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Quota;
+            }
+        }
+
+        /// <summary> App Service plans this offer is restricted to. </summary>
+        public AppServicePlanRestrictions? WebHostingPlanRestrictions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WebHostingPlanRestrictions;
+            }
+        }
+
+        /// <summary> Privacy policy URL. </summary>
+        public string PrivacyPolicyUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivacyPolicyUri;
+            }
+        }
+
+        /// <summary> Legal terms URL. </summary>
+        public string LegalTermsUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LegalTermsUri;
+            }
+        }
+
+        /// <summary> Marketplace publisher. </summary>
+        public string MarketplacePublisher
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplacePublisher;
+            }
+        }
+
+        /// <summary> Marketplace offer. </summary>
+        public string MarketplaceOffer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MarketplaceOffer;
+            }
+        }
     }
 }

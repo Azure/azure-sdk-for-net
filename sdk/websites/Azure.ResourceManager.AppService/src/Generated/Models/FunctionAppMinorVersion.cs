@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Function App stack minor version.
-    /// Serialized Name: FunctionAppMinorVersion
-    /// </summary>
+    /// <summary> Function App stack minor version. </summary>
     public partial class FunctionAppMinorVersion
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppMinorVersion"/>. </summary>
         internal FunctionAppMinorVersion()
@@ -54,44 +22,25 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppMinorVersion"/>. </summary>
-        /// <param name="displayText">
-        /// Function App stack (display only).
-        /// Serialized Name: FunctionAppMinorVersion.displayText
-        /// </param>
-        /// <param name="value">
-        /// Function App stack name.
-        /// Serialized Name: FunctionAppMinorVersion.value
-        /// </param>
-        /// <param name="stackSettings">
-        /// Settings associated with the minor version.
-        /// Serialized Name: FunctionAppMinorVersion.stackSettings
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionAppMinorVersion(string displayText, string value, FunctionAppRuntimes stackSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="displayText"> Function App stack (display only). </param>
+        /// <param name="value"> Function App stack name. </param>
+        /// <param name="stackSettings"> Settings associated with the minor version. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionAppMinorVersion(string displayText, string value, FunctionAppRuntimes stackSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayText = displayText;
             Value = value;
             StackSettings = stackSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Function App stack (display only).
-        /// Serialized Name: FunctionAppMinorVersion.displayText
-        /// </summary>
-        [WirePath("displayText")]
+        /// <summary> Function App stack (display only). </summary>
         public string DisplayText { get; }
-        /// <summary>
-        /// Function App stack name.
-        /// Serialized Name: FunctionAppMinorVersion.value
-        /// </summary>
-        [WirePath("value")]
+
+        /// <summary> Function App stack name. </summary>
         public string Value { get; }
-        /// <summary>
-        /// Settings associated with the minor version.
-        /// Serialized Name: FunctionAppMinorVersion.stackSettings
-        /// </summary>
-        [WirePath("stackSettings")]
+
+        /// <summary> Settings associated with the minor version. </summary>
         public FunctionAppRuntimes StackSettings { get; }
     }
 }

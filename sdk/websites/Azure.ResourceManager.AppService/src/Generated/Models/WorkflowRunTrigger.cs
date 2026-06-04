@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The workflow run trigger.
-    /// Serialized Name: WorkflowRunTrigger
-    /// </summary>
+    /// <summary> The workflow run trigger. </summary>
     public partial class WorkflowRunTrigger
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunTrigger"/>. </summary>
         internal WorkflowRunTrigger()
@@ -54,64 +23,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunTrigger"/>. </summary>
-        /// <param name="name">
-        /// Gets the name.
-        /// Serialized Name: WorkflowRunTrigger.name
-        /// </param>
-        /// <param name="inputs">
-        /// Gets the inputs.
-        /// Serialized Name: WorkflowRunTrigger.inputs
-        /// </param>
-        /// <param name="inputsLink">
-        /// Gets the link to inputs.
-        /// Serialized Name: WorkflowRunTrigger.inputsLink
-        /// </param>
-        /// <param name="outputs">
-        /// Gets the outputs.
-        /// Serialized Name: WorkflowRunTrigger.outputs
-        /// </param>
-        /// <param name="outputsLink">
-        /// Gets the link to outputs.
-        /// Serialized Name: WorkflowRunTrigger.outputsLink
-        /// </param>
-        /// <param name="scheduledOn">
-        /// Gets the scheduled time.
-        /// Serialized Name: WorkflowRunTrigger.scheduledTime
-        /// </param>
-        /// <param name="startOn">
-        /// Gets the start time.
-        /// Serialized Name: WorkflowRunTrigger.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// Gets the end time.
-        /// Serialized Name: WorkflowRunTrigger.endTime
-        /// </param>
-        /// <param name="trackingId">
-        /// Gets the tracking id.
-        /// Serialized Name: WorkflowRunTrigger.trackingId
-        /// </param>
-        /// <param name="correlation">
-        /// The run correlation.
-        /// Serialized Name: WorkflowRunTrigger.correlation
-        /// </param>
-        /// <param name="code">
-        /// Gets the code.
-        /// Serialized Name: WorkflowRunTrigger.code
-        /// </param>
-        /// <param name="status">
-        /// Gets the status.
-        /// Serialized Name: WorkflowRunTrigger.status
-        /// </param>
-        /// <param name="error">
-        /// Gets the error.
-        /// Serialized Name: WorkflowRunTrigger.error
-        /// </param>
-        /// <param name="trackedProperties">
-        /// Gets the tracked properties.
-        /// Serialized Name: WorkflowRunTrigger.trackedProperties
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunTrigger(string name, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string trackingId, Correlation correlation, string code, WorkflowStatus? status, BinaryData error, BinaryData trackedProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"> Gets the name. </param>
+        /// <param name="inputs"> Gets the inputs. </param>
+        /// <param name="inputsLink"> Gets the link to inputs. </param>
+        /// <param name="outputs"> Gets the outputs. </param>
+        /// <param name="outputsLink"> Gets the link to outputs. </param>
+        /// <param name="scheduledOn"> Gets the scheduled time. </param>
+        /// <param name="startOn"> Gets the start time. </param>
+        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="trackingId"> Gets the tracking id. </param>
+        /// <param name="correlation"> The run correlation. </param>
+        /// <param name="code"> Gets the code. </param>
+        /// <param name="status"> Gets the status. </param>
+        /// <param name="error"> Gets the error. </param>
+        /// <param name="trackedProperties"> Gets the tracked properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkflowRunTrigger(string name, BinaryData inputs, Models.WebAppContentLink inputsLink, BinaryData outputs, Models.WebAppContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string trackingId, Correlation correlation, string code, WorkflowStatus? status, BinaryData error, BinaryData trackedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Inputs = inputs;
@@ -127,209 +54,158 @@ namespace Azure.ResourceManager.AppService.Models
             Status = status;
             Error = error;
             TrackedProperties = trackedProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Gets the name.
-        /// Serialized Name: WorkflowRunTrigger.name
-        /// </summary>
-        [WirePath("name")]
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
+
         /// <summary>
         /// Gets the inputs.
-        /// Serialized Name: WorkflowRunTrigger.inputs
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("inputs")]
         public BinaryData Inputs { get; }
-        /// <summary>
-        /// Gets the link to inputs.
-        /// Serialized Name: WorkflowRunTrigger.inputsLink
-        /// </summary>
-        [WirePath("inputsLink")]
-        public WebAppContentLink InputsLink { get; }
-        /// <summary>
-        /// Gets the outputs.
-        /// Serialized Name: WorkflowRunTrigger.outputs
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("outputs")]
-        public BinaryData Outputs { get; }
-        /// <summary>
-        /// Gets the link to outputs.
-        /// Serialized Name: WorkflowRunTrigger.outputsLink
-        /// </summary>
-        [WirePath("outputsLink")]
-        public WebAppContentLink OutputsLink { get; }
-        /// <summary>
-        /// Gets the scheduled time.
-        /// Serialized Name: WorkflowRunTrigger.scheduledTime
-        /// </summary>
-        [WirePath("scheduledTime")]
-        public DateTimeOffset? ScheduledOn { get; }
-        /// <summary>
-        /// Gets the start time.
-        /// Serialized Name: WorkflowRunTrigger.startTime
-        /// </summary>
-        [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// Gets the end time.
-        /// Serialized Name: WorkflowRunTrigger.endTime
-        /// </summary>
-        [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// Gets the tracking id.
-        /// Serialized Name: WorkflowRunTrigger.trackingId
-        /// </summary>
-        [WirePath("trackingId")]
-        public string TrackingId { get; }
-        /// <summary>
-        /// The run correlation.
-        /// Serialized Name: WorkflowRunTrigger.correlation
-        /// </summary>
-        internal Correlation Correlation { get; }
-        /// <summary>
-        /// The client tracking id.
-        /// Serialized Name: Correlation.clientTrackingId
-        /// </summary>
-        [WirePath("correlation.clientTrackingId")]
-        public string CorrelationClientTrackingId
-        {
-            get => Correlation?.ClientTrackingId;
-        }
+
+        /// <summary> Gets the link to inputs. </summary>
+        public Models.WebAppContentLink InputsLink { get; }
 
         /// <summary>
-        /// Gets the code.
-        /// Serialized Name: WorkflowRunTrigger.code
+        /// Gets the outputs.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
-        [WirePath("code")]
+        public BinaryData Outputs { get; }
+
+        /// <summary> Gets the link to outputs. </summary>
+        public Models.WebAppContentLink OutputsLink { get; }
+
+        /// <summary> Gets the scheduled time. </summary>
+        public DateTimeOffset? ScheduledOn { get; }
+
+        /// <summary> Gets the start time. </summary>
+        public DateTimeOffset? StartOn { get; }
+
+        /// <summary> Gets the end time. </summary>
+        public DateTimeOffset? EndOn { get; }
+
+        /// <summary> Gets the tracking id. </summary>
+        public string TrackingId { get; }
+
+        /// <summary> The run correlation. </summary>
+        internal Correlation Correlation { get; }
+
+        /// <summary> Gets the code. </summary>
         public string Code { get; }
-        /// <summary>
-        /// Gets the status.
-        /// Serialized Name: WorkflowRunTrigger.status
-        /// </summary>
-        [WirePath("status")]
+
+        /// <summary> Gets the status. </summary>
         public WorkflowStatus? Status { get; }
+
         /// <summary>
         /// Gets the error.
-        /// Serialized Name: WorkflowRunTrigger.error
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("error")]
         public BinaryData Error { get; }
+
         /// <summary>
         /// Gets the tracked properties.
-        /// Serialized Name: WorkflowRunTrigger.trackedProperties
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("trackedProperties")]
         public BinaryData TrackedProperties { get; }
+
+        /// <summary> The client tracking id. </summary>
+        public string CorrelationClientTrackingId
+        {
+            get
+            {
+                return Correlation is null ? default : Correlation.ClientTrackingId;
+            }
+        }
     }
 }

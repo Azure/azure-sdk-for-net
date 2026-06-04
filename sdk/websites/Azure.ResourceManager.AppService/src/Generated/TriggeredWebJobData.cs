@@ -13,231 +13,144 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the TriggeredWebJob data model.
-    /// Triggered Web Job Information.
-    /// Serialized Name: TriggeredWebJob
-    /// </summary>
+    /// <summary> Triggered Web Job Information. </summary>
     public partial class TriggeredWebJobData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TriggeredWebJobData"/>. </summary>
-        public TriggeredWebJobData()
+        internal TriggeredWebJobData()
         {
-            Settings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TriggeredWebJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: TriggeredWebJob.kind
-        /// </param>
-        /// <param name="latestRun">
-        /// Latest job run information.
-        /// Serialized Name: TriggeredWebJob.properties.latest_run
-        /// </param>
-        /// <param name="historyUri">
-        /// History URL.
-        /// Serialized Name: TriggeredWebJob.properties.history_url
-        /// </param>
-        /// <param name="schedulerLogsUri">
-        /// Scheduler Logs URL.
-        /// Serialized Name: TriggeredWebJob.properties.scheduler_logs_url
-        /// </param>
-        /// <param name="runCommand">
-        /// Run command.
-        /// Serialized Name: TriggeredWebJob.properties.run_command
-        /// </param>
-        /// <param name="uri">
-        /// Job URL.
-        /// Serialized Name: TriggeredWebJob.properties.url
-        /// </param>
-        /// <param name="extraInfoUri">
-        /// Extra Info URL.
-        /// Serialized Name: TriggeredWebJob.properties.extra_info_url
-        /// </param>
-        /// <param name="webJobType">
-        /// Job type.
-        /// Serialized Name: TriggeredWebJob.properties.web_job_type
-        /// </param>
-        /// <param name="error">
-        /// Error information.
-        /// Serialized Name: TriggeredWebJob.properties.error
-        /// </param>
-        /// <param name="isUsingSdk">
-        /// Using SDK?
-        /// Serialized Name: TriggeredWebJob.properties.using_sdk
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string.
-        /// Serialized Name: TriggeredWebJob.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="isStorageAccountRequired">
-        /// Checks if Customer provided storage account is required
-        /// Serialized Name: TriggeredWebJob.properties.storageAccountRequired
-        /// </param>
-        /// <param name="settings">
-        /// Job settings.
-        /// Serialized Name: TriggeredWebJob.properties.settings
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, string publicNetworkAccess, bool? isStorageAccountRequired, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> TriggeredWebJob resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggeredWebJobProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            LatestRun = latestRun;
-            HistoryUri = historyUri;
-            SchedulerLogsUri = schedulerLogsUri;
-            RunCommand = runCommand;
-            Uri = uri;
-            ExtraInfoUri = extraInfoUri;
-            WebJobType = webJobType;
-            Error = error;
-            IsUsingSdk = isUsingSdk;
-            PublicNetworkAccess = publicNetworkAccess;
-            IsStorageAccountRequired = isStorageAccountRequired;
-            Settings = settings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: TriggeredWebJob.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
-        /// <summary>
-        /// Latest job run information.
-        /// Serialized Name: TriggeredWebJob.properties.latest_run
-        /// </summary>
-        [WirePath("properties.latest_run")]
-        public TriggeredJobRun LatestRun { get; set; }
-        /// <summary>
-        /// History URL.
-        /// Serialized Name: TriggeredWebJob.properties.history_url
-        /// </summary>
-        [WirePath("properties.history_url")]
-        public Uri HistoryUri { get; set; }
-        /// <summary>
-        /// Scheduler Logs URL.
-        /// Serialized Name: TriggeredWebJob.properties.scheduler_logs_url
-        /// </summary>
-        [WirePath("properties.scheduler_logs_url")]
-        public Uri SchedulerLogsUri { get; set; }
-        /// <summary>
-        /// Run command.
-        /// Serialized Name: TriggeredWebJob.properties.run_command
-        /// </summary>
-        [WirePath("properties.run_command")]
-        public string RunCommand { get; set; }
-        /// <summary>
-        /// Job URL.
-        /// Serialized Name: TriggeredWebJob.properties.url
-        /// </summary>
-        [WirePath("properties.url")]
-        public Uri Uri { get; set; }
-        /// <summary>
-        /// Extra Info URL.
-        /// Serialized Name: TriggeredWebJob.properties.extra_info_url
-        /// </summary>
-        [WirePath("properties.extra_info_url")]
-        public Uri ExtraInfoUri { get; set; }
-        /// <summary>
-        /// Job type.
-        /// Serialized Name: TriggeredWebJob.properties.web_job_type
-        /// </summary>
-        [WirePath("properties.web_job_type")]
-        public WebJobType? WebJobType { get; set; }
-        /// <summary>
-        /// Error information.
-        /// Serialized Name: TriggeredWebJob.properties.error
-        /// </summary>
-        [WirePath("properties.error")]
-        public string Error { get; set; }
-        /// <summary>
-        /// Using SDK?
-        /// Serialized Name: TriggeredWebJob.properties.using_sdk
-        /// </summary>
-        [WirePath("properties.using_sdk")]
-        public bool? IsUsingSdk { get; set; }
-        /// <summary>
-        /// Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string.
-        /// Serialized Name: TriggeredWebJob.properties.publicNetworkAccess
-        /// </summary>
-        [WirePath("properties.publicNetworkAccess")]
-        public string PublicNetworkAccess { get; set; }
-        /// <summary>
-        /// Checks if Customer provided storage account is required
-        /// Serialized Name: TriggeredWebJob.properties.storageAccountRequired
-        /// </summary>
-        [WirePath("properties.storageAccountRequired")]
-        public bool? IsStorageAccountRequired { get; set; }
-        /// <summary>
-        /// Job settings.
-        /// Serialized Name: TriggeredWebJob.properties.settings
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.settings")]
-        public IDictionary<string, BinaryData> Settings { get; }
+        /// <summary> TriggeredWebJob resource specific properties. </summary>
+        internal TriggeredWebJobProperties Properties { get; }
+
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; }
+
+        /// <summary> Latest job run information. </summary>
+        public TriggeredJobRun LatestRun
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LatestRun;
+            }
+        }
+
+        /// <summary> History URL. </summary>
+        public string HistoryUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HistoryUri;
+            }
+        }
+
+        /// <summary> Scheduler Logs URL. </summary>
+        public string SchedulerLogsUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SchedulerLogsUri;
+            }
+        }
+
+        /// <summary> Run command. </summary>
+        public string RunCommand
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunCommand;
+            }
+        }
+
+        /// <summary> Job URL. </summary>
+        public string Uri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Uri;
+            }
+        }
+
+        /// <summary> Extra Info URL. </summary>
+        public string ExtraInfoUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExtraInfoUri;
+            }
+        }
+
+        /// <summary> Job type. </summary>
+        public WebJobType? WebJobType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WebJobType;
+            }
+        }
+
+        /// <summary> Error information. </summary>
+        public string Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+        }
+
+        /// <summary> Using SDK?. </summary>
+        public bool? UsingSdk
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UsingSdk;
+            }
+        }
+
+        /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
+        public string PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+        }
+
+        /// <summary> Checks if Customer provided storage account is required. </summary>
+        public bool? StorageAccountRequired
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccountRequired;
+            }
+        }
+
+        /// <summary> Job settings. </summary>
+        public IDictionary<string, BinaryData> Settings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Settings;
+            }
+        }
     }
 }

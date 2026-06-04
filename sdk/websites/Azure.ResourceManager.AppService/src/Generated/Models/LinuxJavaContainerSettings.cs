@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Linux Java Container settings.
-    /// Serialized Name: LinuxJavaContainerSettings
-    /// </summary>
+    /// <summary> Linux Java Container settings. </summary>
     public partial class LinuxJavaContainerSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LinuxJavaContainerSettings"/>. </summary>
         internal LinuxJavaContainerSettings()
@@ -54,40 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LinuxJavaContainerSettings"/>. </summary>
-        /// <param name="java11Runtime">
-        /// Java 11 version (runtime only).
-        /// Serialized Name: LinuxJavaContainerSettings.java11Runtime
-        /// </param>
-        /// <param name="java8Runtime">
-        /// Java 8 version (runtime only).
-        /// Serialized Name: LinuxJavaContainerSettings.java8Runtime
-        /// </param>
-        /// <param name="isPreview">
-        /// &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: LinuxJavaContainerSettings.isPreview
-        /// </param>
-        /// <param name="isDeprecated">
-        /// &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: LinuxJavaContainerSettings.isDeprecated
-        /// </param>
-        /// <param name="isHidden">
-        /// &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: LinuxJavaContainerSettings.isHidden
-        /// </param>
-        /// <param name="endOfLifeOn">
-        /// End-of-life date for the minor version.
-        /// Serialized Name: LinuxJavaContainerSettings.endOfLifeDate
-        /// </param>
-        /// <param name="isAutoUpdate">
-        /// &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: LinuxJavaContainerSettings.isAutoUpdate
-        /// </param>
-        /// <param name="isEarlyAccess">
-        /// &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: LinuxJavaContainerSettings.isEarlyAccess
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxJavaContainerSettings(string java11Runtime, string java8Runtime, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="java11Runtime"> Java 11 version (runtime only). </param>
+        /// <param name="java8Runtime"> Java 8 version (runtime only). </param>
+        /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isHidden"> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="endOfLifeOn"> End-of-life date for the minor version. </param>
+        /// <param name="isAutoUpdate"> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isEarlyAccess"> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LinuxJavaContainerSettings(string java11Runtime, string java8Runtime, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Java11Runtime = java11Runtime;
             Java8Runtime = java8Runtime;
@@ -97,56 +41,31 @@ namespace Azure.ResourceManager.AppService.Models
             EndOfLifeOn = endOfLifeOn;
             IsAutoUpdate = isAutoUpdate;
             IsEarlyAccess = isEarlyAccess;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Java 11 version (runtime only).
-        /// Serialized Name: LinuxJavaContainerSettings.java11Runtime
-        /// </summary>
-        [WirePath("java11Runtime")]
+        /// <summary> Java 11 version (runtime only). </summary>
         public string Java11Runtime { get; }
-        /// <summary>
-        /// Java 8 version (runtime only).
-        /// Serialized Name: LinuxJavaContainerSettings.java8Runtime
-        /// </summary>
-        [WirePath("java8Runtime")]
+
+        /// <summary> Java 8 version (runtime only). </summary>
         public string Java8Runtime { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: LinuxJavaContainerSettings.isPreview
-        /// </summary>
-        [WirePath("isPreview")]
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsPreview { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: LinuxJavaContainerSettings.isDeprecated
-        /// </summary>
-        [WirePath("isDeprecated")]
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsDeprecated { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: LinuxJavaContainerSettings.isHidden
-        /// </summary>
-        [WirePath("isHidden")]
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsHidden { get; }
-        /// <summary>
-        /// End-of-life date for the minor version.
-        /// Serialized Name: LinuxJavaContainerSettings.endOfLifeDate
-        /// </summary>
-        [WirePath("endOfLifeDate")]
+
+        /// <summary> End-of-life date for the minor version. </summary>
         public DateTimeOffset? EndOfLifeOn { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: LinuxJavaContainerSettings.isAutoUpdate
-        /// </summary>
-        [WirePath("isAutoUpdate")]
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsAutoUpdate { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: LinuxJavaContainerSettings.isEarlyAccess
-        /// </summary>
-        [WirePath("isEarlyAccess")]
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsEarlyAccess { get; }
     }
 }

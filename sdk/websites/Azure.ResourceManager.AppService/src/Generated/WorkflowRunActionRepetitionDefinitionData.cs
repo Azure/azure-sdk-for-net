@@ -13,337 +13,171 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the WorkflowRunActionRepetitionDefinition data model.
-    /// The workflow run action repetition definition.
-    /// Serialized Name: WorkflowRunActionRepetitionDefinition
-    /// </summary>
+    /// <summary> The workflow run action repetition definition. </summary>
     public partial class WorkflowRunActionRepetitionDefinitionData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionDefinitionData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public WorkflowRunActionRepetitionDefinitionData(AzureLocation location) : base(location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The workflow run action repetition properties definition. </param>
+        internal WorkflowRunActionRepetitionDefinitionData(AzureLocation location, WorkflowRunActionRepetitionProperties properties) : base(location)
         {
-            RetryHistory = new ChangeTrackingList<WebAppRetryHistory>();
-            RepetitionIndexes = new ChangeTrackingList<WorkflowRunActionRepetitionIndex>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionDefinitionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="startOn">
-        /// The start time of the workflow scope repetition.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end time of the workflow scope repetition.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.endTime
-        /// </param>
-        /// <param name="correlation">
-        /// The correlation properties.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.correlation
-        /// </param>
-        /// <param name="status">
-        /// The status of the workflow scope repetition.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.status
-        /// </param>
-        /// <param name="code">
-        /// The workflow scope repetition code.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.code
-        /// </param>
-        /// <param name="error">
-        /// Anything
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.error
-        /// </param>
-        /// <param name="trackingId">
-        /// Gets the tracking id.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.trackingId
-        /// </param>
-        /// <param name="inputs">
-        /// Gets the inputs.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.inputs
-        /// </param>
-        /// <param name="inputsLink">
-        /// Gets the link to inputs.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.inputsLink
-        /// </param>
-        /// <param name="outputs">
-        /// Gets the outputs.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.outputs
-        /// </param>
-        /// <param name="outputsLink">
-        /// Gets the link to outputs.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.outputsLink
-        /// </param>
-        /// <param name="trackedProperties">
-        /// Gets the tracked properties.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.trackedProperties
-        /// </param>
-        /// <param name="retryHistory">
-        /// Gets the retry histories.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.retryHistory
-        /// </param>
-        /// <param name="iterationCount"> Serialized Name: WorkflowRunActionRepetitionDefinition.properties.iterationCount. </param>
-        /// <param name="repetitionIndexes">
-        /// The repetition indexes.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.repetitionIndexes
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, string trackingId, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, BinaryData trackedProperties, IList<WebAppRetryHistory> retryHistory, int? iterationCount, IList<WorkflowRunActionRepetitionIndex> repetitionIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The workflow run action repetition properties definition. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkflowRunActionRepetitionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            StartOn = startOn;
-            EndOn = endOn;
-            Correlation = correlation;
-            Status = status;
-            Code = code;
-            Error = error;
-            TrackingId = trackingId;
-            Inputs = inputs;
-            InputsLink = inputsLink;
-            Outputs = outputs;
-            OutputsLink = outputsLink;
-            TrackedProperties = trackedProperties;
-            RetryHistory = retryHistory;
-            IterationCount = iterationCount;
-            RepetitionIndexes = repetitionIndexes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkflowRunActionRepetitionDefinitionData"/> for deserialization. </summary>
-        internal WorkflowRunActionRepetitionDefinitionData()
+        /// <summary> The workflow run action repetition properties definition. </summary>
+        internal WorkflowRunActionRepetitionProperties Properties { get; }
+
+        /// <summary> The start time of the workflow scope repetition. </summary>
+        public DateTimeOffset? StartOn
         {
+            get
+            {
+                return Properties.StartOn;
+            }
         }
 
-        /// <summary>
-        /// The start time of the workflow scope repetition.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.startTime
-        /// </summary>
-        [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// The end time of the workflow scope repetition.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.endTime
-        /// </summary>
-        [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// The correlation properties.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.correlation
-        /// </summary>
-        [WirePath("properties.correlation")]
-        public WebAppRunActionCorrelation Correlation { get; set; }
-        /// <summary>
-        /// The status of the workflow scope repetition.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.status
-        /// </summary>
-        [WirePath("properties.status")]
-        public WorkflowStatus? Status { get; set; }
-        /// <summary>
-        /// The workflow scope repetition code.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.code
-        /// </summary>
-        [WirePath("properties.code")]
-        public string Code { get; set; }
-        /// <summary>
-        /// Anything
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.error
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.error")]
-        public BinaryData Error { get; set; }
-        /// <summary>
-        /// Gets the tracking id.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.trackingId
-        /// </summary>
-        [WirePath("properties.trackingId")]
-        public string TrackingId { get; }
-        /// <summary>
-        /// Gets the inputs.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.inputs
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.inputs")]
-        public BinaryData Inputs { get; }
-        /// <summary>
-        /// Gets the link to inputs.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.inputsLink
-        /// </summary>
-        [WirePath("properties.inputsLink")]
-        public WebAppContentLink InputsLink { get; }
-        /// <summary>
-        /// Gets the outputs.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.outputs
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.outputs")]
-        public BinaryData Outputs { get; }
-        /// <summary>
-        /// Gets the link to outputs.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.outputsLink
-        /// </summary>
-        [WirePath("properties.outputsLink")]
-        public WebAppContentLink OutputsLink { get; }
-        /// <summary>
-        /// Gets the tracked properties.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.trackedProperties
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.trackedProperties")]
-        public BinaryData TrackedProperties { get; }
-        /// <summary>
-        /// Gets the retry histories.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.retryHistory
-        /// </summary>
-        [WirePath("properties.retryHistory")]
-        public IList<WebAppRetryHistory> RetryHistory { get; }
-        /// <summary> Serialized Name: WorkflowRunActionRepetitionDefinition.properties.iterationCount. </summary>
-        [WirePath("properties.iterationCount")]
-        public int? IterationCount { get; set; }
-        /// <summary>
-        /// The repetition indexes.
-        /// Serialized Name: WorkflowRunActionRepetitionDefinition.properties.repetitionIndexes
-        /// </summary>
-        [WirePath("properties.repetitionIndexes")]
-        public IList<WorkflowRunActionRepetitionIndex> RepetitionIndexes { get; }
+        /// <summary> The end time of the workflow scope repetition. </summary>
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties.EndOn;
+            }
+        }
+
+        /// <summary> The correlation properties. </summary>
+        public RunActionCorrelation Correlation
+        {
+            get
+            {
+                return Properties.Correlation;
+            }
+        }
+
+        /// <summary> The status of the workflow scope repetition. </summary>
+        public WorkflowStatus? Status
+        {
+            get
+            {
+                return Properties.Status;
+            }
+        }
+
+        /// <summary> The workflow scope repetition code. </summary>
+        public string Code
+        {
+            get
+            {
+                return Properties.Code;
+            }
+        }
+
+        /// <summary> Anything. </summary>
+        public BinaryData Error
+        {
+            get
+            {
+                return Properties.Error;
+            }
+        }
+
+        /// <summary> Gets the tracking id. </summary>
+        public string TrackingId
+        {
+            get
+            {
+                return Properties.TrackingId;
+            }
+        }
+
+        /// <summary> Gets the inputs. </summary>
+        public BinaryData Inputs
+        {
+            get
+            {
+                return Properties.Inputs;
+            }
+        }
+
+        /// <summary> Gets the link to inputs. </summary>
+        public ContentLink InputsLink
+        {
+            get
+            {
+                return Properties.InputsLink;
+            }
+        }
+
+        /// <summary> Gets the outputs. </summary>
+        public BinaryData Outputs
+        {
+            get
+            {
+                return Properties.Outputs;
+            }
+        }
+
+        /// <summary> Gets the link to outputs. </summary>
+        public ContentLink OutputsLink
+        {
+            get
+            {
+                return Properties.OutputsLink;
+            }
+        }
+
+        /// <summary> Gets the tracked properties. </summary>
+        public BinaryData TrackedProperties
+        {
+            get
+            {
+                return Properties.TrackedProperties;
+            }
+        }
+
+        /// <summary> Gets the retry histories. </summary>
+        public IList<RetryHistory> RetryHistory
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RetryHistory;
+            }
+        }
+
+        /// <summary> Gets the IterationCount. </summary>
+        public int? IterationCount
+        {
+            get
+            {
+                return Properties.IterationCount;
+            }
+        }
+
+        /// <summary> The repetition indexes. </summary>
+        public IList<RepetitionIndex> RepetitionIndexes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RepetitionIndexes;
+            }
+        }
     }
 }

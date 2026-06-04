@@ -7,119 +7,66 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Used for getting PHP error logging flag.
-    /// Serialized Name: SitePhpErrorLogFlag
-    /// </summary>
-    public partial class SitePhpErrorLogFlag : ResourceData
+    /// <summary> Used for getting PHP error logging flag. </summary>
+    public partial class SitePhpErrorLogFlag : ProxyOnlyResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="SitePhpErrorLogFlag"/>. </summary>
-        public SitePhpErrorLogFlag()
+        internal SitePhpErrorLogFlag()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SitePhpErrorLogFlag"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="localLogErrors">
-        /// Local log_errors setting.
-        /// Serialized Name: SitePhpErrorLogFlag.properties.localLogErrors
-        /// </param>
-        /// <param name="masterLogErrors">
-        /// Master log_errors setting.
-        /// Serialized Name: SitePhpErrorLogFlag.properties.masterLogErrors
-        /// </param>
-        /// <param name="localLogErrorsMaxLength">
-        /// Local log_errors_max_len setting.
-        /// Serialized Name: SitePhpErrorLogFlag.properties.localLogErrorsMaxLength
-        /// </param>
-        /// <param name="masterLogErrorsMaxLength">
-        /// Master log_errors_max_len setting.
-        /// Serialized Name: SitePhpErrorLogFlag.properties.masterLogErrorsMaxLength
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SitePhpErrorLogFlag(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string localLogErrors, string masterLogErrors, string localLogErrorsMaxLength, string masterLogErrorsMaxLength, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource Name. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> SitePhpErrorLogFlag resource specific properties. </param>
+        internal SitePhpErrorLogFlag(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SitePhpErrorLogFlagProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
-            LocalLogErrors = localLogErrors;
-            MasterLogErrors = masterLogErrors;
-            LocalLogErrorsMaxLength = localLogErrorsMaxLength;
-            MasterLogErrorsMaxLength = masterLogErrorsMaxLength;
-            Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// Local log_errors setting.
-        /// Serialized Name: SitePhpErrorLogFlag.properties.localLogErrors
-        /// </summary>
-        [WirePath("properties.localLogErrors")]
-        public string LocalLogErrors { get; set; }
-        /// <summary>
-        /// Master log_errors setting.
-        /// Serialized Name: SitePhpErrorLogFlag.properties.masterLogErrors
-        /// </summary>
-        [WirePath("properties.masterLogErrors")]
-        public string MasterLogErrors { get; set; }
-        /// <summary>
-        /// Local log_errors_max_len setting.
-        /// Serialized Name: SitePhpErrorLogFlag.properties.localLogErrorsMaxLength
-        /// </summary>
-        [WirePath("properties.localLogErrorsMaxLength")]
-        public string LocalLogErrorsMaxLength { get; set; }
-        /// <summary>
-        /// Master log_errors_max_len setting.
-        /// Serialized Name: SitePhpErrorLogFlag.properties.masterLogErrorsMaxLength
-        /// </summary>
-        [WirePath("properties.masterLogErrorsMaxLength")]
-        public string MasterLogErrorsMaxLength { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        /// <summary> SitePhpErrorLogFlag resource specific properties. </summary>
+        internal SitePhpErrorLogFlagProperties Properties { get; }
+
+        /// <summary> Local log_errors setting. </summary>
+        public string LocalLogErrors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalLogErrors;
+            }
+        }
+
+        /// <summary> Master log_errors setting. </summary>
+        public string MasterLogErrors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MasterLogErrors;
+            }
+        }
+
+        /// <summary> Local log_errors_max_len setting. </summary>
+        public string LocalLogErrorsMaxLength
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LocalLogErrorsMaxLength;
+            }
+        }
+
+        /// <summary> Master log_errors_max_len setting. </summary>
+        public string MasterLogErrorsMaxLength
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MasterLogErrorsMaxLength;
+            }
+        }
     }
 }

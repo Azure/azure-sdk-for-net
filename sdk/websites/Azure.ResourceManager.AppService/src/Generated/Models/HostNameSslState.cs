@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// SSL-enabled hostname.
-    /// Serialized Name: HostNameSslState
-    /// </summary>
+    /// <summary> SSL-enabled hostname. </summary>
     public partial class HostNameSslState
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HostNameSslState"/>. </summary>
         public HostNameSslState()
@@ -54,77 +22,40 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HostNameSslState"/>. </summary>
-        /// <param name="name">
-        /// Hostname.
-        /// Serialized Name: HostNameSslState.name
-        /// </param>
-        /// <param name="sslState">
-        /// SSL type.
-        /// Serialized Name: HostNameSslState.sslState
-        /// </param>
-        /// <param name="virtualIP">
-        /// Virtual IP address assigned to the hostname if IP based SSL is enabled.
-        /// Serialized Name: HostNameSslState.virtualIP
-        /// </param>
-        /// <param name="thumbprintString">
-        /// SSL certificate thumbprint.
-        /// Serialized Name: HostNameSslState.thumbprint
-        /// </param>
-        /// <param name="toUpdate">
-        /// Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname.
-        /// Serialized Name: HostNameSslState.toUpdate
-        /// </param>
-        /// <param name="hostType">
-        /// Indicates whether the hostname is a standard or repository hostname.
-        /// Serialized Name: HostNameSslState.hostType
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostNameSslState(string name, HostNameBindingSslState? sslState, string virtualIP, string thumbprintString, bool? toUpdate, AppServiceHostType? hostType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"> Hostname. </param>
+        /// <param name="sslState"> SSL type. </param>
+        /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
+        /// <param name="thumbprint"> SSL certificate thumbprint. </param>
+        /// <param name="toUpdate"> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </param>
+        /// <param name="hostType"> Indicates whether the hostname is a standard or repository hostname. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HostNameSslState(string name, Models.HostNameBindingSslState? sslState, string virtualIP, BinaryData thumbprint, bool? toUpdate, Models.AppServiceHostType? hostType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SslState = sslState;
             VirtualIP = virtualIP;
-            ThumbprintString = thumbprintString;
+            Thumbprint = thumbprint;
             ToUpdate = toUpdate;
             HostType = hostType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Hostname.
-        /// Serialized Name: HostNameSslState.name
-        /// </summary>
-        [WirePath("name")]
+        /// <summary> Hostname. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// SSL type.
-        /// Serialized Name: HostNameSslState.sslState
-        /// </summary>
-        [WirePath("sslState")]
-        public HostNameBindingSslState? SslState { get; set; }
-        /// <summary>
-        /// Virtual IP address assigned to the hostname if IP based SSL is enabled.
-        /// Serialized Name: HostNameSslState.virtualIP
-        /// </summary>
-        [WirePath("virtualIP")]
+
+        /// <summary> SSL type. </summary>
+        public Models.HostNameBindingSslState? SslState { get; set; }
+
+        /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
         public string VirtualIP { get; set; }
-        /// <summary>
-        /// SSL certificate thumbprint.
-        /// Serialized Name: HostNameSslState.thumbprint
-        /// </summary>
-        [WirePath("thumbprint")]
-        public string ThumbprintString { get; set; }
-        /// <summary>
-        /// Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname.
-        /// Serialized Name: HostNameSslState.toUpdate
-        /// </summary>
-        [WirePath("toUpdate")]
+
+        /// <summary> SSL certificate thumbprint. </summary>
+        public BinaryData Thumbprint { get; set; }
+
+        /// <summary> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </summary>
         public bool? ToUpdate { get; set; }
-        /// <summary>
-        /// Indicates whether the hostname is a standard or repository hostname.
-        /// Serialized Name: HostNameSslState.hostType
-        /// </summary>
-        [WirePath("hostType")]
-        public AppServiceHostType? HostType { get; set; }
+
+        /// <summary> Indicates whether the hostname is a standard or repository hostname. </summary>
+        public Models.AppServiceHostType? HostType { get; set; }
     }
 }

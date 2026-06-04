@@ -10,70 +10,37 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ContainerMemoryStatistics.
-    /// Serialized Name: ContainerMemoryStatistics
-    /// </summary>
+    /// <summary> The ContainerMemoryStatistics. </summary>
     public partial class ContainerMemoryStatistics
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerMemoryStatistics"/>. </summary>
-        public ContainerMemoryStatistics()
+        internal ContainerMemoryStatistics()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerMemoryStatistics"/>. </summary>
-        /// <param name="usage"> Serialized Name: ContainerMemoryStatistics.usage. </param>
-        /// <param name="maxUsage"> Serialized Name: ContainerMemoryStatistics.maxUsage. </param>
-        /// <param name="limit"> Serialized Name: ContainerMemoryStatistics.limit. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerMemoryStatistics(long? usage, long? maxUsage, long? limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="usage"></param>
+        /// <param name="maxUsage"></param>
+        /// <param name="limit"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerMemoryStatistics(long? usage, long? maxUsage, long? limit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Usage = usage;
             MaxUsage = maxUsage;
             Limit = limit;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Serialized Name: ContainerMemoryStatistics.usage. </summary>
-        [WirePath("usage")]
-        public long? Usage { get; set; }
-        /// <summary> Serialized Name: ContainerMemoryStatistics.maxUsage. </summary>
-        [WirePath("maxUsage")]
-        public long? MaxUsage { get; set; }
-        /// <summary> Serialized Name: ContainerMemoryStatistics.limit. </summary>
-        [WirePath("limit")]
-        public long? Limit { get; set; }
+        /// <summary> Gets the Usage. </summary>
+        public long? Usage { get; }
+
+        /// <summary> Gets the MaxUsage. </summary>
+        public long? MaxUsage { get; }
+
+        /// <summary> Gets the Limit. </summary>
+        public long? Limit { get; }
     }
 }

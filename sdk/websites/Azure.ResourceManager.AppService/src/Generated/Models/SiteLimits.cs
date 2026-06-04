@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Metric limits set on an app.
-    /// Serialized Name: SiteLimits
-    /// </summary>
+    /// <summary> Metric limits set on an app. </summary>
     public partial class SiteLimits
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteLimits"/>. </summary>
         public SiteLimits()
@@ -54,44 +22,25 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteLimits"/>. </summary>
-        /// <param name="maxPercentageCpu">
-        /// Maximum allowed CPU usage percentage.
-        /// Serialized Name: SiteLimits.maxPercentageCpu
-        /// </param>
-        /// <param name="maxMemoryInMb">
-        /// Maximum allowed memory usage in MB.
-        /// Serialized Name: SiteLimits.maxMemoryInMb
-        /// </param>
-        /// <param name="maxDiskSizeInMb">
-        /// Maximum allowed disk size usage in MB.
-        /// Serialized Name: SiteLimits.maxDiskSizeInMb
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteLimits(double? maxPercentageCpu, long? maxMemoryInMb, long? maxDiskSizeInMb, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="maxPercentageCpu"> Maximum allowed CPU usage percentage. </param>
+        /// <param name="maxMemoryInMb"> Maximum allowed memory usage in MB. </param>
+        /// <param name="maxDiskSizeInMb"> Maximum allowed disk size usage in MB. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteLimits(double? maxPercentageCpu, long? maxMemoryInMb, long? maxDiskSizeInMb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxPercentageCpu = maxPercentageCpu;
             MaxMemoryInMb = maxMemoryInMb;
             MaxDiskSizeInMb = maxDiskSizeInMb;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Maximum allowed CPU usage percentage.
-        /// Serialized Name: SiteLimits.maxPercentageCpu
-        /// </summary>
-        [WirePath("maxPercentageCpu")]
+        /// <summary> Maximum allowed CPU usage percentage. </summary>
         public double? MaxPercentageCpu { get; set; }
-        /// <summary>
-        /// Maximum allowed memory usage in MB.
-        /// Serialized Name: SiteLimits.maxMemoryInMb
-        /// </summary>
-        [WirePath("maxMemoryInMb")]
+
+        /// <summary> Maximum allowed memory usage in MB. </summary>
         public long? MaxMemoryInMb { get; set; }
-        /// <summary>
-        /// Maximum allowed disk size usage in MB.
-        /// Serialized Name: SiteLimits.maxDiskSizeInMb
-        /// </summary>
-        [WirePath("maxDiskSizeInMb")]
+
+        /// <summary> Maximum allowed disk size usage in MB. </summary>
         public long? MaxDiskSizeInMb { get; set; }
     }
 }

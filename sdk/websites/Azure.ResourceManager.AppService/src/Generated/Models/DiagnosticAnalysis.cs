@@ -7,133 +7,75 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Class representing a diagnostic analysis done on an application
-    /// Serialized Name: DiagnosticAnalysis
-    /// </summary>
-    public partial class DiagnosticAnalysis : ResourceData
+    /// <summary> Class representing a diagnostic analysis done on an application. </summary>
+    public partial class DiagnosticAnalysis : ProxyOnlyResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="DiagnosticAnalysis"/>. </summary>
-        public DiagnosticAnalysis()
+        internal DiagnosticAnalysis()
         {
-            AbnormalTimePeriods = new ChangeTrackingList<AbnormalTimePeriod>();
-            Payload = new ChangeTrackingList<AnalysisDetectorEvidences>();
-            NonCorrelatedDetectors = new ChangeTrackingList<DetectorDefinition>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticAnalysis"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="startOn">
-        /// Start time of the period
-        /// Serialized Name: DiagnosticAnalysis.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time of the period
-        /// Serialized Name: DiagnosticAnalysis.properties.endTime
-        /// </param>
-        /// <param name="abnormalTimePeriods">
-        /// List of time periods.
-        /// Serialized Name: DiagnosticAnalysis.properties.abnormalTimePeriods
-        /// </param>
-        /// <param name="payload">
-        /// Data by each detector
-        /// Serialized Name: DiagnosticAnalysis.properties.payload
-        /// </param>
-        /// <param name="nonCorrelatedDetectors">
-        /// Data by each detector for detectors that did not corelate
-        /// Serialized Name: DiagnosticAnalysis.properties.nonCorrelatedDetectors
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticAnalysis(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, IList<AbnormalTimePeriod> abnormalTimePeriods, IList<AnalysisDetectorEvidences> payload, IList<DetectorDefinition> nonCorrelatedDetectors, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource Name. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> DiagnosticAnalysis resource specific properties. </param>
+        internal DiagnosticAnalysis(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DiagnosticAnalysisProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
-            AbnormalTimePeriods = abnormalTimePeriods;
-            Payload = payload;
-            NonCorrelatedDetectors = nonCorrelatedDetectors;
-            Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// Start time of the period
-        /// Serialized Name: DiagnosticAnalysis.properties.startTime
-        /// </summary>
-        [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// End time of the period
-        /// Serialized Name: DiagnosticAnalysis.properties.endTime
-        /// </summary>
-        [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn { get; set; }
-        /// <summary>
-        /// List of time periods.
-        /// Serialized Name: DiagnosticAnalysis.properties.abnormalTimePeriods
-        /// </summary>
-        [WirePath("properties.abnormalTimePeriods")]
-        public IList<AbnormalTimePeriod> AbnormalTimePeriods { get; }
-        /// <summary>
-        /// Data by each detector
-        /// Serialized Name: DiagnosticAnalysis.properties.payload
-        /// </summary>
-        [WirePath("properties.payload")]
-        public IList<AnalysisDetectorEvidences> Payload { get; }
-        /// <summary>
-        /// Data by each detector for detectors that did not corelate
-        /// Serialized Name: DiagnosticAnalysis.properties.nonCorrelatedDetectors
-        /// </summary>
-        [WirePath("properties.nonCorrelatedDetectors")]
-        public IList<DetectorDefinition> NonCorrelatedDetectors { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        /// <summary> DiagnosticAnalysis resource specific properties. </summary>
+        internal DiagnosticAnalysisProperties Properties { get; }
+
+        /// <summary> Start time of the period. </summary>
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
+        /// <summary> End time of the period. </summary>
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+        }
+
+        /// <summary> List of time periods. </summary>
+        public IList<AbnormalTimePeriod> AbnormalTimePeriods
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AbnormalTimePeriods;
+            }
+        }
+
+        /// <summary> Data by each detector. </summary>
+        public IList<AnalysisData> Payload
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Payload;
+            }
+        }
+
+        /// <summary> Data by each detector for detectors that did not corelate. </summary>
+        public IList<DetectorDefinition> NonCorrelatedDetectors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NonCorrelatedDetectors;
+            }
+        }
     }
 }

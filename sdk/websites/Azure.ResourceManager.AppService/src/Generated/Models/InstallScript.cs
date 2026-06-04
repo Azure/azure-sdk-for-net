@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Server farm install script configuration.
-    /// Serialized Name: InstallScript
-    /// </summary>
+    /// <summary> Server farm install script configuration. </summary>
     public partial class InstallScript
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InstallScript"/>. </summary>
         public InstallScript()
@@ -54,33 +22,20 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InstallScript"/>. </summary>
-        /// <param name="name">
-        /// Name of the install script.
-        /// Serialized Name: InstallScript.name
-        /// </param>
-        /// <param name="source">
-        /// Source of the install script.
-        /// Serialized Name: InstallScript.source
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstallScript(string name, InstallScriptSource source, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"> Name of the install script. </param>
+        /// <param name="source"> Source of the install script. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InstallScript(string name, InstallScriptSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Source = source;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Name of the install script.
-        /// Serialized Name: InstallScript.name
-        /// </summary>
-        [WirePath("name")]
+        /// <summary> Name of the install script. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Source of the install script.
-        /// Serialized Name: InstallScript.source
-        /// </summary>
-        [WirePath("source")]
+
+        /// <summary> Source of the install script. </summary>
         public InstallScriptSource Source { get; set; }
     }
 }

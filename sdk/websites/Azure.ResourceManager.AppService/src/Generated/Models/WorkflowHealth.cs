@@ -7,84 +7,38 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Represents the workflow health.
-    /// Serialized Name: WorkflowHealth
-    /// </summary>
+    /// <summary> Represents the workflow health. </summary>
     public partial class WorkflowHealth
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowHealth"/>. </summary>
-        /// <param name="state">
-        /// Gets or sets the workflow health state.
-        /// Serialized Name: WorkflowHealth.state
-        /// </param>
-        public WorkflowHealth(WorkflowHealthState state)
+        /// <param name="state"> Gets or sets the workflow health state. </param>
+        internal WorkflowHealth(WorkflowHealthState state)
         {
             State = state;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowHealth"/>. </summary>
-        /// <param name="state">
-        /// Gets or sets the workflow health state.
-        /// Serialized Name: WorkflowHealth.state
-        /// </param>
-        /// <param name="error">
-        /// Gets or sets the workflow error.
-        /// Serialized Name: WorkflowHealth.error
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowHealth(WorkflowHealthState state, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="state"> Gets or sets the workflow health state. </param>
+        /// <param name="error"> Gets or sets the workflow error. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkflowHealth(WorkflowHealthState state, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkflowHealth"/> for deserialization. </summary>
-        internal WorkflowHealth()
-        {
-        }
+        /// <summary> Gets or sets the workflow health state. </summary>
+        public WorkflowHealthState State { get; }
 
-        /// <summary>
-        /// Gets or sets the workflow health state.
-        /// Serialized Name: WorkflowHealth.state
-        /// </summary>
-        [WirePath("state")]
-        public WorkflowHealthState State { get; set; }
+        /// <summary> Gets or sets the workflow error. </summary>
+        public ResponseError Error { get; }
     }
 }

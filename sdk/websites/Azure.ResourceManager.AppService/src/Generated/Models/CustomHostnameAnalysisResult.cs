@@ -7,195 +7,129 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Custom domain analysis.
-    /// Serialized Name: CustomHostnameAnalysisResult
-    /// </summary>
-    public partial class CustomHostnameAnalysisResult : ResourceData
+    /// <summary> Custom domain analysis. </summary>
+    public partial class CustomHostnameAnalysisResult : ProxyOnlyResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CustomHostnameAnalysisResult"/>. </summary>
-        public CustomHostnameAnalysisResult()
+        internal CustomHostnameAnalysisResult()
         {
-            CNameRecords = new ChangeTrackingList<string>();
-            TxtRecords = new ChangeTrackingList<string>();
-            ARecords = new ChangeTrackingList<string>();
-            AlternateCNameRecords = new ChangeTrackingList<string>();
-            AlternateTxtRecords = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomHostnameAnalysisResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="isHostnameAlreadyVerified">
-        /// &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.isHostnameAlreadyVerified
-        /// </param>
-        /// <param name="customDomainVerificationTest">
-        /// DNS verification test result.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.customDomainVerificationTest
-        /// </param>
-        /// <param name="customDomainVerificationFailureInfo">
-        /// Raw failure information if DNS verification fails.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.customDomainVerificationFailureInfo
-        /// </param>
-        /// <param name="hasConflictOnScaleUnit">
-        /// &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.hasConflictOnScaleUnit
-        /// </param>
-        /// <param name="hasConflictAcrossSubscription">
-        /// &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.hasConflictAcrossSubscription
-        /// </param>
-        /// <param name="conflictingAppResourceId">
-        /// Name of the conflicting app on scale unit if it's within the same subscription.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.conflictingAppResourceId
-        /// </param>
-        /// <param name="cNameRecords">
-        /// CName records controller can see for this hostname.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.cNameRecords
-        /// </param>
-        /// <param name="txtRecords">
-        /// TXT records controller can see for this hostname.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.txtRecords
-        /// </param>
-        /// <param name="aRecords">
-        /// A records controller can see for this hostname.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.aRecords
-        /// </param>
-        /// <param name="alternateCNameRecords">
-        /// Alternate CName records controller can see for this hostname.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.alternateCNameRecords
-        /// </param>
-        /// <param name="alternateTxtRecords">
-        /// Alternate TXT records controller can see for this hostname.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.alternateTxtRecords
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomHostnameAnalysisResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isHostnameAlreadyVerified, DnsVerificationTestResult? customDomainVerificationTest, ResponseError customDomainVerificationFailureInfo, bool? hasConflictOnScaleUnit, bool? hasConflictAcrossSubscription, string conflictingAppResourceId, IList<string> cNameRecords, IList<string> txtRecords, IList<string> aRecords, IList<string> alternateCNameRecords, IList<string> alternateTxtRecords, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource Name. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> CustomHostnameAnalysisResult resource specific properties. </param>
+        internal CustomHostnameAnalysisResult(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomHostnameAnalysisResultProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
-            IsHostnameAlreadyVerified = isHostnameAlreadyVerified;
-            CustomDomainVerificationTest = customDomainVerificationTest;
-            CustomDomainVerificationFailureInfo = customDomainVerificationFailureInfo;
-            HasConflictOnScaleUnit = hasConflictOnScaleUnit;
-            HasConflictAcrossSubscription = hasConflictAcrossSubscription;
-            ConflictingAppResourceId = conflictingAppResourceId;
-            CNameRecords = cNameRecords;
-            TxtRecords = txtRecords;
-            ARecords = aRecords;
-            AlternateCNameRecords = alternateCNameRecords;
-            AlternateTxtRecords = alternateTxtRecords;
-            Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.isHostnameAlreadyVerified
-        /// </summary>
-        [WirePath("properties.isHostnameAlreadyVerified")]
-        public bool? IsHostnameAlreadyVerified { get; }
-        /// <summary>
-        /// DNS verification test result.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.customDomainVerificationTest
-        /// </summary>
-        [WirePath("properties.customDomainVerificationTest")]
-        public DnsVerificationTestResult? CustomDomainVerificationTest { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.hasConflictOnScaleUnit
-        /// </summary>
-        [WirePath("properties.hasConflictOnScaleUnit")]
-        public bool? HasConflictOnScaleUnit { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.hasConflictAcrossSubscription
-        /// </summary>
-        [WirePath("properties.hasConflictAcrossSubscription")]
-        public bool? HasConflictAcrossSubscription { get; }
-        /// <summary>
-        /// Name of the conflicting app on scale unit if it's within the same subscription.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.conflictingAppResourceId
-        /// </summary>
-        [WirePath("properties.conflictingAppResourceId")]
-        public string ConflictingAppResourceId { get; }
-        /// <summary>
-        /// CName records controller can see for this hostname.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.cNameRecords
-        /// </summary>
-        [WirePath("properties.cNameRecords")]
-        public IList<string> CNameRecords { get; }
-        /// <summary>
-        /// TXT records controller can see for this hostname.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.txtRecords
-        /// </summary>
-        [WirePath("properties.txtRecords")]
-        public IList<string> TxtRecords { get; }
-        /// <summary>
-        /// A records controller can see for this hostname.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.aRecords
-        /// </summary>
-        [WirePath("properties.aRecords")]
-        public IList<string> ARecords { get; }
-        /// <summary>
-        /// Alternate CName records controller can see for this hostname.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.alternateCNameRecords
-        /// </summary>
-        [WirePath("properties.alternateCNameRecords")]
-        public IList<string> AlternateCNameRecords { get; }
-        /// <summary>
-        /// Alternate TXT records controller can see for this hostname.
-        /// Serialized Name: CustomHostnameAnalysisResult.properties.alternateTxtRecords
-        /// </summary>
-        [WirePath("properties.alternateTxtRecords")]
-        public IList<string> AlternateTxtRecords { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        /// <summary> CustomHostnameAnalysisResult resource specific properties. </summary>
+        internal CustomHostnameAnalysisResultProperties Properties { get; }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        public bool? IsHostnameAlreadyVerified
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsHostnameAlreadyVerified;
+            }
+        }
+
+        /// <summary> DNS verification test result. </summary>
+        public DnsVerificationTestResult? CustomDomainVerificationTest
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomDomainVerificationTest;
+            }
+        }
+
+        /// <summary> Raw failure information if DNS verification fails. </summary>
+        public ErrorEntity CustomDomainVerificationFailureInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomDomainVerificationFailureInfo;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        public bool? HasConflictOnScaleUnit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HasConflictOnScaleUnit;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        public bool? HasConflictAcrossSubscription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HasConflictAcrossSubscription;
+            }
+        }
+
+        /// <summary> Name of the conflicting app on scale unit if it's within the same subscription. </summary>
+        public string ConflictingAppResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConflictingAppResourceId;
+            }
+        }
+
+        /// <summary> CName records controller can see for this hostname. </summary>
+        public IList<string> CNameRecords
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CNameRecords;
+            }
+        }
+
+        /// <summary> TXT records controller can see for this hostname. </summary>
+        public IList<string> TxtRecords
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TxtRecords;
+            }
+        }
+
+        /// <summary> A records controller can see for this hostname. </summary>
+        public IList<string> ARecords
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ARecords;
+            }
+        }
+
+        /// <summary> Alternate CName records controller can see for this hostname. </summary>
+        public IList<string> AlternateCNameRecords
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AlternateCNameRecords;
+            }
+        }
+
+        /// <summary> Alternate TXT records controller can see for this hostname. </summary>
+        public IList<string> AlternateTxtRecords
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AlternateTxtRecords;
+            }
+        }
     }
 }

@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Function app site update strategy configuration for deployments and site config updates.
-    /// Serialized Name: FunctionsSiteUpdateStrategy
-    /// </summary>
+    /// <summary> Function app site update strategy configuration for deployments and site config updates. </summary>
     internal partial class FunctionsSiteUpdateStrategy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FunctionsSiteUpdateStrategy"/>. </summary>
         public FunctionsSiteUpdateStrategy()
@@ -54,22 +22,15 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionsSiteUpdateStrategy"/>. </summary>
-        /// <param name="siteUpdateStrategyType">
-        /// Function app site update strategy type. Available options: Recreate, RollingUpdate
-        /// Serialized Name: FunctionsSiteUpdateStrategy.type
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionsSiteUpdateStrategy(SiteUpdateStrategyType? siteUpdateStrategyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"> Function app site update strategy type. Available options: Recreate, RollingUpdate. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionsSiteUpdateStrategy(SiteUpdateStrategyType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SiteUpdateStrategyType = siteUpdateStrategyType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Function app site update strategy type. Available options: Recreate, RollingUpdate
-        /// Serialized Name: FunctionsSiteUpdateStrategy.type
-        /// </summary>
-        [WirePath("type")]
-        public SiteUpdateStrategyType? SiteUpdateStrategyType { get; set; }
+        /// <summary> Function app site update strategy type. Available options: Recreate, RollingUpdate. </summary>
+        public SiteUpdateStrategyType? Type { get; set; }
     }
 }

@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The access control configuration.
-    /// Serialized Name: FlowAccessControlConfiguration
-    /// </summary>
+    /// <summary> The access control configuration. </summary>
     public partial class FlowAccessControlConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfiguration"/>. </summary>
         public FlowAccessControlConfiguration()
@@ -54,55 +22,30 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfiguration"/>. </summary>
-        /// <param name="triggers">
-        /// The access control configuration for invoking workflow triggers.
-        /// Serialized Name: FlowAccessControlConfiguration.triggers
-        /// </param>
-        /// <param name="contents">
-        /// The access control configuration for accessing workflow run contents.
-        /// Serialized Name: FlowAccessControlConfiguration.contents
-        /// </param>
-        /// <param name="actions">
-        /// The access control configuration for workflow actions.
-        /// Serialized Name: FlowAccessControlConfiguration.actions
-        /// </param>
-        /// <param name="workflowManagement">
-        /// The access control configuration for workflow management.
-        /// Serialized Name: FlowAccessControlConfiguration.workflowManagement
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FlowAccessControlConfiguration(FlowAccessControlConfigurationPolicy triggers, FlowAccessControlConfigurationPolicy contents, FlowAccessControlConfigurationPolicy actions, FlowAccessControlConfigurationPolicy workflowManagement, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="triggers"> The access control configuration for invoking workflow triggers. </param>
+        /// <param name="contents"> The access control configuration for accessing workflow run contents. </param>
+        /// <param name="actions"> The access control configuration for workflow actions. </param>
+        /// <param name="workflowManagement"> The access control configuration for workflow management. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FlowAccessControlConfiguration(FlowAccessControlConfigurationPolicy triggers, FlowAccessControlConfigurationPolicy contents, FlowAccessControlConfigurationPolicy actions, FlowAccessControlConfigurationPolicy workflowManagement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Triggers = triggers;
             Contents = contents;
             Actions = actions;
             WorkflowManagement = workflowManagement;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The access control configuration for invoking workflow triggers.
-        /// Serialized Name: FlowAccessControlConfiguration.triggers
-        /// </summary>
-        [WirePath("triggers")]
+        /// <summary> The access control configuration for invoking workflow triggers. </summary>
         public FlowAccessControlConfigurationPolicy Triggers { get; set; }
-        /// <summary>
-        /// The access control configuration for accessing workflow run contents.
-        /// Serialized Name: FlowAccessControlConfiguration.contents
-        /// </summary>
-        [WirePath("contents")]
+
+        /// <summary> The access control configuration for accessing workflow run contents. </summary>
         public FlowAccessControlConfigurationPolicy Contents { get; set; }
-        /// <summary>
-        /// The access control configuration for workflow actions.
-        /// Serialized Name: FlowAccessControlConfiguration.actions
-        /// </summary>
-        [WirePath("actions")]
+
+        /// <summary> The access control configuration for workflow actions. </summary>
         public FlowAccessControlConfigurationPolicy Actions { get; set; }
-        /// <summary>
-        /// The access control configuration for workflow management.
-        /// Serialized Name: FlowAccessControlConfiguration.workflowManagement
-        /// </summary>
-        [WirePath("workflowManagement")]
+
+        /// <summary> The access control configuration for workflow management. </summary>
         public FlowAccessControlConfigurationPolicy WorkflowManagement { get; set; }
     }
 }

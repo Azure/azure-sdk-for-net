@@ -7,97 +7,48 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Hybrid Connection key contract. This has the send key name and value for a Hybrid Connection.
-    /// Serialized Name: HybridConnectionKey
-    /// </summary>
-    public partial class HybridConnectionKey : ResourceData
+    /// <summary> Hybrid Connection key contract. This has the send key name and value for a Hybrid Connection. </summary>
+    public partial class HybridConnectionKey : ProxyOnlyResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="HybridConnectionKey"/>. </summary>
-        public HybridConnectionKey()
+        internal HybridConnectionKey()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridConnectionKey"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sendKeyName">
-        /// The name of the send key.
-        /// Serialized Name: HybridConnectionKey.properties.sendKeyName
-        /// </param>
-        /// <param name="sendKeyValue">
-        /// The value of the send key.
-        /// Serialized Name: HybridConnectionKey.properties.sendKeyValue
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectionKey(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sendKeyName, string sendKeyValue, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource Name. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> HybridConnectionKey resource specific properties. </param>
+        internal HybridConnectionKey(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, HybridConnectionKeyProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
-            SendKeyName = sendKeyName;
-            SendKeyValue = sendKeyValue;
-            Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// The name of the send key.
-        /// Serialized Name: HybridConnectionKey.properties.sendKeyName
-        /// </summary>
-        [WirePath("properties.sendKeyName")]
-        public string SendKeyName { get; }
-        /// <summary>
-        /// The value of the send key.
-        /// Serialized Name: HybridConnectionKey.properties.sendKeyValue
-        /// </summary>
-        [WirePath("properties.sendKeyValue")]
-        public string SendKeyValue { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        /// <summary> HybridConnectionKey resource specific properties. </summary>
+        internal HybridConnectionKeyProperties Properties { get; }
+
+        /// <summary> The name of the send key. </summary>
+        public string SendKeyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SendKeyName;
+            }
+        }
+
+        /// <summary> The value of the send key. </summary>
+        public string SendKeyValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SendKeyValue;
+            }
+        }
     }
 }

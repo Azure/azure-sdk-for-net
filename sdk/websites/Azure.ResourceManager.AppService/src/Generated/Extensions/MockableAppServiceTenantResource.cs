@@ -8,72 +8,92 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableAppServiceTenantResource : ArmResource
     {
+        private ClientDiagnostics _webClientClientDiagnostics;
+        private WebClient _webClientRestClient;
         private ClientDiagnostics _providerClientDiagnostics;
-        private ProviderRestOperations _providerRestClient;
+        private Provider _providerRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAppServiceTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAppServiceTenantResource for mocking. </summary>
         protected MockableAppServiceTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAppServiceTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAppServiceTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAppServiceTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ProviderClientDiagnostics => _providerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ProviderRestOperations ProviderRestClient => _providerRestClient ??= new ProviderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics WebClientClientDiagnostics => _webClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private WebClient WebClientRestClient => _webClientRestClient ??= new WebClient(WebClientClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+
+        private ClientDiagnostics ProviderClientDiagnostics => _providerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Provider ProviderRestClient => _providerRestClient ??= new Provider(ProviderClientDiagnostics, Pipeline, Endpoint, "2026-03-01-preview");
+
+        /// <summary>
+        /// Description for Gets publishing user
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/publishingUsers/web. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Users_GetPublishingUser. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="UserResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="UserResource"/> object. </returns>
+        public virtual UserResource GetUser()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return new UserResource(Client, Id.AppendProviderResource("Microsoft.Web", "publishingUsers", "web"));
         }
 
-        /// <summary> Gets an object representing a PublishingUserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
-        /// <returns> Returns a <see cref="PublishingUserResource"/> object. </returns>
-        public virtual PublishingUserResource GetPublishingUser()
+        /// <summary> Gets a collection of SourceControls in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of SourceControls and their operations over a SourceControlResource. </returns>
+        public virtual SourceControlCollection GetSourceControls()
         {
-            return new PublishingUserResource(Client, Id.AppendProviderResource("Microsoft.Web", "publishingUsers", "web"));
-        }
-
-        /// <summary> Gets a collection of AppServiceSourceControlResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of AppServiceSourceControlResources and their operations over a AppServiceSourceControlResource. </returns>
-        public virtual AppServiceSourceControlCollection GetAppServiceSourceControls()
-        {
-            return GetCachedClient(client => new AppServiceSourceControlCollection(client, Id));
+            return GetCachedClient(client => new SourceControlCollection(client, Id));
         }
 
         /// <summary>
         /// Description for Gets source control token
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/sourcecontrols/{sourceControlType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetSourceControl</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_GetSourceControl. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceSourceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,29 +102,27 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AppServiceSourceControlResource>> GetAppServiceSourceControlAsync(string sourceControlType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SourceControlResource>> GetSourceControlAsync(string sourceControlType, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSourceControls().GetAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
+
+            return await GetSourceControls().GetAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Description for Gets source control token
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/sourcecontrols/{sourceControlType}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/sourcecontrols/{sourceControlType}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GetSourceControl</description>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_GetSourceControl. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AppServiceSourceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,335 +131,509 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceControlType"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AppServiceSourceControlResource> GetAppServiceSourceControl(string sourceControlType, CancellationToken cancellationToken = default)
+        public virtual Response<SourceControlResource> GetSourceControl(string sourceControlType, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSourceControls().Get(sourceControlType, cancellationToken);
+            Argument.AssertNotNullOrEmpty(sourceControlType, nameof(sourceControlType));
+
+            return GetSourceControls().Get(sourceControlType, cancellationToken);
         }
 
         /// <summary>
-        /// Description for Get available application frameworks and their versions
+        /// Description for Validate whether a resource can be moved.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/availableStacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_GetAvailableStacks</description>
+        /// <term> Operation Id. </term>
+        /// <description> Web_ValidateMove. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="moveResourceEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> ValidateMoveAsync(string resourceGroupName, Guid subscriptionId, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetAvailableStacksRequest(osTypeSelected);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetAvailableStacksNextPageRequest(nextLink, osTypeSelected);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApplicationStackResource.DeserializeApplicationStackResource(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetAvailableStacksProviders", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
+
+            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceTenantResource.ValidateMove");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WebClientRestClient.CreateValidateMoveRequest(resourceGroupName, subscriptionId, CsmMoveResourceEnvelope.ToRequestContent(moveResourceEnvelope), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Validate whether a resource can be moved.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/validateMoveResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Web_ValidateMove. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="moveResourceEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response ValidateMove(string resourceGroupName, Guid subscriptionId, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
+
+            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceTenantResource.ValidateMove");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WebClientRestClient.CreateValidateMoveRequest(resourceGroupName, subscriptionId, CsmMoveResourceEnvelope.ToRequestContent(moveResourceEnvelope), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Move resources between resource groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Web_Move. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="moveResourceEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response> MoveAsync(string resourceGroupName, Guid subscriptionId, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
+
+            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceTenantResource.Move");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WebClientRestClient.CreateMoveRequest(resourceGroupName, subscriptionId, CsmMoveResourceEnvelope.ToRequestContent(moveResourceEnvelope), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Description for Move resources between resource groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/moveResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Web_Move. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="moveResourceEnvelope"> Object that represents the resource to move. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="moveResourceEnvelope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response Move(string resourceGroupName, Guid subscriptionId, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(moveResourceEnvelope, nameof(moveResourceEnvelope));
+
+            using DiagnosticScope scope = WebClientClientDiagnostics.CreateScope("MockableAppServiceTenantResource.Move");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = WebClientRestClient.CreateMoveRequest(resourceGroupName, subscriptionId, CsmMoveResourceEnvelope.ToRequestContent(moveResourceEnvelope), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Description for Get available application frameworks and their versions
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/availableStacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/availableStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_GetAvailableStacks</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderOperationGroup_GetAvailableStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
+        /// <param name="osTypeSelected"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationStackResource> GetAvailableStacksProviders(ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApplicationStackResource> GetAvailableStacksAsync(ProviderOsTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetAvailableStacksRequest(osTypeSelected);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetAvailableStacksNextPageRequest(nextLink, osTypeSelected);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApplicationStackResource.DeserializeApplicationStackResource(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetAvailableStacksProviders", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProviderGetAvailableStacksAsyncCollectionResultOfT(ProviderRestClient, osTypeSelected?.ToString(), context, "MockableAppServiceTenantResource.GetAvailableStacks");
+        }
+
+        /// <summary>
+        /// Description for Get available application frameworks and their versions
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/availableStacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderOperationGroup_GetAvailableStacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="osTypeSelected"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApplicationStackResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApplicationStackResource> GetAvailableStacks(ProviderOsTypeSelected? osTypeSelected = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProviderGetAvailableStacksCollectionResultOfT(ProviderRestClient, osTypeSelected?.ToString(), context, "MockableAppServiceTenantResource.GetAvailableStacks");
         }
 
         /// <summary>
         /// Description for Get available Function app frameworks and their versions
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/functionAppStacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/functionAppStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_GetFunctionAppStacks</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderOperationGroup_GetFunctionAppStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="stackOSType"> Stack OS Type. </param>
+        /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksAsync(ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetFunctionAppStacksRequest(stackOSType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetFunctionAppStacksNextPageRequest(nextLink, stackOSType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FunctionAppStack.DeserializeFunctionAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProviderGetFunctionAppStacksAsyncCollectionResultOfT(ProviderRestClient, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetFunctionAppStacks");
         }
 
         /// <summary>
         /// Description for Get available Function app frameworks and their versions
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/functionAppStacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/functionAppStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_GetFunctionAppStacks</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderOperationGroup_GetFunctionAppStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="stackOSType"> Stack OS Type. </param>
+        /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksProviders(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<FunctionAppStack> GetFunctionAppStacks(ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetFunctionAppStacksRequest(stackOSType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetFunctionAppStacksNextPageRequest(nextLink, stackOSType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FunctionAppStack.DeserializeFunctionAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProviderGetFunctionAppStacksCollectionResultOfT(ProviderRestClient, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetFunctionAppStacks");
         }
 
         /// <summary>
         /// Description for Get available Function app frameworks and their versions for location
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/locations/{location}/functionAppStacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/locations/{location}/functionAppStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_GetFunctionAppStacksForLocation</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderOperationGroup_GetFunctionAppStacksForLocation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="stackOSType"> Stack OS Type. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationAsync(string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetFunctionAppStacksForLocationRequest(location, stackOSType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetFunctionAppStacksForLocationNextPageRequest(nextLink, location, stackOSType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FunctionAppStack.DeserializeFunctionAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetFunctionAppStacksForLocationProviders", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProviderGetFunctionAppStacksForLocationAsyncCollectionResultOfT(ProviderRestClient, location, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetFunctionAppStacksForLocation");
         }
 
         /// <summary>
         /// Description for Get available Function app frameworks and their versions for location
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/locations/{location}/functionAppStacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/locations/{location}/functionAppStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_GetFunctionAppStacksForLocation</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderOperationGroup_GetFunctionAppStacksForLocation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="stackOSType"> Stack OS Type. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksForLocation(string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetFunctionAppStacksForLocationRequest(location, stackOSType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetFunctionAppStacksForLocationNextPageRequest(nextLink, location, stackOSType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FunctionAppStack.DeserializeFunctionAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetFunctionAppStacksForLocationProviders", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProviderGetFunctionAppStacksForLocationCollectionResultOfT(ProviderRestClient, location, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetFunctionAppStacksForLocation");
         }
 
         /// <summary>
         /// Description for Get available Web app frameworks and their versions for location
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/locations/{location}/webAppStacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/locations/{location}/webAppStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_GetWebAppStacksForLocation</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderOperationGroup_GetWebAppStacksForLocation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="stackOSType"> Stack OS Type. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebAppStack> GetWebAppStacksForLocationAsync(string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetWebAppStacksForLocationRequest(location, stackOSType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetWebAppStacksForLocationNextPageRequest(nextLink, location, stackOSType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WebAppStack.DeserializeWebAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetWebAppStacksByLocation", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProviderGetWebAppStacksForLocationAsyncCollectionResultOfT(ProviderRestClient, location, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksForLocation");
         }
 
         /// <summary>
         /// Description for Get available Web app frameworks and their versions for location
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/locations/{location}/webAppStacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/locations/{location}/webAppStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_GetWebAppStacksForLocation</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderOperationGroup_GetWebAppStacksForLocation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="stackOSType"> Stack OS Type. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppStack> GetWebAppStacksByLocation(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebAppStack> GetWebAppStacksForLocation(string location, ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetWebAppStacksForLocationRequest(location, stackOSType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetWebAppStacksForLocationNextPageRequest(nextLink, location, stackOSType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WebAppStack.DeserializeWebAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetWebAppStacksByLocation", "value", "nextLink", cancellationToken);
-        }
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
 
-        /// <summary>
-        /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_ListOperations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CsmOperationDescription"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CsmOperationDescription> GetOperationsProvidersAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateListOperationsRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateListOperationsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CsmOperationDescription.DeserializeCsmOperationDescription(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsProviders", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for Gets all available operations for the Microsoft.Web resource provider. Also exposes resource metric definitions
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/operations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_ListOperations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CsmOperationDescription"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CsmOperationDescription> GetOperationsProviders(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateListOperationsRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateListOperationsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CsmOperationDescription.DeserializeCsmOperationDescription(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsProviders", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProviderGetWebAppStacksForLocationCollectionResultOfT(ProviderRestClient, location, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksForLocation");
         }
 
         /// <summary>
         /// Description for Get available Web app frameworks and their versions
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/webAppStacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/webAppStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_GetWebAppStacks</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderOperationGroup_GetWebAppStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="stackOSType"> Stack OS Type. </param>
+        /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebAppStack> GetWebAppStacksAsync(ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetWebAppStacksRequest(stackOSType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetWebAppStacksNextPageRequest(nextLink, stackOSType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WebAppStack.DeserializeWebAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetWebAppStacksProviders", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProviderGetWebAppStacksAsyncCollectionResultOfT(ProviderRestClient, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacks");
         }
 
         /// <summary>
         /// Description for Get available Web app frameworks and their versions
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Web/webAppStacks</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Web/webAppStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Provider_GetWebAppStacks</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderOperationGroup_GetWebAppStacks. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="stackOSType"> Stack OS Type. </param>
+        /// <param name="stackOsType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppStack> GetWebAppStacksProviders(ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebAppStack> GetWebAppStacks(ProviderStackOsType? stackOsType = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetWebAppStacksRequest(stackOSType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetWebAppStacksNextPageRequest(nextLink, stackOSType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WebAppStack.DeserializeWebAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetWebAppStacksProviders", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ProviderGetWebAppStacksCollectionResultOfT(ProviderRestClient, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacks");
         }
     }
 }

@@ -10,99 +10,42 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Application stack minor version.
-    /// Serialized Name: StackMinorVersion
-    /// </summary>
+    /// <summary> Application stack minor version. </summary>
     public partial class StackMinorVersion
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StackMinorVersion"/>. </summary>
-        public StackMinorVersion()
+        internal StackMinorVersion()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="StackMinorVersion"/>. </summary>
-        /// <param name="displayVersion">
-        /// Application stack minor version (display only).
-        /// Serialized Name: StackMinorVersion.displayVersion
-        /// </param>
-        /// <param name="runtimeVersion">
-        /// Application stack minor version (runtime only).
-        /// Serialized Name: StackMinorVersion.runtimeVersion
-        /// </param>
-        /// <param name="isDefault">
-        /// &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StackMinorVersion.isDefault
-        /// </param>
-        /// <param name="isRemoteDebuggingEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StackMinorVersion.isRemoteDebuggingEnabled
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StackMinorVersion(string displayVersion, string runtimeVersion, bool? isDefault, bool? isRemoteDebuggingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="displayVersion"> Application stack minor version (display only). </param>
+        /// <param name="runtimeVersion"> Application stack minor version (runtime only). </param>
+        /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isRemoteDebuggingEnabled"> &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StackMinorVersion(string displayVersion, string runtimeVersion, bool? isDefault, bool? isRemoteDebuggingEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayVersion = displayVersion;
             RuntimeVersion = runtimeVersion;
             IsDefault = isDefault;
             IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Application stack minor version (display only).
-        /// Serialized Name: StackMinorVersion.displayVersion
-        /// </summary>
-        [WirePath("displayVersion")]
-        public string DisplayVersion { get; set; }
-        /// <summary>
-        /// Application stack minor version (runtime only).
-        /// Serialized Name: StackMinorVersion.runtimeVersion
-        /// </summary>
-        [WirePath("runtimeVersion")]
-        public string RuntimeVersion { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StackMinorVersion.isDefault
-        /// </summary>
-        [WirePath("isDefault")]
-        public bool? IsDefault { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StackMinorVersion.isRemoteDebuggingEnabled
-        /// </summary>
-        [WirePath("isRemoteDebuggingEnabled")]
-        public bool? IsRemoteDebuggingEnabled { get; set; }
+        /// <summary> Application stack minor version (display only). </summary>
+        public string DisplayVersion { get; }
+
+        /// <summary> Application stack minor version (runtime only). </summary>
+        public string RuntimeVersion { get; }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        public bool? IsDefault { get; }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if this supports Remote Debugging, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
+        public bool? IsRemoteDebuggingEnabled { get; }
     }
 }

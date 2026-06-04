@@ -10,79 +10,31 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Class representing Diagnostic Metric
-    /// Serialized Name: DiagnosticMetricSample
-    /// </summary>
+    /// <summary> Class representing Diagnostic Metric. </summary>
     public partial class DiagnosticMetricSample
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSample"/>. </summary>
-        public DiagnosticMetricSample()
+        internal DiagnosticMetricSample()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSample"/>. </summary>
-        /// <param name="timestamp">
-        /// Time at which metric is measured
-        /// Serialized Name: DiagnosticMetricSample.timestamp
-        /// </param>
+        /// <param name="timestamp"> Time at which metric is measured. </param>
         /// <param name="roleInstance">
         /// Role Instance. Null if this counter is not per instance
         /// This is returned and should be whichever instance name we desire to be returned
         /// i.e. CPU and Memory return RDWORKERNAME (LargeDed..._IN_0)
         /// where RDWORKERNAME is Machine name below and RoleInstance name in parenthesis
-        /// Serialized Name: DiagnosticMetricSample.roleInstance
         /// </param>
-        /// <param name="total">
-        /// Total value of the metric. If multiple measurements are made this will have sum of all.
-        /// Serialized Name: DiagnosticMetricSample.total
-        /// </param>
-        /// <param name="maximum">
-        /// Maximum of the metric sampled during the time period
-        /// Serialized Name: DiagnosticMetricSample.maximum
-        /// </param>
-        /// <param name="minimum">
-        /// Minimum of the metric sampled during the time period
-        /// Serialized Name: DiagnosticMetricSample.minimum
-        /// </param>
-        /// <param name="isAggregated">
-        /// Whether the values are aggregates across all workers or not
-        /// Serialized Name: DiagnosticMetricSample.isAggregated
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticMetricSample(DateTimeOffset? timestamp, string roleInstance, double? total, double? maximum, double? minimum, bool? isAggregated, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="total"> Total value of the metric. If multiple measurements are made this will have sum of all. </param>
+        /// <param name="maximum"> Maximum of the metric sampled during the time period. </param>
+        /// <param name="minimum"> Minimum of the metric sampled during the time period. </param>
+        /// <param name="isAggregated"> Whether the values are aggregates across all workers or not. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticMetricSample(DateTimeOffset? timestamp, string roleInstance, double? total, double? maximum, double? minimum, bool? isAggregated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             RoleInstance = roleInstance;
@@ -90,47 +42,30 @@ namespace Azure.ResourceManager.AppService.Models
             Maximum = maximum;
             Minimum = minimum;
             IsAggregated = isAggregated;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Time at which metric is measured
-        /// Serialized Name: DiagnosticMetricSample.timestamp
-        /// </summary>
-        [WirePath("timestamp")]
-        public DateTimeOffset? Timestamp { get; set; }
+        /// <summary> Time at which metric is measured. </summary>
+        public DateTimeOffset? Timestamp { get; }
+
         /// <summary>
         /// Role Instance. Null if this counter is not per instance
         /// This is returned and should be whichever instance name we desire to be returned
         /// i.e. CPU and Memory return RDWORKERNAME (LargeDed..._IN_0)
         /// where RDWORKERNAME is Machine name below and RoleInstance name in parenthesis
-        /// Serialized Name: DiagnosticMetricSample.roleInstance
         /// </summary>
-        [WirePath("roleInstance")]
-        public string RoleInstance { get; set; }
-        /// <summary>
-        /// Total value of the metric. If multiple measurements are made this will have sum of all.
-        /// Serialized Name: DiagnosticMetricSample.total
-        /// </summary>
-        [WirePath("total")]
-        public double? Total { get; set; }
-        /// <summary>
-        /// Maximum of the metric sampled during the time period
-        /// Serialized Name: DiagnosticMetricSample.maximum
-        /// </summary>
-        [WirePath("maximum")]
-        public double? Maximum { get; set; }
-        /// <summary>
-        /// Minimum of the metric sampled during the time period
-        /// Serialized Name: DiagnosticMetricSample.minimum
-        /// </summary>
-        [WirePath("minimum")]
-        public double? Minimum { get; set; }
-        /// <summary>
-        /// Whether the values are aggregates across all workers or not
-        /// Serialized Name: DiagnosticMetricSample.isAggregated
-        /// </summary>
-        [WirePath("isAggregated")]
-        public bool? IsAggregated { get; set; }
+        public string RoleInstance { get; }
+
+        /// <summary> Total value of the metric. If multiple measurements are made this will have sum of all. </summary>
+        public double? Total { get; }
+
+        /// <summary> Maximum of the metric sampled during the time period. </summary>
+        public double? Maximum { get; }
+
+        /// <summary> Minimum of the metric sampled during the time period. </summary>
+        public double? Minimum { get; }
+
+        /// <summary> Whether the values are aggregates across all workers or not. </summary>
+        public bool? IsAggregated { get; }
     }
 }

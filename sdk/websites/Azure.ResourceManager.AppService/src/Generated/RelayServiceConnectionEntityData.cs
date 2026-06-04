@@ -8,48 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the RelayServiceConnectionEntity data model.
-    /// Hybrid Connection for an App Service app.
-    /// Serialized Name: RelayServiceConnectionEntity
-    /// </summary>
+    /// <summary> Hybrid Connection for an App Service app. </summary>
     public partial class RelayServiceConnectionEntityData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RelayServiceConnectionEntityData"/>. </summary>
         public RelayServiceConnectionEntityData()
@@ -57,56 +25,143 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Initializes a new instance of <see cref="RelayServiceConnectionEntityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: RelayServiceConnectionEntity.kind
-        /// </param>
-        /// <param name="entityName"> Serialized Name: RelayServiceConnectionEntity.properties.entityName. </param>
-        /// <param name="entityConnectionString"> Serialized Name: RelayServiceConnectionEntity.properties.entityConnectionString. </param>
-        /// <param name="resourceConnectionString"> Serialized Name: RelayServiceConnectionEntity.properties.resourceConnectionString. </param>
-        /// <param name="hostname"> Serialized Name: RelayServiceConnectionEntity.properties.hostname. </param>
-        /// <param name="port"> Serialized Name: RelayServiceConnectionEntity.properties.port. </param>
-        /// <param name="biztalkUri"> Serialized Name: RelayServiceConnectionEntity.properties.biztalkUri. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RelayServiceConnectionEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string entityName, string entityConnectionString, string resourceConnectionString, string hostname, int? port, Uri biztalkUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> RelayServiceConnectionEntity resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RelayServiceConnectionEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayServiceConnectionEntityProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            EntityName = entityName;
-            EntityConnectionString = entityConnectionString;
-            ResourceConnectionString = resourceConnectionString;
-            Hostname = hostname;
-            Port = port;
-            BiztalkUri = biztalkUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: RelayServiceConnectionEntity.kind
-        /// </summary>
-        [WirePath("kind")]
+        /// <summary> RelayServiceConnectionEntity resource specific properties. </summary>
+        internal RelayServiceConnectionEntityProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
-        /// <summary> Serialized Name: RelayServiceConnectionEntity.properties.entityName. </summary>
-        [WirePath("properties.entityName")]
-        public string EntityName { get; set; }
-        /// <summary> Serialized Name: RelayServiceConnectionEntity.properties.entityConnectionString. </summary>
-        [WirePath("properties.entityConnectionString")]
-        public string EntityConnectionString { get; set; }
-        /// <summary> Serialized Name: RelayServiceConnectionEntity.properties.resourceConnectionString. </summary>
-        [WirePath("properties.resourceConnectionString")]
-        public string ResourceConnectionString { get; set; }
-        /// <summary> Serialized Name: RelayServiceConnectionEntity.properties.hostname. </summary>
-        [WirePath("properties.hostname")]
-        public string Hostname { get; set; }
-        /// <summary> Serialized Name: RelayServiceConnectionEntity.properties.port. </summary>
-        [WirePath("properties.port")]
-        public int? Port { get; set; }
-        /// <summary> Serialized Name: RelayServiceConnectionEntity.properties.biztalkUri. </summary>
-        [WirePath("properties.biztalkUri")]
-        public Uri BiztalkUri { get; set; }
+
+        /// <summary> Gets or sets the EntityName. </summary>
+        public string EntityName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EntityName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RelayServiceConnectionEntityProperties();
+                }
+                Properties.EntityName = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EntityConnectionString. </summary>
+        public string EntityConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EntityConnectionString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RelayServiceConnectionEntityProperties();
+                }
+                Properties.EntityConnectionString = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ResourceType. </summary>
+        public string ResourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RelayServiceConnectionEntityProperties();
+                }
+                Properties.ResourceType = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ResourceConnectionString. </summary>
+        public string ResourceConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceConnectionString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RelayServiceConnectionEntityProperties();
+                }
+                Properties.ResourceConnectionString = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Hostname. </summary>
+        public string Hostname
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Hostname;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RelayServiceConnectionEntityProperties();
+                }
+                Properties.Hostname = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Port. </summary>
+        public int? Port
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Port;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RelayServiceConnectionEntityProperties();
+                }
+                Properties.Port = value;
+            }
+        }
+
+        /// <summary> Gets or sets the BiztalkUri. </summary>
+        public string BiztalkUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BiztalkUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RelayServiceConnectionEntityProperties();
+                }
+                Properties.BiztalkUri = value;
+            }
+        }
     }
 }

@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// App Insights Web App stack settings.
-    /// Serialized Name: AppInsightsWebAppStackSettings
-    /// </summary>
+    /// <summary> App Insights Web App stack settings. </summary>
     public partial class AppInsightsWebAppStackSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppInsightsWebAppStackSettings"/>. </summary>
         internal AppInsightsWebAppStackSettings()
@@ -54,33 +22,20 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppInsightsWebAppStackSettings"/>. </summary>
-        /// <param name="isSupported">
-        /// &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: AppInsightsWebAppStackSettings.isSupported
-        /// </param>
-        /// <param name="isDefaultOff">
-        /// &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: AppInsightsWebAppStackSettings.isDefaultOff
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppInsightsWebAppStackSettings(bool? isSupported, bool? isDefaultOff, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="isSupported"> &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isDefaultOff"> &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppInsightsWebAppStackSettings(bool? isSupported, bool? isDefaultOff, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsSupported = isSupported;
             IsDefaultOff = isDefaultOff;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: AppInsightsWebAppStackSettings.isSupported
-        /// </summary>
-        [WirePath("isSupported")]
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsSupported { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: AppInsightsWebAppStackSettings.isDefaultOff
-        /// </summary>
-        [WirePath("isDefaultOff")]
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsDefaultOff { get; }
     }
 }

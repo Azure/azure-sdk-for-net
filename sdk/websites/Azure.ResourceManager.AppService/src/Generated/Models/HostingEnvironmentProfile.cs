@@ -11,43 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Specification for an App Service Environment to use for this resource.
-    /// Serialized Name: HostingEnvironmentProfile
-    /// </summary>
+    /// <summary> Specification for an App Service Environment to use for this resource. </summary>
     public partial class HostingEnvironmentProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HostingEnvironmentProfile"/>. </summary>
         public HostingEnvironmentProfile()
@@ -55,44 +23,25 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HostingEnvironmentProfile"/>. </summary>
-        /// <param name="id">
-        /// Resource ID of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentProfile.id
-        /// </param>
-        /// <param name="name">
-        /// Name of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentProfile.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource type of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentProfile.type
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HostingEnvironmentProfile(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="id"> Resource ID of the App Service Environment. </param>
+        /// <param name="name"> Name of the App Service Environment. </param>
+        /// <param name="type"> Resource type of the App Service Environment. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HostingEnvironmentProfile(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            ResourceType = resourceType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Resource ID of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentProfile.id
-        /// </summary>
-        [WirePath("id")]
+        /// <summary> Resource ID of the App Service Environment. </summary>
         public ResourceIdentifier Id { get; set; }
-        /// <summary>
-        /// Name of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentProfile.name
-        /// </summary>
-        [WirePath("name")]
+
+        /// <summary> Name of the App Service Environment. </summary>
         public string Name { get; }
-        /// <summary>
-        /// Resource type of the App Service Environment.
-        /// Serialized Name: HostingEnvironmentProfile.type
-        /// </summary>
-        [WirePath("type")]
-        public ResourceType? ResourceType { get; }
+
+        /// <summary> Resource type of the App Service Environment. </summary>
+        public string Type { get; }
     }
 }

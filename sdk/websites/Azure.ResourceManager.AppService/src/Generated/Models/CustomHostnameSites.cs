@@ -7,91 +7,58 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A hostname and its assigned sites
-    /// Serialized Name: CustomHostnameSites
-    /// </summary>
-    public partial class CustomHostnameSites : ResourceData
+    /// <summary> A hostname and its assigned sites. </summary>
+    public partial class CustomHostnameSites : ProxyOnlyResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CustomHostnameSites"/>. </summary>
-        public CustomHostnameSites()
+        internal CustomHostnameSites()
         {
-            SiteResourceIds = new ChangeTrackingList<AppServiceIdentifierData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomHostnameSites"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="customHostname"> Serialized Name: CustomHostnameSites.properties.customHostname. </param>
-        /// <param name="region"> Serialized Name: CustomHostnameSites.properties.region. </param>
-        /// <param name="siteResourceIds"> Serialized Name: CustomHostnameSites.properties.siteResourceIds. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomHostnameSites(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string customHostname, string region, IList<AppServiceIdentifierData> siteResourceIds, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource Name. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> CustomHostnameSites resource specific properties. </param>
+        internal CustomHostnameSites(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomHostnameSitesProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
-            CustomHostname = customHostname;
-            Region = region;
-            SiteResourceIds = siteResourceIds;
-            Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
-        /// <summary> Serialized Name: CustomHostnameSites.properties.customHostname. </summary>
-        [WirePath("properties.customHostname")]
-        public string CustomHostname { get; set; }
-        /// <summary> Serialized Name: CustomHostnameSites.properties.region. </summary>
-        [WirePath("properties.region")]
-        public string Region { get; set; }
-        /// <summary> Serialized Name: CustomHostnameSites.properties.siteResourceIds. </summary>
-        [WirePath("properties.siteResourceIds")]
-        public IList<AppServiceIdentifierData> SiteResourceIds { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        /// <summary> CustomHostnameSites resource specific properties. </summary>
+        internal CustomHostnameSitesProperties Properties { get; }
+
+        /// <summary> Gets the CustomHostname. </summary>
+        public string CustomHostname
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomHostname;
+            }
+        }
+
+        /// <summary> Gets the Region. </summary>
+        public string Region
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Region;
+            }
+        }
+
+        /// <summary> Gets the SiteResourceIds. </summary>
+        public IList<IdentifierData> SiteResourceIds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SiteResourceIds;
+            }
+        }
     }
 }

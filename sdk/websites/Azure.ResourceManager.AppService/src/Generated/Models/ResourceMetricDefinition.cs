@@ -7,132 +7,32 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Metadata for the metrics.
-    /// Serialized Name: ResourceMetricDefinition
-    /// </summary>
-    public partial class ResourceMetricDefinition : ResourceData
+    /// <summary> Metadata for the metrics. </summary>
+    public partial class ResourceMetricDefinition : ProxyOnlyResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ResourceMetricDefinition"/>. </summary>
-        public ResourceMetricDefinition()
+        internal ResourceMetricDefinition()
         {
-            MetricAvailabilities = new ChangeTrackingList<ResourceMetricAvailability>();
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceMetricDefinition"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="unit">
-        /// Unit of the metric.
-        /// Serialized Name: ResourceMetricDefinition.properties.unit
-        /// </param>
-        /// <param name="primaryAggregationType">
-        /// Primary aggregation type.
-        /// Serialized Name: ResourceMetricDefinition.properties.primaryAggregationType
-        /// </param>
-        /// <param name="metricAvailabilities">
-        /// List of time grains supported for the metric together with retention period.
-        /// Serialized Name: ResourceMetricDefinition.properties.metricAvailabilities
-        /// </param>
-        /// <param name="resourceUri">
-        /// Resource URI.
-        /// Serialized Name: ResourceMetricDefinition.properties.resourceUri
-        /// </param>
-        /// <param name="properties">
-        /// Resource metric definition properties.
-        /// Serialized Name: ResourceMetricDefinition.properties.properties
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceMetricDefinition(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string unit, string primaryAggregationType, IReadOnlyList<ResourceMetricAvailability> metricAvailabilities, Uri resourceUri, IReadOnlyDictionary<string, string> properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource Name. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> ResourceMetricDefinition resource specific properties. </param>
+        internal ResourceMetricDefinition(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyDictionary<string, string> properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
-            Unit = unit;
-            PrimaryAggregationType = primaryAggregationType;
-            MetricAvailabilities = metricAvailabilities;
-            ResourceUri = resourceUri;
             Properties = properties;
-            Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Unit of the metric.
-        /// Serialized Name: ResourceMetricDefinition.properties.unit
-        /// </summary>
-        [WirePath("properties.unit")]
-        public string Unit { get; }
-        /// <summary>
-        /// Primary aggregation type.
-        /// Serialized Name: ResourceMetricDefinition.properties.primaryAggregationType
-        /// </summary>
-        [WirePath("properties.primaryAggregationType")]
-        public string PrimaryAggregationType { get; }
-        /// <summary>
-        /// List of time grains supported for the metric together with retention period.
-        /// Serialized Name: ResourceMetricDefinition.properties.metricAvailabilities
-        /// </summary>
-        [WirePath("properties.metricAvailabilities")]
-        public IReadOnlyList<ResourceMetricAvailability> MetricAvailabilities { get; }
-        /// <summary>
-        /// Resource URI.
-        /// Serialized Name: ResourceMetricDefinition.properties.resourceUri
-        /// </summary>
-        [WirePath("properties.resourceUri")]
-        public Uri ResourceUri { get; }
-        /// <summary>
-        /// Resource metric definition properties.
-        /// Serialized Name: ResourceMetricDefinition.properties.properties
-        /// </summary>
-        [WirePath("properties.properties")]
+        /// <summary> ResourceMetricDefinition resource specific properties. </summary>
         public IReadOnlyDictionary<string, string> Properties { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }

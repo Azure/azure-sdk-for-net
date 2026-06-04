@@ -7,152 +7,93 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A setting difference between two deployment slots of an app.
-    /// Serialized Name: SlotDifference
-    /// </summary>
-    public partial class SlotDifference : ResourceData
+    /// <summary> A setting difference between two deployment slots of an app. </summary>
+    public partial class SlotDifference : ProxyOnlyResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="SlotDifference"/>. </summary>
-        public SlotDifference()
+        internal SlotDifference()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SlotDifference"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="level">
-        /// Level of the difference: Information, Warning or Error.
-        /// Serialized Name: SlotDifference.properties.level
-        /// </param>
-        /// <param name="settingType">
-        /// The type of the setting: General, AppSetting or ConnectionString.
-        /// Serialized Name: SlotDifference.properties.settingType
-        /// </param>
-        /// <param name="diffRule">
-        /// Rule that describes how to process the setting difference during a slot swap.
-        /// Serialized Name: SlotDifference.properties.diffRule
-        /// </param>
-        /// <param name="settingName">
-        /// Name of the setting.
-        /// Serialized Name: SlotDifference.properties.settingName
-        /// </param>
-        /// <param name="valueInCurrentSlot">
-        /// Value of the setting in the current slot.
-        /// Serialized Name: SlotDifference.properties.valueInCurrentSlot
-        /// </param>
-        /// <param name="valueInTargetSlot">
-        /// Value of the setting in the target slot.
-        /// Serialized Name: SlotDifference.properties.valueInTargetSlot
-        /// </param>
-        /// <param name="description">
-        /// Description of the setting difference.
-        /// Serialized Name: SlotDifference.properties.description
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SlotDifference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string level, string settingType, string diffRule, string settingName, string valueInCurrentSlot, string valueInTargetSlot, string description, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource Name. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> SlotDifference resource specific properties. </param>
+        internal SlotDifference(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SlotDifferenceProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
-            Level = level;
-            SettingType = settingType;
-            DiffRule = diffRule;
-            SettingName = settingName;
-            ValueInCurrentSlot = valueInCurrentSlot;
-            ValueInTargetSlot = valueInTargetSlot;
-            Description = description;
-            Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// Level of the difference: Information, Warning or Error.
-        /// Serialized Name: SlotDifference.properties.level
-        /// </summary>
-        [WirePath("properties.level")]
-        public string Level { get; }
-        /// <summary>
-        /// The type of the setting: General, AppSetting or ConnectionString.
-        /// Serialized Name: SlotDifference.properties.settingType
-        /// </summary>
-        [WirePath("properties.settingType")]
-        public string SettingType { get; }
-        /// <summary>
-        /// Rule that describes how to process the setting difference during a slot swap.
-        /// Serialized Name: SlotDifference.properties.diffRule
-        /// </summary>
-        [WirePath("properties.diffRule")]
-        public string DiffRule { get; }
-        /// <summary>
-        /// Name of the setting.
-        /// Serialized Name: SlotDifference.properties.settingName
-        /// </summary>
-        [WirePath("properties.settingName")]
-        public string SettingName { get; }
-        /// <summary>
-        /// Value of the setting in the current slot.
-        /// Serialized Name: SlotDifference.properties.valueInCurrentSlot
-        /// </summary>
-        [WirePath("properties.valueInCurrentSlot")]
-        public string ValueInCurrentSlot { get; }
-        /// <summary>
-        /// Value of the setting in the target slot.
-        /// Serialized Name: SlotDifference.properties.valueInTargetSlot
-        /// </summary>
-        [WirePath("properties.valueInTargetSlot")]
-        public string ValueInTargetSlot { get; }
-        /// <summary>
-        /// Description of the setting difference.
-        /// Serialized Name: SlotDifference.properties.description
-        /// </summary>
-        [WirePath("properties.description")]
-        public string Description { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        /// <summary> SlotDifference resource specific properties. </summary>
+        internal SlotDifferenceProperties Properties { get; }
+
+        /// <summary> Level of the difference: Information, Warning or Error. </summary>
+        public string Level
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Level;
+            }
+        }
+
+        /// <summary> The type of the setting: General, AppSetting or ConnectionString. </summary>
+        public string SettingType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SettingType;
+            }
+        }
+
+        /// <summary> Rule that describes how to process the setting difference during a slot swap. </summary>
+        public string DiffRule
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiffRule;
+            }
+        }
+
+        /// <summary> Name of the setting. </summary>
+        public string SettingName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SettingName;
+            }
+        }
+
+        /// <summary> Value of the setting in the current slot. </summary>
+        public string ValueInCurrentSlot
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValueInCurrentSlot;
+            }
+        }
+
+        /// <summary> Value of the setting in the target slot. </summary>
+        public string ValueInTargetSlot
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValueInTargetSlot;
+            }
+        }
+
+        /// <summary> Description of the setting difference. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
     }
 }

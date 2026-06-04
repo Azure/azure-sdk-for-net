@@ -9,20 +9,28 @@ using System;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    internal static partial class StackPreferredOSExtensions
+    internal static partial class StackPreferredOsExtensions
     {
-        public static string ToSerialString(this StackPreferredOS value) => value switch
+        /// <param name="value"> The value to serialize. </param>
+        public static string ToSerialString(this StackPreferredOs value) => value switch
         {
-            StackPreferredOS.Windows => "Windows",
-            StackPreferredOS.Linux => "Linux",
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StackPreferredOS value.")
+            StackPreferredOs.Windows => "Windows",
+            StackPreferredOs.Linux => "Linux",
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StackPreferredOs value.")
         };
 
-        public static StackPreferredOS ToStackPreferredOS(this string value)
+        /// <param name="value"> The value to deserialize. </param>
+        public static StackPreferredOs ToStackPreferredOs(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows")) return StackPreferredOS.Windows;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux")) return StackPreferredOS.Linux;
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StackPreferredOS value.");
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows"))
+            {
+                return StackPreferredOs.Windows;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Linux"))
+            {
+                return StackPreferredOs.Linux;
+            }
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StackPreferredOs value.");
         }
     }
 }

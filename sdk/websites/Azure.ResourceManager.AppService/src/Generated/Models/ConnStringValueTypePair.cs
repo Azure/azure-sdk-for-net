@@ -7,98 +7,43 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Database connection string value to type pair.
-    /// Serialized Name: ConnStringValueTypePair
-    /// </summary>
+    /// <summary> Database connection string value to type pair. </summary>
     public partial class ConnStringValueTypePair
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnStringValueTypePair"/>. </summary>
-        /// <param name="value">
-        /// Value of pair.
-        /// Serialized Name: ConnStringValueTypePair.value
-        /// </param>
-        /// <param name="connectionStringType">
-        /// Type of database.
-        /// Serialized Name: ConnStringValueTypePair.type
-        /// </param>
+        /// <param name="value"> Value of pair. </param>
+        /// <param name="type"> Type of database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConnStringValueTypePair(string value, ConnectionStringType connectionStringType)
+        public ConnStringValueTypePair(string value, ConnectionStringType @type)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
-            ConnectionStringType = connectionStringType;
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnStringValueTypePair"/>. </summary>
-        /// <param name="value">
-        /// Value of pair.
-        /// Serialized Name: ConnStringValueTypePair.value
-        /// </param>
-        /// <param name="connectionStringType">
-        /// Type of database.
-        /// Serialized Name: ConnStringValueTypePair.type
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnStringValueTypePair(string value, ConnectionStringType connectionStringType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> Value of pair. </param>
+        /// <param name="type"> Type of database. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnStringValueTypePair(string value, ConnectionStringType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
-            ConnectionStringType = connectionStringType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnStringValueTypePair"/> for deserialization. </summary>
-        internal ConnStringValueTypePair()
-        {
-        }
-
-        /// <summary>
-        /// Value of pair.
-        /// Serialized Name: ConnStringValueTypePair.value
-        /// </summary>
-        [WirePath("value")]
+        /// <summary> Value of pair. </summary>
         public string Value { get; set; }
-        /// <summary>
-        /// Type of database.
-        /// Serialized Name: ConnStringValueTypePair.type
-        /// </summary>
-        [WirePath("type")]
-        public ConnectionStringType ConnectionStringType { get; set; }
+
+        /// <summary> Type of database. </summary>
+        public ConnectionStringType Type { get; set; }
     }
 }

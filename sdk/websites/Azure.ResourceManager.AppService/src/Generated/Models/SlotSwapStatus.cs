@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The status of the last successful slot swap operation.
-    /// Serialized Name: SlotSwapStatus
-    /// </summary>
+    /// <summary> The status of the last successful slot swap operation. </summary>
     public partial class SlotSwapStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SlotSwapStatus"/>. </summary>
         internal SlotSwapStatus()
@@ -54,44 +22,25 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SlotSwapStatus"/>. </summary>
-        /// <param name="timestampUtc">
-        /// The time the last successful slot swap completed.
-        /// Serialized Name: SlotSwapStatus.timestampUtc
-        /// </param>
-        /// <param name="sourceSlotName">
-        /// The source slot of the last swap operation.
-        /// Serialized Name: SlotSwapStatus.sourceSlotName
-        /// </param>
-        /// <param name="destinationSlotName">
-        /// The destination slot of the last swap operation.
-        /// Serialized Name: SlotSwapStatus.destinationSlotName
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SlotSwapStatus(DateTimeOffset? timestampUtc, string sourceSlotName, string destinationSlotName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="timestampUtc"> The time the last successful slot swap completed. </param>
+        /// <param name="sourceSlotName"> The source slot of the last swap operation. </param>
+        /// <param name="destinationSlotName"> The destination slot of the last swap operation. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SlotSwapStatus(DateTimeOffset? timestampUtc, string sourceSlotName, string destinationSlotName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimestampUtc = timestampUtc;
             SourceSlotName = sourceSlotName;
             DestinationSlotName = destinationSlotName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The time the last successful slot swap completed.
-        /// Serialized Name: SlotSwapStatus.timestampUtc
-        /// </summary>
-        [WirePath("timestampUtc")]
+        /// <summary> The time the last successful slot swap completed. </summary>
         public DateTimeOffset? TimestampUtc { get; }
-        /// <summary>
-        /// The source slot of the last swap operation.
-        /// Serialized Name: SlotSwapStatus.sourceSlotName
-        /// </summary>
-        [WirePath("sourceSlotName")]
+
+        /// <summary> The source slot of the last swap operation. </summary>
         public string SourceSlotName { get; }
-        /// <summary>
-        /// The destination slot of the last swap operation.
-        /// Serialized Name: SlotSwapStatus.destinationSlotName
-        /// </summary>
-        [WirePath("destinationSlotName")]
+
+        /// <summary> The destination slot of the last swap operation. </summary>
         public string DestinationSlotName { get; }
     }
 }

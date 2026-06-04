@@ -7,163 +7,102 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Usage of the quota resource.
-    /// Serialized Name: Usage
-    /// </summary>
-    public partial class AppServiceUsage : ResourceData
+    /// <summary> Usage of the quota resource. </summary>
+    public partial class AppServiceUsage : ProxyOnlyResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="AppServiceUsage"/>. </summary>
-        public AppServiceUsage()
+        internal AppServiceUsage()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceUsage"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName">
-        /// Friendly name shown in the UI.
-        /// Serialized Name: Usage.properties.displayName
-        /// </param>
-        /// <param name="resourceName">
-        /// Name of the quota resource.
-        /// Serialized Name: Usage.properties.resourceName
-        /// </param>
-        /// <param name="unit">
-        /// Units of measurement for the quota resource.
-        /// Serialized Name: Usage.properties.unit
-        /// </param>
-        /// <param name="currentValue">
-        /// The current value of the resource counter.
-        /// Serialized Name: Usage.properties.currentValue
-        /// </param>
-        /// <param name="limit">
-        /// The resource limit.
-        /// Serialized Name: Usage.properties.limit
-        /// </param>
-        /// <param name="nextResetOn">
-        /// Next reset time for the resource counter.
-        /// Serialized Name: Usage.properties.nextResetTime
-        /// </param>
-        /// <param name="computeMode">
-        /// Compute mode used for this usage.
-        /// Serialized Name: Usage.properties.computeMode
-        /// </param>
-        /// <param name="siteMode">
-        /// Site mode used for this usage.
-        /// Serialized Name: Usage.properties.siteMode
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceUsage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string resourceName, string unit, long? currentValue, long? limit, DateTimeOffset? nextResetOn, ComputeModeOption? computeMode, string siteMode, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="name"> Resource Name. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Usage resource specific properties. </param>
+        internal AppServiceUsage(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, UsageProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
-            DisplayName = displayName;
-            ResourceName = resourceName;
-            Unit = unit;
-            CurrentValue = currentValue;
-            Limit = limit;
-            NextResetOn = nextResetOn;
-            ComputeMode = computeMode;
-            SiteMode = siteMode;
-            Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// Friendly name shown in the UI.
-        /// Serialized Name: Usage.properties.displayName
-        /// </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; }
-        /// <summary>
-        /// Name of the quota resource.
-        /// Serialized Name: Usage.properties.resourceName
-        /// </summary>
-        [WirePath("properties.resourceName")]
-        public string ResourceName { get; }
-        /// <summary>
-        /// Units of measurement for the quota resource.
-        /// Serialized Name: Usage.properties.unit
-        /// </summary>
-        [WirePath("properties.unit")]
-        public string Unit { get; }
-        /// <summary>
-        /// The current value of the resource counter.
-        /// Serialized Name: Usage.properties.currentValue
-        /// </summary>
-        [WirePath("properties.currentValue")]
-        public long? CurrentValue { get; }
-        /// <summary>
-        /// The resource limit.
-        /// Serialized Name: Usage.properties.limit
-        /// </summary>
-        [WirePath("properties.limit")]
-        public long? Limit { get; }
-        /// <summary>
-        /// Next reset time for the resource counter.
-        /// Serialized Name: Usage.properties.nextResetTime
-        /// </summary>
-        [WirePath("properties.nextResetTime")]
-        public DateTimeOffset? NextResetOn { get; }
-        /// <summary>
-        /// Compute mode used for this usage.
-        /// Serialized Name: Usage.properties.computeMode
-        /// </summary>
-        [WirePath("properties.computeMode")]
-        public ComputeModeOption? ComputeMode { get; }
-        /// <summary>
-        /// Site mode used for this usage.
-        /// Serialized Name: Usage.properties.siteMode
-        /// </summary>
-        [WirePath("properties.siteMode")]
-        public string SiteMode { get; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
+        /// <summary> Usage resource specific properties. </summary>
+        internal UsageProperties Properties { get; }
+
+        /// <summary> Friendly name shown in the UI. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
+        /// <summary> Name of the quota resource. </summary>
+        public string ResourceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceName;
+            }
+        }
+
+        /// <summary> Units of measurement for the quota resource. </summary>
+        public string Unit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Unit;
+            }
+        }
+
+        /// <summary> The current value of the resource counter. </summary>
+        public long? CurrentValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentValue;
+            }
+        }
+
+        /// <summary> The resource limit. </summary>
+        public long? Limit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Limit;
+            }
+        }
+
+        /// <summary> Next reset time for the resource counter. </summary>
+        public DateTimeOffset? NextResetOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NextResetOn;
+            }
+        }
+
+        /// <summary> Compute mode used for this usage. </summary>
+        public ComputeModeOptions? ComputeMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComputeMode;
+            }
+        }
+
+        /// <summary> Site mode used for this usage. </summary>
+        public string SiteMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SiteMode;
+            }
+        }
     }
 }

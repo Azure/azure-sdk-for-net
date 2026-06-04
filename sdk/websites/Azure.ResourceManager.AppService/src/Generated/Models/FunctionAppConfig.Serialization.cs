@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class FunctionAppConfig : IUtf8JsonSerializable, IJsonModel<FunctionAppConfig>
+    /// <summary> Function app configuration. </summary>
+    public partial class FunctionAppConfig : IJsonModel<FunctionAppConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionAppConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FunctionAppConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFunctionAppConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FunctionAppConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FunctionAppConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FunctionAppConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionAppConfig IPersistableModel<FunctionAppConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FunctionAppConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FunctionAppConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppConfig)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Deployment))
             {
                 writer.WritePropertyName("deployment"u8);
@@ -43,27 +82,27 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
-                writer.WriteObjectValue(Runtime, options);
+                writer.WriteObjectValue<Models.FunctionAppRuntime>(Runtime, options);
             }
             if (Optional.IsDefined(ScaleAndConcurrency))
             {
                 writer.WritePropertyName("scaleAndConcurrency"u8);
-                writer.WriteObjectValue(ScaleAndConcurrency, options);
+                writer.WriteObjectValue<Models.FunctionAppScaleAndConcurrency>(ScaleAndConcurrency, options);
             }
             if (Optional.IsDefined(SiteUpdateStrategy))
             {
                 writer.WritePropertyName("siteUpdateStrategy"u8);
                 writer.WriteObjectValue(SiteUpdateStrategy, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,191 +111,80 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        FunctionAppConfig IJsonModel<FunctionAppConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FunctionAppConfig IJsonModel<FunctionAppConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FunctionAppConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FunctionAppConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppConfig)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFunctionAppConfig(document.RootElement, options);
         }
 
-        internal static FunctionAppConfig DeserializeFunctionAppConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FunctionAppConfig DeserializeFunctionAppConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             FunctionsDeployment deployment = default;
-            FunctionAppRuntime runtime = default;
-            FunctionAppScaleAndConcurrency scaleAndConcurrency = default;
+            Models.FunctionAppRuntime runtime = default;
+            Models.FunctionAppScaleAndConcurrency scaleAndConcurrency = default;
             FunctionsSiteUpdateStrategy siteUpdateStrategy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("deployment"u8))
+                if (prop.NameEquals("deployment"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deployment = FunctionsDeployment.DeserializeFunctionsDeployment(property.Value, options);
+                    deployment = FunctionsDeployment.DeserializeFunctionsDeployment(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("runtime"u8))
+                if (prop.NameEquals("runtime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runtime = FunctionAppRuntime.DeserializeFunctionAppRuntime(property.Value, options);
+                    runtime = Models.FunctionAppRuntime.DeserializeFunctionAppRuntime(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("scaleAndConcurrency"u8))
+                if (prop.NameEquals("scaleAndConcurrency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scaleAndConcurrency = FunctionAppScaleAndConcurrency.DeserializeFunctionAppScaleAndConcurrency(property.Value, options);
+                    scaleAndConcurrency = Models.FunctionAppScaleAndConcurrency.DeserializeFunctionAppScaleAndConcurrency(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("siteUpdateStrategy"u8))
+                if (prop.NameEquals("siteUpdateStrategy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    siteUpdateStrategy = FunctionsSiteUpdateStrategy.DeserializeFunctionsSiteUpdateStrategy(property.Value, options);
+                    siteUpdateStrategy = FunctionsSiteUpdateStrategy.DeserializeFunctionsSiteUpdateStrategy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new FunctionAppConfig(deployment, runtime, scaleAndConcurrency, siteUpdateStrategy, serializedAdditionalRawData);
+            return new FunctionAppConfig(deployment, runtime, scaleAndConcurrency, siteUpdateStrategy, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DeploymentStorage", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  deployment: ");
-                builder.AppendLine("{");
-                builder.Append("    storage: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Deployment))
-                {
-                    builder.Append("  deployment: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Deployment, options, 2, false, "  deployment: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Runtime), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  runtime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Runtime))
-                {
-                    builder.Append("  runtime: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Runtime, options, 2, false, "  runtime: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleAndConcurrency), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scaleAndConcurrency: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScaleAndConcurrency))
-                {
-                    builder.Append("  scaleAndConcurrency: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ScaleAndConcurrency, options, 2, false, "  scaleAndConcurrency: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SiteUpdateStrategyType", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  siteUpdateStrategy: ");
-                builder.AppendLine("{");
-                builder.Append("    type: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(SiteUpdateStrategy))
-                {
-                    builder.Append("  siteUpdateStrategy: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SiteUpdateStrategy, options, 2, false, "  siteUpdateStrategy: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<FunctionAppConfig>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(FunctionAppConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FunctionAppConfig IPersistableModel<FunctionAppConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFunctionAppConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FunctionAppConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FunctionAppConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Object to hold install script reference.
-    /// Serialized Name: InstallScriptSource
-    /// </summary>
+    /// <summary> Object to hold install script reference. </summary>
     public partial class InstallScriptSource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InstallScriptSource"/>. </summary>
         public InstallScriptSource()
@@ -54,33 +22,20 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InstallScriptSource"/>. </summary>
-        /// <param name="sourceUri">
-        /// Install script source URI where the install script file will be fetched from.
-        /// Serialized Name: InstallScriptSource.sourceUri
-        /// </param>
-        /// <param name="scriptType">
-        /// Type of the install script.
-        /// Serialized Name: InstallScriptSource.type
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstallScriptSource(Uri sourceUri, InstallScriptType? scriptType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="sourceUri"> Install script source URI where the install script file will be fetched from. </param>
+        /// <param name="type"> Type of the install script. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InstallScriptSource(Uri sourceUri, InstallScriptType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceUri = sourceUri;
-            ScriptType = scriptType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Install script source URI where the install script file will be fetched from.
-        /// Serialized Name: InstallScriptSource.sourceUri
-        /// </summary>
-        [WirePath("sourceUri")]
+        /// <summary> Install script source URI where the install script file will be fetched from. </summary>
         public Uri SourceUri { get; set; }
-        /// <summary>
-        /// Type of the install script.
-        /// Serialized Name: InstallScriptSource.type
-        /// </summary>
-        [WirePath("type")]
-        public InstallScriptType? ScriptType { get; set; }
+
+        /// <summary> Type of the install script. </summary>
+        public InstallScriptType? Type { get; set; }
     }
 }

@@ -8,17 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SitePhpErrorLogFlag : IUtf8JsonSerializable, IJsonModel<SitePhpErrorLogFlag>
+    /// <summary> Used for getting PHP error logging flag. </summary>
+    public partial class SitePhpErrorLogFlag : ProxyOnlyResource, IJsonModel<SitePhpErrorLogFlag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SitePhpErrorLogFlag>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ProxyOnlyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SitePhpErrorLogFlag>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSitePhpErrorLogFlag(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SitePhpErrorLogFlag)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SitePhpErrorLogFlag>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SitePhpErrorLogFlag)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SitePhpErrorLogFlag>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SitePhpErrorLogFlag IPersistableModel<SitePhpErrorLogFlag>.Create(BinaryData data, ModelReaderWriterOptions options) => (SitePhpErrorLogFlag)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SitePhpErrorLogFlag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="SitePhpErrorLogFlag"/> from. </param>
+        internal static SitePhpErrorLogFlag FromResponse(Azure.Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSitePhpErrorLogFlag(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SitePhpErrorLogFlag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,373 +77,93 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SitePhpErrorLogFlag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SitePhpErrorLogFlag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SitePhpErrorLogFlag)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Kind))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(LocalLogErrors))
-            {
-                writer.WritePropertyName("localLogErrors"u8);
-                writer.WriteStringValue(LocalLogErrors);
-            }
-            if (Optional.IsDefined(MasterLogErrors))
-            {
-                writer.WritePropertyName("masterLogErrors"u8);
-                writer.WriteStringValue(MasterLogErrors);
-            }
-            if (Optional.IsDefined(LocalLogErrorsMaxLength))
-            {
-                writer.WritePropertyName("localLogErrorsMaxLength"u8);
-                writer.WriteStringValue(LocalLogErrorsMaxLength);
-            }
-            if (Optional.IsDefined(MasterLogErrorsMaxLength))
-            {
-                writer.WritePropertyName("masterLogErrorsMaxLength"u8);
-                writer.WriteStringValue(MasterLogErrorsMaxLength);
-            }
-            writer.WriteEndObject();
         }
 
-        SitePhpErrorLogFlag IJsonModel<SitePhpErrorLogFlag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SitePhpErrorLogFlag IJsonModel<SitePhpErrorLogFlag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SitePhpErrorLogFlag)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ProxyOnlyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SitePhpErrorLogFlag>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SitePhpErrorLogFlag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SitePhpErrorLogFlag)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSitePhpErrorLogFlag(document.RootElement, options);
         }
 
-        internal static SitePhpErrorLogFlag DeserializeSitePhpErrorLogFlag(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SitePhpErrorLogFlag DeserializeSitePhpErrorLogFlag(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string kind = default;
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
-            string localLogErrors = default;
-            string masterLogErrors = default;
-            string localLogErrorsMaxLength = default;
-            string masterLogErrorsMaxLength = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string kind = default;
+            string @type = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SitePhpErrorLogFlagProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    kind = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    name = property.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemData"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("localLogErrors"u8))
-                        {
-                            localLogErrors = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("masterLogErrors"u8))
-                        {
-                            masterLogErrors = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("localLogErrorsMaxLength"u8))
-                        {
-                            localLogErrorsMaxLength = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("masterLogErrorsMaxLength"u8))
-                        {
-                            masterLogErrorsMaxLength = property0.Value.GetString();
-                            continue;
-                        }
-                    }
+                    properties = SitePhpErrorLogFlagProperties.DeserializeSitePhpErrorLogFlagProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SitePhpErrorLogFlag(
                 id,
                 name,
-                type,
-                systemData,
-                localLogErrors,
-                masterLogErrors,
-                localLogErrorsMaxLength,
-                masterLogErrorsMaxLength,
                 kind,
-                serializedAdditionalRawData);
+                @type,
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Kind))
-                {
-                    builder.Append("  kind: ");
-                    if (Kind.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Kind}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Kind}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalLogErrors), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    localLogErrors: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LocalLogErrors))
-                {
-                    builder.Append("    localLogErrors: ");
-                    if (LocalLogErrors.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LocalLogErrors}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LocalLogErrors}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterLogErrors), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    masterLogErrors: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MasterLogErrors))
-                {
-                    builder.Append("    masterLogErrors: ");
-                    if (MasterLogErrors.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MasterLogErrors}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MasterLogErrors}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalLogErrorsMaxLength), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    localLogErrorsMaxLength: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LocalLogErrorsMaxLength))
-                {
-                    builder.Append("    localLogErrorsMaxLength: ");
-                    if (LocalLogErrorsMaxLength.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LocalLogErrorsMaxLength}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LocalLogErrorsMaxLength}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterLogErrorsMaxLength), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    masterLogErrorsMaxLength: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MasterLogErrorsMaxLength))
-                {
-                    builder.Append("    masterLogErrorsMaxLength: ");
-                    if (MasterLogErrorsMaxLength.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MasterLogErrorsMaxLength}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MasterLogErrorsMaxLength}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SitePhpErrorLogFlag>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SitePhpErrorLogFlag>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SitePhpErrorLogFlag)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SitePhpErrorLogFlag IPersistableModel<SitePhpErrorLogFlag>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SitePhpErrorLogFlag>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSitePhpErrorLogFlag(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SitePhpErrorLogFlag)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SitePhpErrorLogFlag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

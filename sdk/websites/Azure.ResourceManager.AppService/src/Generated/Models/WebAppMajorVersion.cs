@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Web App stack major version.
-    /// Serialized Name: WebAppMajorVersion
-    /// </summary>
+    /// <summary> Web App stack major version. </summary>
     public partial class WebAppMajorVersion
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppMajorVersion"/>. </summary>
         internal WebAppMajorVersion()
@@ -55,44 +24,25 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppMajorVersion"/>. </summary>
-        /// <param name="displayText">
-        /// Web App stack major version (display only).
-        /// Serialized Name: WebAppMajorVersion.displayText
-        /// </param>
-        /// <param name="value">
-        /// Web App stack major version name.
-        /// Serialized Name: WebAppMajorVersion.value
-        /// </param>
-        /// <param name="minorVersions">
-        /// Minor versions associated with the major version.
-        /// Serialized Name: WebAppMajorVersion.minorVersions
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppMajorVersion(string displayText, string value, IReadOnlyList<WebAppMinorVersion> minorVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="displayText"> Web App stack major version (display only). </param>
+        /// <param name="value"> Web App stack major version name. </param>
+        /// <param name="minorVersions"> Minor versions associated with the major version. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppMajorVersion(string displayText, string value, IReadOnlyList<WebAppMinorVersion> minorVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayText = displayText;
             Value = value;
             MinorVersions = minorVersions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Web App stack major version (display only).
-        /// Serialized Name: WebAppMajorVersion.displayText
-        /// </summary>
-        [WirePath("displayText")]
+        /// <summary> Web App stack major version (display only). </summary>
         public string DisplayText { get; }
-        /// <summary>
-        /// Web App stack major version name.
-        /// Serialized Name: WebAppMajorVersion.value
-        /// </summary>
-        [WirePath("value")]
+
+        /// <summary> Web App stack major version name. </summary>
         public string Value { get; }
-        /// <summary>
-        /// Minor versions associated with the major version.
-        /// Serialized Name: WebAppMajorVersion.minorVersions
-        /// </summary>
-        [WirePath("minorVersions")]
+
+        /// <summary> Minor versions associated with the major version. </summary>
         public IReadOnlyList<WebAppMinorVersion> MinorVersions { get; }
     }
 }

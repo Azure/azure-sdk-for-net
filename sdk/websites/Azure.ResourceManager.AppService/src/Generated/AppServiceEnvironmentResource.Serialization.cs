@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServiceEnvironmentResource : IJsonModel<AppServiceEnvironmentData>
+    /// <summary></summary>
+    public partial class AppServiceEnvironmentResource : IJsonModel<RemotePrivateEndpointConnectionARMResourceData>
     {
-        private static AppServiceEnvironmentData s_dataDeserializationInstance;
-        private static AppServiceEnvironmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RemotePrivateEndpointConnectionARMResourceData> s_dataDeserializationInstance;
 
-        void IJsonModel<AppServiceEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceEnvironmentData>)Data).Write(writer, options);
+        private static IJsonModel<RemotePrivateEndpointConnectionARMResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RemotePrivateEndpointConnectionARMResourceData();
 
-        AppServiceEnvironmentData IJsonModel<AppServiceEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceEnvironmentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<RemotePrivateEndpointConnectionARMResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RemotePrivateEndpointConnectionARMResourceData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<AppServiceEnvironmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppServiceEnvironmentData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RemotePrivateEndpointConnectionARMResourceData IJsonModel<RemotePrivateEndpointConnectionARMResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        AppServiceEnvironmentData IPersistableModel<AppServiceEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceEnvironmentData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RemotePrivateEndpointConnectionARMResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<AppServiceEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceEnvironmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RemotePrivateEndpointConnectionARMResourceData IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RemotePrivateEndpointConnectionARMResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -13,143 +13,99 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the WebSiteInstanceStatus data model.
-    /// Concrete proxy resource types can be created by aliasing this type using a specific property type.
-    /// Serialized Name: WebSiteInstanceStatus
-    /// </summary>
+    /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class WebSiteInstanceStatusData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebSiteInstanceStatusData"/>. </summary>
-        public WebSiteInstanceStatusData()
+        internal WebSiteInstanceStatusData()
         {
-            Containers = new ChangeTrackingDictionary<string, ContainerInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebSiteInstanceStatusData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: WebSiteInstanceStatus.kind
-        /// </param>
-        /// <param name="state"> Serialized Name: WebSiteInstanceStatus.properties.state. </param>
-        /// <param name="statusUri">
-        /// Link to the GetStatusApi in Kudu
-        /// Serialized Name: WebSiteInstanceStatus.properties.statusUrl
-        /// </param>
-        /// <param name="detectorUri">
-        /// Link to the Diagnose and Solve Portal
-        /// Serialized Name: WebSiteInstanceStatus.properties.detectorUrl
-        /// </param>
-        /// <param name="consoleUri">
-        /// Link to the console to web app instance
-        /// Serialized Name: WebSiteInstanceStatus.properties.consoleUrl
-        /// </param>
-        /// <param name="healthCheckUrlString">
-        /// Link to the console to web app instance
-        /// Serialized Name: WebSiteInstanceStatus.properties.healthCheckUrl
-        /// </param>
-        /// <param name="containers">
-        /// Dictionary of &lt;ContainerInfo&gt;
-        /// Serialized Name: WebSiteInstanceStatus.properties.containers
-        /// </param>
-        /// <param name="physicalZone">
-        /// The physical zone that the instance is in
-        /// Serialized Name: WebSiteInstanceStatus.properties.physicalZone
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, SiteRuntimeState? state, Uri statusUri, Uri detectorUri, Uri consoleUri, string healthCheckUrlString, IDictionary<string, ContainerInfo> containers, string physicalZone, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> WebSiteInstanceStatus resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebSiteInstanceStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebSiteInstanceStatusProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            State = state;
-            StatusUri = statusUri;
-            DetectorUri = detectorUri;
-            ConsoleUri = consoleUri;
-            HealthCheckUrlString = healthCheckUrlString;
-            Containers = containers;
-            PhysicalZone = physicalZone;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: WebSiteInstanceStatus.kind
-        /// </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
-        /// <summary> Serialized Name: WebSiteInstanceStatus.properties.state. </summary>
-        [WirePath("properties.state")]
-        public SiteRuntimeState? State { get; set; }
-        /// <summary>
-        /// Link to the GetStatusApi in Kudu
-        /// Serialized Name: WebSiteInstanceStatus.properties.statusUrl
-        /// </summary>
-        [WirePath("properties.statusUrl")]
-        public Uri StatusUri { get; set; }
-        /// <summary>
-        /// Link to the Diagnose and Solve Portal
-        /// Serialized Name: WebSiteInstanceStatus.properties.detectorUrl
-        /// </summary>
-        [WirePath("properties.detectorUrl")]
-        public Uri DetectorUri { get; set; }
-        /// <summary>
-        /// Link to the console to web app instance
-        /// Serialized Name: WebSiteInstanceStatus.properties.consoleUrl
-        /// </summary>
-        [WirePath("properties.consoleUrl")]
-        public Uri ConsoleUri { get; set; }
-        /// <summary>
-        /// Link to the console to web app instance
-        /// Serialized Name: WebSiteInstanceStatus.properties.healthCheckUrl
-        /// </summary>
-        [WirePath("properties.healthCheckUrl")]
-        public string HealthCheckUrlString { get; set; }
-        /// <summary>
-        /// Dictionary of &lt;ContainerInfo&gt;
-        /// Serialized Name: WebSiteInstanceStatus.properties.containers
-        /// </summary>
-        [WirePath("properties.containers")]
-        public IDictionary<string, ContainerInfo> Containers { get; }
-        /// <summary>
-        /// The physical zone that the instance is in
-        /// Serialized Name: WebSiteInstanceStatus.properties.physicalZone
-        /// </summary>
-        [WirePath("properties.physicalZone")]
-        public string PhysicalZone { get; set; }
+        /// <summary> WebSiteInstanceStatus resource specific properties. </summary>
+        internal WebSiteInstanceStatusProperties Properties { get; }
+
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; }
+
+        /// <summary> Gets the State. </summary>
+        public SiteRuntimeState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
+        /// <summary> Link to the GetStatusApi in Kudu. </summary>
+        public string StatusUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusUri;
+            }
+        }
+
+        /// <summary> Link to the Diagnose and Solve Portal. </summary>
+        public string DetectorUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetectorUri;
+            }
+        }
+
+        /// <summary> Link to the console to web app instance. </summary>
+        public string ConsoleUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConsoleUri;
+            }
+        }
+
+        /// <summary> Link to the console to web app instance. </summary>
+        public string HealthCheckUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthCheckUri;
+            }
+        }
+
+        /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
+        public IDictionary<string, ContainerInfo> Containers
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Containers;
+            }
+        }
+
+        /// <summary> The physical zone that the instance is in. </summary>
+        public string PhysicalZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PhysicalZone;
+            }
+        }
     }
 }

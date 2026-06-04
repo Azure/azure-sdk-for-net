@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Web App runtime settings.
-    /// Serialized Name: WebAppRuntimeSettings
-    /// </summary>
+    /// <summary> Web App runtime settings. </summary>
     public partial class WebAppRuntimeSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebAppRuntimeSettings"/>. </summary>
         internal WebAppRuntimeSettings()
@@ -54,51 +22,21 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppRuntimeSettings"/>. </summary>
-        /// <param name="runtimeVersion">
-        /// Web App stack minor version (runtime only).
-        /// Serialized Name: WebAppRuntimeSettings.runtimeVersion
-        /// </param>
-        /// <param name="isRemoteDebuggingSupported">
-        /// &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WebAppRuntimeSettings.remoteDebuggingSupported
-        /// </param>
-        /// <param name="appInsightsSettings">
-        /// Application Insights settings associated with the minor version.
-        /// Serialized Name: WebAppRuntimeSettings.appInsightsSettings
-        /// </param>
-        /// <param name="gitHubActionSettings">
-        /// GitHub Actions settings associated with the minor version.
-        /// Serialized Name: WebAppRuntimeSettings.gitHubActionSettings
-        /// </param>
-        /// <param name="isPreview">
-        /// &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WebAppRuntimeSettings.isPreview
-        /// </param>
-        /// <param name="isDeprecated">
-        /// &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WebAppRuntimeSettings.isDeprecated
-        /// </param>
-        /// <param name="isHidden">
-        /// &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WebAppRuntimeSettings.isHidden
-        /// </param>
-        /// <param name="endOfLifeOn">
-        /// End-of-life date for the minor version.
-        /// Serialized Name: WebAppRuntimeSettings.endOfLifeDate
-        /// </param>
-        /// <param name="isAutoUpdate">
-        /// &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WebAppRuntimeSettings.isAutoUpdate
-        /// </param>
-        /// <param name="isEarlyAccess">
-        /// &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WebAppRuntimeSettings.isEarlyAccess
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppRuntimeSettings(string runtimeVersion, bool? isRemoteDebuggingSupported, AppInsightsWebAppStackSettings appInsightsSettings, GitHubActionWebAppStackSettings gitHubActionSettings, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="runtimeVersion"> Web App stack minor version (runtime only). </param>
+        /// <param name="remoteDebuggingSupported"> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="appInsightsSettings"> Application Insights settings associated with the minor version. </param>
+        /// <param name="gitHubActionSettings"> GitHub Actions settings associated with the minor version. </param>
+        /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isDeprecated"> &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isHidden"> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="endOfLifeOn"> End-of-life date for the minor version. </param>
+        /// <param name="isAutoUpdate"> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isEarlyAccess"> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppRuntimeSettings(string runtimeVersion, bool? remoteDebuggingSupported, AppInsightsWebAppStackSettings appInsightsSettings, GitHubActionWebAppStackSettings gitHubActionSettings, bool? isPreview, bool? isDeprecated, bool? isHidden, DateTimeOffset? endOfLifeOn, bool? isAutoUpdate, bool? isEarlyAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuntimeVersion = runtimeVersion;
-            IsRemoteDebuggingSupported = isRemoteDebuggingSupported;
+            RemoteDebuggingSupported = remoteDebuggingSupported;
             AppInsightsSettings = appInsightsSettings;
             GitHubActionSettings = gitHubActionSettings;
             IsPreview = isPreview;
@@ -107,68 +45,37 @@ namespace Azure.ResourceManager.AppService.Models
             EndOfLifeOn = endOfLifeOn;
             IsAutoUpdate = isAutoUpdate;
             IsEarlyAccess = isEarlyAccess;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Web App stack minor version (runtime only).
-        /// Serialized Name: WebAppRuntimeSettings.runtimeVersion
-        /// </summary>
-        [WirePath("runtimeVersion")]
+        /// <summary> Web App stack minor version (runtime only). </summary>
         public string RuntimeVersion { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WebAppRuntimeSettings.remoteDebuggingSupported
-        /// </summary>
-        [WirePath("remoteDebuggingSupported")]
-        public bool? IsRemoteDebuggingSupported { get; }
-        /// <summary>
-        /// Application Insights settings associated with the minor version.
-        /// Serialized Name: WebAppRuntimeSettings.appInsightsSettings
-        /// </summary>
-        [WirePath("appInsightsSettings")]
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        public bool? RemoteDebuggingSupported { get; }
+
+        /// <summary> Application Insights settings associated with the minor version. </summary>
         public AppInsightsWebAppStackSettings AppInsightsSettings { get; }
-        /// <summary>
-        /// GitHub Actions settings associated with the minor version.
-        /// Serialized Name: WebAppRuntimeSettings.gitHubActionSettings
-        /// </summary>
-        [WirePath("gitHubActionSettings")]
+
+        /// <summary> GitHub Actions settings associated with the minor version. </summary>
         public GitHubActionWebAppStackSettings GitHubActionSettings { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WebAppRuntimeSettings.isPreview
-        /// </summary>
-        [WirePath("isPreview")]
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsPreview { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WebAppRuntimeSettings.isDeprecated
-        /// </summary>
-        [WirePath("isDeprecated")]
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsDeprecated { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WebAppRuntimeSettings.isHidden
-        /// </summary>
-        [WirePath("isHidden")]
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsHidden { get; }
-        /// <summary>
-        /// End-of-life date for the minor version.
-        /// Serialized Name: WebAppRuntimeSettings.endOfLifeDate
-        /// </summary>
-        [WirePath("endOfLifeDate")]
+
+        /// <summary> End-of-life date for the minor version. </summary>
         public DateTimeOffset? EndOfLifeOn { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WebAppRuntimeSettings.isAutoUpdate
-        /// </summary>
-        [WirePath("isAutoUpdate")]
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsAutoUpdate { get; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: WebAppRuntimeSettings.isEarlyAccess
-        /// </summary>
-        [WirePath("isEarlyAccess")]
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsEarlyAccess { get; }
     }
 }

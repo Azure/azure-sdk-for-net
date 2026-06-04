@@ -13,159 +13,112 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the WorkflowTrigger data model.
-    /// The workflow trigger.
-    /// Serialized Name: WorkflowTrigger
-    /// </summary>
+    /// <summary> The workflow trigger. </summary>
     public partial class WorkflowTriggerData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerData"/>. </summary>
-        public WorkflowTriggerData()
+        internal WorkflowTriggerData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState">
-        /// Gets the provisioning state.
-        /// Serialized Name: WorkflowTrigger.properties.provisioningState
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets the created time.
-        /// Serialized Name: WorkflowTrigger.properties.createdTime
-        /// </param>
-        /// <param name="changedOn">
-        /// Gets the changed time.
-        /// Serialized Name: WorkflowTrigger.properties.changedTime
-        /// </param>
-        /// <param name="state">
-        /// Gets the state.
-        /// Serialized Name: WorkflowTrigger.properties.state
-        /// </param>
-        /// <param name="status">
-        /// Gets the status.
-        /// Serialized Name: WorkflowTrigger.properties.status
-        /// </param>
-        /// <param name="lastExecutionOn">
-        /// Gets the last execution time.
-        /// Serialized Name: WorkflowTrigger.properties.lastExecutionTime
-        /// </param>
-        /// <param name="nextExecutionOn">
-        /// Gets the next execution time.
-        /// Serialized Name: WorkflowTrigger.properties.nextExecutionTime
-        /// </param>
-        /// <param name="recurrence">
-        /// Gets the workflow trigger recurrence.
-        /// Serialized Name: WorkflowTrigger.properties.recurrence
-        /// </param>
-        /// <param name="workflow">
-        /// Gets the reference to workflow.
-        /// Serialized Name: WorkflowTrigger.properties.workflow
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkflowTriggerProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, WorkflowStatus? status, DateTimeOffset? lastExecutionOn, DateTimeOffset? nextExecutionOn, WorkflowTriggerRecurrence recurrence, WorkflowResourceReference workflow, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The workflow trigger properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkflowTriggerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkflowTriggerProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            CreatedOn = createdOn;
-            ChangedOn = changedOn;
-            State = state;
-            Status = status;
-            LastExecutionOn = lastExecutionOn;
-            NextExecutionOn = nextExecutionOn;
-            Recurrence = recurrence;
-            Workflow = workflow;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Gets the provisioning state.
-        /// Serialized Name: WorkflowTrigger.properties.provisioningState
-        /// </summary>
-        [WirePath("properties.provisioningState")]
-        public WorkflowTriggerProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Gets the created time.
-        /// Serialized Name: WorkflowTrigger.properties.createdTime
-        /// </summary>
-        [WirePath("properties.createdTime")]
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Gets the changed time.
-        /// Serialized Name: WorkflowTrigger.properties.changedTime
-        /// </summary>
-        [WirePath("properties.changedTime")]
-        public DateTimeOffset? ChangedOn { get; }
-        /// <summary>
-        /// Gets the state.
-        /// Serialized Name: WorkflowTrigger.properties.state
-        /// </summary>
-        [WirePath("properties.state")]
-        public WorkflowState? State { get; }
-        /// <summary>
-        /// Gets the status.
-        /// Serialized Name: WorkflowTrigger.properties.status
-        /// </summary>
-        [WirePath("properties.status")]
-        public WorkflowStatus? Status { get; }
-        /// <summary>
-        /// Gets the last execution time.
-        /// Serialized Name: WorkflowTrigger.properties.lastExecutionTime
-        /// </summary>
-        [WirePath("properties.lastExecutionTime")]
-        public DateTimeOffset? LastExecutionOn { get; }
-        /// <summary>
-        /// Gets the next execution time.
-        /// Serialized Name: WorkflowTrigger.properties.nextExecutionTime
-        /// </summary>
-        [WirePath("properties.nextExecutionTime")]
-        public DateTimeOffset? NextExecutionOn { get; }
-        /// <summary>
-        /// Gets the workflow trigger recurrence.
-        /// Serialized Name: WorkflowTrigger.properties.recurrence
-        /// </summary>
-        [WirePath("properties.recurrence")]
-        public WorkflowTriggerRecurrence Recurrence { get; }
-        /// <summary>
-        /// Gets the reference to workflow.
-        /// Serialized Name: WorkflowTrigger.properties.workflow
-        /// </summary>
-        [WirePath("properties.workflow")]
-        public WorkflowResourceReference Workflow { get; }
+        /// <summary> The workflow trigger properties. </summary>
+        internal WorkflowTriggerProperties Properties { get; }
+
+        /// <summary> Gets the provisioning state. </summary>
+        public WorkflowTriggerProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the created time. </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> Gets the changed time. </summary>
+        public DateTimeOffset? ChangedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ChangedOn;
+            }
+        }
+
+        /// <summary> Gets the state. </summary>
+        public WorkflowState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
+        /// <summary> Gets the status. </summary>
+        public WorkflowStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> Gets the last execution time. </summary>
+        public DateTimeOffset? LastExecutionOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastExecutionOn;
+            }
+        }
+
+        /// <summary> Gets the next execution time. </summary>
+        public DateTimeOffset? NextExecutionOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NextExecutionOn;
+            }
+        }
+
+        /// <summary> Gets the workflow trigger recurrence. </summary>
+        public WorkflowTriggerRecurrence Recurrence
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Recurrence;
+            }
+        }
+
+        /// <summary> Gets the reference to workflow. </summary>
+        public ResourceReference Workflow
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Workflow;
+            }
+        }
     }
 }

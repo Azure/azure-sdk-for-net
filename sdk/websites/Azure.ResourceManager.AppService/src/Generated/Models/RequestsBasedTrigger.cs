@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Trigger based on total requests.
-    /// Serialized Name: RequestsBasedTrigger
-    /// </summary>
+    /// <summary> Trigger based on total requests. </summary>
     public partial class RequestsBasedTrigger
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RequestsBasedTrigger"/>. </summary>
         public RequestsBasedTrigger()
@@ -54,33 +22,20 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestsBasedTrigger"/>. </summary>
-        /// <param name="count">
-        /// Request Count.
-        /// Serialized Name: RequestsBasedTrigger.count
-        /// </param>
-        /// <param name="timeInterval">
-        /// Time interval.
-        /// Serialized Name: RequestsBasedTrigger.timeInterval
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RequestsBasedTrigger(int? count, string timeInterval, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="count"> Request Count. </param>
+        /// <param name="timeInterval"> Time interval. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RequestsBasedTrigger(int? count, string timeInterval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
             TimeInterval = timeInterval;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Request Count.
-        /// Serialized Name: RequestsBasedTrigger.count
-        /// </summary>
-        [WirePath("count")]
+        /// <summary> Request Count. </summary>
         public int? Count { get; set; }
-        /// <summary>
-        /// Time interval.
-        /// Serialized Name: RequestsBasedTrigger.timeInterval
-        /// </summary>
-        [WirePath("timeInterval")]
+
+        /// <summary> Time interval. </summary>
         public string TimeInterval { get; set; }
     }
 }

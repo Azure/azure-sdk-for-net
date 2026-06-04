@@ -10,60 +10,28 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ContainerInfo.
-    /// Serialized Name: ContainerInfo
-    /// </summary>
+    /// <summary> The ContainerInfo. </summary>
     public partial class ContainerInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerInfo"/>. </summary>
-        public ContainerInfo()
+        internal ContainerInfo()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerInfo"/>. </summary>
-        /// <param name="currentTimeStamp"> Serialized Name: ContainerInfo.currentTimeStamp. </param>
-        /// <param name="previousTimeStamp"> Serialized Name: ContainerInfo.previousTimeStamp. </param>
-        /// <param name="currentCpuStats"> Serialized Name: ContainerInfo.currentCpuStats. </param>
-        /// <param name="previousCpuStats"> Serialized Name: ContainerInfo.previousCpuStats. </param>
-        /// <param name="memoryStats"> Serialized Name: ContainerInfo.memoryStats. </param>
-        /// <param name="name"> Serialized Name: ContainerInfo.name. </param>
-        /// <param name="id"> Serialized Name: ContainerInfo.id. </param>
-        /// <param name="eth0"> Serialized Name: ContainerInfo.eth0. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerInfo(DateTimeOffset? currentTimeStamp, DateTimeOffset? previousTimeStamp, ContainerCpuStatistics currentCpuStats, ContainerCpuStatistics previousCpuStats, ContainerMemoryStatistics memoryStats, string name, string id, ContainerNetworkInterfaceStatistics eth0, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="currentTimeStamp"></param>
+        /// <param name="previousTimeStamp"></param>
+        /// <param name="currentCpuStats"></param>
+        /// <param name="previousCpuStats"></param>
+        /// <param name="memoryStats"></param>
+        /// <param name="name"></param>
+        /// <param name="id"></param>
+        /// <param name="eth0"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerInfo(DateTimeOffset? currentTimeStamp, DateTimeOffset? previousTimeStamp, ContainerCpuStatistics currentCpuStats, ContainerCpuStatistics previousCpuStats, ContainerMemoryStatistics memoryStats, string name, string id, ContainerNetworkInterfaceStatistics eth0, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentTimeStamp = currentTimeStamp;
             PreviousTimeStamp = previousTimeStamp;
@@ -73,32 +41,31 @@ namespace Azure.ResourceManager.AppService.Models
             Name = name;
             Id = id;
             Eth0 = eth0;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Serialized Name: ContainerInfo.currentTimeStamp. </summary>
-        [WirePath("currentTimeStamp")]
-        public DateTimeOffset? CurrentTimeStamp { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.previousTimeStamp. </summary>
-        [WirePath("previousTimeStamp")]
-        public DateTimeOffset? PreviousTimeStamp { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.currentCpuStats. </summary>
-        [WirePath("currentCpuStats")]
-        public ContainerCpuStatistics CurrentCpuStats { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.previousCpuStats. </summary>
-        [WirePath("previousCpuStats")]
-        public ContainerCpuStatistics PreviousCpuStats { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.memoryStats. </summary>
-        [WirePath("memoryStats")]
-        public ContainerMemoryStatistics MemoryStats { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.name. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.id. </summary>
-        [WirePath("id")]
-        public string Id { get; set; }
-        /// <summary> Serialized Name: ContainerInfo.eth0. </summary>
-        [WirePath("eth0")]
-        public ContainerNetworkInterfaceStatistics Eth0 { get; set; }
+        /// <summary> Gets the CurrentTimeStamp. </summary>
+        public DateTimeOffset? CurrentTimeStamp { get; }
+
+        /// <summary> Gets the PreviousTimeStamp. </summary>
+        public DateTimeOffset? PreviousTimeStamp { get; }
+
+        /// <summary> Gets the CurrentCpuStats. </summary>
+        public ContainerCpuStatistics CurrentCpuStats { get; }
+
+        /// <summary> Gets the PreviousCpuStats. </summary>
+        public ContainerCpuStatistics PreviousCpuStats { get; }
+
+        /// <summary> Gets the MemoryStats. </summary>
+        public ContainerMemoryStatistics MemoryStats { get; }
+
+        /// <summary> Gets the Name. </summary>
+        public string Name { get; }
+
+        /// <summary> Gets the Id. </summary>
+        public string Id { get; }
+
+        /// <summary> Gets the Eth0. </summary>
+        public ContainerNetworkInterfaceStatistics Eth0 { get; }
     }
 }

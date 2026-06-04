@@ -10,60 +10,28 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ContainerNetworkInterfaceStatistics.
-    /// Serialized Name: ContainerNetworkInterfaceStatistics
-    /// </summary>
+    /// <summary> The ContainerNetworkInterfaceStatistics. </summary>
     public partial class ContainerNetworkInterfaceStatistics
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceStatistics"/>. </summary>
-        public ContainerNetworkInterfaceStatistics()
+        internal ContainerNetworkInterfaceStatistics()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkInterfaceStatistics"/>. </summary>
-        /// <param name="rxBytes"> Serialized Name: ContainerNetworkInterfaceStatistics.rxBytes. </param>
-        /// <param name="rxPackets"> Serialized Name: ContainerNetworkInterfaceStatistics.rxPackets. </param>
-        /// <param name="rxErrors"> Serialized Name: ContainerNetworkInterfaceStatistics.rxErrors. </param>
-        /// <param name="rxDropped"> Serialized Name: ContainerNetworkInterfaceStatistics.rxDropped. </param>
-        /// <param name="txBytes"> Serialized Name: ContainerNetworkInterfaceStatistics.txBytes. </param>
-        /// <param name="txPackets"> Serialized Name: ContainerNetworkInterfaceStatistics.txPackets. </param>
-        /// <param name="txErrors"> Serialized Name: ContainerNetworkInterfaceStatistics.txErrors. </param>
-        /// <param name="txDropped"> Serialized Name: ContainerNetworkInterfaceStatistics.txDropped. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerNetworkInterfaceStatistics(long? rxBytes, long? rxPackets, long? rxErrors, long? rxDropped, long? txBytes, long? txPackets, long? txErrors, long? txDropped, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="rxBytes"></param>
+        /// <param name="rxPackets"></param>
+        /// <param name="rxErrors"></param>
+        /// <param name="rxDropped"></param>
+        /// <param name="txBytes"></param>
+        /// <param name="txPackets"></param>
+        /// <param name="txErrors"></param>
+        /// <param name="txDropped"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerNetworkInterfaceStatistics(long? rxBytes, long? rxPackets, long? rxErrors, long? rxDropped, long? txBytes, long? txPackets, long? txErrors, long? txDropped, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RxBytes = rxBytes;
             RxPackets = rxPackets;
@@ -73,32 +41,31 @@ namespace Azure.ResourceManager.AppService.Models
             TxPackets = txPackets;
             TxErrors = txErrors;
             TxDropped = txDropped;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.rxBytes. </summary>
-        [WirePath("rxBytes")]
-        public long? RxBytes { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.rxPackets. </summary>
-        [WirePath("rxPackets")]
-        public long? RxPackets { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.rxErrors. </summary>
-        [WirePath("rxErrors")]
-        public long? RxErrors { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.rxDropped. </summary>
-        [WirePath("rxDropped")]
-        public long? RxDropped { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.txBytes. </summary>
-        [WirePath("txBytes")]
-        public long? TxBytes { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.txPackets. </summary>
-        [WirePath("txPackets")]
-        public long? TxPackets { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.txErrors. </summary>
-        [WirePath("txErrors")]
-        public long? TxErrors { get; set; }
-        /// <summary> Serialized Name: ContainerNetworkInterfaceStatistics.txDropped. </summary>
-        [WirePath("txDropped")]
-        public long? TxDropped { get; set; }
+        /// <summary> Gets the RxBytes. </summary>
+        public long? RxBytes { get; }
+
+        /// <summary> Gets the RxPackets. </summary>
+        public long? RxPackets { get; }
+
+        /// <summary> Gets the RxErrors. </summary>
+        public long? RxErrors { get; }
+
+        /// <summary> Gets the RxDropped. </summary>
+        public long? RxDropped { get; }
+
+        /// <summary> Gets the TxBytes. </summary>
+        public long? TxBytes { get; }
+
+        /// <summary> Gets the TxPackets. </summary>
+        public long? TxPackets { get; }
+
+        /// <summary> Gets the TxErrors. </summary>
+        public long? TxErrors { get; }
+
+        /// <summary> Gets the TxDropped. </summary>
+        public long? TxDropped { get; }
     }
 }

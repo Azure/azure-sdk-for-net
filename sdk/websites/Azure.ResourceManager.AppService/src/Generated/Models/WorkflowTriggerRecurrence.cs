@@ -10,43 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The workflow trigger recurrence.
-    /// Serialized Name: WorkflowTriggerRecurrence
-    /// </summary>
+    /// <summary> The workflow trigger recurrence. </summary>
     public partial class WorkflowTriggerRecurrence
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerRecurrence"/>. </summary>
         internal WorkflowTriggerRecurrence()
@@ -54,32 +22,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerRecurrence"/>. </summary>
-        /// <param name="frequency">
-        /// The frequency.
-        /// Serialized Name: WorkflowTriggerRecurrence.frequency
-        /// </param>
-        /// <param name="interval">
-        /// The interval.
-        /// Serialized Name: WorkflowTriggerRecurrence.interval
-        /// </param>
-        /// <param name="startTime">
-        /// The start time.
-        /// Serialized Name: WorkflowTriggerRecurrence.startTime
-        /// </param>
-        /// <param name="endTime">
-        /// The end time.
-        /// Serialized Name: WorkflowTriggerRecurrence.endTime
-        /// </param>
-        /// <param name="timeZone">
-        /// The time zone.
-        /// Serialized Name: WorkflowTriggerRecurrence.timeZone
-        /// </param>
-        /// <param name="schedule">
-        /// The recurrence schedule.
-        /// Serialized Name: WorkflowTriggerRecurrence.schedule
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerRecurrence(WorkflowRecurrenceFrequency? frequency, int? interval, string startTime, string endTime, string timeZone, WorkflowRecurrenceSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="frequency"> The frequency. </param>
+        /// <param name="interval"> The interval. </param>
+        /// <param name="startTime"> The start time. </param>
+        /// <param name="endTime"> The end time. </param>
+        /// <param name="timeZone"> The time zone. </param>
+        /// <param name="schedule"> The recurrence schedule. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkflowTriggerRecurrence(Models.WorkflowRecurrenceFrequency? frequency, int? interval, string startTime, string endTime, string timeZone, Models.WorkflowRecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Frequency = frequency;
             Interval = interval;
@@ -87,44 +37,25 @@ namespace Azure.ResourceManager.AppService.Models
             EndTime = endTime;
             TimeZone = timeZone;
             Schedule = schedule;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The frequency.
-        /// Serialized Name: WorkflowTriggerRecurrence.frequency
-        /// </summary>
-        [WirePath("frequency")]
-        public WorkflowRecurrenceFrequency? Frequency { get; }
-        /// <summary>
-        /// The interval.
-        /// Serialized Name: WorkflowTriggerRecurrence.interval
-        /// </summary>
-        [WirePath("interval")]
+        /// <summary> The frequency. </summary>
+        public Models.WorkflowRecurrenceFrequency? Frequency { get; }
+
+        /// <summary> The interval. </summary>
         public int? Interval { get; }
-        /// <summary>
-        /// The start time.
-        /// Serialized Name: WorkflowTriggerRecurrence.startTime
-        /// </summary>
-        [WirePath("startTime")]
+
+        /// <summary> The start time. </summary>
         public string StartTime { get; }
-        /// <summary>
-        /// The end time.
-        /// Serialized Name: WorkflowTriggerRecurrence.endTime
-        /// </summary>
-        [WirePath("endTime")]
+
+        /// <summary> The end time. </summary>
         public string EndTime { get; }
-        /// <summary>
-        /// The time zone.
-        /// Serialized Name: WorkflowTriggerRecurrence.timeZone
-        /// </summary>
-        [WirePath("timeZone")]
+
+        /// <summary> The time zone. </summary>
         public string TimeZone { get; }
-        /// <summary>
-        /// The recurrence schedule.
-        /// Serialized Name: WorkflowTriggerRecurrence.schedule
-        /// </summary>
-        [WirePath("schedule")]
-        public WorkflowRecurrenceSchedule Schedule { get; }
+
+        /// <summary> The recurrence schedule. </summary>
+        public Models.WorkflowRecurrenceSchedule Schedule { get; }
     }
 }

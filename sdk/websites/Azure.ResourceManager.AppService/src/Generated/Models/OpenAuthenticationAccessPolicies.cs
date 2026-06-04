@@ -7,70 +7,32 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// AuthenticationPolicy of type Open.
-    /// Serialized Name: OpenAuthenticationAccessPolicies
-    /// </summary>
+    /// <summary> AuthenticationPolicy of type Open. </summary>
     internal partial class OpenAuthenticationAccessPolicies
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicies"/>. </summary>
         public OpenAuthenticationAccessPolicies()
         {
-            OpenAuthenticationPolicyList = new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>();
+            Policies = new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAuthenticationAccessPolicies"/>. </summary>
-        /// <param name="openAuthenticationPolicyList">
-        /// Open authentication policies.
-        /// Serialized Name: OpenAuthenticationAccessPolicies.policies
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAuthenticationAccessPolicies(IDictionary<string, OpenAuthenticationAccessPolicy> openAuthenticationPolicyList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="policies"> Open authentication policies. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OpenAuthenticationAccessPolicies(IDictionary<string, OpenAuthenticationAccessPolicy> policies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OpenAuthenticationPolicyList = openAuthenticationPolicyList;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Policies = policies;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Open authentication policies.
-        /// Serialized Name: OpenAuthenticationAccessPolicies.policies
-        /// </summary>
-        [WirePath("policies")]
-        public IDictionary<string, OpenAuthenticationAccessPolicy> OpenAuthenticationPolicyList { get; }
+        /// <summary> Open authentication policies. </summary>
+        public IDictionary<string, OpenAuthenticationAccessPolicy> Policies { get; }
     }
 }

@@ -11,21 +11,35 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class ManagedServiceIdentityTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ManagedServiceIdentityType value) => value switch
         {
-            ManagedServiceIdentityType.None => "None",
             ManagedServiceIdentityType.SystemAssigned => "SystemAssigned",
             ManagedServiceIdentityType.UserAssigned => "UserAssigned",
             ManagedServiceIdentityType.SystemAssignedUserAssigned => "SystemAssigned, UserAssigned",
+            ManagedServiceIdentityType.None => "None",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedServiceIdentityType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ManagedServiceIdentityType ToManagedServiceIdentityType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ManagedServiceIdentityType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned")) return ManagedServiceIdentityType.SystemAssigned;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserAssigned")) return ManagedServiceIdentityType.UserAssigned;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned, UserAssigned")) return ManagedServiceIdentityType.SystemAssignedUserAssigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned"))
+            {
+                return ManagedServiceIdentityType.SystemAssigned;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserAssigned"))
+            {
+                return ManagedServiceIdentityType.UserAssigned;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned, UserAssigned"))
+            {
+                return ManagedServiceIdentityType.SystemAssignedUserAssigned;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return ManagedServiceIdentityType.None;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedServiceIdentityType value.");
         }
     }

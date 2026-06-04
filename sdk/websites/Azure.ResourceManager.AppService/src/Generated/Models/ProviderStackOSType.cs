@@ -7,60 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The ProviderStackOSType.
-    /// Serialized Name: ProviderStackOsType
-    /// </summary>
-    public readonly partial struct ProviderStackOSType : IEquatable<ProviderStackOSType>
+    /// <summary></summary>
+    public readonly partial struct ProviderStackOsType : IEquatable<ProviderStackOsType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ProviderStackOSType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProviderStackOSType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string WindowsValue = "Windows";
         private const string LinuxValue = "Linux";
         private const string AllValue = "All";
 
-        /// <summary>
-        /// Windows
-        /// Serialized Name: ProviderStackOsType.Windows
-        /// </summary>
-        public static ProviderStackOSType Windows { get; } = new ProviderStackOSType(WindowsValue);
-        /// <summary>
-        /// Linux
-        /// Serialized Name: ProviderStackOsType.Linux
-        /// </summary>
-        public static ProviderStackOSType Linux { get; } = new ProviderStackOSType(LinuxValue);
-        /// <summary>
-        /// All
-        /// Serialized Name: ProviderStackOsType.All
-        /// </summary>
-        public static ProviderStackOSType All { get; } = new ProviderStackOSType(AllValue);
-        /// <summary> Determines if two <see cref="ProviderStackOSType"/> values are the same. </summary>
-        public static bool operator ==(ProviderStackOSType left, ProviderStackOSType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ProviderStackOSType"/> values are not the same. </summary>
-        public static bool operator !=(ProviderStackOSType left, ProviderStackOSType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderStackOSType"/>. </summary>
-        public static implicit operator ProviderStackOSType(string value) => new ProviderStackOSType(value);
+        /// <summary> Initializes a new instance of <see cref="ProviderStackOsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProviderStackOsType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        /// <inheritdoc />
+            _value = value;
+        }
+
+        /// <summary> Gets the Windows. </summary>
+        public static ProviderStackOsType Windows { get; } = new ProviderStackOsType(WindowsValue);
+
+        /// <summary> Gets the Linux. </summary>
+        public static ProviderStackOsType Linux { get; } = new ProviderStackOsType(LinuxValue);
+
+        /// <summary> Gets the All. </summary>
+        public static ProviderStackOsType All { get; } = new ProviderStackOsType(AllValue);
+
+        /// <summary> Determines if two <see cref="ProviderStackOsType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(ProviderStackOsType left, ProviderStackOsType right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="ProviderStackOsType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(ProviderStackOsType left, ProviderStackOsType right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="ProviderStackOsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProviderStackOsType(string value) => new ProviderStackOsType(value);
+
+        /// <summary> Converts a string to a <see cref="ProviderStackOsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProviderStackOsType?(string value) => value == null ? null : new ProviderStackOsType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProviderStackOSType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(ProviderStackOSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is ProviderStackOsType other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(ProviderStackOsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,145 +7,162 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the AseV3NetworkingConfiguration data model.
-    /// Full view of networking configuration for an ASE.
-    /// Serialized Name: AseV3NetworkingConfiguration
-    /// </summary>
+    /// <summary> Full view of networking configuration for an ASE. </summary>
     public partial class AseV3NetworkingConfigurationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AseV3NetworkingConfigurationData"/>. </summary>
         public AseV3NetworkingConfigurationData()
         {
-            WindowsOutboundIPAddresses = new ChangeTrackingList<IPAddress>();
-            LinuxOutboundIPAddresses = new ChangeTrackingList<IPAddress>();
-            ExternalInboundIPAddresses = new ChangeTrackingList<IPAddress>();
-            InternalInboundIPAddresses = new ChangeTrackingList<IPAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AseV3NetworkingConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: AseV3NetworkingConfiguration.kind
-        /// </param>
-        /// <param name="windowsOutboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.windowsOutboundIpAddresses. </param>
-        /// <param name="linuxOutboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.linuxOutboundIpAddresses. </param>
-        /// <param name="externalInboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.externalInboundIpAddresses. </param>
-        /// <param name="internalInboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.internalInboundIpAddresses. </param>
-        /// <param name="allowNewPrivateEndpointConnections">
-        /// Property to enable and disable new private endpoint connection creation on ASE
-        /// Serialized Name: AseV3NetworkingConfiguration.properties.allowNewPrivateEndpointConnections
-        /// </param>
-        /// <param name="isFtpEnabled">
-        /// Property to enable and disable FTP on ASEV3
-        /// Serialized Name: AseV3NetworkingConfiguration.properties.ftpEnabled
-        /// </param>
-        /// <param name="isRemoteDebugEnabled">
-        /// Property to enable and disable Remote Debug on ASEV3
-        /// Serialized Name: AseV3NetworkingConfiguration.properties.remoteDebugEnabled
-        /// </param>
-        /// <param name="inboundIPAddressOverride">
-        /// Customer provided Inbound IP Address. Only able to be set on Ase create.
-        /// Serialized Name: AseV3NetworkingConfiguration.properties.inboundIpAddressOverride
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IReadOnlyList<IPAddress> windowsOutboundIPAddresses, IReadOnlyList<IPAddress> linuxOutboundIPAddresses, IReadOnlyList<IPAddress> externalInboundIPAddresses, IReadOnlyList<IPAddress> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, bool? isFtpEnabled, bool? isRemoteDebugEnabled, string inboundIPAddressOverride, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> AseV3NetworkingConfiguration resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AseV3NetworkingConfigurationProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            WindowsOutboundIPAddresses = windowsOutboundIPAddresses;
-            LinuxOutboundIPAddresses = linuxOutboundIPAddresses;
-            ExternalInboundIPAddresses = externalInboundIPAddresses;
-            InternalInboundIPAddresses = internalInboundIPAddresses;
-            AllowNewPrivateEndpointConnections = allowNewPrivateEndpointConnections;
-            IsFtpEnabled = isFtpEnabled;
-            IsRemoteDebugEnabled = isRemoteDebugEnabled;
-            InboundIPAddressOverride = inboundIPAddressOverride;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: AseV3NetworkingConfiguration.kind
-        /// </summary>
-        [WirePath("kind")]
+        /// <summary> AseV3NetworkingConfiguration resource specific properties. </summary>
+        internal AseV3NetworkingConfigurationProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
-        /// <summary> Serialized Name: AseV3NetworkingConfiguration.properties.windowsOutboundIpAddresses. </summary>
-        [WirePath("properties.windowsOutboundIpAddresses")]
-        public IReadOnlyList<IPAddress> WindowsOutboundIPAddresses { get; }
-        /// <summary> Serialized Name: AseV3NetworkingConfiguration.properties.linuxOutboundIpAddresses. </summary>
-        [WirePath("properties.linuxOutboundIpAddresses")]
-        public IReadOnlyList<IPAddress> LinuxOutboundIPAddresses { get; }
-        /// <summary> Serialized Name: AseV3NetworkingConfiguration.properties.externalInboundIpAddresses. </summary>
-        [WirePath("properties.externalInboundIpAddresses")]
-        public IReadOnlyList<IPAddress> ExternalInboundIPAddresses { get; }
-        /// <summary> Serialized Name: AseV3NetworkingConfiguration.properties.internalInboundIpAddresses. </summary>
-        [WirePath("properties.internalInboundIpAddresses")]
-        public IReadOnlyList<IPAddress> InternalInboundIPAddresses { get; }
-        /// <summary>
-        /// Property to enable and disable new private endpoint connection creation on ASE
-        /// Serialized Name: AseV3NetworkingConfiguration.properties.allowNewPrivateEndpointConnections
-        /// </summary>
-        [WirePath("properties.allowNewPrivateEndpointConnections")]
-        public bool? AllowNewPrivateEndpointConnections { get; set; }
-        /// <summary>
-        /// Property to enable and disable FTP on ASEV3
-        /// Serialized Name: AseV3NetworkingConfiguration.properties.ftpEnabled
-        /// </summary>
-        [WirePath("properties.ftpEnabled")]
-        public bool? IsFtpEnabled { get; set; }
-        /// <summary>
-        /// Property to enable and disable Remote Debug on ASEV3
-        /// Serialized Name: AseV3NetworkingConfiguration.properties.remoteDebugEnabled
-        /// </summary>
-        [WirePath("properties.remoteDebugEnabled")]
-        public bool? IsRemoteDebugEnabled { get; set; }
-        /// <summary>
-        /// Customer provided Inbound IP Address. Only able to be set on Ase create.
-        /// Serialized Name: AseV3NetworkingConfiguration.properties.inboundIpAddressOverride
-        /// </summary>
-        [WirePath("properties.inboundIpAddressOverride")]
-        public string InboundIPAddressOverride { get; set; }
+
+        /// <summary> Gets the WindowsOutboundIpAddresses. </summary>
+        public IReadOnlyList<string> WindowsOutboundIpAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AseV3NetworkingConfigurationProperties();
+                }
+                return Properties.WindowsOutboundIpAddresses;
+            }
+        }
+
+        /// <summary> Gets the LinuxOutboundIpAddresses. </summary>
+        public IReadOnlyList<string> LinuxOutboundIpAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AseV3NetworkingConfigurationProperties();
+                }
+                return Properties.LinuxOutboundIpAddresses;
+            }
+        }
+
+        /// <summary> Gets the ExternalInboundIpAddresses. </summary>
+        public IReadOnlyList<string> ExternalInboundIpAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AseV3NetworkingConfigurationProperties();
+                }
+                return Properties.ExternalInboundIpAddresses;
+            }
+        }
+
+        /// <summary> Gets the InternalInboundIpAddresses. </summary>
+        public IReadOnlyList<string> InternalInboundIpAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AseV3NetworkingConfigurationProperties();
+                }
+                return Properties.InternalInboundIpAddresses;
+            }
+        }
+
+        /// <summary> Property to enable and disable new private endpoint connection creation on ASE. </summary>
+        public bool? AllowNewPrivateEndpointConnections
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowNewPrivateEndpointConnections;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AseV3NetworkingConfigurationProperties();
+                }
+                Properties.AllowNewPrivateEndpointConnections = value;
+            }
+        }
+
+        /// <summary> Property to enable and disable FTP on ASEV3. </summary>
+        public bool? FtpEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FtpEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AseV3NetworkingConfigurationProperties();
+                }
+                Properties.FtpEnabled = value;
+            }
+        }
+
+        /// <summary> Property to enable and disable Remote Debug on ASEV3. </summary>
+        public bool? RemoteDebugEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemoteDebugEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AseV3NetworkingConfigurationProperties();
+                }
+                Properties.RemoteDebugEnabled = value;
+            }
+        }
+
+        /// <summary> Customer provided Inbound IP Address. Only able to be set on Ase create. </summary>
+        public string InboundIpAddressOverride
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InboundIpAddressOverride;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AseV3NetworkingConfigurationProperties();
+                }
+                Properties.InboundIpAddressOverride = value;
+            }
+        }
     }
 }
