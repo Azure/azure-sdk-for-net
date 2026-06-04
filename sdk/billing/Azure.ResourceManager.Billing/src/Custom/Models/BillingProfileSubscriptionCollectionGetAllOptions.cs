@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Restored from GA 1.2.2 (sdk/billing/.../src/Generated/Models/BillingProfileSubscriptionCollectionGetAllOptions.cs).
-// MPG generator emits OData-style query options as expanded method parameters and does not
-// regenerate this Options class; this Custom partial mirrors the GA shape verbatim,
-// including [WirePath(...)] attributes, to keep ApiCompat green.
-
 #nullable disable
 
 namespace Azure.ResourceManager.Billing.Models
 {
+    // Restored from GA 1.2.2 (sdk/billing/.../src/Generated/Models/BillingProfileSubscriptionCollectionGetAllOptions.cs).
+    // MPG generator emits OData-style query options as expanded method parameters and does not
+    // regenerate this Options class; this Custom partial mirrors the GA shape verbatim,
+    // including [WirePath(...)] attributes, to keep ApiCompat green.
+
     /// <summary> The BillingProfileSubscriptionCollectionGetAllOptions. </summary>
     public partial class BillingProfileSubscriptionCollectionGetAllOptions
     {

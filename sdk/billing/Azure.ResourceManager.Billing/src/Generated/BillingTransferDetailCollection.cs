@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BillingTransferDetailResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string transferName, InitiateTransferRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingTransferDetailResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string transferName, BillingTransferDetailCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
             Argument.AssertNotNull(content, nameof(content));
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, transferName, InitiateTransferRequest.ToRequestContent(content), context);
+                HttpMessage message = _transfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, transferName, BillingTransferDetailCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BillingTransferDetailData> response = Response.FromValue(BillingTransferDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BillingTransferDetailResource> CreateOrUpdate(WaitUntil waitUntil, string transferName, InitiateTransferRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingTransferDetailResource> CreateOrUpdate(WaitUntil waitUntil, string transferName, BillingTransferDetailCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
             Argument.AssertNotNull(content, nameof(content));
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _transfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, transferName, InitiateTransferRequest.ToRequestContent(content), context);
+                HttpMessage message = _transfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, transferName, BillingTransferDetailCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BillingTransferDetailData> response = Response.FromValue(BillingTransferDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

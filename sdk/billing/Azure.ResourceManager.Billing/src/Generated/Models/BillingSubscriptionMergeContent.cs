@@ -12,21 +12,21 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Request parameters that are provided to merge the two billing subscriptions. </summary>
-    public partial class BillingSubscriptionMergeRequest
+    public partial class BillingSubscriptionMergeContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionMergeRequest"/>. </summary>
-        public BillingSubscriptionMergeRequest()
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionMergeContent"/>. </summary>
+        public BillingSubscriptionMergeContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionMergeRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionMergeContent"/>. </summary>
         /// <param name="targetBillingSubscriptionName"> The ID of the target billing subscription that will be merged with the source subscription provided in the request. </param>
         /// <param name="quantity"> The quantity of the source billing subscription that will be merged with the target billing subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingSubscriptionMergeRequest(string targetBillingSubscriptionName, int? quantity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingSubscriptionMergeContent(string targetBillingSubscriptionName, int? quantity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetBillingSubscriptionName = targetBillingSubscriptionName;
             Quantity = quantity;

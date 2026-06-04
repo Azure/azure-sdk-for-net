@@ -6,51 +6,39 @@
 using System;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    // See BillingSubscriptionData for the root-cause explanation. Same situation applies on
-    // BillingSubscriptionAliasData — inner BillingSubscriptionAliasProperties extends
-    // BillingSubscriptionProperties and inherits beneficiaryTenantId/customerId, which MPG
-    // does not flatten onto the Read-only Alias Data wrapper.
+    // See BillingSubscriptionData for root-cause explanation. BillingSubscriptionAliasProperties
+    // extends BillingSubscriptionProperties and inherits the beneficiaryTenantId / customerId
+    // flatten proxies — generator emits them under the base names (BeneficiaryTenantId /
+    // CustomerId). Add the GA primary names (SubscriptionAlias-prefixed) as forwarders so
+    // GA 1.2.2 callers continue to compile. BillingSubscriptionId (Obsolete, ResourceIdentifier)
+    // is kept as a thin proxy over the string-typed SubscriptionAliasSubscriptionId.
     public partial class BillingSubscriptionAliasData
     {
         /// <summary> The provisioning tenant of the subscription. </summary>
         [WirePath("properties.beneficiaryTenantId")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public Guid? SubscriptionAliasBeneficiaryTenantId
         {
-            get => Properties?.BeneficiaryTenantId;
-            set
-            {
-                Properties ??= new BillingSubscriptionAliasProperties();
-                Properties.BeneficiaryTenantId = value;
-            }
+            get => BeneficiaryTenantId;
+            set => BeneficiaryTenantId = value;
         }
 
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
         [WirePath("properties.customerId")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string SubscriptionAliasCustomerId
         {
-            get => Properties?.CustomerId;
-            set
-            {
-                Properties ??= new BillingSubscriptionAliasProperties();
-                Properties.CustomerId = value;
-            }
+            get => CustomerId;
+            set => CustomerId = value;
         }
 
-        /// <summary> The provisioning tenant of the subscription. </summary>
-        [Obsolete("This property is now deprecated. Please use the new property `SubscriptionAliasBeneficiaryTenantId` moving forward.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string BeneficiaryTenantId { get; set; }
-        /// <summary> The ID of the customer for whom the subscription was created. The field is applicable only for Microsoft Partner Agreement billing accounts. </summary>
-        [Obsolete("This property is now deprecated. Please use the new property `SubscriptionAliasCustomerId` moving forward.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string CustomerId { get; set; }
         /// <summary> The ID of the billing subscription with the subscription alias. </summary>
         [Obsolete("This property is now deprecated. Please use the new property `SubscriptionAliasSubscriptionId` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResourceIdentifier BillingSubscriptionId { get; }
+        public ResourceIdentifier BillingSubscriptionId =>
+            SubscriptionAliasSubscriptionId is null ? null : new ResourceIdentifier(SubscriptionAliasSubscriptionId);
     }
 }

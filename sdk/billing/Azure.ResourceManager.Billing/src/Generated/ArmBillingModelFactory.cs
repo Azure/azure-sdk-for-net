@@ -1666,10 +1666,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Request parameters for cancel customer subscription. </summary>
         /// <param name="cancellationReason"> Cancellation reason. </param>
         /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
-        /// <returns> A new <see cref="Models.CancelSubscriptionRequest"/> instance for mocking. </returns>
-        public static CancelSubscriptionRequest CancelSubscriptionRequest(CustomerSubscriptionCancellationReason cancellationReason = default, string customerId = default)
+        /// <returns> A new <see cref="Models.CancelSubscriptionContent"/> instance for mocking. </returns>
+        public static CancelSubscriptionContent CancelSubscriptionContent(CustomerSubscriptionCancellationReason cancellationReason = default, ResourceIdentifier customerId = default)
         {
-            return new CancelSubscriptionRequest(cancellationReason, customerId, additionalBinaryDataProperties: null);
+            return new CancelSubscriptionContent(cancellationReason, customerId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result of the transfer eligibility validation. </summary>
@@ -2572,12 +2572,12 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Savings plan update validate request. </summary>
         /// <param name="benefits"> The benefits of a savings plan. </param>
-        /// <returns> A new <see cref="Models.SavingsPlanUpdateValidateRequest"/> instance for mocking. </returns>
-        public static SavingsPlanUpdateValidateRequest SavingsPlanUpdateValidateRequest(IEnumerable<SavingsPlanUpdateRequestProperties> benefits = default)
+        /// <returns> A new <see cref="Models.SavingsPlanUpdateValidateContent"/> instance for mocking. </returns>
+        public static SavingsPlanUpdateValidateContent SavingsPlanUpdateValidateContent(IEnumerable<SavingsPlanUpdateRequestProperties> benefits = default)
         {
             benefits ??= new ChangeTrackingList<SavingsPlanUpdateRequestProperties>();
 
-            return new SavingsPlanUpdateValidateRequest(benefits.ToList(), additionalBinaryDataProperties: null);
+            return new SavingsPlanUpdateValidateContent(benefits.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Savings plan update validate response. </summary>

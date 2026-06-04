@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateDownloadDocumentsByBillingSubscriptionRequest(string subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateDownloadDocumentsByBillingSubscriptionInvoiceRequest(string subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

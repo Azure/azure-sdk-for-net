@@ -6,56 +6,29 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
+    // Generator tag-helper boilerplate (#58747) calls this.Update/UpdateAsync(WaitUntil,
+    // PartnerTransferDetailData, CT), but the actual generated Update method takes
+    // PartnerTransferDetailCreateOrUpdateContent (partner transfer details are only
+    // mutated via Initiate/Cancel actions, not via Data envelope). Provide a
+    // NotSupportedException overload so the tag-helper compiles; the happy path
+    // (tag-resource fallback) is unaffected.
     public partial class PartnerTransferDetailResource
     {
-        /// <summary>
-        /// Update by full resource data is not supported by the service; partner transfer details
-        /// are only mutated through the Initiate and Cancel actions. This overload exists to
-        /// satisfy the auto-generated tag boilerplate.
-        /// </summary>
+        /// <summary> Not supported. Partner transfer details are only mutated through Initiate and Cancel actions. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation<PartnerTransferDetailResource>> UpdateAsync(WaitUntil waitUntil, PartnerTransferDetailData data, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("Updating PartnerTransferDetailResource via the resource data envelope is not supported. Use Initiate or Cancel instead.");
         }
 
-        /// <summary>
-        /// Update by full resource data is not supported by the service; partner transfer details
-        /// are only mutated through the Initiate and Cancel actions. This overload exists to
-        /// satisfy the auto-generated tag boilerplate.
-        /// </summary>
+        /// <summary> Not supported. Partner transfer details are only mutated through Initiate and Cancel actions. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<PartnerTransferDetailResource> Update(WaitUntil waitUntil, PartnerTransferDetailData data, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("Updating PartnerTransferDetailResource via the resource data envelope is not supported. Use Initiate or Cancel instead.");
-        }
-
-        /// <summary> Back-compat overload for GA 1.2.2 callers that pass <see cref="PartnerTransferDetailCreateOrUpdateContent"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<PartnerTransferDetailResource>> UpdateAsync(WaitUntil waitUntil, PartnerTransferDetailCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-        {
-            var request = new PartnerInitiateTransferRequest
-            {
-                RecipientEmailId = content?.RecipientEmailId,
-                ResellerId = content?.ResellerId,
-            };
-            return await UpdateAsync(waitUntil, request, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Back-compat overload for GA 1.2.2 callers that pass <see cref="PartnerTransferDetailCreateOrUpdateContent"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<PartnerTransferDetailResource> Update(WaitUntil waitUntil, PartnerTransferDetailCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-        {
-            var request = new PartnerInitiateTransferRequest
-            {
-                RecipientEmailId = content?.RecipientEmailId,
-                ResellerId = content?.ResellerId,
-            };
-            return Update(waitUntil, request, cancellationToken);
         }
     }
 }

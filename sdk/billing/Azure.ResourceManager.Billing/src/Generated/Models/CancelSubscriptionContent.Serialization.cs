@@ -15,66 +15,66 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Request parameters for cancel customer subscription. </summary>
-    public partial class CancelSubscriptionRequest : IJsonModel<CancelSubscriptionRequest>
+    public partial class CancelSubscriptionContent : IJsonModel<CancelSubscriptionContent>
     {
-        /// <summary> Initializes a new instance of <see cref="CancelSubscriptionRequest"/> for deserialization. </summary>
-        internal CancelSubscriptionRequest()
+        /// <summary> Initializes a new instance of <see cref="CancelSubscriptionContent"/> for deserialization. </summary>
+        internal CancelSubscriptionContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CancelSubscriptionRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CancelSubscriptionContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CancelSubscriptionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CancelSubscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCancelSubscriptionRequest(document.RootElement, options);
+                        return DeserializeCancelSubscriptionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CancelSubscriptionRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CancelSubscriptionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CancelSubscriptionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CancelSubscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CancelSubscriptionRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CancelSubscriptionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CancelSubscriptionRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CancelSubscriptionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CancelSubscriptionRequest IPersistableModel<CancelSubscriptionRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CancelSubscriptionContent IPersistableModel<CancelSubscriptionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CancelSubscriptionRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CancelSubscriptionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="cancelSubscriptionRequest"> The <see cref="CancelSubscriptionRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CancelSubscriptionRequest cancelSubscriptionRequest)
+        /// <param name="cancelSubscriptionContent"> The <see cref="CancelSubscriptionContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CancelSubscriptionContent cancelSubscriptionContent)
         {
-            if (cancelSubscriptionRequest == null)
+            if (cancelSubscriptionContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(cancelSubscriptionRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(cancelSubscriptionContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CancelSubscriptionRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CancelSubscriptionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CancelSubscriptionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CancelSubscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CancelSubscriptionRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CancelSubscriptionContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("cancellationReason"u8);
             writer.WriteStringValue(CancellationReason.ToString());
@@ -116,31 +116,31 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CancelSubscriptionRequest IJsonModel<CancelSubscriptionRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CancelSubscriptionContent IJsonModel<CancelSubscriptionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CancelSubscriptionRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CancelSubscriptionContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CancelSubscriptionRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CancelSubscriptionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CancelSubscriptionRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CancelSubscriptionContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCancelSubscriptionRequest(document.RootElement, options);
+            return DeserializeCancelSubscriptionContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CancelSubscriptionRequest DeserializeCancelSubscriptionRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static CancelSubscriptionContent DeserializeCancelSubscriptionContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             CustomerSubscriptionCancellationReason cancellationReason = default;
-            string customerId = default;
+            ResourceIdentifier customerId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,7 +151,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("customerId"u8))
                 {
-                    customerId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +163,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CancelSubscriptionRequest(cancellationReason, customerId, additionalBinaryDataProperties);
+            return new CancelSubscriptionContent(cancellationReason, customerId, additionalBinaryDataProperties);
         }
     }
 }

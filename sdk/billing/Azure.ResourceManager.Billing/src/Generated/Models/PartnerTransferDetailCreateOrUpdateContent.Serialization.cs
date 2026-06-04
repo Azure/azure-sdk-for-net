@@ -14,62 +14,62 @@ using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> Request parameters to initiate transfer. </summary>
-    public partial class InitiateTransferRequest : IJsonModel<InitiateTransferRequest>
+    /// <summary> Request parameters to initiate partner transfer. </summary>
+    public partial class PartnerTransferDetailCreateOrUpdateContent : IJsonModel<PartnerTransferDetailCreateOrUpdateContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InitiateTransferRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PartnerTransferDetailCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InitiateTransferRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PartnerTransferDetailCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInitiateTransferRequest(document.RootElement, options);
+                        return DeserializePartnerTransferDetailCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InitiateTransferRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerTransferDetailCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InitiateTransferRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PartnerTransferDetailCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InitiateTransferRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerTransferDetailCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InitiateTransferRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PartnerTransferDetailCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InitiateTransferRequest IPersistableModel<InitiateTransferRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PartnerTransferDetailCreateOrUpdateContent IPersistableModel<PartnerTransferDetailCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InitiateTransferRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PartnerTransferDetailCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="initiateTransferRequest"> The <see cref="InitiateTransferRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(InitiateTransferRequest initiateTransferRequest)
+        /// <param name="partnerTransferDetailCreateOrUpdateContent"> The <see cref="PartnerTransferDetailCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PartnerTransferDetailCreateOrUpdateContent partnerTransferDetailCreateOrUpdateContent)
         {
-            if (initiateTransferRequest == null)
+            if (partnerTransferDetailCreateOrUpdateContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(initiateTransferRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(partnerTransferDetailCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InitiateTransferRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PartnerTransferDetailCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InitiateTransferRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PartnerTransferDetailCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InitiateTransferRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerTransferDetailCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -109,30 +109,30 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InitiateTransferRequest IJsonModel<InitiateTransferRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PartnerTransferDetailCreateOrUpdateContent IJsonModel<PartnerTransferDetailCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InitiateTransferRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PartnerTransferDetailCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InitiateTransferRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PartnerTransferDetailCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InitiateTransferRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerTransferDetailCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInitiateTransferRequest(document.RootElement, options);
+            return DeserializePartnerTransferDetailCreateOrUpdateContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InitiateTransferRequest DeserializeInitiateTransferRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static PartnerTransferDetailCreateOrUpdateContent DeserializePartnerTransferDetailCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            InitiateTransferProperties properties = default;
+            PartnerInitiateTransferProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    properties = InitiateTransferProperties.DeserializeInitiateTransferProperties(prop.Value, options);
+                    properties = PartnerInitiateTransferProperties.DeserializePartnerInitiateTransferProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InitiateTransferRequest(properties, additionalBinaryDataProperties);
+            return new PartnerTransferDetailCreateOrUpdateContent(properties, additionalBinaryDataProperties);
         }
     }
 }

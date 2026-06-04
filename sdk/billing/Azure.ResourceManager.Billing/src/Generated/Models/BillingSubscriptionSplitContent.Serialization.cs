@@ -15,61 +15,61 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Request parameters that are provided to split the billing subscription. </summary>
-    public partial class BillingSubscriptionSplitRequest : IJsonModel<BillingSubscriptionSplitRequest>
+    public partial class BillingSubscriptionSplitContent : IJsonModel<BillingSubscriptionSplitContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BillingSubscriptionSplitRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BillingSubscriptionSplitContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionSplitRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionSplitContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBillingSubscriptionSplitRequest(document.RootElement, options);
+                        return DeserializeBillingSubscriptionSplitContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionSplitRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionSplitRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionSplitContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionSplitRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BillingSubscriptionSplitRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BillingSubscriptionSplitContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BillingSubscriptionSplitRequest IPersistableModel<BillingSubscriptionSplitRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BillingSubscriptionSplitContent IPersistableModel<BillingSubscriptionSplitContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BillingSubscriptionSplitRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BillingSubscriptionSplitContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="billingSubscriptionSplitRequest"> The <see cref="BillingSubscriptionSplitRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(BillingSubscriptionSplitRequest billingSubscriptionSplitRequest)
+        /// <param name="billingSubscriptionSplitContent"> The <see cref="BillingSubscriptionSplitContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BillingSubscriptionSplitContent billingSubscriptionSplitContent)
         {
-            if (billingSubscriptionSplitRequest == null)
+            if (billingSubscriptionSplitContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(billingSubscriptionSplitRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(billingSubscriptionSplitContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BillingSubscriptionSplitRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BillingSubscriptionSplitContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionSplitRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionSplitContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionSplitRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(TargetProductTypeId))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(TermDuration))
             {
                 writer.WritePropertyName("termDuration"u8);
-                writer.WriteStringValue(TermDuration);
+                writer.WriteStringValue(TermDuration.Value, "P");
             }
             if (Optional.IsDefined(BillingFrequency))
             {
@@ -129,24 +129,24 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BillingSubscriptionSplitRequest IJsonModel<BillingSubscriptionSplitRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BillingSubscriptionSplitContent IJsonModel<BillingSubscriptionSplitContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BillingSubscriptionSplitRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BillingSubscriptionSplitContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionSplitRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionSplitContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionSplitRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBillingSubscriptionSplitRequest(document.RootElement, options);
+            return DeserializeBillingSubscriptionSplitContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BillingSubscriptionSplitRequest DeserializeBillingSubscriptionSplitRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static BillingSubscriptionSplitContent DeserializeBillingSubscriptionSplitContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Billing.Models
             string targetProductTypeId = default;
             string targetSkuId = default;
             int? quantity = default;
-            string termDuration = default;
+            TimeSpan? termDuration = default;
             string billingFrequency = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -181,7 +181,11 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (prop.NameEquals("termDuration"u8))
                 {
-                    termDuration = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    termDuration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (prop.NameEquals("billingFrequency"u8))
@@ -194,7 +198,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BillingSubscriptionSplitRequest(
+            return new BillingSubscriptionSplitContent(
                 targetProductTypeId,
                 targetSkuId,
                 quantity,

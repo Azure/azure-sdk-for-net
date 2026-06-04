@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request parameters for cancel customer subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, CancelSubscriptionRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, CancelSubscriptionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateCancelRequest(Id.Parent.Name, Id.Name, CancelSubscriptionRequest.ToRequestContent(content), context);
+                HttpMessage message = _billingSubscriptionsRestClient.CreateCancelRequest(Id.Parent.Name, Id.Name, CancelSubscriptionContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation operation = new BillingArmOperation(_billingSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request parameters for cancel customer subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation Cancel(WaitUntil waitUntil, CancelSubscriptionRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Cancel(WaitUntil waitUntil, CancelSubscriptionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateCancelRequest(Id.Parent.Name, Id.Name, CancelSubscriptionRequest.ToRequestContent(content), context);
+                HttpMessage message = _billingSubscriptionsRestClient.CreateCancelRequest(Id.Parent.Name, Id.Name, CancelSubscriptionContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation operation = new BillingArmOperation(_billingSubscriptionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request parameters that are provided to merge the two billing subscriptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingSubscriptionResource>> MergeAsync(WaitUntil waitUntil, BillingSubscriptionMergeRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingSubscriptionResource>> MergeAsync(WaitUntil waitUntil, BillingSubscriptionMergeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMergeRequest.ToRequestContent(content), context);
+                HttpMessage message = _billingSubscriptionsRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMergeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
                     new BillingSubscriptionResourceOperationSource(Client),
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request parameters that are provided to merge the two billing subscriptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BillingSubscriptionResource> Merge(WaitUntil waitUntil, BillingSubscriptionMergeRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingSubscriptionResource> Merge(WaitUntil waitUntil, BillingSubscriptionMergeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMergeRequest.ToRequestContent(content), context);
+                HttpMessage message = _billingSubscriptionsRestClient.CreateMergeRequest(Id.Parent.Name, Id.Name, BillingSubscriptionMergeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
                     new BillingSubscriptionResourceOperationSource(Client),
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request parameters that are provided to split the billing subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingSubscriptionResource>> SplitAsync(WaitUntil waitUntil, BillingSubscriptionSplitRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingSubscriptionResource>> SplitAsync(WaitUntil waitUntil, BillingSubscriptionSplitContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, BillingSubscriptionSplitRequest.ToRequestContent(content), context);
+                HttpMessage message = _billingSubscriptionsRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, BillingSubscriptionSplitContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
                     new BillingSubscriptionResourceOperationSource(Client),
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request parameters that are provided to split the billing subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BillingSubscriptionResource> Split(WaitUntil waitUntil, BillingSubscriptionSplitRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingSubscriptionResource> Split(WaitUntil waitUntil, BillingSubscriptionSplitContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingSubscriptionsRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, BillingSubscriptionSplitRequest.ToRequestContent(content), context);
+                HttpMessage message = _billingSubscriptionsRestClient.CreateSplitRequest(Id.Parent.Name, Id.Name, BillingSubscriptionSplitContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingSubscriptionResource> operation = new BillingArmOperation<BillingSubscriptionResource>(
                     new BillingSubscriptionResourceOperationSource(Client),

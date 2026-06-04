@@ -15,61 +15,61 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Savings plan update validate request. </summary>
-    public partial class SavingsPlanUpdateValidateRequest : IJsonModel<SavingsPlanUpdateValidateRequest>
+    public partial class SavingsPlanUpdateValidateContent : IJsonModel<SavingsPlanUpdateValidateContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SavingsPlanUpdateValidateRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SavingsPlanUpdateValidateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUpdateValidateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUpdateValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSavingsPlanUpdateValidateRequest(document.RootElement, options);
+                        return DeserializeSavingsPlanUpdateValidateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanUpdateValidateRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanUpdateValidateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUpdateValidateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUpdateValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanUpdateValidateRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanUpdateValidateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SavingsPlanUpdateValidateRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SavingsPlanUpdateValidateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SavingsPlanUpdateValidateRequest IPersistableModel<SavingsPlanUpdateValidateRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SavingsPlanUpdateValidateContent IPersistableModel<SavingsPlanUpdateValidateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SavingsPlanUpdateValidateRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SavingsPlanUpdateValidateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="savingsPlanUpdateValidateRequest"> The <see cref="SavingsPlanUpdateValidateRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SavingsPlanUpdateValidateRequest savingsPlanUpdateValidateRequest)
+        /// <param name="savingsPlanUpdateValidateContent"> The <see cref="SavingsPlanUpdateValidateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SavingsPlanUpdateValidateContent savingsPlanUpdateValidateContent)
         {
-            if (savingsPlanUpdateValidateRequest == null)
+            if (savingsPlanUpdateValidateContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(savingsPlanUpdateValidateRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(savingsPlanUpdateValidateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SavingsPlanUpdateValidateRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SavingsPlanUpdateValidateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUpdateValidateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUpdateValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanUpdateValidateRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanUpdateValidateContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Benefits))
             {
@@ -114,24 +114,24 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SavingsPlanUpdateValidateRequest IJsonModel<SavingsPlanUpdateValidateRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SavingsPlanUpdateValidateContent IJsonModel<SavingsPlanUpdateValidateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SavingsPlanUpdateValidateRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SavingsPlanUpdateValidateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUpdateValidateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUpdateValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanUpdateValidateRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanUpdateValidateContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSavingsPlanUpdateValidateRequest(document.RootElement, options);
+            return DeserializeSavingsPlanUpdateValidateContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SavingsPlanUpdateValidateRequest DeserializeSavingsPlanUpdateValidateRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static SavingsPlanUpdateValidateContent DeserializeSavingsPlanUpdateValidateContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SavingsPlanUpdateValidateRequest(benefits ?? new ChangeTrackingList<SavingsPlanUpdateRequestProperties>(), additionalBinaryDataProperties);
+            return new SavingsPlanUpdateValidateContent(benefits ?? new ChangeTrackingList<SavingsPlanUpdateRequestProperties>(), additionalBinaryDataProperties);
         }
     }
 }

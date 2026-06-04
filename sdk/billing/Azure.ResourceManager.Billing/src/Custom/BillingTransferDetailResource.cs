@@ -6,48 +6,29 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
+    // Generator tag-helper boilerplate (#58747) calls this.Update/UpdateAsync(WaitUntil,
+    // BillingTransferDetailData, CT), but the actual generated Update method takes
+    // BillingTransferDetailCreateOrUpdateContent (transfer details are only mutated via
+    // Initiate/Cancel actions, not via Data envelope). Provide a NotSupportedException
+    // overload so the tag-helper compiles; the happy path (tag-resource fallback) is
+    // unaffected.
     public partial class BillingTransferDetailResource
     {
-        /// <summary>
-        /// Update by full resource data is not supported by the service; transfer details
-        /// are only mutated through the Initiate and Cancel actions. This overload exists to
-        /// satisfy the auto-generated tag boilerplate.
-        /// </summary>
+        /// <summary> Not supported. Transfer details are only mutated through Initiate and Cancel actions. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation<BillingTransferDetailResource>> UpdateAsync(WaitUntil waitUntil, BillingTransferDetailData data, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("Updating BillingTransferDetailResource via the resource data envelope is not supported. Use Initiate or Cancel instead.");
         }
 
-        /// <summary>
-        /// Update by full resource data is not supported by the service; transfer details
-        /// are only mutated through the Initiate and Cancel actions. This overload exists to
-        /// satisfy the auto-generated tag boilerplate.
-        /// </summary>
+        /// <summary> Not supported. Transfer details are only mutated through Initiate and Cancel actions. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BillingTransferDetailResource> Update(WaitUntil waitUntil, BillingTransferDetailData data, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("Updating BillingTransferDetailResource via the resource data envelope is not supported. Use Initiate or Cancel instead.");
-        }
-
-        /// <summary> Back-compat overload for GA 1.2.2 callers that pass <see cref="BillingTransferDetailCreateOrUpdateContent"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<ArmOperation<BillingTransferDetailResource>> UpdateAsync(WaitUntil waitUntil, BillingTransferDetailCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-        {
-            var request = new InitiateTransferRequest { RecipientEmailId = content?.RecipientEmailId };
-            return await UpdateAsync(waitUntil, request, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Back-compat overload for GA 1.2.2 callers that pass <see cref="BillingTransferDetailCreateOrUpdateContent"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<BillingTransferDetailResource> Update(WaitUntil waitUntil, BillingTransferDetailCreateOrUpdateContent content, CancellationToken cancellationToken = default)
-        {
-            var request = new InitiateTransferRequest { RecipientEmailId = content?.RecipientEmailId };
-            return Update(waitUntil, request, cancellationToken);
         }
     }
 }

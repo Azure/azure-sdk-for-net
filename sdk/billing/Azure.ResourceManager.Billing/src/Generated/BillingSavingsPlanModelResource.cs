@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request body for patching a savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SavingsPlanValidateResult>> ValidateUpdateByBillingAccountAsync(SavingsPlanUpdateValidateRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SavingsPlanValidateResult>> ValidateUpdateByBillingAccountAsync(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlansRestClient.CreateValidateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SavingsPlanUpdateValidateRequest.ToRequestContent(content), context);
+                HttpMessage message = _savingsPlansRestClient.CreateValidateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SavingsPlanUpdateValidateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SavingsPlanValidateResult> response = Response.FromValue(SavingsPlanValidateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request body for patching a savings plan order alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SavingsPlanValidateResult> ValidateUpdateByBillingAccount(SavingsPlanUpdateValidateRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<SavingsPlanValidateResult> ValidateUpdateByBillingAccount(SavingsPlanUpdateValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _savingsPlansRestClient.CreateValidateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SavingsPlanUpdateValidateRequest.ToRequestContent(content), context);
+                HttpMessage message = _savingsPlansRestClient.CreateValidateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SavingsPlanUpdateValidateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SavingsPlanValidateResult> response = Response.FromValue(SavingsPlanValidateResult.FromResponse(result), result);
                 if (response.Value == null)

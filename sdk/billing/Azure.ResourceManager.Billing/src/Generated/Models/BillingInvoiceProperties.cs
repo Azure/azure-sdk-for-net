@@ -171,6 +171,10 @@ namespace Azure.ResourceManager.Billing.Models
         [WirePath("purchaseOrderNumber")]
         public string PurchaseOrderNumber { get; }
 
+        /// <summary> Rebill details for an invoice. </summary>
+        [WirePath("rebillDetails")]
+        public RebillDetails RebillDetails { get; set; }
+
         /// <summary> The current status of the invoice. </summary>
         [WirePath("status")]
         public BillingInvoiceStatus? Status { get; }

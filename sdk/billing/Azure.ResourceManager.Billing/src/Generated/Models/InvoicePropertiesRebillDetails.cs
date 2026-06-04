@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.Billing.Models
     public partial class InvoicePropertiesRebillDetails : RebillDetails
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesRebillDetails"/>. </summary>
+        public InvoicePropertiesRebillDetails()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InvoicePropertiesRebillDetails"/>. </summary>
         /// <param name="invoiceDocumentId"> The ID of invoice. </param>
         /// <param name="creditNoteDocumentId"> The ID of credit note. </param>
         /// <param name="rebillDetailsValue"> The rebill details of an invoice. </param>

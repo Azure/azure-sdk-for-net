@@ -12,20 +12,20 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Request parameters to initiate transfer. </summary>
-    public partial class InitiateTransferRequest
+    public partial class BillingTransferDetailCreateOrUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InitiateTransferRequest"/>. </summary>
-        public InitiateTransferRequest()
+        /// <summary> Initializes a new instance of <see cref="BillingTransferDetailCreateOrUpdateContent"/>. </summary>
+        public BillingTransferDetailCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InitiateTransferRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingTransferDetailCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Request parameters to initiate transfer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InitiateTransferRequest(InitiateTransferProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingTransferDetailCreateOrUpdateContent(InitiateTransferProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

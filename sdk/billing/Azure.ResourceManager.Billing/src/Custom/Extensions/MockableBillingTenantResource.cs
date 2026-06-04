@@ -9,92 +9,11 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Billing.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Billing.Mocking
 {
-    // Back-compat shim for GA 1.2.2 callers. The DownloadDocumentsByBillingSubscription
-    // operation was renamed in GA 1.2.2 to *DownloadDocumentsByBillingSubscriptionInvoice*
-    // (note the trailing "Invoice"); the new MPG generator emits the no-suffix name.
-    // The [CodeGenSuppress] below removes the generator's no-suffix method so we can
-    // keep the GA spelling. Replacement bodies are byte-for-byte copies of the generator
-    // output with `BinaryContentHelper.FromEnumerable(parameters)` used directly.
-    [CodeGenSuppress("DownloadDocumentsByBillingSubscriptionAsync", typeof(WaitUntil), typeof(string), typeof(IEnumerable<BillingDocumentDownloadRequestContent>), typeof(CancellationToken))]
-    [CodeGenSuppress("DownloadDocumentsByBillingSubscription", typeof(WaitUntil), typeof(string), typeof(IEnumerable<BillingDocumentDownloadRequestContent>), typeof(CancellationToken))]
     public partial class MockableBillingTenantResource
     {
-        /// <summary> Downloads multiple invoice documents as a zip file for a billing subscription. </summary>
-        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
-
-            using DiagnosticScope scope = InvoicesClientDiagnostics.CreateScope("MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionInvoice");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, BinaryContentHelper.FromEnumerable(arrayOfDocumentDownloadRequest), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
-                    new BillingDocumentDownloadResultOperationSource(),
-                    InvoicesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Downloads multiple invoice documents as a zip file for a billing subscription. </summary>
-        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadDocumentsByBillingSubscriptionInvoice(WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
-
-            using DiagnosticScope scope = InvoicesClientDiagnostics.CreateScope("MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionInvoice");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, BinaryContentHelper.FromEnumerable(arrayOfDocumentDownloadRequest), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
-                    new BillingDocumentDownloadResultOperationSource(),
-                    InvoicesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         // Back-compat shims for GA 1.2.2 callers: TenantResource exposed shortcut accessors
         // that took a billingAccountName (and billingProfileName) and returned the child
         // collection without first materializing a BillingAccountResource handle. The new

@@ -8,29 +8,21 @@ using Azure;
 
 namespace Azure.ResourceManager.Billing
 {
+    // Generator tag-helper boilerplate (#58747) calls this.Update/UpdateAsync(WaitUntil,
+    // <Data>, CT) on PUT-only resources, but MPG emits CreateOrUpdate for PUT (method
+    // name derived from HTTP verb per ARM convention). Alias Update -> CreateOrUpdate so
+    // the generated AddTag/SetTags/RemoveTag fallback compiles. Also restores the GA
+    // Update API surface that the prior AutoRest SDK exposed.
     public partial class BillingAccountPolicyResource
     {
-        // Back-compat shim — NOT a codegen bug. The MPG generator emits CreateOrUpdate
-        // for PUT operations per ARM resource conventions; the previous GA SDK exposed
-        // the same operation as Update via an AutoRest-side customization. We restore
-        // Update/UpdateAsync as thin EditorBrowsable(Never) wrappers so existing callers
-        // keep compiling. No spec or generator change can resolve this — the Resource
-        // method name is derived from HTTP verb (PUT→CreateOrUpdate, PATCH→Update),
-        // not from operation name; @@clientName affects the rest-client method name
-        // (CreateUpdateRequest) but not the public Resource method name.
-
-        /// <summary>
-        /// Update is an alias for CreateOrUpdate to preserve the GA 12.4.0 API surface.
-        /// </summary>
+        /// <summary> Update is an alias for CreateOrUpdate to satisfy generator tag-helper boilerplate (#58747) and preserve the GA API surface. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<BillingAccountPolicyResource>> UpdateAsync(WaitUntil waitUntil, BillingAccountPolicyData data, CancellationToken cancellationToken = default)
         {
             return await CreateOrUpdateAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Update is an alias for CreateOrUpdate to preserve the GA 12.4.0 API surface.
-        /// </summary>
+        /// <summary> Update is an alias for CreateOrUpdate to satisfy generator tag-helper boilerplate (#58747) and preserve the GA API surface. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BillingAccountPolicyResource> Update(WaitUntil waitUntil, BillingAccountPolicyData data, CancellationToken cancellationToken = default)
         {

@@ -12,21 +12,21 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Savings plan update validate request. </summary>
-    public partial class SavingsPlanUpdateValidateRequest
+    public partial class SavingsPlanUpdateValidateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SavingsPlanUpdateValidateRequest"/>. </summary>
-        public SavingsPlanUpdateValidateRequest()
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanUpdateValidateContent"/>. </summary>
+        public SavingsPlanUpdateValidateContent()
         {
             Benefits = new ChangeTrackingList<SavingsPlanUpdateRequestProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SavingsPlanUpdateValidateRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanUpdateValidateContent"/>. </summary>
         /// <param name="benefits"> The benefits of a savings plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SavingsPlanUpdateValidateRequest(IList<SavingsPlanUpdateRequestProperties> benefits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SavingsPlanUpdateValidateContent(IList<SavingsPlanUpdateRequestProperties> benefits, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Benefits = benefits;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -66,6 +66,16 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
+        /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("properties.provisioningState")]
+        public BillingProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The provisioning state of the savings plan for display, e.g. Succeeded. </summary>
         [WirePath("properties.displayProvisioningState")]
         public string DisplayProvisioningState

@@ -12,24 +12,24 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Request parameters that are provided to split the billing subscription. </summary>
-    public partial class BillingSubscriptionSplitRequest
+    public partial class BillingSubscriptionSplitContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionSplitRequest"/>. </summary>
-        public BillingSubscriptionSplitRequest()
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionSplitContent"/>. </summary>
+        public BillingSubscriptionSplitContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionSplitRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingSubscriptionSplitContent"/>. </summary>
         /// <param name="targetProductTypeId"> The ID of the target product to which the subscription needs to be split into. This value is not same as the value returned in Get API call and can be retrieved from Catalog API to know the product id to split into. </param>
         /// <param name="targetSkuId"> The ID of the target product to which the subscription needs to be split into. This value is not same as the value returned in Get API call and can be retrieved from Catalog API to know the sku id to split into. </param>
         /// <param name="quantity"> The quantity of the target product to which the subscription needs to be split into. </param>
         /// <param name="termDuration"> The term duration of the target in ISO8601 format product to which the subscription needs to be split into. Example: P1M, P1Y. </param>
         /// <param name="billingFrequency"> The billing frequency of the target subscription in the ISO8601 format. Example: P1M, P3M, P1Y". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingSubscriptionSplitRequest(string targetProductTypeId, string targetSkuId, int? quantity, string termDuration, string billingFrequency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingSubscriptionSplitContent(string targetProductTypeId, string targetSkuId, int? quantity, TimeSpan? termDuration, string billingFrequency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetProductTypeId = targetProductTypeId;
             TargetSkuId = targetSkuId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The term duration of the target in ISO8601 format product to which the subscription needs to be split into. Example: P1M, P1Y. </summary>
         [WirePath("termDuration")]
-        public string TermDuration { get; set; }
+        public TimeSpan? TermDuration { get; set; }
 
         /// <summary> The billing frequency of the target subscription in the ISO8601 format. Example: P1M, P3M, P1Y". </summary>
         [WirePath("billingFrequency")]

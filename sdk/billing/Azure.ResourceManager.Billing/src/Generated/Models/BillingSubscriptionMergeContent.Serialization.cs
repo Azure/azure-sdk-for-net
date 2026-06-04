@@ -14,62 +14,62 @@ using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> Request parameters to initiate partner transfer. </summary>
-    public partial class PartnerInitiateTransferRequest : IJsonModel<PartnerInitiateTransferRequest>
+    /// <summary> Request parameters that are provided to merge the two billing subscriptions. </summary>
+    public partial class BillingSubscriptionMergeContent : IJsonModel<BillingSubscriptionMergeContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PartnerInitiateTransferRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BillingSubscriptionMergeContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PartnerInitiateTransferRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionMergeContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePartnerInitiateTransferRequest(document.RootElement, options);
+                        return DeserializeBillingSubscriptionMergeContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerInitiateTransferRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionMergeContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PartnerInitiateTransferRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionMergeContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerInitiateTransferRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionMergeContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PartnerInitiateTransferRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BillingSubscriptionMergeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PartnerInitiateTransferRequest IPersistableModel<PartnerInitiateTransferRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BillingSubscriptionMergeContent IPersistableModel<BillingSubscriptionMergeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PartnerInitiateTransferRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BillingSubscriptionMergeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="partnerInitiateTransferRequest"> The <see cref="PartnerInitiateTransferRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PartnerInitiateTransferRequest partnerInitiateTransferRequest)
+        /// <param name="billingSubscriptionMergeContent"> The <see cref="BillingSubscriptionMergeContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BillingSubscriptionMergeContent billingSubscriptionMergeContent)
         {
-            if (partnerInitiateTransferRequest == null)
+            if (billingSubscriptionMergeContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(partnerInitiateTransferRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(billingSubscriptionMergeContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PartnerInitiateTransferRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BillingSubscriptionMergeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,15 +80,20 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PartnerInitiateTransferRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionMergeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerInitiateTransferRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionMergeContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(TargetBillingSubscriptionName))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("targetBillingSubscriptionName"u8);
+                writer.WriteStringValue(TargetBillingSubscriptionName);
+            }
+            if (Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -109,40 +114,46 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PartnerInitiateTransferRequest IJsonModel<PartnerInitiateTransferRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BillingSubscriptionMergeContent IJsonModel<BillingSubscriptionMergeContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PartnerInitiateTransferRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BillingSubscriptionMergeContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PartnerInitiateTransferRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionMergeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerInitiateTransferRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionMergeContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePartnerInitiateTransferRequest(document.RootElement, options);
+            return DeserializeBillingSubscriptionMergeContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PartnerInitiateTransferRequest DeserializePartnerInitiateTransferRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static BillingSubscriptionMergeContent DeserializeBillingSubscriptionMergeContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PartnerInitiateTransferProperties properties = default;
+            string targetBillingSubscriptionName = default;
+            int? quantity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("properties"u8))
+                if (prop.NameEquals("targetBillingSubscriptionName"u8))
+                {
+                    targetBillingSubscriptionName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("quantity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = PartnerInitiateTransferProperties.DeserializePartnerInitiateTransferProperties(prop.Value, options);
+                    quantity = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +161,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PartnerInitiateTransferRequest(properties, additionalBinaryDataProperties);
+            return new BillingSubscriptionMergeContent(targetBillingSubscriptionName, quantity, additionalBinaryDataProperties);
         }
     }
 }

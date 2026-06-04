@@ -7,28 +7,29 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Request parameters for cancel customer subscription. </summary>
-    public partial class CancelSubscriptionRequest
+    public partial class CancelSubscriptionContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CancelSubscriptionRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelSubscriptionContent"/>. </summary>
         /// <param name="cancellationReason"> Cancellation reason. </param>
-        public CancelSubscriptionRequest(CustomerSubscriptionCancellationReason cancellationReason)
+        public CancelSubscriptionContent(CustomerSubscriptionCancellationReason cancellationReason)
         {
             CancellationReason = cancellationReason;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CancelSubscriptionRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelSubscriptionContent"/>. </summary>
         /// <param name="cancellationReason"> Cancellation reason. </param>
         /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CancelSubscriptionRequest(CustomerSubscriptionCancellationReason cancellationReason, string customerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CancelSubscriptionContent(CustomerSubscriptionCancellationReason cancellationReason, ResourceIdentifier customerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CancellationReason = cancellationReason;
             CustomerId = customerId;
@@ -41,6 +42,6 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
         [WirePath("customerId")]
-        public string CustomerId { get; set; }
+        public ResourceIdentifier CustomerId { get; set; }
     }
 }

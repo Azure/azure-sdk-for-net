@@ -1,11 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Billing.Mocking;
+using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -14,6 +17,15 @@ namespace Azure.ResourceManager.Billing
     // builds the parent ResourceIdentifier and constructs the child collection.
     // The two-layer split mirrors the canonical Mockable-extension pattern used by
     // every existing extension in the generated BillingExtensions.cs.
+    //
+    // The two [CodeGenSuppress] entries below remove the generator-emitted
+    // DownloadDocumentsByBillingSubscriptionInvoice overloads that ship with broken
+    // XML <see cref> docs (generator bug #59626 emits unqualified 'IEnumerable' instead
+    // of 'IEnumerable{T}', producing CS1574/CS1580). Our re-emitted versions below use
+    // a parameter-less cref that resolves cleanly. TODO: remove [CodeGenSuppress] once
+    // #59626 is fixed in the generator.
+    [CodeGenSuppress("DownloadDocumentsByBillingSubscriptionInvoiceAsync", typeof(TenantResource), typeof(WaitUntil), typeof(string), typeof(IEnumerable<BillingDocumentDownloadRequestContent>), typeof(CancellationToken))]
+    [CodeGenSuppress("DownloadDocumentsByBillingSubscriptionInvoice", typeof(TenantResource), typeof(WaitUntil), typeof(string), typeof(IEnumerable<BillingDocumentDownloadRequestContent>), typeof(CancellationToken))]
     public static partial class BillingExtensions
     {
         /// <summary> Gets a collection of <see cref="BillingSubscriptionResource"/> objects under the given billing account. </summary>
@@ -122,15 +134,25 @@ namespace Azure.ResourceManager.Billing
             return await GetMockableBillingTenantResource(tenantResource).ValidateAddresAsync(details, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Downloads multiple invoice documents as a zip file for a billing subscription. </summary>
-        public static ArmOperation<Models.BillingDocumentDownloadResult> DownloadDocumentsByBillingSubscriptionInvoice(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, System.Collections.Generic.IEnumerable<Models.BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        /// <summary> Downloads multiple invoice documents as a zip file for a billing subscription. Re-emitted with a parameter-less cref to work around generator bug #59626. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
+        /// <param name="arrayOfDocumentDownloadRequest"> A list of download details for individual documents. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static ArmOperation<BillingDocumentDownloadResult> DownloadDocumentsByBillingSubscriptionInvoice(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
             return GetMockableBillingTenantResource(tenantResource).DownloadDocumentsByBillingSubscriptionInvoice(waitUntil, subscriptionId, arrayOfDocumentDownloadRequest, cancellationToken);
         }
 
-        /// <summary> Downloads multiple invoice documents as a zip file for a billing subscription. </summary>
-        public static async Task<ArmOperation<Models.BillingDocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, System.Collections.Generic.IEnumerable<Models.BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
+        /// <summary> Downloads multiple invoice documents as a zip file for a billing subscription. Re-emitted with a parameter-less cref to work around generator bug #59626. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
+        /// <param name="arrayOfDocumentDownloadRequest"> A list of download details for individual documents. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public static async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
             return await GetMockableBillingTenantResource(tenantResource).DownloadDocumentsByBillingSubscriptionInvoiceAsync(waitUntil, subscriptionId, arrayOfDocumentDownloadRequest, cancellationToken).ConfigureAwait(false);

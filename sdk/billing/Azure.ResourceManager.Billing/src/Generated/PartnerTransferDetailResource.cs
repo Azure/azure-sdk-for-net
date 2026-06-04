@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request parameters that are provided to the initiate transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PartnerTransferDetailResource>> UpdateAsync(WaitUntil waitUntil, PartnerInitiateTransferRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PartnerTransferDetailResource>> UpdateAsync(WaitUntil waitUntil, PartnerTransferDetailCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _partnerTransfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PartnerInitiateTransferRequest.ToRequestContent(content), context);
+                HttpMessage message = _partnerTransfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PartnerTransferDetailCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PartnerTransferDetailData> response = Response.FromValue(PartnerTransferDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request parameters that are provided to the initiate transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PartnerTransferDetailResource> Update(WaitUntil waitUntil, PartnerInitiateTransferRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PartnerTransferDetailResource> Update(WaitUntil waitUntil, PartnerTransferDetailCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _partnerTransfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PartnerInitiateTransferRequest.ToRequestContent(content), context);
+                HttpMessage message = _partnerTransfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PartnerTransferDetailCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PartnerTransferDetailData> response = Response.FromValue(PartnerTransferDetailData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
