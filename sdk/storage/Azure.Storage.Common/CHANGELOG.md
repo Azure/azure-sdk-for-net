@@ -1,6 +1,6 @@
 # Release History
 
-## 12.28.0 (Unreleased)
+## 12.28.0 (2026-06-04)
 
 ### Features Added
 - This release contains bug fixes to improve quality.

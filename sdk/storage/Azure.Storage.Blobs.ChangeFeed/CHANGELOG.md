@@ -1,16 +1,12 @@
 # Release History
 
-## 12.0.0-preview.63 (Unreleased)
+## 12.0.0-preview.63 (2026-06-04)
 
 ### Features Added
 - This release contains bug fixes to improve quality.
 
-### Breaking Changes
-
 ### Bugs Fixed
 - Added validation for length-prefixed fields when parsing Avro responses to prevent excessive memory allocation from malformed or untrusted payloads.
-
-### Other Changes
 
 ## 12.0.0-preview.62 (2026-05-12)
 

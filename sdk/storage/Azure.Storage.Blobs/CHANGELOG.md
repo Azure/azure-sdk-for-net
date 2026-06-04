@@ -1,16 +1,12 @@
 # Release History
 
-## 12.29.0 (Unreleased)
+## 12.29.0 (2026-06-04)
 
 ### Features Added
 - Includes all features from 12.29.0-beta.1
 
-### Breaking Changes
-
 ### Bugs Fixed
 - Added validation for length-prefixed fields when parsing Blob Query responses to prevent excessive memory allocation from malformed or untrusted payloads.
-
-### Other Changes
 
 ## 12.28.0 (2026-05-12)
 
