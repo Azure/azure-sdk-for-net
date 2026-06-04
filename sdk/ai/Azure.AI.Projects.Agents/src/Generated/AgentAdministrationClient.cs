@@ -83,6 +83,118 @@ namespace Azure.AI.Projects.Agents
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
+        /// Creates a new code-based agent. Uploads the code zip and creates the agent in a single call.
+        /// The agent name is provided in the `x-ms-agent-name` header since POST /agents has no name in the URL path.
+        /// The SHA-256 hex digest of the zip is provided in the `x-ms-code-zip-sha256` header for integrity and dedup.
+        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
+        /// Maximum upload size is 250 MB.
+        /// </summary>
+        /// <param name="agentName"> The unique name that identifies the agent. Max 63 chars, must start and end with alphanumeric, hyphens allowed in the middle. </param>
+        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
+        /// <param name="content"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="codeZipSha256"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="codeZipSha256"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual ClientResult<ProjectsAgentRecord> CreateAgentFromCode(string agentName, string codeZipSha256, CreateAgentFromCodeOptions content, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(codeZipSha256, nameof(codeZipSha256));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using MultiPartFormContent content0 = content.ToMultipartFormContent();
+            ClientResult result = this.CreateAgentFromCode(agentName, codeZipSha256, content0, content0.MediaType, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Creates a new code-based agent. Uploads the code zip and creates the agent in a single call.
+        /// The agent name is provided in the `x-ms-agent-name` header since POST /agents has no name in the URL path.
+        /// The SHA-256 hex digest of the zip is provided in the `x-ms-code-zip-sha256` header for integrity and dedup.
+        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
+        /// Maximum upload size is 250 MB.
+        /// </summary>
+        /// <param name="agentName"> The unique name that identifies the agent. Max 63 chars, must start and end with alphanumeric, hyphens allowed in the middle. </param>
+        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
+        /// <param name="content"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="codeZipSha256"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="codeZipSha256"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual async Task<ClientResult<ProjectsAgentRecord>> CreateAgentFromCodeAsync(string agentName, string codeZipSha256, CreateAgentFromCodeOptions content, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(codeZipSha256, nameof(codeZipSha256));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using MultiPartFormContent content0 = content.ToMultipartFormContent();
+            ClientResult result = await this.CreateAgentFromCodeAsync(agentName, codeZipSha256, content0, content0.MediaType, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Updates a code-based agent by uploading new code and creating a new version.
+        /// If the code and definition are unchanged (matched by x-ms-code-zip-sha256 header), returns the existing version.
+        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
+        /// Maximum upload size is 250 MB.
+        /// </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
+        /// <param name="content"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="codeZipSha256"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="codeZipSha256"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual ClientResult<ProjectsAgentRecord> UpdateAgentFromCode(string agentName, string codeZipSha256, CreateAgentVersionFromCodeContent content, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(codeZipSha256, nameof(codeZipSha256));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using MultiPartFormContent content0 = content.ToMultipartFormContent();
+            ClientResult result = this.UpdateAgentFromCode(agentName, codeZipSha256, content0, content0.MediaType, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Updates a code-based agent by uploading new code and creating a new version.
+        /// If the code and definition are unchanged (matched by x-ms-code-zip-sha256 header), returns the existing version.
+        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
+        /// Maximum upload size is 250 MB.
+        /// </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
+        /// <param name="content"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="codeZipSha256"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="codeZipSha256"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual async Task<ClientResult<ProjectsAgentRecord>> UpdateAgentFromCodeAsync(string agentName, string codeZipSha256, CreateAgentVersionFromCodeContent content, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(codeZipSha256, nameof(codeZipSha256));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using MultiPartFormContent content0 = content.ToMultipartFormContent();
+            ClientResult result = await this.UpdateAgentFromCodeAsync(agentName, codeZipSha256, content0, content0.MediaType, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ProjectsAgentRecord)result, result.GetRawResponse());
+        }
+
+        /// <summary>
         /// [Protocol Method] Updates an agent endpoint.
         /// <list type="bullet">
         /// <item>
@@ -170,6 +282,42 @@ namespace Azure.AI.Projects.Agents
         {
             using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, foundryFeatures, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary> CreateAgentVersionFromCode. </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
+        /// <param name="content"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        internal virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string codeZipSha256, CreateAgentVersionFromCodeContent content, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            using MultiPartFormContent content0 = content.ToMultipartFormContent();
+            ClientResult result = CreateAgentVersionFromCode(agentName, codeZipSha256, content0, content0.MediaType, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
+        }
+
+        /// <summary> CreateAgentVersionFromCode. </summary>
+        /// <param name="agentName">
+        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
+        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
+        /// </param>
+        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
+        /// <param name="content"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        internal virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, CreateAgentVersionFromCodeContent content, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            using MultiPartFormContent content0 = content.ToMultipartFormContent();
+            ClientResult result = await CreateAgentVersionFromCodeAsync(agentName, codeZipSha256, content0, content0.MediaType, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
         }
 
         /// <summary>

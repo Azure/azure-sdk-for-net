@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal readonly partial struct MessageContentType : IEquatable<MessageContentType>
+    public readonly partial struct MessageContentType : IEquatable<MessageContentType>
     {
         private readonly string _value;
         private const string InputTextValue = "input_text";
