@@ -8,12 +8,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.ResourceManager.CosmosDB.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    [CodeGenSuppress("GetConnectionStrings", typeof(CancellationToken))]
-    [CodeGenSuppress("GetConnectionStringsAsync", typeof(CancellationToken))]
     public partial class CosmosDBAccountResource
     {
         /// <summary>
