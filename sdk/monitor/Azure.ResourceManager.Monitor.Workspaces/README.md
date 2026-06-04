@@ -1,6 +1,6 @@
-# Azure.ResourceManager.Monitor.Workspaces management client library for .NET
+# Microsoft Azure Monitor Workspaces management client library for .NET
 
-This library supports managing Microsoft Azure resources.
+This client library enables management of Azure Monitor Workspaces resources through Azure Resource Manager.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Azure.ResourceManager.Monitor.Workspaces management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Azure Monitor Workspaces management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.Monitor.Workspaces --prerelease
@@ -22,7 +22,7 @@ dotnet add package Azure.ResourceManager.Monitor.Workspaces --prerelease
 
 ### Prerequisites
 
-* You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
 ### Authenticate the Client
 
@@ -30,7 +30,7 @@ To create an authenticated client and start interacting with Microsoft Azure res
 
 ## Key concepts
 
-Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
+Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
 
 ## Documentation
 
