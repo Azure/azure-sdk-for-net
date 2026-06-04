@@ -8,7 +8,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    [CodeGenSuppress("ProvisioningState")]
+    // Preserve the previously shipped settable ProvisioningState member while honoring
+    // the TypeSpec contract, where provisioningState is read-only.
     public partial class CosmosDBFleetData
     {
         /// <summary> A provisioning state of the Fleet. </summary>
