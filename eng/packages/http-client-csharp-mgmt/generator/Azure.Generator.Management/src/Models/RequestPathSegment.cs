@@ -28,6 +28,8 @@ namespace Azure.Generator.Management.Models
         {
             if (other is null)
                 return false;
+            if (!IsConstant && !other.IsConstant)
+                return true;
             return _value == other._value;
         }
 
@@ -74,7 +76,7 @@ namespace Azure.Generator.Management.Models
         public override bool Equals(object? obj) => obj is RequestPathSegment other && Equals(other);
 
         /// <inheritdoc />
-        public override int GetHashCode() => _value.GetHashCode();
+        public override int GetHashCode() => IsConstant ? _value.GetHashCode() : "{}".GetHashCode();
 
         /// <inheritdoc />
         public override string ToString() => _value;

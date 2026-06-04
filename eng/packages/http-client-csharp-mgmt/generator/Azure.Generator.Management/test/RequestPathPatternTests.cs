@@ -121,6 +121,16 @@ namespace Azure.Generator.Management.Tests
         }
 
         [Test]
+        public void GetHashCode_EqualPatternsWithDifferentVariableNamesUseEqualHashCodes()
+        {
+            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}");
+
+            Assert.That(second, Is.EqualTo(first));
+            Assert.That(second.GetHashCode(), Is.EqualTo(first.GetHashCode()));
+        }
+
+        [Test]
         public void GetHashCode_DifferentPatternsUseDifferentHashCodes()
         {
             var resourceGroup = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
