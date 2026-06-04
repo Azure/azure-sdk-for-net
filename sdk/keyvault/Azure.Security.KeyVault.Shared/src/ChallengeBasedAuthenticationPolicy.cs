@@ -52,11 +52,7 @@ namespace Azure.Security.KeyVault
             if (_challenge != null)
             {
                 // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
-                var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, isProofOfPossessionEnabled: true);
-                if (context.IsProofOfPossessionEnabled)
-                {
-                    message.Request.Headers.Add("x-ms-tokenboundauth", true);
-                }
+                var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true);
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -119,8 +115,6 @@ namespace Azure.Security.KeyVault
                 message.Request.Content = content as RequestContent;
             }
 
-            // TODO: Handle parsing the token binding capabilities from the challenge response. This is required to properly set up the TokenRequestContext for isProofOfPossessionEnabled.
-
             string error = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "error");
             string authority = GetRequestAuthority(message.Request);
             string scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "resource");
@@ -181,12 +175,7 @@ namespace Azure.Security.KeyVault
                 s_challengeCache[authority] = _challenge;
             }
 
-            // TODO: Do not hard code isProofOfPossessionEnabled to true once we have properly parsed the token binding capabilities from the challenge response.
-            var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, claims: claims, isProofOfPossessionEnabled: true);
-            if (context.IsProofOfPossessionEnabled)
-            {
-                message.Request.Headers.Add("x-ms-tokenboundauth", true);
-            }
+            var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, claims: claims);
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);

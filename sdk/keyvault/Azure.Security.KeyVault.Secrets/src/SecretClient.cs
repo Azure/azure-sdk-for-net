@@ -66,12 +66,8 @@ namespace Azure.Security.KeyVault.Secrets
             options ??= new SecretClientOptions();
             string apiVersion = options.GetVersionString();
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(
-                options,
-                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                perRetryPolicies: [new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification)],
-                transportOptions: new HttpPipelineTransportOptions(),
-                responseClassifier: null);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
+                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, new ClientDiagnostics(options));
         }
