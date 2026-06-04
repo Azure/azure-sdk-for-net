@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the AML file system. </param>
@@ -39,14 +38,15 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="identity"> The managed identity used by the AML file system, if configured. </param>
         /// <param name="sku"> SKU for the resource. </param>
         /// <param name="zones"> The availability zones. </param>
-        internal AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AmlFilesystemProperties properties, string amlFileSystemName, ManagedServiceIdentity identity, StorageCacheSkuName sku, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AmlFilesystemProperties properties, string amlFileSystemName, AmlFileSystemIdentity identity, StorageCacheSkuName sku, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             AmlFileSystemName = amlFileSystemName;
             Identity = identity;
             Sku = sku;
             Zones = zones;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the AML file system. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StorageCache
         public string AmlFileSystemName { get; }
 
         /// <summary> The managed identity used by the AML file system, if configured. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public AmlFileSystemIdentity Identity { get; set; }
 
         /// <summary> SKU for the resource. </summary>
         internal StorageCacheSkuName Sku { get; set; }

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -130,6 +130,21 @@ namespace Azure.ResourceManager.StorageCache
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -162,14 +177,14 @@ namespace Azure.ResourceManager.StorageCache
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             AmlFilesystemProperties properties = default;
             string amlFileSystemName = default;
-            ManagedServiceIdentity identity = default;
+            AmlFileSystemIdentity identity = default;
             StorageCacheSkuName sku = default;
             IList<string> zones = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -245,7 +260,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageCacheContext.Default);
+                    identity = AmlFileSystemIdentity.DeserializeAmlFileSystemIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))
@@ -288,14 +303,14 @@ namespace Azure.ResourceManager.StorageCache
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 amlFileSystemName,
                 identity,
                 sku,
-                zones ?? new ChangeTrackingList<string>());
+                zones ?? new ChangeTrackingList<string>(),
+                additionalBinaryDataProperties);
         }
     }
 }
