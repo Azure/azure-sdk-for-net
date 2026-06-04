@@ -525,8 +525,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                groupIds is null && connectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, additionalBinaryDataProperties: null));
+                groupIds is null && connectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, additionalBinaryDataProperties: null),
+                additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerTuningOptionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

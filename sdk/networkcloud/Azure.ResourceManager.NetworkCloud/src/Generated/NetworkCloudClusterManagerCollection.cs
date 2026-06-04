@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _clusterManagersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterManagerName, NetworkCloudClusterManagerData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudClusterManagerResource> operation = new NetworkCloudArmOperation<NetworkCloudClusterManagerResource>(
-                    new NetworkCloudClusterManagerOperationSource(Client),
+                    new NetworkCloudClusterManagerResourceOperationSource(Client),
                     _clusterManagersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _clusterManagersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterManagerName, NetworkCloudClusterManagerData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudClusterManagerResource> operation = new NetworkCloudArmOperation<NetworkCloudClusterManagerResource>(
-                    new NetworkCloudClusterManagerOperationSource(Client),
+                    new NetworkCloudClusterManagerResourceOperationSource(Client),
                     _clusterManagersClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -175,7 +175,7 @@ namespace Azure.AI.Projects.Agents
             string query = default;
             IDictionary<string, double> scores = default;
             double compositeScore = default;
-            int tokens = default;
+            long tokens = default;
             TimeSpan durationSeconds = default;
             bool passed = default;
             string errorMessage = default;
@@ -212,7 +212,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("tokens"u8))
                 {
-                    tokens = prop.Value.GetInt32();
+                    tokens = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("duration_seconds"u8))

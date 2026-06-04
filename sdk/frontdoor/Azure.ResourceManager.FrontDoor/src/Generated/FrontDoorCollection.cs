@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor
                 HttpMessage message = _frontDoorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, FrontDoorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FrontDoorArmOperation<FrontDoorResource> operation = new FrontDoorArmOperation<FrontDoorResource>(
-                    new FrontDoorOperationSource(Client),
+                    new FrontDoorResourceOperationSource(Client),
                     _frontDoorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.FrontDoor
                 HttpMessage message = _frontDoorsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, frontDoorName, FrontDoorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FrontDoorArmOperation<FrontDoorResource> operation = new FrontDoorArmOperation<FrontDoorResource>(
-                    new FrontDoorOperationSource(Client),
+                    new FrontDoorResourceOperationSource(Client),
                     _frontDoorsClientDiagnostics,
                     Pipeline,
                     message.Request,

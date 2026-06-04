@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _subvolumesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, NetAppSubvolumeInfoData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppSubvolumeInfoResource> operation = new NetAppArmOperation<NetAppSubvolumeInfoResource>(
-                    new NetAppSubvolumeInfoOperationSource(Client),
+                    new NetAppSubvolumeInfoResourceOperationSource(Client),
                     _subvolumesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _subvolumesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, subvolumeName, NetAppSubvolumeInfoData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppSubvolumeInfoResource> operation = new NetAppArmOperation<NetAppSubvolumeInfoResource>(
-                    new NetAppSubvolumeInfoOperationSource(Client),
+                    new NetAppSubvolumeInfoResourceOperationSource(Client),
                     _subvolumesClientDiagnostics,
                     Pipeline,
                     message.Request,

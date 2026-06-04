@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _pureStoragePoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storagePolicyName, AvsPureStoragePolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsPureStoragePolicyResource> operation = new AvsArmOperation<AvsPureStoragePolicyResource>(
-                    new AvsPureStoragePolicyOperationSource(Client),
+                    new AvsPureStoragePolicyResourceOperationSource(Client),
                     _pureStoragePoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _pureStoragePoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storagePolicyName, AvsPureStoragePolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsPureStoragePolicyResource> operation = new AvsArmOperation<AvsPureStoragePolicyResource>(
-                    new AvsPureStoragePolicyOperationSource(Client),
+                    new AvsPureStoragePolicyResourceOperationSource(Client),
                     _pureStoragePoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

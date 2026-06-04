@@ -1,0 +1,22 @@
+# Azure.AI.Projects.Agents approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# OPENAI001 is the [Experimental] marker on the OpenAI SDK types this library
+# extends and depends on (response items, streaming updates, derived clients,
+# tool/output models, etc.). The library builds directly on the official OpenAI
+# .NET SDK to maintain rapid upstream feature propagation, so the experimental
+# opt-in is by design across both the hand-written extension types and the
+# generated client surface. The diagnostic exists so external consumers
+# explicitly acknowledge experimental usage; acknowledging it once at the
+# assembly level matches intent.
+nowarn:OPENAI001
+
+# AAIP001 is this library's own [Experimental] marker for preview Foundry Agent
+# features (HostedAgentDefinition, WorkflowAgentDefinition, AgentToolboxes,
+# AgentSessionFiles, AgentOptimizationJobs, ProjectAgentSkills). The library's
+# generated client surface and supporting types reference these experimental
+# members internally, so AAIP001 fires throughout the assembly. External
+# consumers opt in once via `#pragma warning disable AAIP001` (documented in
+# the README); acknowledging it once at the assembly level matches the same
+# intent for the library's own implementation.
+nowarn:AAIP001

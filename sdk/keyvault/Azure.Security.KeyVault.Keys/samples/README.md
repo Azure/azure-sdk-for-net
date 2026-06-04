@@ -17,3 +17,4 @@ description: Samples for the Azure.Security.KeyVault.Keys client library.
 - [Encrypting and decrypt keys](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample4_EncryptDecrypt.md)
 - [Signing and verifying keys](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample5_SignVerify.md)
 - [Wrapping and unwrap a key](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample6_WrapUnwrap.md)
+- [Registering and managing external keys](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/samples/Sample9_CreateExternalKey.md)
