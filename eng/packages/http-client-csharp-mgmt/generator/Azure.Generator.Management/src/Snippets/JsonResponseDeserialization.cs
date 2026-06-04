@@ -23,7 +23,8 @@ namespace Azure.Generator.Management.Snippets
     /// </summary>
     // MTG already emits equivalent collection deserialization for model properties, but that logic is
     // internal to generated model serialization providers and is not exposed as a reusable statement-producing
-    // API. This helper bridges that gap for top-level response values and LRO operation-source results.
+    // API (see https://github.com/microsoft/typespec/issues/10887). This helper bridges that gap for
+    // top-level response values and LRO operation-source results.
     internal static class JsonResponseDeserialization
     {
         /// <summary>
