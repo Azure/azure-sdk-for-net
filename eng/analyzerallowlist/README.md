@@ -35,8 +35,14 @@ nowarn:CS1591
 
 ### `nowarn:CODE`
 
-Each `nowarn:` line approves the use of `CODE` in the project's `<NoWarn>` property.
-Codes not listed here (and not in the central allow-list) will cause a build error.
+Each `nowarn:` line approves the use of `CODE` for the project **and applies it
+automatically** — the build system injects approved codes into `$(NoWarn)` before
+compilation, so projects should **not** keep an equivalent entry in the csproj's
+`<NoWarn>` property. The allow-list file is the single source of truth: every
+listed code is both reviewed and active.
+
+If a code appears in the csproj's `<NoWarn>` without being on this list (and not
+in the central allow-list), the build fails with `AZSDK0002`.
 
 ### `CODE:SYMBOL` (future)
 
@@ -46,9 +52,12 @@ These entries will be consumed by a Roslyn analyzer to approve inline suppressio
 ## How It Works
 
 1. `eng/AnalyzerAllowList.targets` reads the per-package `.txt` file at build time.
-2. It extracts `nowarn:` lines into the `_ProjectAllowedNoWarn` MSBuild property.
-3. `eng/NoWarnValidation.targets` uses `_ProjectAllowedNoWarn` to validate that
-   the project's `<NoWarn>` codes are all approved.
+2. It extracts `nowarn:` lines into the `_ProjectAllowedNoWarn` MSBuild property and
+   **appends them to `$(NoWarn)`** so the compiler honors the suppression without
+   the project needing to duplicate the code in its csproj.
+3. `eng/NoWarnValidation.targets` uses `_ProjectAllowedNoWarn` to validate that any
+   codes the project itself declares in `<NoWarn>` are all approved. Any unapproved
+   csproj-declared code fails the build with `AZSDK0002`.
 4. Projects listed in `eng/NoWarnSkipValidation.txt` short-circuit the validator entirely
    (temporary backlog escape hatch).
 
@@ -60,7 +69,8 @@ Use this only when the suppression is genuinely project-wide and the underlying 
 cannot be fixed or narrowed:
 
 1. Create or edit `eng/analyzerallowlist/<YourProjectName>.txt`.
-2. Add a `nowarn:CODE` line for the diagnostic you need to suppress.
+2. Add a `nowarn:CODE` line for the diagnostic you need to suppress. **Do not also add
+   the code to `<NoWarn>` in the csproj** — the build injects it automatically.
 3. **Include a comment immediately above each entry** explaining *why* the suppression is
    needed and why it can't be narrowed.
 4. The PR adding the entry will be reviewed by the SDK team.
@@ -84,7 +94,8 @@ When picking a project out of `eng/NoWarnSkipValidation.txt`:
    - **Migrate:** convert to a scoped `#pragma warning disable` with a justification and
      remove from `<NoWarn>`.
    - **Approve:** add a `nowarn:CODE` entry to this directory's file for the project, with
-     a justification comment.
+     a justification comment, **and remove the code from the csproj `<NoWarn>`** — the
+     allow-list entry both records the approval and applies the suppression.
 4. Land in a per-project PR.
 
 ## Related

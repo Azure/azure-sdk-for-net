@@ -32,7 +32,7 @@
       SA1649;
     </NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
+  <PropertyGroup Condition="'$(IsClientLibrary)' == 'true' and '$(IsMgmtLibrary)' != 'true'">
     <!--
     These analyzers are blocked by https://github.com/Azure/azure-sdk-tools/issues/127
      -->
@@ -57,7 +57,7 @@
     <PackageProjectUrl>http://go.microsoft.com/fwlink/?LinkId=235168</PackageProjectUrl>
     -->
   </PropertyGroup>
-  <PropertyGroup Condition="'$(HasReleaseVersion)' != 'true'">
+  <PropertyGroup Condition="'$(HasReleaseVersion)' != 'true' and '$(IsMgmtLibrary)' != 'true'">
     <!-- Verify that latest service version is used only when we ship release. -->
     <NoWarn>
       $(NoWarn);
