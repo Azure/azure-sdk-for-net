@@ -124,10 +124,11 @@ namespace Azure.Identity
             if (isTokenBindingAvailable)
             {
                 builder.WithMtlsProofOfPossession();
-                AzureIdentityEventSource.Singleton.LogMsal(LogLevel.Verbose, "Managed identity token request configured with mTLS proof-of-possession.");
+                AzureIdentityEventSource.Singleton.LogMsal(LogLevel.Verbose, $"MsalManagedIdentityClient called builder.WithMtlsProofOfPossession()");
             }
 
             _beforeTokenAcquisition?.Invoke(builder);
+            AzureIdentityEventSource.Singleton.LogMsal(LogLevel.Verbose, $"MsalManagedIdentityClient called _beforeTokenAcquisition?.Invoke(builder) and the _beforeTokenAcquisition is not null: {_beforeTokenAcquisition is not null}");
 
             if (_isForceRefreshEnabled)
             {

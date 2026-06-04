@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
@@ -148,7 +149,7 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Update(HttpPipelineTransportOptions options)
         {
-            AzureCoreEventSource.Singleton.TokenBinding("HttpClientTransport updating transport options with " + options.ClientCertificates.Count + " client certificate(s).");
+            AzureCoreEventSource.Singleton.TokenBinding("HttpClientTransport received request to update transport options. Options containing client certificates: " + (options.ClientCertificates.Count > 0 ? string.Join(", ", options.ClientCertificates.Select(c => c.Thumbprint)) : "none")    );
             if (this == Shared)
             {
                 throw new InvalidOperationException("Cannot update the shared HttpClientTransport instance.");
@@ -180,7 +181,7 @@ namespace Azure.Core.Pipeline
 
             var newWrapper = new HttpClientWrapper(newClient);
             var oldWrapper = Interlocked.Exchange(ref _clientWrapper!, newWrapper);
-            AzureCoreEventSource.Singleton.TokenBinding("HttpClientTransport replaced HttpClient for updated transport options.");
+            AzureCoreEventSource.Singleton.TokenBinding("HttpClientTransport updated client.");
 
             // Release the transport's reference to the old client
             oldWrapper?.Release();
@@ -299,6 +300,7 @@ namespace Azure.Core.Pipeline
 
         private static HttpMessageHandler CreateDefaultHandler(HttpPipelineTransportOptions? options = null)
         {
+            AzureCoreEventSource.Singleton.TokenBinding("Creating default HTTP message handler with options containing client certificates: " + (options?.ClientCertificates.Count > 0 ? string.Join(", ", options.ClientCertificates.Select(c => c.Thumbprint)) : "none"));
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
                 // UseCookies is not supported on "browser"
@@ -364,6 +366,28 @@ namespace Azure.Core.Pipeline
                 httpHandler.SslOptions.ClientCertificates ??= new X509CertificateCollection();
                 httpHandler.SslOptions.ClientCertificates!.Add(cert);
             }
+
+            // Log client certificate selection during TLS handshake
+            if (options.ClientCertificates.Count > 0)
+            {
+                httpHandler.SslOptions.LocalCertificateSelectionCallback = (sender, targetHost, localCerts, remoteCert, acceptableIssuers) =>
+                {
+                    if (localCerts.Count > 0)
+                    {
+                        var selected = localCerts[0] as X509Certificate2;
+                        AzureCoreEventSource.Singleton.TokenBinding(
+                            $"TLS handshake selected client certificate: Subject='{selected?.Subject}', Thumbprint='{selected?.Thumbprint}' for host '{targetHost}'");
+                        return localCerts[0];
+                    }
+                    AzureCoreEventSource.Singleton.TokenBinding(
+                        $"TLS handshake: no client certificate available for host '{targetHost}'");
+                    return null!;
+                };
+            }
+            else
+            {
+                AzureCoreEventSource.Singleton.TokenBinding("TLS handshake: no client certificates configured.");
+            }
 #pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
             return httpHandler;
         }
@@ -390,7 +414,7 @@ namespace Azure.Core.Pipeline
                 httpHandler.ClientCertificates.Add(cert);
             }
 
-            // Ensure client certificates are sent during TLS handshake
+            // Log client certificate selection during TLS handshake
             if (options.ClientCertificates.Count > 0)
             {
                 httpHandler.ClientCertificateOptions = ClientCertificateOption.Manual;
