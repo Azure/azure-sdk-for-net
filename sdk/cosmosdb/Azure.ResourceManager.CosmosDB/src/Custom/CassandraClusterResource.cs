@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Task<ArmOperation> DeallocateAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
-            return DeallocateAsync(waitUntil, xMsForceDeallocate: null, cancellationToken);
+            return DeallocateAsync(waitUntil, xMsForceDeallocate: null, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Deallocate(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
-            return Deallocate(waitUntil, xMsForceDeallocate: null, cancellationToken);
+            return Deallocate(waitUntil, xMsForceDeallocate: null, cancellationToken: cancellationToken);
         }
     }
 }
