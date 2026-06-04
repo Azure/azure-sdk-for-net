@@ -121,24 +121,6 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PolicyAttestationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsArmClient.GetPolicyAttestationResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PolicyAttestationResource"/> object. </returns>
-        public static PolicyAttestationResource GetPolicyAttestationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockablePolicyInsightsArmClient(client).GetPolicyAttestationResource(id);
-        }
-
-        /// <summary>
         /// Gets a collection of <see cref="PolicyAttestationCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
@@ -1321,6 +1303,61 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
+        /// Gets a collection of PolicyAttestations in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.GetPolicyAttestations()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of PolicyAttestations and their operations over a PolicyAttestationResource. </returns>
+        public static PolicyAttestationCollection GetPolicyAttestations(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyAttestations();
+        }
+
+        /// <summary>
+        /// Gets an existing attestation at resource group scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.GetPolicyAttestationAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="attestationName"> The name of the attestation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PolicyAttestationResource>> GetPolicyAttestationAsync(this ResourceGroupResource resourceGroupResource, string attestationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyAttestationAsync(attestationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing attestation at resource group scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.GetPolicyAttestation(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="attestationName"> The name of the attestation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PolicyAttestationResource> GetPolicyAttestation(this ResourceGroupResource resourceGroupResource, string attestationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetPolicyAttestation(attestationName, cancellationToken);
+        }
+
+        /// <summary>
         /// Queries policy events for the resources under the resource group.
         /// <item>
         /// <term> Mocking. </term>
@@ -1586,6 +1623,61 @@ namespace Azure.ResourceManager.PolicyInsights
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetQueryResultsForResourceGroup(policyTrackedResourcesResource, queryOptions, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of PolicyAttestations in the <see cref="SubscriptionResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.GetPolicyAttestations()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of PolicyAttestations and their operations over a PolicyAttestationResource. </returns>
+        public static PolicyAttestationCollection GetPolicyAttestations(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyAttestations();
+        }
+
+        /// <summary>
+        /// Gets an existing attestation at subscription scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.GetPolicyAttestationAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="attestationName"> The name of the attestation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PolicyAttestationResource>> GetPolicyAttestationAsync(this SubscriptionResource subscriptionResource, string attestationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyAttestationAsync(attestationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing attestation at subscription scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.GetPolicyAttestation(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="attestationName"> The name of the attestation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PolicyAttestationResource> GetPolicyAttestation(this SubscriptionResource subscriptionResource, string attestationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetPolicyAttestation(attestationName, cancellationToken);
         }
 
         /// <summary>

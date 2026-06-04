@@ -114,15 +114,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             return await GetPolicyRemediations(scope).GetAsync(remediationName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="PolicyAttestationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyAttestationResource"/> object. </returns>
-        public virtual PolicyAttestationResource GetPolicyAttestationResource(ResourceIdentifier id)
-        {
-            PolicyAttestationResource.ValidateResourceId(id);
-            return new PolicyAttestationResource(Client, id);
-        }
-
         /// <summary> Gets a collection of <see cref="PolicyAttestationCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="PolicyAttestationResource"/> objects. </returns>
