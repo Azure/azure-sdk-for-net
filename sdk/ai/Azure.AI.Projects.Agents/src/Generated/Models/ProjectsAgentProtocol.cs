@@ -15,6 +15,8 @@ namespace Azure.AI.Projects.Agents
         private const string ResponsesValue = "responses";
         private const string McpValue = "mcp";
         private const string InvocationsValue = "invocations";
+        /// <summary> WebSocket-based protocol for hosted voice and real-time streaming agents. </summary>
+        private const string InvocationsWsValue = "invocations_ws";
 
         /// <summary> Initializes a new instance of <see cref="ProjectsAgentProtocol"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -37,6 +39,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the Invocations. </summary>
         public static ProjectsAgentProtocol Invocations { get; } = new ProjectsAgentProtocol(InvocationsValue);
+
+        /// <summary> WebSocket-based protocol for hosted voice and real-time streaming agents. </summary>
+        public static ProjectsAgentProtocol InvocationsWs { get; } = new ProjectsAgentProtocol(InvocationsWsValue);
 
         /// <summary> Determines if two <see cref="ProjectsAgentProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

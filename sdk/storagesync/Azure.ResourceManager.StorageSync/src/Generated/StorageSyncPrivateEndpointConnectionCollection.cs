@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, StorageSyncPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageSyncArmOperation<StorageSyncPrivateEndpointConnectionResource> operation = new StorageSyncArmOperation<StorageSyncPrivateEndpointConnectionResource>(
-                    new StorageSyncPrivateEndpointConnectionOperationSource(Client),
+                    new StorageSyncPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StorageSync
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, StorageSyncPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageSyncArmOperation<StorageSyncPrivateEndpointConnectionResource> operation = new StorageSyncArmOperation<StorageSyncPrivateEndpointConnectionResource>(
-                    new StorageSyncPrivateEndpointConnectionOperationSource(Client),
+                    new StorageSyncPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

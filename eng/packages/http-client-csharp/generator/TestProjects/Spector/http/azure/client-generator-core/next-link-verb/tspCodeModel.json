@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -35,6 +36,7 @@
           "name": "ListTestResult"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "4",
@@ -60,6 +62,7 @@
                   "name": "Test"
                 }
               },
+              "isExactName": false,
               "properties": [
                 {
                   "$id": "7",
@@ -85,7 +88,8 @@
                       "name": "id"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             },
@@ -103,7 +107,8 @@
               "name": "items"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "9",
@@ -129,7 +134,8 @@
               "name": "nextLink"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -142,6 +148,7 @@
       "$id": "11",
       "kind": "client",
       "name": "NextLinkVerbClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb",
       "doc": "Test for @nextLinkVerb decorator.",
       "methods": [
@@ -149,11 +156,13 @@
           "$id": "12",
           "kind": "paging",
           "name": "listItems",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "13",
             "name": "listItems",
+            "isExactName": false,
             "resourceName": "NextLinkVerb",
             "accessibility": "public",
             "parameters": [
@@ -188,9 +197,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.listItems.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -205,7 +216,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "POST",
@@ -278,7 +294,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

@@ -103,6 +103,21 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -134,11 +149,11 @@ namespace Azure.ResourceManager.NetApp.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
             AccountPropertiesPatch properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -173,20 +188,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetAppContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("identity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerNetAppContext.Default);
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -208,6 +209,20 @@ namespace Azure.ResourceManager.NetApp.Models
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerNetAppContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -227,11 +242,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                properties);
+                properties,
+                additionalBinaryDataProperties);
         }
     }
 }

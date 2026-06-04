@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Playwright
                 HttpMessage message = _playwrightWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, PlaywrightWorkspaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PlaywrightArmOperation<PlaywrightWorkspaceResource> operation = new PlaywrightArmOperation<PlaywrightWorkspaceResource>(
-                    new PlaywrightWorkspaceOperationSource(Client),
+                    new PlaywrightWorkspaceResourceOperationSource(Client),
                     _playwrightWorkspacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Playwright
                 HttpMessage message = _playwrightWorkspacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, playwrightWorkspaceName, PlaywrightWorkspaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PlaywrightArmOperation<PlaywrightWorkspaceResource> operation = new PlaywrightArmOperation<PlaywrightWorkspaceResource>(
-                    new PlaywrightWorkspaceOperationSource(Client),
+                    new PlaywrightWorkspaceResourceOperationSource(Client),
                     _playwrightWorkspacesClientDiagnostics,
                     Pipeline,
                     message.Request,

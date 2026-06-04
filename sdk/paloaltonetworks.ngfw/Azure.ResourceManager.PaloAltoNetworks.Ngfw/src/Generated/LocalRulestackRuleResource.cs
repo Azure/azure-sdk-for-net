@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _localRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, LocalRulestackRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<LocalRulestackRuleResource> operation = new NgfwArmOperation<LocalRulestackRuleResource>(
-                    new LocalRulestackRuleOperationSource(Client),
+                    new LocalRulestackRuleResourceOperationSource(Client),
                     _localRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _localRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, LocalRulestackRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<LocalRulestackRuleResource> operation = new NgfwArmOperation<LocalRulestackRuleResource>(
-                    new LocalRulestackRuleOperationSource(Client),
+                    new LocalRulestackRuleResourceOperationSource(Client),
                     _localRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

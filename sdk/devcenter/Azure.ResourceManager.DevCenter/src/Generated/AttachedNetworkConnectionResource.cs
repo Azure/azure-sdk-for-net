@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _attachedNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AttachedNetworkConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<AttachedNetworkConnectionResource> operation = new DevCenterArmOperation<AttachedNetworkConnectionResource>(
-                    new AttachedNetworkConnectionOperationSource(Client),
+                    new AttachedNetworkConnectionResourceOperationSource(Client),
                     _attachedNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _attachedNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AttachedNetworkConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<AttachedNetworkConnectionResource> operation = new DevCenterArmOperation<AttachedNetworkConnectionResource>(
-                    new AttachedNetworkConnectionOperationSource(Client),
+                    new AttachedNetworkConnectionResourceOperationSource(Client),
                     _attachedNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

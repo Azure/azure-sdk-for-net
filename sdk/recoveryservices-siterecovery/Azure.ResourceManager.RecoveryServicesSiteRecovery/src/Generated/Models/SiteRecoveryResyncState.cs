@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct SiteRecoveryResyncState : IEquatable<SiteRecoveryResyncState>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> PreparedForResynchronization. </summary>
+        private const string PreparedForResynchronizationValue = "PreparedForResynchronization";
+        /// <summary> StartedResynchronization. </summary>
+        private const string StartedResynchronizationValue = "StartedResynchronization";
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryResyncState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteRecoveryResyncState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string PreparedForResynchronizationValue = "PreparedForResynchronization";
-        private const string StartedResynchronizationValue = "StartedResynchronization";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SiteRecoveryResyncState None { get; } = new SiteRecoveryResyncState(NoneValue);
+
         /// <summary> PreparedForResynchronization. </summary>
         public static SiteRecoveryResyncState PreparedForResynchronization { get; } = new SiteRecoveryResyncState(PreparedForResynchronizationValue);
+
         /// <summary> StartedResynchronization. </summary>
         public static SiteRecoveryResyncState StartedResynchronization { get; } = new SiteRecoveryResyncState(StartedResynchronizationValue);
+
         /// <summary> Determines if two <see cref="SiteRecoveryResyncState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteRecoveryResyncState left, SiteRecoveryResyncState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteRecoveryResyncState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteRecoveryResyncState left, SiteRecoveryResyncState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryResyncState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteRecoveryResyncState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteRecoveryResyncState(string value) => new SiteRecoveryResyncState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteRecoveryResyncState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteRecoveryResyncState?(string value) => value == null ? null : new SiteRecoveryResyncState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteRecoveryResyncState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteRecoveryResyncState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

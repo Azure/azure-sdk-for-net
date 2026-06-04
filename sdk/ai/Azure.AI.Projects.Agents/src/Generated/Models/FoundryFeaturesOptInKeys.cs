@@ -17,6 +17,8 @@ namespace Azure.AI.Projects.Agents
         InsightsV1Preview,
         /// <summary> MemoryStoresV1Preview. </summary>
         MemoryStoresV1Preview,
+        /// <summary> RoutinesV1Preview. </summary>
+        RoutinesV1Preview,
         /// <summary> ToolboxesV1Preview. </summary>
         ToolboxesV1Preview,
         /// <summary> SkillsV1Preview. </summary>

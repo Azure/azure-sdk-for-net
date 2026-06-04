@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _fqdnListGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, GlobalRulestackFqdnData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<GlobalRulestackFqdnResource> operation = new NgfwArmOperation<GlobalRulestackFqdnResource>(
-                    new GlobalRulestackFqdnOperationSource(Client),
+                    new GlobalRulestackFqdnResourceOperationSource(Client),
                     _fqdnListGlobalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _fqdnListGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, GlobalRulestackFqdnData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<GlobalRulestackFqdnResource> operation = new NgfwArmOperation<GlobalRulestackFqdnResource>(
-                    new GlobalRulestackFqdnOperationSource(Client),
+                    new GlobalRulestackFqdnResourceOperationSource(Client),
                     _fqdnListGlobalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,

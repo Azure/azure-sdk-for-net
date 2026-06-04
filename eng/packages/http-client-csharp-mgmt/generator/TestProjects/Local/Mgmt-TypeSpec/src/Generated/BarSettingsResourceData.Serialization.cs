@@ -134,6 +134,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             writer.WritePropertyName("discriminatorProperty"u8);
             writer.WriteObjectValue(DiscriminatorProperty, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -165,7 +180,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BarSettingsProperties properties = default;
             IList<string> stringArray = default;
             BarQuotaProperties @property = default;
@@ -173,6 +187,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             BarNestedQuotaProperties flattenedNestedProperty = default;
             OptionalFlattenPropertyType optionalFlattenProperty = default;
             LimitJsonObject discriminatorProperty = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -276,14 +291,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 properties,
                 stringArray ?? new ChangeTrackingList<string>(),
                 @property,
                 anotherProperty,
                 flattenedNestedProperty,
                 optionalFlattenProperty,
-                discriminatorProperty);
+                discriminatorProperty,
+                additionalBinaryDataProperties);
         }
     }
 }

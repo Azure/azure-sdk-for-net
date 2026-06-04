@@ -175,7 +175,9 @@ namespace Azure.ResourceManager.SiteManager.Models
 {
     public static partial class ArmSiteManagerModelFactory
     {
+        public static Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties EdgeSiteAddressProperties(string streetAddress1 = null, string streetAddress2 = null, string city = null, string stateOrProvince = null, string country = null, string postalCode = null) { throw null; }
         public static Azure.ResourceManager.SiteManager.EdgeSiteData EdgeSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.SiteManager.Models.EdgeSitePatch EdgeSitePatch(Azure.ResourceManager.SiteManager.Models.EdgeSitePatchProperties properties = null) { throw null; }
         public static Azure.ResourceManager.SiteManager.Models.EdgeSitePatchProperties EdgeSitePatchProperties(string displayName = null, string description = null, Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties siteAddress = null, System.Collections.Generic.IDictionary<string, string> labels = null) { throw null; }
         public static Azure.ResourceManager.SiteManager.Models.EdgeSiteProperties EdgeSiteProperties(string displayName = null, string description = null, Azure.ResourceManager.SiteManager.Models.EdgeSiteAddressProperties siteAddress = null, System.Collections.Generic.IDictionary<string, string> labels = null, Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState? provisioningState = default(Azure.ResourceManager.SiteManager.Models.EdgeSiteProvisioningState?)) { throw null; }
     }

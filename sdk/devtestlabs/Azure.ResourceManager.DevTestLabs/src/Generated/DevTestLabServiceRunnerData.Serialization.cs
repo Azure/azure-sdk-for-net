@@ -106,6 +106,21 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -137,10 +152,10 @@ namespace Azure.ResourceManager.DevTestLabs
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureLocation location = default;
             IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             DevTestLabManagedIdentity identity = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -175,11 +190,6 @@ namespace Azure.ResourceManager.DevTestLabs
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDevTestLabsContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -201,6 +211,11 @@ namespace Azure.ResourceManager.DevTestLabs
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("identity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -220,10 +235,10 @@ namespace Azure.ResourceManager.DevTestLabs
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
-                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity);
+                location,
+                identity,
+                additionalBinaryDataProperties);
         }
     }
 }

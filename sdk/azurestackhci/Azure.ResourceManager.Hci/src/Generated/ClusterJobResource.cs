@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clusterJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ClusterJobData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<ClusterJobResource> operation = new HciArmOperation<ClusterJobResource>(
-                    new ClusterJobOperationSource(Client),
+                    new ClusterJobResourceOperationSource(Client),
                     _clusterJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _clusterJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ClusterJobData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<ClusterJobResource> operation = new HciArmOperation<ClusterJobResource>(
-                    new ClusterJobOperationSource(Client),
+                    new ClusterJobResourceOperationSource(Client),
                     _clusterJobsClientDiagnostics,
                     Pipeline,
                     message.Request,

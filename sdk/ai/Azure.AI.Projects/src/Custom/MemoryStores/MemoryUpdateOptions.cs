@@ -8,13 +8,20 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Memory;
 
+/// <summary> Options that describe a memory-store update request. </summary>
 public partial class MemoryUpdateOptions : IJsonModel<MemoryUpdateOptions>
 {
+    /// <summary> The conversation items to write into the memory store. </summary>
     public IList<ResponseItem> Items { get; private set; }
+    /// <summary> The scope (for example, user or session identifier) that partitions the memory store. </summary>
     public string Scope { get; }
+    /// <summary> The identifier of the previous update, used to chain or supersede a prior update. </summary>
     public string PreviousUpdateId { get; set; }
+    /// <summary> Optional delay, in milliseconds, before the update is applied. </summary>
     public int? UpdateDelay { get; set; }
 
+    /// <summary> Initializes a new instance of <see cref="MemoryUpdateOptions"/>. </summary>
+    /// <param name="scope"> The scope that partitions the memory store. </param>
     public MemoryUpdateOptions(string scope)
     {
         Scope = scope;

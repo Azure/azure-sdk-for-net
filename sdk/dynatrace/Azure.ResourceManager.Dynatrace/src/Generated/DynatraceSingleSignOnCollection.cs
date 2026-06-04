@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _singleSignOnRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, DynatraceSingleSignOnData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DynatraceArmOperation<DynatraceSingleSignOnResource> operation = new DynatraceArmOperation<DynatraceSingleSignOnResource>(
-                    new DynatraceSingleSignOnOperationSource(Client),
+                    new DynatraceSingleSignOnResourceOperationSource(Client),
                     _singleSignOnClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _singleSignOnRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, DynatraceSingleSignOnData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DynatraceArmOperation<DynatraceSingleSignOnResource> operation = new DynatraceArmOperation<DynatraceSingleSignOnResource>(
-                    new DynatraceSingleSignOnOperationSource(Client),
+                    new DynatraceSingleSignOnResourceOperationSource(Client),
                     _singleSignOnClientDiagnostics,
                     Pipeline,
                     message.Request,

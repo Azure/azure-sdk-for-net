@@ -205,9 +205,9 @@ namespace Azure.ResourceManager.Storage
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 properties,
-                eTag);
+                eTag,
+                additionalBinaryDataProperties);
         }
     }
 }
