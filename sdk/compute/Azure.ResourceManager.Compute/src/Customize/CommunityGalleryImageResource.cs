@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute

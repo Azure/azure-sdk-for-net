@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.Models
         // positional call instead.
         // ---------------------------------------------------------------------
 
-        /// <summary> Initializes a new instance of <see cref="Compute.SharedGalleryImageVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.SharedGalleryImageVersionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, IReadOnlyDictionary<string, string> artifactTags)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
                 artifactTags: (IDictionary<string, string>)artifactTags?.ToDictionary(p => p.Key, p => p.Value));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.CommunityGalleryData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommunityGalleryData CommunityGalleryData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, string disclaimer, IReadOnlyDictionary<string, string> artifactTags, CommunityGalleryMetadata communityMetadata)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
                 communityMetadata: communityMetadata);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryImageVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.CommunityGalleryImageVersionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, string disclaimer, IReadOnlyDictionary<string, string> artifactTags)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
         // Older shim (no artifactTags param). Generated body forwards with
         // `artifactTags: default`, ambiguous against the IReadOnlyDictionary
         // back-compat overload above. Cast to (IDictionary<string, string>)null.
-        /// <summary> Initializes a new instance of <see cref="Compute.SharedGalleryImageVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.SharedGalleryImageVersionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
         {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         // Older shim (no artifactTags param). See note above.
-        /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.CommunityGalleryData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommunityGalleryData CommunityGalleryData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId)
         {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         // Older shim (no artifactTags param). See note above.
-        /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryImageVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.CommunityGalleryImageVersionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
         {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Compute.Models
         // IReadOnlyDictionary<string,string> back-compat overload. We supply
         // an explicit cast to disambiguate; the generator detects this matching
         // signature and skips re-emitting the broken version.
-        /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryImageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.CommunityGalleryImageData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommunityGalleryImageData CommunityGalleryImageData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, CommunityGalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, IEnumerable<string> disallowedDiskTypes, HyperVGeneration? hyperVGeneration, IEnumerable<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula)
         {

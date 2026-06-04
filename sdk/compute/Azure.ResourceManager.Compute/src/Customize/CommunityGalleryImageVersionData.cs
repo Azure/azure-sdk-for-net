@@ -3,11 +3,10 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
     public partial class CommunityGalleryImageVersionData
     {
@@ -28,16 +27,5 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? ExcludeFromLatest { get => IsExcludedFromLatest; }
-
-        // Customization: restored as IReadOnlyDictionary<string, string> to preserve the previously-shipped
-        // API surface. The new spec emits this as a writable IDictionary, which would be a binary-breaking
-        // change for existing consumers.
-        public IReadOnlyDictionary<string, string> ArtifactTags
-        {
-            get
-            {
-                return Properties is null ? new ChangeTrackingDictionary<string, string>() : (IReadOnlyDictionary<string, string>)Properties.ArtifactTags;
-            }
-        }
     }
 }

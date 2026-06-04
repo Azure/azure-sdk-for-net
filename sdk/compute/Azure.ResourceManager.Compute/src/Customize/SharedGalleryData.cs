@@ -6,7 +6,7 @@
 using System.ComponentModel;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Compute
+namespace Azure.ResourceManager.Compute.Models
 {
     public partial class SharedGalleryData
     {

@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
