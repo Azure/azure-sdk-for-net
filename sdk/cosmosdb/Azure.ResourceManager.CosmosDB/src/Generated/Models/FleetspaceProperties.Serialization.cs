@@ -14,6 +14,7 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    /// <summary> Properties to update Azure Cosmos DB Fleetspace. </summary>
     internal partial class FleetspaceProperties : IJsonModel<FleetspaceProperties>
     {
         /// <param name="data"> The data to parse. </param>

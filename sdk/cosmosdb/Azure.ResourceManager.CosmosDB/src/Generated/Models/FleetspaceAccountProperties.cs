@@ -11,6 +11,7 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    /// <summary> An Azure Cosmos DB Global Database Account which is part of a Fleetspace Account. </summary>
     internal partial class FleetspaceAccountProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -31,6 +32,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             GlobalDatabaseAccountProperties = globalDatabaseAccountProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> A provisioning state of the Fleetspace Account. </summary>
+        [WirePath("provisioningState")]
+        public CosmosDBStatus? ProvisioningState { get; }
 
         /// <summary> Configuration for fleetspace Account in the fleetspace. </summary>
         [WirePath("globalDatabaseAccountProperties")]

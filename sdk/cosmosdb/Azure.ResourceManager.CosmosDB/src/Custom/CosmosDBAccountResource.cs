@@ -12,10 +12,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    // Back-compat: 1.4.0 GA exposed listConnectionStrings as Pageable<CosmosDBAccountConnectionString>
-    // (wire response is a single non-paged object with an inline array). MPG emits
-    // Response<DatabaseAccountListConnectionStringsResult> and @@Legacy.markAsPageable has no effect
-    // on this single-object shape, so suppress the generated overloads and re-emit the Pageable surface.
     [CodeGenSuppress("GetConnectionStrings", typeof(CancellationToken))]
     [CodeGenSuppress("GetConnectionStringsAsync", typeof(CancellationToken))]
     public partial class CosmosDBAccountResource
@@ -64,8 +60,6 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        // Mirrors the generator-emitted body (suppressed above): direct rest-client call via
-        // CreateGetConnectionStringsRequest + Response.FromValue.
         private Response<DatabaseAccountListConnectionStringsResult> GetConnectionStringsCore(CancellationToken cancellationToken)
         {
             using Azure.Core.Pipeline.DiagnosticScope scope = _databaseAccountsClientDiagnostics.CreateScope("CosmosDBAccountResource.GetConnectionStrings");

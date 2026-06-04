@@ -404,6 +404,116 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new SoftDeleteConfiguration(softDeletionEnabled, minMinutesBeforePermanentDeletionAllowed, softDeleteRetentionPeriodInMinutes, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
+        /// <param name="identity"></param>
+        /// <param name="consistencyPolicy"> The consistency policy for the Cosmos DB account. </param>
+        /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
+        /// <param name="databaseAccountOfferType"> The offer type for the Cosmos DB database account. </param>
+        /// <param name="ipRules"> List of IpRules. </param>
+        /// <param name="isVirtualNetworkFilterEnabled"> Flag to indicate whether to enable/disable Virtual Network ACL rules. </param>
+        /// <param name="enableAutomaticFailover"> Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account. </param>
+        /// <param name="capabilities"> List of Cosmos DB capabilities for the account. </param>
+        /// <param name="virtualNetworkRules"> List of Virtual Network ACL rules configured for the Cosmos DB account. </param>
+        /// <param name="enableMultipleWriteLocations"> Enables the account to write in multiple locations. </param>
+        /// <param name="enableCassandraConnector"> Enables the cassandra connector on the Cosmos DB C* account. </param>
+        /// <param name="connectorOffer"> The cassandra connector offer type for the Cosmos DB database C* account. </param>
+        /// <param name="disableKeyBasedMetadataWriteAccess"> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </param>
+        /// <param name="keyVaultKeyUri"> The URI of the key vault. </param>
+        /// <param name="defaultIdentity"> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </param>
+        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
+        /// <param name="isFreeTierEnabled"> Flag to indicate whether Free Tier is enabled. </param>
+        /// <param name="isAnalyticalStorageEnabled"> Flag to indicate whether to enable storage analytics. </param>
+        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
+        /// <param name="backupPolicy"> The object representing the policy for taking backups on an account. </param>
+        /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
+        /// <param name="networkAclBypass"> Indicates what services are allowed to bypass firewall checks. </param>
+        /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
+        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
+        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
+        /// <param name="capacityMode"> Indicates the capacityMode of the Cosmos DB account. </param>
+        /// <param name="enableMaterializedViews"> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </param>
+        /// <param name="keysMetadata"> This property is ignored during the update/create operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </param>
+        /// <param name="enablePartitionMerge"> Flag to indicate enabling/disabling of Partition Merge feature on the account. </param>
+        /// <param name="enableBurstCapacity"> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </param>
+        /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </param>
+        /// <param name="customerManagedKeyStatus"> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </param>
+        /// <param name="enablePriorityBasedExecution"> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </param>
+        /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
+        /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </param>
+        /// <param name="enableAllVersionsAndDeletesChangeFeed"> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </param>
+        /// <param name="softDeleteConfiguration"> The configuration for soft delete on the Cosmos DB account. </param>
+        /// <param name="enforceHierarchicalPartitionKeyIdLastLevel"> Flag to indicate enabling/disabling of hierarchical partition key ID last level enforcement on the account. </param>
+        /// <param name="apiServerVersion"> Describes the version of the MongoDB account. </param>
+        /// <param name="analyticalStorageSchemaType"> Describes the types of schema for analytical storage. </param>
+        /// <param name="diagnosticLogEnableFullTextQuery"> Describe the level of detail with which queries are to be logged. </param>
+        /// <param name="capacityTotalThroughputLimit"> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
+        /// <returns> A new <see cref="Models.CosmosDBAccountCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static CosmosDBAccountCreateOrUpdateContent CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBAccountKind? kind = default, ManagedServiceIdentity identity = default, ConsistencyPolicy consistencyPolicy = default, IEnumerable<CosmosDBAccountLocation> locations = default, CosmosDBAccountOfferType databaseAccountOfferType = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = default, bool? isVirtualNetworkFilterEnabled = default, bool? enableAutomaticFailover = default, IEnumerable<CosmosDBAccountCapability> capabilities = default, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = default, bool? enableMultipleWriteLocations = default, bool? enableCassandraConnector = default, ConnectorOffer? connectorOffer = default, bool? disableKeyBasedMetadataWriteAccess = default, Uri keyVaultKeyUri = default, string defaultIdentity = default, CosmosDBPublicNetworkAccess? publicNetworkAccess = default, bool? isFreeTierEnabled = default, bool? isAnalyticalStorageEnabled = default, CosmosDBAccountCreateMode? createMode = default, CosmosDBAccountBackupPolicy backupPolicy = default, IEnumerable<CosmosDBAccountCorsPolicy> cors = default, NetworkAclBypass? networkAclBypass = default, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = default, bool? disableLocalAuth = default, CosmosDBAccountRestoreParameters restoreParameters = default, CapacityMode? capacityMode = default, bool? enableMaterializedViews = default, DatabaseAccountKeysMetadata keysMetadata = default, bool? enablePartitionMerge = default, bool? enableBurstCapacity = default, CosmosDBMinimalTlsVersion? minimalTlsVersion = default, string customerManagedKeyStatus = default, bool? enablePriorityBasedExecution = default, DefaultPriorityLevel? defaultPriorityLevel = default, bool? enablePerRegionPerPartitionAutoscale = default, bool? enableAllVersionsAndDeletesChangeFeed = default, SoftDeleteConfiguration softDeleteConfiguration = default, bool? enforceHierarchicalPartitionKeyIdLastLevel = default, CosmosDBServerVersion? apiServerVersion = default, AnalyticalStorageSchemaType? analyticalStorageSchemaType = default, CosmosDBFullTextQueryState? diagnosticLogEnableFullTextQuery = default, int? capacityTotalThroughputLimit = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CosmosDBAccountCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                identity,
+                isVirtualNetworkFilterEnabled is null && enableAutomaticFailover is null && enableMultipleWriteLocations is null && enableCassandraConnector is null && disableKeyBasedMetadataWriteAccess is null && isFreeTierEnabled is null && apiServerVersion is null && isAnalyticalStorageEnabled is null && analyticalStorageSchemaType is null && diagnosticLogEnableFullTextQuery is null && disableLocalAuth is null && capacityTotalThroughputLimit is null && enableMaterializedViews is null && enablePartitionMerge is null && enableBurstCapacity is null && enablePriorityBasedExecution is null && enablePerRegionPerPartitionAutoscale is null && enableAllVersionsAndDeletesChangeFeed is null && enforceHierarchicalPartitionKeyIdLastLevel is null ? default : new DatabaseAccountCreateUpdateProperties(
+                    default,
+                    default,
+                    databaseAccountOfferType,
+                    default,
+                    isVirtualNetworkFilterEnabled,
+                    enableAutomaticFailover,
+                    default,
+                    default,
+                    enableMultipleWriteLocations,
+                    enableCassandraConnector,
+                    default,
+                    disableKeyBasedMetadataWriteAccess,
+                    default,
+                    default,
+                    default,
+                    isFreeTierEnabled,
+                    new ApiProperties(apiServerVersion, default),
+                    isAnalyticalStorageEnabled,
+                    new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    new DiagnosticLogSettings(diagnosticLogEnableFullTextQuery, default),
+                    disableLocalAuth,
+                    default,
+                    new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
+                    default,
+                    enableMaterializedViews,
+                    default,
+                    enablePartitionMerge,
+                    enableBurstCapacity,
+                    default,
+                    default,
+                    enablePriorityBasedExecution,
+                    default,
+                    enablePerRegionPerPartitionAutoscale,
+                    enableAllVersionsAndDeletesChangeFeed,
+                    default,
+                    enforceHierarchicalPartitionKeyIdLastLevel,
+                    default),
+                default);
+        }
+
         /// <param name="id"> The unique resource identifier of the ARM resource. </param>
         /// <param name="name"> The name of the ARM resource. </param>
         /// <param name="type"> The type of Azure resource. </param>
@@ -5054,6 +5164,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 default);
         }
 
+        /// <param name="provisioningState"> A provisioning state of the Fleet. </param>
+        /// <returns> A new <see cref="Models.CosmosDBFleetPatch"/> instance for mocking. </returns>
+        public static CosmosDBFleetPatch CosmosDBFleetPatch(CosmosDBStatus? provisioningState = default)
+        {
+            return new CosmosDBFleetPatch(provisioningState is null ? default : new FleetResourceProperties(provisioningState, default), default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -5073,6 +5190,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> A provisioning state of the Fleetspace. </param>
+        /// <param name="fleetspaceApiKind"> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </param>
+        /// <param name="serviceTier"> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </param>
+        /// <param name="dataRegions"> List of data regions assigned to the fleetspace. Eg [westus2]. </param>
+        /// <param name="throughputPoolConfiguration"> Configuration for throughput pool in the fleetspace. </param>
+        /// <returns> A new <see cref="CosmosDB.CosmosDBFleetspaceData"/> instance for mocking. </returns>
+        public static CosmosDBFleetspaceData CosmosDBFleetspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CosmosDBStatus? provisioningState = default, CosmosDBFleetspaceApiKind? fleetspaceApiKind = default, CosmosDBFleetspaceServiceTier? serviceTier = default, IEnumerable<AzureLocation> dataRegions = default, CosmosDBFleetspaceThroughputPoolConfiguration throughputPoolConfiguration = default)
+        {
+            return new CosmosDBFleetspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && fleetspaceApiKind is null && serviceTier is null && dataRegions is null && throughputPoolConfiguration is null ? default : new FleetspaceProperties(
+                    provisioningState,
+                    fleetspaceApiKind,
+                    serviceTier,
+                    (dataRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                    throughputPoolConfiguration,
+                    default),
+                default);
+        }
+
         /// <param name="minThroughput"> Minimum throughput for the pool. </param>
         /// <param name="maxThroughput"> Maximum throughput for the pool. </param>
         /// <param name="dedicatedRUs"> Total dedicated throughput (RU/s) for fleetspace. Represents the sum of all manual provisioned throughput and all autoscale max RU/s across all shared throughput databases and dedicated throughput containers across all accounts in the fleetspace for 1 region. </param>
@@ -5081,6 +5225,41 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBFleetspaceThroughputPoolConfiguration CosmosDBFleetspaceThroughputPoolConfiguration(int? minThroughput = default, int? maxThroughput = default, long? dedicatedRUs = default, long? maxConsumableRUs = default)
         {
             return new CosmosDBFleetspaceThroughputPoolConfiguration(minThroughput, maxThroughput, dedicatedRUs, maxConsumableRUs, default);
+        }
+
+        /// <param name="provisioningState"> A provisioning state of the Fleetspace. </param>
+        /// <param name="fleetspaceApiKind"> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </param>
+        /// <param name="serviceTier"> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </param>
+        /// <param name="dataRegions"> List of data regions assigned to the fleetspace. Eg [westus2]. </param>
+        /// <param name="throughputPoolConfiguration"> Configuration for throughput pool in the fleetspace. </param>
+        /// <returns> A new <see cref="Models.CosmosDBFleetspacePatch"/> instance for mocking. </returns>
+        public static CosmosDBFleetspacePatch CosmosDBFleetspacePatch(CosmosDBStatus? provisioningState = default, CosmosDBFleetspaceApiKind? fleetspaceApiKind = default, CosmosDBFleetspaceServiceTier? serviceTier = default, IEnumerable<AzureLocation> dataRegions = default, CosmosDBFleetspaceThroughputPoolConfiguration throughputPoolConfiguration = default)
+        {
+            return new CosmosDBFleetspacePatch(provisioningState is null && fleetspaceApiKind is null && serviceTier is null && dataRegions is null && throughputPoolConfiguration is null ? default : new FleetspaceProperties(
+                provisioningState,
+                fleetspaceApiKind,
+                serviceTier,
+                (dataRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                throughputPoolConfiguration,
+                default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> A provisioning state of the Fleetspace Account. </param>
+        /// <param name="globalDatabaseAccountProperties"> Configuration for fleetspace Account in the fleetspace. </param>
+        /// <returns> A new <see cref="CosmosDB.CosmosDBFleetspaceAccountData"/> instance for mocking. </returns>
+        public static CosmosDBFleetspaceAccountData CosmosDBFleetspaceAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CosmosDBStatus? provisioningState = default, CosmosDBFleetspaceAccountConfiguration globalDatabaseAccountProperties = default)
+        {
+            return new CosmosDBFleetspaceAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && globalDatabaseAccountProperties is null ? default : new FleetspaceAccountProperties(provisioningState, globalDatabaseAccountProperties, default),
+                default);
         }
 
         /// <param name="resourceId"> The resource identifier of global database account in the Fleetspace Account. </param>
@@ -6069,55 +6248,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 timestamp,
                 etag,
                 self);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBFleetspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> A provisioning state of the Fleetspace. </param>
-        /// <param name="fleetspaceApiKind"> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </param>
-        /// <param name="serviceTier"> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </param>
-        /// <param name="dataRegions"> List of data regions assigned to the fleetspace. Eg [westus2]. </param>
-        /// <param name="throughputPoolConfiguration"> Configuration for throughput pool in the fleetspace. </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBFleetspaceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBFleetspaceData CosmosDBFleetspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CosmosDBStatus? provisioningState = default, CosmosDBFleetspaceApiKind? fleetspaceApiKind = default, CosmosDBFleetspaceServiceTier? serviceTier = default, IEnumerable<AzureLocation> dataRegions = default, CosmosDBFleetspaceThroughputPoolConfiguration throughputPoolConfiguration = default)
-        {
-            return new CosmosDBFleetspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && fleetspaceApiKind is null && serviceTier is null && dataRegions is null && throughputPoolConfiguration is null ? default : new FleetspaceProperties(
-                    provisioningState,
-                    fleetspaceApiKind,
-                    serviceTier,
-                    (dataRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(),
-                    throughputPoolConfiguration,
-                    default),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBFleetspaceAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> A provisioning state of the Fleetspace Account. </param>
-        /// <param name="globalDatabaseAccountProperties"> Configuration for fleetspace Account in the fleetspace. </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBFleetspaceAccountData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CosmosDBFleetspaceAccountData CosmosDBFleetspaceAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CosmosDBStatus? provisioningState = default, CosmosDBFleetspaceAccountConfiguration globalDatabaseAccountProperties = default)
-        {
-            return new CosmosDBFleetspaceAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && globalDatabaseAccountProperties is null ? default : new FleetspaceAccountProperties(provisioningState, globalDatabaseAccountProperties, default),
-                default);
         }
     }
 }

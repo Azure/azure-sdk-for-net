@@ -7,9 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    /// <summary> Properties to update Azure Cosmos DB fleet resource. </summary>
     internal partial class FleetResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -28,5 +30,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> A provisioning state of the Fleet. </summary>
+        [WirePath("provisioningState")]
+        public CosmosDBStatus? ProvisioningState { get; }
     }
 }

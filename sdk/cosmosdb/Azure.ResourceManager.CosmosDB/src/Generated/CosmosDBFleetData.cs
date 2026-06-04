@@ -39,5 +39,9 @@ namespace Azure.ResourceManager.CosmosDB
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties to update Azure Cosmos DB fleet resource. </summary>
+        [WirePath("properties")]
+        internal FleetResourceProperties Properties { get; set; }
     }
 }

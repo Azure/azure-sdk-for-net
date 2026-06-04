@@ -12,6 +12,7 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    /// <summary> Properties to update Azure Cosmos DB Fleetspace. </summary>
     internal partial class FleetspaceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -39,6 +40,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ThroughputPoolConfiguration = throughputPoolConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> A provisioning state of the Fleetspace. </summary>
+        [WirePath("provisioningState")]
+        public CosmosDBStatus? ProvisioningState { get; }
 
         /// <summary> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </summary>
         [WirePath("fleetspaceApiKind")]

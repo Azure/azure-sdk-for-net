@@ -15,6 +15,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class DataTransferServiceProperties : CosmosDBServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="DataTransferServiceProperties"/>. </summary>
+        public DataTransferServiceProperties() : base(CosmosDBServiceType.DataTransfer)
+        {
+            Locations = new ChangeTrackingList<DataTransferRegionalService>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataTransferServiceProperties"/>. </summary>
         /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>

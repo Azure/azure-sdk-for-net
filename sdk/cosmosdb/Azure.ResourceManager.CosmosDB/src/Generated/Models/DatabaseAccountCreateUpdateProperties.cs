@@ -13,6 +13,7 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    /// <summary> Properties to create and update Azure Cosmos DB database accounts. </summary>
     internal partial class DatabaseAccountCreateUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -21,8 +22,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="DatabaseAccountCreateUpdateProperties"/>. </summary>
         /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
         /// <param name="databaseAccountOfferType"> The offer type for the Cosmos DB database account. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="locations"/> is null. </exception>
         public DatabaseAccountCreateUpdateProperties(IEnumerable<CosmosDBAccountLocation> locations, CosmosDBAccountOfferType databaseAccountOfferType)
         {
+            Argument.AssertNotNull(locations, nameof(locations));
+
             Locations = locations.ToList();
             DatabaseAccountOfferType = databaseAccountOfferType;
             IPRules = new ChangeTrackingList<CosmosDBIPAddressOrRange>();
@@ -128,6 +132,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> An array that contains the georeplication locations enabled for the Cosmos DB account. </summary>
         [WirePath("locations")]
         public IList<CosmosDBAccountLocation> Locations { get; } = new ChangeTrackingList<CosmosDBAccountLocation>();
+
+        /// <summary> The offer type for the Cosmos DB database account. </summary>
+        [WirePath("databaseAccountOfferType")]
+        public CosmosDBAccountOfferType DatabaseAccountOfferType { get; set; }
 
         /// <summary> List of IpRules. </summary>
         [WirePath("ipRules")]

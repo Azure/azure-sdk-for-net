@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -16,11 +17,7 @@ namespace Azure.ResourceManager.CosmosDB
         public CosmosDBStatus? ProvisioningState
         {
             get => Properties is null ? default : Properties.ProvisioningState;
-            set
-            {
-                Properties ??= new FleetspaceProperties();
-                Properties.ProvisioningState = value;
-            }
+            set => throw new NotSupportedException("ProvisioningState is read-only.");
         }
     }
 }

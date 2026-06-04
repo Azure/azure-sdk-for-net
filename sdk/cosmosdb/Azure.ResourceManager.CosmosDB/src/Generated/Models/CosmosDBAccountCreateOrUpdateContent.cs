@@ -94,6 +94,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
+        /// <summary> The offer type for the Cosmos DB database account. </summary>
+        [WirePath("properties.databaseAccountOfferType")]
+        public CosmosDBAccountOfferType DatabaseAccountOfferType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseAccountOfferType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseAccountCreateUpdateProperties();
+                }
+                Properties.DatabaseAccountOfferType = value;
+            }
+        }
+
         /// <summary> List of IpRules. </summary>
         [WirePath("properties.ipRules")]
         public IList<CosmosDBIPAddressOrRange> IPRules
@@ -747,24 +765,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     Properties = new DatabaseAccountCreateUpdateProperties();
                 }
                 Properties.CapacityTotalThroughputLimit = value;
-            }
-        }
-
-        /// <summary> The offer type for the Cosmos DB database account. </summary>
-        [WirePath("properties.databaseAccountOfferType")]
-        public CosmosDBAccountOfferType DatabaseAccountOfferType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DatabaseAccountOfferType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DatabaseAccountCreateUpdateProperties();
-                }
-                Properties.DatabaseAccountOfferType = value;
             }
         }
     }

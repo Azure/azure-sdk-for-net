@@ -14,6 +14,7 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    /// <summary> Properties to create and update Azure Cosmos DB database accounts. </summary>
     internal partial class DatabaseAccountCreateUpdateProperties : IJsonModel<DatabaseAccountCreateUpdateProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DatabaseAccountCreateUpdateProperties"/> for deserialization. </summary>
