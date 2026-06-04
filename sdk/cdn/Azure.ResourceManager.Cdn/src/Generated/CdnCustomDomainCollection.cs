@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _customDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, CdnCustomDomainCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnCustomDomainResource> operation = new CdnArmOperation<CdnCustomDomainResource>(
-                    new CdnCustomDomainOperationSource(Client),
+                    new CdnCustomDomainResourceOperationSource(Client),
                     _customDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _customDomainsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, customDomainName, CdnCustomDomainCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnCustomDomainResource> operation = new CdnArmOperation<CdnCustomDomainResource>(
-                    new CdnCustomDomainOperationSource(Client),
+                    new CdnCustomDomainResourceOperationSource(Client),
                     _customDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -8,12 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Asynchronous operation status. </summary>
-    public partial class RedisOperationStatus
+    public partial class RedisOperationStatus : OperationStatusResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, EnterpriseMccCacheNodeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ConnectedCacheArmOperation<EnterpriseMccCacheNodeResource> operation = new ConnectedCacheArmOperation<EnterpriseMccCacheNodeResource>(
-                    new EnterpriseMccCacheNodeOperationSource(Client),
+                    new EnterpriseMccCacheNodeResourceOperationSource(Client),
                     _enterpriseMccCacheNodesOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ConnectedCache
                 HttpMessage message = _enterpriseMccCacheNodesOperationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cacheNodeResourceName, EnterpriseMccCacheNodeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ConnectedCacheArmOperation<EnterpriseMccCacheNodeResource> operation = new ConnectedCacheArmOperation<EnterpriseMccCacheNodeResource>(
-                    new EnterpriseMccCacheNodeOperationSource(Client),
+                    new EnterpriseMccCacheNodeResourceOperationSource(Client),
                     _enterpriseMccCacheNodesOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,

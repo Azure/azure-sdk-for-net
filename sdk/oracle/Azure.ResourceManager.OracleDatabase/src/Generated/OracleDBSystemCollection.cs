@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _dbSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, OracleDBSystemData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<OracleDBSystemResource> operation = new OracleDatabaseArmOperation<OracleDBSystemResource>(
-                    new OracleDBSystemOperationSource(Client),
+                    new OracleDBSystemResourceOperationSource(Client),
                     _dbSystemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _dbSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dbSystemName, OracleDBSystemData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<OracleDBSystemResource> operation = new OracleDatabaseArmOperation<OracleDBSystemResource>(
-                    new OracleDBSystemOperationSource(Client),
+                    new OracleDBSystemResourceOperationSource(Client),
                     _dbSystemsClientDiagnostics,
                     Pipeline,
                     message.Request,

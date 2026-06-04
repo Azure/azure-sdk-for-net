@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DeviceProvisioningServicePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(
-                    new DeviceProvisioningServiceOperationSource(Client),
+                    new DeviceProvisioningServiceResourceOperationSource(Client),
                     _provisioningServiceDescriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DeviceProvisioningServicePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(
-                    new DeviceProvisioningServiceOperationSource(Client),
+                    new DeviceProvisioningServiceResourceOperationSource(Client),
                     _provisioningServiceDescriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,

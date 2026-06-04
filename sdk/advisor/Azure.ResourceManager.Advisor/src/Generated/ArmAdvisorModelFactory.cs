@@ -18,6 +18,14 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAdvisorModelFactory
     {
+        /// <param name="predictionType"> Type of the prediction. </param>
+        /// <param name="extendedProperties"> Extended properties are arguments specific for each prediction type. </param>
+        /// <returns> A new <see cref="Models.AdvisorPredictionContent"/> instance for mocking. </returns>
+        public static AdvisorPredictionContent AdvisorPredictionContent(AdvisorPredictionType? predictionType = default, BinaryData extendedProperties = default)
+        {
+            return new AdvisorPredictionContent(predictionType is null && extendedProperties is null ? default : new AdvisorPredictionContentProperties(predictionType, extendedProperties, default), default);
+        }
+
         /// <param name="extendedProperties"> Extended properties. </param>
         /// <param name="predictionType"> Type of the prediction. </param>
         /// <param name="category"> The category of the recommendation. </param>
@@ -36,16 +44,15 @@ namespace Azure.ResourceManager.Advisor.Models
                 impactedField,
                 lastUpdatedOn,
                 shortDescription,
-                null), additionalBinaryDataProperties: null);
+                default), default);
         }
 
-        /// <summary> A summary of the recommendation. </summary>
         /// <param name="problem"> The issue or opportunity identified by the recommendation and proposed solution. </param>
         /// <param name="solution"> The issue or opportunity identified by the recommendation and proposed solution. </param>
         /// <returns> A new <see cref="Models.RecommendationShortDescription"/> instance for mocking. </returns>
         public static RecommendationShortDescription RecommendationShortDescription(string problem = default, string solution = default)
         {
-            return new RecommendationShortDescription(problem, solution, additionalBinaryDataProperties: null);
+            return new RecommendationShortDescription(problem, solution, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -64,17 +71,16 @@ namespace Azure.ResourceManager.Advisor.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                displayName is null && dependsOn is null && applicableScenarios is null && supportedValues is null ? default : new AdvisorMetadataEntityProperties(displayName, (dependsOn ?? new ChangeTrackingList<string>()).ToList(), (applicableScenarios ?? new ChangeTrackingList<MetadataScenarioType>()).ToList(), (supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>()).ToList(), null));
+                displayName is null && dependsOn is null && applicableScenarios is null && supportedValues is null ? default : new AdvisorMetadataEntityProperties(displayName, (dependsOn ?? new ChangeTrackingList<string>()).ToList(), (applicableScenarios ?? new ChangeTrackingList<MetadataScenarioType>()).ToList(), (supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>()).ToList(), default),
+                default);
         }
 
-        /// <summary> The metadata supported value detail. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="displayName"> The display name. </param>
         /// <returns> A new <see cref="Models.MetadataSupportedValueDetail"/> instance for mocking. </returns>
         public static MetadataSupportedValueDetail MetadataSupportedValueDetail(string id = default, string displayName = default)
         {
-            return new MetadataSupportedValueDetail(id, displayName, additionalBinaryDataProperties: null);
+            return new MetadataSupportedValueDetail(id, displayName, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -115,7 +121,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 category is null && control is null && impact is null && impactedField is null && impactedValue is null && lastUpdatedOn is null && metadata is null && recommendationTypeId is null && risk is null && shortDescription is null && suppressionIds is null && extendedProperties is null && resourceMetadata is null && description is null && label is null && learnMoreLink is null && potentialBenefits is null && actions is null && remediation is null && exposedMetadataProperties is null && isTracked is null && trackedProperties is null && review is null && resourceWorkload is null && sourceSystem is null && notes is null ? default : new AdvisorRecommendationProperties(
                     category,
                     control,
@@ -123,30 +128,30 @@ namespace Azure.ResourceManager.Advisor.Models
                     impactedField,
                     impactedValue,
                     lastUpdatedOn,
-                    metadata,
+                    metadata ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     recommendationTypeId,
                     risk,
                     shortDescription,
                     (suppressionIds ?? new ChangeTrackingList<Guid>()).ToList(),
-                    extendedProperties,
+                    extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                     resourceMetadata,
                     description,
                     label,
                     learnMoreLink,
                     potentialBenefits,
                     (actions ?? new ChangeTrackingList<IDictionary<string, BinaryData>>()).ToList(),
-                    remediation,
-                    exposedMetadataProperties,
+                    remediation ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                    exposedMetadataProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     isTracked,
                     trackedProperties,
                     review,
                     resourceWorkload,
                     sourceSystem,
                     notes,
-                    null));
+                    default),
+                default);
         }
 
-        /// <summary> Recommendation resource metadata. </summary>
         /// <param name="resourceId"> Azure resource Id of the assessed resource. </param>
         /// <param name="source"> Source from which recommendation is generated. </param>
         /// <param name="action"> The action to view resource. </param>
@@ -160,28 +165,43 @@ namespace Azure.ResourceManager.Advisor.Models
             return new RecommendationResourceMetadata(
                 resourceId,
                 source,
-                action,
+                action ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 singular,
                 plural,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The Review that this Recommendation belongs to. </summary>
+        /// <param name="state"> The state of the Recommendation. </param>
+        /// <param name="postponedUntil"> The time the Recommendation was postponed until. </param>
+        /// <param name="reason"> The reason the state of the Recommendation was changed. </param>
+        /// <param name="priority"> The Priority of the Recommendation. </param>
+        /// <returns> A new <see cref="Models.TrackedRecommendationProperties"/> instance for mocking. </returns>
+        public static TrackedRecommendationProperties TrackedRecommendationProperties(RecommendationState? state = default, DateTimeOffset? postponedUntil = default, RecommendationStateChangeReason? reason = default, RecommendationPriority? priority = default)
+        {
+            return new TrackedRecommendationProperties(state, postponedUntil, reason, priority, default);
+        }
+
         /// <param name="id"> The ARM Resource Id of the Review. </param>
         /// <param name="name"> The Name of the Review. </param>
         /// <returns> A new <see cref="Models.RecommendationReview"/> instance for mocking. </returns>
         public static RecommendationReview RecommendationReview(string id = default, string name = default)
         {
-            return new RecommendationReview(id, name, additionalBinaryDataProperties: null);
+            return new RecommendationReview(id, name, default);
         }
 
-        /// <summary> The Workload that this Resource belongs to. </summary>
         /// <param name="id"> The Id of the Workload. </param>
         /// <param name="name"> The Name of the Workload. </param>
         /// <returns> A new <see cref="Models.RecommendationResourceWorkload"/> instance for mocking. </returns>
         public static RecommendationResourceWorkload RecommendationResourceWorkload(string id = default, string name = default)
         {
-            return new RecommendationResourceWorkload(id, name, additionalBinaryDataProperties: null);
+            return new RecommendationResourceWorkload(id, name, default);
+        }
+
+        /// <param name="advisorRecommendationPatchTrackedProperties"> The tracked properties of a Recommendation. </param>
+        /// <returns> A new <see cref="Models.AdvisorRecommendationPatch"/> instance for mocking. </returns>
+        public static AdvisorRecommendationPatch AdvisorRecommendationPatch(TrackedRecommendationProperties advisorRecommendationPatchTrackedProperties = default)
+        {
+            return new AdvisorRecommendationPatch(advisorRecommendationPatchTrackedProperties is null ? default : new AdvisorRecommendationPatchProperties(advisorRecommendationPatchTrackedProperties, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -199,8 +219,8 @@ namespace Azure.ResourceManager.Advisor.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                suppressionId is null && ttl is null && expireOn is null ? default : new AdvisorSuppressionProperties(suppressionId, ttl, expireOn, null));
+                suppressionId is null && ttl is null && expireOn is null ? default : new AdvisorSuppressionProperties(suppressionId, ttl, expireOn, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -217,11 +237,10 @@ namespace Azure.ResourceManager.Advisor.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                lastRefreshedScore is null && timeSeries is null ? default : new AdvisorScoreEntityProperties(lastRefreshedScore, (timeSeries ?? new ChangeTrackingList<AdvisorTimeSeriesEntity>()).ToList(), null));
+                lastRefreshedScore is null && timeSeries is null ? default : new AdvisorScoreEntityProperties(lastRefreshedScore, (timeSeries ?? new ChangeTrackingList<AdvisorTimeSeriesEntity>()).ToList(), default),
+                default);
         }
 
-        /// <summary> The details of Advisor Score. </summary>
         /// <param name="date"> The date score was calculated. </param>
         /// <param name="score"> The percentage score. </param>
         /// <param name="consumptionUnits"> The consumption units for the score. </param>
@@ -238,10 +257,9 @@ namespace Azure.ResourceManager.Advisor.Models
                 impactedResourceCount,
                 potentialScoreIncrease,
                 categoryCount,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The historic data at different aggregation levels. </summary>
         /// <param name="aggregationLevel"> The aggregation level of the score. </param>
         /// <param name="scoreHistory"> The past score data. </param>
         /// <returns> A new <see cref="Models.AdvisorTimeSeriesEntity"/> instance for mocking. </returns>
@@ -249,7 +267,7 @@ namespace Azure.ResourceManager.Advisor.Models
         {
             scoreHistory ??= new ChangeTrackingList<AdvisorScoreEntityContent>();
 
-            return new AdvisorTimeSeriesEntity(aggregationLevel, scoreHistory.ToList(), additionalBinaryDataProperties: null);
+            return new AdvisorTimeSeriesEntity(aggregationLevel, (scoreHistory ?? new ChangeTrackingList<AdvisorScoreEntityContent>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -274,7 +292,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 workloadId is null && workloadName is null && assessmentId is null && description is null && typeId is null && @type is null && score is null && state is null && typeVersion is null && locale is null ? default : new AdvisorAssessmentProperties(
                     workloadId,
                     workloadName,
@@ -286,7 +303,8 @@ namespace Azure.ResourceManager.Advisor.Models
                     state,
                     typeVersion,
                     locale,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -307,7 +325,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 reviewName is null && workloadName is null && reviewStatus is null && recommendationsCount is null && publishedOn is null && updatedOn is null ? default : new AdvisorResiliencyReviewProperties(
                     reviewName,
                     workloadName,
@@ -315,7 +332,8 @@ namespace Azure.ResourceManager.Advisor.Models
                     recommendationsCount,
                     publishedOn,
                     updatedOn,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -340,7 +358,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 reviewId is null && title is null && priority is null && appliesToSubscriptions is null && recommendationStatus is null && updatedOn is null && rejectReason is null && potentialBenefits is null && description is null && notes is null ? default : new AdvisorTriageRecommendationProperties(
                     reviewId,
                     title,
@@ -352,7 +369,15 @@ namespace Azure.ResourceManager.Advisor.Models
                     potentialBenefits,
                     description,
                     notes,
-                    null));
+                    default),
+                default);
+        }
+
+        /// <param name="reasonForRejection"> Reason for rejecting recommendation. </param>
+        /// <returns> A new <see cref="Models.RecommendationRejectContent"/> instance for mocking. </returns>
+        public static RecommendationRejectContent RecommendationRejectContent(RejectingRecommendationReason? reasonForRejection = default)
+        {
+            return new RecommendationRejectContent(reasonForRejection, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -374,7 +399,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 reviewId is null && recommendationId is null && subscriptionId is null && resourceGroup is null && triageResourceType is null && resourceId is null && resourceName is null ? default : new AdvisorTriageProperties(
                     reviewId,
                     recommendationId,
@@ -383,7 +407,8 @@ namespace Azure.ResourceManager.Advisor.Models
                     triageResourceType,
                     resourceId,
                     resourceName,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -402,11 +427,10 @@ namespace Azure.ResourceManager.Advisor.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                isExcluded is null && lowCpuThreshold is null && duration is null && digests is null ? default : new AdvisorConfigurationProperties(isExcluded, lowCpuThreshold, duration, (digests ?? new ChangeTrackingList<AdvisorDigestConfiguration>()).ToList(), null));
+                isExcluded is null && lowCpuThreshold is null && duration is null && digests is null ? default : new AdvisorConfigurationProperties(isExcluded, lowCpuThreshold, duration, (digests ?? new ChangeTrackingList<AdvisorDigestConfiguration>()).ToList(), default),
+                default);
         }
 
-        /// <summary> Advisor Digest configuration entity. </summary>
         /// <param name="name"> Name of digest configuration. Value is case-insensitive and must be unique within a subscription. </param>
         /// <param name="actionGroupResourceId"> Action group resource id used by digest. </param>
         /// <param name="frequency"> Frequency that digest will be triggered, in days. Value must be between 7 and 30 days inclusive. </param>
@@ -422,13 +446,12 @@ namespace Azure.ResourceManager.Advisor.Models
                 name,
                 actionGroupResourceId,
                 frequency,
-                categories.ToList(),
+                (categories ?? new ChangeTrackingList<RecommendationCategory>()).ToList(),
                 language,
                 state,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The Advisor assessment type result data structure. </summary>
         /// <param name="id"> Assessment Type Id. </param>
         /// <param name="title"> Assessment Type Title. </param>
         /// <param name="description"> Assessment Type Description. </param>
@@ -443,10 +466,9 @@ namespace Azure.ResourceManager.Advisor.Models
                 description,
                 locale,
                 version,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The Workload result data structure. </summary>
         /// <param name="id"> Workload Id. </param>
         /// <param name="name"> Workload Name. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
@@ -454,7 +476,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <returns> A new <see cref="Models.AdvisorWorkload"/> instance for mocking. </returns>
         public static AdvisorWorkload AdvisorWorkload(string id = default, string name = default, string subscriptionId = default, string subscriptionName = default)
         {
-            return new AdvisorWorkload(id, name, subscriptionId, subscriptionName, additionalBinaryDataProperties: null);
+            return new AdvisorWorkload(id, name, subscriptionId, subscriptionName, default);
         }
     }
 }

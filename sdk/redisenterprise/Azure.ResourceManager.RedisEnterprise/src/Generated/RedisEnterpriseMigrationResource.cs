@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 HttpMessage message = _migrationRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource>(
-                    new RedisEnterpriseMigrationOperationSource(Client),
+                    new RedisEnterpriseMigrationResourceOperationSource(Client),
                     _migrationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 HttpMessage message = _migrationRestClient.CreateStartRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseMigrationResource>(
-                    new RedisEnterpriseMigrationOperationSource(Client),
+                    new RedisEnterpriseMigrationResourceOperationSource(Client),
                     _migrationClientDiagnostics,
                     Pipeline,
                     message.Request,

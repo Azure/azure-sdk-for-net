@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             List<SelfHelpSection> sections = new List<SelfHelpSection>();
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
             SolutionResourceProperties solutionResourceProperties = new SolutionResourceProperties(triggerCriterionList, parameters, null, null, null, null, null, sections, null);
-            var data = new SelfHelpSolutionData(scope, null, resourceType, null, null, solutionResourceProperties);
+            var data = new SelfHelpSolutionData(scope, null, resourceType, null, solutionResourceProperties, null);
 
             return data;
         }

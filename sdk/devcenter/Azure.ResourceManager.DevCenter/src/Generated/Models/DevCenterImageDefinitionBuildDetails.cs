@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageReference"> The specific image version used by the build. </param>
         /// <param name="status"> The status of the build. </param>
         /// <param name="startOn"> Start time of the task group. </param>
         /// <param name="endOn"> End time of the task group. </param>
         /// <param name="errorDetails"> Details for image creation error. Populated when the image creation is not successful. </param>
         /// <param name="taskGroups"> The list of task groups executed during the image definition build. </param>
-        internal DevCenterImageDefinitionBuildDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DevCenterImageReference imageReference, DevCenterImageDefinitionBuildStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DevCenterImageCreationErrorDetails errorDetails, IReadOnlyList<DevCenterImageDefinitionBuildTaskGroup> taskGroups) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterImageDefinitionBuildDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DevCenterImageReference imageReference, DevCenterImageDefinitionBuildStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, DevCenterImageCreationErrorDetails errorDetails, IReadOnlyList<DevCenterImageDefinitionBuildTaskGroup> taskGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             ImageReference = imageReference;
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
             ErrorDetails = errorDetails;
             TaskGroups = taskGroups;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The specific image version used by the build. </summary>

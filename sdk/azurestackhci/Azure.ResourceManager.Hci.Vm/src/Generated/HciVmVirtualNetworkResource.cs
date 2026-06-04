@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualNetworksRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmVirtualNetworkPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmVirtualNetworkResource> operation = new VmArmOperation<HciVmVirtualNetworkResource>(
-                    new HciVmVirtualNetworkOperationSource(Client),
+                    new HciVmVirtualNetworkResourceOperationSource(Client),
                     _virtualNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualNetworksRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmVirtualNetworkPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmVirtualNetworkResource> operation = new VmArmOperation<HciVmVirtualNetworkResource>(
-                    new HciVmVirtualNetworkOperationSource(Client),
+                    new HciVmVirtualNetworkResourceOperationSource(Client),
                     _virtualNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, MySqlFlexibleServersPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServersPrivateEndpointConnectionResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServersPrivateEndpointConnectionResource>(
-                    new MySqlFlexibleServersPrivateEndpointConnectionOperationSource(Client),
+                    new MySqlFlexibleServersPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, MySqlFlexibleServersPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServersPrivateEndpointConnectionResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServersPrivateEndpointConnectionResource>(
-                    new MySqlFlexibleServersPrivateEndpointConnectionOperationSource(Client),
+                    new MySqlFlexibleServersPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

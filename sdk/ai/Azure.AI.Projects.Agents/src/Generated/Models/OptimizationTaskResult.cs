@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="tokens"> Total tokens consumed during the agent run for this task. </param>
         /// <param name="durationSeconds"> Wall-clock seconds for this task's agent execution. </param>
         /// <param name="passed"> Whether the task met the pass threshold. </param>
-        internal OptimizationTaskResult(string taskName, IDictionary<string, double> scores, double compositeScore, int tokens, TimeSpan durationSeconds, bool passed)
+        internal OptimizationTaskResult(string taskName, IDictionary<string, double> scores, double compositeScore, long tokens, TimeSpan durationSeconds, bool passed)
         {
             TaskName = taskName;
             Scores = scores;
@@ -44,7 +44,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="response"> Raw agent response text. </param>
         /// <param name="runId"> Identifier of the agent run that produced this result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationTaskResult(string taskName, string query, IDictionary<string, double> scores, double compositeScore, int tokens, TimeSpan durationSeconds, bool passed, string errorMessage, IDictionary<string, string> rationales, string response, string runId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationTaskResult(string taskName, string query, IDictionary<string, double> scores, double compositeScore, long tokens, TimeSpan durationSeconds, bool passed, string errorMessage, IDictionary<string, string> rationales, string response, string runId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TaskName = taskName;
             Query = query;
@@ -73,7 +73,7 @@ namespace Azure.AI.Projects.Agents
         public double CompositeScore { get; }
 
         /// <summary> Total tokens consumed during the agent run for this task. </summary>
-        public int Tokens { get; }
+        public long Tokens { get; }
 
         /// <summary> Wall-clock seconds for this task's agent execution. </summary>
         public TimeSpan DurationSeconds { get; }

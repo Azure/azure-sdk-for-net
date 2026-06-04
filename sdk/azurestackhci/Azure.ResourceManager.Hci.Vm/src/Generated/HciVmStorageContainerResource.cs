@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _storageContainersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmStorageContainerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmStorageContainerResource> operation = new VmArmOperation<HciVmStorageContainerResource>(
-                    new HciVmStorageContainerOperationSource(Client),
+                    new HciVmStorageContainerResourceOperationSource(Client),
                     _storageContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _storageContainersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmStorageContainerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmStorageContainerResource> operation = new VmArmOperation<HciVmStorageContainerResource>(
-                    new HciVmStorageContainerOperationSource(Client),
+                    new HciVmStorageContainerResourceOperationSource(Client),
                     _storageContainersClientDiagnostics,
                     Pipeline,
                     message.Request,
