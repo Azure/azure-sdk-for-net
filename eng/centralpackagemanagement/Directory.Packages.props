@@ -233,7 +233,7 @@
   <!--                  package dependencies                          -->
   <!-- ============================================================== -->
   <ItemGroup>
-    <PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260129.1" PrivateAssets="All" />
+    <PackageVersion Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20260604.1" PrivateAssets="All" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20251023.1" PrivateAssets="All" />
 
