@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0 (2026-06-02)
+## 1.1.0 (2026-06-03)
  
 ### Features Added
  
@@ -24,6 +24,10 @@
 - Renamed `PhotoAvatarBaseModes` to `PhotoAvatarBaseMode` (singular). `AvatarConfiguration.Model` was renamed to `AvatarConfiguration.BaseMode` and now uses the new type.
 - Renamed `AvatarConfiguration.OutputAuditAudio` to `AvatarConfiguration.AuditOutputAudio`.
 - Renamed `ReasoningEffort.Xhigh` to `ReasoningEffort.ExtraHigh`.
+
+### Bugs Fixed
+
+- Telemetry: `gen_ai.event.content` on `.done` and related response events now correctly respects the content recording opt-in (`OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` or `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED`). Previously these events emitted message content (transcripts, function-call arguments, response bodies) unconditionally. To restore the previous behavior, set one of those environment variables to `true`.
 
 ### Other Changes
 
