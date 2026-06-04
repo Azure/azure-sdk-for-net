@@ -59,7 +59,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionChargeSummary IPersistableModel<ConsumptionChargeSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConsumptionChargeSummary)PersistableModelCreateCore(data, options);
+        ConsumptionChargeSummary IPersistableModel<ConsumptionChargeSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (ConsumptionChargeSummary)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConsumptionChargeSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -87,7 +90,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConsumptionChargeSummary IJsonModel<ConsumptionChargeSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConsumptionChargeSummary)JsonModelCreateCore(ref reader, options);
+        ConsumptionChargeSummary IJsonModel<ConsumptionChargeSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (ConsumptionChargeSummary)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -114,9 +120,9 @@ namespace Azure.ResourceManager.Consumption.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ChargeSummaryKind kind = default;
             ETag? eTag = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -175,9 +181,9 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 kind,
-                eTag);
+                eTag,
+                additionalBinaryDataProperties);
         }
     }
 }

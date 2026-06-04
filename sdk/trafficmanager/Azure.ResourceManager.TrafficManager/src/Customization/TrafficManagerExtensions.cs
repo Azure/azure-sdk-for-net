@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TrafficManager
 {
+    [CodeGenSuppress("GetTrafficManagerUserMetric", typeof(SubscriptionResource))]
     public static partial class TrafficManagerExtensions
     {
         /// <summary>

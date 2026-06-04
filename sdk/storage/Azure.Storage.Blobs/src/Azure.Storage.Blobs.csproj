@@ -117,6 +117,7 @@
     <Compile Include="$(AzureStorageSharedSources)TransferValidationOptionsExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroParser.cs" LinkBase="Shared" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroConstants.cs" LinkBase="Shared" />
+    <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\Errors.Avro.cs" LinkBase="Shared" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\AvroReader.cs" LinkBase="Shared" />
     <Compile Include="$(MSBuildThisFileDirectory)\..\..\Azure.Storage.Internal.Avro\src\StreamWithPosition.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)\StorageBearerTokenChallengeAuthorizationPolicy.cs" LinkBase="Shared" />

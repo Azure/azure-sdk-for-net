@@ -35,10 +35,11 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="adminPassword"> Initial administrator password of the resource. </param>
         /// <param name="availabilityZone"> Availability zone. </param>
         /// <param name="userDetailsEmail"> User Email. </param>
+        /// <param name="name0"> Name of the File System resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="initialCapacity"></param>
         /// <returns> A new <see cref="Qumulo.QumuloFileSystemResourceData"/> instance for mocking. </returns>
-        public static QumuloFileSystemResourceData QumuloFileSystemResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MarketplaceDetails marketplaceDetails = default, QumuloArmProvisioningState? armProvisioningState = default, string storageSkuName = default, string delegatedSubnetId = default, Uri clusterLoginUri = default, IEnumerable<IPAddress> privateIPs = default, string adminPassword = default, string availabilityZone = default, string userDetailsEmail = default, ManagedServiceIdentity identity = default, int initialCapacity = default)
+        public static QumuloFileSystemResourceData QumuloFileSystemResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MarketplaceDetails marketplaceDetails = default, QumuloArmProvisioningState? armProvisioningState = default, string storageSkuName = default, string delegatedSubnetId = default, Uri clusterLoginUri = default, IEnumerable<IPAddress> privateIPs = default, string adminPassword = default, string availabilityZone = default, string userDetailsEmail = default, string name0 = default, ManagedServiceIdentity identity = default, int initialCapacity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -47,25 +48,24 @@ namespace Azure.ResourceManager.Qumulo.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                marketplaceDetails is null && armProvisioningState is null && storageSkuName is null && delegatedSubnetId is null && clusterLoginUri is null && privateIPs is null && adminPassword is null && availabilityZone is null && userDetailsEmail is null ? default : new FileSystemResourceProperties(
+                marketplaceDetails is null && armProvisioningState is null && storageSkuName is null && userDetailsEmail is null && delegatedSubnetId is null && clusterLoginUri is null && privateIPs is null && adminPassword is null && availabilityZone is null ? default : new FileSystemResourceProperties(
                     marketplaceDetails,
                     armProvisioningState,
                     storageSkuName,
-                    new QumuloUserDetails(userDetailsEmail, null),
+                    new QumuloUserDetails(userDetailsEmail, default),
                     delegatedSubnetId,
                     clusterLoginUri,
                     (privateIPs ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     adminPassword,
                     availabilityZone,
-                    null),
+                    default),
                 identity,
-                initialCapacity);
+                initialCapacity,
+                default);
         }
 
-        /// <summary> MarketplaceDetails of Qumulo FileSystem resource. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
@@ -82,10 +82,16 @@ namespace Azure.ResourceManager.Qumulo.Models
                 publisherId,
                 termUnit,
                 qumuloMarketplaceSubscriptionStatus,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The type used for update operations of the FileSystemResource. </summary>
+        /// <param name="email"> User Email. </param>
+        /// <returns> A new <see cref="Models.QumuloUserDetails"/> instance for mocking. </returns>
+        public static QumuloUserDetails QumuloUserDetails(string email = default)
+        {
+            return new QumuloUserDetails(email, default);
+        }
+
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the FileSystemResource. </param>
@@ -94,7 +100,26 @@ namespace Azure.ResourceManager.Qumulo.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new QumuloFileSystemResourcePatch(identity, tags, properties, additionalBinaryDataProperties: null);
+            return new QumuloFileSystemResourcePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <param name="marketplaceDetails"> Marketplace details. </param>
+        /// <param name="userDetailsEmail"> User Email. </param>
+        /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
+        /// <param name="clusterLoginUri"></param>
+        /// <param name="privateIPs"></param>
+        /// <returns> A new <see cref="Models.FileSystemResourceUpdateProperties"/> instance for mocking. </returns>
+        public static FileSystemResourceUpdateProperties FileSystemResourceUpdateProperties(MarketplaceDetails marketplaceDetails = default, string userDetailsEmail = default, ResourceIdentifier delegatedSubnetId = default, Uri clusterLoginUri = default, IEnumerable<string> privateIPs = default)
+        {
+            privateIPs ??= new ChangeTrackingList<string>();
+
+            return new FileSystemResourceUpdateProperties(
+                marketplaceDetails,
+                userDetailsEmail is null ? default : new QumuloUserDetails(userDetailsEmail, default),
+                delegatedSubnetId,
+                clusterLoginUri,
+                (privateIPs ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
     }
 }
