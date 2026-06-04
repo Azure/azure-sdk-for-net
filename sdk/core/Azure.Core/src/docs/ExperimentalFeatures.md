@@ -167,7 +167,6 @@ The mTLS token binding APIs enable proof-of-possession token support for managed
 - `Azure.Core.Pipeline.BearerTokenAuthenticationPolicy` constructors accepting `HttpPipelineTransportOptions`
 - `Azure.Core.Pipeline.BearerTokenAuthenticationPolicy.TransportOptionsChanged` event
 - `Azure.Core.Pipeline.BearerTokenAuthenticationPolicy.OnTransportOptionsChanged` method
-- `Azure.Identity.Broker.ManagedIdentityCredentialAttestationOptions` class
 
 ### Suppression
 
