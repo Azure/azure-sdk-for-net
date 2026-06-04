@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _volumesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, volumeName, NetworkCloudVolumeData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudVolumeResource> operation = new NetworkCloudArmOperation<NetworkCloudVolumeResource>(
-                    new NetworkCloudVolumeOperationSource(Client),
+                    new NetworkCloudVolumeResourceOperationSource(Client),
                     _volumesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _volumesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, volumeName, NetworkCloudVolumeData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudVolumeResource> operation = new NetworkCloudArmOperation<NetworkCloudVolumeResource>(
-                    new NetworkCloudVolumeOperationSource(Client),
+                    new NetworkCloudVolumeResourceOperationSource(Client),
                     _volumesClientDiagnostics,
                     Pipeline,
                     message.Request,

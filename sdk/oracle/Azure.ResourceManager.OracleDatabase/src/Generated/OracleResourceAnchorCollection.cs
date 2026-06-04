@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _resourceAnchorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceAnchorName, OracleResourceAnchorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<OracleResourceAnchorResource> operation = new OracleDatabaseArmOperation<OracleResourceAnchorResource>(
-                    new OracleResourceAnchorOperationSource(Client),
+                    new OracleResourceAnchorResourceOperationSource(Client),
                     _resourceAnchorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _resourceAnchorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceAnchorName, OracleResourceAnchorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<OracleResourceAnchorResource> operation = new OracleDatabaseArmOperation<OracleResourceAnchorResource>(
-                    new OracleResourceAnchorOperationSource(Client),
+                    new OracleResourceAnchorResourceOperationSource(Client),
                     _resourceAnchorsClientDiagnostics,
                     Pipeline,
                     message.Request,

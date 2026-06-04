@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.TrafficManager
     internal partial class ProfilesGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<TrafficManagerProfileData>
     {
         private readonly Profiles _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ProfilesGetByResourceGroupAsyncCollectionResultOfT(Profiles client, string subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ProfilesGetByResourceGroupAsyncCollectionResultOfT(Profiles client, Guid subscriptionId, string resourceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _replicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WebPubSubReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubReplicaResource> operation = new WebPubSubArmOperation<WebPubSubReplicaResource>(
-                    new WebPubSubReplicaOperationSource(Client),
+                    new WebPubSubReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _replicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WebPubSubReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubReplicaResource> operation = new WebPubSubArmOperation<WebPubSubReplicaResource>(
-                    new WebPubSubReplicaOperationSource(Client),
+                    new WebPubSubReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,

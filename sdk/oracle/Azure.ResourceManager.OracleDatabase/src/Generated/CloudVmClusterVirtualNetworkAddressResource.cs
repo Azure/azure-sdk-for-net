@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _virtualNetworkAddressesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CloudVmClusterVirtualNetworkAddressData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource> operation = new OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource>(
-                    new CloudVmClusterVirtualNetworkAddressOperationSource(Client),
+                    new CloudVmClusterVirtualNetworkAddressResourceOperationSource(Client),
                     _virtualNetworkAddressesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _virtualNetworkAddressesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CloudVmClusterVirtualNetworkAddressData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource> operation = new OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource>(
-                    new CloudVmClusterVirtualNetworkAddressOperationSource(Client),
+                    new CloudVmClusterVirtualNetworkAddressResourceOperationSource(Client),
                     _virtualNetworkAddressesClientDiagnostics,
                     Pipeline,
                     message.Request,
