@@ -14,62 +14,62 @@ using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> BareMetalMachineReimageParameters represents the body of the request to reimage a bare metal machine. </summary>
-    public partial class BareMetalMachineReimageParameters : IJsonModel<BareMetalMachineReimageParameters>
+    /// <summary> BareMetalMachineReimageContent represents the body of the request to reimage a bare metal machine. </summary>
+    public partial class BareMetalMachineReimageContent : IJsonModel<BareMetalMachineReimageContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BareMetalMachineReimageParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BareMetalMachineReimageContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineReimageParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineReimageContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBareMetalMachineReimageParameters(document.RootElement, options);
+                        return DeserializeBareMetalMachineReimageContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BareMetalMachineReimageParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BareMetalMachineReimageContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineReimageParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineReimageContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BareMetalMachineReimageParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BareMetalMachineReimageContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BareMetalMachineReimageParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BareMetalMachineReimageContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BareMetalMachineReimageParameters IPersistableModel<BareMetalMachineReimageParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BareMetalMachineReimageContent IPersistableModel<BareMetalMachineReimageContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BareMetalMachineReimageParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BareMetalMachineReimageContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="bareMetalMachineReimageParameters"> The <see cref="BareMetalMachineReimageParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(BareMetalMachineReimageParameters bareMetalMachineReimageParameters)
+        /// <param name="bareMetalMachineReimageContent"> The <see cref="BareMetalMachineReimageContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BareMetalMachineReimageContent bareMetalMachineReimageContent)
         {
-            if (bareMetalMachineReimageParameters == null)
+            if (bareMetalMachineReimageContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(bareMetalMachineReimageParameters, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(bareMetalMachineReimageContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BareMetalMachineReimageParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BareMetalMachineReimageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineReimageParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineReimageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BareMetalMachineReimageParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BareMetalMachineReimageContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(SafeguardMode))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BareMetalMachineReimageParameters IJsonModel<BareMetalMachineReimageParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BareMetalMachineReimageContent IJsonModel<BareMetalMachineReimageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BareMetalMachineReimageParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BareMetalMachineReimageContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineReimageParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineReimageContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BareMetalMachineReimageParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BareMetalMachineReimageContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBareMetalMachineReimageParameters(document.RootElement, options);
+            return DeserializeBareMetalMachineReimageContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BareMetalMachineReimageParameters DeserializeBareMetalMachineReimageParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static BareMetalMachineReimageContent DeserializeBareMetalMachineReimageContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BareMetalMachineReimageParameters(safeguardMode, additionalBinaryDataProperties);
+            return new BareMetalMachineReimageContent(safeguardMode, additionalBinaryDataProperties);
         }
     }
 }
