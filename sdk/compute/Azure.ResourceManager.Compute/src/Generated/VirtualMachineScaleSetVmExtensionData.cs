@@ -9,32 +9,36 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary> Describes a VMSS VM Extension. </summary>
-    public partial class VirtualMachineScaleSetVmExtensionData : ComputeSubResourceData
+    public partial class VirtualMachineScaleSetVmExtensionData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionData"/>. </summary>
         public VirtualMachineScaleSetVmExtensionData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmExtensionData"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Extension. </param>
         /// <param name="location"> The location of the extension. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="name"> Resource name. </param>
         /// <param name="vmssExtensionName"> The name of the virtual machine extension. </param>
-        internal VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualMachineExtensionProperties properties, AzureLocation? location, string @type, string name, string vmssExtensionName) : base(id, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualMachineExtensionProperties properties, AzureLocation? location, string vmssExtensionName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
-            Type = @type;
-            Name = name;
             VmssExtensionName = vmssExtensionName;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes the properties of a Virtual Machine Extension. </summary>
@@ -42,12 +46,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The location of the extension. </summary>
         public AzureLocation? Location { get; set; }
-
-        /// <summary> Resource type. </summary>
-        public string Type { get; }
-
-        /// <summary> Resource name. </summary>
-        public string Name { get; }
 
         /// <summary> The name of the virtual machine extension. </summary>
         public string VmssExtensionName { get; }

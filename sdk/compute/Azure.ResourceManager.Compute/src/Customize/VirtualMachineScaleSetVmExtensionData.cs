@@ -7,10 +7,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineScaleSetVmExtensionData
+    // Backward compatibility: the previously shipped SDK exposed this type as a direct ResourceData-derived model.
+    // The generator honors this partial base declaration and emits generated code with the same base type.
+    public partial class VirtualMachineScaleSetVmExtensionData : ResourceData
     {
         // Backward compatibility: the previously-shipped SDK exposed `ProtectedSettingsFromKeyVault` as a loosely-typed
         // BinaryData property. The TypeSpec spec types it as `KeyVaultSecretReference`, which is now surfaced as the
