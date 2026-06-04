@@ -71,21 +71,8 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
     public IReadOnlyList<ValueExpression> PopulateArguments(
         ScopedApi<ResourceIdentifier> idProperty,
         IReadOnlyList<ParameterProvider> requestParameters,
-        VariableExpression requestContext,
+        VariableExpression? requestContext,
         IReadOnlyList<ParameterProvider> methodParameters)
-        => PopulateArguments(idProperty, requestParameters, methodParameters, requestContext);
-
-    public IReadOnlyList<ValueExpression> PopulateArguments(
-        ScopedApi<ResourceIdentifier> idProperty,
-        IReadOnlyList<ParameterProvider> requestParameters,
-        IReadOnlyList<ParameterProvider> methodParameters)
-        => PopulateArguments(idProperty, requestParameters, methodParameters, requestContext: null);
-
-    private IReadOnlyList<ValueExpression> PopulateArguments(
-        ScopedApi<ResourceIdentifier> idProperty,
-        IReadOnlyList<ParameterProvider> requestParameters,
-        IReadOnlyList<ParameterProvider> methodParameters,
-        VariableExpression? requestContext)
     {
         var arguments = new List<ValueExpression>();
         // here we always assume that the parameter name matches the parameter name in the request path.

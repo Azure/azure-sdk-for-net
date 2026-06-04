@@ -308,7 +308,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var idExpression = _scopeParameter != null
                 ? _scopeParameter.As<Azure.Core.ResourceIdentifier>()
                 : This.As<ArmResource>().Id();
-            var arguments = _parameterMappings.PopulateArguments(idExpression, _convenienceMethod.Signature.Parameters, _signature.Parameters);
+            var arguments = _parameterMappings.PopulateArguments(idExpression, _convenienceMethod.Signature.Parameters, null, _signature.Parameters);
             var responseDeclaration = Declare(
                 "response",
                 new CSharpType(typeof(Response<>), typeof(bool)),
