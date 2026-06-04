@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyAttestationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyAttestationResource> GetAllAsync(AttestationsListForResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyAttestationResource> GetAllAsync(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyAttestationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyAttestationResource> GetAll(AttestationsListForResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyAttestationResource> GetAll(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="remediationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="RemediationDeployment"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAtManagementGroupAsync(ResourceIdentifier scope, string remediationName, RemediationsListDeploymentsAtManagementGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAtManagementGroupAsync(ResourceIdentifier scope, string remediationName, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="remediationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="RemediationDeployment"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RemediationDeployment> GetDeploymentsAtManagementGroup(ResourceIdentifier scope, string remediationName, RemediationsListDeploymentsAtManagementGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<RemediationDeployment> GetDeploymentsAtManagementGroup(ResourceIdentifier scope, string remediationName, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForManagementGroupAsync(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForManagementGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForManagementGroupAsync(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForManagementGroup(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForManagementGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyEvent> GetQueryResultsForManagementGroup(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForResourceAsync(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForResourceAsync(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForResource(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyEvent> GetQueryResultsForResource(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForPolicySetDefinitionAsync(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForPolicySetDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForPolicySetDefinitionAsync(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForPolicySetDefinition(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForPolicySetDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyEvent> GetQueryResultsForPolicySetDefinition(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForPolicyDefinitionAsync(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForPolicyDefinitionAsync(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForPolicyDefinition(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyEvent> GetQueryResultsForPolicyDefinition(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentAsync(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentAsync(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignment(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignment(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignmentAsync(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignmentAsync(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignment(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignment(ResourceIdentifier scope, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForManagementGroupAsync(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForManagementGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyState> GetQueryResultsForManagementGroupAsync(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1000,7 +1000,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForManagementGroup(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForManagementGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyState> GetQueryResultsForManagementGroup(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SummarizeResults>> SummarizeForManagementGroupAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForManagementGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SummarizeResults>> SummarizeForManagementGroupAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1096,7 +1096,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SummarizeResults> SummarizeForManagementGroup(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForManagementGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<SummarizeResults> SummarizeForManagementGroup(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1147,7 +1147,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForResourceAsync(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyState> GetQueryResultsForResourceAsync(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForResource(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyState> GetQueryResultsForResource(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SummarizeResults>> SummarizeForResourceAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SummarizeResults>> SummarizeForResourceAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1292,7 +1292,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SummarizeResults> SummarizeForResource(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<SummarizeResults> SummarizeForResource(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1343,7 +1343,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForPolicySetDefinitionAsync(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForPolicySetDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyState> GetQueryResultsForPolicySetDefinitionAsync(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1391,7 +1391,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForPolicySetDefinition(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForPolicySetDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyState> GetQueryResultsForPolicySetDefinition(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1438,7 +1438,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SummarizeResults>> SummarizeForPolicySetDefinitionAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForPolicySetDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SummarizeResults>> SummarizeForPolicySetDefinitionAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1488,7 +1488,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SummarizeResults> SummarizeForPolicySetDefinition(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForPolicySetDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<SummarizeResults> SummarizeForPolicySetDefinition(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1539,7 +1539,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForPolicyDefinitionAsync(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForPolicyDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyState> GetQueryResultsForPolicyDefinitionAsync(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1587,7 +1587,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForPolicyDefinition(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForPolicyDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyState> GetQueryResultsForPolicyDefinition(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1634,7 +1634,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SummarizeResults>> SummarizeForPolicyDefinitionAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForPolicyDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SummarizeResults>> SummarizeForPolicyDefinitionAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1684,7 +1684,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SummarizeResults> SummarizeForPolicyDefinition(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForPolicyDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<SummarizeResults> SummarizeForPolicyDefinition(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1735,7 +1735,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentAsync(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentAsync(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1783,7 +1783,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignment(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignment(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1830,7 +1830,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SummarizeResults>> SummarizeForSubscriptionLevelPolicyAssignmentAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForSubscriptionLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SummarizeResults>> SummarizeForSubscriptionLevelPolicyAssignmentAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1880,7 +1880,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SummarizeResults> SummarizeForSubscriptionLevelPolicyAssignment(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForSubscriptionLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<SummarizeResults> SummarizeForSubscriptionLevelPolicyAssignment(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1931,7 +1931,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentAsync(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentAsync(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -1980,7 +1980,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignment(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignment(ResourceIdentifier scope, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2028,7 +2028,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SummarizeResults>> SummarizeForResourceGroupLevelPolicyAssignmentAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForResourceGroupLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SummarizeResults>> SummarizeForResourceGroupLevelPolicyAssignmentAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2078,7 +2078,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SummarizeResults> SummarizeForResourceGroupLevelPolicyAssignment(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForResourceGroupLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<SummarizeResults> SummarizeForResourceGroupLevelPolicyAssignment(ResourceIdentifier scope, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2228,7 +2228,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForResourceAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, ComponentPolicyStatesListQueryResultsForResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForResourceAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2278,7 +2278,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForResource(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, ComponentPolicyStatesListQueryResultsForResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForResource(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2328,7 +2328,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForPolicyDefinitionAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForPolicyDefinitionAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2378,7 +2378,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForPolicyDefinition(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForPolicyDefinition(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2428,7 +2428,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForSubscriptionLevelPolicyAssignmentAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, ComponentPolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForSubscriptionLevelPolicyAssignmentAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2478,7 +2478,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForSubscriptionLevelPolicyAssignment(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, ComponentPolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForSubscriptionLevelPolicyAssignment(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2528,7 +2528,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForResourceGroupLevelPolicyAssignmentAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, ComponentPolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForResourceGroupLevelPolicyAssignmentAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2578,7 +2578,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForResourceGroupLevelPolicyAssignment(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, ComponentPolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForResourceGroupLevelPolicyAssignment(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2629,7 +2629,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetQueryResultsForManagementGroupAsync(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyTrackedResourcesListQueryResultsForManagementGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetQueryResultsForManagementGroupAsync(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2670,7 +2670,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyTrackedResourceRecord> GetQueryResultsForManagementGroup(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyTrackedResourcesListQueryResultsForManagementGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyTrackedResourceRecord> GetQueryResultsForManagementGroup(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2711,7 +2711,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetQueryResultsForResourceAsync(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyTrackedResourcesListQueryResultsForResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetQueryResultsForResourceAsync(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -2752,7 +2752,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyTrackedResourceRecord> GetQueryResultsForResource(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyTrackedResourcesListQueryResultsForResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyTrackedResourceRecord> GetQueryResultsForResource(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 

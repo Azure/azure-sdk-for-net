@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RemediationDeployment"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAtResourceAsync(RemediationsListDeploymentsAtResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAtResourceAsync(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RemediationDeployment"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RemediationDeployment> GetDeploymentsAtResource(RemediationsListDeploymentsAtResourceQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<RemediationDeployment> GetDeploymentsAtResource(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

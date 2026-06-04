@@ -83,18 +83,28 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <param name="top"> Maximum number of records to return. </param>
+        /// <param name="orderBy"> Ordering expression using OData notation. </param>
+        /// <param name="select"> Select expression using OData notation. </param>
+        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
+        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
         /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.RemediationsListForResourceQueryOptions"/> instance for mocking. </returns>
-        public static RemediationsListForResourceQueryOptions RemediationsListForResourceQueryOptions(int? top = default, string filter = default)
+        /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to expand components use $expand=components. </param>
+        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
+        /// <returns> A new <see cref="Models.PolicyQuerySettings"/> instance for mocking. </returns>
+        public static PolicyQuerySettings PolicyQuerySettings(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string expand = default, string skipToken = default)
         {
-            return new RemediationsListForResourceQueryOptions(top, filter, default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <returns> A new <see cref="Models.RemediationsListDeploymentsAtResourceQueryOptions"/> instance for mocking. </returns>
-        public static RemediationsListDeploymentsAtResourceQueryOptions RemediationsListDeploymentsAtResourceQueryOptions(int? top = default)
-        {
-            return new RemediationsListDeploymentsAtResourceQueryOptions(top, default);
+            return new PolicyQuerySettings(
+                top,
+                orderBy,
+                @select,
+                @from,
+                to,
+                filter,
+                apply,
+                expand,
+                skipToken,
+                default);
         }
 
         /// <param name="remediatedResourceId"> Resource ID of the resource that is being remediated by the deployment. </param>
@@ -116,13 +126,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 createdOn,
                 lastUpdatedOn,
                 default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <returns> A new <see cref="Models.RemediationsListDeploymentsAtManagementGroupQueryOptions"/> instance for mocking. </returns>
-        public static RemediationsListDeploymentsAtManagementGroupQueryOptions RemediationsListDeploymentsAtManagementGroupQueryOptions(int? top = default)
-        {
-            return new RemediationsListDeploymentsAtManagementGroupQueryOptions(top, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -161,14 +164,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new AttestationEvidence(description, sourceUri, default);
         }
 
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.AttestationsListForResourceQueryOptions"/> instance for mocking. </returns>
-        public static AttestationsListForResourceQueryOptions AttestationsListForResourceQueryOptions(int? top = default, string filter = default)
-        {
-            return new AttestationsListForResourceQueryOptions(top, filter, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -202,13 +197,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <returns> A new <see cref="Models.PolicyMetadataListQueryOptions"/> instance for mocking. </returns>
-        public static PolicyMetadataListQueryOptions PolicyMetadataListQueryOptions(int? top = default)
-        {
-            return new PolicyMetadataListQueryOptions(top, default);
-        }
-
         /// <param name="metadataId"> The policy metadata identifier. </param>
         /// <param name="category"> The category of the policy metadata. </param>
         /// <param name="title"> The title of the policy metadata. </param>
@@ -229,29 +217,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalContentUri,
                 metadata,
                 default), id, @type, name, default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForManagementGroupQueryOptions"/> instance for mocking. </returns>
-        public static PolicyEventsListQueryResultsForManagementGroupQueryOptions PolicyEventsListQueryResultsForManagementGroupQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyEventsListQueryResultsForManagementGroupQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
         }
 
         /// <param name="odataId"> OData entity ID; always set to null since policy event records do not have an entity ID. </param>
@@ -349,192 +314,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 principalOid,
                 policyDefinitionAction,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForSubscriptionQueryOptions"/> instance for mocking. </returns>
-        public static PolicyEventsListQueryResultsForSubscriptionQueryOptions PolicyEventsListQueryResultsForSubscriptionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyEventsListQueryResultsForSubscriptionQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForResourceGroupQueryOptions"/> instance for mocking. </returns>
-        public static PolicyEventsListQueryResultsForResourceGroupQueryOptions PolicyEventsListQueryResultsForResourceGroupQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyEventsListQueryResultsForResourceGroupQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to expand components use $expand=components. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForResourceQueryOptions"/> instance for mocking. </returns>
-        public static PolicyEventsListQueryResultsForResourceQueryOptions PolicyEventsListQueryResultsForResourceQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string expand = default, string skipToken = default)
-        {
-            return new PolicyEventsListQueryResultsForResourceQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                expand,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForPolicySetDefinitionQueryOptions"/> instance for mocking. </returns>
-        public static PolicyEventsListQueryResultsForPolicySetDefinitionQueryOptions PolicyEventsListQueryResultsForPolicySetDefinitionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyEventsListQueryResultsForPolicySetDefinitionQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions"/> instance for mocking. </returns>
-        public static PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
-        public static PolicyEventsListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions PolicyEventsListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyEventsListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyEventsListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
-        public static PolicyEventsListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions PolicyEventsListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyEventsListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForManagementGroupQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesListQueryResultsForManagementGroupQueryOptions PolicyStatesListQueryResultsForManagementGroupQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyStatesListQueryResultsForManagementGroupQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
         }
 
         /// <param name="odataId"> OData entity ID; always set to null since policy state records do not have an entity ID. </param>
@@ -676,16 +455,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForManagementGroupQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesSummarizeForManagementGroupQueryOptions PolicyStatesSummarizeForManagementGroupQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
-        {
-            return new PolicyStatesSummarizeForManagementGroupQueryOptions(top, @from, to, filter, default);
-        }
-
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="odataCount"> OData entity count; represents the number of summaries returned; always set to 1. </param>
         /// <param name="value"> Summarize action results. </param>
@@ -785,239 +554,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static PolicyGroupSummary PolicyGroupSummary(string policyGroupName = default, PolicySummaryResults results = default)
         {
             return new PolicyGroupSummary(policyGroupName, results, default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForSubscriptionQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesListQueryResultsForSubscriptionQueryOptions PolicyStatesListQueryResultsForSubscriptionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyStatesListQueryResultsForSubscriptionQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForSubscriptionQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesSummarizeForSubscriptionQueryOptions PolicyStatesSummarizeForSubscriptionQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
-        {
-            return new PolicyStatesSummarizeForSubscriptionQueryOptions(top, @from, to, filter, default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForResourceGroupQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesListQueryResultsForResourceGroupQueryOptions PolicyStatesListQueryResultsForResourceGroupQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyStatesListQueryResultsForResourceGroupQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForResourceGroupQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesSummarizeForResourceGroupQueryOptions PolicyStatesSummarizeForResourceGroupQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
-        {
-            return new PolicyStatesSummarizeForResourceGroupQueryOptions(top, @from, to, filter, default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to expand components use $expand=components. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForResourceQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesListQueryResultsForResourceQueryOptions PolicyStatesListQueryResultsForResourceQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string expand = default, string skipToken = default)
-        {
-            return new PolicyStatesListQueryResultsForResourceQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                expand,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForResourceQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesSummarizeForResourceQueryOptions PolicyStatesSummarizeForResourceQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
-        {
-            return new PolicyStatesSummarizeForResourceQueryOptions(top, @from, to, filter, default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForPolicySetDefinitionQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesListQueryResultsForPolicySetDefinitionQueryOptions PolicyStatesListQueryResultsForPolicySetDefinitionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyStatesListQueryResultsForPolicySetDefinitionQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForPolicySetDefinitionQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesSummarizeForPolicySetDefinitionQueryOptions PolicyStatesSummarizeForPolicySetDefinitionQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
-        {
-            return new PolicyStatesSummarizeForPolicySetDefinitionQueryOptions(top, @from, to, filter, default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForPolicyDefinitionQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesListQueryResultsForPolicyDefinitionQueryOptions PolicyStatesListQueryResultsForPolicyDefinitionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyStatesListQueryResultsForPolicyDefinitionQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForPolicyDefinitionQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesSummarizeForPolicyDefinitionQueryOptions PolicyStatesSummarizeForPolicyDefinitionQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
-        {
-            return new PolicyStatesSummarizeForPolicyDefinitionQueryOptions(top, @from, to, filter, default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions PolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForSubscriptionLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesSummarizeForSubscriptionLevelPolicyAssignmentQueryOptions PolicyStatesSummarizeForSubscriptionLevelPolicyAssignmentQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
-        {
-            return new PolicyStatesSummarizeForSubscriptionLevelPolicyAssignmentQueryOptions(top, @from, to, filter, default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions PolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string skipToken = default)
-        {
-            return new PolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                skipToken,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.PolicyStatesSummarizeForResourceGroupLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
-        public static PolicyStatesSummarizeForResourceGroupLevelPolicyAssignmentQueryOptions PolicyStatesSummarizeForResourceGroupLevelPolicyAssignmentQueryOptions(int? top = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default)
-        {
-            return new PolicyStatesSummarizeForResourceGroupLevelPolicyAssignmentQueryOptions(top, @from, to, filter, default);
         }
 
         /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
@@ -1130,27 +666,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             pendingFields ??= new ChangeTrackingList<PendingField>();
 
             return new CheckManagementGroupPolicyRestrictionsContent(resourceDetails, (pendingFields ?? new ChangeTrackingList<PendingField>()).ToList(), default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <returns> A new <see cref="Models.ComponentPolicyStatesListQueryResultsForSubscriptionQueryOptions"/> instance for mocking. </returns>
-        public static ComponentPolicyStatesListQueryResultsForSubscriptionQueryOptions ComponentPolicyStatesListQueryResultsForSubscriptionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default)
-        {
-            return new ComponentPolicyStatesListQueryResultsForSubscriptionQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                default);
         }
 
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
@@ -1270,121 +785,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <returns> A new <see cref="Models.ComponentPolicyStatesListQueryResultsForResourceGroupQueryOptions"/> instance for mocking. </returns>
-        public static ComponentPolicyStatesListQueryResultsForResourceGroupQueryOptions ComponentPolicyStatesListQueryResultsForResourceGroupQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default)
-        {
-            return new ComponentPolicyStatesListQueryResultsForResourceGroupQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <param name="expand"> The $expand query parameter. For example, to expand components use $expand=components. </param>
-        /// <returns> A new <see cref="Models.ComponentPolicyStatesListQueryResultsForResourceQueryOptions"/> instance for mocking. </returns>
-        public static ComponentPolicyStatesListQueryResultsForResourceQueryOptions ComponentPolicyStatesListQueryResultsForResourceQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default, string expand = default)
-        {
-            return new ComponentPolicyStatesListQueryResultsForResourceQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                expand,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <returns> A new <see cref="Models.ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions"/> instance for mocking. </returns>
-        public static ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default)
-        {
-            return new ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <returns> A new <see cref="Models.ComponentPolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
-        public static ComponentPolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions ComponentPolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default)
-        {
-            return new ComponentPolicyStatesListQueryResultsForSubscriptionLevelPolicyAssignmentQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="orderBy"> Ordering expression using OData notation. </param>
-        /// <param name="select"> Select expression using OData notation. </param>
-        /// <param name="from"> ISO 8601 formatted timestamp specifying the start time of the interval to query. </param>
-        /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <param name="apply"> OData apply expression for aggregations. </param>
-        /// <returns> A new <see cref="Models.ComponentPolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions"/> instance for mocking. </returns>
-        public static ComponentPolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions ComponentPolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions(int? top = default, string orderBy = default, string @select = default, DateTimeOffset? @from = default, DateTimeOffset? to = default, string filter = default, string apply = default)
-        {
-            return new ComponentPolicyStatesListQueryResultsForResourceGroupLevelPolicyAssignmentQueryOptions(
-                top,
-                orderBy,
-                @select,
-                @from,
-                to,
-                filter,
-                apply,
-                default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.PolicyTrackedResourcesListQueryResultsForManagementGroupQueryOptions"/> instance for mocking. </returns>
-        public static PolicyTrackedResourcesListQueryResultsForManagementGroupQueryOptions PolicyTrackedResourcesListQueryResultsForManagementGroupQueryOptions(int? top = default, string filter = default)
-        {
-            return new PolicyTrackedResourcesListQueryResultsForManagementGroupQueryOptions(top, filter, default);
-        }
-
         /// <param name="trackedResourceId"> The ID of the policy tracked resource. </param>
         /// <param name="policyDetails"> The details of the policy that require the tracked resource. </param>
         /// <param name="createdBy"> The details of the policy triggered deployment that created the tracked resource. </param>
@@ -1428,30 +828,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static TrackedResourceModificationDetails TrackedResourceModificationDetails(PolicyDetails policyDetails = default, ResourceIdentifier deploymentId = default, DateTimeOffset? deploymentOn = default)
         {
             return new TrackedResourceModificationDetails(policyDetails, deploymentId, deploymentOn, default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.PolicyTrackedResourcesListQueryResultsForSubscriptionQueryOptions"/> instance for mocking. </returns>
-        public static PolicyTrackedResourcesListQueryResultsForSubscriptionQueryOptions PolicyTrackedResourcesListQueryResultsForSubscriptionQueryOptions(int? top = default, string filter = default)
-        {
-            return new PolicyTrackedResourcesListQueryResultsForSubscriptionQueryOptions(top, filter, default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.PolicyTrackedResourcesListQueryResultsForResourceGroupQueryOptions"/> instance for mocking. </returns>
-        public static PolicyTrackedResourcesListQueryResultsForResourceGroupQueryOptions PolicyTrackedResourcesListQueryResultsForResourceGroupQueryOptions(int? top = default, string filter = default)
-        {
-            return new PolicyTrackedResourcesListQueryResultsForResourceGroupQueryOptions(top, filter, default);
-        }
-
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="filter"> OData filter expression. </param>
-        /// <returns> A new <see cref="Models.PolicyTrackedResourcesListQueryResultsForResourceQueryOptions"/> instance for mocking. </returns>
-        public static PolicyTrackedResourcesListQueryResultsForResourceQueryOptions PolicyTrackedResourcesListQueryResultsForResourceQueryOptions(int? top = default, string filter = default)
-        {
-            return new PolicyTrackedResourcesListQueryResultsForResourceQueryOptions(top, filter, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyInsights.PolicyRemediationData"/>. </summary>

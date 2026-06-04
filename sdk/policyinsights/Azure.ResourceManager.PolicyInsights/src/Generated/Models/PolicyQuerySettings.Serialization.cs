@@ -13,52 +13,52 @@ using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions. </summary>
-    public partial class ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions : IJsonModel<ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions>
+    /// <summary> Parameter group for OData query options. </summary>
+    public partial class PolicyQuerySettings : IJsonModel<PolicyQuerySettings>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PolicyQuerySettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyQuerySettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions(document.RootElement, options);
+                        return DeserializePolicyQuerySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyQuerySettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyQuerySettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPolicyInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyQuerySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PolicyQuerySettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions IPersistableModel<ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PolicyQuerySettings IPersistableModel<PolicyQuerySettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PolicyQuerySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PolicyQuerySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyQuerySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyQuerySettings)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -93,24 +93,24 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions IJsonModel<ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PolicyQuerySettings IJsonModel<PolicyQuerySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PolicyQuerySettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyQuerySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyQuerySettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions(document.RootElement, options);
+            return DeserializePolicyQuerySettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions DeserializeComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions(JsonElement element, ModelReaderWriterOptions options)
+        internal static PolicyQuerySettings DeserializePolicyQuerySettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,6 +123,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             DateTimeOffset? to = default;
             string filter = default;
             string apply = default;
+            string expand = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +133,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComponentPolicyStatesListQueryResultsForPolicyDefinitionQueryOptions(
+            return new PolicyQuerySettings(
                 top,
                 orderBy,
                 @select,
@@ -139,6 +141,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 to,
                 filter,
                 apply,
+                expand,
+                skipToken,
                 additionalBinaryDataProperties);
         }
     }

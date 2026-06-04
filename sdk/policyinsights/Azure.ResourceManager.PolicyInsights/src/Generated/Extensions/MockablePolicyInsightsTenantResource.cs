@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SlimPolicyMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SlimPolicyMetadata> GetAllAsync(PolicyMetadataListQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SlimPolicyMetadata> GetAllAsync(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SlimPolicyMetadata"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SlimPolicyMetadata> GetAll(PolicyMetadataListQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SlimPolicyMetadata> GetAll(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

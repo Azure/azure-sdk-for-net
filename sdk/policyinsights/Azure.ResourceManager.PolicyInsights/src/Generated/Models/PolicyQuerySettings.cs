@@ -10,18 +10,18 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions. </summary>
-    public partial class PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions
+    /// <summary> Parameter group for OData query options. </summary>
+    public partial class PolicyQuerySettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions"/>. </summary>
-        public PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions()
+        /// <summary> Initializes a new instance of <see cref="PolicyQuerySettings"/>. </summary>
+        public PolicyQuerySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyQuerySettings"/>. </summary>
         /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="orderBy"> Ordering expression using OData notation. </param>
         /// <param name="select"> Select expression using OData notation. </param>
@@ -29,9 +29,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="to"> ISO 8601 formatted timestamp specifying the end time of the interval to query. </param>
         /// <param name="filter"> OData filter expression. </param>
         /// <param name="apply"> OData apply expression for aggregations. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to expand components use $expand=components. </param>
         /// <param name="skipToken"> Skiptoken provided if a previous response returned a partial result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyEventsListQueryResultsForPolicyDefinitionQueryOptions(int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyQuerySettings(int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string expand, string skipToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Top = top;
             OrderBy = orderBy;
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             To = to;
             Filter = filter;
             Apply = apply;
+            Expand = expand;
             SkipToken = skipToken;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -64,6 +66,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> OData apply expression for aggregations. </summary>
         public string Apply { get; set; }
+
+        /// <summary> The $expand query parameter. For example, to expand components use $expand=components. </summary>
+        public string Expand { get; set; }
 
         /// <summary> Skiptoken provided if a previous response returned a partial result. </summary>
         public string SkipToken { get; set; }

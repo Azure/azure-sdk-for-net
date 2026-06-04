@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForResourceGroupAsync(PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForResourceGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForResourceGroupAsync(PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForResourceGroup(PolicyEventType policyEventsResource, PolicyEventsListQueryResultsForResourceGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyEvent> GetQueryResultsForResourceGroup(PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForResourceGroupAsync(PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForResourceGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyState> GetQueryResultsForResourceGroupAsync(PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForResourceGroup(PolicyStateType policyStatesResource, PolicyStatesListQueryResultsForResourceGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyState> GetQueryResultsForResourceGroup(PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="policyStatesSummaryResource"></param>
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SummarizeResults>> SummarizeForResourceGroupAsync(PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForResourceGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SummarizeResults>> SummarizeForResourceGroupAsync(PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsResourceGroupResource.SummarizeForResourceGroup");
             scope.Start();
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="policyStatesSummaryResource"></param>
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SummarizeResults> SummarizeForResourceGroup(PolicyStateSummaryType policyStatesSummaryResource, PolicyStatesSummarizeForResourceGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<SummarizeResults> SummarizeForResourceGroup(PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsResourceGroupResource.SummarizeForResourceGroup");
             scope.Start();
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="componentPolicyStatesResource"></param>
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForResourceGroupAsync(ComponentPolicyStatesResource componentPolicyStatesResource, ComponentPolicyStatesListQueryResultsForResourceGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForResourceGroupAsync(ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ComponentPolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsResourceGroupResource.GetQueryResultsForResourceGroup");
             scope.Start();
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="componentPolicyStatesResource"></param>
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForResourceGroup(ComponentPolicyStatesResource componentPolicyStatesResource, ComponentPolicyStatesListQueryResultsForResourceGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForResourceGroup(ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ComponentPolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsResourceGroupResource.GetQueryResultsForResourceGroup");
             scope.Start();
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetQueryResultsForResourceGroupAsync(PolicyTrackedResourceType policyTrackedResourcesResource, PolicyTrackedResourcesListQueryResultsForResourceGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetQueryResultsForResourceGroupAsync(PolicyTrackedResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyTrackedResourceRecord> GetQueryResultsForResourceGroup(PolicyTrackedResourceType policyTrackedResourcesResource, PolicyTrackedResourcesListQueryResultsForResourceGroupQueryOptions queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyTrackedResourceRecord> GetQueryResultsForResourceGroup(PolicyTrackedResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
