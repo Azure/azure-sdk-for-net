@@ -6189,7 +6189,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
-        /// <returns> A new <see cref="Models.SharedGalleryData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Compute.SharedGalleryData"/> instance for mocking. </returns>
         public static SharedGalleryData SharedGalleryData(string name = default, AzureLocation? location = default, string uniqueId = default, IReadOnlyDictionary<string, string> artifactTags = default)
         {
             return new SharedGalleryData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), artifactTags is null ? default : new SharedGalleryProperties(artifactTags ?? new ChangeTrackingDictionary<string, string>(), default));
@@ -6235,7 +6235,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="eula"> End-user license agreement for the current community gallery image. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
         /// <param name="disallowedDiskTypes"> A list of disk types. </param>
-        /// <returns> A new <see cref="Models.SharedGalleryImageData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Compute.SharedGalleryImageData"/> instance for mocking. </returns>
         public static SharedGalleryImageData SharedGalleryImageData(string name = default, AzureLocation? location = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
         {
             return new SharedGalleryImageData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), osType is null && osState is null && endOfLifeOn is null && imageIdentifier is null && recommended is null && disallowedDiskTypes is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && artifactTags is null ? default : new SharedGalleryImageProperties(
@@ -6263,7 +6263,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
-        /// <returns> A new <see cref="Models.SharedGalleryImageVersionData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Compute.SharedGalleryImageVersionData"/> instance for mocking. </returns>
         public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = default, AzureLocation? location = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, IDictionary<string, string> artifactTags = default)
         {
             return new SharedGalleryImageVersionData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && artifactTags is null ? default : new SharedGalleryImageVersionProperties(
@@ -6317,7 +6317,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <param name="communityMetadata"> The metadata of community gallery. </param>
-        /// <returns> A new <see cref="Models.CommunityGalleryData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Compute.CommunityGalleryData"/> instance for mocking. </returns>
         public static CommunityGalleryData CommunityGalleryData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, CommunityGalleryMetadata communityMetadata = default)
         {
             return new CommunityGalleryData(
@@ -6383,7 +6383,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
         /// <param name="disallowedDiskTypes"> A list of disk types. </param>
-        /// <returns> A new <see cref="Models.CommunityGalleryImageData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Compute.CommunityGalleryImageData"/> instance for mocking. </returns>
         public static CommunityGalleryImageData CommunityGalleryImageData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, CommunityGalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, string disclaimer = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
         {
             return new CommunityGalleryImageData(
@@ -6429,7 +6429,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
-        /// <returns> A new <see cref="Models.CommunityGalleryImageVersionData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Compute.CommunityGalleryImageVersionData"/> instance for mocking. </returns>
         public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IDictionary<string, string> artifactTags = default)
         {
             return new CommunityGalleryImageVersionData(
@@ -8550,6 +8550,91 @@ namespace Azure.ResourceManager.Compute.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryImageData"/>. </summary>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="uniqueId"> The unique id of this community gallery. </param>
+        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: **Windows,** **Linux.**. </param>
+        /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
+        /// <param name="endOfLifeOn"> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="imageIdentifier"> This is the community gallery image definition identifier. </param>
+        /// <param name="recommended"> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </param>
+        /// <param name="disallowedDiskTypes"> Describes the disallowed disk types. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
+        /// <param name="features"> A list of gallery image features. </param>
+        /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
+        /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
+        /// <param name="privacyStatementUri"> Privacy statement URI for the current community gallery image. </param>
+        /// <param name="eula"> The end-user license agreement for the current community gallery image. </param>
+        /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
+        /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
+        /// <returns> A new <see cref="Compute.CommunityGalleryImageData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunityGalleryImageData CommunityGalleryImageData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, CommunityGalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, IEnumerable<string> disallowedDiskTypes = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, string disclaimer = default, IReadOnlyDictionary<string, string> artifactTags = default)
+        {
+            return new CommunityGalleryImageData(
+                name,
+                location,
+                resourceType,
+                uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, default),
+                default,
+                osType is null && osState is null && endOfLifeOn is null && imageIdentifier is null && recommended is null && disallowedDiskTypes is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && disclaimer is null && artifactTags is null ? default : new CommunityGalleryImageProperties(
+                    osType.GetValueOrDefault(),
+                    osState.GetValueOrDefault(),
+                    endOfLifeOn,
+                    imageIdentifier,
+                    recommended,
+                    new Disallowed((disallowedDiskTypes ?? new ChangeTrackingList<string>()).ToList(), default),
+                    hyperVGeneration,
+                    (features ?? new ChangeTrackingList<GalleryImageFeature>()).ToList(),
+                    purchasePlan,
+                    architecture,
+                    privacyStatementUri,
+                    eula,
+                    disclaimer,
+                    new ChangeTrackingDictionary<string, string>(artifactTags ?? new ChangeTrackingDictionary<string, string>()),
+                    default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Compute.SharedGalleryImageData"/>. </summary>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="uniqueId"> The unique id of this shared gallery. </param>
+        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: **Windows,** **Linux.**. </param>
+        /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
+        /// <param name="endOfLifeOn"> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="identifier"> This is the gallery image definition identifier. </param>
+        /// <param name="recommended"> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </param>
+        /// <param name="disallowedDiskTypes"> Describes the disallowed disk types. </param>
+        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
+        /// <param name="features"> A list of gallery image features. </param>
+        /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
+        /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
+        /// <param name="privacyStatementUri"> Privacy statement uri for the current community gallery image. </param>
+        /// <param name="eula"> End-user license agreement for the current community gallery image. </param>
+        /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
+        /// <returns> A new <see cref="Compute.SharedGalleryImageData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SharedGalleryImageData SharedGalleryImageData(string name = default, AzureLocation? location = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier identifier = default, RecommendedMachineConfiguration recommended = default, IEnumerable<string> disallowedDiskTypes = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, IReadOnlyDictionary<string, string> artifactTags = default)
+        {
+            return new SharedGalleryImageData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), osType is null && osState is null && endOfLifeOn is null && recommended is null && disallowedDiskTypes is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && artifactTags is null ? default : new SharedGalleryImageProperties(
+                osType.GetValueOrDefault(),
+                osState.GetValueOrDefault(),
+                endOfLifeOn,
+                default,
+                recommended,
+                new Disallowed((disallowedDiskTypes ?? new ChangeTrackingList<string>()).ToList(), default),
+                hyperVGeneration,
+                (features ?? new ChangeTrackingList<GalleryImageFeature>()).ToList(),
+                purchasePlan,
+                architecture,
+                privacyStatementUri,
+                eula,
+                new ChangeTrackingDictionary<string, string>(artifactTags ?? new ChangeTrackingDictionary<string, string>()),
+                default));
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.GalleryPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -9970,6 +10055,50 @@ namespace Azure.ResourceManager.Compute.Models
                     default,
                     default),
                 default);
+        }
+
+        /// <param name="name"></param>
+        /// <param name="location"></param>
+        /// <param name="uniqueId"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SharedGalleryData SharedGalleryData(string name, AzureLocation? location, string uniqueId)
+        {
+            return new SharedGalleryData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), default);
+        }
+
+        /// <param name="name"></param>
+        /// <param name="location"></param>
+        /// <param name="uniqueId"></param>
+        /// <param name="osType"></param>
+        /// <param name="osState"></param>
+        /// <param name="endOfLifeOn"></param>
+        /// <param name="identifier"></param>
+        /// <param name="recommended"></param>
+        /// <param name="disallowedDiskTypes"></param>
+        /// <param name="hyperVGeneration"></param>
+        /// <param name="features"></param>
+        /// <param name="purchasePlan"></param>
+        /// <param name="architecture"></param>
+        /// <param name="privacyStatementUri"></param>
+        /// <param name="eula"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SharedGalleryImageData SharedGalleryImageData(string name, AzureLocation? location, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, IEnumerable<string> disallowedDiskTypes, HyperVGeneration? hyperVGeneration, IEnumerable<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula)
+        {
+            return new SharedGalleryImageData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), osType is null && osState is null && endOfLifeOn is null && recommended is null && disallowedDiskTypes is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null ? default : new SharedGalleryImageProperties(
+                osType.GetValueOrDefault(),
+                osState.GetValueOrDefault(),
+                endOfLifeOn,
+                default,
+                recommended,
+                new Disallowed((disallowedDiskTypes ?? new ChangeTrackingList<string>()).ToList(), default),
+                hyperVGeneration,
+                (features ?? new ChangeTrackingList<GalleryImageFeature>()).ToList(),
+                purchasePlan,
+                architecture,
+                privacyStatementUri,
+                eula,
+                default,
+                default));
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.GalleryData"/>. </summary>

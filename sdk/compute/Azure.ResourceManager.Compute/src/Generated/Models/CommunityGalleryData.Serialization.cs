@@ -11,9 +11,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the Community Gallery that you want to create or update. </summary>
     public partial class CommunityGalleryData : PirCommunityGalleryResourceData, IJsonModel<CommunityGalleryData>

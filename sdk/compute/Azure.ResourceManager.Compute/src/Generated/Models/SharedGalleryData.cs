@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the Shared Gallery that you want to create or update. </summary>
     public partial class SharedGalleryData : PirSharedGalleryResourceData

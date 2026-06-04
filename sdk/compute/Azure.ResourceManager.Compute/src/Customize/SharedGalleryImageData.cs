@@ -5,9 +5,14 @@
 
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Azure.ResourceManager.Compute
 {
+    // Backward compatibility: the previously shipped SDK exposed this data type in the root namespace.
+    // The generated TypeSpec model is otherwise placed under Models; CodeGenType keeps the public API shape.
+    [CodeGenType("SharedGalleryImageData")]
     public partial class SharedGalleryImageData
     {
         // we also must add back this property to avoid breaking changes, but its payload never have this property.

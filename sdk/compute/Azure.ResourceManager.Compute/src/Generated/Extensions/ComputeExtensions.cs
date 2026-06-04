@@ -2805,7 +2805,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<Models.SharedGalleryData>> GetSharedGalleryDataAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SharedGalleryData>> GetSharedGalleryDataAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -2824,7 +2824,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryUniqueName"> The unique name of the Shared Gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<Models.SharedGalleryData> GetSharedGalleryData(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        public static Response<SharedGalleryData> GetSharedGalleryData(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -2843,8 +2843,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.SharedGalleryData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.SharedGalleryData> GetSharedGalleriesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedGalleryData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SharedGalleryData> GetSharedGalleriesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -2863,8 +2863,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.SharedGalleryData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.SharedGalleryData> GetSharedGalleries(this SubscriptionResource subscriptionResource, AzureLocation location, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedGalleryData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SharedGalleryData> GetSharedGalleries(this SubscriptionResource subscriptionResource, AzureLocation location, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -2884,7 +2884,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<Models.SharedGalleryImageData>> GetSharedGalleryImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SharedGalleryImageData>> GetSharedGalleryImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -2904,7 +2904,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<Models.SharedGalleryImageData> GetSharedGalleryImage(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
+        public static Response<SharedGalleryImageData> GetSharedGalleryImage(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -2924,8 +2924,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.SharedGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.SharedGalleryImageData> GetSharedGalleryImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SharedGalleryImageData> GetSharedGalleryImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -2945,8 +2945,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.SharedGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.SharedGalleryImageData> GetSharedGalleryImages(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SharedGalleryImageData> GetSharedGalleryImages(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -2967,7 +2967,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<Models.SharedGalleryImageVersionData>> GetSharedGalleryImageVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<SharedGalleryImageVersionData>> GetSharedGalleryImageVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -2988,7 +2988,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<Models.SharedGalleryImageVersionData> GetSharedGalleryImageVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public static Response<SharedGalleryImageVersionData> GetSharedGalleryImageVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3009,8 +3009,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.SharedGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.SharedGalleryImageVersionData> GetSharedGalleryImageVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SharedGalleryImageVersionData> GetSharedGalleryImageVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3031,8 +3031,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.SharedGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.SharedGalleryImageVersionData> GetSharedGalleryImageVersions(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SharedGalleryImageVersionData> GetSharedGalleryImageVersions(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3051,7 +3051,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<Models.CommunityGalleryData>> GetCommunityGalleryDataAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CommunityGalleryData>> GetCommunityGalleryDataAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3070,7 +3070,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<Models.CommunityGalleryData> GetCommunityGalleryData(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        public static Response<CommunityGalleryData> GetCommunityGalleryData(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3090,7 +3090,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<Models.CommunityGalleryImageData>> GetCommunityGalleryImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CommunityGalleryImageData>> GetCommunityGalleryImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3110,7 +3110,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<Models.CommunityGalleryImageData> GetCommunityGalleryImage(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public static Response<CommunityGalleryImageData> GetCommunityGalleryImage(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3129,8 +3129,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.CommunityGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.CommunityGalleryImageData> GetCommunityGalleryImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommunityGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CommunityGalleryImageData> GetCommunityGalleryImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3149,8 +3149,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publicGalleryName"> The public name of the community gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.CommunityGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.CommunityGalleryImageData> GetCommunityGalleryImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommunityGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CommunityGalleryImageData> GetCommunityGalleryImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3171,7 +3171,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<Models.CommunityGalleryImageVersionData>> GetCommunityGalleryImageVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<CommunityGalleryImageVersionData>> GetCommunityGalleryImageVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3192,7 +3192,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageVersionName"> The name of the community gallery image version. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<Models.CommunityGalleryImageVersionData> GetCommunityGalleryImageVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public static Response<CommunityGalleryImageVersionData> GetCommunityGalleryImageVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3212,8 +3212,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.CommunityGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.CommunityGalleryImageVersionData> GetCommunityGalleryImageVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommunityGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CommunityGalleryImageVersionData> GetCommunityGalleryImageVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3233,8 +3233,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.CommunityGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.CommunityGalleryImageVersionData> GetCommunityGalleryImageVersions(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommunityGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CommunityGalleryImageVersionData> GetCommunityGalleryImageVersions(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

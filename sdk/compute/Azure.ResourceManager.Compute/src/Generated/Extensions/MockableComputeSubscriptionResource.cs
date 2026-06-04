@@ -2637,7 +2637,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Models.SharedGalleryData>> GetSharedGalleryDataAsync(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedGalleryData>> GetSharedGalleryDataAsync(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
 
@@ -2651,7 +2651,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 };
                 HttpMessage message = SharedGalleriesRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, location, galleryUniqueName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<Models.SharedGalleryData> response = Response.FromValue(Models.SharedGalleryData.FromResponse(result), result);
+                Response<SharedGalleryData> response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -2687,7 +2687,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Models.SharedGalleryData> GetSharedGalleryData(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
+        public virtual Response<SharedGalleryData> GetSharedGalleryData(AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
 
@@ -2701,7 +2701,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 };
                 HttpMessage message = SharedGalleriesRestClient.CreateGetSharedGalleryDataRequest(Id.SubscriptionId, location, galleryUniqueName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<Models.SharedGalleryData> response = Response.FromValue(Models.SharedGalleryData.FromResponse(result), result);
+                Response<SharedGalleryData> response = Response.FromValue(SharedGalleryData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -2735,8 +2735,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.SharedGalleryData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.SharedGalleryData> GetSharedGalleriesAsync(AzureLocation location, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedGalleryData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SharedGalleryData> GetSharedGalleriesAsync(AzureLocation location, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -2771,8 +2771,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Models.SharedGalleryData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.SharedGalleryData> GetSharedGalleries(AzureLocation location, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedGalleryData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SharedGalleryData> GetSharedGalleries(AzureLocation location, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -2810,7 +2810,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Models.SharedGalleryImageData>> GetSharedGalleryImageAsync(AzureLocation location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedGalleryImageData>> GetSharedGalleryImageAsync(AzureLocation location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
@@ -2825,7 +2825,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 };
                 HttpMessage message = SharedGalleryImagesRestClient.CreateGetSharedGalleryImageRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<Models.SharedGalleryImageData> response = Response.FromValue(Models.SharedGalleryImageData.FromResponse(result), result);
+                Response<SharedGalleryImageData> response = Response.FromValue(SharedGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -2862,7 +2862,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Models.SharedGalleryImageData> GetSharedGalleryImage(AzureLocation location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual Response<SharedGalleryImageData> GetSharedGalleryImage(AzureLocation location, string galleryUniqueName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
@@ -2877,7 +2877,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 };
                 HttpMessage message = SharedGalleryImagesRestClient.CreateGetSharedGalleryImageRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<Models.SharedGalleryImageData> response = Response.FromValue(Models.SharedGalleryImageData.FromResponse(result), result);
+                Response<SharedGalleryImageData> response = Response.FromValue(SharedGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -2914,8 +2914,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Models.SharedGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.SharedGalleryImageData> GetSharedGalleryImagesAsync(AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SharedGalleryImageData> GetSharedGalleryImagesAsync(AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
 
@@ -2956,8 +2956,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Models.SharedGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.SharedGalleryImageData> GetSharedGalleryImages(AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SharedGalleryImageData> GetSharedGalleryImages(AzureLocation location, string galleryUniqueName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
 
@@ -2999,7 +2999,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Models.SharedGalleryImageVersionData>> GetSharedGalleryImageVersionAsync(AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharedGalleryImageVersionData>> GetSharedGalleryImageVersionAsync(AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
@@ -3015,7 +3015,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 };
                 HttpMessage message = SharedGalleryImageVersionsRestClient.CreateGetSharedGalleryImageVersionRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, galleryImageVersionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<Models.SharedGalleryImageVersionData> response = Response.FromValue(Models.SharedGalleryImageVersionData.FromResponse(result), result);
+                Response<SharedGalleryImageVersionData> response = Response.FromValue(SharedGalleryImageVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -3053,7 +3053,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Models.SharedGalleryImageVersionData> GetSharedGalleryImageVersion(AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<SharedGalleryImageVersionData> GetSharedGalleryImageVersion(AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
@@ -3069,7 +3069,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 };
                 HttpMessage message = SharedGalleryImageVersionsRestClient.CreateGetSharedGalleryImageVersionRequest(Id.SubscriptionId, location, galleryUniqueName, galleryImageName, galleryImageVersionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<Models.SharedGalleryImageVersionData> response = Response.FromValue(Models.SharedGalleryImageVersionData.FromResponse(result), result);
+                Response<SharedGalleryImageVersionData> response = Response.FromValue(SharedGalleryImageVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -3107,8 +3107,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Models.SharedGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.SharedGalleryImageVersionData> GetSharedGalleryImageVersionsAsync(AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SharedGalleryImageVersionData> GetSharedGalleryImageVersionsAsync(AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
@@ -3152,8 +3152,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Models.SharedGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.SharedGalleryImageVersionData> GetSharedGalleryImageVersions(AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SharedGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SharedGalleryImageVersionData> GetSharedGalleryImageVersions(AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
@@ -3195,7 +3195,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Models.CommunityGalleryData>> GetCommunityGalleryDataAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunityGalleryData>> GetCommunityGalleryDataAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
@@ -3209,7 +3209,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 };
                 HttpMessage message = CommunityGalleriesRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<Models.CommunityGalleryData> response = Response.FromValue(Models.CommunityGalleryData.FromResponse(result), result);
+                Response<CommunityGalleryData> response = Response.FromValue(CommunityGalleryData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -3245,7 +3245,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Models.CommunityGalleryData> GetCommunityGalleryData(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        public virtual Response<CommunityGalleryData> GetCommunityGalleryData(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
@@ -3259,7 +3259,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 };
                 HttpMessage message = CommunityGalleriesRestClient.CreateGetCommunityGalleryDataRequest(Id.SubscriptionId, location, publicGalleryName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<Models.CommunityGalleryData> response = Response.FromValue(Models.CommunityGalleryData.FromResponse(result), result);
+                Response<CommunityGalleryData> response = Response.FromValue(CommunityGalleryData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -3296,7 +3296,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Models.CommunityGalleryImageData>> GetCommunityGalleryImageAsync(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunityGalleryImageData>> GetCommunityGalleryImageAsync(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
@@ -3311,7 +3311,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 };
                 HttpMessage message = CommunityGalleryImagesRestClient.CreateGetCommunityGalleryImageRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<Models.CommunityGalleryImageData> response = Response.FromValue(Models.CommunityGalleryImageData.FromResponse(result), result);
+                Response<CommunityGalleryImageData> response = Response.FromValue(CommunityGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -3348,7 +3348,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Models.CommunityGalleryImageData> GetCommunityGalleryImage(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        public virtual Response<CommunityGalleryImageData> GetCommunityGalleryImage(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
@@ -3363,7 +3363,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 };
                 HttpMessage message = CommunityGalleryImagesRestClient.CreateGetCommunityGalleryImageRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<Models.CommunityGalleryImageData> response = Response.FromValue(Models.CommunityGalleryImageData.FromResponse(result), result);
+                Response<CommunityGalleryImageData> response = Response.FromValue(CommunityGalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -3399,8 +3399,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Models.CommunityGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.CommunityGalleryImageData> GetCommunityGalleryImagesAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommunityGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommunityGalleryImageData> GetCommunityGalleryImagesAsync(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
@@ -3439,8 +3439,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Models.CommunityGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.CommunityGalleryImageData> GetCommunityGalleryImages(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommunityGalleryImageData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommunityGalleryImageData> GetCommunityGalleryImages(AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
 
@@ -3481,7 +3481,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Models.CommunityGalleryImageVersionData>> GetCommunityGalleryImageVersionAsync(AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommunityGalleryImageVersionData>> GetCommunityGalleryImageVersionAsync(AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
@@ -3497,7 +3497,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 };
                 HttpMessage message = CommunityGalleryImageVersionsRestClient.CreateGetCommunityGalleryImageVersionRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName, galleryImageVersionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<Models.CommunityGalleryImageVersionData> response = Response.FromValue(Models.CommunityGalleryImageVersionData.FromResponse(result), result);
+                Response<CommunityGalleryImageVersionData> response = Response.FromValue(CommunityGalleryImageVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -3535,7 +3535,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Models.CommunityGalleryImageVersionData> GetCommunityGalleryImageVersion(AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        public virtual Response<CommunityGalleryImageVersionData> GetCommunityGalleryImageVersion(AzureLocation location, string publicGalleryName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
@@ -3551,7 +3551,7 @@ namespace Azure.ResourceManager.Compute.Mocking
                 };
                 HttpMessage message = CommunityGalleryImageVersionsRestClient.CreateGetCommunityGalleryImageVersionRequest(Id.SubscriptionId, location, publicGalleryName, galleryImageName, galleryImageVersionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<Models.CommunityGalleryImageVersionData> response = Response.FromValue(Models.CommunityGalleryImageVersionData.FromResponse(result), result);
+                Response<CommunityGalleryImageVersionData> response = Response.FromValue(CommunityGalleryImageVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -3588,8 +3588,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Models.CommunityGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.CommunityGalleryImageVersionData> GetCommunityGalleryImageVersionsAsync(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommunityGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommunityGalleryImageVersionData> GetCommunityGalleryImageVersionsAsync(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
@@ -3631,8 +3631,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publicGalleryName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Models.CommunityGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.CommunityGalleryImageVersionData> GetCommunityGalleryImageVersions(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommunityGalleryImageVersionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommunityGalleryImageVersionData> GetCommunityGalleryImageVersions(AzureLocation location, string publicGalleryName, string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publicGalleryName, nameof(publicGalleryName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
