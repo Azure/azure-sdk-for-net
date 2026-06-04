@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -23,5 +24,16 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier Id { get; internal set; }
+
+        // Backward compatibility: the previously shipped SDK exposed ArtifactTags as IReadOnlyDictionary.
+        // Suppress the generated IDictionary property and keep the read-only return type to avoid a binary break.
+        /// <summary> The artifact tags of a community gallery resource. </summary>
+        public IReadOnlyDictionary<string, string> ArtifactTags
+        {
+            get
+            {
+                return Properties is null ? new ChangeTrackingDictionary<string, string>() : (IReadOnlyDictionary<string, string>)Properties.ArtifactTags;
+            }
+        }
     }
 }

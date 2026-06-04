@@ -69,14 +69,5 @@ namespace Azure.ResourceManager.Compute
                 return Properties is null ? default : Properties.StorageProfile;
             }
         }
-
-        /// <summary> The artifact tags of a shared gallery resource. </summary>
-        public IDictionary<string, string> ArtifactTags
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ArtifactTags;
-            }
-        }
     }
 }
