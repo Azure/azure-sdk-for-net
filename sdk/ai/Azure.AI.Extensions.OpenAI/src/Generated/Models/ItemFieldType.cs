@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal readonly partial struct ItemFieldType : IEquatable<ItemFieldType>
+    public readonly partial struct ItemFieldType : IEquatable<ItemFieldType>
     {
         private readonly string _value;
         private const string MessageValue = "message";
