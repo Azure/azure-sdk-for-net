@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListVirtualWANsResult"/>. </summary>
-        internal ListVirtualWANsResult()
+        /// <param name="value"> The VirtualWAN items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ListVirtualWANsResult(IEnumerable<VirtualWanData> value)
         {
-            Value = new ChangeTrackingList<VirtualWanData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListVirtualWANsResult"/>. </summary>
-        /// <param name="value"> List of VirtualWANs. </param>
-        /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
+        /// <param name="value"> The VirtualWAN items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListVirtualWANsResult(IReadOnlyList<VirtualWanData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListVirtualWANsResult(IReadOnlyList<VirtualWanData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of VirtualWANs. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVirtualWANsResult"/> for deserialization. </summary>
+        internal ListVirtualWANsResult()
+        {
+        }
+
+        /// <summary> The VirtualWAN items on this page. </summary>
         public IReadOnlyList<VirtualWanData> Value { get; }
-        /// <summary> URL to get the next set of operation list results if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

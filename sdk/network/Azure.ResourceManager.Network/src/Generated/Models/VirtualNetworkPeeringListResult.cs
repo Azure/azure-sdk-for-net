@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListSubnets API service call. Retrieves all subnets that belong to a virtual network. </summary>
+    /// <summary> The response of a VirtualNetworkPeering list operation. </summary>
     internal partial class VirtualNetworkPeeringListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkPeeringListResult"/>. </summary>
-        internal VirtualNetworkPeeringListResult()
+        /// <param name="value"> The VirtualNetworkPeering items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal VirtualNetworkPeeringListResult(IEnumerable<CommonVirtualNetworkPeeringData> value)
         {
-            Value = new ChangeTrackingList<VirtualNetworkPeeringData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkPeeringListResult"/>. </summary>
-        /// <param name="value"> The peerings in a virtual network. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The VirtualNetworkPeering items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkPeeringListResult(IReadOnlyList<VirtualNetworkPeeringData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualNetworkPeeringListResult(IReadOnlyList<CommonVirtualNetworkPeeringData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The peerings in a virtual network. </summary>
-        public IReadOnlyList<VirtualNetworkPeeringData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkPeeringListResult"/> for deserialization. </summary>
+        internal VirtualNetworkPeeringListResult()
+        {
+        }
+
+        /// <summary> The VirtualNetworkPeering items on this page. </summary>
+        public IReadOnlyList<CommonVirtualNetworkPeeringData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string VirtualNetworkGatewayValue = "VirtualNetworkGateway";
         private const string VnetLocalValue = "VnetLocal";
         private const string HyperNetGatewayValue = "HyperNetGateway";
+        private const string VirtualApplianceEcmpValue = "VirtualApplianceEcmp";
         private const string NoneValue = "None";
 
         /// <summary> Internet. </summary>
@@ -39,7 +40,9 @@ namespace Azure.ResourceManager.Network.Models
         public static NextHopType VnetLocal { get; } = new NextHopType(VnetLocalValue);
         /// <summary> HyperNetGateway. </summary>
         public static NextHopType HyperNetGateway { get; } = new NextHopType(HyperNetGatewayValue);
-        /// <summary> None. </summary>
+        /// <summary> Routes traffic to virtual appliances using Equal-Cost Multi-Path (ECMP) routing with multiple next hop IP addresses. </summary>
+        public static NextHopType VirtualApplianceEcmp { get; } = new NextHopType(VirtualApplianceEcmpValue);
+        /// <summary> No next hop type. </summary>
         public static NextHopType None { get; } = new NextHopType(NoneValue);
         /// <summary> Determines if two <see cref="NextHopType"/> values are the same. </summary>
         public static bool operator ==(NextHopType left, NextHopType right) => left.Equals(right);

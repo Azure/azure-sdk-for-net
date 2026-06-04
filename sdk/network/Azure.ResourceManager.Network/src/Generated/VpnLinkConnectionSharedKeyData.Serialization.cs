@@ -65,9 +65,9 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             VpnLinkConnectionSharedKeyProperties properties = default;
-            ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            string type = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,15 +81,6 @@ namespace Azure.ResourceManager.Network
                     properties = VpnLinkConnectionSharedKeyProperties.DeserializeVpnLinkConnectionSharedKeyProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("id"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -97,11 +88,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -110,7 +102,7 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VpnLinkConnectionSharedKeyData(id, name, type, serializedAdditionalRawData, properties);
+            return new VpnLinkConnectionSharedKeyData(id, serializedAdditionalRawData, name, type, properties);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -173,7 +165,15 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 

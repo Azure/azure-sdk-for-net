@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateApplicationGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ApplicationGatewayCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ApplicationGatewayCreate.json
             // this example is just showing the usage of "ApplicationGateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Samples
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity1")] = new UserAssignedIdentity()
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity1")] = new UserAssignedIdentity()
 },
                 },
                 Sku = new ApplicationGatewaySku
@@ -58,100 +58,101 @@ namespace Azure.ResourceManager.Network.Samples
                     Tier = ApplicationGatewayTier.StandardV2,
                     Capacity = 3,
                 },
-                GatewayIPConfigurations = {new ApplicationGatewayIPConfiguration
+                GatewayIPConfigurations = {new CommonApplicationGatewayIPConfiguration
 {
-SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet/subnets/appgwsubnet"),
 Name = "appgwipc",
+SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet/subnets/appgwsubnet"),
 }},
                 TrustedRootCertificates = {new ApplicationGatewayTrustedRootCertificate
 {
-Data = BinaryData.FromObjectAsJson("****"),
 Name = "rootcert",
+Data = BinaryData.FromObjectAsJson("****"),
 }, new ApplicationGatewayTrustedRootCertificate
 {
-KeyVaultSecretId = "https://kv/secret",
 Name = "rootcert1",
+KeyVaultSecretId = "https://kv/secret",
 }},
                 TrustedClientCertificates = {new ApplicationGatewayTrustedClientCertificate
 {
-Data = BinaryData.FromObjectAsJson("****"),
 Name = "clientcert",
+Data = BinaryData.FromObjectAsJson("****"),
 }},
                 SslCertificates = {new ApplicationGatewaySslCertificate
 {
+Name = "sslcert",
 Data = BinaryData.FromObjectAsJson("****"),
 Password = "****",
-Name = "sslcert",
 }, new ApplicationGatewaySslCertificate
 {
-KeyVaultSecretId = "https://kv/secret",
 Name = "sslcert2",
+KeyVaultSecretId = "https://kv/secret",
 }},
                 FrontendIPConfigurations = {new ApplicationGatewayFrontendIPConfiguration
 {
-PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/appgwpip"),
 Name = "appgwfip",
+PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/appgwpip"),
 }},
                 FrontendPorts = {new ApplicationGatewayFrontendPort
 {
-Port = 443,
 Name = "appgwfp",
+Port = 443,
 }, new ApplicationGatewayFrontendPort
 {
-Port = 80,
 Name = "appgwfp80",
+Port = 80,
 }},
-                BackendAddressPools = {new ApplicationGatewayBackendAddressPool
+                BackendAddressPools = {new CommonApplicationGatewayBackendAddressPool
 {
-BackendAddresses = {new ApplicationGatewayBackendAddress
+Name = "appgwpool",
+BackendAddresses = {new CommonApplicationGatewayBackendAddress
 {
 IPAddress = "10.0.1.1",
-}, new ApplicationGatewayBackendAddress
+}, new CommonApplicationGatewayBackendAddress
 {
 IPAddress = "10.0.1.2",
 }},
-Name = "appgwpool",
-}, new ApplicationGatewayBackendAddressPool
+}, new CommonApplicationGatewayBackendAddressPool
 {
-BackendAddresses = {new ApplicationGatewayBackendAddress
+Name = "appgwpool1",
+BackendAddresses = {new CommonApplicationGatewayBackendAddress
 {
 IPAddress = "10.0.0.1",
-}, new ApplicationGatewayBackendAddress
+}, new CommonApplicationGatewayBackendAddress
 {
 IPAddress = "10.0.0.2",
 }},
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendAddressPools/appgwpool1"),
-Name = "appgwpool1",
+Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendAddressPools/appgwpool1",
 }},
                 BackendHttpSettingsCollection = {new ApplicationGatewayBackendHttpSettings
 {
+Name = "appgwbhs",
 Port = 80,
 Protocol = ApplicationGatewayProtocol.Http,
 CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Disabled,
 RequestTimeoutInSeconds = 30,
-Name = "appgwbhs",
 }},
                 HttpListeners = {new ApplicationGatewayHttpListener
 {
-FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/frontendIPConfigurations/appgwfip"),
-FrontendPortId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/frontendPorts/appgwfp"),
-Protocol = ApplicationGatewayProtocol.Https,
-SslCertificateId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/sslCertificates/sslcert"),
-SslProfileId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/sslProfiles/sslProfile1"),
-RequireServerNameIndication = false,
 Name = "appgwhl",
+FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/frontendIPConfigurations/appgwfip"),
+FrontendPortId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/frontendPorts/appgwfp"),
+Protocol = ApplicationGatewayProtocol.Https,
+SslCertificateId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/sslCertificates/sslcert"),
+SslProfileId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/sslProfiles/sslProfile1"),
+RequireServerNameIndication = false,
 }, new ApplicationGatewayHttpListener
 {
-FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/frontendIPConfigurations/appgwfip"),
-FrontendPortId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/frontendPorts/appgwfp80"),
-Protocol = ApplicationGatewayProtocol.Http,
 Name = "appgwhttplistener",
+FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/frontendIPConfigurations/appgwfip"),
+FrontendPortId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/frontendPorts/appgwfp80"),
+Protocol = ApplicationGatewayProtocol.Http,
 }},
                 SslProfiles = {new ApplicationGatewaySslProfile
 {
+Name = "sslProfile1",
 TrustedClientCertificates = {new WritableSubResource
 {
-Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/trustedClientCertificates/clientcert"),
+Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/trustedClientCertificates/clientcert"),
 }},
 SslPolicy = new ApplicationGatewaySslPolicy
 {
@@ -163,21 +164,21 @@ ClientAuthConfiguration = new ApplicationGatewayClientAuthConfiguration
 {
 VerifyClientCertIssuerDN = true,
 },
-Name = "sslProfile1",
 }},
                 RequestRoutingRules = {new ApplicationGatewayRequestRoutingRule
 {
+Name = "appgwrule",
 RuleType = ApplicationGatewayRequestRoutingRuleType.Basic,
 Priority = 10,
-BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendAddressPools/appgwpool"),
-BackendHttpSettingsId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendHttpSettingsCollection/appgwbhs"),
-HttpListenerId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/httpListeners/appgwhl"),
-RewriteRuleSetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/rewriteRuleSets/rewriteRuleSet1"),
-EntraJwtValidationConfigId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/entraJWTValidationConfigs/entraJWTValidationConfig1"),
-Name = "appgwrule",
+BackendAddressPoolId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendAddressPools/appgwpool"),
+BackendHttpSettingsId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendHttpSettingsCollection/appgwbhs"),
+HttpListenerId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/httpListeners/appgwhl"),
+RewriteRuleSetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/rewriteRuleSets/rewriteRuleSet1"),
+EntraJwtValidationConfigId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/entraJWTValidationConfigs/entraJWTValidationConfig1"),
 }},
                 RewriteRuleSets = {new ApplicationGatewayRewriteRuleSet
 {
+Name = "rewriteRuleSet1",
 RewriteRules = {new ApplicationGatewayRewriteRule
 {
 Name = "Set X-Forwarded-For",
@@ -207,14 +208,13 @@ ModifiedPath = "/abc",
 },
 },
 }},
-Name = "rewriteRuleSet1",
 }},
                 EntraJwtValidationConfigs = {new ApplicationGatewayEntraJwtValidationConfig
 {
+Name = "entraJWTValidationConfig1",
 UnAuthorizedRequestAction = ApplicationGatewayUnAuthorizedRequestAction.Deny,
 TenantId = Guid.Parse("70a036f6-8e4d-4615-bad6-149c02e7720d"),
 ClientId = "37293f5a-97b3-451d-b786-f532d711c9ff",
-Name = "entraJWTValidationConfig1",
 }},
                 GlobalConfiguration = new ApplicationGatewayGlobalConfiguration
                 {
@@ -237,7 +237,7 @@ Name = "entraJWTValidationConfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetApplicationGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ApplicationGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ApplicationGatewayGet.json
             // this example is just showing the usage of "ApplicationGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -247,7 +247,7 @@ Name = "entraJWTValidationConfig1",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -270,7 +270,7 @@ Name = "entraJWTValidationConfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListsAllApplicationGatewaysInAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ApplicationGatewayList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ApplicationGatewayList.json
             // this example is just showing the usage of "ApplicationGateways_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -280,7 +280,7 @@ Name = "entraJWTValidationConfig1",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -305,7 +305,7 @@ Name = "entraJWTValidationConfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetApplicationGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ApplicationGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ApplicationGatewayGet.json
             // this example is just showing the usage of "ApplicationGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -315,7 +315,7 @@ Name = "entraJWTValidationConfig1",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -334,7 +334,7 @@ Name = "entraJWTValidationConfig1",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetApplicationGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ApplicationGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ApplicationGatewayGet.json
             // this example is just showing the usage of "ApplicationGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -344,7 +344,7 @@ Name = "entraJWTValidationConfig1",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

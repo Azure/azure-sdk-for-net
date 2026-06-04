@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListNetworkSecurityGroups API service call. </summary>
+    /// <summary> The response of a NetworkSecurityGroup list operation. </summary>
     internal partial class NetworkSecurityGroupListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupListResult"/>. </summary>
-        internal NetworkSecurityGroupListResult()
+        /// <param name="value"> The NetworkSecurityGroup items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetworkSecurityGroupListResult(IEnumerable<CommonNetworkSecurityGroupData> value)
         {
-            Value = new ChangeTrackingList<NetworkSecurityGroupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupListResult"/>. </summary>
-        /// <param name="value"> A list of NetworkSecurityGroup resources. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The NetworkSecurityGroup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityGroupListResult(IReadOnlyList<NetworkSecurityGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityGroupListResult(IReadOnlyList<CommonNetworkSecurityGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of NetworkSecurityGroup resources. </summary>
-        public IReadOnlyList<NetworkSecurityGroupData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupListResult"/> for deserialization. </summary>
+        internal NetworkSecurityGroupListResult()
+        {
+        }
+
+        /// <summary> The NetworkSecurityGroup items on this page. </summary>
+        public IReadOnlyList<CommonNetworkSecurityGroupData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

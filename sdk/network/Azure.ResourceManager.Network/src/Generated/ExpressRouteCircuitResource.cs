@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteCircuitResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpressRouteCircuitResource(ArmClient client, ExpressRouteCircuitData data) : this(client, data.Id)
+        internal ExpressRouteCircuitResource(ArmClient client, ExpressRouteCircuitData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -477,6 +477,290 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Retrieves the details of all the link failover tests performed on the express route circuit.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/getCircuitLinkFailoverAllTestsDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCircuits_GetCircuitLinkFailoverAllTestsDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteCircuitResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="failoverTestType"> The type of failover test. </param>
+        /// <param name="fetchLatest"> Fetch only the latest tests. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<IList<ExpressRouteLinkFailoverAllTestsDetails>>> GetCircuitLinkFailoverAllTestsDetailsAsync(WaitUntil waitUntil, string failoverTestType = null, bool? fetchLatest = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitResource.GetCircuitLinkFailoverAllTestsDetails");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteCircuitRestClient.GetCircuitLinkFailoverAllTestsDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverTestType, fetchLatest, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<IList<ExpressRouteLinkFailoverAllTestsDetails>>(new IListOperationSource(), _expressRouteCircuitClientDiagnostics, Pipeline, _expressRouteCircuitRestClient.CreateGetCircuitLinkFailoverAllTestsDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverTestType, fetchLatest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the details of all the link failover tests performed on the express route circuit.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/getCircuitLinkFailoverAllTestsDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCircuits_GetCircuitLinkFailoverAllTestsDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteCircuitResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="failoverTestType"> The type of failover test. </param>
+        /// <param name="fetchLatest"> Fetch only the latest tests. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<IList<ExpressRouteLinkFailoverAllTestsDetails>> GetCircuitLinkFailoverAllTestsDetails(WaitUntil waitUntil, string failoverTestType = null, bool? fetchLatest = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitResource.GetCircuitLinkFailoverAllTestsDetails");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteCircuitRestClient.GetCircuitLinkFailoverAllTestsDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverTestType, fetchLatest, cancellationToken);
+                var operation = new NetworkArmOperation<IList<ExpressRouteLinkFailoverAllTestsDetails>>(new IListOperationSource(), _expressRouteCircuitClientDiagnostics, Pipeline, _expressRouteCircuitRestClient.CreateGetCircuitLinkFailoverAllTestsDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failoverTestType, fetchLatest).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the details of a particular link failover test performed on the express route circuit.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/getCircuitLinkFailoverSingleTestDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCircuits_GetCircuitLinkFailoverSingleTestDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteCircuitResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="linkType"> The link type. </param>
+        /// <param name="circuitTestCategory"> The circuit test category. </param>
+        /// <param name="failoverTestId"> The unique Guid value which identifies the test. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkType"/>, <paramref name="circuitTestCategory"/> or <paramref name="failoverTestId"/> is null. </exception>
+        public virtual async Task<ArmOperation<IList<ExpressRouteLinkFailoverSingleTestDetails>>> GetCircuitLinkFailoverSingleTestDetailsAsync(WaitUntil waitUntil, string linkType, string circuitTestCategory, string failoverTestId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(linkType, nameof(linkType));
+            Argument.AssertNotNull(circuitTestCategory, nameof(circuitTestCategory));
+            Argument.AssertNotNull(failoverTestId, nameof(failoverTestId));
+
+            using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitResource.GetCircuitLinkFailoverSingleTestDetails");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteCircuitRestClient.GetCircuitLinkFailoverSingleTestDetailsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, failoverTestId, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<IList<ExpressRouteLinkFailoverSingleTestDetails>>(new IListOperationSource(), _expressRouteCircuitClientDiagnostics, Pipeline, _expressRouteCircuitRestClient.CreateGetCircuitLinkFailoverSingleTestDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, failoverTestId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the details of a particular link failover test performed on the express route circuit.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/getCircuitLinkFailoverSingleTestDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCircuits_GetCircuitLinkFailoverSingleTestDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteCircuitResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="linkType"> The link type. </param>
+        /// <param name="circuitTestCategory"> The circuit test category. </param>
+        /// <param name="failoverTestId"> The unique Guid value which identifies the test. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkType"/>, <paramref name="circuitTestCategory"/> or <paramref name="failoverTestId"/> is null. </exception>
+        public virtual ArmOperation<IList<ExpressRouteLinkFailoverSingleTestDetails>> GetCircuitLinkFailoverSingleTestDetails(WaitUntil waitUntil, string linkType, string circuitTestCategory, string failoverTestId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(linkType, nameof(linkType));
+            Argument.AssertNotNull(circuitTestCategory, nameof(circuitTestCategory));
+            Argument.AssertNotNull(failoverTestId, nameof(failoverTestId));
+
+            using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitResource.GetCircuitLinkFailoverSingleTestDetails");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteCircuitRestClient.GetCircuitLinkFailoverSingleTestDetails(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, failoverTestId, cancellationToken);
+                var operation = new NetworkArmOperation<IList<ExpressRouteLinkFailoverSingleTestDetails>>(new IListOperationSource(), _expressRouteCircuitClientDiagnostics, Pipeline, _expressRouteCircuitRestClient.CreateGetCircuitLinkFailoverSingleTestDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, failoverTestId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts link failover simulation on the express route circuit for the specified link type and test category.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/startCircuitLinkFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCircuits_StartCircuitLinkFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteCircuitResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="linkType"> The link type. </param>
+        /// <param name="circuitTestCategory"> The circuit test category. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkType"/> or <paramref name="circuitTestCategory"/> is null. </exception>
+        public virtual async Task<ArmOperation<string>> StartCircuitLinkFailoverTestAsync(WaitUntil waitUntil, string linkType, string circuitTestCategory, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(linkType, nameof(linkType));
+            Argument.AssertNotNull(circuitTestCategory, nameof(circuitTestCategory));
+
+            using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitResource.StartCircuitLinkFailoverTest");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteCircuitRestClient.StartCircuitLinkFailoverTestAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _expressRouteCircuitClientDiagnostics, Pipeline, _expressRouteCircuitRestClient.CreateStartCircuitLinkFailoverTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts link failover simulation on the express route circuit for the specified link type and test category.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/startCircuitLinkFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCircuits_StartCircuitLinkFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteCircuitResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="linkType"> The link type. </param>
+        /// <param name="circuitTestCategory"> The circuit test category. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkType"/> or <paramref name="circuitTestCategory"/> is null. </exception>
+        public virtual ArmOperation<string> StartCircuitLinkFailoverTest(WaitUntil waitUntil, string linkType, string circuitTestCategory, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(linkType, nameof(linkType));
+            Argument.AssertNotNull(circuitTestCategory, nameof(circuitTestCategory));
+
+            using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitResource.StartCircuitLinkFailoverTest");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteCircuitRestClient.StartCircuitLinkFailoverTest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory, cancellationToken);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _expressRouteCircuitClientDiagnostics, Pipeline, _expressRouteCircuitRestClient.CreateStartCircuitLinkFailoverTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, linkType, circuitTestCategory).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets all the stats from an express route circuit in a resource group.
         /// <list type="bullet">
         /// <item>
@@ -489,7 +773,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -527,7 +811,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -553,6 +837,98 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Stops link failover simulation on the express route circuit.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/stopCircuitLinkFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCircuits_StopCircuitLinkFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteCircuitResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to stop the link failover simulation on the express route circuit. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<string>> StopCircuitLinkFailoverTestAsync(WaitUntil waitUntil, ExpressRouteLinkFailoverStopApiContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitResource.StopCircuitLinkFailoverTest");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteCircuitRestClient.StopCircuitLinkFailoverTestAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _expressRouteCircuitClientDiagnostics, Pipeline, _expressRouteCircuitRestClient.CreateStopCircuitLinkFailoverTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops link failover simulation on the express route circuit.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/stopCircuitLinkFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteCircuits_StopCircuitLinkFailoverTest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteCircuitResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to stop the link failover simulation on the express route circuit. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<string> StopCircuitLinkFailoverTest(WaitUntil waitUntil, ExpressRouteLinkFailoverStopApiContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _expressRouteCircuitClientDiagnostics.CreateScope("ExpressRouteCircuitResource.StopCircuitLinkFailoverTest");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteCircuitRestClient.StopCircuitLinkFailoverTest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new NetworkArmOperation<string>(new StringOperationSource(), _expressRouteCircuitClientDiagnostics, Pipeline, _expressRouteCircuitRestClient.CreateStopCircuitLinkFailoverTestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -565,7 +941,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -627,7 +1003,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -689,7 +1065,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -746,7 +1122,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -803,7 +1179,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -863,7 +1239,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

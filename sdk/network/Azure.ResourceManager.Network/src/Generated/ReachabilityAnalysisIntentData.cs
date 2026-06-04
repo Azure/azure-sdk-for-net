@@ -67,10 +67,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Represents the Reachability Analysis Intent properties. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReachabilityAnalysisIntentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReachabilityAnalysisIntentProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ReachabilityAnalysisIntentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReachabilityAnalysisIntentProperties properties, string commonResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            CommonResourceType = commonResourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,5 +84,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Represents the Reachability Analysis Intent properties. </summary>
         [WirePath("properties")]
         public ReachabilityAnalysisIntentProperties Properties { get; set; }
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string CommonResourceType { get; }
     }
 }

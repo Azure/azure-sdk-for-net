@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the ExpressRoutePortsLocation data model.
     /// Definition of the ExpressRoutePorts peering location resource.
     /// </summary>
-    public partial class ExpressRoutePortsLocationData : NetworkTrackedResourceData
+    public partial class ExpressRoutePortsLocationData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationData"/>. </summary>
         public ExpressRoutePortsLocationData()
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="contact"> Contact details of peering locations. </param>
         /// <param name="availableBandwidths"> The inventory of available ExpressRoutePort bandwidths. </param>
         /// <param name="provisioningState"> The provisioning state of the express route port location resource. </param>
-        internal ExpressRoutePortsLocationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string address, string contact, IList<ExpressRoutePortsLocationBandwidths> availableBandwidths, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal ExpressRoutePortsLocationData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string address, string contact, IList<ExpressRoutePortsLocationBandwidths> availableBandwidths, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Address = address;
             Contact = contact;

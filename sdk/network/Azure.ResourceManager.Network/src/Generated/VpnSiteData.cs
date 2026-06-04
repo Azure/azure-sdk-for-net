@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the VpnSite data model.
     /// VpnSite Resource.
     /// </summary>
-    public partial class VpnSiteData : NetworkTrackedResourceData
+    public partial class VpnSiteData : TrackedResourceWithSettableIdOptionalLocation
     {
         /// <summary> Initializes a new instance of <see cref="VpnSiteData"/>. </summary>
         public VpnSiteData()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="isSecuritySite"> IsSecuritySite flag. </param>
         /// <param name="vpnSiteLinks"> List of all vpn site links. </param>
         /// <param name="o365Policy"> Office365 Policy. </param>
-        internal VpnSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, VirtualNetworkAddressSpace addressSpace, BgpSettings bgpProperties, NetworkProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal VpnSiteData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, CommonAddressSpace addressSpace, BgpSettings bgpProperties, NetworkProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             VirtualWan = virtualWan;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         public string SiteKey { get; set; }
         /// <summary> The AddressSpace that contains an array of IP address ranges. </summary>
         [WirePath("properties.addressSpace")]
-        public VirtualNetworkAddressSpace AddressSpace { get; set; }
+        public CommonAddressSpace AddressSpace { get; set; }
         /// <summary> The set of bgp properties. </summary>
         [WirePath("properties.bgpProperties")]
         public BgpSettings BgpProperties { get; set; }

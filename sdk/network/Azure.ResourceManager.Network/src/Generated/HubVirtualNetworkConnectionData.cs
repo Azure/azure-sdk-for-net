@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the HubVirtualNetworkConnection data model.
     /// HubVirtualNetworkConnection Resource.
     /// </summary>
-    public partial class HubVirtualNetworkConnectionData : NetworkResourceData
+    public partial class HubVirtualNetworkConnectionData : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="HubVirtualNetworkConnectionData"/>. </summary>
         public HubVirtualNetworkConnectionData()
@@ -26,27 +26,32 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="HubVirtualNetworkConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="remoteVirtualNetwork"> Reference to the remote virtual network. </param>
         /// <param name="allowHubToRemoteVnetTransit"> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </param>
         /// <param name="allowRemoteVnetToUseHubVnetGateways"> Deprecated: Allow RemoteVnet to use Virtual Hub's gateways. </param>
+        /// <param name="connectionPolicy"> The resource id of the ConnectionPolicy associated with this HubVirtualNetworkConnection. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
         /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
-        internal HubVirtualNetworkConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource remoteVirtualNetwork, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfiguration routingConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal HubVirtualNetworkConnectionData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, WritableSubResource remoteVirtualNetwork, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, WritableSubResource connectionPolicy, bool? enableInternetSecurity, RoutingConfiguration routingConfiguration, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
             RemoteVirtualNetwork = remoteVirtualNetwork;
             AllowHubToRemoteVnetTransit = allowHubToRemoteVnetTransit;
             AllowRemoteVnetToUseHubVnetGateways = allowRemoteVnetToUseHubVnetGateways;
+            ConnectionPolicy = connectionPolicy;
             EnableInternetSecurity = enableInternetSecurity;
             RoutingConfiguration = routingConfiguration;
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
@@ -71,6 +76,21 @@ namespace Azure.ResourceManager.Network
         /// <summary> Deprecated: Allow RemoteVnet to use Virtual Hub's gateways. </summary>
         [WirePath("properties.allowRemoteVnetToUseHubVnetGateways")]
         public bool? AllowRemoteVnetToUseHubVnetGateways { get; set; }
+        /// <summary> The resource id of the ConnectionPolicy associated with this HubVirtualNetworkConnection. </summary>
+        internal WritableSubResource ConnectionPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.connectionPolicy.id")]
+        public ResourceIdentifier ConnectionPolicyId
+        {
+            get => ConnectionPolicy is null ? default : ConnectionPolicy.Id;
+            set
+            {
+                if (ConnectionPolicy is null)
+                    ConnectionPolicy = new WritableSubResource();
+                ConnectionPolicy.Id = value;
+            }
+        }
+
         /// <summary> Enable internet security. </summary>
         [WirePath("properties.enableInternetSecurity")]
         public bool? EnableInternetSecurity { get; set; }

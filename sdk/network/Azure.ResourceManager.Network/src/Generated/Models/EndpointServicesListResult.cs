@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for the ListAvailableEndpointServices API service call. </summary>
+    /// <summary> Paged collection of EndpointServiceResult items. </summary>
     internal partial class EndpointServicesListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EndpointServicesListResult"/>. </summary>
-        internal EndpointServicesListResult()
+        /// <param name="value"> The EndpointServiceResult items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal EndpointServicesListResult(IEnumerable<EndpointServiceResult> value)
         {
-            Value = new ChangeTrackingList<EndpointServiceResult>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointServicesListResult"/>. </summary>
-        /// <param name="value"> List of available endpoint services in a region. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The EndpointServiceResult items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointServicesListResult(IReadOnlyList<EndpointServiceResult> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EndpointServicesListResult(IReadOnlyList<EndpointServiceResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of available endpoint services in a region. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointServicesListResult"/> for deserialization. </summary>
+        internal EndpointServicesListResult()
+        {
+        }
+
+        /// <summary> The EndpointServiceResult items on this page. </summary>
         public IReadOnlyList<EndpointServiceResult> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

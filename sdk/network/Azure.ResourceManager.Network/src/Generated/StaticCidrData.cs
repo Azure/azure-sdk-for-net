@@ -62,15 +62,20 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of static CIDR resource. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticCidrData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StaticCidrProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StaticCidrData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StaticCidrProperties properties, string commonResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            CommonResourceType = commonResourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Properties of static CIDR resource. </summary>
         [WirePath("properties")]
         public StaticCidrProperties Properties { get; set; }
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string CommonResourceType { get; }
     }
 }

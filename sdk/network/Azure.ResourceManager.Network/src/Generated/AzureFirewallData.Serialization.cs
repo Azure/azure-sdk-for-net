@@ -162,6 +162,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("autoscaleConfiguration"u8);
                 writer.WriteObjectValue(AutoscaleConfiguration, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(AfcConfiguration))
+            {
+                writer.WritePropertyName("afcConfiguration"u8);
+                writer.WriteObjectValue(AfcConfiguration, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -188,9 +193,9 @@ namespace Azure.ResourceManager.Network
             ExtendedLocation extendedLocation = default;
             IList<string> zones = default;
             ETag? etag = default;
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType? type = default;
+            string type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections = default;
@@ -207,6 +212,7 @@ namespace Azure.ResourceManager.Network
             AzureFirewallSku sku = default;
             IDictionary<string, string> additionalProperties = default;
             AzureFirewallAutoscaleConfiguration autoscaleConfiguration = default;
+            AfcConfiguration afcConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,11 +251,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -259,11 +261,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -454,6 +452,15 @@ namespace Azure.ResourceManager.Network
                             autoscaleConfiguration = AzureFirewallAutoscaleConfiguration.DeserializeAzureFirewallAutoscaleConfiguration(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("afcConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            afcConfiguration = AfcConfiguration.DeserializeAfcConfiguration(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -486,7 +493,8 @@ namespace Azure.ResourceManager.Network
                 ipGroups ?? new ChangeTrackingList<AzureFirewallIPGroups>(),
                 sku,
                 additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
-                autoscaleConfiguration);
+                autoscaleConfiguration,
+                afcConfiguration);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -652,7 +660,15 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 
@@ -937,6 +953,26 @@ namespace Azure.ResourceManager.Network
                 {
                     builder.Append("    autoscaleConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AutoscaleConfiguration, options, 4, false, "    autoscaleConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AfcServiceEndpoint", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    afcConfiguration: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      afcConfiguration: {");
+                builder.Append("        serviceEndpoint: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AfcConfiguration))
+                {
+                    builder.Append("    afcConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AfcConfiguration, options, 4, false, "    afcConfiguration: ");
                 }
             }
 

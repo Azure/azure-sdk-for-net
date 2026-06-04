@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListBackendAddressPool API service call. </summary>
+    /// <summary> Paged collection of BackendAddressPool items. </summary>
     internal partial class LoadBalancerBackendAddressPoolListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddressPoolListResult"/>. </summary>
-        internal LoadBalancerBackendAddressPoolListResult()
+        /// <param name="value"> The BackendAddressPool items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal LoadBalancerBackendAddressPoolListResult(IEnumerable<CommonBackendAddressPoolData> value)
         {
-            Value = new ChangeTrackingList<BackendAddressPoolData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddressPoolListResult"/>. </summary>
-        /// <param name="value"> A list of backend address pools in a load balancer. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The BackendAddressPool items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerBackendAddressPoolListResult(IReadOnlyList<BackendAddressPoolData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadBalancerBackendAddressPoolListResult(IReadOnlyList<CommonBackendAddressPoolData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of backend address pools in a load balancer. </summary>
-        public IReadOnlyList<BackendAddressPoolData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddressPoolListResult"/> for deserialization. </summary>
+        internal LoadBalancerBackendAddressPoolListResult()
+        {
+        }
+
+        /// <summary> The BackendAddressPool items on this page. </summary>
+        public IReadOnlyList<CommonBackendAddressPoolData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

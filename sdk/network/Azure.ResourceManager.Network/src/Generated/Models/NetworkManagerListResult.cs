@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Result of the request to list NetworkManager. It contains a list of network managers and a URL link to get the next set of results. </summary>
+    /// <summary> The response of a NetworkManager list operation. </summary>
     internal partial class NetworkManagerListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkManagerListResult"/>. </summary>
-        internal NetworkManagerListResult()
+        /// <param name="value"> The NetworkManager items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetworkManagerListResult(IEnumerable<NetworkManagerData> value)
         {
-            Value = new ChangeTrackingList<NetworkManagerData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkManagerListResult"/>. </summary>
-        /// <param name="value"> Gets a page of NetworkManager. </param>
-        /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
+        /// <param name="value"> The NetworkManager items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkManagerListResult(IReadOnlyList<NetworkManagerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkManagerListResult(IReadOnlyList<NetworkManagerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets a page of NetworkManager. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerListResult"/> for deserialization. </summary>
+        internal NetworkManagerListResult()
+        {
+        }
+
+        /// <summary> The NetworkManager items on this page. </summary>
         public IReadOnlyList<NetworkManagerData> Value { get; }
-        /// <summary> Gets the URL to get the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the RoutingIntent data model.
     /// The routing intent child resource of a Virtual hub.
     /// </summary>
-    public partial class RoutingIntentData : NetworkResourceData
+    public partial class RoutingIntentData : CommonSubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="RoutingIntentData"/>. </summary>
         public RoutingIntentData()
@@ -26,13 +25,13 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="RoutingIntentData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routingPolicies"> List of routing policies. </param>
         /// <param name="provisioningState"> The provisioning state of the RoutingIntent resource. </param>
-        internal RoutingIntentData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<RoutingPolicy> routingPolicies, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal RoutingIntentData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string resourceType, ETag? etag, IList<RoutingPolicy> routingPolicies, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData, name, resourceType)
         {
             ETag = etag;
             RoutingPolicies = routingPolicies;

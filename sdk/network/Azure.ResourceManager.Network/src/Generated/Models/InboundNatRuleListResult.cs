@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListInboundNatRule API service call. </summary>
+    /// <summary> The response of a InboundNatRule list operation. </summary>
     internal partial class InboundNatRuleListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="InboundNatRuleListResult"/>. </summary>
-        internal InboundNatRuleListResult()
+        /// <param name="value"> The InboundNatRule items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal InboundNatRuleListResult(IEnumerable<CommonInboundNatRuleData> value)
         {
-            Value = new ChangeTrackingList<InboundNatRuleData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="InboundNatRuleListResult"/>. </summary>
-        /// <param name="value"> A list of inbound NAT rules in a load balancer. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The InboundNatRule items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InboundNatRuleListResult(IReadOnlyList<InboundNatRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InboundNatRuleListResult(IReadOnlyList<CommonInboundNatRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of inbound NAT rules in a load balancer. </summary>
-        public IReadOnlyList<InboundNatRuleData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="InboundNatRuleListResult"/> for deserialization. </summary>
+        internal InboundNatRuleListResult()
+        {
+        }
+
+        /// <summary> The InboundNatRule items on this page. </summary>
+        public IReadOnlyList<CommonInboundNatRuleData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

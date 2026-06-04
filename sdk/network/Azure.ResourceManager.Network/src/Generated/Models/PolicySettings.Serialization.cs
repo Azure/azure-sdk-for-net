@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("jsChallengeCookieExpirationInMins"u8);
                 writer.WriteNumberValue(JsChallengeCookieExpirationInMins.Value);
             }
-            if (Optional.IsDefined(CaptchaCookieExpirationInMins))
+            if (Optional.IsDefined(CaptchaExpirationInMins))
             {
-                writer.WritePropertyName("captchaCookieExpirationInMins"u8);
-                writer.WriteNumberValue(CaptchaCookieExpirationInMins.Value);
+                writer.WritePropertyName("captchaExpirationInMins"u8);
+                writer.WriteNumberValue(CaptchaExpirationInMins.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
             string customBlockResponseBody = default;
             PolicySettingsLogScrubbing logScrubbing = default;
             int? jsChallengeCookieExpirationInMins = default;
-            int? captchaCookieExpirationInMins = default;
+            int? captchaExpirationInMins = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,13 +258,13 @@ namespace Azure.ResourceManager.Network.Models
                     jsChallengeCookieExpirationInMins = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("captchaCookieExpirationInMins"u8))
+                if (property.NameEquals("captchaExpirationInMins"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    captchaCookieExpirationInMins = property.Value.GetInt32();
+                    captchaExpirationInMins = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Network.Models
                 customBlockResponseBody,
                 logScrubbing,
                 jsChallengeCookieExpirationInMins,
-                captchaCookieExpirationInMins,
+                captchaExpirationInMins,
                 serializedAdditionalRawData);
         }
 
@@ -492,18 +492,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CaptchaCookieExpirationInMins), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CaptchaExpirationInMins), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  captchaCookieExpirationInMins: ");
+                builder.Append("  captchaExpirationInMins: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(CaptchaCookieExpirationInMins))
+                if (Optional.IsDefined(CaptchaExpirationInMins))
                 {
-                    builder.Append("  captchaCookieExpirationInMins: ");
-                    builder.AppendLine($"{CaptchaCookieExpirationInMins.Value}");
+                    builder.Append("  captchaExpirationInMins: ");
+                    builder.AppendLine($"{CaptchaExpirationInMins.Value}");
                 }
             }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ListVpnSiteLinksResult"/>. </summary>
-        internal ListVpnSiteLinksResult()
+        /// <param name="value"> The VpnSiteLink items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ListVpnSiteLinksResult(IEnumerable<VpnSiteLinkData> value)
         {
-            Value = new ChangeTrackingList<VpnSiteLinkData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListVpnSiteLinksResult"/>. </summary>
-        /// <param name="value"> List of VpnSitesLinks. </param>
-        /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
+        /// <param name="value"> The VpnSiteLink items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListVpnSiteLinksResult(IReadOnlyList<VpnSiteLinkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListVpnSiteLinksResult(IReadOnlyList<VpnSiteLinkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of VpnSitesLinks. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVpnSiteLinksResult"/> for deserialization. </summary>
+        internal ListVpnSiteLinksResult()
+        {
+        }
+
+        /// <summary> The VpnSiteLink items on this page. </summary>
         public IReadOnlyList<VpnSiteLinkData> Value { get; }
-        /// <summary> URL to get the next set of operation list results if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

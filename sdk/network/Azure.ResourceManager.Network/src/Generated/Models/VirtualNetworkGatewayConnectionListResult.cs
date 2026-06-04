@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for the ListVirtualNetworkGatewayConnections API service call. </summary>
+    /// <summary> The response of a VirtualNetworkGatewayConnection list operation. </summary>
     internal partial class VirtualNetworkGatewayConnectionListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListResult"/>. </summary>
-        internal VirtualNetworkGatewayConnectionListResult()
+        /// <param name="value"> The VirtualNetworkGatewayConnection items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal VirtualNetworkGatewayConnectionListResult(IEnumerable<VirtualNetworkGatewayConnectionData> value)
         {
-            Value = new ChangeTrackingList<VirtualNetworkGatewayConnectionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListResult"/>. </summary>
-        /// <param name="value"> A list of VirtualNetworkGatewayConnection resources that exists in a resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The VirtualNetworkGatewayConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkGatewayConnectionListResult(IReadOnlyList<VirtualNetworkGatewayConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualNetworkGatewayConnectionListResult(IReadOnlyList<VirtualNetworkGatewayConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of VirtualNetworkGatewayConnection resources that exists in a resource group. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionListResult"/> for deserialization. </summary>
+        internal VirtualNetworkGatewayConnectionListResult()
+        {
+        }
+
+        /// <summary> The VirtualNetworkGatewayConnection items on this page. </summary>
         public IReadOnlyList<VirtualNetworkGatewayConnectionData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

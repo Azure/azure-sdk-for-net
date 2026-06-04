@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the VirtualRouter data model.
     /// VirtualRouter Resource.
     /// </summary>
-    public partial class VirtualRouterData : NetworkTrackedResourceData
+    public partial class VirtualRouterData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="VirtualRouterData"/>. </summary>
         public VirtualRouterData()
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="hostedGateway"> The Gateway on which VirtualRouter is hosted. </param>
         /// <param name="peerings"> List of references to VirtualRouterPeerings. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouterData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, long? virtualRouterAsn, IList<string> virtualRouterIPs, WritableSubResource hostedSubnet, WritableSubResource hostedGateway, IReadOnlyList<WritableSubResource> peerings, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal VirtualRouterData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, long? virtualRouterAsn, IList<string> virtualRouterIPs, WritableSubResource hostedSubnet, WritableSubResource hostedGateway, IReadOnlyList<WritableSubResource> peerings, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             VirtualRouterAsn = virtualRouterAsn;

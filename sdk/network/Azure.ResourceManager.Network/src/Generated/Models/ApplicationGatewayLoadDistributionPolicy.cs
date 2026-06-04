@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Load Distribution Policy of an application gateway. </summary>
-    public partial class ApplicationGatewayLoadDistributionPolicy : NetworkResourceData
+    public partial class ApplicationGatewayLoadDistributionPolicy : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionPolicy"/>. </summary>
         public ApplicationGatewayLoadDistributionPolicy()
@@ -22,24 +21,32 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionPolicy"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the load distribution policy that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="loadDistributionTargets"> Load Distribution Targets resource of an application gateway. </param>
         /// <param name="loadDistributionAlgorithm"> Load Distribution Targets resource of an application gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the Load Distribution Policy resource. </param>
-        internal ApplicationGatewayLoadDistributionPolicy(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<ApplicationGatewayLoadDistributionTarget> loadDistributionTargets, ApplicationGatewayLoadDistributionAlgorithm? loadDistributionAlgorithm, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayLoadDistributionPolicy(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, string resourceType, IList<ApplicationGatewayLoadDistributionTarget> loadDistributionTargets, ApplicationGatewayLoadDistributionAlgorithm? loadDistributionAlgorithm, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
+            ResourceType = resourceType;
             LoadDistributionTargets = loadDistributionTargets;
             LoadDistributionAlgorithm = loadDistributionAlgorithm;
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> Name of the load distribution policy that is unique within an Application Gateway. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+        /// <summary> Type of the resource. </summary>
+        [WirePath("type")]
+        public string ResourceType { get; }
         /// <summary> Load Distribution Targets resource of an application gateway. </summary>
         [WirePath("properties.loadDistributionTargets")]
         public IList<ApplicationGatewayLoadDistributionTarget> LoadDistributionTargets { get; }

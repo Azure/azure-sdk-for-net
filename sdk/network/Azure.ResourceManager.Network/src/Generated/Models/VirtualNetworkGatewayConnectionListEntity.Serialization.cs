@@ -174,6 +174,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enablePrivateLinkFastPath"u8);
                 writer.WriteBooleanValue(EnablePrivateLinkFastPath.Value);
             }
+            if (Optional.IsDefined(RoutingConfiguration))
+            {
+                writer.WritePropertyName("routingConfiguration"u8);
+                writer.WriteObjectValue(RoutingConfiguration, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -198,9 +203,9 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ETag? etag = default;
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType? type = default;
+            string type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             string authorizationKey = default;
@@ -226,6 +231,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkProvisioningState? provisioningState = default;
             bool? expressRouteGatewayBypass = default;
             bool? enablePrivateLinkFastPath = default;
+            RoutingConfiguration routingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,11 +247,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -255,11 +257,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    type = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -505,6 +503,15 @@ namespace Azure.ResourceManager.Network.Models
                             enablePrivateLinkFastPath = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("routingConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -544,7 +551,8 @@ namespace Azure.ResourceManager.Network.Models
                 resourceGuid,
                 provisioningState,
                 expressRouteGatewayBypass,
-                enablePrivateLinkFastPath);
+                enablePrivateLinkFastPath,
+                routingConfiguration);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -659,7 +667,15 @@ namespace Azure.ResourceManager.Network.Models
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 
@@ -1076,6 +1092,21 @@ namespace Azure.ResourceManager.Network.Models
                     builder.Append("    enablePrivateLinkFastPath: ");
                     var boolValue = EnablePrivateLinkFastPath.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    routingConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingConfiguration))
+                {
+                    builder.Append("    routingConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RoutingConfiguration, options, 4, false, "    routingConfiguration: ");
                 }
             }
 

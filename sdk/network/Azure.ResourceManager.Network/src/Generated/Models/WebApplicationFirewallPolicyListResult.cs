@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Result of the request to list WebApplicationFirewallPolicies. It contains a list of WebApplicationFirewallPolicy objects and a URL link to get the next set of results. </summary>
+    /// <summary> Paged collection of WebApplicationFirewallPolicy items. </summary>
     internal partial class WebApplicationFirewallPolicyListResult
     {
         /// <summary>
@@ -46,25 +47,31 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyListResult"/>. </summary>
-        internal WebApplicationFirewallPolicyListResult()
+        /// <param name="value"> The WebApplicationFirewallPolicy items on this page. </param>
+        internal WebApplicationFirewallPolicyListResult(IEnumerable<WebApplicationFirewallPolicyData> value)
         {
-            Value = new ChangeTrackingList<WebApplicationFirewallPolicyData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyListResult"/>. </summary>
-        /// <param name="value"> List of WebApplicationFirewallPolicies within a resource group. </param>
-        /// <param name="nextLink"> URL to get the next set of WebApplicationFirewallPolicy objects if there are any. </param>
+        /// <param name="value"> The WebApplicationFirewallPolicy items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebApplicationFirewallPolicyListResult(IReadOnlyList<WebApplicationFirewallPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebApplicationFirewallPolicyListResult(IReadOnlyList<WebApplicationFirewallPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of WebApplicationFirewallPolicies within a resource group. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyListResult"/> for deserialization. </summary>
+        internal WebApplicationFirewallPolicyListResult()
+        {
+        }
+
+        /// <summary> The WebApplicationFirewallPolicy items on this page. </summary>
         public IReadOnlyList<WebApplicationFirewallPolicyData> Value { get; }
-        /// <summary> URL to get the next set of WebApplicationFirewallPolicy objects if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

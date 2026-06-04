@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the AzureFirewall data model.
     /// Azure Firewall resource.
     /// </summary>
-    public partial class AzureFirewallData : NetworkTrackedResourceData
+    public partial class AzureFirewallData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="AzureFirewallData"/>. </summary>
         public AzureFirewallData()
@@ -55,7 +55,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="sku"> The Azure Firewall Resource SKU. </param>
         /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
         /// <param name="autoscaleConfiguration"> Properties to provide a custom autoscale configuration to this azure firewall. </param>
-        internal AzureFirewallData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, IList<string> zones, ETag? etag, IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IList<AzureFirewallNatRuleCollectionData> natRuleCollections, IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, WritableSubResource virtualHub, WritableSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="afcConfiguration"> AFC configuration for the Azure Firewall. </param>
+        internal AzureFirewallData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, IList<string> zones, ETag? etag, IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IList<AzureFirewallNatRuleCollectionData> natRuleCollections, IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, WritableSubResource virtualHub, WritableSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration, AfcConfiguration afcConfiguration) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             Zones = zones;
@@ -74,6 +75,7 @@ namespace Azure.ResourceManager.Network
             Sku = sku;
             AdditionalProperties = additionalProperties;
             AutoscaleConfiguration = autoscaleConfiguration;
+            AfcConfiguration = afcConfiguration;
         }
 
         /// <summary> The extended location of type local virtual network gateway. </summary>
@@ -151,5 +153,13 @@ namespace Azure.ResourceManager.Network
         /// <summary> Properties to provide a custom autoscale configuration to this azure firewall. </summary>
         [WirePath("properties.autoscaleConfiguration")]
         public AzureFirewallAutoscaleConfiguration AutoscaleConfiguration { get; set; }
+        /// <summary> AFC configuration for the Azure Firewall. </summary>
+        internal AfcConfiguration AfcConfiguration { get; }
+        /// <summary> The endpoint URL of the AFC control plane associated with this Azure Firewall. </summary>
+        [WirePath("properties.afcConfiguration.serviceEndpoint")]
+        public string AfcServiceEndpoint
+        {
+            get => AfcConfiguration?.ServiceEndpoint;
+        }
     }
 }

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListProbe API service call. </summary>
+    /// <summary> Paged collection of Probe items. </summary>
     internal partial class LoadBalancerProbeListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerProbeListResult"/>. </summary>
-        internal LoadBalancerProbeListResult()
+        /// <param name="value"> The Probe items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal LoadBalancerProbeListResult(IEnumerable<CommonProbeData> value)
         {
-            Value = new ChangeTrackingList<ProbeData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerProbeListResult"/>. </summary>
-        /// <param name="value"> A list of probes in a load balancer. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The Probe items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerProbeListResult(IReadOnlyList<ProbeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadBalancerProbeListResult(IReadOnlyList<CommonProbeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of probes in a load balancer. </summary>
-        public IReadOnlyList<ProbeData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerProbeListResult"/> for deserialization. </summary>
+        internal LoadBalancerProbeListResult()
+        {
+        }
+
+        /// <summary> The Probe items on this page. </summary>
+        public IReadOnlyList<CommonProbeData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

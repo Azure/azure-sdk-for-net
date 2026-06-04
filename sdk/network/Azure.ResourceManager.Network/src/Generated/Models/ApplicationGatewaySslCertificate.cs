@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SSL certificates of an application gateway. </summary>
-    public partial class ApplicationGatewaySslCertificate : NetworkResourceData
+    public partial class ApplicationGatewaySslCertificate : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslCertificate"/>. </summary>
         public ApplicationGatewaySslCertificate()
@@ -21,28 +20,38 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslCertificate"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the SSL certificate that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="data"> Base-64 encoded pfx certificate. Only applicable in PUT Request. </param>
         /// <param name="password"> Password for the pfx file specified in data. Only applicable in PUT request. </param>
         /// <param name="publicCertData"> Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request. </param>
         /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
+        /// <param name="hsm"> Managed HSM properties of the Application Gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the SSL certificate resource. </param>
-        internal ApplicationGatewaySslCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, BinaryData data, string password, BinaryData publicCertData, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewaySslCertificate(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, string resourceType, BinaryData data, string password, BinaryData publicCertData, string keyVaultSecretId, ApplicationGatewayManagedHsm hsm, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
+            ResourceType = resourceType;
             Data = data;
             Password = password;
             PublicCertData = publicCertData;
             KeyVaultSecretId = keyVaultSecretId;
+            Hsm = hsm;
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> Name of the SSL certificate that is unique within an Application Gateway. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+        /// <summary> Type of the resource. </summary>
+        [WirePath("type")]
+        public string ResourceType { get; }
         /// <summary>
         /// Base-64 encoded pfx certificate. Only applicable in PUT Request.
         /// <para>
@@ -113,6 +122,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </summary>
         [WirePath("properties.keyVaultSecretId")]
         public string KeyVaultSecretId { get; set; }
+        /// <summary> Managed HSM properties of the Application Gateway resource. </summary>
+        [WirePath("properties.hsm")]
+        public ApplicationGatewayManagedHsm Hsm { get; set; }
         /// <summary> The provisioning state of the SSL certificate resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }

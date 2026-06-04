@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A web application firewall rule set. </summary>
-    public partial class ApplicationGatewayFirewallRuleSet : NetworkTrackedResourceData
+    public partial class ApplicationGatewayFirewallRuleSet : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayFirewallRuleSet"/>. </summary>
         public ApplicationGatewayFirewallRuleSet()
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
         /// <param name="tiers"> Tier of an application gateway that support the rule set. </param>
-        internal ApplicationGatewayFirewallRuleSet(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkProvisioningState? provisioningState, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups, IList<ApplicationGatewayTierType> tiers) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal ApplicationGatewayFirewallRuleSet(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkProvisioningState? provisioningState, string ruleSetType, string ruleSetVersion, IList<ApplicationGatewayFirewallRuleGroup> ruleGroups, IList<ApplicationGatewayTierType> tiers) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             RuleSetType = ruleSetType;

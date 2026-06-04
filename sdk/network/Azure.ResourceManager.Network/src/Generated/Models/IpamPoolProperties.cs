@@ -98,6 +98,6 @@ namespace Azure.ResourceManager.Network.Models
         public IList<string> AddressPrefixes { get; }
         /// <summary> Provisioning states of a resource. </summary>
         [WirePath("provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; set; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

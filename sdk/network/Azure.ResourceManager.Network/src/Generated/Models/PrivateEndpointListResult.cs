@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for the ListPrivateEndpoints API service call. </summary>
+    /// <summary> The response of a PrivateEndpoint list operation. </summary>
     internal partial class PrivateEndpointListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointListResult"/>. </summary>
-        internal PrivateEndpointListResult()
+        /// <param name="value"> The PrivateEndpoint items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PrivateEndpointListResult(IEnumerable<CommonPrivateEndpointData> value)
         {
-            Value = new ChangeTrackingList<PrivateEndpointData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointListResult"/>. </summary>
-        /// <param name="value"> A list of private endpoint resources in a resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The PrivateEndpoint items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointListResult(IReadOnlyList<PrivateEndpointData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateEndpointListResult(IReadOnlyList<CommonPrivateEndpointData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of private endpoint resources in a resource group. </summary>
-        public IReadOnlyList<PrivateEndpointData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointListResult"/> for deserialization. </summary>
+        internal PrivateEndpointListResult()
+        {
+        }
+
+        /// <summary> The PrivateEndpoint items on this page. </summary>
+        public IReadOnlyList<CommonPrivateEndpointData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

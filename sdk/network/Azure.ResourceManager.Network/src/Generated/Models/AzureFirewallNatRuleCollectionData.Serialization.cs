@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -92,10 +97,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ETag? etag = default;
-            ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            ETag? etag = default;
+            string id = default;
             int? priority = default;
             AzureFirewallNatRCAction action = default;
             IList<AzureFirewallNatRule> rules = default;
@@ -104,6 +108,11 @@ namespace Azure.ResourceManager.Network.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -115,25 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -197,9 +188,8 @@ namespace Azure.ResourceManager.Network.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new AzureFirewallNatRuleCollectionData(
                 id,
-                name,
-                type,
                 serializedAdditionalRawData,
+                name,
                 etag,
                 priority,
                 action,
@@ -267,7 +257,15 @@ namespace Azure.ResourceManager.Network.Models
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 

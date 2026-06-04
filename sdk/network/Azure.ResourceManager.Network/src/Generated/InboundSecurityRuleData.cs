@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the InboundSecurityRule data model.
     /// NVA Inbound Security Rule resource.
     /// </summary>
-    public partial class InboundSecurityRuleData : NetworkResourceData
+    public partial class InboundSecurityRuleData : CommonSubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="InboundSecurityRuleData"/>. </summary>
         public InboundSecurityRuleData()
@@ -26,14 +25,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="InboundSecurityRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="ruleType"> Rule Type. This should be either AutoExpire or Permanent. Auto Expire Rule only creates NSG rules. Permanent Rule creates NSG rule and SLB LB Rule. </param>
         /// <param name="rules"> List of allowed rules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal InboundSecurityRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, InboundSecurityRuleType? ruleType, IList<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal InboundSecurityRuleData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string resourceType, ETag? etag, InboundSecurityRuleType? ruleType, IList<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData, name, resourceType)
         {
             ETag = etag;
             RuleType = ruleType;

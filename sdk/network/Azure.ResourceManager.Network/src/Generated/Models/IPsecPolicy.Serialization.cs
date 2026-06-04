@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
             IPsecIntegrity ipsecIntegrity = default;
             IkeEncryption ikeEncryption = default;
             IkeIntegrity ikeIntegrity = default;
-            DHGroup dhGroup = default;
+            DhGroup dhGroup = default;
             PfsGroup pfsGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("dhGroup"u8))
                 {
-                    dhGroup = new DHGroup(property.Value.GetString());
+                    dhGroup = new DhGroup(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("pfsGroup"u8))

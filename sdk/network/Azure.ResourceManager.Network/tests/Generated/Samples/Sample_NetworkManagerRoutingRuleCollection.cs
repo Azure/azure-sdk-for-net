@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreateADefaultRoutingRule()
+        public async Task CreateOrUpdate_CreateAnECMPRoutingRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkManagerRoutingRulePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkManagerRoutingRulePutEcmp.json
             // this example is just showing the usage of "RoutingRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -42,12 +42,15 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkManagerRoutingRuleCollection collection = networkManagerRoutingRules.GetNetworkManagerRoutingRules();
 
             // invoke the operation
-            string ruleName = "SampleRoutingRule";
+            string ruleName = "SampleEcmpRoutingRule";
             NetworkManagerRoutingRuleData data = new NetworkManagerRoutingRuleData
             {
-                Description = "This is Sample Routing Rule",
+                Description = "This is a sample ECMP routing rule with multiple next hop IP addresses",
                 Destination = new RoutingRuleRouteDestination(RoutingRuleDestinationType.AddressPrefix, "10.0.0.0/16"),
-                NextHop = new RoutingRuleNextHop(RoutingRuleNextHopType.VirtualNetworkGateway),
+                NextHop = new RoutingRuleNextHop(RoutingRuleNextHopType.VirtualAppliance)
+                {
+                    NextHopAddress = "10.1.0.4,10.1.0.5,10.1.0.6",
+                },
             };
             ArmOperation<NetworkManagerRoutingRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
             NetworkManagerRoutingRuleResource result = lro.Value;
@@ -63,7 +66,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAnRoutingRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkManagerRoutingRulePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkManagerRoutingRulePut.json
             // this example is just showing the usage of "RoutingRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +109,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsRoutingRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkManagerRoutingRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkManagerRoutingRuleGet.json
             // this example is just showing the usage of "RoutingRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -142,7 +145,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListRoutingRules()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkManagerRoutingRuleList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkManagerRoutingRuleList.json
             // this example is just showing the usage of "RoutingRules_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -180,7 +183,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsRoutingRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkManagerRoutingRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkManagerRoutingRuleGet.json
             // this example is just showing the usage of "RoutingRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -212,7 +215,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsRoutingRule()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/NetworkManagerRoutingRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/NetworkManagerRoutingRuleGet.json
             // this example is just showing the usage of "RoutingRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

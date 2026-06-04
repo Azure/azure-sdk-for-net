@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RouteTableGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/HubRouteTableGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/HubRouteTableGet.json
             // this example is just showing the usage of "HubRouteTables_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this HubRouteTableResource created on azure
             // for more information of creating HubRouteTableResource, please refer to the document of HubRouteTableResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             string routeTableName = "hubRouteTable1";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RouteTableDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/HubRouteTableDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/HubRouteTableDelete.json
             // this example is just showing the usage of "HubRouteTables_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this HubRouteTableResource created on azure
             // for more information of creating HubRouteTableResource, please refer to the document of HubRouteTableResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             string routeTableName = "hubRouteTable1";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RouteTablePut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/HubRouteTablePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/HubRouteTablePut.json
             // this example is just showing the usage of "HubRouteTables_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this HubRouteTableResource created on azure
             // for more information of creating HubRouteTableResource, please refer to the document of HubRouteTableResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualHubName = "virtualHub1";
             string routeTableName = "hubRouteTable1";
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             HubRouteTableData data = new HubRouteTableData
             {
-                Routes = { new HubRoute("route1", "CIDR", new string[] { "10.0.0.0/8", "20.0.0.0/8", "30.0.0.0/8" }, "ResourceId", "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azureFirewall1") },
+                Routes = { new HubRoute("route1", "CIDR", new string[] { "10.0.0.0/8", "20.0.0.0/8", "30.0.0.0/8" }, "ResourceId", "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azureFirewall1") },
                 Labels = { "label1", "label2" },
             };
             ArmOperation<HubRouteTableResource> lro = await hubRouteTable.UpdateAsync(WaitUntil.Completed, data);

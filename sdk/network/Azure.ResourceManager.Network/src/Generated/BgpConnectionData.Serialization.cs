@@ -70,6 +70,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
+            if (Optional.IsDefined(RoutingConfiguration))
+            {
+                writer.WritePropertyName("routingConfiguration"u8);
+                writer.WriteObjectValue(RoutingConfiguration, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -94,14 +99,15 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             ETag? etag = default;
-            ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            string type = default;
+            string id = default;
             long? peerAsn = default;
             string peerIP = default;
             WritableSubResource hubVirtualNetworkConnection = default;
             NetworkProvisioningState? provisioningState = default;
             HubBgpConnectionStatus? connectionState = default;
+            RoutingConfiguration routingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,15 +121,6 @@ namespace Azure.ResourceManager.Network
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -131,11 +128,12 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -188,6 +186,15 @@ namespace Azure.ResourceManager.Network
                             connectionState = new HubBgpConnectionStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("routingConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -199,15 +206,16 @@ namespace Azure.ResourceManager.Network
             serializedAdditionalRawData = rawDataDictionary;
             return new BgpConnectionData(
                 id,
+                serializedAdditionalRawData,
                 name,
                 type,
-                serializedAdditionalRawData,
                 etag,
                 peerAsn,
                 peerIP,
                 hubVirtualNetworkConnection,
                 provisioningState,
-                connectionState);
+                connectionState,
+                routingConfiguration);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -270,7 +278,15 @@ namespace Azure.ResourceManager.Network
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
                 }
             }
 
@@ -361,6 +377,21 @@ namespace Azure.ResourceManager.Network
                 {
                     builder.Append("    connectionState: ");
                     builder.AppendLine($"'{ConnectionState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    routingConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingConfiguration))
+                {
+                    builder.Append("    routingConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RoutingConfiguration, options, 4, false, "    routingConfiguration: ");
                 }
             }
 

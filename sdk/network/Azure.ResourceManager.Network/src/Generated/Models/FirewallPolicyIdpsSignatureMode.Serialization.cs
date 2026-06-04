@@ -11,11 +11,19 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal static partial class FirewallPolicyIdpsSignatureModeExtensions
     {
-        public static FirewallPolicyIdpsSignatureMode ToFirewallPolicyIdpsSignatureMode(this int value)
+        public static float ToSerialSingle(this FirewallPolicyIdpsSignatureMode value) => value switch
         {
-            if (value == 0) return FirewallPolicyIdpsSignatureMode.Zero;
-            if (value == 1) return FirewallPolicyIdpsSignatureMode.One;
-            if (value == 2) return FirewallPolicyIdpsSignatureMode.Two;
+            FirewallPolicyIdpsSignatureMode.Zero => 0F,
+            FirewallPolicyIdpsSignatureMode.One => 1F,
+            FirewallPolicyIdpsSignatureMode.Two => 2F,
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureMode value.")
+        };
+
+        public static FirewallPolicyIdpsSignatureMode ToFirewallPolicyIdpsSignatureMode(this float value)
+        {
+            if (value == 0F) return FirewallPolicyIdpsSignatureMode.Zero;
+            if (value == 1F) return FirewallPolicyIdpsSignatureMode.One;
+            if (value == 2F) return FirewallPolicyIdpsSignatureMode.Two;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureMode value.");
         }
     }

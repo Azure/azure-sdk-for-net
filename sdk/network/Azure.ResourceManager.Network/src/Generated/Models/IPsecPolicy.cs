@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ikeIntegrity"> The IKE integrity algorithm (IKE phase 2). </param>
         /// <param name="dhGroup"> The DH Group used in IKE Phase 1 for initial SA. </param>
         /// <param name="pfsGroup"> The Pfs Group used in IKE Phase 2 for new child SA. </param>
-        public IPsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, IPsecEncryption ipsecEncryption, IPsecIntegrity ipsecIntegrity, IkeEncryption ikeEncryption, IkeIntegrity ikeIntegrity, DHGroup dhGroup, PfsGroup pfsGroup)
+        public IPsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, IPsecEncryption ipsecEncryption, IPsecIntegrity ipsecIntegrity, IkeEncryption ikeEncryption, IkeIntegrity ikeIntegrity, DhGroup dhGroup, PfsGroup pfsGroup)
         {
             SaLifeTimeSeconds = saLifeTimeSeconds;
             SaDataSizeKilobytes = saDataSizeKilobytes;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="dhGroup"> The DH Group used in IKE Phase 1 for initial SA. </param>
         /// <param name="pfsGroup"> The Pfs Group used in IKE Phase 2 for new child SA. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, IPsecEncryption ipsecEncryption, IPsecIntegrity ipsecIntegrity, IkeEncryption ikeEncryption, IkeIntegrity ikeIntegrity, DHGroup dhGroup, PfsGroup pfsGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IPsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, IPsecEncryption ipsecEncryption, IPsecIntegrity ipsecIntegrity, IkeEncryption ikeEncryption, IkeIntegrity ikeIntegrity, DhGroup dhGroup, PfsGroup pfsGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SaLifeTimeSeconds = saLifeTimeSeconds;
             SaDataSizeKilobytes = saDataSizeKilobytes;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
         public IkeIntegrity IkeIntegrity { get; set; }
         /// <summary> The DH Group used in IKE Phase 1 for initial SA. </summary>
         [WirePath("dhGroup")]
-        public DHGroup DhGroup { get; set; }
+        public DhGroup DhGroup { get; set; }
         /// <summary> The Pfs Group used in IKE Phase 2 for new child SA. </summary>
         [WirePath("pfsGroup")]
         public PfsGroup PfsGroup { get; set; }

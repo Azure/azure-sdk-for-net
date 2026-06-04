@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ResourceIdentifier targetResourceId = default;
-            TrafficAnalyticsProperties flowAnalyticsConfiguration = default;
+            CommonTrafficAnalyticsProperties flowAnalyticsConfiguration = default;
             ManagedServiceIdentity identity = default;
             ResourceIdentifier storageId = default;
             string enabledFilteringCriteria = default;
             string recordTypes = default;
             bool enabled = default;
-            RetentionPolicyParameters retentionPolicy = default;
-            FlowLogProperties format = default;
+            CommonRetentionPolicyParameters retentionPolicy = default;
+            CommonFlowLogFormatParameters format = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    flowAnalyticsConfiguration = TrafficAnalyticsProperties.DeserializeTrafficAnalyticsProperties(property.Value, options);
+                    flowAnalyticsConfiguration = CommonTrafficAnalyticsProperties.DeserializeCommonTrafficAnalyticsProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(property0.Value, options);
+                            retentionPolicy = CommonRetentionPolicyParameters.DeserializeCommonRetentionPolicyParameters(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("format"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            format = FlowLogProperties.DeserializeFlowLogProperties(property0.Value, options);
+                            format = CommonFlowLogFormatParameters.DeserializeCommonFlowLogFormatParameters(property0.Value, options);
                             continue;
                         }
                     }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("TrafficAnalyticsConfiguration", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("NetworkWatcherFlowAnalyticsConfiguration", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  flowAnalyticsConfiguration: ");

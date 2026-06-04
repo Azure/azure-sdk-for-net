@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the LocalNetworkGateway data model.
     /// A common class for general resource information.
     /// </summary>
-    public partial class LocalNetworkGatewayData : NetworkTrackedResourceData
+    public partial class LocalNetworkGatewayData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="LocalNetworkGatewayData"/>. </summary>
         public LocalNetworkGatewayData()
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="bgpSettings"> Local network gateway's BGP speaker settings. </param>
         /// <param name="resourceGuid"> The resource GUID property of the local network gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the local network gateway resource. </param>
-        internal LocalNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, VirtualNetworkAddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal LocalNetworkGatewayData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, CommonAddressSpace localNetworkAddressSpace, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             LocalNetworkAddressSpace = localNetworkAddressSpace;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         public ETag? ETag { get; }
         /// <summary> Local network site address space. </summary>
         [WirePath("properties.localNetworkAddressSpace")]
-        public VirtualNetworkAddressSpace LocalNetworkAddressSpace { get; set; }
+        public CommonAddressSpace LocalNetworkAddressSpace { get; set; }
         /// <summary> IP address of local network gateway. </summary>
         [WirePath("properties.gatewayIpAddress")]
         public string GatewayIPAddress { get; set; }

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListApplicationGatewayPrivateEndpointConnection API service call. Gets all private endpoint connections for an application gateway. </summary>
+    /// <summary> The response of a ApplicationGatewayPrivateEndpointConnection list operation. </summary>
     internal partial class ApplicationGatewayPrivateEndpointConnectionListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionListResult"/>. </summary>
-        internal ApplicationGatewayPrivateEndpointConnectionListResult()
+        /// <param name="value"> The ApplicationGatewayPrivateEndpointConnection items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ApplicationGatewayPrivateEndpointConnectionListResult(IEnumerable<ApplicationGatewayPrivateEndpointConnectionData> value)
         {
-            Value = new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value"> List of private endpoint connections on an application gateway. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The ApplicationGatewayPrivateEndpointConnection items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayPrivateEndpointConnectionListResult(IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayPrivateEndpointConnectionListResult(IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of private endpoint connections on an application gateway. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateEndpointConnectionListResult"/> for deserialization. </summary>
+        internal ApplicationGatewayPrivateEndpointConnectionListResult()
+        {
+        }
+
+        /// <summary> The ApplicationGatewayPrivateEndpointConnection items on this page. </summary>
         public IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

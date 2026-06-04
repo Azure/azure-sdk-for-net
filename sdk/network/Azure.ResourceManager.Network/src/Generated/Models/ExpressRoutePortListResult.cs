@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListExpressRoutePorts API service call. </summary>
+    /// <summary> Paged collection of ExpressRoutePort items. </summary>
     internal partial class ExpressRoutePortListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortListResult"/>. </summary>
-        internal ExpressRoutePortListResult()
+        /// <param name="value"> The ExpressRoutePort items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ExpressRoutePortListResult(IEnumerable<ExpressRoutePortData> value)
         {
-            Value = new ChangeTrackingList<ExpressRoutePortData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortListResult"/>. </summary>
-        /// <param name="value"> A list of ExpressRoutePort resources. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The ExpressRoutePort items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRoutePortListResult(IReadOnlyList<ExpressRoutePortData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExpressRoutePortListResult(IReadOnlyList<ExpressRoutePortData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of ExpressRoutePort resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortListResult"/> for deserialization. </summary>
+        internal ExpressRoutePortListResult()
+        {
+        }
+
+        /// <summary> The ExpressRoutePort items on this page. </summary>
         public IReadOnlyList<ExpressRoutePortData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

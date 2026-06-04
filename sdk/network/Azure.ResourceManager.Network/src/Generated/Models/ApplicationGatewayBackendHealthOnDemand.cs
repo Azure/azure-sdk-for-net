@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="backendAddressPool"> Reference to an ApplicationGatewayBackendAddressPool resource. </param>
         /// <param name="backendHealthHttpSettings"> Application gateway BackendHealthHttp settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayBackendHealthOnDemand(ApplicationGatewayBackendAddressPool backendAddressPool, ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayBackendHealthOnDemand(CommonApplicationGatewayBackendAddressPool backendAddressPool, ApplicationGatewayBackendHealthHttpSettings backendHealthHttpSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackendAddressPool = backendAddressPool;
             BackendHealthHttpSettings = backendHealthHttpSettings;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Reference to an ApplicationGatewayBackendAddressPool resource. </summary>
         [WirePath("backendAddressPool")]
-        public ApplicationGatewayBackendAddressPool BackendAddressPool { get; }
+        public CommonApplicationGatewayBackendAddressPool BackendAddressPool { get; }
         /// <summary> Application gateway BackendHealthHttp settings. </summary>
         [WirePath("backendHealthHttpSettings")]
         public ApplicationGatewayBackendHealthHttpSettings BackendHealthHttpSettings { get; }

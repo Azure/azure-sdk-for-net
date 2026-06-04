@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(CommonResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(CommonResourceType);
+            }
         }
 
         StaticCidrData IJsonModel<StaticCidrData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -66,9 +71,10 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             StaticCidrProperties properties = default;
+            string type = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType type0 = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -83,6 +89,11 @@ namespace Azure.ResourceManager.Network
                     properties = StaticCidrProperties.DeserializeStaticCidrProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -95,7 +106,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type0 = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
@@ -116,9 +127,10 @@ namespace Azure.ResourceManager.Network
             return new StaticCidrData(
                 id,
                 name,
-                type,
+                type0,
                 systemData,
                 properties,
+                type,
                 serializedAdditionalRawData);
         }
 
@@ -184,6 +196,18 @@ namespace Azure.ResourceManager.Network
                     builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  type: ");
+                builder.AppendLine($"'{ResourceType.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the NetworkVirtualApplianceSku data model.
     /// Definition of the NetworkVirtualApplianceSkus resource.
     /// </summary>
-    public partial class NetworkVirtualApplianceSkuData : NetworkTrackedResourceData
+    public partial class NetworkVirtualApplianceSkuData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceSkuData"/>. </summary>
         public NetworkVirtualApplianceSkuData()
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vendor"> Network Virtual Appliance Sku vendor. </param>
         /// <param name="availableVersions"> Available Network Virtual Appliance versions. </param>
         /// <param name="availableScaleUnits"> The list of scale units available. </param>
-        internal NetworkVirtualApplianceSkuData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string vendor, IReadOnlyList<string> availableVersions, IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal NetworkVirtualApplianceSkuData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string vendor, IReadOnlyList<string> availableVersions, IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             Vendor = vendor;

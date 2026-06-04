@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> A list of network manager security admin configurations. </summary>
+    /// <summary> The response of a SecurityAdminConfiguration list operation. </summary>
     internal partial class SecurityAdminConfigurationListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAdminConfigurationListResult"/>. </summary>
-        internal SecurityAdminConfigurationListResult()
+        /// <param name="value"> The SecurityAdminConfiguration items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SecurityAdminConfigurationListResult(IEnumerable<SecurityAdminConfigurationData> value)
         {
-            Value = new ChangeTrackingList<SecurityAdminConfigurationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAdminConfigurationListResult"/>. </summary>
-        /// <param name="value"> Gets a page of security admin configurations. </param>
-        /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
+        /// <param name="value"> The SecurityAdminConfiguration items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAdminConfigurationListResult(IReadOnlyList<SecurityAdminConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityAdminConfigurationListResult(IReadOnlyList<SecurityAdminConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets a page of security admin configurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAdminConfigurationListResult"/> for deserialization. </summary>
+        internal SecurityAdminConfigurationListResult()
+        {
+        }
+
+        /// <summary> The SecurityAdminConfiguration items on this page. </summary>
         public IReadOnlyList<SecurityAdminConfigurationData> Value { get; }
-        /// <summary> Gets the URL to get the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

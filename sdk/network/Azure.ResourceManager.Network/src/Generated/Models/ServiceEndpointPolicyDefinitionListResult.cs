@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListServiceEndpointPolicyDefinition API service call. Retrieves all service endpoint policy definition that belongs to a service endpoint policy. </summary>
+    /// <summary> The response of a ServiceEndpointPolicyDefinition list operation. </summary>
     internal partial class ServiceEndpointPolicyDefinitionListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionListResult"/>. </summary>
-        internal ServiceEndpointPolicyDefinitionListResult()
+        /// <param name="value"> The ServiceEndpointPolicyDefinition items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ServiceEndpointPolicyDefinitionListResult(IEnumerable<CommonServiceEndpointPolicyDefinitionData> value)
         {
-            Value = new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionListResult"/>. </summary>
-        /// <param name="value"> The service endpoint policy definition in a service endpoint policy. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The ServiceEndpointPolicyDefinition items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceEndpointPolicyDefinitionListResult(IReadOnlyList<ServiceEndpointPolicyDefinitionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceEndpointPolicyDefinitionListResult(IReadOnlyList<CommonServiceEndpointPolicyDefinitionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The service endpoint policy definition in a service endpoint policy. </summary>
-        public IReadOnlyList<ServiceEndpointPolicyDefinitionData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyDefinitionListResult"/> for deserialization. </summary>
+        internal ServiceEndpointPolicyDefinitionListResult()
+        {
+        }
+
+        /// <summary> The ServiceEndpointPolicyDefinition items on this page. </summary>
+        public IReadOnlyList<CommonServiceEndpointPolicyDefinitionData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

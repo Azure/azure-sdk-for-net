@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AvailableServiceAliasesResult"/>. </summary>
-        internal AvailableServiceAliasesResult()
+        /// <param name="value"> The AvailableServiceAlias items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AvailableServiceAliasesResult(IEnumerable<AvailableServiceAlias> value)
         {
-            Value = new ChangeTrackingList<AvailableServiceAlias>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailableServiceAliasesResult"/>. </summary>
-        /// <param name="value"> An array of available service aliases. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The AvailableServiceAlias items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableServiceAliasesResult(IReadOnlyList<AvailableServiceAlias> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AvailableServiceAliasesResult(IReadOnlyList<AvailableServiceAlias> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array of available service aliases. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableServiceAliasesResult"/> for deserialization. </summary>
+        internal AvailableServiceAliasesResult()
+        {
+        }
+
+        /// <summary> The AvailableServiceAlias items on this page. </summary>
         public IReadOnlyList<AvailableServiceAlias> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListExpressRoutePortsLocations API service call. </summary>
+    /// <summary> Paged collection of ExpressRoutePortsLocation items. </summary>
     internal partial class ExpressRoutePortsLocationListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationListResult"/>. </summary>
-        internal ExpressRoutePortsLocationListResult()
+        /// <param name="value"> The ExpressRoutePortsLocation items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ExpressRoutePortsLocationListResult(IEnumerable<ExpressRoutePortsLocationData> value)
         {
-            Value = new ChangeTrackingList<ExpressRoutePortsLocationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationListResult"/>. </summary>
-        /// <param name="value"> The list of all ExpressRoutePort peering locations. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The ExpressRoutePortsLocation items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRoutePortsLocationListResult(IReadOnlyList<ExpressRoutePortsLocationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExpressRoutePortsLocationListResult(IReadOnlyList<ExpressRoutePortsLocationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of all ExpressRoutePort peering locations. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePortsLocationListResult"/> for deserialization. </summary>
+        internal ExpressRoutePortsLocationListResult()
+        {
+        }
+
+        /// <summary> The ExpressRoutePortsLocation items on this page. </summary>
         public IReadOnlyList<ExpressRoutePortsLocationData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

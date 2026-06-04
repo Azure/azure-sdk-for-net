@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetExpressRouteCrossConnectionBgpPeering()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCrossConnectionBgpPeeringGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteCrossConnectionBgpPeeringGet.json
             // this example is just showing the usage of "ExpressRouteCrossConnectionPeerings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
             // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "CrossConnection-SiliconValley";
             string crossConnectionName = "<circuitServiceKey>";
             string peeringName = "AzurePrivatePeering";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteExpressRouteCrossConnectionBgpPeering()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCrossConnectionBgpPeeringDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteCrossConnectionBgpPeeringDelete.json
             // this example is just showing the usage of "ExpressRouteCrossConnectionPeerings_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
             // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "CrossConnection-SiliconValley";
             string crossConnectionName = "<circuitServiceKey>";
             string peeringName = "AzurePrivatePeering";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ExpressRouteCrossConnectionBgpPeeringCreate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCrossConnectionBgpPeeringCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteCrossConnectionBgpPeeringCreate.json
             // this example is just showing the usage of "ExpressRouteCrossConnectionPeerings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
             // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "CrossConnection-SiliconValley";
             string crossConnectionName = "<circuitServiceKey>";
             string peeringName = "AzurePrivatePeering";
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetArpTableExpressRouteCrossConnection_GetExpressRouteCrossConnectionsArpTable()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCrossConnectionsArpTable.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteCrossConnectionsArpTable.json
             // this example is just showing the usage of "ExpressRouteCrossConnections_ListArpTable" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
             // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "CrossConnection-SiliconValley";
             string crossConnectionName = "<circuitServiceKey>";
             string peeringName = "AzurePrivatePeering";
@@ -149,38 +149,9 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetRoutesTableSummaryExpressRouteCrossConnection_GetExpressRouteCrossConnectionsRouteTableSummary()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCrossConnectionsRouteTableSummary.json
-            // this example is just showing the usage of "ExpressRouteCrossConnections_ListRoutesTableSummary" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
-            // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "CrossConnection-SiliconValley";
-            string crossConnectionName = "<circuitServiceKey>";
-            string peeringName = "AzurePrivatePeering";
-            ResourceIdentifier expressRouteCrossConnectionPeeringResourceId = ExpressRouteCrossConnectionPeeringResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, crossConnectionName, peeringName);
-            ExpressRouteCrossConnectionPeeringResource expressRouteCrossConnectionPeering = client.GetExpressRouteCrossConnectionPeeringResource(expressRouteCrossConnectionPeeringResourceId);
-
-            // invoke the operation
-            string devicePath = "primary";
-            ArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> lro = await expressRouteCrossConnectionPeering.GetRoutesTableSummaryExpressRouteCrossConnectionAsync(WaitUntil.Completed, devicePath);
-            ExpressRouteCrossConnectionsRoutesTableSummaryListResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetRoutesTableExpressRouteCrossConnection_GetExpressRouteCrossConnectionsRouteTable()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCrossConnectionsRouteTable.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteCrossConnectionsRouteTable.json
             // this example is just showing the usage of "ExpressRouteCrossConnections_ListRoutesTable" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -190,7 +161,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
             // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "CrossConnection-SiliconValley";
             string crossConnectionName = "<circuitServiceKey>";
             string peeringName = "AzurePrivatePeering";
@@ -201,6 +172,35 @@ namespace Azure.ResourceManager.Network.Samples
             string devicePath = "primary";
             ArmOperation<ExpressRouteCircuitsRoutesTableListResult> lro = await expressRouteCrossConnectionPeering.GetRoutesTableExpressRouteCrossConnectionAsync(WaitUntil.Completed, devicePath);
             ExpressRouteCircuitsRoutesTableListResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetRoutesTableSummaryExpressRouteCrossConnection_GetExpressRouteCrossConnectionsRouteTableSummary()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteCrossConnectionsRouteTableSummary.json
+            // this example is just showing the usage of "ExpressRouteCrossConnections_ListRoutesTableSummary" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExpressRouteCrossConnectionPeeringResource created on azure
+            // for more information of creating ExpressRouteCrossConnectionPeeringResource, please refer to the document of ExpressRouteCrossConnectionPeeringResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "CrossConnection-SiliconValley";
+            string crossConnectionName = "<circuitServiceKey>";
+            string peeringName = "AzurePrivatePeering";
+            ResourceIdentifier expressRouteCrossConnectionPeeringResourceId = ExpressRouteCrossConnectionPeeringResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, crossConnectionName, peeringName);
+            ExpressRouteCrossConnectionPeeringResource expressRouteCrossConnectionPeering = client.GetExpressRouteCrossConnectionPeeringResource(expressRouteCrossConnectionPeeringResourceId);
+
+            // invoke the operation
+            string devicePath = "primary";
+            ArmOperation<ExpressRouteCrossConnectionsRoutesTableSummaryListResult> lro = await expressRouteCrossConnectionPeering.GetRoutesTableSummaryExpressRouteCrossConnectionAsync(WaitUntil.Completed, devicePath);
+            ExpressRouteCrossConnectionsRoutesTableSummaryListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

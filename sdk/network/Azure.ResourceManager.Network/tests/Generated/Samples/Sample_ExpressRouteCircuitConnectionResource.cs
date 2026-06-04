@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExpressRouteCircuitConnectionGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCircuitConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteCircuitConnectionGet.json
             // this example is just showing the usage of "ExpressRouteCircuitConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCircuitConnectionResource created on azure
             // for more information of creating ExpressRouteCircuitConnectionResource, please refer to the document of ExpressRouteCircuitConnectionResource
-            string subscriptionId = "subid1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string circuitName = "ExpressRouteARMCircuitA";
             string peeringName = "AzurePrivatePeering";
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteExpressRouteCircuit()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCircuitConnectionDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteCircuitConnectionDelete.json
             // this example is just showing the usage of "ExpressRouteCircuitConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCircuitConnectionResource created on azure
             // for more information of creating ExpressRouteCircuitConnectionResource, please refer to the document of ExpressRouteCircuitConnectionResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string circuitName = "ExpressRouteARMCircuitA";
             string peeringName = "AzurePrivatePeering";
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ExpressRouteCircuitConnectionCreate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteCircuitConnectionCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteCircuitConnectionCreate.json
             // this example is just showing the usage of "ExpressRouteCircuitConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteCircuitConnectionResource created on azure
             // for more information of creating ExpressRouteCircuitConnectionResource, please refer to the document of ExpressRouteCircuitConnectionResource
-            string subscriptionId = "subid1";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string circuitName = "ExpressRouteARMCircuitA";
             string peeringName = "AzurePrivatePeering";
@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             ExpressRouteCircuitConnectionData data = new ExpressRouteCircuitConnectionData
             {
-                ExpressRouteCircuitPeeringId = new ResourceIdentifier("/subscriptions/subid1/resourceGroups/dedharcktinit/providers/Microsoft.Network/expressRouteCircuits/dedharcktlocal/peerings/AzurePrivatePeering"),
-                PeerExpressRouteCircuitPeeringId = new ResourceIdentifier("/subscriptions/subid2/resourceGroups/dedharcktpeer/providers/Microsoft.Network/expressRouteCircuits/dedharcktremote/peerings/AzurePrivatePeering"),
+                ExpressRouteCircuitPeeringId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dedharcktinit/providers/Microsoft.Network/expressRouteCircuits/dedharcktlocal/peerings/AzurePrivatePeering"),
+                PeerExpressRouteCircuitPeeringId = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/dedharcktpeer/providers/Microsoft.Network/expressRouteCircuits/dedharcktremote/peerings/AzurePrivatePeering"),
                 AddressPrefix = "10.0.0.0/29",
                 AuthorizationKey = "946a1918-b7a2-4917-b43c-8c4cdaee006a",
                 IPv6CircuitConnectionConfig = new IPv6CircuitConnectionConfig

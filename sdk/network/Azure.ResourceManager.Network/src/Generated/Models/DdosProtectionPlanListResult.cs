@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> A list of DDoS protection plans. </summary>
+    /// <summary> The response of a DdosProtectionPlan list operation. </summary>
     internal partial class DdosProtectionPlanListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanListResult"/>. </summary>
-        internal DdosProtectionPlanListResult()
+        /// <param name="value"> The DdosProtectionPlan items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal DdosProtectionPlanListResult(IEnumerable<DdosProtectionPlanData> value)
         {
-            Value = new ChangeTrackingList<DdosProtectionPlanData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanListResult"/>. </summary>
-        /// <param name="value"> A list of DDoS protection plans. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The DdosProtectionPlan items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DdosProtectionPlanListResult(IReadOnlyList<DdosProtectionPlanData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DdosProtectionPlanListResult(IReadOnlyList<DdosProtectionPlanData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of DDoS protection plans. </summary>
+        /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanListResult"/> for deserialization. </summary>
+        internal DdosProtectionPlanListResult()
+        {
+        }
+
+        /// <summary> The DdosProtectionPlan items on this page. </summary>
         public IReadOnlyList<DdosProtectionPlanData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

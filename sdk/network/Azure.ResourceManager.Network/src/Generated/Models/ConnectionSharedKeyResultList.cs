@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConnectionSharedKeyResultList"/>. </summary>
-        internal ConnectionSharedKeyResultList()
+        /// <param name="value"> The ConnectionSharedKeyResult items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ConnectionSharedKeyResultList(IEnumerable<VpnLinkConnectionSharedKeyData> value)
         {
-            Value = new ChangeTrackingList<VpnLinkConnectionSharedKeyData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectionSharedKeyResultList"/>. </summary>
-        /// <param name="value"> List of SharedKeys. </param>
-        /// <param name="nextLink"> URL to get the next set of operation list results if there are any. </param>
+        /// <param name="value"> The ConnectionSharedKeyResult items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionSharedKeyResultList(IReadOnlyList<VpnLinkConnectionSharedKeyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectionSharedKeyResultList(IReadOnlyList<VpnLinkConnectionSharedKeyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of SharedKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionSharedKeyResultList"/> for deserialization. </summary>
+        internal ConnectionSharedKeyResultList()
+        {
+        }
+
+        /// <summary> The ConnectionSharedKeyResult items on this page. </summary>
         public IReadOnlyList<VpnLinkConnectionSharedKeyData> Value { get; }
-        /// <summary> URL to get the next set of operation list results if there are any. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

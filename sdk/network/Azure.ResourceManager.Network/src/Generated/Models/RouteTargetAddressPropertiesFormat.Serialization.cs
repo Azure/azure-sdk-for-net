@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            SubnetData subnet = default;
+            CommonSubnetData subnet = default;
             string privateIPAddress = default;
             NetworkIPAllocationMethod? privateIPAllocationMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    subnet = SubnetData.DeserializeSubnetData(property.Value, options);
+                    subnet = CommonSubnetData.DeserializeCommonSubnetData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateIPAddress"u8))

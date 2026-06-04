@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="SecurityRuleAssociations"/>. </summary>
         internal SecurityRuleAssociations()
         {
-            DefaultSecurityRules = new ChangeTrackingList<SecurityRuleData>();
+            DefaultSecurityRules = new ChangeTrackingList<CommonSecurityRuleData>();
             EffectiveSecurityRules = new ChangeTrackingList<EffectiveNetworkSecurityRule>();
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="defaultSecurityRules"> Collection of default security rules of the network security group. </param>
         /// <param name="effectiveSecurityRules"> Collection of effective security rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityRuleAssociations(NetworkInterfaceAssociation networkInterfaceAssociation, SubnetAssociation subnetAssociation, IReadOnlyList<SecurityRuleData> defaultSecurityRules, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityRuleAssociations(NetworkInterfaceAssociation networkInterfaceAssociation, SubnetAssociation subnetAssociation, IReadOnlyList<CommonSecurityRuleData> defaultSecurityRules, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NetworkInterfaceAssociation = networkInterfaceAssociation;
             SubnetAssociation = subnetAssociation;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
         public SubnetAssociation SubnetAssociation { get; }
         /// <summary> Collection of default security rules of the network security group. </summary>
         [WirePath("defaultSecurityRules")]
-        public IReadOnlyList<SecurityRuleData> DefaultSecurityRules { get; }
+        public IReadOnlyList<CommonSecurityRuleData> DefaultSecurityRules { get; }
         /// <summary> Collection of effective security rules. </summary>
         [WirePath("effectiveSecurityRules")]
         public IReadOnlyList<EffectiveNetworkSecurityRule> EffectiveSecurityRules { get; }

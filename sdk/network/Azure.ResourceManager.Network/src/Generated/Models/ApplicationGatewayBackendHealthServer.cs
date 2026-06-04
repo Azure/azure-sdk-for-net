@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="health"> Health of backend server. </param>
         /// <param name="healthProbeLog"> Health Probe Log. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayBackendHealthServer(string address, NetworkInterfaceIPConfigurationData ipConfiguration, ApplicationGatewayBackendHealthServerHealth? health, string healthProbeLog, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayBackendHealthServer(string address, CommonNetworkInterfaceIPConfigurationData ipConfiguration, ApplicationGatewayBackendHealthServerHealth? health, string healthProbeLog, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             IPConfiguration = ipConfiguration;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Address { get; }
         /// <summary> Reference to IP configuration of backend server. </summary>
         [WirePath("ipConfiguration")]
-        public NetworkInterfaceIPConfigurationData IPConfiguration { get; }
+        public CommonNetworkInterfaceIPConfigurationData IPConfiguration { get; }
         /// <summary> Health of backend server. </summary>
         [WirePath("health")]
         public ApplicationGatewayBackendHealthServerHealth? Health { get; }

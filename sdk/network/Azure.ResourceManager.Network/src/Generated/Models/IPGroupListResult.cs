@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for the ListIpGroups API service call. </summary>
+    /// <summary> The response of a IpGroup list operation. </summary>
     internal partial class IPGroupListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IPGroupListResult"/>. </summary>
-        internal IPGroupListResult()
+        /// <param name="value"> The IpGroup items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal IPGroupListResult(IEnumerable<IPGroupData> value)
         {
-            Value = new ChangeTrackingList<IPGroupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="IPGroupListResult"/>. </summary>
-        /// <param name="value"> The list of IpGroups information resources. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The IpGroup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPGroupListResult(IReadOnlyList<IPGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IPGroupListResult(IReadOnlyList<IPGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of IpGroups information resources. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPGroupListResult"/> for deserialization. </summary>
+        internal IPGroupListResult()
+        {
+        }
+
+        /// <summary> The IpGroup items on this page. </summary>
         public IReadOnlyList<IPGroupData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

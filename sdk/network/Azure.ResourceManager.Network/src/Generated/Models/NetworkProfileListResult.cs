@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListNetworkProfiles API service call. </summary>
+    /// <summary> The response of a NetworkProfile list operation. </summary>
     internal partial class NetworkProfileListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkProfileListResult"/>. </summary>
-        internal NetworkProfileListResult()
+        /// <param name="value"> The NetworkProfile items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetworkProfileListResult(IEnumerable<NetworkProfileData> value)
         {
-            Value = new ChangeTrackingList<NetworkProfileData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkProfileListResult"/>. </summary>
-        /// <param name="value"> A list of network profiles that exist in a resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The NetworkProfile items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkProfileListResult(IReadOnlyList<NetworkProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkProfileListResult(IReadOnlyList<NetworkProfileData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of network profiles that exist in a resource group. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileListResult"/> for deserialization. </summary>
+        internal NetworkProfileListResult()
+        {
+        }
+
+        /// <summary> The NetworkProfile items on this page. </summary>
         public IReadOnlyList<NetworkProfileData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

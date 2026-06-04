@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            IReadOnlyList<SecurityRuleData> securityRules = default;
+            IReadOnlyList<CommonSecurityRuleData> securityRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<SecurityRuleData> array = new List<SecurityRuleData>();
+                    List<CommonSecurityRuleData> array = new List<CommonSecurityRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item, options));
+                        array.Add(CommonSecurityRuleData.DeserializeCommonSecurityRuleData(item, options));
                     }
                     securityRules = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SubnetAssociation(id, securityRules ?? new ChangeTrackingList<SecurityRuleData>(), serializedAdditionalRawData);
+            return new SubnetAssociation(id, securityRules ?? new ChangeTrackingList<CommonSecurityRuleData>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

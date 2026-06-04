@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ConfigurationPolicyGroupPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ConfigurationPolicyGroupPut.json
             // this example is just showing the usage of "ConfigurationPolicyGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VpnServerConfigurationResource created on azure
             // for more information of creating VpnServerConfigurationResource, please refer to the document of VpnServerConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string vpnServerConfigurationName = "vpnServerConfiguration1";
             ResourceIdentifier vpnServerConfigurationResourceId = VpnServerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vpnServerConfigurationName);
@@ -71,7 +71,7 @@ AttributeValue = "red.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigurationPolicyGroupGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ConfigurationPolicyGroupGet.json
             // this example is just showing the usage of "ConfigurationPolicyGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ AttributeValue = "red.com",
 
             // this example assumes you already have this VpnServerConfigurationResource created on azure
             // for more information of creating VpnServerConfigurationResource, please refer to the document of VpnServerConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string vpnServerConfigurationName = "vpnServerConfiguration1";
             ResourceIdentifier vpnServerConfigurationResourceId = VpnServerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vpnServerConfigurationName);
@@ -105,8 +105,8 @@ AttributeValue = "red.com",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ConfigurationPolicyGroupListByVpnServerConfiguration()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupListByVpnServerConfiguration.json
-            // this example is just showing the usage of "configurationPolicyGroups_ListByVpnServerConfiguration" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ConfigurationPolicyGroupListByVpnServerConfiguration.json
+            // this example is just showing the usage of "ConfigurationPolicyGroups_ListByVpnServerConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -115,7 +115,7 @@ AttributeValue = "red.com",
 
             // this example assumes you already have this VpnServerConfigurationResource created on azure
             // for more information of creating VpnServerConfigurationResource, please refer to the document of VpnServerConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string vpnServerConfigurationName = "vpnServerConfiguration1";
             ResourceIdentifier vpnServerConfigurationResourceId = VpnServerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vpnServerConfigurationName);
@@ -141,7 +141,7 @@ AttributeValue = "red.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ConfigurationPolicyGroupGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ConfigurationPolicyGroupGet.json
             // this example is just showing the usage of "ConfigurationPolicyGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +151,7 @@ AttributeValue = "red.com",
 
             // this example assumes you already have this VpnServerConfigurationResource created on azure
             // for more information of creating VpnServerConfigurationResource, please refer to the document of VpnServerConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string vpnServerConfigurationName = "vpnServerConfiguration1";
             ResourceIdentifier vpnServerConfigurationResourceId = VpnServerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vpnServerConfigurationName);
@@ -171,7 +171,7 @@ AttributeValue = "red.com",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ConfigurationPolicyGroupGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ConfigurationPolicyGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ConfigurationPolicyGroupGet.json
             // this example is just showing the usage of "ConfigurationPolicyGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,7 +181,7 @@ AttributeValue = "red.com",
 
             // this example assumes you already have this VpnServerConfigurationResource created on azure
             // for more information of creating VpnServerConfigurationResource, please refer to the document of VpnServerConfigurationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string vpnServerConfigurationName = "vpnServerConfiguration1";
             ResourceIdentifier vpnServerConfigurationResourceId = VpnServerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vpnServerConfigurationName);

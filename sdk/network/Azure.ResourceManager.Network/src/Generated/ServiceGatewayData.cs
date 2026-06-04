@@ -77,8 +77,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="routeTargetAddressV6"> Route Target address V6 of Service gateway. </param>
         /// <param name="resourceGuid"> The resource GUID property of the service gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the service gateway resource. </param>
+        /// <param name="securityPerimeterResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ServiceGatewaySku sku, IList<string> zones, VirtualNetworkData virtualNetwork, RouteTargetAddressPropertiesFormat routeTargetAddress, RouteTargetAddressPropertiesFormat routeTargetAddressV6, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ServiceGatewaySku sku, IList<string> zones, CommonVirtualNetworkData virtualNetwork, RouteTargetAddressPropertiesFormat routeTargetAddress, RouteTargetAddressPropertiesFormat routeTargetAddressV6, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string securityPerimeterResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Sku = sku;
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.Network
             RouteTargetAddressV6 = routeTargetAddressV6;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
+            SecurityPerimeterResourceType = securityPerimeterResourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -111,7 +113,7 @@ namespace Azure.ResourceManager.Network
         public IList<string> Zones { get; }
         /// <summary> Reference to an existing virtual network. </summary>
         [WirePath("properties.virtualNetwork")]
-        public VirtualNetworkData VirtualNetwork { get; set; }
+        public CommonVirtualNetworkData VirtualNetwork { get; set; }
         /// <summary> Route Target address of Service gateway. </summary>
         [WirePath("properties.routeTargetAddress")]
         public RouteTargetAddressPropertiesFormat RouteTargetAddress { get; set; }
@@ -124,5 +126,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the service gateway resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
+        [WirePath("type")]
+        public string SecurityPerimeterResourceType { get; }
     }
 }

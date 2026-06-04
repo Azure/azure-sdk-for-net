@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the DscpConfiguration data model.
     /// Differentiated Services Code Point configuration for any given network interface
     /// </summary>
-    public partial class DscpConfigurationData : NetworkTrackedResourceData
+    public partial class DscpConfigurationData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="DscpConfigurationData"/>. </summary>
         public DscpConfigurationData()
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
             SourcePortRanges = new ChangeTrackingList<QosPortRange>();
             DestinationPortRanges = new ChangeTrackingList<QosPortRange>();
             QosDefinitionCollection = new ChangeTrackingList<DscpQosDefinition>();
-            AssociatedNetworkInterfaces = new ChangeTrackingList<NetworkInterfaceData>();
+            AssociatedNetworkInterfaces = new ChangeTrackingList<CommonNetworkInterfaceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DscpConfigurationData"/>. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="associatedNetworkInterfaces"> Associated Network Interfaces to the DSCP Configuration. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DSCP Configuration resource. </param>
         /// <param name="provisioningState"> The provisioning state of the DSCP Configuration resource. </param>
-        internal DscpConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IList<DscpQosDefinition> qosDefinitionCollection, string qosCollectionId, IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal DscpConfigurationData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<int> markings, IList<QosIPRange> sourceIPRanges, IList<QosIPRange> destinationIPRanges, IList<QosPortRange> sourcePortRanges, IList<QosPortRange> destinationPortRanges, ProtocolType? protocol, IList<DscpQosDefinition> qosDefinitionCollection, string qosCollectionId, IReadOnlyList<CommonNetworkInterfaceData> associatedNetworkInterfaces, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             Markings = markings;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
         public string QosCollectionId { get; }
         /// <summary> Associated Network Interfaces to the DSCP Configuration. </summary>
         [WirePath("properties.associatedNetworkInterfaces")]
-        public IReadOnlyList<NetworkInterfaceData> AssociatedNetworkInterfaces { get; }
+        public IReadOnlyList<CommonNetworkInterfaceData> AssociatedNetworkInterfaces { get; }
         /// <summary> The resource GUID property of the DSCP Configuration resource. </summary>
         [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }

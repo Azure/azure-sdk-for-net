@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A ExpressRouteResourceProvider object. </summary>
-    public partial class ExpressRouteServiceProvider : NetworkTrackedResourceData
+    public partial class ExpressRouteServiceProvider : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteServiceProvider"/>. </summary>
         public ExpressRouteServiceProvider()
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="peeringLocations"> A list of peering locations. </param>
         /// <param name="bandwidthsOffered"> A list of bandwidths offered. </param>
         /// <param name="provisioningState"> The provisioning state of the express route service provider resource. </param>
-        internal ExpressRouteServiceProvider(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> peeringLocations, IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal ExpressRouteServiceProvider(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> peeringLocations, IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             PeeringLocations = peeringLocations;
             BandwidthsOffered = bandwidthsOffered;

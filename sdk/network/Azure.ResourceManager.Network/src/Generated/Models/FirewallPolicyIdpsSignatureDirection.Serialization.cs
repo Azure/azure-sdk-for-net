@@ -11,14 +11,25 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal static partial class FirewallPolicyIdpsSignatureDirectionExtensions
     {
-        public static FirewallPolicyIdpsSignatureDirection ToFirewallPolicyIdpsSignatureDirection(this int value)
+        public static float ToSerialSingle(this FirewallPolicyIdpsSignatureDirection value) => value switch
         {
-            if (value == 0) return FirewallPolicyIdpsSignatureDirection.Zero;
-            if (value == 1) return FirewallPolicyIdpsSignatureDirection.One;
-            if (value == 2) return FirewallPolicyIdpsSignatureDirection.Two;
-            if (value == 3) return FirewallPolicyIdpsSignatureDirection.Three;
-            if (value == 4) return FirewallPolicyIdpsSignatureDirection.Four;
-            if (value == 5) return FirewallPolicyIdpsSignatureDirection.Five;
+            FirewallPolicyIdpsSignatureDirection.Zero => 0F,
+            FirewallPolicyIdpsSignatureDirection.One => 1F,
+            FirewallPolicyIdpsSignatureDirection.Two => 2F,
+            FirewallPolicyIdpsSignatureDirection.Three => 3F,
+            FirewallPolicyIdpsSignatureDirection.Four => 4F,
+            FirewallPolicyIdpsSignatureDirection.Five => 5F,
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureDirection value.")
+        };
+
+        public static FirewallPolicyIdpsSignatureDirection ToFirewallPolicyIdpsSignatureDirection(this float value)
+        {
+            if (value == 0F) return FirewallPolicyIdpsSignatureDirection.Zero;
+            if (value == 1F) return FirewallPolicyIdpsSignatureDirection.One;
+            if (value == 2F) return FirewallPolicyIdpsSignatureDirection.Two;
+            if (value == 3F) return FirewallPolicyIdpsSignatureDirection.Three;
+            if (value == 4F) return FirewallPolicyIdpsSignatureDirection.Four;
+            if (value == 5F) return FirewallPolicyIdpsSignatureDirection.Five;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureDirection value.");
         }
     }

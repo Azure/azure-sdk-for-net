@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the SecurityPartnerProvider data model.
     /// Security Partner Provider resource.
     /// </summary>
-    public partial class SecurityPartnerProviderData : NetworkTrackedResourceData
+    public partial class SecurityPartnerProviderData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="SecurityPartnerProviderData"/>. </summary>
         public SecurityPartnerProviderData()
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="securityProviderName"> The security provider name. </param>
         /// <param name="connectionStatus"> The connection status with the Security Partner Provider. </param>
         /// <param name="virtualHub"> The virtualHub to which the Security Partner Provider belongs. </param>
-        internal SecurityPartnerProviderData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, NetworkProvisioningState? provisioningState, SecurityProviderName? securityProviderName, SecurityPartnerProviderConnectionStatus? connectionStatus, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal SecurityPartnerProviderData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, NetworkProvisioningState? provisioningState, SecurityProviderName? securityProviderName, SecurityPartnerProviderConnectionStatus? connectionStatus, WritableSubResource virtualHub) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             ProvisioningState = provisioningState;

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "vpngw";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkScalableGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkScalableGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkScalableGatewayGet.json
             // this example is just showing the usage of "VirtualNetworkGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "ergw";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayDelete.json
             // this example is just showing the usage of "VirtualNetworkGateways_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "vpngw";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateVirtualNetworkGatewayTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayUpdateTags.json
             // this example is just showing the usage of "VirtualNetworkGateways_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "vpngw";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
@@ -144,9 +144,61 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task InvokeAbortMigration_VirtualNetworkGatewayAbortMigration()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayAbortMigration.json
+            // this example is just showing the usage of "VirtualNetworkGateways_InvokeAbortMigration" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            await virtualNetworkGateway.InvokeAbortMigrationAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task InvokeCommitMigration_VirtualNetworkGatewayCommitMigration()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayCommitMigration.json
+            // this example is just showing the usage of "VirtualNetworkGateways_InvokeCommitMigration" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            await virtualNetworkGateway.InvokeCommitMigrationAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConnections_VirtualNetworkGatewaysListConnections()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewaysListConnections.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewaysListConnections.json
             // this example is just showing the usage of "VirtualNetworkGateways_ListConnections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -156,7 +208,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "testrg";
             string virtualNetworkGatewayName = "test-vpn-gateway-1";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
@@ -173,9 +225,457 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task DisconnectVirtualNetworkGatewayVpnConnections_DisconnectVpnConnectionsFromVirtualNetworkGateway()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewaysDisconnectP2sVpnConnections.json
+            // this example is just showing the usage of "VirtualNetworkGateways_DisconnectVirtualNetworkGatewayVpnConnections" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "vpn-gateway-test";
+            string virtualNetworkGatewayName = "vpngateway";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            P2SVpnConnectionRequest request = new P2SVpnConnectionRequest
+            {
+                VpnConnectionIds = { "vpnconnId1", "vpnconnId2" },
+            };
+            await virtualNetworkGateway.DisconnectVirtualNetworkGatewayVpnConnectionsAsync(WaitUntil.Completed, request);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task InvokeExecuteMigration_VirtualNetworkGatewayExecuteMigration()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayExecuteMigration.json
+            // this example is just showing the usage of "VirtualNetworkGateways_InvokeExecuteMigration" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            await virtualNetworkGateway.InvokeExecuteMigrationAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GenerateVpnClientPackage_GenerateVPNClientPackage()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayGenerateVpnClientPackage.json
+            // this example is just showing the usage of "VirtualNetworkGateways_Generatevpnclientpackage" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            VpnClientContent content = new VpnClientContent();
+            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnClientPackageAsync(WaitUntil.Completed, content);
+            string result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GenerateVpnProfile_GenerateVirtualNetworkGatewayVPNProfile()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayGenerateVpnProfile.json
+            // this example is just showing the usage of "VirtualNetworkGateways_GenerateVpnProfile" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            VpnClientContent content = new VpnClientContent();
+            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnProfileAsync(WaitUntil.Completed, content);
+            string result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAdvertisedRoutes_GetVirtualNetworkGatewayAdvertisedRoutes()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayGetAdvertisedRoutes.json
+            // this example is just showing the usage of "VirtualNetworkGateways_GetAdvertisedRoutes" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            string peer = "test";
+            ArmOperation<GatewayRouteListResult> lro = await virtualNetworkGateway.GetAdvertisedRoutesAsync(WaitUntil.Completed, peer);
+            GatewayRouteListResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBgpPeerStatus_GetVirtualNetworkGatewayBGPPeerStatus()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayGetBGPPeerStatus.json
+            // this example is just showing the usage of "VirtualNetworkGateways_GetBgpPeerStatus" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            ArmOperation<BgpPeerStatusListResult> lro = await virtualNetworkGateway.GetBgpPeerStatusAsync(WaitUntil.Completed);
+            BgpPeerStatusListResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetFailoverAllTestDetails_VirtualNetworkGatewayGetFailoverAllTestsDetails()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayGetFailoverAllTestsDetails.json
+            // this example is just showing the usage of "VirtualNetworkGateways_GetFailoverAllTestDetails" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "ergw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            string type = "SingleSiteFailover";
+            bool fetchLatest = true;
+            ArmOperation<IList<ExpressRouteFailoverTestDetails>> lro = await virtualNetworkGateway.GetFailoverAllTestDetailsAsync(WaitUntil.Completed, type, fetchLatest);
+            IList<ExpressRouteFailoverTestDetails> result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetFailoverSingleTestDetails_VirtualNetworkGatewayGetFailoverSingleTestDetails()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayGetFailoverSingleTestDetails.json
+            // this example is just showing the usage of "VirtualNetworkGateways_GetFailoverSingleTestDetails" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "ergw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            string peeringLocation = "Vancouver";
+            string failoverTestId = "fe458ae8-d2ae-4520-a104-44bc233bde7e";
+            ArmOperation<IList<ExpressRouteFailoverSingleTestDetails>> lro = await virtualNetworkGateway.GetFailoverSingleTestDetailsAsync(WaitUntil.Completed, peeringLocation, failoverTestId);
+            IList<ExpressRouteFailoverSingleTestDetails> result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetLearnedRoutes_GetVirtualNetworkGatewayLearnedRoutes()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayLearnedRoutes.json
+            // this example is just showing the usage of "VirtualNetworkGateways_GetLearnedRoutes" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            ArmOperation<GatewayRouteListResult> lro = await virtualNetworkGateway.GetLearnedRoutesAsync(WaitUntil.Completed);
+            GatewayRouteListResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetResiliencyInformation_GetVirtualNetworkGatewayResiliencyInformation()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayGetResiliencyInformation.json
+            // this example is just showing the usage of "VirtualNetworkGateways_GetResiliencyInformation" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            bool? attemptRefresh = true;
+            ArmOperation<GatewayResiliencyInformation> lro = await virtualNetworkGateway.GetResiliencyInformationAsync(WaitUntil.Completed, attemptRefresh: attemptRefresh);
+            GatewayResiliencyInformation result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetRoutesInformation_GetVirtualNetworkGatewayRoutesInformation()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayGetRoutesInformation.json
+            // this example is just showing the usage of "VirtualNetworkGateways_GetRoutesInformation" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            bool? attemptRefresh = false;
+            ArmOperation<GatewayRouteSetsInformation> lro = await virtualNetworkGateway.GetRoutesInformationAsync(WaitUntil.Completed, attemptRefresh: attemptRefresh);
+            GatewayRouteSetsInformation result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetVpnclientConnectionHealth_GetVirtualNetworkGatewayVpnclientConnectionHealth()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayGetVpnclientConnectionHealth.json
+            // this example is just showing the usage of "VirtualNetworkGateways_GetVpnclientConnectionHealth" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "p2s-vnet-test";
+            string virtualNetworkGatewayName = "vpnp2sgw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            ArmOperation<VpnClientConnectionHealthDetailListResult> lro = await virtualNetworkGateway.GetVpnclientConnectionHealthAsync(WaitUntil.Completed);
+            VpnClientConnectionHealthDetailListResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetVpnclientIPsecParameters_GetVirtualNetworkGatewayVpnClientIpsecParameters()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayGetVpnClientIpsecParameters.json
+            // this example is just showing the usage of "VirtualNetworkGateways_GetVpnclientIPsecParameters" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            ArmOperation<VpnClientIPsecParameters> lro = await virtualNetworkGateway.GetVpnclientIPsecParametersAsync(WaitUntil.Completed);
+            VpnClientIPsecParameters result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetVpnProfilePackageUrl_GetVirtualNetworkGatewayVPNProfilePackageURL()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayGetVpnProfilePackageUrl.json
+            // this example is just showing the usage of "VirtualNetworkGateways_GetVpnProfilePackageUrl" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            ArmOperation<string> lro = await virtualNetworkGateway.GetVpnProfilePackageUrlAsync(WaitUntil.Completed);
+            string result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetRadiusSecrets_ListAllVirtualNetworkGatewayRadiusServerSecrets()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/AllVirtualNetworkGatewayRadiusServerSecretsList.json
+            // this example is just showing the usage of "VirtualNetworkGateways_ListRadiusSecrets" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (RadiusAuthServer item in virtualNetworkGateway.GetRadiusSecretsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task InvokePrepareMigration_VirtualNetworkGatewayPrepareMigration()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayPrepareMigration.json
+            // this example is just showing the usage of "VirtualNetworkGateways_InvokePrepareMigration" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            VirtualNetworkGatewayMigrationContent content = new VirtualNetworkGatewayMigrationContent(VirtualNetworkGatewayMigrationType.UpgradeDeploymentToStandardIP)
+            {
+                ResourceUri = new Uri("testUrl"),
+            };
+            await virtualNetworkGateway.InvokePrepareMigrationAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Reset_ResetVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayReset.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayReset.json
             // this example is just showing the usage of "VirtualNetworkGateways_Reset" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +685,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "vpngw";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
@@ -206,7 +706,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ResetVpnClientSharedKey_ResetVpnClientSharedKey()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayResetVpnClientSharedKey.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayResetVpnClientSharedKey.json
             // this example is just showing the usage of "VirtualNetworkGateways_ResetVpnClientSharedKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -216,7 +716,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "vpngw";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
@@ -230,285 +730,9 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GenerateVpnClientPackage_GenerateVPNClientPackage()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGenerateVpnClientPackage.json
-            // this example is just showing the usage of "VirtualNetworkGateways_Generatevpnclientpackage" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            VpnClientContent content = new VpnClientContent();
-            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnClientPackageAsync(WaitUntil.Completed, content);
-            string result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GenerateVpnProfile_GenerateVirtualNetworkGatewayVPNProfile()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGenerateVpnProfile.json
-            // this example is just showing the usage of "VirtualNetworkGateways_GenerateVpnProfile" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            VpnClientContent content = new VpnClientContent();
-            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnProfileAsync(WaitUntil.Completed, content);
-            string result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetVpnProfilePackageUrl_GetVirtualNetworkGatewayVPNProfilePackageURL()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGetVpnProfilePackageUrl.json
-            // this example is just showing the usage of "VirtualNetworkGateways_GetVpnProfilePackageUrl" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            ArmOperation<string> lro = await virtualNetworkGateway.GetVpnProfilePackageUrlAsync(WaitUntil.Completed);
-            string result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetBgpPeerStatus_GetVirtualNetworkGatewayBGPPeerStatus()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGetBGPPeerStatus.json
-            // this example is just showing the usage of "VirtualNetworkGateways_GetBgpPeerStatus" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            ArmOperation<BgpPeerStatusListResult> lro = await virtualNetworkGateway.GetBgpPeerStatusAsync(WaitUntil.Completed);
-            BgpPeerStatusListResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task SupportedVpnDevices_ListVirtualNetworkGatewaySupportedVPNDevices()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewaySupportedVpnDevice.json
-            // this example is just showing the usage of "VirtualNetworkGateways_SupportedVpnDevices" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            string result = await virtualNetworkGateway.SupportedVpnDevicesAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetRadiusSecrets_ListAllVirtualNetworkGatewayRadiusServerSecrets()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/AllVirtualNetworkGatewayRadiusServerSecretsList.json
-            // this example is just showing the usage of "VirtualNetworkGateways_ListRadiusSecrets" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "72f988bf-86f1-41af-91ab-2d7cd0dddd4";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (RadiusAuthServer item in virtualNetworkGateway.GetRadiusSecretsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetLearnedRoutes_GetVirtualNetworkGatewayLearnedRoutes()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayLearnedRoutes.json
-            // this example is just showing the usage of "VirtualNetworkGateways_GetLearnedRoutes" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            ArmOperation<GatewayRouteListResult> lro = await virtualNetworkGateway.GetLearnedRoutesAsync(WaitUntil.Completed);
-            GatewayRouteListResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAdvertisedRoutes_GetVirtualNetworkGatewayAdvertisedRoutes()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGetAdvertisedRoutes.json
-            // this example is just showing the usage of "VirtualNetworkGateways_GetAdvertisedRoutes" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            string peer = "test";
-            ArmOperation<GatewayRouteListResult> lro = await virtualNetworkGateway.GetAdvertisedRoutesAsync(WaitUntil.Completed, peer);
-            GatewayRouteListResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetResiliencyInformation_GetVirtualNetworkGatewayResiliencyInformation()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGetResiliencyInformation.json
-            // this example is just showing the usage of "VirtualNetworkGateways_GetResiliencyInformation" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            bool? attemptRefresh = true;
-            ArmOperation<GatewayResiliencyInformation> lro = await virtualNetworkGateway.GetResiliencyInformationAsync(WaitUntil.Completed, attemptRefresh: attemptRefresh);
-            GatewayResiliencyInformation result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetRoutesInformation_GetVirtualNetworkGatewayRoutesInformation()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGetRoutesInformation.json
-            // this example is just showing the usage of "VirtualNetworkGateways_GetRoutesInformation" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            bool? attemptRefresh = false;
-            ArmOperation<GatewayRouteSetsInformation> lro = await virtualNetworkGateway.GetRoutesInformationAsync(WaitUntil.Completed, attemptRefresh: attemptRefresh);
-            GatewayRouteSetsInformation result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task SetVpnclientIPsecParameters_SetVirtualNetworkGatewayVpnClientIpsecParameters()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewaySetVpnClientIpsecParameters.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewaySetVpnClientIpsecParameters.json
             // this example is just showing the usage of "VirtualNetworkGateways_SetVpnclientIPsecParameters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -518,7 +742,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "vpngw";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
@@ -528,40 +752,13 @@ namespace Azure.ResourceManager.Network.Samples
             VpnClientIPsecParameters vpnclientIPsecParams = new VpnClientIPsecParameters(
                 86473,
                 429497,
-                IPsecEncryption.Aes256,
-                IPsecIntegrity.Sha256,
-                IkeEncryption.Aes256,
-                IkeIntegrity.Sha384,
-                DHGroup.DHGroup2,
-                PfsGroup.Pfs2);
+                IPsecEncryption.AES256,
+                IPsecIntegrity.SHA256,
+                IkeEncryption.AES256,
+                IkeIntegrity.SHA384,
+                DhGroup.DHGroup2,
+                PfsGroup.PFS2);
             ArmOperation<VpnClientIPsecParameters> lro = await virtualNetworkGateway.SetVpnclientIPsecParametersAsync(WaitUntil.Completed, vpnclientIPsecParams);
-            VpnClientIPsecParameters result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetVpnclientIPsecParameters_GetVirtualNetworkGatewayVpnClientIpsecParameters()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGetVpnClientIpsecParameters.json
-            // this example is just showing the usage of "VirtualNetworkGateways_GetVpnclientIPsecParameters" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            ArmOperation<VpnClientIPsecParameters> lro = await virtualNetworkGateway.GetVpnclientIPsecParametersAsync(WaitUntil.Completed);
             VpnClientIPsecParameters result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -571,7 +768,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StartPacketCapture_StartPacketCaptureOnVirtualNetworkGatewayWithFilter()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayStartPacketCaptureFilterData.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayStartPacketCaptureFilterData.json
             // this example is just showing the usage of "VirtualNetworkGateways_StartPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -581,7 +778,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "vpngw";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
@@ -602,7 +799,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StartPacketCapture_StartPacketCaptureOnVirtualNetworkGatewayWithoutFilter()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayStartPacketCapture.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayStartPacketCapture.json
             // this example is just showing the usage of "VirtualNetworkGateways_StartPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -612,7 +809,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "vpngw";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
@@ -627,9 +824,37 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task StartExpressRouteSiteFailoverSimulation_VirtualNetworkGatewayStartSiteFailoverSimulation()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayStartSiteFailoverSimulation.json
+            // this example is just showing the usage of "VirtualNetworkGateways_StartExpressRouteSiteFailoverSimulation" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
+            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "ergw";
+            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
+            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
+
+            // invoke the operation
+            string peeringLocation = "Vancouver";
+            ArmOperation<string> lro = await virtualNetworkGateway.StartExpressRouteSiteFailoverSimulationAsync(WaitUntil.Completed, peeringLocation);
+            string result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StopPacketCapture_StopPacketCaptureOnVirtualNetworkGateway()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayStopPacketCapture.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayStopPacketCapture.json
             // this example is just showing the usage of "VirtualNetworkGateways_StopPacketCapture" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -639,7 +864,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "vpngw";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
@@ -658,95 +883,9 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetFailoverAllTestDetails_VirtualNetworkGatewayGetFailoverAllTestsDetails()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGetFailoverAllTestsDetails.json
-            // this example is just showing the usage of "VirtualNetworkGateways_GetFailoverAllTestDetails" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "ergw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            string type = "SingleSiteFailover";
-            bool fetchLatest = true;
-            ArmOperation<IList<ExpressRouteFailoverTestDetails>> lro = await virtualNetworkGateway.GetFailoverAllTestDetailsAsync(WaitUntil.Completed, type, fetchLatest);
-            IList<ExpressRouteFailoverTestDetails> result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetFailoverSingleTestDetails_VirtualNetworkGatewayGetFailoverSingleTestDetails()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGetFailoverSingleTestDetails.json
-            // this example is just showing the usage of "VirtualNetworkGateways_GetFailoverSingleTestDetails" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "ergw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            string peeringLocation = "Vancouver";
-            string failoverTestId = "fe458ae8-d2ae-4520-a104-44bc233bde7e";
-            ArmOperation<IList<ExpressRouteFailoverSingleTestDetails>> lro = await virtualNetworkGateway.GetFailoverSingleTestDetailsAsync(WaitUntil.Completed, peeringLocation, failoverTestId);
-            IList<ExpressRouteFailoverSingleTestDetails> result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task StartExpressRouteSiteFailoverSimulation_VirtualNetworkGatewayStartSiteFailoverSimulation()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayStartSiteFailoverSimulation.json
-            // this example is just showing the usage of "VirtualNetworkGateways_StartExpressRouteSiteFailoverSimulation" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "ergw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            string peeringLocation = "Vancouver";
-            ArmOperation<string> lro = await virtualNetworkGateway.StartExpressRouteSiteFailoverSimulationAsync(WaitUntil.Completed, peeringLocation);
-            string result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task StopExpressRouteSiteFailoverSimulation_VirtualNetworkGatewayStopSiteFailoverSimulation()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayStopSiteFailoverSimulation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewayStopSiteFailoverSimulation.json
             // this example is just showing the usage of "VirtualNetworkGateways_StopExpressRouteSiteFailoverSimulation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -756,14 +895,14 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string virtualNetworkGatewayName = "ergw";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            ExpressRouteFailoverStopApiContent content = new ExpressRouteFailoverStopApiContent
+            ExpressRouteFailoverStopApiParameters stopParameters = new ExpressRouteFailoverStopApiParameters
             {
                 PeeringLocation = "Vancouver",
                 WasSimulationSuccessful = true,
@@ -779,7 +918,7 @@ FailoverLocation = "Amsterdam",
 IsVerified = true,
 }},
             };
-            ArmOperation<string> lro = await virtualNetworkGateway.StopExpressRouteSiteFailoverSimulationAsync(WaitUntil.Completed, content);
+            ArmOperation<string> lro = await virtualNetworkGateway.StopExpressRouteSiteFailoverSimulationAsync(WaitUntil.Completed, stopParameters);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -787,10 +926,10 @@ IsVerified = true,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetVpnclientConnectionHealth_GetVirtualNetworkGatewayVpnclientConnectionHealth()
+        public async Task SupportedVpnDevices_ListVirtualNetworkGatewaySupportedVPNDevices()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayGetVpnclientConnectionHealth.json
-            // this example is just showing the usage of "VirtualNetworkGateways_GetVpnclientConnectionHealth" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/VirtualNetworkGatewaySupportedVpnDevice.json
+            // this example is just showing the usage of "VirtualNetworkGateways_SupportedVpnDevices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -799,155 +938,16 @@ IsVerified = true,
 
             // this example assumes you already have this VirtualNetworkGatewayResource created on azure
             // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "p2s-vnet-test";
-            string virtualNetworkGatewayName = "vpnp2sgw";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayName = "vpngw";
             ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<VpnClientConnectionHealthDetailListResult> lro = await virtualNetworkGateway.GetVpnclientConnectionHealthAsync(WaitUntil.Completed);
-            VpnClientConnectionHealthDetailListResult result = lro.Value;
+            string result = await virtualNetworkGateway.SupportedVpnDevicesAsync();
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task DisconnectVirtualNetworkGatewayVpnConnections_DisconnectVpnConnectionsFromVirtualNetworkGateway()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewaysDisconnectP2sVpnConnections.json
-            // this example is just showing the usage of "VirtualNetworkGateways_DisconnectVirtualNetworkGatewayVpnConnections" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "vpn-gateway-test";
-            string virtualNetworkGatewayName = "vpngateway";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            P2SVpnConnectionRequest request = new P2SVpnConnectionRequest
-            {
-                VpnConnectionIds = { "vpnconnId1", "vpnconnId2" },
-            };
-            await virtualNetworkGateway.DisconnectVirtualNetworkGatewayVpnConnectionsAsync(WaitUntil.Completed, request);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task InvokePrepareMigration_VirtualNetworkGatewayPrepareMigration()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayPrepareMigration.json
-            // this example is just showing the usage of "VirtualNetworkGateways_InvokePrepareMigration" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            VirtualNetworkGatewayMigrationContent content = new VirtualNetworkGatewayMigrationContent(VirtualNetworkGatewayMigrationType.UpgradeDeploymentToStandardIP)
-            {
-                ResourceUri = new Uri("testUrl"),
-            };
-            await virtualNetworkGateway.InvokePrepareMigrationAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task InvokeExecuteMigration_VirtualNetworkGatewayExecuteMigration()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayExecuteMigration.json
-            // this example is just showing the usage of "VirtualNetworkGateways_InvokeExecuteMigration" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            await virtualNetworkGateway.InvokeExecuteMigrationAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task InvokeCommitMigration_VirtualNetworkGatewayCommitMigration()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayCommitMigration.json
-            // this example is just showing the usage of "VirtualNetworkGateways_InvokeCommitMigration" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            await virtualNetworkGateway.InvokeCommitMigrationAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task InvokeAbortMigration_VirtualNetworkGatewayAbortMigration()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/VirtualNetworkGatewayAbortMigration.json
-            // this example is just showing the usage of "VirtualNetworkGateways_InvokeAbortMigration" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayResource created on azure
-            // for more information of creating VirtualNetworkGatewayResource, please refer to the document of VirtualNetworkGatewayResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayResourceId = VirtualNetworkGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayName);
-            VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
-
-            // invoke the operation
-            await virtualNetworkGateway.InvokeAbortMigrationAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

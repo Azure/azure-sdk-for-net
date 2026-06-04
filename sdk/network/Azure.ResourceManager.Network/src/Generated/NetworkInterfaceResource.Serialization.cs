@@ -11,19 +11,19 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkInterfaceResource : IJsonModel<NetworkInterfaceData>
+    public partial class NetworkInterfaceResource : IJsonModel<CommonNetworkInterfaceData>
     {
-        private static NetworkInterfaceData s_dataDeserializationInstance;
-        private static NetworkInterfaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static CommonNetworkInterfaceData s_dataDeserializationInstance;
+        private static CommonNetworkInterfaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
 
-        void IJsonModel<NetworkInterfaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkInterfaceData>)Data).Write(writer, options);
+        void IJsonModel<CommonNetworkInterfaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommonNetworkInterfaceData>)Data).Write(writer, options);
 
-        NetworkInterfaceData IJsonModel<NetworkInterfaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkInterfaceData>)DataDeserializationInstance).Create(ref reader, options);
+        CommonNetworkInterfaceData IJsonModel<CommonNetworkInterfaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommonNetworkInterfaceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkInterfaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkInterfaceData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<CommonNetworkInterfaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommonNetworkInterfaceData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        NetworkInterfaceData IPersistableModel<NetworkInterfaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkInterfaceData>(data, options, AzureResourceManagerNetworkContext.Default);
+        CommonNetworkInterfaceData IPersistableModel<CommonNetworkInterfaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommonNetworkInterfaceData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkInterfaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkInterfaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CommonNetworkInterfaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommonNetworkInterfaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

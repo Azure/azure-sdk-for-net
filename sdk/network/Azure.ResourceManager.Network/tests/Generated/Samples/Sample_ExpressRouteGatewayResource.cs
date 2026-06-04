@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ExpressRouteGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteGatewayGet.json
             // this example is just showing the usage of "ExpressRouteGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ExpressRouteGatewayDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteGatewayDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteGatewayDelete.json
             // this example is just showing the usage of "ExpressRouteGateways_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ExpressRouteGatewayUpdate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-05-01/examples/ExpressRouteGatewayUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteGatewayUpdateTags.json
             // this example is just showing the usage of "ExpressRouteGateways_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // this example assumes you already have this ExpressRouteGatewayResource created on azure
             // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "resourceGroupName";
             string expressRouteGatewayName = "expressRouteGatewayName";
             ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
@@ -109,6 +110,186 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRouteGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetFailoverAllTestsDetails_ExpressRouteGatewayGetFailoverAllTestsDetails()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteGatewayGetFailoverAllTestsDetails.json
+            // this example is just showing the usage of "ExpressRouteGateways_GetFailoverAllTestsDetails" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExpressRouteGatewayResource created on azure
+            // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string expressRouteGatewayName = "ergw1";
+            ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
+            ExpressRouteGatewayResource expressRouteGateway = client.GetExpressRouteGatewayResource(expressRouteGatewayResourceId);
+
+            // invoke the operation
+            string type = "SingleSiteFailover";
+            bool? fetchLatest = true;
+            ArmOperation<IList<ExpressRouteFailoverTestDetails>> lro = await expressRouteGateway.GetFailoverAllTestsDetailsAsync(WaitUntil.Completed, type: type, fetchLatest: fetchLatest);
+            IList<ExpressRouteFailoverTestDetails> result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetFailoverSingleTestDetails_ExpressRouteGatewayGetFailoverSingleTestDetails()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteGatewayGetFailoverSingleTestDetails.json
+            // this example is just showing the usage of "ExpressRouteGateways_GetFailoverSingleTestDetails" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExpressRouteGatewayResource created on azure
+            // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string expressRouteGatewayName = "ergw1";
+            ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
+            ExpressRouteGatewayResource expressRouteGateway = client.GetExpressRouteGatewayResource(expressRouteGatewayResourceId);
+
+            // invoke the operation
+            string peeringLocation = "Vancouver";
+            string failoverTestId = "00000000-0000-0000-0000-000000000001";
+            ArmOperation<IList<ExpressRouteFailoverSingleTestDetails>> lro = await expressRouteGateway.GetFailoverSingleTestDetailsAsync(WaitUntil.Completed, peeringLocation, failoverTestId);
+            IList<ExpressRouteFailoverSingleTestDetails> result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetResiliencyInformation_ExpressRouteGatewayGetResiliencyInformation()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteGatewayGetResiliencyInformation.json
+            // this example is just showing the usage of "ExpressRouteGateways_GetResiliencyInformation" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExpressRouteGatewayResource created on azure
+            // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string expressRouteGatewayName = "ergw1";
+            ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
+            ExpressRouteGatewayResource expressRouteGateway = client.GetExpressRouteGatewayResource(expressRouteGatewayResourceId);
+
+            // invoke the operation
+            bool? attemptRefresh = false;
+            ArmOperation<GatewayResiliencyInformation> lro = await expressRouteGateway.GetResiliencyInformationAsync(WaitUntil.Completed, attemptRefresh: attemptRefresh);
+            GatewayResiliencyInformation result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetRoutesInformation_ExpressRouteGatewayGetRoutesInformation()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteGatewayGetRoutesInformation.json
+            // this example is just showing the usage of "ExpressRouteGateways_GetRoutesInformation" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExpressRouteGatewayResource created on azure
+            // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string expressRouteGatewayName = "ergw1";
+            ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
+            ExpressRouteGatewayResource expressRouteGateway = client.GetExpressRouteGatewayResource(expressRouteGatewayResourceId);
+
+            // invoke the operation
+            bool? attemptRefresh = false;
+            ArmOperation<GatewayRouteSetsInformation> lro = await expressRouteGateway.GetRoutesInformationAsync(WaitUntil.Completed, attemptRefresh: attemptRefresh);
+            GatewayRouteSetsInformation result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task StartSiteFailoverTest_ExpressRouteGatewayStartSiteFailoverTest()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteGatewayStartSiteFailoverTest.json
+            // this example is just showing the usage of "ExpressRouteGateways_StartSiteFailoverTest" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExpressRouteGatewayResource created on azure
+            // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string expressRouteGatewayName = "ergw1";
+            ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
+            ExpressRouteGatewayResource expressRouteGateway = client.GetExpressRouteGatewayResource(expressRouteGatewayResourceId);
+
+            // invoke the operation
+            string peeringLocation = "Vancouver";
+            ArmOperation<string> lro = await expressRouteGateway.StartSiteFailoverTestAsync(WaitUntil.Completed, peeringLocation);
+            string result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task StopSiteFailoverTest_ExpressRouteGatewayStopSiteFailoverTest()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/Network/stable/2025-07-01/examples/ExpressRouteGatewayStopSiteFailoverTest.json
+            // this example is just showing the usage of "ExpressRouteGateways_StopSiteFailoverTest" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ExpressRouteGatewayResource created on azure
+            // for more information of creating ExpressRouteGatewayResource, please refer to the document of ExpressRouteGatewayResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string expressRouteGatewayName = "ergw1";
+            ResourceIdentifier expressRouteGatewayResourceId = ExpressRouteGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, expressRouteGatewayName);
+            ExpressRouteGatewayResource expressRouteGateway = client.GetExpressRouteGatewayResource(expressRouteGatewayResourceId);
+
+            // invoke the operation
+            ExpressRouteFailoverStopApiParameters stopParameters = new ExpressRouteFailoverStopApiParameters
+            {
+                PeeringLocation = "Vancouver",
+                WasSimulationSuccessful = true,
+                Details = {new FailoverConnectionDetails
+{
+FailoverConnectionName = "conn1",
+FailoverLocation = "Denver",
+IsVerified = true,
+}},
+            };
+            ArmOperation<string> lro = await expressRouteGateway.StopSiteFailoverTestAsync(WaitUntil.Completed, stopParameters);
+            string result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

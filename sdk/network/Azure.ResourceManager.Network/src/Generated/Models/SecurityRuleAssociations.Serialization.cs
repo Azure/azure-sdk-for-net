@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             NetworkInterfaceAssociation networkInterfaceAssociation = default;
             SubnetAssociation subnetAssociation = default;
-            IReadOnlyList<SecurityRuleData> defaultSecurityRules = default;
+            IReadOnlyList<CommonSecurityRuleData> defaultSecurityRules = default;
             IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<SecurityRuleData> array = new List<SecurityRuleData>();
+                    List<CommonSecurityRuleData> array = new List<CommonSecurityRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item, options));
+                        array.Add(CommonSecurityRuleData.DeserializeCommonSecurityRuleData(item, options));
                     }
                     defaultSecurityRules = array;
                     continue;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SecurityRuleAssociations(networkInterfaceAssociation, subnetAssociation, defaultSecurityRules ?? new ChangeTrackingList<SecurityRuleData>(), effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>(), serializedAdditionalRawData);
+            return new SecurityRuleAssociations(networkInterfaceAssociation, subnetAssociation, defaultSecurityRules ?? new ChangeTrackingList<CommonSecurityRuleData>(), effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

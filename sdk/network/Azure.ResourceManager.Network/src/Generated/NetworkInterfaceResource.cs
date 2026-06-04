@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         private readonly NetworkInterfacesRestOperations _networkInterfaceRestClient;
         private readonly ClientDiagnostics _networkInterfaceLoadBalancersClientDiagnostics;
         private readonly NetworkInterfaceLoadBalancersRestOperations _networkInterfaceLoadBalancersRestClient;
-        private readonly NetworkInterfaceData _data;
+        private readonly CommonNetworkInterfaceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkInterfaces";
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref="NetworkInterfaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetworkInterfaceResource(ArmClient client, NetworkInterfaceData data) : this(client, data.Id)
+        internal NetworkInterfaceResource(ArmClient client, CommonNetworkInterfaceData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual NetworkInterfaceData Data
+        public virtual CommonNetworkInterfaceData Data
         {
             get
             {
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of NetworkInterfaceIPConfigurationResources in the NetworkInterface. </summary>
-        /// <returns> An object representing collection of NetworkInterfaceIPConfigurationResources and their operations over a NetworkInterfaceIPConfigurationResource. </returns>
-        public virtual NetworkInterfaceIPConfigurationCollection GetNetworkInterfaceIPConfigurations()
+        /// <summary> Gets a collection of CommonNetworkInterfaceIPConfigurationResources in the NetworkInterface. </summary>
+        /// <returns> An object representing collection of CommonNetworkInterfaceIPConfigurationResources and their operations over a CommonNetworkInterfaceIPConfigurationResource. </returns>
+        public virtual CommonNetworkInterfaceIPConfigurationCollection GetCommonNetworkInterfaceIPConfigurations()
         {
-            return GetCachedClient(client => new NetworkInterfaceIPConfigurationCollection(client, Id));
+            return GetCachedClient(client => new CommonNetworkInterfaceIPConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceIPConfigurationResource"/></description>
+        /// <description><see cref="CommonNetworkInterfaceIPConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkInterfaceIPConfigurationResource>> GetNetworkInterfaceIPConfigurationAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommonNetworkInterfaceIPConfigurationResource>> GetCommonNetworkInterfaceIPConfigurationAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
-            return await GetNetworkInterfaceIPConfigurations().GetAsync(ipConfigurationName, cancellationToken).ConfigureAwait(false);
+            return await GetCommonNetworkInterfaceIPConfigurations().GetAsync(ipConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceIPConfigurationResource"/></description>
+        /// <description><see cref="CommonNetworkInterfaceIPConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,47 +159,16 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkInterfaceIPConfigurationResource> GetNetworkInterfaceIPConfiguration(string ipConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<CommonNetworkInterfaceIPConfigurationResource> GetCommonNetworkInterfaceIPConfiguration(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
-            return GetNetworkInterfaceIPConfigurations().Get(ipConfigurationName, cancellationToken);
+            return GetCommonNetworkInterfaceIPConfigurations().Get(ipConfigurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkInterfaceTapConfigurationResources in the NetworkInterface. </summary>
-        /// <returns> An object representing collection of NetworkInterfaceTapConfigurationResources and their operations over a NetworkInterfaceTapConfigurationResource. </returns>
-        public virtual NetworkInterfaceTapConfigurationCollection GetNetworkInterfaceTapConfigurations()
+        /// <summary> Gets a collection of CommonNetworkInterfaceTapConfigurationResources in the NetworkInterface. </summary>
+        /// <returns> An object representing collection of CommonNetworkInterfaceTapConfigurationResources and their operations over a CommonNetworkInterfaceTapConfigurationResource. </returns>
+        public virtual CommonNetworkInterfaceTapConfigurationCollection GetCommonNetworkInterfaceTapConfigurations()
         {
-            return GetCachedClient(client => new NetworkInterfaceTapConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the specified tap configuration on a network interface.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaceTapConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceTapConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkInterfaceTapConfigurationResource>> GetNetworkInterfaceTapConfigurationAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkInterfaceTapConfigurations().GetAsync(tapConfigurationName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new CommonNetworkInterfaceTapConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -215,22 +184,53 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceTapConfigurationResource"/></description>
+        /// <description><see cref="CommonNetworkInterfaceTapConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
+        /// <param name="tapConfigurationName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkInterfaceTapConfigurationResource> GetNetworkInterfaceTapConfiguration(string tapConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommonNetworkInterfaceTapConfigurationResource>> GetCommonNetworkInterfaceTapConfigurationAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
-            return GetNetworkInterfaceTapConfigurations().Get(tapConfigurationName, cancellationToken);
+            return await GetCommonNetworkInterfaceTapConfigurations().GetAsync(tapConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified tap configuration on a network interface.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/tapConfigurations/{tapConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaceTapConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommonNetworkInterfaceTapConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tapConfigurationName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CommonNetworkInterfaceTapConfigurationResource> GetCommonNetworkInterfaceTapConfiguration(string tapConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return GetCommonNetworkInterfaceTapConfigurations().Get(tapConfigurationName, cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -484,90 +484,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets all route tables applied to a network interface.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveRouteTable</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaces_GetEffectiveRouteTable</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<EffectiveRouteListResult>> GetEffectiveRouteTableAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.GetEffectiveRouteTable");
-            scope.Start();
-            try
-            {
-                var response = await _networkInterfaceRestClient.GetEffectiveRouteTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<EffectiveRouteListResult>(new EffectiveRouteListResultOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateGetEffectiveRouteTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets all route tables applied to a network interface.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveRouteTable</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaces_GetEffectiveRouteTable</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<EffectiveRouteListResult> GetEffectiveRouteTable(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.GetEffectiveRouteTable");
-            scope.Start();
-            try
-            {
-                var response = _networkInterfaceRestClient.GetEffectiveRouteTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation<EffectiveRouteListResult>(new EffectiveRouteListResultOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateGetEffectiveRouteTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Gets all network security groups applied to a network interface.
         /// <list type="bullet">
         /// <item>
@@ -580,7 +496,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -622,7 +538,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -652,29 +568,87 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// List all load balancers in a network interface.
+        /// Gets all route tables applied to a network interface.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/loadBalancers</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveRouteTable</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkInterfaceLoadBalancers_List</description>
+        /// <description>NetworkInterfaces_GetEffectiveRouteTable</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkInterfaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LoadBalancerResource> GetNetworkInterfaceLoadBalancersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EffectiveRouteListResult>> GetEffectiveRouteTableAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceLoadBalancersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceLoadBalancersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.GetEffectiveRouteTable");
+            scope.Start();
+            try
+            {
+                var response = await _networkInterfaceRestClient.GetEffectiveRouteTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<EffectiveRouteListResult>(new EffectiveRouteListResultOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateGetEffectiveRouteTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all route tables applied to a network interface.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/effectiveRouteTable</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaces_GetEffectiveRouteTable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<EffectiveRouteListResult> GetEffectiveRouteTable(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _networkInterfaceClientDiagnostics.CreateScope("NetworkInterfaceResource.GetEffectiveRouteTable");
+            scope.Start();
+            try
+            {
+                var response = _networkInterfaceRestClient.GetEffectiveRouteTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NetworkArmOperation<EffectiveRouteListResult>(new EffectiveRouteListResultOperationSource(), _networkInterfaceClientDiagnostics, Pipeline, _networkInterfaceRestClient.CreateGetEffectiveRouteTableRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -690,17 +664,43 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LoadBalancerResource> GetNetworkInterfaceLoadBalancers(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CommonLoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommonLoadBalancerResource> GetNetworkInterfaceLoadBalancersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceLoadBalancersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceLoadBalancersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CommonLoadBalancerResource(Client, CommonLoadBalancerData.DeserializeCommonLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all load balancers in a network interface.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/loadBalancers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkInterfaceLoadBalancers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CommonLoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommonLoadBalancerResource> GetNetworkInterfaceLoadBalancers(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkInterfaceLoadBalancersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkInterfaceLoadBalancersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CommonLoadBalancerResource(Client, CommonLoadBalancerData.DeserializeCommonLoadBalancerData(e)), _networkInterfaceLoadBalancersClientDiagnostics, Pipeline, "NetworkInterfaceResource.GetNetworkInterfaceLoadBalancers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -954,7 +954,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1014,7 +1014,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

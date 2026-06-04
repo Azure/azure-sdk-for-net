@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the ExpressRouteCircuit data model.
     /// ExpressRouteCircuit resource.
     /// </summary>
-    public partial class ExpressRouteCircuitData : NetworkTrackedResourceData
+    public partial class ExpressRouteCircuitData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitData"/>. </summary>
         public ExpressRouteCircuitData()
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="sku"> The SKU. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="sku"> The SKU. </param>
         /// <param name="allowClassicOperations"> Allow classic operations. </param>
         /// <param name="circuitProvisioningState"> The CircuitProvisioningState state of the resource. </param>
         /// <param name="serviceProviderProvisioningState"> The ServiceProviderProvisioningState state of the resource. </param>
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="authorizationKey"> The authorizationKey. </param>
         /// <param name="authorizationStatus"> The authorization status of the Circuit. </param>
         /// <param name="enableDirectPortRateLimit"> Flag denoting rate-limiting status of the ExpressRoute direct-port circuit. </param>
-        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus, bool? enableDirectPortRateLimit) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal ExpressRouteCircuitData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ExpressRouteCircuitSku sku, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus, bool? enableDirectPortRateLimit) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
-            Sku = sku;
             ETag = etag;
+            Sku = sku;
             AllowClassicOperations = allowClassicOperations;
             CircuitProvisioningState = circuitProvisioningState;
             ServiceProviderProvisioningState = serviceProviderProvisioningState;
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Network
             EnableDirectPortRateLimit = enableDirectPortRateLimit;
         }
 
-        /// <summary> The SKU. </summary>
-        [WirePath("sku")]
-        public ExpressRouteCircuitSku Sku { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+        /// <summary> The SKU. </summary>
+        [WirePath("sku")]
+        public ExpressRouteCircuitSku Sku { get; set; }
         /// <summary> Allow classic operations. </summary>
         [WirePath("properties.allowClassicOperations")]
         public bool? AllowClassicOperations { get; set; }

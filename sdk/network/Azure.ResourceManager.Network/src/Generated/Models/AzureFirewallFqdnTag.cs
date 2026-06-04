@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Azure Firewall FQDN Tag Resource. </summary>
-    public partial class AzureFirewallFqdnTag : NetworkTrackedResourceData
+    public partial class AzureFirewallFqdnTag : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="AzureFirewallFqdnTag"/>. </summary>
         public AzureFirewallFqdnTag()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure firewall FQDN tag resource. </param>
         /// <param name="fqdnTagName"> The name of this FQDN Tag. </param>
-        internal AzureFirewallFqdnTag(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, NetworkProvisioningState? provisioningState, string fqdnTagName) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal AzureFirewallFqdnTag(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, NetworkProvisioningState? provisioningState, string fqdnTagName) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             ProvisioningState = provisioningState;

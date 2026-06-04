@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the FirewallPolicyDraft data model.
     /// FirewallPolicy Resource.
     /// </summary>
-    public partial class FirewallPolicyDraftData : NetworkTrackedResourceData
+    public partial class FirewallPolicyDraftData : CommonResource
     {
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyDraftData"/>. </summary>
         public FirewallPolicyDraftData()
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="dnsSettings"> DNS Proxy Settings definition. </param>
         /// <param name="explicitProxy"> Explicit Proxy Settings definition. </param>
         /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
-        internal FirewallPolicyDraftData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource basePolicy, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal FirewallPolicyDraftData(string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource basePolicy, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             BasePolicy = basePolicy;
             ThreatIntelMode = threatIntelMode;

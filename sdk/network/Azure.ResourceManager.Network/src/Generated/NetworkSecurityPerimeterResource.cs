@@ -90,6 +90,213 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of NetworkSecurityPerimeterLinkReferenceResources in the NetworkSecurityPerimeter. </summary>
+        /// <returns> An object representing collection of NetworkSecurityPerimeterLinkReferenceResources and their operations over a NetworkSecurityPerimeterLinkReferenceResource. </returns>
+        public virtual NetworkSecurityPerimeterLinkReferenceCollection GetNetworkSecurityPerimeterLinkReferences()
+        {
+            return GetCachedClient(client => new NetworkSecurityPerimeterLinkReferenceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified NSP linkReference resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterLinkReferences_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterLinkReferenceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkReferenceName"> The name of the NSP linkReference. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkReferenceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkSecurityPerimeterLinkReferenceResource>> GetNetworkSecurityPerimeterLinkReferenceAsync(string linkReferenceName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetworkSecurityPerimeterLinkReferences().GetAsync(linkReferenceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified NSP linkReference resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterLinkReferences_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterLinkReferenceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkReferenceName"> The name of the NSP linkReference. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkReferenceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkSecurityPerimeterLinkReferenceResource> GetNetworkSecurityPerimeterLinkReference(string linkReferenceName, CancellationToken cancellationToken = default)
+        {
+            return GetNetworkSecurityPerimeterLinkReferences().Get(linkReferenceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkSecurityPerimeterLinkResources in the NetworkSecurityPerimeter. </summary>
+        /// <returns> An object representing collection of NetworkSecurityPerimeterLinkResources and their operations over a NetworkSecurityPerimeterLinkResource. </returns>
+        public virtual NetworkSecurityPerimeterLinkCollection GetNetworkSecurityPerimeterLinks()
+        {
+            return GetCachedClient(client => new NetworkSecurityPerimeterLinkCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified NSP link resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/links/{linkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkName"> The name of the NSP link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkSecurityPerimeterLinkResource>> GetNetworkSecurityPerimeterLinkAsync(string linkName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetworkSecurityPerimeterLinks().GetAsync(linkName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified NSP link resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/links/{linkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkName"> The name of the NSP link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkSecurityPerimeterLinkResource> GetNetworkSecurityPerimeterLink(string linkName, CancellationToken cancellationToken = default)
+        {
+            return GetNetworkSecurityPerimeterLinks().Get(linkName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkSecurityPerimeterLoggingConfigurationResources in the NetworkSecurityPerimeter. </summary>
+        /// <returns> An object representing collection of NetworkSecurityPerimeterLoggingConfigurationResources and their operations over a NetworkSecurityPerimeterLoggingConfigurationResource. </returns>
+        public virtual NetworkSecurityPerimeterLoggingConfigurationCollection GetNetworkSecurityPerimeterLoggingConfigurations()
+        {
+            return GetCachedClient(client => new NetworkSecurityPerimeterLoggingConfigurationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the NSP logging configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterLoggingConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loggingConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkSecurityPerimeterLoggingConfigurationResource>> GetNetworkSecurityPerimeterLoggingConfigurationAsync(string loggingConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetworkSecurityPerimeterLoggingConfigurations().GetAsync(loggingConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the NSP logging configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterLoggingConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="loggingConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkSecurityPerimeterLoggingConfigurationResource> GetNetworkSecurityPerimeterLoggingConfiguration(string loggingConfigurationName, CancellationToken cancellationToken = default)
+        {
+            return GetNetworkSecurityPerimeterLoggingConfigurations().Get(loggingConfigurationName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of NetworkSecurityPerimeterProfileResources in the NetworkSecurityPerimeter. </summary>
         /// <returns> An object representing collection of NetworkSecurityPerimeterProfileResources and their operations over a NetworkSecurityPerimeterProfileResource. </returns>
         public virtual NetworkSecurityPerimeterProfileCollection GetNetworkSecurityPerimeterProfiles()
@@ -110,7 +317,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +348,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +386,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +417,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -228,213 +435,6 @@ namespace Azure.ResourceManager.Network
             return GetNetworkSecurityPerimeterAssociations().Get(associationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkSecurityPerimeterLinkResources in the NetworkSecurityPerimeter. </summary>
-        /// <returns> An object representing collection of NetworkSecurityPerimeterLinkResources and their operations over a NetworkSecurityPerimeterLinkResource. </returns>
-        public virtual NetworkSecurityPerimeterLinkCollection GetNetworkSecurityPerimeterLinks()
-        {
-            return GetCachedClient(client => new NetworkSecurityPerimeterLinkCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified NSP link resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/links/{linkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLinks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="linkName"> The name of the NSP link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkSecurityPerimeterLinkResource>> GetNetworkSecurityPerimeterLinkAsync(string linkName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkSecurityPerimeterLinks().GetAsync(linkName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified NSP link resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/links/{linkName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLinks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="linkName"> The name of the NSP link. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkSecurityPerimeterLinkResource> GetNetworkSecurityPerimeterLink(string linkName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkSecurityPerimeterLinks().Get(linkName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkSecurityPerimeterLinkReferenceResources in the NetworkSecurityPerimeter. </summary>
-        /// <returns> An object representing collection of NetworkSecurityPerimeterLinkReferenceResources and their operations over a NetworkSecurityPerimeterLinkReferenceResource. </returns>
-        public virtual NetworkSecurityPerimeterLinkReferenceCollection GetNetworkSecurityPerimeterLinkReferences()
-        {
-            return GetCachedClient(client => new NetworkSecurityPerimeterLinkReferenceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified NSP linkReference resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLinkReferences_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLinkReferenceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="linkReferenceName"> The name of the NSP linkReference. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkReferenceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="linkReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkSecurityPerimeterLinkReferenceResource>> GetNetworkSecurityPerimeterLinkReferenceAsync(string linkReferenceName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkSecurityPerimeterLinkReferences().GetAsync(linkReferenceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified NSP linkReference resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/linkReferences/{linkReferenceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLinkReferences_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLinkReferenceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="linkReferenceName"> The name of the NSP linkReference. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkReferenceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="linkReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkSecurityPerimeterLinkReferenceResource> GetNetworkSecurityPerimeterLinkReference(string linkReferenceName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkSecurityPerimeterLinkReferences().Get(linkReferenceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkSecurityPerimeterLoggingConfigurationResources in the NetworkSecurityPerimeter. </summary>
-        /// <returns> An object representing collection of NetworkSecurityPerimeterLoggingConfigurationResources and their operations over a NetworkSecurityPerimeterLoggingConfigurationResource. </returns>
-        public virtual NetworkSecurityPerimeterLoggingConfigurationCollection GetNetworkSecurityPerimeterLoggingConfigurations()
-        {
-            return GetCachedClient(client => new NetworkSecurityPerimeterLoggingConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the NSP logging configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLoggingConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loggingConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkSecurityPerimeterLoggingConfigurationResource>> GetNetworkSecurityPerimeterLoggingConfigurationAsync(string loggingConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkSecurityPerimeterLoggingConfigurations().GetAsync(loggingConfigurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the NSP logging configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/loggingConfigurations/{loggingConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterLoggingConfigurations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterLoggingConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="loggingConfigurationName"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="loggingConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="loggingConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkSecurityPerimeterLoggingConfigurationResource> GetNetworkSecurityPerimeterLoggingConfiguration(string loggingConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkSecurityPerimeterLoggingConfigurations().Get(loggingConfigurationName, cancellationToken);
-        }
-
         /// <summary>
         /// Gets the specified network security perimeter by the name.
         /// <list type="bullet">
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -936,7 +936,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

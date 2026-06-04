@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListFrontendIPConfiguration API service call. </summary>
+    /// <summary> Paged collection of FrontendIPConfiguration items. </summary>
     internal partial class LoadBalancerFrontendIPConfigurationListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerFrontendIPConfigurationListResult"/>. </summary>
-        internal LoadBalancerFrontendIPConfigurationListResult()
+        /// <param name="value"> The FrontendIPConfiguration items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal LoadBalancerFrontendIPConfigurationListResult(IEnumerable<CommonFrontendIPConfigurationData> value)
         {
-            Value = new ChangeTrackingList<FrontendIPConfigurationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerFrontendIPConfigurationListResult"/>. </summary>
-        /// <param name="value"> A list of frontend IP configurations in a load balancer. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The FrontendIPConfiguration items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerFrontendIPConfigurationListResult(IReadOnlyList<FrontendIPConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadBalancerFrontendIPConfigurationListResult(IReadOnlyList<CommonFrontendIPConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of frontend IP configurations in a load balancer. </summary>
-        public IReadOnlyList<FrontendIPConfigurationData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerFrontendIPConfigurationListResult"/> for deserialization. </summary>
+        internal LoadBalancerFrontendIPConfigurationListResult()
+        {
+        }
+
+        /// <summary> The FrontendIPConfiguration items on this page. </summary>
+        public IReadOnlyList<CommonFrontendIPConfigurationData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

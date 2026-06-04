@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Load Distribution Target of an application gateway. </summary>
-    public partial class ApplicationGatewayLoadDistributionTarget : NetworkResourceData
+    public partial class ApplicationGatewayLoadDistributionTarget : CommonSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionTarget"/>. </summary>
         public ApplicationGatewayLoadDistributionTarget()
@@ -22,22 +22,30 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionTarget"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the load distribution policy that is unique within an Application Gateway. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="weightPerServer"> Weight per server. Range between 1 and 100. </param>
         /// <param name="backendAddressPool"> Backend address pool resource of the application gateway. </param>
-        internal ApplicationGatewayLoadDistributionTarget(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? weightPerServer, WritableSubResource backendAddressPool) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal ApplicationGatewayLoadDistributionTarget(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, ETag? etag, string resourceType, int? weightPerServer, WritableSubResource backendAddressPool) : base(id, serializedAdditionalRawData)
         {
+            Name = name;
             ETag = etag;
+            ResourceType = resourceType;
             WeightPerServer = weightPerServer;
             BackendAddressPool = backendAddressPool;
         }
 
+        /// <summary> Name of the load distribution policy that is unique within an Application Gateway. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+        /// <summary> Type of the resource. </summary>
+        [WirePath("type")]
+        public string ResourceType { get; }
         /// <summary> Weight per server. Range between 1 and 100. </summary>
         [WirePath("properties.weightPerServer")]
         public int? WeightPerServer { get; set; }

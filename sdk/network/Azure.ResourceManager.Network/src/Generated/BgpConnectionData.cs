@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the BgpConnection data model.
     /// Virtual Appliance Site resource.
     /// </summary>
-    public partial class BgpConnectionData : NetworkResourceData
+    public partial class BgpConnectionData : CommonSubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="BgpConnectionData"/>. </summary>
         public BgpConnectionData()
@@ -26,16 +26,17 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="BgpConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="peerAsn"> Peer ASN. </param>
         /// <param name="peerIP"> Peer IP. </param>
         /// <param name="hubVirtualNetworkConnection"> The reference to the HubVirtualNetworkConnection resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="connectionState"> The current state of the VirtualHub to Peer. </param>
-        internal BgpConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, long? peerAsn, string peerIP, WritableSubResource hubVirtualNetworkConnection, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="routingConfiguration"> The routing configuration indicating the associated and propagated route tables for this connection. </param>
+        internal BgpConnectionData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string resourceType, ETag? etag, long? peerAsn, string peerIP, WritableSubResource hubVirtualNetworkConnection, NetworkProvisioningState? provisioningState, HubBgpConnectionStatus? connectionState, RoutingConfiguration routingConfiguration) : base(id, serializedAdditionalRawData, name, resourceType)
         {
             ETag = etag;
             PeerAsn = peerAsn;
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.Network
             HubVirtualNetworkConnection = hubVirtualNetworkConnection;
             ProvisioningState = provisioningState;
             ConnectionState = connectionState;
+            RoutingConfiguration = routingConfiguration;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -75,5 +77,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> The current state of the VirtualHub to Peer. </summary>
         [WirePath("properties.connectionState")]
         public HubBgpConnectionStatus? ConnectionState { get; }
+        /// <summary> The routing configuration indicating the associated and propagated route tables for this connection. </summary>
+        [WirePath("properties.routingConfiguration")]
+        public RoutingConfiguration RoutingConfiguration { get; set; }
     }
 }

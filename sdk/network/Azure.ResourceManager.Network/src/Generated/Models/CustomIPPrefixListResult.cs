@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListCustomIpPrefixes API service call. </summary>
+    /// <summary> The response of a CustomIpPrefix list operation. </summary>
     internal partial class CustomIPPrefixListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CustomIPPrefixListResult"/>. </summary>
-        internal CustomIPPrefixListResult()
+        /// <param name="value"> The CustomIpPrefix items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal CustomIPPrefixListResult(IEnumerable<CustomIPPrefixData> value)
         {
-            Value = new ChangeTrackingList<CustomIPPrefixData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomIPPrefixListResult"/>. </summary>
-        /// <param name="value"> A list of Custom IP prefixes that exists in a resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The CustomIpPrefix items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomIPPrefixListResult(IReadOnlyList<CustomIPPrefixData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomIPPrefixListResult(IReadOnlyList<CustomIPPrefixData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of Custom IP prefixes that exists in a resource group. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixListResult"/> for deserialization. </summary>
+        internal CustomIPPrefixListResult()
+        {
+        }
+
+        /// <summary> The CustomIpPrefix items on this page. </summary>
         public IReadOnlyList<CustomIPPrefixData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

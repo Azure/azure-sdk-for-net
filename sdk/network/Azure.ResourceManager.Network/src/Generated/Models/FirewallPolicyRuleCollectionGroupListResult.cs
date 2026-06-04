@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Response for ListFirewallPolicyRuleCollectionGroups API service call. </summary>
+    /// <summary> The response of a FirewallPolicyRuleCollectionGroup list operation. </summary>
     internal partial class FirewallPolicyRuleCollectionGroupListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupListResult"/>. </summary>
-        internal FirewallPolicyRuleCollectionGroupListResult()
+        /// <param name="value"> The FirewallPolicyRuleCollectionGroup items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal FirewallPolicyRuleCollectionGroupListResult(IEnumerable<FirewallPolicyRuleCollectionGroupData> value)
         {
-            Value = new ChangeTrackingList<FirewallPolicyRuleCollectionGroupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupListResult"/>. </summary>
-        /// <param name="value"> List of FirewallPolicyRuleCollectionGroups in a FirewallPolicy. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The FirewallPolicyRuleCollectionGroup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallPolicyRuleCollectionGroupListResult(IReadOnlyList<FirewallPolicyRuleCollectionGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirewallPolicyRuleCollectionGroupListResult(IReadOnlyList<FirewallPolicyRuleCollectionGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of FirewallPolicyRuleCollectionGroups in a FirewallPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyRuleCollectionGroupListResult"/> for deserialization. </summary>
+        internal FirewallPolicyRuleCollectionGroupListResult()
+        {
+        }
+
+        /// <summary> The FirewallPolicyRuleCollectionGroup items on this page. </summary>
         public IReadOnlyList<FirewallPolicyRuleCollectionGroupData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

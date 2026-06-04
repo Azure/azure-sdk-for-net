@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(SecurityPerimeterResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(SecurityPerimeterResourceType);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualNetwork))
@@ -112,13 +117,14 @@ namespace Azure.ResourceManager.Network
             ETag? etag = default;
             ServiceGatewaySku sku = default;
             IList<string> zones = default;
+            string type = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType type0 = default;
             SystemData systemData = default;
-            VirtualNetworkData virtualNetwork = default;
+            CommonVirtualNetworkData virtualNetwork = default;
             RouteTargetAddressPropertiesFormat routeTargetAddress = default;
             RouteTargetAddressPropertiesFormat routeTargetAddressV6 = default;
             Guid? resourceGuid = default;
@@ -159,6 +165,11 @@ namespace Azure.ResourceManager.Network
                     zones = array;
                     continue;
                 }
+                if (property.NameEquals("type"u8))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -190,7 +201,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    type0 = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
@@ -217,7 +228,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualNetwork = VirtualNetworkData.DeserializeVirtualNetworkData(property0.Value, options);
+                            virtualNetwork = CommonVirtualNetworkData.DeserializeCommonVirtualNetworkData(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("routeTargetAddress"u8))
@@ -268,7 +279,7 @@ namespace Azure.ResourceManager.Network
             return new ServiceGatewayData(
                 id,
                 name,
-                type,
+                type0,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
@@ -280,6 +291,7 @@ namespace Azure.ResourceManager.Network
                 routeTargetAddressV6,
                 resourceGuid,
                 provisioningState,
+                type,
                 serializedAdditionalRawData);
         }
 
@@ -445,6 +457,18 @@ namespace Azure.ResourceManager.Network
                     builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  type: ");
+                builder.AppendLine($"'{ResourceType.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);

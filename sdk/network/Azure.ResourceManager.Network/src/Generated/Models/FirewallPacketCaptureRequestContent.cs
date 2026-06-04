@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="protocol"> The protocol of packets to capture. </param>
         /// <param name="flags"> The tcp-flag type to be captured. Used with protocol TCP. </param>
         /// <param name="filters"> Rules to filter packet captures. </param>
-        /// <param name="operation"> The Azure Firewall packet capture operation to perform. </param>
+        /// <param name="operation"> The packet capture operation to perform. If the Start operation is selected, please provide all the fields in the firewallPacketCaptureParameters to successfully initiate the packet capture. If the Status or Stop operation is selected, only the operation field is required; all other fields in the firewallPacketCaptureParameters can be omitted to successfully retrieve the capture status or stop the capture. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FirewallPacketCaptureRequestContent(int? durationInSeconds, int? numberOfPacketsToCapture, Uri sasUri, string fileName, AzureFirewallNetworkRuleProtocol? protocol, IList<AzureFirewallPacketCaptureFlags> flags, IList<AzureFirewallPacketCaptureRule> filters, AzureFirewallPacketCaptureOperationType? operation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Rules to filter packet captures. </summary>
         [WirePath("filters")]
         public IList<AzureFirewallPacketCaptureRule> Filters { get; }
-        /// <summary> The Azure Firewall packet capture operation to perform. </summary>
+        /// <summary> The packet capture operation to perform. If the Start operation is selected, please provide all the fields in the firewallPacketCaptureParameters to successfully initiate the packet capture. If the Status or Stop operation is selected, only the operation field is required; all other fields in the firewallPacketCaptureParameters can be omitted to successfully retrieve the capture status or stop the capture. </summary>
         [WirePath("operation")]
         public AzureFirewallPacketCaptureOperationType? Operation { get; set; }
     }

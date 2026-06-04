@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.Network
     /// A class representing the VirtualRouterPeering data model.
     /// Virtual Router Peering resource.
     /// </summary>
-    public partial class VirtualRouterPeeringData : NetworkResourceData
+    public partial class VirtualRouterPeeringData : CommonSubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="VirtualRouterPeeringData"/>. </summary>
         public VirtualRouterPeeringData()
@@ -25,14 +24,14 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="VirtualRouterPeeringData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="peerAsn"> Peer ASN. </param>
         /// <param name="peerIP"> Peer IP. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouterPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal VirtualRouterPeeringData(string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string resourceType, ETag? etag, long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState) : base(id, serializedAdditionalRawData, name, resourceType)
         {
             ETag = etag;
             PeerAsn = peerAsn;
