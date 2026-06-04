@@ -8,8 +8,6 @@
 ### Bugs Fixed
 - Added validation for length-prefixed fields when parsing Avro responses to prevent excessive memory allocation from malformed or untrusted payloads.
 
-### Other Changes
-
 ## 12.0.0-preview.62 (2026-05-12)
 
 ### Features Added
