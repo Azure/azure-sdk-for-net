@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Billing.Mocking
     public partial class MockableBillingTenantResource
     {
         /// <summary> Downloads multiple invoice documents as a zip file for a billing subscription. </summary>
-        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> parameters, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingSubscriptionInvoiceAsync(WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
 
             using DiagnosticScope scope = InvoicesClientDiagnostics.CreateScope("MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionInvoice");
             scope.Start();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Billing.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, BinaryContentHelper.FromEnumerable(parameters), context);
+                HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, BinaryContentHelper.FromEnumerable(arrayOfDocumentDownloadRequest), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Billing.Mocking
         }
 
         /// <summary> Downloads multiple invoice documents as a zip file for a billing subscription. </summary>
-        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadDocumentsByBillingSubscriptionInvoice(WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> parameters, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadDocumentsByBillingSubscriptionInvoice(WaitUntil waitUntil, string subscriptionId, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
 
             using DiagnosticScope scope = InvoicesClientDiagnostics.CreateScope("MockableBillingTenantResource.DownloadDocumentsByBillingSubscriptionInvoice");
             scope.Start();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Billing.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, BinaryContentHelper.FromEnumerable(parameters), context);
+                HttpMessage message = InvoicesRestClient.CreateDownloadDocumentsByBillingSubscriptionRequest(subscriptionId, BinaryContentHelper.FromEnumerable(arrayOfDocumentDownloadRequest), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
                     new BillingDocumentDownloadResultOperationSource(),

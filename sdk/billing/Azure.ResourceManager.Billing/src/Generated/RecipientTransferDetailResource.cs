@@ -410,32 +410,16 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request parameters that are provided to the validate transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<ValidateTransferListResponse>> ValidateAsync(AcceptTransferContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingTransferValidationResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingTransferValidationResult> ValidateAsync(AcceptTransferContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _recipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailResource.Validate");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _recipientTransfersRestClient.CreateValidateRequest(Id.Name, AcceptTransferContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ValidateTransferListResponse> response = Response.FromValue(ValidateTransferListResponse.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new RecipientTransfersValidateAsyncCollectionResultOfT(_recipientTransfersRestClient, Id.Name, AcceptTransferContent.ToRequestContent(content), context, "RecipientTransferDetailResource.Validate");
         }
 
         /// <summary>
@@ -462,32 +446,16 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> Request parameters that are provided to the validate transfer operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<ValidateTransferListResponse> Validate(AcceptTransferContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingTransferValidationResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingTransferValidationResult> Validate(AcceptTransferContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _recipientTransfersClientDiagnostics.CreateScope("RecipientTransferDetailResource.Validate");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _recipientTransfersRestClient.CreateValidateRequest(Id.Name, AcceptTransferContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ValidateTransferListResponse> response = Response.FromValue(ValidateTransferListResponse.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new RecipientTransfersValidateCollectionResultOfT(_recipientTransfersRestClient, Id.Name, AcceptTransferContent.ToRequestContent(content), context, "RecipientTransferDetailResource.Validate");
         }
     }
 }

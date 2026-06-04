@@ -443,12 +443,12 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> The properties of payment term. </param>
+        /// <param name="arrayOfPaymentTerm"> The properties of payment term. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingAccountResource>> AddPaymentTermsAsync(WaitUntil waitUntil, IEnumerable<BillingPaymentTerm> parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="arrayOfPaymentTerm"/> is null. </exception>
+        public virtual async Task<ArmOperation<BillingAccountResource>> AddPaymentTermsAsync(WaitUntil waitUntil, IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(arrayOfPaymentTerm, nameof(arrayOfPaymentTerm));
 
             using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountResource.AddPaymentTerms");
             scope.Start();
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountsRestClient.CreateAddPaymentTermsRequest(Id.Name, BinaryContentHelper.FromEnumerable(parameters), context);
+                HttpMessage message = _billingAccountsRestClient.CreateAddPaymentTermsRequest(Id.Name, BinaryContentHelper.FromEnumerable(arrayOfPaymentTerm), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingArmOperation<BillingAccountResource> operation = new BillingArmOperation<BillingAccountResource>(
                     new BillingAccountResourceOperationSource(Client),
@@ -502,12 +502,12 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameters"> The properties of payment term. </param>
+        /// <param name="arrayOfPaymentTerm"> The properties of payment term. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual ArmOperation<BillingAccountResource> AddPaymentTerms(WaitUntil waitUntil, IEnumerable<BillingPaymentTerm> parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="arrayOfPaymentTerm"/> is null. </exception>
+        public virtual ArmOperation<BillingAccountResource> AddPaymentTerms(WaitUntil waitUntil, IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(arrayOfPaymentTerm, nameof(arrayOfPaymentTerm));
 
             using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountResource.AddPaymentTerms");
             scope.Start();
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountsRestClient.CreateAddPaymentTermsRequest(Id.Name, BinaryContentHelper.FromEnumerable(parameters), context);
+                HttpMessage message = _billingAccountsRestClient.CreateAddPaymentTermsRequest(Id.Name, BinaryContentHelper.FromEnumerable(arrayOfPaymentTerm), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingArmOperation<BillingAccountResource> operation = new BillingArmOperation<BillingAccountResource>(
                     new BillingAccountResourceOperationSource(Client),
@@ -1282,12 +1282,12 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameters"> The properties of payment term. </param>
+        /// <param name="arrayOfPaymentTerm"> The properties of payment term. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<PaymentTermsEligibilityResult>> ValidatePaymentTermsAsync(IEnumerable<BillingPaymentTerm> parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="arrayOfPaymentTerm"/> is null. </exception>
+        public virtual async Task<Response<PaymentTermsEligibilityResult>> ValidatePaymentTermsAsync(IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(arrayOfPaymentTerm, nameof(arrayOfPaymentTerm));
 
             using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountResource.ValidatePaymentTerms");
             scope.Start();
@@ -1297,7 +1297,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountsRestClient.CreateValidatePaymentTermsRequest(Id.Name, BinaryContentHelper.FromEnumerable(parameters), context);
+                HttpMessage message = _billingAccountsRestClient.CreateValidatePaymentTermsRequest(Id.Name, BinaryContentHelper.FromEnumerable(arrayOfPaymentTerm), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PaymentTermsEligibilityResult> response = Response.FromValue(PaymentTermsEligibilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1334,12 +1334,12 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameters"> The properties of payment term. </param>
+        /// <param name="arrayOfPaymentTerm"> The properties of payment term. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<PaymentTermsEligibilityResult> ValidatePaymentTerms(IEnumerable<BillingPaymentTerm> parameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="arrayOfPaymentTerm"/> is null. </exception>
+        public virtual Response<PaymentTermsEligibilityResult> ValidatePaymentTerms(IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(arrayOfPaymentTerm, nameof(arrayOfPaymentTerm));
 
             using DiagnosticScope scope = _billingAccountsClientDiagnostics.CreateScope("BillingAccountResource.ValidatePaymentTerms");
             scope.Start();
@@ -1349,7 +1349,7 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _billingAccountsRestClient.CreateValidatePaymentTermsRequest(Id.Name, BinaryContentHelper.FromEnumerable(parameters), context);
+                HttpMessage message = _billingAccountsRestClient.CreateValidatePaymentTermsRequest(Id.Name, BinaryContentHelper.FromEnumerable(arrayOfPaymentTerm), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PaymentTermsEligibilityResult> response = Response.FromValue(PaymentTermsEligibilityResult.FromResponse(result), result);
                 if (response.Value == null)

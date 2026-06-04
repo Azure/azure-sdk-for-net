@@ -15,7 +15,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Result of transfer validation. </summary>
-    public partial class ValidateTransferListResponse : IJsonModel<ValidateTransferListResponse>
+    internal partial class ValidateTransferListResponse : IJsonModel<ValidateTransferListResponse>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

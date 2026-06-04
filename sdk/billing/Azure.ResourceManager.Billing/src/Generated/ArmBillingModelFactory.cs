@@ -2386,16 +2386,6 @@ namespace Azure.ResourceManager.Billing.Models
                 tags);
         }
 
-        /// <summary> Result of transfer validation. </summary>
-        /// <param name="value"> The list of transfer validation results. </param>
-        /// <returns> A new <see cref="Models.ValidateTransferListResponse"/> instance for mocking. </returns>
-        public static ValidateTransferListResponse ValidateTransferListResponse(IEnumerable<BillingTransferValidationResult> value = default)
-        {
-            value ??= new ChangeTrackingList<BillingTransferValidationResult>();
-
-            return new ValidateTransferListResponse(value.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <param name="status"> The status of validation. </param>
         /// <param name="productId"> The product id for which this result applies. </param>
         /// <param name="results"> The array of validation results. </param>
