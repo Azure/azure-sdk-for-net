@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Adopt System.ClientModel 1.14.0
+
 ### Breaking Changes
 
 ### Bugs Fixed
