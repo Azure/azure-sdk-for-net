@@ -13,6 +13,9 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBAccountResource
     {
+        // Preserve the previously shipped pageable API. The service returns a single
+        // response envelope with an inline connectionStrings array, so this wrapper
+        // projects that array as one pageable page.
         /// <summary>
         /// Lists the connection strings for the specified Azure Cosmos DB database account.
         /// </summary>
