@@ -15,56 +15,56 @@ using Azure.ResourceManager.Monitor.Workspaces;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> Properties of an alert which is related to the issue. </summary>
-    public partial class IssueRelatedAlertProperties : IJsonModel<IssueRelatedAlertProperties>
+    public partial class IssueRelatedAlertInfo : IJsonModel<IssueRelatedAlertInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="IssueRelatedAlertProperties"/> for deserialization. </summary>
-        internal IssueRelatedAlertProperties()
+        /// <summary> Initializes a new instance of <see cref="IssueRelatedAlertInfo"/> for deserialization. </summary>
+        internal IssueRelatedAlertInfo()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IssueRelatedAlertProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IssueRelatedAlertInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IssueRelatedAlertProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IssueRelatedAlertInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIssueRelatedAlertProperties(document.RootElement, options);
+                        return DeserializeIssueRelatedAlertInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IssueRelatedAlertProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IssueRelatedAlertInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IssueRelatedAlertProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IssueRelatedAlertInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorWorkspacesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IssueRelatedAlertProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IssueRelatedAlertInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IssueRelatedAlertProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IssueRelatedAlertInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IssueRelatedAlertProperties IPersistableModel<IssueRelatedAlertProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IssueRelatedAlertInfo IPersistableModel<IssueRelatedAlertInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IssueRelatedAlertProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IssueRelatedAlertInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IssueRelatedAlertProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IssueRelatedAlertInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IssueRelatedAlertProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IssueRelatedAlertInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IssueRelatedAlertProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IssueRelatedAlertInfo)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IssueRelatedAlertProperties IJsonModel<IssueRelatedAlertProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IssueRelatedAlertInfo IJsonModel<IssueRelatedAlertInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IssueRelatedAlertProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IssueRelatedAlertInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IssueRelatedAlertProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IssueRelatedAlertInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IssueRelatedAlertProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IssueRelatedAlertInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIssueRelatedAlertProperties(document.RootElement, options);
+            return DeserializeIssueRelatedAlertInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IssueRelatedAlertProperties DeserializeIssueRelatedAlertProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static IssueRelatedAlertInfo DeserializeIssueRelatedAlertInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IssueRelatedAlertProperties(
+            return new IssueRelatedAlertInfo(
                 id,
                 relevance,
                 origin,

@@ -13,31 +13,31 @@ using Azure.ResourceManager.Monitor.Workspaces;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> A list of related alerts. </summary>
-    public partial class IssueRelatedAlertPropertiesList
+    public partial class IssueRelatedAlertInfoList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IssueRelatedAlertPropertiesList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueRelatedAlertInfoList"/>. </summary>
         /// <param name="value"> A list of related alerts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IssueRelatedAlertPropertiesList(IEnumerable<IssueRelatedAlertProperties> value)
+        public IssueRelatedAlertInfoList(IEnumerable<IssueRelatedAlertInfo> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IssueRelatedAlertPropertiesList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueRelatedAlertInfoList"/>. </summary>
         /// <param name="value"> A list of related alerts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssueRelatedAlertPropertiesList(IList<IssueRelatedAlertProperties> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IssueRelatedAlertInfoList(IList<IssueRelatedAlertInfo> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of related alerts. </summary>
-        public IList<IssueRelatedAlertProperties> Value { get; }
+        public IList<IssueRelatedAlertInfo> Value { get; }
     }
 }

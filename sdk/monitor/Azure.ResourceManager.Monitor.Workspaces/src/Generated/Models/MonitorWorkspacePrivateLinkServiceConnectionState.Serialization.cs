@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 return null;
             }
-            MonitorWorkspacesPrivateEndpointServiceConnectionStatus? status = default;
+            MonitorWorkspacePrivateEndpointServiceConnectionStatus? status = default;
             string description = default;
             string actionsRequired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     {
                         continue;
                     }
-                    status = new MonitorWorkspacesPrivateEndpointServiceConnectionStatus(prop.Value.GetString());
+                    status = new MonitorWorkspacePrivateEndpointServiceConnectionStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

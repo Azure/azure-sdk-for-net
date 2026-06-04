@@ -13,16 +13,16 @@ using Azure.ResourceManager.Monitor.Workspaces;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> Properties of an alert which is related to the issue. </summary>
-    public partial class IssueRelatedAlertProperties
+    public partial class IssueRelatedAlertInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IssueRelatedAlertProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueRelatedAlertInfo"/>. </summary>
         /// <param name="id"> The alert ID. </param>
         /// <param name="relevance"> The alerts's relevance status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public IssueRelatedAlertProperties(ResourceIdentifier id, MonitorRelevanceStatus relevance)
+        public IssueRelatedAlertInfo(ResourceIdentifier id, MonitorRelevanceStatus relevance)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             Relevance = relevance;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IssueRelatedAlertProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueRelatedAlertInfo"/>. </summary>
         /// <param name="id"> The alert ID. </param>
         /// <param name="relevance"> The alerts's relevance status. </param>
         /// <param name="origin"> The source that related the alert to the issue. </param>
         /// <param name="addedOn"> The time this relation was added to the issue (in UTC). </param>
         /// <param name="lastModifiedOn"> The last update time of this relation (in UTC). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssueRelatedAlertProperties(ResourceIdentifier id, MonitorRelevanceStatus relevance, MonitorEntityOrigin origin, DateTimeOffset addedOn, DateTimeOffset lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IssueRelatedAlertInfo(ResourceIdentifier id, MonitorRelevanceStatus relevance, MonitorEntityOrigin origin, DateTimeOffset addedOn, DateTimeOffset lastModifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Relevance = relevance;

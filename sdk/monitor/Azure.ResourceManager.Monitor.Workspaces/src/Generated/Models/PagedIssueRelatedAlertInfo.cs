@@ -11,32 +11,32 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
-    /// <summary> Paged collection of RelatedResource items. </summary>
-    public partial class PagedIssueRelatedResourceProperties
+    /// <summary> Paged collection of RelatedAlert items. </summary>
+    public partial class PagedIssueRelatedAlertInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PagedIssueRelatedResourceProperties"/>. </summary>
-        /// <param name="value"> The RelatedResource items on this page. </param>
-        internal PagedIssueRelatedResourceProperties(IEnumerable<IssueRelatedResourceProperties> value)
+        /// <summary> Initializes a new instance of <see cref="PagedIssueRelatedAlertInfo"/>. </summary>
+        /// <param name="value"> The RelatedAlert items on this page. </param>
+        internal PagedIssueRelatedAlertInfo(IEnumerable<IssueRelatedAlertInfo> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PagedIssueRelatedResourceProperties"/>. </summary>
-        /// <param name="value"> The RelatedResource items on this page. </param>
+        /// <summary> Initializes a new instance of <see cref="PagedIssueRelatedAlertInfo"/>. </summary>
+        /// <param name="value"> The RelatedAlert items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedIssueRelatedResourceProperties(IList<IssueRelatedResourceProperties> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedIssueRelatedAlertInfo(IList<IssueRelatedAlertInfo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The RelatedResource items on this page. </summary>
-        public IList<IssueRelatedResourceProperties> Value { get; }
+        /// <summary> The RelatedAlert items on this page. </summary>
+        public IList<IssueRelatedAlertInfo> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

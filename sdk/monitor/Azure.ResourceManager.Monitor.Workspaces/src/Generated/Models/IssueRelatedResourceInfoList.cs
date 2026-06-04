@@ -13,31 +13,31 @@ using Azure.ResourceManager.Monitor.Workspaces;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> A list of related resources. </summary>
-    public partial class IssueRelatedResourcePropertiesList
+    public partial class IssueRelatedResourceInfoList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IssueRelatedResourcePropertiesList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueRelatedResourceInfoList"/>. </summary>
         /// <param name="value"> A list of related resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IssueRelatedResourcePropertiesList(IEnumerable<IssueRelatedResourceProperties> value)
+        public IssueRelatedResourceInfoList(IEnumerable<IssueRelatedResourceInfo> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IssueRelatedResourcePropertiesList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueRelatedResourceInfoList"/>. </summary>
         /// <param name="value"> A list of related resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssueRelatedResourcePropertiesList(IList<IssueRelatedResourceProperties> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IssueRelatedResourceInfoList(IList<IssueRelatedResourceInfo> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of related resources. </summary>
-        public IList<IssueRelatedResourceProperties> Value { get; }
+        public IList<IssueRelatedResourceInfo> Value { get; }
     }
 }

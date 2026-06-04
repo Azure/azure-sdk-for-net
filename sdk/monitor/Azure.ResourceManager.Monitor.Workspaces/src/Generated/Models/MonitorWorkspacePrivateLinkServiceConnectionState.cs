@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorWorkspacePrivateLinkServiceConnectionState(MonitorWorkspacesPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorWorkspacePrivateLinkServiceConnectionState(MonitorWorkspacePrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Description = description;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         }
 
         /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
-        public MonitorWorkspacesPrivateEndpointServiceConnectionStatus? Status { get; }
+        public MonitorWorkspacePrivateEndpointServiceConnectionStatus? Status { get; }
 
         /// <summary> The reason for approval/rejection of the connection. </summary>
         public string Description { get; }

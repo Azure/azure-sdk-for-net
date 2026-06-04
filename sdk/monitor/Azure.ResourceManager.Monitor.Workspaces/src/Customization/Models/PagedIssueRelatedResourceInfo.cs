@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     // This model is originally defined by customized template, so the name cannot be changed by using the @clientName decorator. So we have to use the CodeGenType annotation to specify the name of the generated model.
     [CodeGenType("PagedRelatedResource")]
-    public partial class PagedIssueRelatedResourceProperties
+    public partial class PagedIssueRelatedResourceInfo
     {
     }
 }

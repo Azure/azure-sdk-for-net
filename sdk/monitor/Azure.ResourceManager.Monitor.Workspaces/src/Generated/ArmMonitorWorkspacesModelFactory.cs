@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspacePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static MonitorWorkspacePrivateLinkServiceConnectionState MonitorWorkspacePrivateLinkServiceConnectionState(MonitorWorkspacesPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        public static MonitorWorkspacePrivateLinkServiceConnectionState MonitorWorkspacePrivateLinkServiceConnectionState(MonitorWorkspacePrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
         {
             return new MonitorWorkspacePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
@@ -311,12 +311,12 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <param name="value"> The RelatedAlert items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.PagedIssueRelatedAlertProperties"/> instance for mocking. </returns>
-        public static PagedIssueRelatedAlertProperties PagedIssueRelatedAlertProperties(IEnumerable<IssueRelatedAlertProperties> value = default, Uri nextLink = default)
+        /// <returns> A new <see cref="Models.PagedIssueRelatedAlertInfo"/> instance for mocking. </returns>
+        public static PagedIssueRelatedAlertInfo PagedIssueRelatedAlertInfo(IEnumerable<IssueRelatedAlertInfo> value = default, Uri nextLink = default)
         {
-            value ??= new ChangeTrackingList<IssueRelatedAlertProperties>();
+            value ??= new ChangeTrackingList<IssueRelatedAlertInfo>();
 
-            return new PagedIssueRelatedAlertProperties((value ?? new ChangeTrackingList<IssueRelatedAlertProperties>()).ToList(), nextLink, default);
+            return new PagedIssueRelatedAlertInfo((value ?? new ChangeTrackingList<IssueRelatedAlertInfo>()).ToList(), nextLink, default);
         }
 
         /// <param name="id"> The alert ID. </param>
@@ -324,10 +324,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="origin"> The source that related the alert to the issue. </param>
         /// <param name="addedOn"> The time this relation was added to the issue (in UTC). </param>
         /// <param name="lastModifiedOn"> The last update time of this relation (in UTC). </param>
-        /// <returns> A new <see cref="Models.IssueRelatedAlertProperties"/> instance for mocking. </returns>
-        public static IssueRelatedAlertProperties IssueRelatedAlertProperties(ResourceIdentifier id = default, MonitorRelevanceStatus relevance = default, MonitorEntityOrigin origin = default, DateTimeOffset addedOn = default, DateTimeOffset lastModifiedOn = default)
+        /// <returns> A new <see cref="Models.IssueRelatedAlertInfo"/> instance for mocking. </returns>
+        public static IssueRelatedAlertInfo IssueRelatedAlertInfo(ResourceIdentifier id = default, MonitorRelevanceStatus relevance = default, MonitorEntityOrigin origin = default, DateTimeOffset addedOn = default, DateTimeOffset lastModifiedOn = default)
         {
-            return new IssueRelatedAlertProperties(
+            return new IssueRelatedAlertInfo(
                 id,
                 relevance,
                 origin,
@@ -337,22 +337,22 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         }
 
         /// <param name="value"> A list of related alerts. </param>
-        /// <returns> A new <see cref="Models.IssueRelatedAlertPropertiesList"/> instance for mocking. </returns>
-        public static IssueRelatedAlertPropertiesList IssueRelatedAlertPropertiesList(IEnumerable<IssueRelatedAlertProperties> value = default)
+        /// <returns> A new <see cref="Models.IssueRelatedAlertInfoList"/> instance for mocking. </returns>
+        public static IssueRelatedAlertInfoList IssueRelatedAlertInfoList(IEnumerable<IssueRelatedAlertInfo> value = default)
         {
-            value ??= new ChangeTrackingList<IssueRelatedAlertProperties>();
+            value ??= new ChangeTrackingList<IssueRelatedAlertInfo>();
 
-            return new IssueRelatedAlertPropertiesList((value ?? new ChangeTrackingList<IssueRelatedAlertProperties>()).ToList(), default);
+            return new IssueRelatedAlertInfoList((value ?? new ChangeTrackingList<IssueRelatedAlertInfo>()).ToList(), default);
         }
 
         /// <param name="value"> The RelatedResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.PagedIssueRelatedResourceProperties"/> instance for mocking. </returns>
-        public static PagedIssueRelatedResourceProperties PagedIssueRelatedResourceProperties(IEnumerable<IssueRelatedResourceProperties> value = default, Uri nextLink = default)
+        /// <returns> A new <see cref="Models.PagedIssueRelatedResourceInfo"/> instance for mocking. </returns>
+        public static PagedIssueRelatedResourceInfo PagedIssueRelatedResourceInfo(IEnumerable<IssueRelatedResourceInfo> value = default, Uri nextLink = default)
         {
-            value ??= new ChangeTrackingList<IssueRelatedResourceProperties>();
+            value ??= new ChangeTrackingList<IssueRelatedResourceInfo>();
 
-            return new PagedIssueRelatedResourceProperties((value ?? new ChangeTrackingList<IssueRelatedResourceProperties>()).ToList(), nextLink, default);
+            return new PagedIssueRelatedResourceInfo((value ?? new ChangeTrackingList<IssueRelatedResourceInfo>()).ToList(), nextLink, default);
         }
 
         /// <param name="id"> The resource ID. </param>
@@ -360,10 +360,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="origin"> The source that related the resource to the issue. </param>
         /// <param name="addedOn"> The time this relation was added to the issue (in UTC). </param>
         /// <param name="lastModifiedOn"> The last update time of this relation (in UTC). </param>
-        /// <returns> A new <see cref="Models.IssueRelatedResourceProperties"/> instance for mocking. </returns>
-        public static IssueRelatedResourceProperties IssueRelatedResourceProperties(ResourceIdentifier id = default, MonitorRelevanceStatus relevance = default, MonitorEntityOrigin origin = default, DateTimeOffset addedOn = default, DateTimeOffset lastModifiedOn = default)
+        /// <returns> A new <see cref="Models.IssueRelatedResourceInfo"/> instance for mocking. </returns>
+        public static IssueRelatedResourceInfo IssueRelatedResourceInfo(ResourceIdentifier id = default, MonitorRelevanceStatus relevance = default, MonitorEntityOrigin origin = default, DateTimeOffset addedOn = default, DateTimeOffset lastModifiedOn = default)
         {
-            return new IssueRelatedResourceProperties(
+            return new IssueRelatedResourceInfo(
                 id,
                 relevance,
                 origin,
@@ -373,12 +373,12 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         }
 
         /// <param name="value"> A list of related resources. </param>
-        /// <returns> A new <see cref="Models.IssueRelatedResourcePropertiesList"/> instance for mocking. </returns>
-        public static IssueRelatedResourcePropertiesList IssueRelatedResourcePropertiesList(IEnumerable<IssueRelatedResourceProperties> value = default)
+        /// <returns> A new <see cref="Models.IssueRelatedResourceInfoList"/> instance for mocking. </returns>
+        public static IssueRelatedResourceInfoList IssueRelatedResourceInfoList(IEnumerable<IssueRelatedResourceInfo> value = default)
         {
-            value ??= new ChangeTrackingList<IssueRelatedResourceProperties>();
+            value ??= new ChangeTrackingList<IssueRelatedResourceInfo>();
 
-            return new IssueRelatedResourcePropertiesList((value ?? new ChangeTrackingList<IssueRelatedResourceProperties>()).ToList(), default);
+            return new IssueRelatedResourceInfoList((value ?? new ChangeTrackingList<IssueRelatedResourceInfo>()).ToList(), default);
         }
 
         /// <param name="visualization"> The background visualization content, in Adaptive Card format. </param>
