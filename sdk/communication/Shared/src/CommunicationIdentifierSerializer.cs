@@ -116,10 +116,24 @@ namespace Azure.Communication
         {
             const string modelName = "TeamsExtensionUserIdentifierModel";
 
-            string? userId = s_teamsExtensionUserIdProperty!.GetValue(teamsExtensionUserModel) as string;
-            string? tenantId = s_teamsExtensionTenantIdProperty!.GetValue(teamsExtensionUserModel) as string;
-            string? resourceId = s_teamsExtensionResourceIdProperty!.GetValue(teamsExtensionUserModel) as string;
-            var cloud = (CommunicationCloudEnvironmentModel?)s_teamsExtensionCloudProperty!.GetValue(teamsExtensionUserModel);
+            // Each member is probed independently at type-init time, so any one of them can be null
+            // when the consumer SDK is generated against a contract that exposes a partially-shaped
+            // TeamsExtensionUserIdentifierModel. Gate up-front so callers see a clear NotSupportedException
+            // instead of a NullReferenceException leaking out of the public Deserialize entry point.
+            if (s_teamsExtensionUserIdProperty is null
+                || s_teamsExtensionTenantIdProperty is null
+                || s_teamsExtensionResourceIdProperty is null
+                || s_teamsExtensionCloudProperty is null)
+            {
+                throw new NotSupportedException(
+                    $"{nameof(TeamsExtensionUserIdentifier)} is not supported by the current service contract. " +
+                    "Upgrade the consuming SDK to a version whose generated CommunicationIdentifierModel exposes 'TeamsExtensionUser' with UserId, TenantId, ResourceId, and Cloud.");
+            }
+
+            string? userId = s_teamsExtensionUserIdProperty.GetValue(teamsExtensionUserModel) as string;
+            string? tenantId = s_teamsExtensionTenantIdProperty.GetValue(teamsExtensionUserModel) as string;
+            string? resourceId = s_teamsExtensionResourceIdProperty.GetValue(teamsExtensionUserModel) as string;
+            var cloud = (CommunicationCloudEnvironmentModel?)s_teamsExtensionCloudProperty.GetValue(teamsExtensionUserModel);
 
             return new TeamsExtensionUserIdentifier(
                 AssertNotNullRef(userId, nameof(TeamsExtensionUserIdentifier.UserId), modelName),
@@ -218,7 +232,11 @@ namespace Azure.Communication
 
             // Older consumer SDKs do not expose IsAnonymous / AssertedId on PhoneNumberIdentifierModel.
             // Only populate them when the generated model carries the corresponding properties.
-            s_phoneIsAnonymousProperty?.SetValue(model, identifier.IsAnonymous);
+            // IsAnonymous defaults to false on the wire, so only emit it when true to avoid noise.
+            if (identifier.IsAnonymous)
+            {
+                s_phoneIsAnonymousProperty?.SetValue(model, true);
+            }
             if (!string.IsNullOrEmpty(identifier.AssertedId))
             {
                 s_phoneAssertedIdProperty?.SetValue(model, identifier.AssertedId);

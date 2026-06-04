@@ -404,5 +404,77 @@ namespace Azure.Communication
             Assert.That(roundTripped.Cloud, Is.EqualTo(expected.Cloud));
             Assert.That(roundTripped, Is.EqualTo(expected));
         }
+
+        [Test]
+        public void DeserializeTeamsExtensionUser_WithOtherNestedModelPopulated_Throws()
+        {
+            // Covers the AssertMaximumOneNestedModel branch that records "TeamsExtensionUser"
+            // alongside the legacy nested models. TeamsExtensionUser is set reflectively because
+            // older consumer SDKs do not expose the property at compile time.
+            if (!ConsumerSupportsTeamsExtensionUser)
+            {
+                Assert.Ignore("Consumer SDK does not expose TeamsExtensionUser on CommunicationIdentifierModel.");
+                return;
+            }
+
+            var teamsExtensionUserProperty = typeof(CommunicationIdentifierModel).GetProperty("TeamsExtensionUser")!;
+            var teamsExtensionUserModelType = teamsExtensionUserProperty.PropertyType;
+            var ctor = teamsExtensionUserModelType.GetConstructor(new[] { typeof(string), typeof(string), typeof(string) })!;
+            var teamsExtensionUserModel = ctor.Invoke(new object[]
+            {
+                "207ffef6-9444-41fb-92ab-20eacaae2768",
+                "45ab2481-1c1c-4005-be24-0ffb879b1130",
+                "bbbcbc1e-9f06-482a-b5d8-20e3f26ef0cd",
+            });
+
+            var model = new CommunicationIdentifierModel
+            {
+                RawId = TestRawId,
+                MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(TestTeamsUserId, isAnonymous: true, CommunicationCloudEnvironmentModel.Public),
+            };
+            teamsExtensionUserProperty.SetValue(model, teamsExtensionUserModel);
+
+            Assert.Throws<JsonException>(() => CommunicationIdentifierSerializer.Deserialize(model));
+        }
+
+        [Test]
+        public void SerializePhoneNumber_WritesIsAnonymousAndAssertedIdWhenSupported()
+        {
+            // Guards the SerializePhoneNumber reflective writes: IsAnonymous is only emitted when
+            // true, and AssertedId is only emitted when non-empty. The wire properties only exist on
+            // newer consumer SDK contracts (e.g. CallAutomation), so older consumers (e.g. Chat) skip
+            // the assertions but still exercise the serialize path to confirm it does not throw.
+            const string assertedId = "55667788";
+            var anonymousIdentifier = new PhoneNumberIdentifier("anonymous", "4:anonymous");
+            var assertedIdentifier = new PhoneNumberIdentifier(TestPhoneNumber, $"{TestPhoneNumberRawId}_{assertedId}");
+            var plainIdentifier = new PhoneNumberIdentifier(TestPhoneNumber, TestPhoneNumberRawId);
+
+            // Sanity-check the source identifiers, since the serializer relies on these derived values.
+            Assert.That(anonymousIdentifier.IsAnonymous, Is.True);
+            Assert.That(assertedIdentifier.AssertedId, Is.EqualTo(assertedId));
+            Assert.That(plainIdentifier.IsAnonymous, Is.False);
+            Assert.That(plainIdentifier.AssertedId, Is.Null.Or.Empty);
+
+            CommunicationIdentifierModel anonymousModel = CommunicationIdentifierSerializer.Serialize(anonymousIdentifier);
+            CommunicationIdentifierModel assertedModel = CommunicationIdentifierSerializer.Serialize(assertedIdentifier);
+            CommunicationIdentifierModel plainModel = CommunicationIdentifierSerializer.Serialize(plainIdentifier);
+
+            var isAnonymousProperty = typeof(PhoneNumberIdentifierModel).GetProperty("IsAnonymous");
+            var assertedIdProperty = typeof(PhoneNumberIdentifierModel).GetProperty("AssertedId");
+
+            if (isAnonymousProperty is null || assertedIdProperty is null)
+            {
+                Assert.Ignore("Consumer PhoneNumberIdentifierModel does not expose IsAnonymous/AssertedId.");
+                return;
+            }
+
+            Assert.That(isAnonymousProperty.GetValue(anonymousModel.PhoneNumber), Is.EqualTo(true), "Anonymous identifiers should propagate IsAnonymous=true to the wire model.");
+            Assert.That(assertedIdProperty.GetValue(assertedModel.PhoneNumber), Is.EqualTo(assertedId), "Non-empty AssertedId should propagate to the wire model.");
+
+            // For plain phone numbers, neither field should be emitted (IsAnonymous remains null
+            // rather than serializing as false; AssertedId remains null).
+            Assert.That(isAnonymousProperty.GetValue(plainModel.PhoneNumber), Is.Null, "IsAnonymous should not be emitted for non-anonymous numbers.");
+            Assert.That(assertedIdProperty.GetValue(plainModel.PhoneNumber), Is.Null.Or.Empty, "AssertedId should not be emitted when the source identifier has none.");
+        }
     }
 }
