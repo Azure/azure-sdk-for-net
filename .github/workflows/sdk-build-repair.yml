@@ -1,0 +1,226 @@
+name: SDK build repair (cloud agent)
+
+# Deterministic kickoff for the Generator Agent cloud-agent repair flow.
+#
+# When a release-automation SDK pull request fails to build because of hand-written
+# customization code, applying the `auto-sdk-build-fix` label (or commenting
+# `/repair-build`) starts a GitHub Copilot cloud-agent task scoped to that PR's
+# branch. The agent uses the `generator-agent` MCP server to fix *custom code only*
+# until the package builds.
+#
+# Security model:
+#   * Only same-repo PRs authored by the release bot are eligible (no forks).
+#   * The triggering actor must have write access (prompt-injection / abuse guard).
+#   * The agent is launched with a fixed, templated prompt — no PR-controlled free
+#     text (title/body) is ever interpolated into the prompt.
+#   * Kickoff uses a stored user-to-server token (COPILOT_AGENT_TASKS_TOKEN), never
+#     the default GITHUB_TOKEN (installation tokens cannot start agent tasks).
+
+# `pull_request_target` (not `pull_request`) so the trusted, default-branch copy of
+# this workflow runs with access to the kickoff secret — a malicious same-repo PR
+# branch cannot modify this file to exfiltrate the token. We never check out PR code.
+# `issue_comment` likewise always runs the default-branch workflow definition.
+on:
+  pull_request_target:
+    types: [labeled]
+  issue_comment:
+    types: [created]
+
+# Never run more than one repair kickoff per PR at a time.
+concurrency:
+  group: sdk-build-repair-${{ github.event.pull_request.number || github.event.issue.number }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pull-requests: write # post a status comment on the PR
+  issues: write # createComment on a PR uses the issues comments endpoint
+
+env:
+  REPAIR_LABEL: auto-sdk-build-fix
+  REPAIR_COMMAND: /repair-build
+  # Login of the release automation account that opens generated SDK PRs.
+  RELEASE_BOT_LOGIN: azure-sdk
+  # Invariants of generated SDK PRs eligible for repair.
+  RELEASE_BASE_REF: main
+  RELEASE_BRANCH_PREFIX: sdkauto/
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      eligible: ${{ steps.check.outputs.eligible }}
+      pr_number: ${{ steps.check.outputs.pr_number }}
+      head_ref: ${{ steps.check.outputs.head_ref }}
+      base_ref: ${{ steps.check.outputs.base_ref }}
+    steps:
+      - name: Evaluate eligibility gates
+        id: check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const label = process.env.REPAIR_LABEL;
+            const command = process.env.REPAIR_COMMAND;
+            const botLogin = process.env.RELEASE_BOT_LOGIN.toLowerCase();
+            const { owner, repo } = context.repo;
+
+            const ineligible = (reason) => {
+              core.info(`Not eligible: ${reason}`);
+              core.setOutput('eligible', 'false');
+            };
+
+            // 1. Resolve the PR and the request source from the triggering event.
+            let prNumber;
+            if (context.eventName === 'pull_request_target') {
+              if (context.payload.label?.name !== label) {
+                return ineligible(`label '${context.payload.label?.name}' is not '${label}'`);
+              }
+              prNumber = context.payload.pull_request.number;
+            } else if (context.eventName === 'issue_comment') {
+              if (!context.payload.issue.pull_request) {
+                return ineligible('comment is not on a pull request');
+              }
+              if ((context.payload.comment.body || '').trim() !== command) {
+                return ineligible('comment is not the repair command');
+              }
+              prNumber = context.payload.issue.number;
+            } else {
+              return ineligible(`unsupported event '${context.eventName}'`);
+            }
+
+            const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
+
+            // 2. The PR must be open — never act on a closed/merged PR.
+            if (pr.state !== 'open') {
+              return ineligible(`PR #${prNumber} is '${pr.state}', not open`);
+            }
+
+            // 3. Same-repo only — never operate on a fork's branch with our token.
+            if (pr.head.repo.full_name !== pr.base.repo.full_name) {
+              return ineligible(`PR head '${pr.head.repo.full_name}' is a fork`);
+            }
+
+            // 4. The PR must have been opened by the release automation account.
+            if (pr.user.login.toLowerCase() !== botLogin) {
+              return ineligible(`PR author '${pr.user.login}' is not the release bot`);
+            }
+
+            // 5. Match the generated-SDK-PR invariants (not just the bot identity), so a
+            //    mislabeled non-generation bot PR (e.g. a version bump) is not repaired.
+            const baseRef = process.env.RELEASE_BASE_REF;
+            const branchPrefix = process.env.RELEASE_BRANCH_PREFIX;
+            if (pr.base.ref !== baseRef) {
+              return ineligible(`PR base '${pr.base.ref}' is not '${baseRef}'`);
+            }
+            if (!pr.head.ref.startsWith(branchPrefix)) {
+              return ineligible(`PR head '${pr.head.ref}' is not a generated SDK branch ('${branchPrefix}*')`);
+            }
+
+            // 6. Prompt-injection / abuse guard: the actor that triggered this run
+            //    must have write access to the repository.
+            const actor = context.actor;
+            const { data: perm } = await github.rest.repos.getCollaboratorPermissionLevel({
+              owner, repo, username: actor,
+            });
+            if (!['admin', 'write', 'maintain'].includes(perm.permission)) {
+              return ineligible(`actor '${actor}' lacks write access (has '${perm.permission}')`);
+            }
+
+            core.info(`Eligible: PR #${prNumber} head '${pr.head.ref}' -> base '${pr.base.ref}', triggered by '${actor}'.`);
+            core.setOutput('eligible', 'true');
+            core.setOutput('pr_number', String(prNumber));
+            core.setOutput('head_ref', pr.head.ref);
+            core.setOutput('base_ref', pr.base.ref);
+
+  kickoff:
+    needs: gate
+    if: needs.gate.outputs.eligible == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start cloud-agent repair task
+        uses: actions/github-script@v7
+        env:
+          AGENT_TASKS_TOKEN: ${{ secrets.COPILOT_AGENT_TASKS_TOKEN }}
+          PR_NUMBER: ${{ needs.gate.outputs.pr_number }}
+          HEAD_REF: ${{ needs.gate.outputs.head_ref }}
+          BASE_REF: ${{ needs.gate.outputs.base_ref }}
+        with:
+          script: |
+            const token = process.env.AGENT_TASKS_TOKEN;
+            if (!token) {
+              core.setFailed('COPILOT_AGENT_TASKS_TOKEN secret is not configured. ' +
+                'A user-to-server token is required; the default GITHUB_TOKEN cannot start agent tasks.');
+              return;
+            }
+            const { owner, repo } = context.repo;
+            const prNumber = process.env.PR_NUMBER;
+            const headRef = process.env.HEAD_REF;
+            const baseRef = process.env.BASE_REF;
+            const apiVersion = '2026-03-10';
+            const base = `https://api.github.com/agents/repos/${owner}/${repo}/tasks`;
+            const headers = {
+              'Accept': 'application/vnd.github+json',
+              'X-GitHub-Api-Version': apiVersion,
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            };
+
+            // Idempotency: skip if an active task already targets this branch.
+            // Best-effort for MVP (not atomic; per-PR concurrency guards same-workflow races).
+            const listResp = await fetch(`${base}?state=queued,in_progress&per_page=100`, { headers });
+            if (listResp.ok) {
+              const body = await listResp.json();
+              const active = (body.tasks || []).some(t =>
+                (t.artifacts || []).some(a => a.data &&
+                  a.data.head_ref === headRef && a.data.base_ref === baseRef));
+              if (active) {
+                core.info(`An active repair task already targets '${headRef}'. Skipping.`);
+                return;
+              }
+            } else {
+              core.warning(`Could not list existing tasks (HTTP ${listResp.status}); proceeding to start a new task.`);
+            }
+
+            // Fixed prompt — no PR-controlled free text is interpolated (injection guard).
+            const prompt = [
+              `Pull request #${prNumber} (branch \`${headRef}\`) was generated by the Azure SDK release`,
+              `automation and currently fails to build. Make the package build succeed by fixing ONLY`,
+              `hand-written customization code. Never edit anything under a \`Generated/\` directory.`,
+              ``,
+              `Use the \`generator-agent\` MCP server tools and the appropriate migration skill`,
+              `(\`dpg-migration\` for data-plane or \`mpg-migration\` for management-plane):`,
+              `1. Run \`build_and_classify\` to compile the changed package and classify the errors.`,
+              `2. Apply the smallest, safest customization fixes (e.g. \`add_codegen_suppress\`,`,
+              `   \`rename_codegen_type\`, using-directive fixes, \`batch_fix\`) to resolve them.`,
+              `3. Re-run the build until it succeeds, then run \`verify_generated_unchanged\` to confirm`,
+              `   no generated files were modified.`,
+              ``,
+              `Constraints:`,
+              `- Only modify files outside \`Generated/\` directories.`,
+              `- Do not change public API shape beyond what is required to compile; prefer additive customization.`,
+              `- If the build cannot be fixed by customization changes alone, stop and summarize what is blocking it.`,
+              ``,
+              `Commit your changes directly to this PR branch.`,
+            ].join('\n');
+
+            // base_ref + head_ref => commit in place to the existing PR branch.
+            const startResp = await fetch(base, {
+              method: 'POST',
+              headers,
+              body: JSON.stringify({ prompt, base_ref: baseRef, head_ref: headRef }),
+            });
+            const respText = await startResp.text();
+            if (!startResp.ok) {
+              core.setFailed(`Failed to start agent task (HTTP ${startResp.status}): ${respText}`);
+              return;
+            }
+            const task = JSON.parse(respText);
+            core.info(`Started agent task ${task.id} (state: ${task.state}).`);
+
+            const link = task.html_url ? `[task ${task.id}](${task.html_url})` : `task \`${task.id}\``;
+            await github.rest.issues.createComment({
+              owner, repo, issue_number: Number(prNumber),
+              body: `🤖 Started a Copilot cloud-agent build-repair ${link} on branch \`${headRef}\` ` +
+                    `(state: \`${task.state}\`). It will attempt to fix customization build errors. ` +
+                    `\n\n--generated by Copilot`,
+            });
