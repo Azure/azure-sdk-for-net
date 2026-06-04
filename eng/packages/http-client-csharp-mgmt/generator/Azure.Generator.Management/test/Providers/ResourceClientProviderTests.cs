@@ -168,13 +168,13 @@ namespace Azure.Generator.Management.Tests.Providers
 
             var syncBody = syncMethod.BodyStatements?.ToDisplayString();
             Assert.That(syncBody, Is.Not.Null);
-            Assert.That(syncBody, Does.Contain("return global::Azure.Response.FromValue((response.Status == 200), response);"));
+            Assert.That(syncBody, Does.Contain("Response<bool> response = _testClientRestClient.CheckNameExists"));
             Assert.That(syncBody, Does.Not.Contain("ModelReaderWriter.Read"));
             Assert.That(syncBody, Does.Not.Contain("response.Value == null"));
 
             var asyncBody = asyncMethod.BodyStatements?.ToDisplayString();
             Assert.That(asyncBody, Is.Not.Null);
-            Assert.That(asyncBody, Does.Contain("return global::Azure.Response.FromValue((response.Status == 200), response);"));
+            Assert.That(asyncBody, Does.Contain("Response<bool> response = await _testClientRestClient.CheckNameExistsAsync"));
             Assert.That(asyncBody, Does.Not.Contain("ModelReaderWriter.Read"));
             Assert.That(asyncBody, Does.Not.Contain("response.Value == null"));
         }

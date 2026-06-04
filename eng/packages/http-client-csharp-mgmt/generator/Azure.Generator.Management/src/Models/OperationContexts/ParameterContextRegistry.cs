@@ -73,6 +73,19 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
         IReadOnlyList<ParameterProvider> requestParameters,
         VariableExpression requestContext,
         IReadOnlyList<ParameterProvider> methodParameters)
+        => PopulateArguments(idProperty, requestParameters, methodParameters, requestContext);
+
+    public IReadOnlyList<ValueExpression> PopulateArguments(
+        ScopedApi<ResourceIdentifier> idProperty,
+        IReadOnlyList<ParameterProvider> requestParameters,
+        IReadOnlyList<ParameterProvider> methodParameters)
+        => PopulateArguments(idProperty, requestParameters, methodParameters, requestContext: null);
+
+    private IReadOnlyList<ValueExpression> PopulateArguments(
+        ScopedApi<ResourceIdentifier> idProperty,
+        IReadOnlyList<ParameterProvider> requestParameters,
+        IReadOnlyList<ParameterProvider> methodParameters,
+        VariableExpression? requestContext)
     {
         var arguments = new List<ValueExpression>();
         // here we always assume that the parameter name matches the parameter name in the request path.
@@ -177,7 +190,7 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
             }
             else if (parameter.Type.Equals(typeof(RequestContext)))
             {
-                arguments.Add(requestContext);
+                arguments.Add(requestContext ?? Default);
             }
             else if (IsMatchConditionType(parameter.Type))
             {

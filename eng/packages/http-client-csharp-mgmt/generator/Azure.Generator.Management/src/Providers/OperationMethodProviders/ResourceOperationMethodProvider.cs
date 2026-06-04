@@ -266,6 +266,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private TryExpression BuildTryExpression()
         {
             var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
+            if (IsHeadAsBooleanOperation && !ShouldApplyLroHandling)
+            {
+                return BuildHeadAsBooleanTryExpression();
+            }
 
             var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
             var tryStatements = new List<MethodBodyStatement>
@@ -299,20 +303,25 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new TryExpression(tryStatements);
         }
 
+        private TryExpression BuildHeadAsBooleanTryExpression()
+        {
+            var idExpression = _scopeParameter != null
+                ? _scopeParameter.As<Azure.Core.ResourceIdentifier>()
+                : This.As<ArmResource>().Id();
+            var arguments = _parameterMappings.PopulateArguments(idExpression, _convenienceMethod.Signature.Parameters, _signature.Parameters);
+            var responseDeclaration = Declare(
+                "response",
+                new CSharpType(typeof(Response<>), typeof(bool)),
+                _restClientField.Invoke(_convenienceMethod.Signature.Name, arguments, null, _isAsync),
+                out var responseVariable);
+            return new TryExpression([responseDeclaration, Return(responseVariable)]);
+        }
+
         protected virtual IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
             VariableExpression messageVariable,
             VariableExpression contextVariable,
             out ScopedApi<Response> responseVariable)
         {
-            if (IsHeadAsBooleanOperation)
-            {
-                return ResourceMethodSnippets.CreateNonGenericResponsePipelineProcessing(
-                    messageVariable,
-                    contextVariable,
-                    _isAsync,
-                    out responseVariable);
-            }
-
             if (_originalBodyType != null && !IsLongRunningOperation)
             {
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
@@ -536,16 +545,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         // TODO: re-examine if this method need to be virtual or not after tags related method providers are implmented.
         protected virtual IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ScopedApi<Response> responseVariable, MethodSignature signature)
         {
-            if (IsHeadAsBooleanOperation)
-            {
-                return [
-                    Return(
-                        ResponseSnippets.FromValue(
-                            responseVariable.Property(nameof(Response.Status)).Equal(Literal(200)),
-                            responseVariable))
-                ];
-            }
-
             var nullCheckStatement = new IfStatement(
                 responseVariable.Value().Equal(Null))
             {
