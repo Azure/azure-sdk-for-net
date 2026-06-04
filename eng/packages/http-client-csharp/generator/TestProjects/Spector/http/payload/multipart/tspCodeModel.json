@@ -31,14 +31,16 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "TypeSpec.Http",
       "isFixed": false,
       "isFlags": false,
       "usage": "Input",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -56,7 +58,8 @@
         "decorators": []
       },
       "value": "image/jpg",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -72,7 +75,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
@@ -88,7 +92,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
@@ -104,7 +109,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
@@ -120,7 +126,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
@@ -136,7 +143,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
@@ -152,7 +160,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
@@ -168,7 +177,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
@@ -184,7 +194,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "23",
@@ -200,7 +211,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "25",
@@ -216,7 +228,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "27",
@@ -232,7 +245,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "29",
@@ -248,7 +262,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "31",
@@ -264,7 +279,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "33",
@@ -280,7 +296,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "35",
@@ -296,7 +313,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "37",
@@ -312,7 +330,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "39",
@@ -328,7 +347,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "41",
@@ -344,7 +364,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "43",
@@ -360,7 +381,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "45",
@@ -376,7 +398,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "47",
@@ -392,7 +415,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "49",
@@ -408,7 +432,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "51",
@@ -424,7 +449,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "53",
@@ -440,7 +466,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "55",
@@ -456,7 +483,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "57",
@@ -472,7 +500,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "59",
@@ -488,7 +517,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "61",
@@ -504,7 +534,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "63",
@@ -520,7 +551,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "65",
@@ -536,7 +568,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "67",
@@ -552,7 +585,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "69",
@@ -568,7 +602,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "71",
@@ -584,7 +619,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "73",
@@ -600,7 +636,8 @@
         "decorators": []
       },
       "value": "multipart/form-data",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -613,6 +650,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "76",
@@ -643,7 +681,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "78",
@@ -674,7 +713,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -687,6 +727,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "81",
@@ -717,7 +758,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "83",
@@ -748,7 +790,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -761,6 +804,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "86",
@@ -791,7 +835,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "88",
@@ -822,7 +867,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -835,6 +881,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "91",
@@ -865,7 +912,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "93",
@@ -881,6 +929,7 @@
             "usage": "Input",
             "decorators": [],
             "serializationOptions": {},
+            "isExactName": false,
             "properties": [
               {
                 "$id": "95",
@@ -905,7 +954,8 @@
                     "name": "city"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -926,7 +976,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "97",
@@ -957,7 +1008,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "99",
@@ -995,7 +1047,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1011,6 +1064,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "103",
@@ -1037,7 +1091,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "104",
@@ -1068,7 +1123,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1081,6 +1137,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "107",
@@ -1111,7 +1168,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "109",
@@ -1149,7 +1207,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1162,6 +1221,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "113",
@@ -1192,7 +1252,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "115",
@@ -1223,7 +1284,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1236,6 +1298,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "118",
@@ -1266,7 +1329,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1279,6 +1343,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "121",
@@ -1309,7 +1374,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "123",
@@ -1336,7 +1402,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "124",
@@ -1352,6 +1419,7 @@
             "usage": "Input",
             "decorators": [],
             "serializationOptions": {},
+            "isExactName": false,
             "baseModel": {
               "$id": "126",
               "kind": "model",
@@ -1363,6 +1431,7 @@
               "summary": "A file in an HTTP request, response, or multipart payload.",
               "decorators": [],
               "serializationOptions": {},
+              "isExactName": false,
               "properties": [
                 {
                   "$id": "127",
@@ -1384,7 +1453,8 @@
                   "decorators": [],
                   "crossLanguageDefinitionId": "TypeSpec.Http.File.contentType",
                   "serializationOptions": {},
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 },
                 {
                   "$id": "129",
@@ -1406,7 +1476,8 @@
                   "decorators": [],
                   "crossLanguageDefinitionId": "TypeSpec.Http.File.filename",
                   "serializationOptions": {},
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 },
                 {
                   "$id": "131",
@@ -1429,7 +1500,8 @@
                   "decorators": [],
                   "crossLanguageDefinitionId": "TypeSpec.Http.File.contents",
                   "serializationOptions": {},
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             },
@@ -1452,7 +1524,8 @@
                 "decorators": [],
                 "crossLanguageDefinitionId": "Payload.MultiPart.FileRequiredMetaData.filename",
                 "serializationOptions": {},
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "135",
@@ -1472,7 +1545,8 @@
                 "decorators": [],
                 "crossLanguageDefinitionId": "Payload.MultiPart.FileRequiredMetaData.contentType",
                 "serializationOptions": {},
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -1499,6 +1573,7 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1532,6 +1607,7 @@
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1559,7 +1635,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "141",
@@ -1593,7 +1670,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "143",
@@ -1633,7 +1711,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1652,6 +1731,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "146",
@@ -1669,6 +1749,7 @@
             "summary": "A file in an HTTP request, response, or multipart payload.",
             "decorators": [],
             "serializationOptions": {},
+            "isExactName": false,
             "properties": [
               {
                 "$id": "148",
@@ -1686,7 +1767,8 @@
                 "decorators": [],
                 "crossLanguageDefinitionId": "TypeSpec.Http.File.contentType",
                 "serializationOptions": {},
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "149",
@@ -1708,7 +1790,8 @@
                 "decorators": [],
                 "crossLanguageDefinitionId": "TypeSpec.Http.File.filename",
                 "serializationOptions": {},
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "151",
@@ -1731,7 +1814,8 @@
                 "decorators": [],
                 "crossLanguageDefinitionId": "TypeSpec.Http.File.contents",
                 "serializationOptions": {},
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -1760,6 +1844,7 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": true,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1794,10 +1879,12 @@
                     "$ref": "4"
                   },
                   "name": "FileContentType",
-                  "isGeneratedName": true
+                  "isGeneratedName": true,
+                  "isExactName": false
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": true,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1825,7 +1912,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1841,6 +1929,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "158",
@@ -1856,6 +1945,7 @@
             "usage": "Input",
             "decorators": [],
             "serializationOptions": {},
+            "isExactName": false,
             "baseModel": {
               "$ref": "147"
             },
@@ -1878,7 +1968,8 @@
                 "decorators": [],
                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.File.FileWithRequiredFilename.filename",
                 "serializationOptions": {},
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -1905,6 +1996,7 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -1935,7 +2027,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -1951,6 +2044,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "165",
@@ -1990,7 +2084,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2003,6 +2098,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "168",
@@ -2018,6 +2114,7 @@
             "usage": "Input",
             "decorators": [],
             "serializationOptions": {},
+            "isExactName": false,
             "baseModel": {
               "$ref": "126"
             },
@@ -2040,7 +2137,8 @@
                 "decorators": [],
                 "crossLanguageDefinitionId": "Payload.MultiPart.FileSpecificContentType.filename",
                 "serializationOptions": {},
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "172",
@@ -2056,7 +2154,8 @@
                 "decorators": [],
                 "crossLanguageDefinitionId": "Payload.MultiPart.FileSpecificContentType.contentType",
                 "serializationOptions": {},
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -2083,6 +2182,7 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2120,10 +2220,12 @@
                     "crossLanguageDefinitionId": "TypeSpec.string"
                   },
                   "name": "FileSpecificContentTypeContentType",
-                  "isGeneratedName": true
+                  "isGeneratedName": true,
+                  "isExactName": false
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2151,7 +2253,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2167,6 +2270,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "179",
@@ -2199,7 +2303,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2212,6 +2317,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "181",
@@ -2227,6 +2333,7 @@
             "usage": "Input",
             "decorators": [],
             "serializationOptions": {},
+            "isExactName": false,
             "baseModel": {
               "$ref": "126"
             },
@@ -2249,7 +2356,8 @@
                 "decorators": [],
                 "crossLanguageDefinitionId": "Payload.MultiPart.FileOptionalContentType.filename",
                 "serializationOptions": {},
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -2276,6 +2384,7 @@
                 },
                 "name": "filename",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2311,6 +2420,7 @@
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": true,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2338,7 +2448,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -2354,6 +2465,7 @@
       "usage": "Input,MultipartFormData",
       "decorators": [],
       "serializationOptions": {},
+      "isExactName": false,
       "properties": [
         {
           "$id": "190",
@@ -2394,10 +2506,12 @@
                     "crossLanguageDefinitionId": "TypeSpec.string"
                   },
                   "name": "FloatRequest1",
-                  "isGeneratedName": true
+                  "isGeneratedName": true,
+                  "isExactName": false
                 },
                 "name": "contentType",
                 "isGeneratedName": false,
+                "isExactName": false,
                 "optional": false,
                 "isApiVersionParam": false,
                 "onClient": false,
@@ -2425,7 +2539,8 @@
               "headers": []
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -2435,6 +2550,7 @@
       "$id": "195",
       "kind": "client",
       "name": "MultiPartClient",
+      "isExactName": false,
       "namespace": "Payload.MultiPart",
       "doc": "Test for multipart",
       "methods": [],
@@ -2467,7 +2583,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Payload.MultiPart.endpoint"
+          "crossLanguageDefinitionId": "Payload.MultiPart.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -2479,18 +2596,21 @@
           "$id": "199",
           "kind": "client",
           "name": "FormData",
+          "isExactName": false,
           "namespace": "Payload.MultiPart.FormData",
           "methods": [
             {
               "$id": "200",
               "kind": "basic",
               "name": "basic",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Test content-type: multipart/form-data",
               "operation": {
                 "$id": "201",
                 "name": "basic",
+                "isExactName": false,
                 "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data",
                 "accessibility": "public",
@@ -2526,9 +2646,11 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.basic.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "204",
@@ -2564,9 +2686,12 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.basic.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -2575,7 +2700,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -2609,12 +2735,14 @@
               "$id": "206",
               "kind": "basic",
               "name": "withWireName",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Test content-type: multipart/form-data with wire names",
               "operation": {
                 "$id": "207",
                 "name": "withWireName",
+                "isExactName": false,
                 "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data with wire names",
                 "accessibility": "public",
@@ -2650,9 +2778,11 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.withWireName.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "210",
@@ -2688,9 +2818,12 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.withWireName.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -2699,7 +2832,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -2733,12 +2867,14 @@
               "$id": "212",
               "kind": "basic",
               "name": "optionalParts",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Test content-type: multipart/form-data with optional parts",
               "operation": {
                 "$id": "213",
                 "name": "optionalParts",
+                "isExactName": false,
                 "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data with optional parts",
                 "accessibility": "public",
@@ -2774,9 +2910,11 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.optionalParts.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "216",
@@ -2812,9 +2950,12 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.optionalParts.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -2823,7 +2964,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -2857,12 +2999,14 @@
               "$id": "218",
               "kind": "basic",
               "name": "fileArrayAndBasic",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Test content-type: multipart/form-data for mixed scenarios",
               "operation": {
                 "$id": "219",
                 "name": "fileArrayAndBasic",
+                "isExactName": false,
                 "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data for mixed scenarios",
                 "accessibility": "public",
@@ -2898,9 +3042,11 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.fileArrayAndBasic.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "222",
@@ -2936,9 +3082,12 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.fileArrayAndBasic.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -2947,7 +3096,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -2981,12 +3131,14 @@
               "$id": "224",
               "kind": "basic",
               "name": "jsonPart",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Test content-type: multipart/form-data for scenario contains json part and binary part ",
               "operation": {
                 "$id": "225",
                 "name": "jsonPart",
+                "isExactName": false,
                 "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data for scenario contains json part and binary part ",
                 "accessibility": "public",
@@ -3022,9 +3174,11 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.jsonPart.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "228",
@@ -3060,9 +3214,12 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.jsonPart.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -3071,7 +3228,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -3105,12 +3263,14 @@
               "$id": "230",
               "kind": "basic",
               "name": "binaryArrayParts",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Test content-type: multipart/form-data for scenario contains multi binary parts",
               "operation": {
                 "$id": "231",
                 "name": "binaryArrayParts",
+                "isExactName": false,
                 "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data for scenario contains multi binary parts",
                 "accessibility": "public",
@@ -3146,9 +3306,11 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.binaryArrayParts.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "234",
@@ -3184,9 +3346,12 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.binaryArrayParts.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -3195,7 +3360,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -3229,12 +3395,14 @@
               "$id": "236",
               "kind": "basic",
               "name": "multiBinaryParts",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Test content-type: multipart/form-data for scenario contains multi binary parts",
               "operation": {
                 "$id": "237",
                 "name": "multiBinaryParts",
+                "isExactName": false,
                 "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data for scenario contains multi binary parts",
                 "accessibility": "public",
@@ -3270,9 +3438,11 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.multiBinaryParts.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "240",
@@ -3308,9 +3478,12 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.multiBinaryParts.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -3319,7 +3492,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -3353,12 +3527,14 @@
               "$id": "242",
               "kind": "basic",
               "name": "checkFileNameAndContentType",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Test content-type: multipart/form-data",
               "operation": {
                 "$id": "243",
                 "name": "checkFileNameAndContentType",
+                "isExactName": false,
                 "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data",
                 "accessibility": "public",
@@ -3394,9 +3570,11 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.checkFileNameAndContentType.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "246",
@@ -3432,9 +3610,12 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.checkFileNameAndContentType.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -3443,7 +3624,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -3477,12 +3659,14 @@
               "$id": "248",
               "kind": "basic",
               "name": "anonymousModel",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Test content-type: multipart/form-data",
               "operation": {
                 "$id": "249",
                 "name": "anonymousModel",
+                "isExactName": false,
                 "resourceName": "FormData",
                 "doc": "Test content-type: multipart/form-data",
                 "accessibility": "public",
@@ -3518,9 +3702,11 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "252",
@@ -3556,9 +3742,12 @@
                         "crossLanguageDefinitionId": "Payload.MultiPart.FormData.anonymousModel.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "responses": [
@@ -3567,7 +3756,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -3627,7 +3817,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Payload.MultiPart.FormData.endpoint"
+              "crossLanguageDefinitionId": "Payload.MultiPart.FormData.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -3642,18 +3833,21 @@
               "$id": "257",
               "kind": "client",
               "name": "HttpParts",
+              "isExactName": false,
               "namespace": "Payload.MultiPart.FormData.HttpParts",
               "methods": [
                 {
                   "$id": "258",
                   "kind": "basic",
                   "name": "jsonArrayAndFileArray",
+                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "doc": "Test content-type: multipart/form-data for mixed scenarios",
                   "operation": {
                     "$id": "259",
                     "name": "jsonArrayAndFileArray",
+                    "isExactName": false,
                     "resourceName": "HttpParts",
                     "doc": "Test content-type: multipart/form-data for mixed scenarios",
                     "accessibility": "public",
@@ -3689,9 +3883,11 @@
                             "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray.contentType",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "262",
@@ -3727,9 +3923,12 @@
                             "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.jsonArrayAndFileArray.body",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "responses": [
@@ -3738,7 +3937,8 @@
                           204
                         ],
                         "headers": [],
-                        "isErrorResponse": false
+                        "isErrorResponse": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "httpMethod": "POST",
@@ -3798,7 +3998,8 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.endpoint"
+                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.endpoint",
+                  "isExactName": false
                 }
               ],
               "initializedBy": 0,
@@ -3813,18 +4014,21 @@
                   "$id": "267",
                   "kind": "client",
                   "name": "ContentType",
+                  "isExactName": false,
                   "namespace": "Payload.MultiPart.FormData.HttpParts.ContentType",
                   "methods": [
                     {
                       "$id": "268",
                       "kind": "basic",
                       "name": "imageJpegContentType",
+                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "doc": "Test content-type: multipart/form-data",
                       "operation": {
                         "$id": "269",
                         "name": "imageJpegContentType",
+                        "isExactName": false,
                         "resourceName": "ContentType",
                         "doc": "Test content-type: multipart/form-data",
                         "accessibility": "public",
@@ -3860,9 +4064,11 @@
                                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.imageJpegContentType.contentType",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           },
                           {
                             "$id": "272",
@@ -3898,9 +4104,12 @@
                                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.imageJpegContentType.body",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false,
+                            "serializationOptions": {}
                           }
                         ],
                         "responses": [
@@ -3909,7 +4118,8 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false
+                            "isErrorResponse": false,
+                            "serializationOptions": {}
                           }
                         ],
                         "httpMethod": "POST",
@@ -3943,12 +4153,14 @@
                       "$id": "274",
                       "kind": "basic",
                       "name": "requiredContentType",
+                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "doc": "Test content-type: multipart/form-data",
                       "operation": {
                         "$id": "275",
                         "name": "requiredContentType",
+                        "isExactName": false,
                         "resourceName": "ContentType",
                         "doc": "Test content-type: multipart/form-data",
                         "accessibility": "public",
@@ -3984,9 +4196,11 @@
                                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.requiredContentType.contentType",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           },
                           {
                             "$id": "278",
@@ -4022,9 +4236,12 @@
                                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.requiredContentType.body",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false,
+                            "serializationOptions": {}
                           }
                         ],
                         "responses": [
@@ -4033,7 +4250,8 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false
+                            "isErrorResponse": false,
+                            "serializationOptions": {}
                           }
                         ],
                         "httpMethod": "POST",
@@ -4067,12 +4285,14 @@
                       "$id": "280",
                       "kind": "basic",
                       "name": "optionalContentType",
+                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "doc": "Test content-type: multipart/form-data for optional content type",
                       "operation": {
                         "$id": "281",
                         "name": "optionalContentType",
+                        "isExactName": false,
                         "resourceName": "ContentType",
                         "doc": "Test content-type: multipart/form-data for optional content type",
                         "accessibility": "public",
@@ -4108,9 +4328,11 @@
                                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.optionalContentType.contentType",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           },
                           {
                             "$id": "284",
@@ -4146,9 +4368,12 @@
                                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.optionalContentType.body",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false,
+                            "serializationOptions": {}
                           }
                         ],
                         "responses": [
@@ -4157,7 +4382,8 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false
+                            "isErrorResponse": false,
+                            "serializationOptions": {}
                           }
                         ],
                         "httpMethod": "POST",
@@ -4217,7 +4443,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.endpoint"
+                      "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.ContentType.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -4233,18 +4460,21 @@
                   "$id": "289",
                   "kind": "client",
                   "name": "NonString",
+                  "isExactName": false,
                   "namespace": "Payload.MultiPart.FormData.HttpParts.NonString",
                   "methods": [
                     {
                       "$id": "290",
                       "kind": "basic",
                       "name": "float",
+                      "isExactName": false,
                       "accessibility": "public",
                       "apiVersions": [],
                       "doc": "Test content-type: multipart/form-data for non string",
                       "operation": {
                         "$id": "291",
                         "name": "float",
+                        "isExactName": false,
                         "resourceName": "NonString",
                         "doc": "Test content-type: multipart/form-data for non string",
                         "accessibility": "public",
@@ -4280,9 +4510,11 @@
                                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.contentType",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false
                           },
                           {
                             "$id": "294",
@@ -4318,9 +4550,12 @@
                                 "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.float.body",
                                 "readOnly": false,
                                 "access": "public",
-                                "decorators": []
+                                "decorators": [],
+                                "isExactName": false
                               }
-                            ]
+                            ],
+                            "isExactName": false,
+                            "serializationOptions": {}
                           }
                         ],
                         "responses": [
@@ -4329,7 +4564,8 @@
                               204
                             ],
                             "headers": [],
-                            "isErrorResponse": false
+                            "isErrorResponse": false,
+                            "serializationOptions": {}
                           }
                         ],
                         "httpMethod": "POST",
@@ -4389,7 +4625,8 @@
                       "serverUrlTemplate": "{endpoint}",
                       "skipUrlEncoding": false,
                       "readOnly": false,
-                      "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.endpoint"
+                      "crossLanguageDefinitionId": "Payload.MultiPart.FormData.HttpParts.NonString.endpoint",
+                      "isExactName": false
                     }
                   ],
                   "initializedBy": 0,
@@ -4408,17 +4645,20 @@
               "$id": "299",
               "kind": "client",
               "name": "File",
+              "isExactName": false,
               "namespace": "Payload.MultiPart.FormData.File",
               "methods": [
                 {
                   "$id": "300",
                   "kind": "basic",
                   "name": "uploadFileSpecificContentType",
+                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
                     "$id": "301",
                     "name": "uploadFileSpecificContentType",
+                    "isExactName": false,
                     "resourceName": "File",
                     "accessibility": "public",
                     "parameters": [
@@ -4453,9 +4693,11 @@
                             "crossLanguageDefinitionId": "Payload.MultiPart.FormData.File.uploadFileSpecificContentType.contentType",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "304",
@@ -4491,9 +4733,12 @@
                             "crossLanguageDefinitionId": "Payload.MultiPart.FormData.File.uploadFileSpecificContentType.body",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "responses": [
@@ -4502,7 +4747,8 @@
                           204
                         ],
                         "headers": [],
-                        "isErrorResponse": false
+                        "isErrorResponse": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "httpMethod": "POST",
@@ -4536,11 +4782,13 @@
                   "$id": "306",
                   "kind": "basic",
                   "name": "uploadFileRequiredFilename",
+                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
                     "$id": "307",
                     "name": "uploadFileRequiredFilename",
+                    "isExactName": false,
                     "resourceName": "File",
                     "accessibility": "public",
                     "parameters": [
@@ -4575,9 +4823,11 @@
                             "crossLanguageDefinitionId": "Payload.MultiPart.FormData.File.uploadFileRequiredFilename.contentType",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "310",
@@ -4613,9 +4863,12 @@
                             "crossLanguageDefinitionId": "Payload.MultiPart.FormData.File.uploadFileRequiredFilename.body",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "responses": [
@@ -4624,7 +4877,8 @@
                           204
                         ],
                         "headers": [],
-                        "isErrorResponse": false
+                        "isErrorResponse": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "httpMethod": "POST",
@@ -4658,11 +4912,13 @@
                   "$id": "312",
                   "kind": "basic",
                   "name": "uploadFileArray",
+                  "isExactName": false,
                   "accessibility": "public",
                   "apiVersions": [],
                   "operation": {
                     "$id": "313",
                     "name": "uploadFileArray",
+                    "isExactName": false,
                     "resourceName": "File",
                     "accessibility": "public",
                     "parameters": [
@@ -4697,9 +4953,11 @@
                             "crossLanguageDefinitionId": "Payload.MultiPart.FormData.File.uploadFileArray.contentType",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false
                       },
                       {
                         "$id": "316",
@@ -4735,9 +4993,12 @@
                             "crossLanguageDefinitionId": "Payload.MultiPart.FormData.File.uploadFileArray.body",
                             "readOnly": false,
                             "access": "public",
-                            "decorators": []
+                            "decorators": [],
+                            "isExactName": false
                           }
-                        ]
+                        ],
+                        "isExactName": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "responses": [
@@ -4746,7 +5007,8 @@
                           204
                         ],
                         "headers": [],
-                        "isErrorResponse": false
+                        "isErrorResponse": false,
+                        "serializationOptions": {}
                       }
                     ],
                     "httpMethod": "POST",
@@ -4806,7 +5068,8 @@
                   "serverUrlTemplate": "{endpoint}",
                   "skipUrlEncoding": false,
                   "readOnly": false,
-                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.File.endpoint"
+                  "crossLanguageDefinitionId": "Payload.MultiPart.FormData.File.endpoint",
+                  "isExactName": false
                 }
               ],
               "initializedBy": 0,

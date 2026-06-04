@@ -19,4 +19,3 @@ internal partial class InternalProjectsClient
 
 [CodeGenType("InternalProjectsClientOptions")] internal partial class InternalProjectsClientOptions { }
 [CodeGenType("ConversationList")] internal partial class InternalConversationList { }
-[CodeGenType("MemorySearchItem")] public partial class MemoryToolSearchItem { }

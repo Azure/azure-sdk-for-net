@@ -20,11 +20,11 @@ namespace Azure.AI.Projects
         /// <param name="type"> The type of the output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> The id of the output dataset created. </param>
-        /// <param name="name"> The name of the output dataset and can be optionally set during job creation time. </param>
+        /// <param name="name"> The name of the output dataset. </param>
         /// <param name="version"> The version of the output dataset. </param>
-        /// <param name="description"> Description of the output dataset and can be optionally set during job creation time. </param>
-        /// <param name="tags"> Tag dictionary of the output dataset and can be optionally set during job creation time. </param>
-        internal DatasetDataGenerationJobOutput(DataGenerationJobOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string name, string version, string description, IDictionary<string, string> tags) : base(@type, additionalBinaryDataProperties)
+        /// <param name="description"> Description of the output dataset. </param>
+        /// <param name="tags"> Tag dictionary of the output dataset. </param>
+        internal DatasetDataGenerationJobOutput(DataGenerationJobOutputType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string name, string version, string description, IReadOnlyDictionary<string, string> tags) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -36,16 +36,16 @@ namespace Azure.AI.Projects
         /// <summary> The id of the output dataset created. </summary>
         public string Id { get; }
 
-        /// <summary> The name of the output dataset and can be optionally set during job creation time. </summary>
+        /// <summary> The name of the output dataset. </summary>
         public string Name { get; }
 
         /// <summary> The version of the output dataset. </summary>
         public string Version { get; }
 
-        /// <summary> Description of the output dataset and can be optionally set during job creation time. </summary>
+        /// <summary> Description of the output dataset. </summary>
         public string Description { get; }
 
-        /// <summary> Tag dictionary of the output dataset and can be optionally set during job creation time. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Tag dictionary of the output dataset. </summary>
+        public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

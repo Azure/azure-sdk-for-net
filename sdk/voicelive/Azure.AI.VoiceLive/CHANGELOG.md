@@ -1,9 +1,47 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0 (2026-06-03)
+ 
+### Features Added
+ 
+- Added support for built-in tool calling scenarios, including file search and web search.
+- Added lifecycle status tracking for tool calls, including `Searching`, `InProgress`, and `Completed` states.
+- Added streaming server events for tool execution, transcript annotations, and video output updates.
+- Added avatar voice synchronization support via `AzureAvatarSyncVoice` with configurable voice parameters.
+- Added phrase-level transcription support, including word-level timing, confidence, and phrase grouping.
+- Added new personal voice models: `PersonalVoiceModels.MaiVoice1` and `PersonalVoiceModels.DragonHDOmniLatestNeural`.
+- Added new turn-detection options, including semantic VAD variants (`AzureSemanticVadTurnDetection`, `AzureSemanticVadTurnDetectionEn`, and `AzureSemanticVadTurnDetectionMultilingual`).
+ 
+### Breaking Changes
+ 
+- Updated transcription completion APIs to include additional metadata (logprobs and phrases).
+- Updated `OutputTokenDetails` constructors to support reasoning tokens.
+- Updated `VoiceLiveSessionOptions` to include new properties such as `Include` and `Metadata`.
+- Renamed `MCPApprovalType` to `McpApprovalKind`.
+- Renamed `AvatarConfiguration.Type` to `AvatarConfiguration.AvatarKind`.
+- Renamed `CustomLexiconUrl` to `CustomLexiconUri` and `CustomTextNormalizationUrl` to `CustomTextNormalizationUri` on `AzureAvatarSyncVoice`, `AzurePersonalVoice`, `AzureCustomVoice`, and `AzureStandardVoice`. The property type changed from `string` to `System.Uri`.
+- Renamed `RequestImageContentPart.Url` to `RequestImageContentPart.Uri` (typed as `System.Uri`).
+- Renamed `PhotoAvatarBaseModes` to `PhotoAvatarBaseMode` (singular). `AvatarConfiguration.Model` was renamed to `AvatarConfiguration.BaseMode` and now uses the new type.
+- Renamed `AvatarConfiguration.OutputAuditAudio` to `AvatarConfiguration.AuditOutputAudio`.
+- Renamed `ReasoningEffort.Xhigh` to `ReasoningEffort.ExtraHigh`.
+
+### Bugs Fixed
+
+- Telemetry: `gen_ai.event.content` on `.done` and related response events now correctly respects the content recording opt-in (`OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` or `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED`). Previously these events emitted message content (transcripts, function-call arguments, response bodies) unconditionally. To restore the previous behavior, set one of those environment variables to `true`.
+
+### Other Changes
+
+- Runnable sample applications moved from `sdk/voicelive/Azure.AI.VoiceLive/samples/` to top-level `samples/voicelive/`. Existing sample folders were renamed to kebab-case (`BasicVoiceAssistant` → `basic-voice-assistant`, `CustomerServiceBot` → `customer-service-bot`), and each sample's entry point was renamed from `SampleProgram.cs` to `Program.cs`.
+- Added new samples:
+  - `samples/voicelive/agent-voice-assistant` — Foundry agent integration sample.
+  - `samples/voicelive/mcp-voice-assistant` — MCP server integration sample.
+  - `samples/voicelive/telemetry-tracing` — end-to-end OpenTelemetry tracing and metrics walkthrough for the SDK telemetry shipped in `1.1.0-beta.4`.
+- Added `--show-traces` flag and console-tracing wiring to `basic-voice-assistant`, `mcp-voice-assistant`, `agent-voice-assistant`, and `customer-service-bot`.
+
+## 1.1.0-beta.4 (2026-05-13)
 
 ### Features Added
-- Replaced `BinaryData` with new `RequireApprovalOption` typed property on `VoiceLiveMcpServerDefinition.RequireApproval`. Customers can now set approval directly (`server.RequireApproval = MCPApprovalType.Never`) instead of using `BinaryData.FromObjectAsJson()`.
+- Replaced `BinaryData` with new `RequireApprovalOption` typed property on `VoiceLiveMcpServerDefinition.RequireApproval`. Customers can now set approval directly (`server.RequireApproval = McpApprovalKind.Never`) instead of using `BinaryData.FromObjectAsJson()`.
 - Added OpenTelemetry distributed tracing support. The SDK now emits spans via `System.Diagnostics.ActivitySource` named `"Azure.AI.VoiceLive"` — no extra instrumentation package required. Spans include standard [GenAI semantic convention](https://opentelemetry.io/docs/specs/semconv/gen-ai/) attributes such as token usage, first-token latency, turn count, and interruption count. 
 - Added OpenTelemetry metrics support. The SDK now emits `gen_ai.client.operation.duration` and `gen_ai.client.token.usage` metrics via a `System.Diagnostics.Metrics.Meter` named `"Azure.AI.VoiceLive"` in compliance with GenAI semantic conventions.
 
@@ -11,9 +49,7 @@
 - `VoiceLiveMcpServerDefinition.RequireApproval` property type changed from `BinaryData` to `RequireApprovalOption`.
 
 ### Bugs Fixed
-- Fixed `MCPApprovalType` serialization so that `require_approval` correctly serializes to `"never"` on the wire. Previously, using `BinaryData.FromObjectAsJson(MCPApprovalType.Never)` silently produced an empty object `{}`, causing the service to treat it as `"always"` and send unexpected approval requests.
-
-### Other Changes
+- Fixed `McpApprovalKind` serialization so that `require_approval` correctly serializes to `"never"` on the wire. Previously, using `BinaryData.FromObjectAsJson(McpApprovalKind.Never)` silently produced an empty object `{}`, causing the service to treat it as `"always"` and send unexpected approval requests.
 
 ## 1.1.0-beta.3 (2026-02-26)
 
@@ -27,7 +63,7 @@
 - **MCP (Model Context Protocol) Support**: Added comprehensive support for MCP server integration
 
     - Added `VoiceLiveMcpServerDefinition` for configuring external MCP servers as tools
-    - Added `MCPApprovalType` enum for controlling tool execution approval workflows ("always", "never")
+    - Added `McpApprovalKind` enum for controlling tool execution approval workflows ("always", "never")
     - Added `VoiceLiveMcpTool` class for representing MCP tool definitions with JSON schemas
     - Added MCP-specific session update events:
         - `SessionUpdateMcpListToolsInProgress` - Tool discovery started

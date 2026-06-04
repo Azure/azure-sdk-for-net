@@ -66,6 +66,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType left, Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType right) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType (string value) { throw null; }
+        public static implicit operator Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType left, Azure.AI.Language.QuestionAnswering.Authoring.ImportContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -680,14 +681,5 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class LanguageQuestionAnsweringAuthoringClientBuilderExtensions
-    {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClient, Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientOptions> AddQuestionAnsweringAuthoringClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClient, Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientOptions> AddQuestionAnsweringAuthoringClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClient, Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringClientOptions> AddQuestionAnsweringAuthoringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

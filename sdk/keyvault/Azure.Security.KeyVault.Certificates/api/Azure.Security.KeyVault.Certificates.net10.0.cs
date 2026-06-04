@@ -77,7 +77,7 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificateClientOptions : Azure.Core.ClientOptions
     {
-        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V2025_07_01) { }
+        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V2026_03_01_Preview) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -90,6 +90,7 @@ namespace Azure.Security.KeyVault.Certificates
             V7_5 = 5,
             V7_6 = 6,
             V2025_07_01 = 7,
+            V2026_03_01_Preview = 8,
         }
     }
     public partial class CertificateContact
@@ -266,6 +267,7 @@ namespace Azure.Security.KeyVault.Certificates
         public Azure.Security.KeyVault.Certificates.CertificateKeyType? KeyType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.CertificateKeyUsage> KeyUsage { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Security.KeyVault.Certificates.LifetimeAction> LifetimeActions { get { throw null; } }
+        public Azure.Security.KeyVault.Certificates.PlatformManaged PlatformManaged { get { throw null; } set { } }
         public bool? ReuseKey { get { throw null; } set { } }
         public string Subject { get { throw null; } }
         public Azure.Security.KeyVault.Certificates.SubjectAlternativeNames SubjectAlternativeNames { get { throw null; } }
@@ -399,6 +401,12 @@ namespace Azure.Security.KeyVault.Certificates
         public string Name { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IEnumerable<byte[]> X509Certificates { get { throw null; } }
+    }
+    public partial class PlatformManaged
+    {
+        public PlatformManaged(string certificateUsage) { }
+        public string CertificateUsage { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Metadata { get { throw null; } }
     }
     public partial class RecoverDeletedCertificateOperation : Azure.Operation<Azure.Security.KeyVault.Certificates.KeyVaultCertificateWithPolicy>
     {

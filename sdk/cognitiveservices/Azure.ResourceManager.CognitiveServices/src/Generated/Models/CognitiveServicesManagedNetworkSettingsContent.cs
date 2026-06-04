@@ -14,7 +14,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The CognitiveServicesManagedNetworkSettingsContent. </summary>
-    public partial class CognitiveServicesManagedNetworkSettingsContent : ResourceData
+    internal partial class CognitiveServicesManagedNetworkSettingsContent : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Managed Network settings for a cognitive services account. </param>
-        internal CognitiveServicesManagedNetworkSettingsContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesManagedNetworkConfiguration properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesManagedNetworkSettingsContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesManagedNetworkConfiguration properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Managed Network settings for a cognitive services account. </summary>

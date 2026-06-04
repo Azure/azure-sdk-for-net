@@ -29,7 +29,8 @@
             "$ref": "1"
           },
           "doc": "The version 2022-12-01-preview.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "_Specs_.Azure.Core.Scalar",
@@ -37,14 +38,15 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
     {
       "$id": "4",
       "kind": "constant",
-      "name": "getContentType",
+      "name": "GetResponseContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -55,12 +57,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "6",
       "kind": "constant",
-      "name": "GetResponseContentType",
+      "name": "GetResponseContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -71,12 +74,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
       "kind": "constant",
-      "name": "GetResponseContentType1",
+      "name": "GetResponseContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -87,12 +91,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
       "kind": "constant",
-      "name": "GetResponseContentType2",
+      "name": "GetResponseContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -103,12 +108,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "12",
       "kind": "constant",
-      "name": "GetResponseContentType3",
+      "name": "GetResponseContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -119,12 +125,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
       "kind": "constant",
-      "name": "GetResponseContentType4",
+      "name": "GetResponseContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -135,12 +142,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "16",
       "kind": "constant",
-      "name": "postContentType",
+      "name": "GetResponseContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -151,7 +159,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -168,6 +177,7 @@
           "name": "AzureLocationModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "19",
@@ -199,7 +209,8 @@
               "name": "location"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -209,6 +220,7 @@
       "$id": "22",
       "kind": "client",
       "name": "ScalarClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.Core.Scalar",
       "methods": [],
       "parameters": [
@@ -240,7 +252,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -254,12 +267,14 @@
           "$id": "26",
           "kind": "client",
           "name": "AzureLocationScalar",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.Core.Scalar",
           "methods": [
             {
               "$id": "27",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -268,6 +283,7 @@
               "operation": {
                 "$id": "28",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "AzureLocationScalar",
                 "doc": "get azureLocation value",
                 "accessibility": "public",
@@ -303,9 +319,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.get.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -339,7 +357,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -371,6 +394,7 @@
               "$id": "33",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -379,6 +403,7 @@
               "operation": {
                 "$id": "34",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "AzureLocationScalar",
                 "doc": "put azureLocation value",
                 "accessibility": "public",
@@ -414,9 +439,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "37",
@@ -476,9 +503,16 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "body"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -487,7 +521,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -521,6 +556,7 @@
               "$id": "43",
               "kind": "basic",
               "name": "post",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -529,6 +565,7 @@
               "operation": {
                 "$id": "44",
                 "name": "post",
+                "isExactName": false,
                 "resourceName": "AzureLocationScalar",
                 "doc": "post a model which has azureLocation property",
                 "accessibility": "public",
@@ -564,9 +601,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "47",
@@ -599,9 +638,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "49",
@@ -639,9 +680,16 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "body"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -656,7 +704,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "POST",
@@ -697,6 +750,7 @@
               "$id": "51",
               "kind": "basic",
               "name": "header",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -705,6 +759,7 @@
               "operation": {
                 "$id": "52",
                 "name": "header",
+                "isExactName": false,
                 "resourceName": "AzureLocationScalar",
                 "doc": "azureLocation value header",
                 "accessibility": "public",
@@ -764,9 +819,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.header.region",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -775,7 +832,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -803,6 +861,7 @@
               "$id": "59",
               "kind": "basic",
               "name": "query",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -811,6 +870,7 @@
               "operation": {
                 "$id": "60",
                 "name": "query",
+                "isExactName": false,
                 "resourceName": "AzureLocationScalar",
                 "doc": "azureLocation value query",
                 "accessibility": "public",
@@ -870,9 +930,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.query.region",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -881,7 +943,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -935,7 +998,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

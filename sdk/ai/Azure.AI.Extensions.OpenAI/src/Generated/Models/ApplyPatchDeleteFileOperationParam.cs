@@ -30,6 +30,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Path of the file to delete relative to the workspace root. </summary>
-        public string Path { get; }
+        public string Path { get; set; }
     }
 }

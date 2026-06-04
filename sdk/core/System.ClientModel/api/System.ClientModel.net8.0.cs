@@ -78,9 +78,9 @@ namespace System.ClientModel
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static System.ClientModel.AuthenticationTokenProvider? GetCredential(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) { throw null; }
-        public static System.ClientModel.AuthenticationTokenProvider? GetCredential(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) { throw null; }
-        public static System.ClientModel.AuthenticationTokenProvider? GetCredential(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings? GetCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) { throw null; }
     }
     public partial class ContinuationToken
     {
@@ -88,6 +88,46 @@ namespace System.ClientModel
         protected ContinuationToken(System.BinaryData bytes) { }
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
+    public sealed partial class FileBinaryContent : System.ClientModel.BinaryContent
+    {
+        public FileBinaryContent(System.BinaryData data, string? mediaType = "application/octet-stream") { }
+        public FileBinaryContent(System.IO.Stream stream, string? mediaType = "application/octet-stream") { }
+        public FileBinaryContent(string path, string? mediaType = "application/octet-stream") { }
+        public string? Filename { get { throw null; } set { } }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
+    public sealed partial class MultiPartFormContent : System.ClientModel.BinaryContent
+    {
+        public MultiPartFormContent() { }
+        public void Add(string name, System.BinaryData content) { }
+        public void Add(string name, bool content, string? mediaType = "text/plain") { }
+        public void Add(string name, byte content, string? mediaType = "text/plain") { }
+        public void Add(string name, byte[] content, string? mediaType = "application/octet-stream") { }
+        public void Add(string name, char content, string? mediaType = "text/plain") { }
+        public void Add(string name, System.ClientModel.FileBinaryContent fileContent) { }
+        public void Add(string name, decimal content, string? mediaType = "text/plain") { }
+        public void Add(string name, double content, string? mediaType = "text/plain") { }
+        public void Add(string name, short content, string? mediaType = "text/plain") { }
+        public void Add(string name, int content, string? mediaType = "text/plain") { }
+        public void Add(string name, long content, string? mediaType = "text/plain") { }
+        public void Add(string name, sbyte content, string? mediaType = "text/plain") { }
+        public void Add(string name, float content, string? mediaType = "text/plain") { }
+        public void Add(string name, string content, string? mediaType = "text/plain") { }
+        public void Add(string name, ushort content, string? mediaType = "text/plain") { }
+        public void Add(string name, uint content, string? mediaType = "text/plain") { }
+        public void Add(string name, ulong content, string? mediaType = "text/plain") { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model) { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions options, string mediaType) { }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
@@ -260,6 +300,7 @@ namespace System.ClientModel.Primitives
     {
         protected CredentialResolver() { }
         public abstract bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider);
+        public virtual bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider?> resolveChild, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public sealed partial class CredentialSettings
@@ -267,7 +308,9 @@ namespace System.ClientModel.Primitives
         public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public Microsoft.Extensions.Configuration.IConfigurationSection? AdditionalProperties { get { throw null; } set { } }
         public string? CredentialSource { get { throw null; } set { } }
+        public string? this[string key] { get { throw null; } }
         public string? Key { get { throw null; } set { } }
+        public System.ClientModel.AuthenticationTokenProvider? TokenProvider { get { throw null; } set { } }
     }
     public partial class GetTokenOptions
     {

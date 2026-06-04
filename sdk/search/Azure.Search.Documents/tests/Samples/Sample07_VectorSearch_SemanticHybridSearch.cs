@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2026_04_01), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
     public partial class VectorSemanticHybridSearch : SearchTestBase
     {
         public VectorSemanticHybridSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -97,7 +97,10 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                if (indexClient != null)
+                {
+                    await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                }
             }
         }
 

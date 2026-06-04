@@ -162,6 +162,55 @@ describe("RequestPath", () => {
     });
   });
 
+  describe("isResourceInstancePath", () => {
+    it("should recognize well-known tenant, subscription, and resource group resource paths", () => {
+      ok(new RequestPath("").isResourceInstancePath());
+      ok(new RequestPath("/tenants/{tenantId}").isResourceInstancePath());
+      ok(
+        new RequestPath(
+          "/subscriptions/{subscriptionId}"
+        ).isResourceInstancePath()
+      );
+      ok(
+        new RequestPath(
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}"
+        ).isResourceInstancePath()
+      );
+    });
+
+    it("should recognize generic provider resource paths", () => {
+      ok(
+        new RequestPath(
+          "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+        ).isResourceInstancePath()
+      );
+    });
+
+    it("should validate provider tail shape without validating scope prefix", () => {
+      ok(
+        new RequestPath(
+          "/{resourceUri}/providers/Microsoft.Edge/sites/{siteName}"
+        ).isResourceInstancePath()
+      );
+    });
+
+    it("should allow variable type segments because their type is validated from operation metadata", () => {
+      ok(
+        new RequestPath(
+          "/subscriptions/{subscriptionId}/providers/Microsoft.Edge/{resourceType}/{resourceName}"
+        ).isResourceInstancePath()
+      );
+    });
+
+    it("should reject provider paths that do not end on a name segment", () => {
+      ok(
+        !new RequestPath(
+          "/subscriptions/{subscriptionId}/providers/Microsoft.Attestation/locations/{location}/defaultProvider"
+        ).isResourceInstancePath()
+      );
+    });
+  });
+
   describe("resourceType", () => {
     it("should extract resource type from resource group resource", () => {
       const rp = new RequestPath(
@@ -216,6 +265,13 @@ describe("RequestPath", () => {
   });
 
   describe("scopePath", () => {
+    it("should cache the last providers segment index", () => {
+      const rp = new RequestPath(
+        "/subscriptions/{sub}/providers/Microsoft.A/parents/{parentName}/providers/Microsoft.B/children/{childName}"
+      );
+      strictEqual(rp.lastProvidersSegmentIndex, 6);
+    });
+
     it("should return scope for resource group resource", () => {
       const rp = new RequestPath(
         "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Compute/virtualMachines/{vmName}"
