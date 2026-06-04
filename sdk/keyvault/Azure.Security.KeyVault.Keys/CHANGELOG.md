@@ -6,7 +6,7 @@
 - Added the `ExternalKey` model and the new methods `CreateExternalKey` and `CreateExternalKeyAsync` in `KeyClient` for registering a Key Vault key whose material is held in an external HSM.
 
 ### Other Changes
-- Updated Service Version to `2026-01-01-preview`
+- The default service version is now `2026-01-01-preview`.
 
 ## 4.10.0 (2026-05-05)
 
