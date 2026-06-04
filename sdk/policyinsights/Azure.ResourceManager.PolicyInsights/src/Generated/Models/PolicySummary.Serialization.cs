@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 throw new FormatException($"The model {nameof(PolicySummary)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OdataId))
+            if (Optional.IsDefined(ODataId))
             {
                 writer.WritePropertyName("@odata.id"u8);
-                writer.WriteStringValue(OdataId);
+                writer.WriteStringValue(ODataId);
             }
-            if (Optional.IsDefined(OdataContext))
+            if (Optional.IsDefined(ODataContext))
             {
                 writer.WritePropertyName("@odata.context"u8);
-                writer.WriteStringValue(OdataContext);
+                writer.WriteStringValue(ODataContext);
             }
             if (Optional.IsDefined(Results))
             {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            string odataId = default;
-            string odataContext = default;
+            string oDataId = default;
+            string oDataContext = default;
             PolicySummaryResults results = default;
             IReadOnlyList<PolicyAssignmentSummary> policyAssignments = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 if (prop.NameEquals("@odata.id"u8))
                 {
-                    odataId = prop.Value.GetString();
+                    oDataId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("@odata.context"u8))
                 {
-                    odataContext = prop.Value.GetString();
+                    oDataContext = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("results"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PolicySummary(odataId, odataContext, results, policyAssignments ?? new ChangeTrackingList<PolicyAssignmentSummary>(), additionalBinaryDataProperties);
+            return new PolicySummary(oDataId, oDataContext, results, policyAssignments ?? new ChangeTrackingList<PolicyAssignmentSummary>(), additionalBinaryDataProperties);
         }
     }
 }

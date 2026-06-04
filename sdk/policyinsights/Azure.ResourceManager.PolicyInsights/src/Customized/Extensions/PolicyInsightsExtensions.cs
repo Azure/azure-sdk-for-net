@@ -142,5 +142,169 @@ namespace Azure.ResourceManager.PolicyInsights
 
         public static Response<Models.CheckPolicyRestrictionsResult> CheckPolicyRestrictions(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Models.CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
             => GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).CheckPolicyRestrictions(content, cancellationToken);
+
+        // === Subscription-level PolicyDefinition / PolicySetDefinition / PolicyAssignment forwarders ===
+        public static AsyncPageable<Models.PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEventsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForPolicyDefinitionPolicyEventsAsync(policyDefinitionName, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEvents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForPolicyDefinitionPolicyEvents(policyDefinitionName, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEventsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForPolicySetDefinitionPolicyEventsAsync(policySetDefinitionName, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEvents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForPolicySetDefinitionPolicyEvents(policySetDefinitionName, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsAsync(policyAssignmentName, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents(policyAssignmentName, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsAsync(policyAssignmentName, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEvents(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEvents(policyAssignmentName, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyState> GetQueryResultsForPolicyDefinitionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForPolicyDefinitionPolicyStatesAsync(policyDefinitionName, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyState> GetQueryResultsForPolicyDefinitionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForPolicyDefinitionPolicyStates(policyDefinitionName, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForPolicySetDefinitionPolicyStatesAsync(policySetDefinitionName, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForPolicySetDefinitionPolicyStates(policySetDefinitionName, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(policyAssignmentName, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates(policyAssignmentName, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(policyAssignmentName, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStates(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStates(policyAssignmentName, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicySummary> SummarizeForPolicyDefinitionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).SummarizeForPolicyDefinitionPolicyStatesAsync(policyDefinitionName, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicySummary> SummarizeForPolicyDefinitionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyDefinitionName, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).SummarizeForPolicyDefinitionPolicyStates(policyDefinitionName, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicySummary> SummarizeForPolicySetDefinitionPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).SummarizeForPolicySetDefinitionPolicyStatesAsync(policySetDefinitionName, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicySummary> SummarizeForPolicySetDefinitionPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policySetDefinitionName, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).SummarizeForPolicySetDefinitionPolicyStates(policySetDefinitionName, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicySummary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).SummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(policyAssignmentName, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicySummary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string policyAssignmentName, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates(policyAssignmentName, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicySummary> SummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).SummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(policyAssignmentName, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicySummary> SummarizeForResourceGroupLevelPolicyAssignmentPolicyStates(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyAssignmentName, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).SummarizeForResourceGroupLevelPolicyAssignmentPolicyStates(policyAssignmentName, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        // === Forwarders on additional receiver types whose Mockable*Resource classes are not emitted in the new SDK. ===
+        // Each forwards to the ArmClient-scope version with the resource's Id as the scope.
+
+        private static MockablePolicyInsightsArmClient GetMockablePolicyInsightsArmClientFromResource(ArmResource resource)
+            => resource.GetCachedClient(c => new MockablePolicyInsightsArmClient(c, ResourceIdentifier.Root));
+
+        public static AsyncPageable<Models.PolicyEvent> GetPolicyEventQueryResultsAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(managementGroupResource).GetPolicyEventQueryResultsAsync(managementGroupResource.Id, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyEvent> GetPolicyEventQueryResults(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(managementGroupResource).GetPolicyEventQueryResults(managementGroupResource.Id, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyState> GetPolicyStateQueryResultsAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(managementGroupResource).GetPolicyStateQueryResultsAsync(managementGroupResource.Id, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyState> GetPolicyStateQueryResults(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(managementGroupResource).GetPolicyStateQueryResults(managementGroupResource.Id, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Models.PolicyTrackedResourceType policyTrackedResourceType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(managementGroupResource).GetPolicyTrackedResourceQueryResultsAsync(managementGroupResource.Id, policyTrackedResourceType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Models.PolicyTrackedResourceType policyTrackedResourceType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(managementGroupResource).GetPolicyTrackedResourceQueryResults(managementGroupResource.Id, policyTrackedResourceType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicySummary> SummarizePolicyStatesAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(managementGroupResource).SummarizePolicyStatesAsync(managementGroupResource.Id, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicySummary> SummarizePolicyStates(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(managementGroupResource).SummarizePolicyStates(managementGroupResource.Id, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static Task<Response<Models.CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Models.CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(managementGroupResource).CheckAtManagementGroupScopeAsync(managementGroupResource.Id, content, cancellationToken);
+
+        public static Response<Models.CheckPolicyRestrictionsResult> CheckPolicyRestrictions(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, Models.CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(managementGroupResource).CheckAtManagementGroupScope(managementGroupResource.Id, content, cancellationToken);
+
+        // PolicyAssignmentResource is on a parent scope (Sub or RG). The Id contains the full path so forwarding to ArmClient works regardless.
+        public static AsyncPageable<Models.PolicyEvent> GetPolicyEventQueryResultsAsync(this Azure.ResourceManager.Resources.PolicyAssignmentResource policyAssignmentResource, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(policyAssignmentResource).GetPolicyEventQueryResultsAsync(policyAssignmentResource.Id, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyEvent> GetPolicyEventQueryResults(this Azure.ResourceManager.Resources.PolicyAssignmentResource policyAssignmentResource, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(policyAssignmentResource).GetPolicyEventQueryResults(policyAssignmentResource.Id, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyState> GetPolicyStateQueryResultsAsync(this Azure.ResourceManager.Resources.PolicyAssignmentResource policyAssignmentResource, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(policyAssignmentResource).GetPolicyStateQueryResultsAsync(policyAssignmentResource.Id, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyState> GetPolicyStateQueryResults(this Azure.ResourceManager.Resources.PolicyAssignmentResource policyAssignmentResource, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(policyAssignmentResource).GetPolicyStateQueryResults(policyAssignmentResource.Id, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicySummary> SummarizePolicyStatesAsync(this Azure.ResourceManager.Resources.PolicyAssignmentResource policyAssignmentResource, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(policyAssignmentResource).SummarizePolicyStatesAsync(policyAssignmentResource.Id, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicySummary> SummarizePolicyStates(this Azure.ResourceManager.Resources.PolicyAssignmentResource policyAssignmentResource, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(policyAssignmentResource).SummarizePolicyStates(policyAssignmentResource.Id, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyEvent> GetPolicyEventQueryResultsAsync(this Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource subscriptionPolicyDefinitionResource, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(subscriptionPolicyDefinitionResource).GetPolicyEventQueryResultsAsync(subscriptionPolicyDefinitionResource.Id, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyEvent> GetPolicyEventQueryResults(this Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource subscriptionPolicyDefinitionResource, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(subscriptionPolicyDefinitionResource).GetPolicyEventQueryResults(subscriptionPolicyDefinitionResource.Id, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyState> GetPolicyStateQueryResultsAsync(this Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource subscriptionPolicyDefinitionResource, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(subscriptionPolicyDefinitionResource).GetPolicyStateQueryResultsAsync(subscriptionPolicyDefinitionResource.Id, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyState> GetPolicyStateQueryResults(this Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource subscriptionPolicyDefinitionResource, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(subscriptionPolicyDefinitionResource).GetPolicyStateQueryResults(subscriptionPolicyDefinitionResource.Id, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicySummary> SummarizePolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource subscriptionPolicyDefinitionResource, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(subscriptionPolicyDefinitionResource).SummarizePolicyStatesAsync(subscriptionPolicyDefinitionResource.Id, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicySummary> SummarizePolicyStates(this Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource subscriptionPolicyDefinitionResource, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(subscriptionPolicyDefinitionResource).SummarizePolicyStates(subscriptionPolicyDefinitionResource.Id, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyEvent> GetPolicyEventQueryResultsAsync(this Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinitionResource, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(subscriptionPolicySetDefinitionResource).GetPolicyEventQueryResultsAsync(subscriptionPolicySetDefinitionResource.Id, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyEvent> GetPolicyEventQueryResults(this Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinitionResource, Models.PolicyEventType policyEventType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(subscriptionPolicySetDefinitionResource).GetPolicyEventQueryResults(subscriptionPolicySetDefinitionResource.Id, policyEventType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicyState> GetPolicyStateQueryResultsAsync(this Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinitionResource, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(subscriptionPolicySetDefinitionResource).GetPolicyStateQueryResultsAsync(subscriptionPolicySetDefinitionResource.Id, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicyState> GetPolicyStateQueryResults(this Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinitionResource, Models.PolicyStateType policyStateType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(subscriptionPolicySetDefinitionResource).GetPolicyStateQueryResults(subscriptionPolicySetDefinitionResource.Id, policyStateType, policyQuerySettings, cancellationToken);
+
+        public static AsyncPageable<Models.PolicySummary> SummarizePolicyStatesAsync(this Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinitionResource, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(subscriptionPolicySetDefinitionResource).SummarizePolicyStatesAsync(subscriptionPolicySetDefinitionResource.Id, policyStateSummaryType, policyQuerySettings, cancellationToken);
+
+        public static Pageable<Models.PolicySummary> SummarizePolicyStates(this Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinitionResource, Models.PolicyStateSummaryType policyStateSummaryType, Models.PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+            => GetMockablePolicyInsightsArmClientFromResource(subscriptionPolicySetDefinitionResource).SummarizePolicyStates(subscriptionPolicySetDefinitionResource.Id, policyStateSummaryType, policyQuerySettings, cancellationToken);
     }
 }

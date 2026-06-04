@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 throw new FormatException($"The model {nameof(PolicyState)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OdataId))
+            if (Optional.IsDefined(ODataId))
             {
                 writer.WritePropertyName("@odata.id"u8);
-                writer.WriteStringValue(OdataId);
+                writer.WriteStringValue(ODataId);
             }
-            if (Optional.IsDefined(OdataContext))
+            if (Optional.IsDefined(ODataContext))
             {
                 writer.WritePropertyName("@odata.context"u8);
-                writer.WriteStringValue(OdataContext);
+                writer.WriteStringValue(ODataContext);
             }
             if (Optional.IsDefined(Timestamp))
             {
@@ -300,8 +300,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            string odataId = default;
-            string odataContext = default;
+            string oDataId = default;
+            string oDataContext = default;
             DateTimeOffset? timestamp = default;
             ResourceIdentifier resourceId = default;
             ResourceIdentifier policyAssignmentId = default;
@@ -339,12 +339,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 if (prop.NameEquals("@odata.id"u8))
                 {
-                    odataId = prop.Value.GetString();
+                    oDataId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("@odata.context"u8))
                 {
-                    odataContext = prop.Value.GetString();
+                    oDataContext = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("timestamp"u8))
@@ -567,8 +567,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
             return new PolicyState(
-                odataId,
-                odataContext,
+                oDataId,
+                oDataContext,
                 timestamp,
                 resourceId,
                 policyAssignmentId,

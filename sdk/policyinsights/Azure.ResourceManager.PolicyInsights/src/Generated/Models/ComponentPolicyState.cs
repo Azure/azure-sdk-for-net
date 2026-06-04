@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComponentPolicyState"/>. </summary>
-        /// <param name="odataId"> OData entity ID; always set to null since component policy state records do not have an entity ID. </param>
-        /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
+        /// <param name="oDataId"> OData entity ID; always set to null since component policy state records do not have an entity ID. </param>
+        /// <param name="oDataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="timestamp"> Timestamp for the component policy state record. </param>
         /// <param name="componentId"> Component Id. </param>
         /// <param name="componentType"> Component type. </param>
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="policySetDefinitionVersion"> Evaluated policy set definition version. </param>
         /// <param name="policyAssignmentVersion"> Evaluated policy assignment version. </param>
         /// <param name="additionalProperties"></param>
-        internal ComponentPolicyState(string odataId, string odataContext, DateTimeOffset? timestamp, string componentId, string componentType, string componentName, string resourceId, string policyAssignmentId, string policyDefinitionId, string subscriptionId, string resourceType, string resourceLocation, string resourceGroup, string policyAssignmentName, string policyAssignmentOwner, string policyAssignmentParameters, string policyAssignmentScope, string policyDefinitionName, string policyDefinitionAction, string policyDefinitionCategory, string policySetDefinitionId, string policySetDefinitionName, string policySetDefinitionOwner, string policySetDefinitionCategory, string policySetDefinitionParameters, string policyDefinitionReferenceId, string complianceState, ComponentPolicyEvaluationDetails policyEvaluationDetails, IReadOnlyList<string> policyDefinitionGroupNames, string policyDefinitionVersion, string policySetDefinitionVersion, string policyAssignmentVersion, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal ComponentPolicyState(string oDataId, string oDataContext, DateTimeOffset? timestamp, string componentId, string componentType, string componentName, string resourceId, string policyAssignmentId, string policyDefinitionId, string subscriptionId, string resourceType, string resourceLocation, string resourceGroup, string policyAssignmentName, string policyAssignmentOwner, string policyAssignmentParameters, string policyAssignmentScope, string policyDefinitionName, string policyDefinitionAction, string policyDefinitionCategory, string policySetDefinitionId, string policySetDefinitionName, string policySetDefinitionOwner, string policySetDefinitionCategory, string policySetDefinitionParameters, string policyDefinitionReferenceId, string complianceState, ComponentPolicyEvaluationDetails policyEvaluationDetails, IReadOnlyList<string> policyDefinitionGroupNames, string policyDefinitionVersion, string policySetDefinitionVersion, string policyAssignmentVersion, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
-            OdataId = odataId;
-            OdataContext = odataContext;
+            ODataId = oDataId;
+            ODataContext = oDataContext;
             Timestamp = timestamp;
             ComponentId = componentId;
             ComponentType = componentType;
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> OData entity ID; always set to null since component policy state records do not have an entity ID. </summary>
-        public string OdataId { get; }
+        public string ODataId { get; }
 
         /// <summary> OData context string; used by OData clients to resolve type information based on metadata. </summary>
-        public string OdataContext { get; }
+        public string ODataContext { get; }
 
         /// <summary> Timestamp for the component policy state record. </summary>
         public DateTimeOffset? Timestamp { get; }
