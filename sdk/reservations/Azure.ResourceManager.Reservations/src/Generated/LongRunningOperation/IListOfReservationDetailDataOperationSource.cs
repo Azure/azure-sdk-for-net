@@ -5,10 +5,7 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,7 +28,17 @@ namespace Azure.ResourceManager.Reservations
         IList<ReservationDetailData> IOperationSource<IList<ReservationDetailData>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ModelReaderWriter.Read<IList<ReservationDetailData>>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerReservationsContext.Default);
+            IList<ReservationDetailData> value = default;
+            if (document.RootElement.ValueKind != JsonValueKind.Null)
+            {
+                List<ReservationDetailData> valueResult = new List<ReservationDetailData>();
+                foreach (JsonElement valueResultElement in document.RootElement.EnumerateArray())
+                {
+                    valueResult.Add(ReservationDetailData.DeserializeReservationDetailData(valueResultElement, ModelSerializationExtensions.WireOptions));
+                }
+                value = valueResult;
+            }
+            return value;
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -40,7 +47,17 @@ namespace Azure.ResourceManager.Reservations
         async ValueTask<IList<ReservationDetailData>> IOperationSource<IList<ReservationDetailData>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ModelReaderWriter.Read<IList<ReservationDetailData>>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerReservationsContext.Default);
+            IList<ReservationDetailData> value = default;
+            if (document.RootElement.ValueKind != JsonValueKind.Null)
+            {
+                List<ReservationDetailData> valueResult = new List<ReservationDetailData>();
+                foreach (JsonElement valueResultElement in document.RootElement.EnumerateArray())
+                {
+                    valueResult.Add(ReservationDetailData.DeserializeReservationDetailData(valueResultElement, ModelSerializationExtensions.WireOptions));
+                }
+                value = valueResult;
+            }
+            return value;
         }
     }
 }
