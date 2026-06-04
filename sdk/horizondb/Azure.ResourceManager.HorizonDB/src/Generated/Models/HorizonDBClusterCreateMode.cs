@@ -11,7 +11,7 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> The mode to create a new HorizonDb cluster. </summary>
+    /// <summary> The mode to create a new HorizonDB cluster. </summary>
     public readonly partial struct HorizonDBClusterCreateMode : IEquatable<HorizonDBClusterCreateMode>
     {
         private readonly string _value;

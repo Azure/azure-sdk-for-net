@@ -14,7 +14,7 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Properties of a HorizonDb pool. </summary>
+    /// <summary> Properties of a HorizonDB pool. </summary>
     public partial class HorizonDBPoolProperties : IJsonModel<HorizonDBPoolProperties>
     {
         /// <param name="data"> The data to parse. </param>

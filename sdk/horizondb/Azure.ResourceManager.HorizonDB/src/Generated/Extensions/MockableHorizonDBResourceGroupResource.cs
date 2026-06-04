@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HorizonDB;
+using Azure.ResourceManager.HorizonDB.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HorizonDB.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableHorizonDBResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _horizonDBPrivateEndpointConnectionsClientDiagnostics;
+        private HorizonDBPrivateEndpointConnections _horizonDBPrivateEndpointConnectionsRestClient;
+
         /// <summary> Initializes a new instance of MockableHorizonDBResourceGroupResource for mocking. </summary>
         protected MockableHorizonDBResourceGroupResource()
         {
@@ -31,6 +36,10 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         {
         }
 
+        private ClientDiagnostics HorizonDBPrivateEndpointConnectionsClientDiagnostics => _horizonDBPrivateEndpointConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private HorizonDBPrivateEndpointConnections HorizonDBPrivateEndpointConnectionsRestClient => _horizonDBPrivateEndpointConnectionsRestClient ??= new HorizonDBPrivateEndpointConnections(HorizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, "2026-01-20-preview");
+
         /// <summary> Gets a collection of HorizonDBClusters in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of HorizonDBClusters and their operations over a HorizonDBClusterResource. </returns>
         public virtual HorizonDBClusterCollection GetHorizonDBClusters()
@@ -39,7 +48,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb cluster.
+        /// Gets information about a HorizonDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -55,7 +64,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the HorizonDb cluster. </param>
+        /// <param name="clusterName"> The name of the HorizonDB cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -68,7 +77,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb cluster.
+        /// Gets information about a HorizonDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -84,7 +93,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="clusterName"> The name of the HorizonDb cluster. </param>
+        /// <param name="clusterName"> The name of the HorizonDB cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -104,7 +113,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb parameter group.
+        /// Gets information about a HorizonDB parameter group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -120,7 +129,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
+        /// <param name="parameterGroupName"> The name of the HorizonDB parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -133,7 +142,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb parameter group.
+        /// Gets information about a HorizonDB parameter group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -149,7 +158,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
+        /// <param name="parameterGroupName"> The name of the HorizonDB parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -159,6 +168,222 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
             Argument.AssertNotNullOrEmpty(parameterGroupName, nameof(parameterGroupName));
 
             return GetHorizonDBParameterGroups().Get(parameterGroupName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates a private endpoint connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HorizonDbPrivateEndpointConnections_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-20-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<HorizonDBPrivateEndpointConnection>> UpdatePrivateEndpointConnectionAsync(WaitUntil waitUntil, string privateEndpointConnectionName, HorizonDBPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = HorizonDBPrivateEndpointConnectionsClientDiagnostics.CreateScope("MockableHorizonDBResourceGroupResource.UpdatePrivateEndpointConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = HorizonDBPrivateEndpointConnectionsRestClient.CreateUpdatePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateEndpointConnectionName, HorizonDBPrivateEndpointConnectionPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HorizonDBArmOperation<HorizonDBPrivateEndpointConnection> operation = new HorizonDBArmOperation<HorizonDBPrivateEndpointConnection>(
+                    new HorizonDBPrivateEndpointConnectionOperationSource(),
+                    HorizonDBPrivateEndpointConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a private endpoint connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HorizonDbPrivateEndpointConnections_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-20-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<HorizonDBPrivateEndpointConnection> UpdatePrivateEndpointConnection(WaitUntil waitUntil, string privateEndpointConnectionName, HorizonDBPrivateEndpointConnectionPatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = HorizonDBPrivateEndpointConnectionsClientDiagnostics.CreateScope("MockableHorizonDBResourceGroupResource.UpdatePrivateEndpointConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = HorizonDBPrivateEndpointConnectionsRestClient.CreateUpdatePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateEndpointConnectionName, HorizonDBPrivateEndpointConnectionPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HorizonDBArmOperation<HorizonDBPrivateEndpointConnection> operation = new HorizonDBArmOperation<HorizonDBPrivateEndpointConnection>(
+                    new HorizonDBPrivateEndpointConnectionOperationSource(),
+                    HorizonDBPrivateEndpointConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a private endpoint connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HorizonDbPrivateEndpointConnections_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-20-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> DeletePrivateEndpointConnectionAsync(WaitUntil waitUntil, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            using DiagnosticScope scope = HorizonDBPrivateEndpointConnectionsClientDiagnostics.CreateScope("MockableHorizonDBResourceGroupResource.DeletePrivateEndpointConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = HorizonDBPrivateEndpointConnectionsRestClient.CreateDeletePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateEndpointConnectionName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HorizonDBArmOperation operation = new HorizonDBArmOperation(HorizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a private endpoint connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HorizonDb/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HorizonDbPrivateEndpointConnections_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-20-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation DeletePrivateEndpointConnection(WaitUntil waitUntil, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            using DiagnosticScope scope = HorizonDBPrivateEndpointConnectionsClientDiagnostics.CreateScope("MockableHorizonDBResourceGroupResource.DeletePrivateEndpointConnection");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = HorizonDBPrivateEndpointConnectionsRestClient.CreateDeletePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, privateEndpointConnectionName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HorizonDBArmOperation operation = new HorizonDBArmOperation(HorizonDBPrivateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

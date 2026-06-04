@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Creates a new HorizonDb parameter group or updates an existing parameter group.
+        /// Creates a new HorizonDB parameter group or updates an existing parameter group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
+        /// <param name="parameterGroupName"> The name of the HorizonDB parameter group. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> or <paramref name="data"/> is null. </exception>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Creates a new HorizonDb parameter group or updates an existing parameter group.
+        /// Creates a new HorizonDB parameter group or updates an existing parameter group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
+        /// <param name="parameterGroupName"> The name of the HorizonDB parameter group. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> or <paramref name="data"/> is null. </exception>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb parameter group.
+        /// Gets information about a HorizonDB parameter group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
+        /// <param name="parameterGroupName"> The name of the HorizonDB parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb parameter group.
+        /// Gets information about a HorizonDB parameter group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
+        /// <param name="parameterGroupName"> The name of the HorizonDB parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Lists all HorizonDb parameter groups in a resource group.
+        /// Lists all HorizonDB parameter groups in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Lists all HorizonDb parameter groups in a resource group.
+        /// Lists all HorizonDB parameter groups in a resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
+        /// <param name="parameterGroupName"> The name of the HorizonDB parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
+        /// <param name="parameterGroupName"> The name of the HorizonDB parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
+        /// <param name="parameterGroupName"> The name of the HorizonDB parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
+        /// <param name="parameterGroupName"> The name of the HorizonDB parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="parameterGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="parameterGroupName"/> is an empty string, and was expected to be non-empty. </exception>

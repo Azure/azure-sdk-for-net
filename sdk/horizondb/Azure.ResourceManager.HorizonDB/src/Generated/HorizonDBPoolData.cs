@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    /// <summary> Represents the HorizonDb pool. </summary>
+    /// <summary> Represents the HorizonDB pool. </summary>
     public partial class HorizonDBPoolData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

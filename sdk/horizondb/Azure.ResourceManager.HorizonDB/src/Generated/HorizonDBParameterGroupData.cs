@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    /// <summary> Represents the HorizonDb parameter group. </summary>
+    /// <summary> Represents the HorizonDB parameter group. </summary>
     public partial class HorizonDBParameterGroupData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

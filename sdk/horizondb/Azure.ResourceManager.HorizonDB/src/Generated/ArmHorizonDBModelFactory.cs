@@ -44,23 +44,23 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="administratorLogin"> The administrator login name. </param>
         /// <param name="administratorLoginPassword"> The administrator login password. </param>
-        /// <param name="version"> The version of the HorizonDb cluster. </param>
-        /// <param name="createMode"> The mode to create a new HorizonDb cluster. </param>
+        /// <param name="version"> The version of the HorizonDB cluster. </param>
+        /// <param name="createMode"> The mode to create a new HorizonDB cluster. </param>
         /// <param name="pointInTimeUtcOn"> Restore point creation time specifying the time to restore from. </param>
         /// <param name="sourceClusterResourceId"> The source cluster resource ID for restore or replica creation. </param>
         /// <param name="poolName"> The pool name for restore or replica operations. </param>
         /// <param name="replicaCount"> Number of replicas. </param>
         /// <param name="vCores"> Number of vCores. </param>
-        /// <param name="processorType"> The processor type for the HorizonDb cluster. </param>
+        /// <param name="processorType"> The processor type for the HorizonDB cluster. </param>
         /// <param name="publicNetworkAccess"> The flag indicating whether public ip is requested. </param>
         /// <param name="state"> Current state of the cluster. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the cluster. </param>
-        /// <param name="readonlyEndpoint"> The fully qualified domain name used for readonly endpoint for the cluster. </param>
+        /// <param name="readOnlyEndpoint"> The fully qualified domain name used for readonly endpoint for the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
         /// <param name="zonePlacementPolicy"> Defines how replicas are placed across availability zones. </param>
         /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterProperties"/> instance for mocking. </returns>
-        public static HorizonDBClusterProperties HorizonDBClusterProperties(string administratorLogin = default, string administratorLoginPassword = default, string version = default, HorizonDBClusterCreateMode? createMode = default, DateTimeOffset? pointInTimeUtcOn = default, ResourceIdentifier sourceClusterResourceId = default, string poolName = default, int? replicaCount = default, int? vCores = default, string processorType = default, HorizonDBPublicNetworkAccessState? publicNetworkAccess = default, HorizonDBClusterState? state = default, string fullyQualifiedDomainName = default, string readonlyEndpoint = default, HorizonDBProvisioningState? provisioningState = default, HorizonDBZonePlacementPolicy? zonePlacementPolicy = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default)
+        public static HorizonDBClusterProperties HorizonDBClusterProperties(string administratorLogin = default, string administratorLoginPassword = default, string version = default, HorizonDBClusterCreateMode? createMode = default, DateTimeOffset? pointInTimeUtcOn = default, ResourceIdentifier sourceClusterResourceId = default, string poolName = default, int? replicaCount = default, int? vCores = default, string processorType = default, HorizonDBPublicNetworkAccessState? publicNetworkAccess = default, HorizonDBClusterState? state = default, string fullyQualifiedDomainName = default, string readOnlyEndpoint = default, HorizonDBProvisioningState? provisioningState = default, HorizonDBZonePlacementPolicy? zonePlacementPolicy = default, HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default)
         {
             return new HorizonDBClusterProperties(
                 administratorLogin,
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 publicNetworkAccess is null ? default : new Network(publicNetworkAccess, default),
                 state,
                 fullyQualifiedDomainName,
-                readonlyEndpoint,
+                readOnlyEndpoint,
                 provisioningState,
                 zonePlacementPolicy,
                 parameterGroup,
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <param name="id"> The resource ID of the connected parameter group. </param>
-        /// <param name="syncStatus"> Indication of if parameter group is applied on HorizonDb resource. </param>
+        /// <param name="syncStatus"> Indication of if parameter group is applied on HorizonDB resource. </param>
         /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <returns> A new <see cref="Models.HorizonDBClusterParameterGroupConnectionProperties"/> instance for mocking. </returns>
         public static HorizonDBClusterParameterGroupConnectionProperties HorizonDBClusterParameterGroupConnectionProperties(ResourceIdentifier id = default, string syncStatus = default, bool? shouldApplyImmediately = default)
@@ -93,13 +93,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The properties that can be updated for a HorizonDb cluster. </param>
-        /// <returns> A new <see cref="Models.HorizonDBClusterForPatchUpdate"/> instance for mocking. </returns>
-        public static HorizonDBClusterForPatchUpdate HorizonDBClusterForPatchUpdate(IDictionary<string, string> tags = default, HorizonDBClusterPatchProperties properties = default)
+        /// <param name="properties"> The properties that can be updated for a HorizonDB cluster. </param>
+        /// <returns> A new <see cref="Models.HorizonDBClusterPatch"/> instance for mocking. </returns>
+        public static HorizonDBClusterPatch HorizonDBClusterPatch(IDictionary<string, string> tags = default, HorizonDBClusterPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HorizonDBClusterForPatchUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new HorizonDBClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <param name="administratorLoginPassword"> The administrator login password. </param>
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
-        /// <param name="location"> The location of the HorizonDb pool. </param>
+        /// <param name="location"> The location of the HorizonDB pool. </param>
         /// <param name="state"> Current state of the pool. </param>
         /// <param name="replicaCount"> Number of replicas in the pool. </param>
-        /// <param name="version"> The version of the HorizonDb pool. </param>
+        /// <param name="version"> The version of the HorizonDB pool. </param>
         /// <param name="createMode"> The create mode for the pool. </param>
         /// <param name="provisioningState"> The provisioning state of the pool. </param>
         /// <returns> A new <see cref="Models.HorizonDBPoolProperties"/> instance for mocking. </returns>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="startIpAddress"> The start IP address of the firewall rule (IPv4). </param>
         /// <param name="endIpAddress"> The end IP address of the firewall rule (IPv4). </param>
-        /// <param name="description"> The description of the HorizonDb firewall rule. </param>
+        /// <param name="description"> The description of the HorizonDB firewall rule. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
         /// <returns> A new <see cref="Models.HorizonDBFirewallRuleProperties"/> instance for mocking. </returns>
         public static HorizonDBFirewallRuleProperties HorizonDBFirewallRuleProperties(string startIpAddress = default, string endIpAddress = default, string description = default, HorizonDBProvisioningState? provisioningState = default)
@@ -343,19 +343,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="parameters"> Parameters in the parameter group. </param>
         /// <param name="description"> Description of the parameter group. </param>
-        /// <param name="pgVersion"> PostgreSQL version for the parameter group. </param>
+        /// <param name="postgreSqlVersion"> PostgreSQL version for the parameter group. </param>
         /// <param name="version"> Current version of the parameter group. </param>
         /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <param name="provisioningState"> The provisioning state of the parameter group. </param>
         /// <returns> A new <see cref="Models.HorizonDBParameterGroupProperties"/> instance for mocking. </returns>
-        public static HorizonDBParameterGroupProperties HorizonDBParameterGroupProperties(IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default, int? pgVersion = default, int? version = default, bool? shouldApplyImmediately = default, HorizonDBProvisioningState? provisioningState = default)
+        public static HorizonDBParameterGroupProperties HorizonDBParameterGroupProperties(IEnumerable<HorizonDBParameterProperties> parameters = default, string description = default, int? postgreSqlVersion = default, int? version = default, bool? shouldApplyImmediately = default, HorizonDBProvisioningState? provisioningState = default)
         {
             parameters ??= new ChangeTrackingList<HorizonDBParameterProperties>();
 
             return new HorizonDBParameterGroupProperties(
                 (parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>()).ToList(),
                 description,
-                pgVersion,
+                postgreSqlVersion,
                 version,
                 shouldApplyImmediately,
                 provisioningState,
@@ -388,13 +388,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The properties that can be updated for a HorizonDb parameter group. </param>
-        /// <returns> A new <see cref="Models.HorizonDBParameterGroupForPatchUpdate"/> instance for mocking. </returns>
-        public static HorizonDBParameterGroupForPatchUpdate HorizonDBParameterGroupForPatchUpdate(IDictionary<string, string> tags = default, HorizonDBParameterGroupPatchProperties properties = default)
+        /// <param name="properties"> The properties that can be updated for a HorizonDB parameter group. </param>
+        /// <returns> A new <see cref="Models.HorizonDBParameterGroupPatch"/> instance for mocking. </returns>
+        public static HorizonDBParameterGroupPatch HorizonDBParameterGroupPatch(IDictionary<string, string> tags = default, HorizonDBParameterGroupPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HorizonDBParameterGroupForPatchUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+            return new HorizonDBParameterGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <param name="parameters"> Parameters in the parameter group. </param>

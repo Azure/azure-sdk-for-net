@@ -13,7 +13,7 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Properties of a HorizonDb firewall rule. </summary>
+    /// <summary> Properties of a HorizonDB firewall rule. </summary>
     public partial class HorizonDBFirewallRuleProperties : IJsonModel<HorizonDBFirewallRuleProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HorizonDBFirewallRuleProperties"/> for deserialization. </summary>

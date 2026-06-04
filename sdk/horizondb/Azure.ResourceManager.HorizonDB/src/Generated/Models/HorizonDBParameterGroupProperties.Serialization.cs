@@ -13,7 +13,7 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Properties of a HorizonDb parameter group. </summary>
+    /// <summary> Properties of a HorizonDB parameter group. </summary>
     public partial class HorizonDBParameterGroupProperties : IJsonModel<HorizonDBParameterGroupProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(PgVersion))
+            if (Optional.IsDefined(PostgreSqlVersion))
             {
                 writer.WritePropertyName("pgVersion"u8);
-                writer.WriteNumberValue(PgVersion.Value);
+                writer.WriteNumberValue(PostgreSqlVersion.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             IList<HorizonDBParameterProperties> parameters = default;
             string description = default;
-            int? pgVersion = default;
+            int? postgreSqlVersion = default;
             int? version = default;
             bool? shouldApplyImmediately = default;
             HorizonDBProvisioningState? provisioningState = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    pgVersion = prop.Value.GetInt32();
+                    postgreSqlVersion = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBParameterGroupProperties(
                 parameters ?? new ChangeTrackingList<HorizonDBParameterProperties>(),
                 description,
-                pgVersion,
+                postgreSqlVersion,
                 version,
                 shouldApplyImmediately,
                 provisioningState,

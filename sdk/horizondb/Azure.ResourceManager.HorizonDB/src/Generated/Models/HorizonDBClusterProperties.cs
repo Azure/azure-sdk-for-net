@@ -12,7 +12,7 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Properties of a HorizonDb cluster. </summary>
+    /// <summary> Properties of a HorizonDB cluster. </summary>
     public partial class HorizonDBClusterProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -31,23 +31,23 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="HorizonDBClusterProperties"/>. </summary>
         /// <param name="administratorLogin"> The administrator login name. </param>
         /// <param name="administratorLoginPassword"> The administrator login password. </param>
-        /// <param name="version"> The version of the HorizonDb cluster. </param>
-        /// <param name="createMode"> The mode to create a new HorizonDb cluster. </param>
+        /// <param name="version"> The version of the HorizonDB cluster. </param>
+        /// <param name="createMode"> The mode to create a new HorizonDB cluster. </param>
         /// <param name="pointInTimeUtcOn"> Restore point creation time specifying the time to restore from. </param>
         /// <param name="sourceClusterResourceId"> The source cluster resource ID for restore or replica creation. </param>
         /// <param name="poolName"> The pool name for restore or replica operations. </param>
         /// <param name="replicaCount"> Number of replicas. </param>
         /// <param name="vCores"> Number of vCores. </param>
-        /// <param name="processorType"> The processor type for the HorizonDb cluster. </param>
+        /// <param name="processorType"> The processor type for the HorizonDB cluster. </param>
         /// <param name="network"> The network related info. </param>
         /// <param name="state"> Current state of the cluster. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the cluster. </param>
-        /// <param name="readonlyEndpoint"> The fully qualified domain name used for readonly endpoint for the cluster. </param>
+        /// <param name="readOnlyEndpoint"> The fully qualified domain name used for readonly endpoint for the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
         /// <param name="zonePlacementPolicy"> Defines how replicas are placed across availability zones. </param>
         /// <param name="parameterGroup"> Defines connection to a parameter group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterProperties(string administratorLogin, string administratorLoginPassword, string version, HorizonDBClusterCreateMode? createMode, DateTimeOffset? pointInTimeUtcOn, ResourceIdentifier sourceClusterResourceId, string poolName, int? replicaCount, int? vCores, string processorType, Network network, HorizonDBClusterState? state, string fullyQualifiedDomainName, string readonlyEndpoint, HorizonDBProvisioningState? provisioningState, HorizonDBZonePlacementPolicy? zonePlacementPolicy, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterProperties(string administratorLogin, string administratorLoginPassword, string version, HorizonDBClusterCreateMode? createMode, DateTimeOffset? pointInTimeUtcOn, ResourceIdentifier sourceClusterResourceId, string poolName, int? replicaCount, int? vCores, string processorType, Network network, HorizonDBClusterState? state, string fullyQualifiedDomainName, string readOnlyEndpoint, HorizonDBProvisioningState? provisioningState, HorizonDBZonePlacementPolicy? zonePlacementPolicy, HorizonDBClusterParameterGroupConnectionProperties parameterGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             Network = network;
             State = state;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
-            ReadonlyEndpoint = readonlyEndpoint;
+            ReadOnlyEndpoint = readOnlyEndpoint;
             ProvisioningState = provisioningState;
             ZonePlacementPolicy = zonePlacementPolicy;
             ParameterGroup = parameterGroup;
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> The administrator login password. </summary>
         public string AdministratorLoginPassword { get; set; }
 
-        /// <summary> The version of the HorizonDb cluster. </summary>
+        /// <summary> The version of the HorizonDB cluster. </summary>
         public string Version { get; set; }
 
-        /// <summary> The mode to create a new HorizonDb cluster. </summary>
+        /// <summary> The mode to create a new HorizonDB cluster. </summary>
         public HorizonDBClusterCreateMode? CreateMode { get; set; }
 
         /// <summary> Restore point creation time specifying the time to restore from. </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Number of vCores. </summary>
         public int? VCores { get; set; }
 
-        /// <summary> The processor type for the HorizonDb cluster. </summary>
+        /// <summary> The processor type for the HorizonDB cluster. </summary>
         public string ProcessorType { get; set; }
 
         /// <summary> The network related info. </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public string FullyQualifiedDomainName { get; }
 
         /// <summary> The fully qualified domain name used for readonly endpoint for the cluster. </summary>
-        public string ReadonlyEndpoint { get; }
+        public string ReadOnlyEndpoint { get; }
 
         /// <summary> The provisioning state of the cluster. </summary>
         public HorizonDBProvisioningState? ProvisioningState { get; }

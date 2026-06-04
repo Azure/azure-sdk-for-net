@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="client"> The HorizonDBPrivateLinkResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="clusterName"> The name of the HorizonDb cluster. </param>
+        /// <param name="clusterName"> The name of the HorizonDB cluster. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
         public HorizonDBPrivateLinkResourcesGetAllAsyncCollectionResultOfT(HorizonDBPrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)

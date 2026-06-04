@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    /// <summary> Represents the HorizonDb cluster. </summary>
+    /// <summary> Represents the HorizonDB cluster. </summary>
     public partial class HorizonDBClusterData : TrackedResourceData, IJsonModel<HorizonDBClusterData>
     {
         /// <summary> Initializes a new instance of <see cref="HorizonDBClusterData"/> for deserialization. </summary>

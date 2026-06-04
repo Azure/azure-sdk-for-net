@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         private HorizonDBParameterGroups HorizonDBParameterGroupsRestClient => _horizonDBParameterGroupsRestClient ??= new HorizonDBParameterGroups(HorizonDBParameterGroupsClientDiagnostics, Pipeline, Endpoint, "2026-01-20-preview");
 
         /// <summary>
-        /// Lists all HorizonDb clusters in a subscription.
+        /// Lists all HorizonDB clusters in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         }
 
         /// <summary>
-        /// Lists all HorizonDb clusters in a subscription.
+        /// Lists all HorizonDB clusters in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         }
 
         /// <summary>
-        /// Lists all HorizonDb parameter groups in a subscription.
+        /// Lists all HorizonDB parameter groups in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         }
 
         /// <summary>
-        /// Lists all HorizonDb parameter groups in a subscription.
+        /// Lists all HorizonDB parameter groups in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

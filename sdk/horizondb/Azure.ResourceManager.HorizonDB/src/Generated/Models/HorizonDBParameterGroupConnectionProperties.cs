@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Connection information for HorizonDb parameter group. </summary>
+    /// <summary> Connection information for HorizonDB parameter group. </summary>
     public partial class HorizonDBParameterGroupConnectionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

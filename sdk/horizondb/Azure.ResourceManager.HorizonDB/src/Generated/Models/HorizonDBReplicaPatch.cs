@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> HorizonDb replica for update operations. </summary>
+    /// <summary> HorizonDB replica for update operations. </summary>
     public partial class HorizonDBReplicaPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBReplicaPatch"/>. </summary>
-        /// <param name="properties"> Properties of a HorizonDb replica for update operations. </param>
+        /// <param name="properties"> Properties of a HorizonDB replica for update operations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HorizonDBReplicaPatch(HorizonDBReplicaPropertiesForPatchUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Properties of a HorizonDb replica for update operations. </summary>
+        /// <summary> Properties of a HorizonDB replica for update operations. </summary>
         internal HorizonDBReplicaPropertiesForPatchUpdate Properties { get; set; }
     }
 }

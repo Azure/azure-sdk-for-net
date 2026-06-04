@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb replica.
+        /// Gets information about a HorizonDB replica.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb replica.
+        /// Gets information about a HorizonDB replica.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Updates an existing HorizonDb replica (e.g., role).
+        /// Updates an existing HorizonDB replica (e.g., role).
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Updates an existing HorizonDb replica (e.g., role).
+        /// Updates an existing HorizonDB replica (e.g., role).
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Deletes a HorizonDb replica.
+        /// Deletes a HorizonDB replica.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Deletes a HorizonDb replica.
+        /// Deletes a HorizonDB replica.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

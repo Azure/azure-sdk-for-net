@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    /// <summary> Represents the HorizonDb replica. </summary>
+    /// <summary> Represents the HorizonDB replica. </summary>
     public partial class HorizonDBReplicaData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

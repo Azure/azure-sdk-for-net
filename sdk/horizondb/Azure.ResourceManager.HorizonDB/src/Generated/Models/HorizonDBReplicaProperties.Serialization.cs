@@ -13,7 +13,7 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Properties of a HorizonDb replica. </summary>
+    /// <summary> Properties of a HorizonDB replica. </summary>
     public partial class HorizonDBReplicaProperties : IJsonModel<HorizonDBReplicaProperties>
     {
         /// <param name="data"> The data to parse. </param>

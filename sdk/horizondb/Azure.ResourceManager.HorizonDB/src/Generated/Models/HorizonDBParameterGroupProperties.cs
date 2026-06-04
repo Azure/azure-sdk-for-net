@@ -11,7 +11,7 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Properties of a HorizonDb parameter group. </summary>
+    /// <summary> Properties of a HorizonDB parameter group. </summary>
     public partial class HorizonDBParameterGroupProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupProperties"/>. </summary>
         /// <param name="parameters"> Parameters in the parameter group. </param>
         /// <param name="description"> Description of the parameter group. </param>
-        /// <param name="pgVersion"> PostgreSQL version for the parameter group. </param>
+        /// <param name="postgreSqlVersion"> PostgreSQL version for the parameter group. </param>
         /// <param name="version"> Current version of the parameter group. </param>
         /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <param name="provisioningState"> The provisioning state of the parameter group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBParameterGroupProperties(IList<HorizonDBParameterProperties> parameters, string description, int? pgVersion, int? version, bool? shouldApplyImmediately, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterGroupProperties(IList<HorizonDBParameterProperties> parameters, string description, int? postgreSqlVersion, int? version, bool? shouldApplyImmediately, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Parameters = parameters;
             Description = description;
-            PgVersion = pgVersion;
+            PostgreSqlVersion = postgreSqlVersion;
             Version = version;
             ShouldApplyImmediately = shouldApplyImmediately;
             ProvisioningState = provisioningState;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public string Description { get; set; }
 
         /// <summary> PostgreSQL version for the parameter group. </summary>
-        public int? PgVersion { get; set; }
+        public int? PostgreSqlVersion { get; set; }
 
         /// <summary> Current version of the parameter group. </summary>
         public int? Version { get; }

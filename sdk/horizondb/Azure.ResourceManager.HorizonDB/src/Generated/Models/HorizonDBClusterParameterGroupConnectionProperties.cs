@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Connection information for HorizonDb parameter group. </summary>
+    /// <summary> Connection information for HorizonDB parameter group. </summary>
     public partial class HorizonDBClusterParameterGroupConnectionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBClusterParameterGroupConnectionProperties"/>. </summary>
         /// <param name="id"> The resource ID of the connected parameter group. </param>
-        /// <param name="syncStatus"> Indication of if parameter group is applied on HorizonDb resource. </param>
+        /// <param name="syncStatus"> Indication of if parameter group is applied on HorizonDB resource. </param>
         /// <param name="shouldApplyImmediately"> Indicates whether the parameters should be applied immediately. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal HorizonDBClusterParameterGroupConnectionProperties(ResourceIdentifier id, string syncStatus, bool? shouldApplyImmediately, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> The resource ID of the connected parameter group. </summary>
         public ResourceIdentifier Id { get; set; }
 
-        /// <summary> Indication of if parameter group is applied on HorizonDb resource. </summary>
+        /// <summary> Indication of if parameter group is applied on HorizonDB resource. </summary>
         public string SyncStatus { get; }
 
         /// <summary> Indicates whether the parameters should be applied immediately. </summary>

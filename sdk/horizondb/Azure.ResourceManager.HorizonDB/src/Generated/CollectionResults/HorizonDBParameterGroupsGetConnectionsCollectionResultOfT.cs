@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="client"> The HorizonDBParameterGroups client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="parameterGroupName"> The name of the HorizonDb parameter group. </param>
+        /// <param name="parameterGroupName"> The name of the HorizonDB parameter group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
         public HorizonDBParameterGroupsGetConnectionsCollectionResultOfT(HorizonDBParameterGroups client, Guid subscriptionId, string resourceGroupName, string parameterGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)

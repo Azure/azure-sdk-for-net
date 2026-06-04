@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    /// <summary> Represents the HorizonDb private link resource. </summary>
+    /// <summary> Represents the HorizonDB private link resource. </summary>
     public partial class HorizonDBPrivateLinkResourceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

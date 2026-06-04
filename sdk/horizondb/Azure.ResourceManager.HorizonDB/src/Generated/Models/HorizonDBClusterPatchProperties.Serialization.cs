@@ -13,7 +13,7 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Properties of a HorizonDb cluster for update operations. </summary>
+    /// <summary> Properties of a HorizonDB cluster for update operations. </summary>
     public partial class HorizonDBClusterPatchProperties : IJsonModel<HorizonDBClusterPatchProperties>
     {
         /// <param name="data"> The data to parse. </param>

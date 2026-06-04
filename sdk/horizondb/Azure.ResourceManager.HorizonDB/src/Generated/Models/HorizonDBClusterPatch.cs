@@ -11,23 +11,23 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> HorizonDb cluster for update operations. </summary>
-    public partial class HorizonDBClusterForPatchUpdate
+    /// <summary> HorizonDB cluster for update operations. </summary>
+    public partial class HorizonDBClusterPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterForPatchUpdate"/>. </summary>
-        public HorizonDBClusterForPatchUpdate()
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterPatch"/>. </summary>
+        public HorizonDBClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterForPatchUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HorizonDBClusterPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The properties that can be updated for a HorizonDb cluster. </param>
+        /// <param name="properties"> The properties that can be updated for a HorizonDB cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterForPatchUpdate(IDictionary<string, string> tags, HorizonDBClusterPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterPatch(IDictionary<string, string> tags, HorizonDBClusterPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
 
-        /// <summary> The properties that can be updated for a HorizonDb cluster. </summary>
+        /// <summary> The properties that can be updated for a HorizonDB cluster. </summary>
         public HorizonDBClusterPatchProperties Properties { get; set; }
     }
 }

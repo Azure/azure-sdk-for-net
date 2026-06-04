@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb firewall rule.
+        /// Gets information about a HorizonDB firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb firewall rule.
+        /// Gets information about a HorizonDB firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Deletes a HorizonDb firewall rule.
+        /// Deletes a HorizonDB firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Deletes a HorizonDb firewall rule.
+        /// Deletes a HorizonDB firewall rule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

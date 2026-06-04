@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.HorizonDB
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(HorizonDBClusterData))]
-    [ModelReaderWriterBuildable(typeof(HorizonDBClusterForPatchUpdate))]
     [ModelReaderWriterBuildable(typeof(HorizonDbClusterListResult))]
     [ModelReaderWriterBuildable(typeof(HorizonDBClusterParameterGroupConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(HorizonDBClusterPatch))]
     [ModelReaderWriterBuildable(typeof(HorizonDBClusterPatchProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDBClusterProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDBClusterResource))]
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.HorizonDB
     [ModelReaderWriterBuildable(typeof(HorizonDBParameterGroupConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDbParameterGroupConnectionPropertiesListResult))]
     [ModelReaderWriterBuildable(typeof(HorizonDBParameterGroupData))]
-    [ModelReaderWriterBuildable(typeof(HorizonDBParameterGroupForPatchUpdate))]
     [ModelReaderWriterBuildable(typeof(HorizonDbParameterGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(HorizonDBParameterGroupPatch))]
     [ModelReaderWriterBuildable(typeof(HorizonDBParameterGroupPatchProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDBParameterGroupProperties))]
     [ModelReaderWriterBuildable(typeof(HorizonDBParameterGroupResource))]

@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    /// <summary> Represents the HorizonDb private link resource. </summary>
+    /// <summary> Represents the HorizonDB private link resource. </summary>
     public partial class HorizonDBPrivateLinkResourceData : ResourceData, IJsonModel<HorizonDBPrivateLinkResourceData>
     {
         /// <param name="data"> The data to parse. </param>

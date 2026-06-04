@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb pool.
+        /// Gets information about a HorizonDB pool.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="poolName"> The name of the HorizonDb pool. </param>
+        /// <param name="poolName"> The name of the HorizonDB pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb pool.
+        /// Gets information about a HorizonDB pool.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="poolName"> The name of the HorizonDb pool. </param>
+        /// <param name="poolName"> The name of the HorizonDB pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Lists all HorizonDb pools in a cluster.
+        /// Lists all HorizonDB pools in a cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Lists all HorizonDb pools in a cluster.
+        /// Lists all HorizonDB pools in a cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="poolName"> The name of the HorizonDb pool. </param>
+        /// <param name="poolName"> The name of the HorizonDB pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="poolName"> The name of the HorizonDb pool. </param>
+        /// <param name="poolName"> The name of the HorizonDB pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="poolName"> The name of the HorizonDb pool. </param>
+        /// <param name="poolName"> The name of the HorizonDB pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.HorizonDB
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="poolName"> The name of the HorizonDb pool. </param>
+        /// <param name="poolName"> The name of the HorizonDB pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>

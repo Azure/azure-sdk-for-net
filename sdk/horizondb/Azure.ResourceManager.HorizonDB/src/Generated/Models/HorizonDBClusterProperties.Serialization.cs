@@ -14,7 +14,7 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Properties of a HorizonDb cluster. </summary>
+    /// <summary> Properties of a HorizonDB cluster. </summary>
     public partial class HorizonDBClusterProperties : IJsonModel<HorizonDBClusterProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HorizonDBClusterProperties"/> for deserialization. </summary>
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReadonlyEndpoint))
+            if (options.Format != "W" && Optional.IsDefined(ReadOnlyEndpoint))
             {
                 writer.WritePropertyName("readonlyEndpoint"u8);
-                writer.WriteStringValue(ReadonlyEndpoint);
+                writer.WriteStringValue(ReadOnlyEndpoint);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             Network network = default;
             HorizonDBClusterState? state = default;
             string fullyQualifiedDomainName = default;
-            string readonlyEndpoint = default;
+            string readOnlyEndpoint = default;
             HorizonDBProvisioningState? provisioningState = default;
             HorizonDBZonePlacementPolicy? zonePlacementPolicy = default;
             HorizonDBClusterParameterGroupConnectionProperties parameterGroup = default;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
                 if (prop.NameEquals("readonlyEndpoint"u8))
                 {
-                    readonlyEndpoint = prop.Value.GetString();
+                    readOnlyEndpoint = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 network,
                 state,
                 fullyQualifiedDomainName,
-                readonlyEndpoint,
+                readOnlyEndpoint,
                 provisioningState,
                 zonePlacementPolicy,
                 parameterGroup,

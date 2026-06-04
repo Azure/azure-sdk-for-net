@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Properties of a HorizonDb pool. </summary>
+    /// <summary> Properties of a HorizonDB pool. </summary>
     public partial class HorizonDBPoolProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HorizonDBPoolProperties"/>. </summary>
-        /// <param name="location"> The location of the HorizonDb pool. </param>
+        /// <param name="location"> The location of the HorizonDB pool. </param>
         /// <param name="state"> Current state of the pool. </param>
         /// <param name="replicaCount"> Number of replicas in the pool. </param>
-        /// <param name="version"> The version of the HorizonDb pool. </param>
+        /// <param name="version"> The version of the HorizonDB pool. </param>
         /// <param name="createMode"> The create mode for the pool. </param>
         /// <param name="provisioningState"> The provisioning state of the pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The location of the HorizonDb pool. </summary>
+        /// <summary> The location of the HorizonDB pool. </summary>
         public AzureLocation? Location { get; }
 
         /// <summary> Current state of the pool. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Number of replicas in the pool. </summary>
         public int? ReplicaCount { get; }
 
-        /// <summary> The version of the HorizonDb pool. </summary>
+        /// <summary> The version of the HorizonDB pool. </summary>
         public string Version { get; }
 
         /// <summary> The create mode for the pool. </summary>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Properties of a HorizonDb replica for update operations. </summary>
+    /// <summary> Properties of a HorizonDB replica for update operations. </summary>
     internal partial class HorizonDBReplicaPropertiesForPatchUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

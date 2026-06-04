@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    /// <summary> Represents the HorizonDb firewall rule. </summary>
+    /// <summary> Represents the HorizonDB firewall rule. </summary>
     public partial class HorizonDBFirewallRuleData : ResourceData, IJsonModel<HorizonDBFirewallRuleData>
     {
         /// <param name="data"> The data to parse. </param>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> Connection information for HorizonDb parameter group. </summary>
+    /// <summary> Connection information for HorizonDB parameter group. </summary>
     public partial class HorizonDBClusterParameterGroupConnectionProperties : IJsonModel<HorizonDBClusterParameterGroupConnectionProperties>
     {
         /// <param name="data"> The data to parse. </param>

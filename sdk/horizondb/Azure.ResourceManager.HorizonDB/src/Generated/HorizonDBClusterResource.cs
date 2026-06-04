@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb cluster.
+        /// Gets information about a HorizonDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb cluster.
+        /// Gets information about a HorizonDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Updates an existing HorizonDb cluster (e.g., tags, virtual cores, replica count).
+        /// Updates an existing HorizonDB cluster (e.g., tags, virtual cores, replica count).
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<ArmOperation<HorizonDBClusterResource>> UpdateAsync(WaitUntil waitUntil, HorizonDBClusterForPatchUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<HorizonDBClusterResource>> UpdateAsync(WaitUntil waitUntil, HorizonDBClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBClusterForPatchUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HorizonDBArmOperation<HorizonDBClusterResource> operation = new HorizonDBArmOperation<HorizonDBClusterResource>(
                     new HorizonDBClusterResourceOperationSource(Client),
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Updates an existing HorizonDb cluster (e.g., tags, virtual cores, replica count).
+        /// Updates an existing HorizonDB cluster (e.g., tags, virtual cores, replica count).
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.HorizonDB
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="properties"> The resource properties to be updated. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual ArmOperation<HorizonDBClusterResource> Update(WaitUntil waitUntil, HorizonDBClusterForPatchUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<HorizonDBClusterResource> Update(WaitUntil waitUntil, HorizonDBClusterPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _horizonDBClustersClientDiagnostics.CreateScope("HorizonDBClusterResource.Update");
             scope.Start();
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HorizonDB
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _horizonDBClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBClusterForPatchUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _horizonDBClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HorizonDBClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HorizonDBArmOperation<HorizonDBClusterResource> operation = new HorizonDBArmOperation<HorizonDBClusterResource>(
                     new HorizonDBClusterResourceOperationSource(Client),
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Deletes a HorizonDb cluster.
+        /// Deletes a HorizonDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Deletes a HorizonDb cluster.
+        /// Deletes a HorizonDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.HorizonDB
                 else
                 {
                     HorizonDBClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HorizonDBClusterForPatchUpdate patch = new HorizonDBClusterForPatchUpdate();
+                    HorizonDBClusterPatch patch = new HorizonDBClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.HorizonDB
                 else
                 {
                     HorizonDBClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HorizonDBClusterForPatchUpdate patch = new HorizonDBClusterForPatchUpdate();
+                    HorizonDBClusterPatch patch = new HorizonDBClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.HorizonDB
                 else
                 {
                     HorizonDBClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HorizonDBClusterForPatchUpdate patch = new HorizonDBClusterForPatchUpdate();
+                    HorizonDBClusterPatch patch = new HorizonDBClusterPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<HorizonDBClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.HorizonDB
                 else
                 {
                     HorizonDBClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HorizonDBClusterForPatchUpdate patch = new HorizonDBClusterForPatchUpdate();
+                    HorizonDBClusterPatch patch = new HorizonDBClusterPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<HorizonDBClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.HorizonDB
                 else
                 {
                     HorizonDBClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    HorizonDBClusterForPatchUpdate patch = new HorizonDBClusterForPatchUpdate();
+                    HorizonDBClusterPatch patch = new HorizonDBClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.HorizonDB
                 else
                 {
                     HorizonDBClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    HorizonDBClusterForPatchUpdate patch = new HorizonDBClusterForPatchUpdate();
+                    HorizonDBClusterPatch patch = new HorizonDBClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -686,8 +686,8 @@ namespace Azure.ResourceManager.HorizonDB
             return GetCachedClient(client => new HorizonDBPoolCollection(client, Id));
         }
 
-        /// <summary> Gets information about a HorizonDb pool. </summary>
-        /// <param name="poolName"> The name of the HorizonDb pool. </param>
+        /// <summary> Gets information about a HorizonDB pool. </summary>
+        /// <param name="poolName"> The name of the HorizonDB pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -699,8 +699,8 @@ namespace Azure.ResourceManager.HorizonDB
             return await GetHorizonDBPools().GetAsync(poolName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets information about a HorizonDb pool. </summary>
-        /// <param name="poolName"> The name of the HorizonDb pool. </param>
+        /// <summary> Gets information about a HorizonDB pool. </summary>
+        /// <param name="poolName"> The name of the HorizonDB pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>

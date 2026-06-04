@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Lists private link resources in a HorizonDb cluster.
+        /// Lists private link resources in a HorizonDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Lists private link resources in a HorizonDb cluster.
+        /// Lists private link resources in a HorizonDB cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

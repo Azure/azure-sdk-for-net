@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    /// <summary> Represents the HorizonDb parameter group. </summary>
+    /// <summary> Represents the HorizonDB parameter group. </summary>
     public partial class HorizonDBParameterGroupData : TrackedResourceData, IJsonModel<HorizonDBParameterGroupData>
     {
         /// <summary> Initializes a new instance of <see cref="HorizonDBParameterGroupData"/> for deserialization. </summary>

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb pool.
+        /// Gets information about a HorizonDB pool.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HorizonDB
         }
 
         /// <summary>
-        /// Gets information about a HorizonDb pool.
+        /// Gets information about a HorizonDB pool.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.HorizonDB
             return GetCachedClient(client => new HorizonDBReplicaCollection(client, Id));
         }
 
-        /// <summary> Gets information about a HorizonDb replica. </summary>
-        /// <param name="replicaName"> The name of the HorizonDb replica. </param>
+        /// <summary> Gets information about a HorizonDB replica. </summary>
+        /// <param name="replicaName"> The name of the HorizonDB replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.HorizonDB
             return await GetHorizonDBReplicas().GetAsync(replicaName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets information about a HorizonDb replica. </summary>
-        /// <param name="replicaName"> The name of the HorizonDb replica. </param>
+        /// <summary> Gets information about a HorizonDB replica. </summary>
+        /// <param name="replicaName"> The name of the HorizonDB replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -227,8 +227,8 @@ namespace Azure.ResourceManager.HorizonDB
             return GetCachedClient(client => new HorizonDBFirewallRuleCollection(client, Id));
         }
 
-        /// <summary> Gets information about a HorizonDb firewall rule. </summary>
-        /// <param name="firewallRuleName"> The name of the HorizonDb firewall rule. </param>
+        /// <summary> Gets information about a HorizonDB firewall rule. </summary>
+        /// <param name="firewallRuleName"> The name of the HorizonDB firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.HorizonDB
             return await GetHorizonDBFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets information about a HorizonDb firewall rule. </summary>
-        /// <param name="firewallRuleName"> The name of the HorizonDb firewall rule. </param>
+        /// <summary> Gets information about a HorizonDB firewall rule. </summary>
+        /// <param name="firewallRuleName"> The name of the HorizonDB firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>

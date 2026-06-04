@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HorizonDB
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdatePrivateEndpointConnectionRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointConnectionName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -119,9 +119,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath("/providers/Microsoft.HorizonDb/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
             if (_apiVersion != null)
             {
@@ -137,7 +135,7 @@ namespace Azure.ResourceManager.HorizonDB
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string clusterName, string privateEndpointConnectionName, RequestContext context)
+        internal HttpMessage CreateDeletePrivateEndpointConnectionRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointConnectionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -145,9 +143,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath("/providers/Microsoft.HorizonDb/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
             if (_apiVersion != null)
             {

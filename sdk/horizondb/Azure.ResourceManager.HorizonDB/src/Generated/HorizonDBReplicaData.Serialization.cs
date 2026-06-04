@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HorizonDB
 {
-    /// <summary> Represents the HorizonDb replica. </summary>
+    /// <summary> Represents the HorizonDB replica. </summary>
     public partial class HorizonDBReplicaData : ResourceData, IJsonModel<HorizonDBReplicaData>
     {
         /// <param name="data"> The data to parse. </param>
