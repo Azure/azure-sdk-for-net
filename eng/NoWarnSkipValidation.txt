@@ -138,7 +138,6 @@ Azure.Provisioning.WebPubSub
 Azure.ResourceManager
 Azure.ResourceManager.AppService
 Azure.ResourceManager.Batch
-Azure.ResourceManager.Cdn
 Azure.ResourceManager.Chaos
 Azure.ResourceManager.Compute
 Azure.ResourceManager.ContainerRegistry
