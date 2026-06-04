@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Initializes a new instance of <see cref="IssueNotificationType"/>. </summary>
         /// <param name="updateType"> The type of update that triggers the notification. </param>
-        private protected IssueNotificationType(UpdateType updateType)
+        private protected IssueNotificationType(IssueNotificationUpdateType updateType)
         {
             UpdateType = updateType;
         }
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <summary> Initializes a new instance of <see cref="IssueNotificationType"/>. </summary>
         /// <param name="updateType"> The type of update that triggers the notification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssueNotificationType(UpdateType updateType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IssueNotificationType(IssueNotificationUpdateType updateType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpdateType = updateType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of update that triggers the notification. </summary>
-        internal UpdateType UpdateType { get; set; }
+        internal IssueNotificationUpdateType UpdateType { get; set; }
     }
 }

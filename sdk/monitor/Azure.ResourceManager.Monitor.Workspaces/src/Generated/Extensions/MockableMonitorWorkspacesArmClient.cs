@@ -26,31 +26,31 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="AzureMonitorWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MonitorWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureMonitorWorkspaceResource"/> object. </returns>
-        public virtual AzureMonitorWorkspaceResource GetAzureMonitorWorkspaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MonitorWorkspaceResource"/> object. </returns>
+        public virtual MonitorWorkspaceResource GetMonitorWorkspaceResource(ResourceIdentifier id)
         {
-            AzureMonitorWorkspaceResource.ValidateResourceId(id);
-            return new AzureMonitorWorkspaceResource(Client, id);
+            MonitorWorkspaceResource.ValidateResourceId(id);
+            return new MonitorWorkspaceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="IssueResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MonitorIssueResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IssueResource"/> object. </returns>
-        public virtual IssueResource GetIssueResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MonitorIssueResource"/> object. </returns>
+        public virtual MonitorIssueResource GetMonitorIssueResource(ResourceIdentifier id)
         {
-            IssueResource.ValidateResourceId(id);
-            return new IssueResource(Client, id);
+            MonitorIssueResource.ValidateResourceId(id);
+            return new MonitorIssueResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MetricsContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MonitorMetricsContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MetricsContainerResource"/> object. </returns>
-        public virtual MetricsContainerResource GetMetricsContainerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MonitorMetricsContainerResource"/> object. </returns>
+        public virtual MonitorMetricsContainerResource GetMonitorMetricsContainerResource(ResourceIdentifier id)
         {
-            MetricsContainerResource.ValidateResourceId(id);
-            return new MetricsContainerResource(Client, id);
+            MonitorMetricsContainerResource.ValidateResourceId(id);
+            return new MonitorMetricsContainerResource(Client, id);
         }
     }
 }

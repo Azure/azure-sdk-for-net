@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureMonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzureMonitorWorkspaceResource> GetAzureMonitorWorkspaceResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspacesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureMonitorWorkspaceResourceData, AzureMonitorWorkspaceResource>(new AzureMonitorWorkspacesGetBySubscriptionAsyncCollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetAzureMonitorWorkspaceResources"), data => new AzureMonitorWorkspaceResource(Client, data));
+            return new AsyncPageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new AzureMonitorWorkspacesGetBySubscriptionAsyncCollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
         }
 
         /// <summary>
@@ -84,14 +84,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureMonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzureMonitorWorkspaceResource> GetAzureMonitorWorkspaceResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorWorkspaceResource> GetMonitorWorkspaces(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureMonitorWorkspaceResourceData, AzureMonitorWorkspaceResource>(new AzureMonitorWorkspacesGetBySubscriptionCollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetAzureMonitorWorkspaceResources"), data => new AzureMonitorWorkspaceResource(Client, data));
+            return new PageableWrapper<MonitorWorkspaceData, MonitorWorkspaceResource>(new AzureMonitorWorkspacesGetBySubscriptionCollectionResultOfT(AzureMonitorWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces"), data => new MonitorWorkspaceResource(Client, data));
         }
     }
 }

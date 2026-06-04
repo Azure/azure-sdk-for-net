@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
     public partial class OnChangeNotificationType : IssueNotificationType
     {
         /// <summary> Initializes a new instance of <see cref="OnChangeNotificationType"/>. </summary>
-        public OnChangeNotificationType() : base(UpdateType.OnChange)
+        public OnChangeNotificationType() : base(IssueNotificationUpdateType.OnChange)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="OnChangeNotificationType"/>. </summary>
         /// <param name="updateType"> The type of update that triggers the notification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OnChangeNotificationType(UpdateType updateType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(updateType, additionalBinaryDataProperties)
+        internal OnChangeNotificationType(IssueNotificationUpdateType updateType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(updateType, additionalBinaryDataProperties)
         {
         }
     }

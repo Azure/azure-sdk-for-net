@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IssueNotificationType IPersistableModel<IssueNotificationType>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IssueNotificationType IPersistableModel<IssueNotificationType>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IssueNotificationType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IssueNotificationType IJsonModel<IssueNotificationType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IssueNotificationType IJsonModel<IssueNotificationType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -106,13 +112,13 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 return null;
             }
-            UpdateType updateType = default;
+            IssueNotificationUpdateType updateType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("updateType"u8))
                 {
-                    updateType = new UpdateType(prop.Value.GetString());
+                    updateType = new IssueNotificationUpdateType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

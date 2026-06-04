@@ -38,81 +38,81 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AzureMonitorWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MonitorWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetAzureMonitorWorkspaceResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetMonitorWorkspaceResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AzureMonitorWorkspaceResource"/> object. </returns>
-        public static AzureMonitorWorkspaceResource GetAzureMonitorWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MonitorWorkspaceResource"/> object. </returns>
+        public static MonitorWorkspaceResource GetMonitorWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMonitorWorkspacesArmClient(client).GetAzureMonitorWorkspaceResource(id);
+            return GetMockableMonitorWorkspacesArmClient(client).GetMonitorWorkspaceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="IssueResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MonitorIssueResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetIssueResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetMonitorIssueResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="IssueResource"/> object. </returns>
-        public static IssueResource GetIssueResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MonitorIssueResource"/> object. </returns>
+        public static MonitorIssueResource GetMonitorIssueResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMonitorWorkspacesArmClient(client).GetIssueResource(id);
+            return GetMockableMonitorWorkspacesArmClient(client).GetMonitorIssueResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MetricsContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="MonitorMetricsContainerResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetMetricsContainerResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesArmClient.GetMonitorMetricsContainerResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MetricsContainerResource"/> object. </returns>
-        public static MetricsContainerResource GetMetricsContainerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MonitorMetricsContainerResource"/> object. </returns>
+        public static MonitorMetricsContainerResource GetMonitorMetricsContainerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMonitorWorkspacesArmClient(client).GetMetricsContainerResource(id);
+            return GetMockableMonitorWorkspacesArmClient(client).GetMonitorMetricsContainerResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of AzureMonitorWorkspaceResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of MonitorWorkspaces in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesResourceGroupResource.GetAzureMonitorWorkspaceResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesResourceGroupResource.GetMonitorWorkspaces()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of AzureMonitorWorkspaceResources and their operations over a AzureMonitorWorkspaceResource. </returns>
-        public static AzureMonitorWorkspaceResourceCollection GetAzureMonitorWorkspaceResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of MonitorWorkspaces and their operations over a MonitorWorkspaceResource. </returns>
+        public static MonitorWorkspaceCollection GetMonitorWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorWorkspacesResourceGroupResource(resourceGroupResource).GetAzureMonitorWorkspaceResources();
+            return GetMockableMonitorWorkspacesResourceGroupResource(resourceGroupResource).GetMonitorWorkspaces();
         }
 
         /// <summary>
         /// Returns the specified Azure Monitor Workspace
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesResourceGroupResource.GetAzureMonitorWorkspaceResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesResourceGroupResource.GetMonitorWorkspaceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -120,18 +120,18 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AzureMonitorWorkspaceResource>> GetAzureMonitorWorkspaceResourceAsync(this ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MonitorWorkspaceResource>> GetMonitorWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMonitorWorkspacesResourceGroupResource(resourceGroupResource).GetAzureMonitorWorkspaceResourceAsync(azureMonitorWorkspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorWorkspacesResourceGroupResource(resourceGroupResource).GetMonitorWorkspaceAsync(azureMonitorWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns the specified Azure Monitor Workspace
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesResourceGroupResource.GetAzureMonitorWorkspaceResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesResourceGroupResource.GetMonitorWorkspace(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -139,47 +139,47 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AzureMonitorWorkspaceResource> GetAzureMonitorWorkspaceResource(this ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
+        public static Response<MonitorWorkspaceResource> GetMonitorWorkspace(this ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorWorkspacesResourceGroupResource(resourceGroupResource).GetAzureMonitorWorkspaceResource(azureMonitorWorkspaceName, cancellationToken);
+            return GetMockableMonitorWorkspacesResourceGroupResource(resourceGroupResource).GetMonitorWorkspace(azureMonitorWorkspaceName, cancellationToken);
         }
 
         /// <summary>
         /// Lists all Azure Monitor Workspaces in the specified subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesSubscriptionResource.GetAzureMonitorWorkspaceResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspacesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AzureMonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AzureMonitorWorkspaceResource> GetAzureMonitorWorkspaceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorWorkspacesSubscriptionResource(subscriptionResource).GetAzureMonitorWorkspaceResourcesAsync(cancellationToken);
+            return GetMockableMonitorWorkspacesSubscriptionResource(subscriptionResource).GetMonitorWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all Azure Monitor Workspaces in the specified subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesSubscriptionResource.GetAzureMonitorWorkspaceResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorWorkspacesSubscriptionResource.GetMonitorWorkspaces(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AzureMonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AzureMonitorWorkspaceResource> GetAzureMonitorWorkspaceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MonitorWorkspaceResource> GetMonitorWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorWorkspacesSubscriptionResource(subscriptionResource).GetAzureMonitorWorkspaceResources(cancellationToken);
+            return GetMockableMonitorWorkspacesSubscriptionResource(subscriptionResource).GetMonitorWorkspaces(cancellationToken);
         }
     }
 }

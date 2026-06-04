@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <summary> Initializes a new instance of <see cref="TimeBasedUpdatesNotificationType"/>. </summary>
         /// <param name="updateInterval"> The interval between time-based updates. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updateInterval"/> is null. </exception>
-        public TimeBasedUpdatesNotificationType(string updateInterval) : base(UpdateType.TimeBased)
+        public TimeBasedUpdatesNotificationType(string updateInterval) : base(IssueNotificationUpdateType.TimeBased)
         {
             Argument.AssertNotNull(updateInterval, nameof(updateInterval));
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="updateType"> The type of update that triggers the notification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="updateInterval"> The interval between time-based updates. </param>
-        internal TimeBasedUpdatesNotificationType(UpdateType updateType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string updateInterval) : base(updateType, additionalBinaryDataProperties)
+        internal TimeBasedUpdatesNotificationType(IssueNotificationUpdateType updateType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string updateInterval) : base(updateType, additionalBinaryDataProperties)
         {
             UpdateInterval = updateInterval;
         }

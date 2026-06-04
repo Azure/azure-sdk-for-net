@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
     public static partial class ArmMonitorWorkspacesModelFactory
     {
 
-        /// <summary> An Azure Monitor Workspace definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -29,137 +28,130 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="properties"> Resource properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <returns> A new <see cref="Workspaces.AzureMonitorWorkspaceResourceData"/> instance for mocking. </returns>
-        public static AzureMonitorWorkspaceResourceData AzureMonitorWorkspaceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AzureMonitorWorkspace properties = default, ManagedServiceIdentity identity = default, string eTag = default)
+        /// <returns> A new <see cref="Workspaces.MonitorWorkspaceData"/> instance for mocking. </returns>
+        public static MonitorWorkspaceData MonitorWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MonitorWorkspaceProperties properties = default, ManagedServiceIdentity identity = default, string eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AzureMonitorWorkspaceResourceData(
+            return new MonitorWorkspaceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 identity,
-                eTag);
+                eTag,
+                default);
         }
 
-        /// <summary> Properties of an Azure Monitor Workspace. </summary>
         /// <param name="accountId"> The immutable Id of the Azure Monitor Workspace. This property is read-only. </param>
         /// <param name="metrics"> Properties related to the metrics container in the Azure Monitor Workspace. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure Monitor Workspace. Set to Succeeded if everything is healthy. </param>
         /// <param name="defaultIngestionSettings"> The Data Collection Rule and Endpoint used for ingestion by default. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to Azure Monitor Workspace. </param>
-        /// <returns> A new <see cref="Models.AzureMonitorWorkspace"/> instance for mocking. </returns>
-        public static AzureMonitorWorkspace AzureMonitorWorkspace(string accountId = default, AzureMonitorWorkspaceMetrics metrics = default, ResourceProvisioningState? provisioningState = default, AzureMonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = default, IEnumerable<MonitorWorkspacesPrivateEndpointConnection> privateEndpointConnections = default, PublicNetworkAccess? publicNetworkAccess = default)
+        /// <returns> A new <see cref="Models.MonitorWorkspaceProperties"/> instance for mocking. </returns>
+        public static MonitorWorkspaceProperties MonitorWorkspaceProperties(string accountId = default, MonitorWorkspaceMetrics metrics = default, MonitorWorkspaceProvisioningState? provisioningState = default, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = default, IEnumerable<MonitorWorkspacesPrivateEndpointConnection> privateEndpointConnections = default, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<MonitorWorkspacesPrivateEndpointConnection>();
 
-            return new AzureMonitorWorkspace(
+            return new MonitorWorkspaceProperties(
                 accountId,
                 metrics,
                 provisioningState,
                 defaultIngestionSettings,
-                privateEndpointConnections.ToList(),
+                (privateEndpointConnections ?? new ChangeTrackingList<MonitorWorkspacesPrivateEndpointConnection>()).ToList(),
                 publicNetworkAccess,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Properties related to the metrics container in the Azure Monitor Workspace. </summary>
         /// <param name="prometheusQueryEndpoint"> The Prometheus query endpoint for the Azure Monitor Workspace. </param>
         /// <param name="internalId"> An internal identifier for the metrics container. Only to be used by the system. </param>
         /// <param name="enableAccessUsingResourcePermissions"> Flag that indicates whether to enable access using resource permissions. </param>
-        /// <returns> A new <see cref="Models.AzureMonitorWorkspaceMetrics"/> instance for mocking. </returns>
-        public static AzureMonitorWorkspaceMetrics AzureMonitorWorkspaceMetrics(string prometheusQueryEndpoint = default, string internalId = default, bool? enableAccessUsingResourcePermissions = default)
+        /// <returns> A new <see cref="Models.MonitorWorkspaceMetrics"/> instance for mocking. </returns>
+        public static MonitorWorkspaceMetrics MonitorWorkspaceMetrics(string prometheusQueryEndpoint = default, string internalId = default, bool? enableAccessUsingResourcePermissions = default)
         {
-            return new AzureMonitorWorkspaceMetrics(prometheusQueryEndpoint, internalId, enableAccessUsingResourcePermissions, additionalBinaryDataProperties: null);
+            return new MonitorWorkspaceMetrics(prometheusQueryEndpoint, internalId, enableAccessUsingResourcePermissions, default);
         }
 
         /// <param name="dataCollectionRuleResourceId"> The Azure resource Id of the default data collection rule for this Azure Monitor Workspace. </param>
         /// <param name="dataCollectionEndpointResourceId"> The Azure resource Id of the default data collection endpoint for this Azure Monitor Workspace. </param>
         /// <param name="dataCollectionRuleImmutableId"> The immutable Id of the default data collection rule for this Azure Monitor Workspace. </param>
         /// <param name="ingestionEndpointsMetrics"> The metrics ingestion endpoint for this Azure Monitor Workspace. </param>
-        /// <returns> A new <see cref="Models.AzureMonitorWorkspaceDefaultIngestionSettings"/> instance for mocking. </returns>
-        public static AzureMonitorWorkspaceDefaultIngestionSettings AzureMonitorWorkspaceDefaultIngestionSettings(string dataCollectionRuleResourceId = default, string dataCollectionEndpointResourceId = default, string dataCollectionRuleImmutableId = default, string ingestionEndpointsMetrics = default)
+        /// <returns> A new <see cref="Models.MonitorWorkspaceDefaultIngestionSettings"/> instance for mocking. </returns>
+        public static MonitorWorkspaceDefaultIngestionSettings MonitorWorkspaceDefaultIngestionSettings(string dataCollectionRuleResourceId = default, string dataCollectionEndpointResourceId = default, string dataCollectionRuleImmutableId = default, string ingestionEndpointsMetrics = default)
         {
-            return new AzureMonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId, dataCollectionEndpointResourceId, dataCollectionRuleImmutableId, ingestionEndpointsMetrics is null ? default : new IngestionEndpoints(ingestionEndpointsMetrics, null), additionalBinaryDataProperties: null);
+            return new MonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId, dataCollectionEndpointResourceId, dataCollectionRuleImmutableId, ingestionEndpointsMetrics is null ? default : new IngestionEndpoints(ingestionEndpointsMetrics, default), default);
         }
 
-        /// <summary> The private endpoint connection resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspacesPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static MonitorWorkspacesPrivateEndpointConnection MonitorWorkspacesPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        public static MonitorWorkspacesPrivateEndpointConnection MonitorWorkspacesPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorWorkspacePrivateEndpointConnectionProperties properties = default)
         {
             return new MonitorWorkspacesPrivateEndpointConnection(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, MonitorWorkspacesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, MonitorWorkspacesPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.MonitorWorkspacePrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static MonitorWorkspacePrivateEndpointConnectionProperties MonitorWorkspacePrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, MonitorWorkspacesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, MonitorWorkspacesPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new PrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
+            return new MonitorWorkspacePrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
         }
 
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspacesPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
         public static MonitorWorkspacesPrivateLinkServiceConnectionState MonitorWorkspacesPrivateLinkServiceConnectionState(MonitorWorkspacesPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
         {
-            return new MonitorWorkspacesPrivateLinkServiceConnectionState(status, description, actionsRequired, additionalBinaryDataProperties: null);
+            return new MonitorWorkspacesPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
-        /// <summary> The type used for updating an Azure Monitor Workspace. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> Resource properties. </param>
-        /// <returns> A new <see cref="Models.AzureMonitorWorkspaceResourcePatch"/> instance for mocking. </returns>
-        public static AzureMonitorWorkspaceResourcePatch AzureMonitorWorkspaceResourcePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, AzureMonitorWorkspace properties = default)
+        /// <returns> A new <see cref="Models.MonitorWorkspacePatch"/> instance for mocking. </returns>
+        public static MonitorWorkspacePatch MonitorWorkspacePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, MonitorWorkspaceProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AzureMonitorWorkspaceResourcePatch(tags, identity, properties, additionalBinaryDataProperties: null);
+            return new MonitorWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, default);
         }
 
-        /// <summary> The Issue resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Workspaces.IssueResourceData"/> instance for mocking. </returns>
-        public static IssueResourceData IssueResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IssueProperties properties = default)
+        /// <returns> A new <see cref="Workspaces.MonitorIssueData"/> instance for mocking. </returns>
+        public static MonitorIssueData MonitorIssueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorIssueProperties properties = default)
         {
-            return new IssueResourceData(
+            return new MonitorIssueData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The issue properties. </summary>
         /// <param name="title"> The issue title. </param>
         /// <param name="status"> The issue status. </param>
         /// <param name="severity"> The issue severity. </param>
@@ -169,178 +161,257 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="background"> The issue background information. </param>
         /// <param name="notifications"> The issue notification settings. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.IssueProperties"/> instance for mocking. </returns>
-        public static IssueProperties IssueProperties(string title = default, Status status = default, string severity = default, IEnumerable<InvestigationMetadata> investigations = default, DateTimeOffset impactOn = default, int investigationsCount = default, Background background = default, Notifications notifications = default, ResourceProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.MonitorIssueProperties"/> instance for mocking. </returns>
+        public static MonitorIssueProperties MonitorIssueProperties(string title = default, MonitorIssueStatus status = default, string severity = default, IEnumerable<IssueInvestigationMetadata> investigations = default, DateTimeOffset impactOn = default, int investigationsCount = default, MonitorIssueBackground background = default, IssueNotifications notifications = default, MonitorWorkspaceProvisioningState? provisioningState = default)
         {
-            investigations ??= new ChangeTrackingList<InvestigationMetadata>();
+            investigations ??= new ChangeTrackingList<IssueInvestigationMetadata>();
 
-            return new IssueProperties(
+            return new MonitorIssueProperties(
                 title,
                 status,
                 severity,
-                investigations.ToList(),
+                (investigations ?? new ChangeTrackingList<IssueInvestigationMetadata>()).ToList(),
                 impactOn,
                 investigationsCount,
                 background,
                 notifications,
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Properties of the current investigation. </summary>
         /// <param name="id"> The unique identifier of the investigation. </param>
         /// <param name="createdOn"> The creation time of the investigation (in UTC). </param>
-        /// <returns> A new <see cref="Models.InvestigationMetadata"/> instance for mocking. </returns>
-        public static InvestigationMetadata InvestigationMetadata(Guid id = default, DateTimeOffset createdOn = default)
+        /// <returns> A new <see cref="Models.IssueInvestigationMetadata"/> instance for mocking. </returns>
+        public static IssueInvestigationMetadata IssueInvestigationMetadata(Guid id = default, DateTimeOffset createdOn = default)
         {
-            return new InvestigationMetadata(id, createdOn, additionalBinaryDataProperties: null);
+            return new IssueInvestigationMetadata(id, createdOn, default);
         }
 
-        /// <summary> The issue background information. </summary>
         /// <param name="type"> The background type. </param>
         /// <param name="text"> The background text. </param>
         /// <param name="details"> The background details. </param>
-        /// <returns> A new <see cref="Models.Background"/> instance for mocking. </returns>
-        public static Background Background(string @type = default, string text = default, IEnumerable<BackgroundDetails> details = default)
+        /// <returns> A new <see cref="Models.MonitorIssueBackground"/> instance for mocking. </returns>
+        public static MonitorIssueBackground MonitorIssueBackground(string @type = default, string text = default, IEnumerable<MonitorIssueBackgroundDetails> details = default)
         {
-            details ??= new ChangeTrackingList<BackgroundDetails>();
+            details ??= new ChangeTrackingList<MonitorIssueBackgroundDetails>();
 
-            return new Background(@type, text, details.ToList(), additionalBinaryDataProperties: null);
+            return new MonitorIssueBackground(@type, text, (details ?? new ChangeTrackingList<MonitorIssueBackgroundDetails>()).ToList(), default);
         }
 
-        /// <summary> Issue notification settings. </summary>
+        /// <param name="name"> The background details name. </param>
+        /// <param name="value"> The background details value. </param>
+        /// <returns> A new <see cref="Models.MonitorIssueBackgroundDetails"/> instance for mocking. </returns>
+        public static MonitorIssueBackgroundDetails MonitorIssueBackgroundDetails(string name = default, string value = default)
+        {
+            return new MonitorIssueBackgroundDetails(name, value, default);
+        }
+
         /// <param name="updateTypes"> The types of updates that trigger notifications. </param>
         /// <param name="actionGroupIds"> The action group IDs to notify. </param>
         /// <param name="excludeDefaultActionGroups"> Whether to exclude default action groups from notifications. </param>
-        /// <returns> A new <see cref="Models.Notifications"/> instance for mocking. </returns>
-        public static Notifications Notifications(IEnumerable<IssueNotificationType> updateTypes = default, IEnumerable<string> actionGroupIds = default, bool? excludeDefaultActionGroups = default)
+        /// <returns> A new <see cref="Models.IssueNotifications"/> instance for mocking. </returns>
+        public static IssueNotifications IssueNotifications(IEnumerable<IssueNotificationType> updateTypes = default, IEnumerable<string> actionGroupIds = default, bool? excludeDefaultActionGroups = default)
         {
             updateTypes ??= new ChangeTrackingList<IssueNotificationType>();
             actionGroupIds ??= new ChangeTrackingList<string>();
 
-            return new Notifications(updateTypes.ToList(), actionGroupIds.ToList(), excludeDefaultActionGroups, additionalBinaryDataProperties: null);
+            return new IssueNotifications((updateTypes ?? new ChangeTrackingList<IssueNotificationType>()).ToList(), (actionGroupIds ?? new ChangeTrackingList<string>()).ToList(), excludeDefaultActionGroups, default);
         }
 
-        /// <summary> Parameters provided to get the investigation result. </summary>
-        /// <param name="investigationId"> The unique identifier of the investigation. </param>
-        /// <returns> A new <see cref="Models.FetchInvestigationResultParameters"/> instance for mocking. </returns>
-        public static FetchInvestigationResultParameters FetchInvestigationResultParameters(Guid investigationId = default)
+        /// <param name="updateType"> The type of update that triggers the notification. </param>
+        /// <returns> A new <see cref="Models.IssueNotificationType"/> instance for mocking. </returns>
+        public static IssueNotificationType IssueNotificationType(string updateType = default)
         {
-            return new FetchInvestigationResultParameters(investigationId, additionalBinaryDataProperties: null);
+            return new UnknownIssueNotificationType(default, default);
         }
 
-        /// <summary> Paged collection of RelatedAlert items. </summary>
+        /// <returns> A new <see cref="Models.IssueCreationNotificationType"/> instance for mocking. </returns>
+        public static IssueCreationNotificationType IssueCreationNotificationType()
+        {
+            return new IssueCreationNotificationType(default, default);
+        }
+
+        /// <returns> A new <see cref="Models.OnChangeNotificationType"/> instance for mocking. </returns>
+        public static OnChangeNotificationType OnChangeNotificationType()
+        {
+            return new OnChangeNotificationType(default, default);
+        }
+
+        /// <param name="updateInterval"> The interval between time-based updates. </param>
+        /// <returns> A new <see cref="Models.TimeBasedUpdatesNotificationType"/> instance for mocking. </returns>
+        public static TimeBasedUpdatesNotificationType TimeBasedUpdatesNotificationType(string updateInterval = default)
+        {
+            return new TimeBasedUpdatesNotificationType(default, default, updateInterval);
+        }
+
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.MonitorIssuePatch"/> instance for mocking. </returns>
+        public static MonitorIssuePatch MonitorIssuePatch(MonitorIssuePatchProperties properties = default)
+        {
+            return new MonitorIssuePatch(properties, default);
+        }
+
+        /// <param name="title"> The issue title. </param>
+        /// <param name="status"> The issue status. </param>
+        /// <param name="severity"> The issue severity. </param>
+        /// <param name="impactOn"> The issue impact time (in UTC). </param>
+        /// <param name="background"> The issue background information. </param>
+        /// <param name="notifications"> The issue notification settings. </param>
+        /// <returns> A new <see cref="Models.MonitorIssuePatchProperties"/> instance for mocking. </returns>
+        public static MonitorIssuePatchProperties MonitorIssuePatchProperties(string title = default, MonitorIssueStatus? status = default, string severity = default, DateTimeOffset? impactOn = default, MonitorIssueBackground background = default, IssueNotifications notifications = default)
+        {
+            return new MonitorIssuePatchProperties(
+                title,
+                status,
+                severity,
+                impactOn,
+                background,
+                notifications,
+                default);
+        }
+
+        /// <param name="id"> The identifier of the investigation. </param>
+        /// <param name="origin"> The origin of the investigation. </param>
+        /// <param name="createdOn"> The creation time of the investigation (in UTC). </param>
+        /// <param name="lastModifiedOn"> The last update time of the investigation (in UTC). </param>
+        /// <param name="result"> The result of this investigation. </param>
+        /// <returns> A new <see cref="Models.IssueInvestigationResult"/> instance for mocking. </returns>
+        public static IssueInvestigationResult IssueInvestigationResult(string id = default, MonitorEntityOrigin origin = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string result = default)
+        {
+            return new IssueInvestigationResult(
+                id,
+                origin,
+                createdOn,
+                lastModifiedOn,
+                result,
+                default);
+        }
+
+        /// <param name="addedBy"> The ID of the origin - for example, in case of 'Manual', the user ID/app ID, and in case of 'Automatic', the name of the automatic system. </param>
+        /// <param name="addedByType"> The source of the origin - Manual or Automatic. </param>
+        /// <returns> A new <see cref="Models.MonitorEntityOrigin"/> instance for mocking. </returns>
+        public static MonitorEntityOrigin MonitorEntityOrigin(string addedBy = default, MonitorEntityType addedByType = default)
+        {
+            return new MonitorEntityOrigin(addedBy, addedByType, default);
+        }
+
+        /// <param name="investigationId"> The unique identifier of the investigation. </param>
+        /// <returns> A new <see cref="Models.FetchInvestigationResultContent"/> instance for mocking. </returns>
+        public static FetchInvestigationResultContent FetchInvestigationResultContent(Guid investigationId = default)
+        {
+            return new FetchInvestigationResultContent(investigationId, default);
+        }
+
+        /// <param name="filter"> The filter to apply on the operation. For example, to filter by relevance, use "$filter=relevance eq 'Relevant'". Note: this property is currently a placeholder and is not in use. </param>
+        /// <returns> A new <see cref="Models.IssueListContent"/> instance for mocking. </returns>
+        public static IssueListContent IssueListContent(string filter = default)
+        {
+            return new IssueListContent(filter, default);
+        }
+
         /// <param name="value"> The RelatedAlert items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.PagedRelatedAlert"/> instance for mocking. </returns>
-        public static PagedRelatedAlert PagedRelatedAlert(IEnumerable<RelatedAlert> value = default, Uri nextLink = default)
+        public static PagedRelatedAlert PagedRelatedAlert(IEnumerable<IssueRelatedAlertProperties> value = default, Uri nextLink = default)
         {
-            value ??= new ChangeTrackingList<RelatedAlert>();
+            value ??= new ChangeTrackingList<IssueRelatedAlertProperties>();
 
-            return new PagedRelatedAlert(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+            return new PagedRelatedAlert((value ?? new ChangeTrackingList<IssueRelatedAlertProperties>()).ToList(), nextLink, default);
         }
 
-        /// <summary> Properties of an alert which is related to the issue. </summary>
         /// <param name="id"> The alert ID. </param>
         /// <param name="relevance"> The alerts's relevance status. </param>
         /// <param name="origin"> The source that related the alert to the issue. </param>
         /// <param name="addedOn"> The time this relation was added to the issue (in UTC). </param>
         /// <param name="lastModifiedOn"> The last update time of this relation (in UTC). </param>
-        /// <returns> A new <see cref="Models.RelatedAlert"/> instance for mocking. </returns>
-        public static RelatedAlert RelatedAlert(ResourceIdentifier id = default, Relevance relevance = default, Models.Origin origin = default, DateTimeOffset addedOn = default, DateTimeOffset lastModifiedOn = default)
+        /// <returns> A new <see cref="Models.IssueRelatedAlertProperties"/> instance for mocking. </returns>
+        public static IssueRelatedAlertProperties IssueRelatedAlertProperties(ResourceIdentifier id = default, MonitorRelevanceStatus relevance = default, MonitorEntityOrigin origin = default, DateTimeOffset addedOn = default, DateTimeOffset lastModifiedOn = default)
         {
-            return new RelatedAlert(
+            return new IssueRelatedAlertProperties(
                 id,
                 relevance,
                 origin,
                 addedOn,
                 lastModifiedOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> A list of related alerts. </summary>
         /// <param name="value"> A list of related alerts. </param>
-        /// <returns> A new <see cref="Models.RelatedAlerts"/> instance for mocking. </returns>
-        public static RelatedAlerts RelatedAlerts(IEnumerable<RelatedAlert> value = default)
+        /// <returns> A new <see cref="Models.IssueRelatedAlertPropertiesList"/> instance for mocking. </returns>
+        public static IssueRelatedAlertPropertiesList IssueRelatedAlertPropertiesList(IEnumerable<IssueRelatedAlertProperties> value = default)
         {
-            value ??= new ChangeTrackingList<RelatedAlert>();
+            value ??= new ChangeTrackingList<IssueRelatedAlertProperties>();
 
-            return new RelatedAlerts(value.ToList(), additionalBinaryDataProperties: null);
+            return new IssueRelatedAlertPropertiesList((value ?? new ChangeTrackingList<IssueRelatedAlertProperties>()).ToList(), default);
         }
 
-        /// <summary> Paged collection of RelatedResource items. </summary>
         /// <param name="value"> The RelatedResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.PagedRelatedResource"/> instance for mocking. </returns>
-        public static PagedRelatedResource PagedRelatedResource(IEnumerable<RelatedResource> value = default, Uri nextLink = default)
+        public static PagedRelatedResource PagedRelatedResource(IEnumerable<IssueRelatedResourceProperties> value = default, Uri nextLink = default)
         {
-            value ??= new ChangeTrackingList<RelatedResource>();
+            value ??= new ChangeTrackingList<IssueRelatedResourceProperties>();
 
-            return new PagedRelatedResource(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+            return new PagedRelatedResource((value ?? new ChangeTrackingList<IssueRelatedResourceProperties>()).ToList(), nextLink, default);
         }
 
-        /// <summary> Properties of a resource which is related to the issue. </summary>
         /// <param name="id"> The resource ID. </param>
         /// <param name="relevance"> The resource's relevance status. </param>
         /// <param name="origin"> The source that related the resource to the issue. </param>
         /// <param name="addedOn"> The time this relation was added to the issue (in UTC). </param>
         /// <param name="lastModifiedOn"> The last update time of this relation (in UTC). </param>
-        /// <returns> A new <see cref="Models.RelatedResource"/> instance for mocking. </returns>
-        public static RelatedResource RelatedResource(ResourceIdentifier id = default, Relevance relevance = default, Models.Origin origin = default, DateTimeOffset addedOn = default, DateTimeOffset lastModifiedOn = default)
+        /// <returns> A new <see cref="Models.IssueRelatedResourceProperties"/> instance for mocking. </returns>
+        public static IssueRelatedResourceProperties IssueRelatedResourceProperties(ResourceIdentifier id = default, MonitorRelevanceStatus relevance = default, MonitorEntityOrigin origin = default, DateTimeOffset addedOn = default, DateTimeOffset lastModifiedOn = default)
         {
-            return new RelatedResource(
+            return new IssueRelatedResourceProperties(
                 id,
                 relevance,
                 origin,
                 addedOn,
                 lastModifiedOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> A list of related resources. </summary>
         /// <param name="value"> A list of related resources. </param>
-        /// <returns> A new <see cref="Models.RelatedResources"/> instance for mocking. </returns>
-        public static RelatedResources RelatedResources(IEnumerable<RelatedResource> value = default)
+        /// <returns> A new <see cref="Models.IssueRelatedResourcePropertiesList"/> instance for mocking. </returns>
+        public static IssueRelatedResourcePropertiesList IssueRelatedResourcePropertiesList(IEnumerable<IssueRelatedResourceProperties> value = default)
         {
-            value ??= new ChangeTrackingList<RelatedResource>();
+            value ??= new ChangeTrackingList<IssueRelatedResourceProperties>();
 
-            return new RelatedResources(value.ToList(), additionalBinaryDataProperties: null);
+            return new IssueRelatedResourcePropertiesList((value ?? new ChangeTrackingList<IssueRelatedResourceProperties>()).ToList(), default);
         }
 
-        /// <summary> The issue background visualization. </summary>
         /// <param name="visualization"> The background visualization content, in Adaptive Card format. </param>
         /// <param name="origin"> The background visualization origin. </param>
-        /// <returns> A new <see cref="Models.BackgroundVisualization"/> instance for mocking. </returns>
-        public static BackgroundVisualization BackgroundVisualization(string visualization = default, Models.Origin origin = default)
+        /// <returns> A new <see cref="Models.MonitorIssueBackgroundVisualization"/> instance for mocking. </returns>
+        public static MonitorIssueBackgroundVisualization MonitorIssueBackgroundVisualization(string visualization = default, MonitorEntityOrigin origin = default)
         {
-            return new BackgroundVisualization(visualization, origin, additionalBinaryDataProperties: null);
+            return new MonitorIssueBackgroundVisualization(visualization, origin, default);
         }
 
-        /// <summary> Metrics container resource for an Azure Monitor Workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Workspaces.MetricsContainerResourceData"/> instance for mocking. </returns>
-        public static MetricsContainerResourceData MetricsContainerResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MetricsContainer properties = default)
+        /// <returns> A new <see cref="Workspaces.MonitorMetricsContainerData"/> instance for mocking. </returns>
+        public static MonitorMetricsContainerData MonitorMetricsContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorMetricsContainerProperties properties = default)
         {
-            return new MetricsContainerResourceData(
+            return new MonitorMetricsContainerData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Properties of a metrics container. </summary>
         /// <param name="provisioningState"> The provisioning state of the metrics container. </param>
         /// <param name="version"> The version of Metrics Query Service that this AMW will use for all metric queries. </param>
-        /// <returns> A new <see cref="Models.MetricsContainer"/> instance for mocking. </returns>
-        public static MetricsContainer MetricsContainer(ResourceProvisioningState? provisioningState = default, string version = default)
+        /// <returns> A new <see cref="Models.MonitorMetricsContainerProperties"/> instance for mocking. </returns>
+        public static MonitorMetricsContainerProperties MonitorMetricsContainerProperties(MonitorWorkspaceProvisioningState? provisioningState = default, string version = default)
         {
-            return new MetricsContainer(provisioningState, version, additionalBinaryDataProperties: null);
+            return new MonitorMetricsContainerProperties(provisioningState, version, default);
         }
     }
 }

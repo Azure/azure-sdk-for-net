@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 return null;
             }
-            UpdateType updateType = default;
+            IssueNotificationUpdateType updateType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string updateInterval = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("updateType"u8))
                 {
-                    updateType = new UpdateType(prop.Value.GetString());
+                    updateType = new IssueNotificationUpdateType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("updateInterval"u8))

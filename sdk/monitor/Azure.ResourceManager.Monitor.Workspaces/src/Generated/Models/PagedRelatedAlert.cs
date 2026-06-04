@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Initializes a new instance of <see cref="PagedRelatedAlert"/>. </summary>
         /// <param name="value"> The RelatedAlert items on this page. </param>
-        internal PagedRelatedAlert(IEnumerable<RelatedAlert> value)
+        internal PagedRelatedAlert(IEnumerable<IssueRelatedAlertProperties> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="value"> The RelatedAlert items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedRelatedAlert(IList<RelatedAlert> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedRelatedAlert(IList<IssueRelatedAlertProperties> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         }
 
         /// <summary> The RelatedAlert items on this page. </summary>
-        public IList<RelatedAlert> Value { get; }
+        public IList<IssueRelatedAlertProperties> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

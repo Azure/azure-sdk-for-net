@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <summary> Initializes a new instance of <see cref="UnknownIssueNotificationType"/>. </summary>
         /// <param name="updateType"> The type of update that triggers the notification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownIssueNotificationType(UpdateType updateType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(updateType != default ? updateType : "unknown", additionalBinaryDataProperties)
+        internal UnknownIssueNotificationType(IssueNotificationUpdateType updateType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(updateType != default ? updateType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

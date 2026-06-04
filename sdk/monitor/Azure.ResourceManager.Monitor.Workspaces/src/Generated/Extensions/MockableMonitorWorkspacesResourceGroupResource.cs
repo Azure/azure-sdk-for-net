@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         {
         }
 
-        /// <summary> Gets a collection of AzureMonitorWorkspaceResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of AzureMonitorWorkspaceResources and their operations over a AzureMonitorWorkspaceResource. </returns>
-        public virtual AzureMonitorWorkspaceResourceCollection GetAzureMonitorWorkspaceResources()
+        /// <summary> Gets a collection of MonitorWorkspaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of MonitorWorkspaces and their operations over a MonitorWorkspaceResource. </returns>
+        public virtual MonitorWorkspaceCollection GetMonitorWorkspaces()
         {
-            return GetCachedClient(client => new AzureMonitorWorkspaceResourceCollection(client, Id));
+            return GetCachedClient(client => new MonitorWorkspaceCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AzureMonitorWorkspaceResource>> GetAzureMonitorWorkspaceResourceAsync(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorWorkspaceResource>> GetMonitorWorkspaceAsync(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
-            return await GetAzureMonitorWorkspaceResources().GetAsync(azureMonitorWorkspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorWorkspaces().GetAsync(azureMonitorWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="azureMonitorWorkspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="azureMonitorWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AzureMonitorWorkspaceResource> GetAzureMonitorWorkspaceResource(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorWorkspaceResource> GetMonitorWorkspace(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureMonitorWorkspaceName, nameof(azureMonitorWorkspaceName));
 
-            return GetAzureMonitorWorkspaceResources().Get(azureMonitorWorkspaceName, cancellationToken);
+            return GetMonitorWorkspaces().Get(azureMonitorWorkspaceName, cancellationToken);
         }
     }
 }

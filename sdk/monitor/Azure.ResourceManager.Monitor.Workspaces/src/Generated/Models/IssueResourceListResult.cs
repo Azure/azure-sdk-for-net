@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Initializes a new instance of <see cref="IssueResourceListResult"/>. </summary>
         /// <param name="value"> The IssueResource items on this page. </param>
-        internal IssueResourceListResult(IEnumerable<IssueResourceData> value)
+        internal IssueResourceListResult(IEnumerable<MonitorIssueData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="value"> The IssueResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssueResourceListResult(IList<IssueResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IssueResourceListResult(IList<MonitorIssueData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         }
 
         /// <summary> The IssueResource items on this page. </summary>
-        public IList<IssueResourceData> Value { get; }
+        public IList<MonitorIssueData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

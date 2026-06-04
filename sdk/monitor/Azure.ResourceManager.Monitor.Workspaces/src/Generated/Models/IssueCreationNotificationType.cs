@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
     public partial class IssueCreationNotificationType : IssueNotificationType
     {
         /// <summary> Initializes a new instance of <see cref="IssueCreationNotificationType"/>. </summary>
-        public IssueCreationNotificationType() : base(UpdateType.IssueCreation)
+        public IssueCreationNotificationType() : base(IssueNotificationUpdateType.IssueCreation)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="IssueCreationNotificationType"/>. </summary>
         /// <param name="updateType"> The type of update that triggers the notification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssueCreationNotificationType(UpdateType updateType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(updateType, additionalBinaryDataProperties)
+        internal IssueCreationNotificationType(IssueNotificationUpdateType updateType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(updateType, additionalBinaryDataProperties)
         {
         }
     }
