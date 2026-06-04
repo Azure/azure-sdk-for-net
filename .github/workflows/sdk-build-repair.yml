@@ -2,11 +2,16 @@ name: SDK build repair (cloud agent)
 
 # Deterministic kickoff for the Generator Agent cloud-agent repair flow.
 #
-# When a release-automation SDK pull request fails to build because of hand-written
-# customization code, applying the `auto-sdk-build-fix` label (or commenting
-# `/repair-build`) starts a GitHub Copilot cloud-agent task scoped to that PR's
-# branch. The agent uses the `generator-agent` MCP server to fix *custom code only*
-# until the package builds.
+# Happy path (fully automatic, no human action):
+#   The release-planner generation pipeline (spec-gen-sdk) auto-applies the
+#   `auto-sdk-build-fix` label to a generated SDK PR when the .NET generation result
+#   is `warning` (generation succeeded but the build failed) — see issue #59651.
+#   That label is this workflow's primary trigger; it then starts a GitHub Copilot
+#   cloud-agent task that uses the `generator-agent` MCP server to fix *custom code
+#   only* until the package builds.
+#
+# Manual fallback: a maintainer with write access can also apply the label by hand
+# or comment `/repair-build` on an eligible PR to (re)start the repair on demand.
 #
 # Security model:
 #   * Only same-repo PRs authored by the release bot are eligible (no forks).
