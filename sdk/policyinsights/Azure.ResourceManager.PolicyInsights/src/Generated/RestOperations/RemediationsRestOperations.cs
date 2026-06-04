@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsAtResourceRequest(string resourceId, string remediationName, int? maxCount, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsRequest(string resourceId, string remediationName, int? maxCount, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeploymentsAtResourceRequest(Uri nextPage, string resourceId, string remediationName, int? maxCount, RequestContext context)
+        internal HttpMessage CreateNextGetDeploymentsRequest(Uri nextPage, string resourceId, string remediationName, int? maxCount, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateCancelAtResourceRequest(string resourceId, string remediationName, RequestContext context)
+        internal HttpMessage CreateCancelRequest(string resourceId, string remediationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

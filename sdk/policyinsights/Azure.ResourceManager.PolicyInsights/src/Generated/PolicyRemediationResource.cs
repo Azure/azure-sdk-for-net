@@ -312,9 +312,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicyRemediationResource>> CancelAtResourceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyRemediationResource>> CancelAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _remediationsClientDiagnostics.CreateScope("PolicyRemediationResource.CancelAtResource");
+            using DiagnosticScope scope = _remediationsClientDiagnostics.CreateScope("PolicyRemediationResource.Cancel");
             scope.Start();
             try
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _remediationsRestClient.CreateCancelAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
+                HttpMessage message = _remediationsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -360,9 +360,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicyRemediationResource> CancelAtResource(CancellationToken cancellationToken = default)
+        public virtual Response<PolicyRemediationResource> Cancel(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _remediationsClientDiagnostics.CreateScope("PolicyRemediationResource.CancelAtResource");
+            using DiagnosticScope scope = _remediationsClientDiagnostics.CreateScope("PolicyRemediationResource.Cancel");
             scope.Start();
             try
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _remediationsRestClient.CreateCancelAtResourceRequest(Id.Parent.ToString(), Id.Name, context);
+                HttpMessage message = _remediationsRestClient.CreateCancelRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -410,19 +410,19 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RemediationDeployment"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAtResourceAsync(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAsync(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new RemediationsGetDeploymentsAtResourceAsyncCollectionResultOfT(
+            return new RemediationsGetDeploymentsAsyncCollectionResultOfT(
                 _remediationsRestClient,
                 Id.Parent.ToString(),
                 Id.Name,
                 default,
                 context,
-                "PolicyRemediationResource.GetDeploymentsAtResource");
+                "PolicyRemediationResource.GetDeployments");
         }
 
         /// <summary>
@@ -449,19 +449,19 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RemediationDeployment"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RemediationDeployment> GetDeploymentsAtResource(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<RemediationDeployment> GetDeployments(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new RemediationsGetDeploymentsAtResourceCollectionResultOfT(
+            return new RemediationsGetDeploymentsCollectionResultOfT(
                 _remediationsRestClient,
                 Id.Parent.ToString(),
                 Id.Name,
                 default,
                 context,
-                "PolicyRemediationResource.GetDeploymentsAtResource");
+                "PolicyRemediationResource.GetDeployments");
         }
 
         /// <summary>

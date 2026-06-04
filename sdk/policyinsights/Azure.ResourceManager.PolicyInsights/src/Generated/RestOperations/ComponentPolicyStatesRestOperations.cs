@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetQueryResultsForSubscriptionRequest(string subscriptionId, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForSubscriptionComponentPolicyStatesRequest(string subscriptionId, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForResourceGroupRequest(string subscriptionId, string resourceGroupName, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForResourceGroupComponentPolicyStatesRequest(string subscriptionId, string resourceGroupName, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForResourceRequest(string resourceId, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string expand, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForResourceComponentPolicyStatesRequest(string resourceId, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForPolicyDefinitionRequest(string subscriptionId, string policyDefinitionName, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForPolicyDefinitionComponentPolicyStatesRequest(string subscriptionId, string policyDefinitionName, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForSubscriptionLevelPolicyAssignmentRequest(string subscriptionId, string policyAssignmentName, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesRequest(string subscriptionId, string policyAssignmentName, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForResourceGroupLevelPolicyAssignmentRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

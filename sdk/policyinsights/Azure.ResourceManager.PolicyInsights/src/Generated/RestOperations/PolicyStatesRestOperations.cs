@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForPolicySetDefinitionRequest(string subscriptionId, string policyStatesResource, string policySetDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForPolicySetDefinitionPolicyStatesRequest(string subscriptionId, string policyStatesResource, string policySetDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateNextGetQueryResultsForPolicySetDefinitionRequest(Uri nextPage, string subscriptionId, string policyStatesResource, string policySetDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
+        internal HttpMessage CreateNextGetQueryResultsForPolicySetDefinitionPolicyStatesRequest(Uri nextPage, string subscriptionId, string policyStatesResource, string policySetDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateSummarizeForPolicySetDefinitionRequest(string subscriptionId, string policyStatesSummaryResource, string policySetDefinitionName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
+        internal HttpMessage CreateSummarizeForPolicySetDefinitionPolicyStatesRequest(string subscriptionId, string policyStatesSummaryResource, string policySetDefinitionName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForPolicyDefinitionRequest(string subscriptionId, string policyStatesResource, string policyDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForPolicyDefinitionPolicyStatesRequest(string subscriptionId, string policyStatesResource, string policyDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateNextGetQueryResultsForPolicyDefinitionRequest(Uri nextPage, string subscriptionId, string policyStatesResource, string policyDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
+        internal HttpMessage CreateNextGetQueryResultsForPolicyDefinitionPolicyStatesRequest(Uri nextPage, string subscriptionId, string policyStatesResource, string policyDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateSummarizeForPolicyDefinitionRequest(string subscriptionId, string policyStatesSummaryResource, string policyDefinitionName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
+        internal HttpMessage CreateSummarizeForPolicyDefinitionPolicyStatesRequest(string subscriptionId, string policyStatesSummaryResource, string policyDefinitionName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForSubscriptionLevelPolicyAssignmentRequest(string subscriptionId, string policyStatesResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesRequest(string subscriptionId, string policyStatesResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateNextGetQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Uri nextPage, string subscriptionId, string policyStatesResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
+        internal HttpMessage CreateNextGetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesRequest(Uri nextPage, string subscriptionId, string policyStatesResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(string subscriptionId, string policyStatesSummaryResource, string policyAssignmentName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
+        internal HttpMessage CreateSummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesRequest(string subscriptionId, string policyStatesSummaryResource, string policyAssignmentName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForResourceGroupLevelPolicyAssignmentRequest(string subscriptionId, string resourceGroupName, string policyStatesResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesRequest(string subscriptionId, string resourceGroupName, string policyStatesResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateNextGetQueryResultsForResourceGroupLevelPolicyAssignmentRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string policyStatesResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
+        internal HttpMessage CreateNextGetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string policyStatesResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateSummarizeForResourceGroupLevelPolicyAssignmentRequest(string subscriptionId, string resourceGroupName, string policyStatesSummaryResource, string policyAssignmentName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
+        internal HttpMessage CreateSummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesRequest(string subscriptionId, string resourceGroupName, string policyStatesSummaryResource, string policyAssignmentName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

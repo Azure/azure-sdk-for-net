@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,7 +14,7 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    internal partial class RemediationsGetDeploymentsAtResourceAsyncCollectionResultOfT : AsyncPageable<RemediationDeployment>
+    internal partial class RemediationsGetDeploymentsCollectionResultOfT : Pageable<RemediationDeployment>
     {
         private readonly Remediations _client;
         private readonly string _resourceId;
@@ -24,14 +23,14 @@ namespace Azure.ResourceManager.PolicyInsights
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of RemediationsGetDeploymentsAtResourceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of RemediationsGetDeploymentsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Remediations client used to send requests. </param>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="maxCount"> Maximum number of records to return. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RemediationsGetDeploymentsAtResourceAsyncCollectionResultOfT(Remediations client, string resourceId, string remediationName, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RemediationsGetDeploymentsCollectionResultOfT(Remediations client, string resourceId, string remediationName, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceId = resourceId;
@@ -41,16 +40,16 @@ namespace Azure.ResourceManager.PolicyInsights
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of RemediationsGetDeploymentsAtResourceAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of RemediationsGetDeploymentsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of RemediationsGetDeploymentsAtResourceAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<RemediationDeployment>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of RemediationsGetDeploymentsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<RemediationDeployment>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -68,14 +67,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDeploymentsAtResourceRequest(nextLink, _resourceId, _remediationName, _maxCount, _context) : _client.CreateGetDeploymentsAtResourceRequest(_resourceId, _remediationName, _maxCount, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetDeploymentsRequest(nextLink, _resourceId, _remediationName, _maxCount, _context) : _client.CreateGetDeploymentsRequest(_resourceId, _remediationName, _maxCount, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

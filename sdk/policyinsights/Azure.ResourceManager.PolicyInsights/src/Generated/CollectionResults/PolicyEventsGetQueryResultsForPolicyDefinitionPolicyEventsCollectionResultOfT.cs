@@ -14,7 +14,7 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    internal partial class PolicyEventsGetQueryResultsForPolicyDefinitionCollectionResultOfT : Pageable<PolicyEvent>
+    internal partial class PolicyEventsGetQueryResultsForPolicyDefinitionPolicyEventsCollectionResultOfT : Pageable<PolicyEvent>
     {
         private readonly PolicyEvents _client;
         private readonly string _subscriptionId;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PolicyInsights
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of PolicyEventsGetQueryResultsForPolicyDefinitionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of PolicyEventsGetQueryResultsForPolicyDefinitionPolicyEventsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PolicyEvents client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="skipToken"> Skiptoken is only provided if a previous response returned a partial result as a part of nextLink element. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public PolicyEventsGetQueryResultsForPolicyDefinitionCollectionResultOfT(PolicyEvents client, string subscriptionId, string policyEventsResource, string policyDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public PolicyEventsGetQueryResultsForPolicyDefinitionPolicyEventsCollectionResultOfT(PolicyEvents client, string subscriptionId, string policyEventsResource, string policyDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.PolicyInsights
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of PolicyEventsGetQueryResultsForPolicyDefinitionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PolicyEventsGetQueryResultsForPolicyDefinitionPolicyEventsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of PolicyEventsGetQueryResultsForPolicyDefinitionCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of PolicyEventsGetQueryResultsForPolicyDefinitionPolicyEventsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<PolicyEvent>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetQueryResultsForPolicyDefinitionRequest(nextLink, _subscriptionId, _policyEventsResource, _policyDefinitionName, _maxCount, _orderBy, _select, _from, _to, _filter, _apply, _skipToken, _context) : _client.CreateGetQueryResultsForPolicyDefinitionRequest(_subscriptionId, _policyEventsResource, _policyDefinitionName, _maxCount, _orderBy, _select, _from, _to, _filter, _apply, _skipToken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetQueryResultsForPolicyDefinitionPolicyEventsRequest(nextLink, _subscriptionId, _policyEventsResource, _policyDefinitionName, _maxCount, _orderBy, _select, _from, _to, _filter, _apply, _skipToken, _context) : _client.CreateGetQueryResultsForPolicyDefinitionPolicyEventsRequest(_subscriptionId, _policyEventsResource, _policyDefinitionName, _maxCount, _orderBy, _select, _from, _to, _filter, _apply, _skipToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -15,13 +15,12 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    internal partial class PolicyStatesGetQueryResultsForResourceGroupLevelPolicyAssignmentAsyncCollectionResultOfT : AsyncPageable<PolicyState>
+    internal partial class PolicyStatesGetQueryResultsForPolicySetDefinitionPolicyStatesAsyncCollectionResultOfT : AsyncPageable<PolicyState>
     {
         private readonly PolicyStates _client;
         private readonly string _subscriptionId;
-        private readonly string _resourceGroupName;
         private readonly string _policyStatesResource;
-        private readonly string _policyAssignmentName;
+        private readonly string _policySetDefinitionName;
         private readonly int? _maxCount;
         private readonly string _orderBy;
         private readonly string _select;
@@ -33,12 +32,11 @@ namespace Azure.ResourceManager.PolicyInsights
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of PolicyStatesGetQueryResultsForResourceGroupLevelPolicyAssignmentAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of PolicyStatesGetQueryResultsForPolicySetDefinitionPolicyStatesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The PolicyStates client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
+        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
         /// <param name="maxCount"> Maximum number of records to return. </param>
         /// <param name="orderBy"> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </param>
         /// <param name="select"> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </param>
@@ -49,13 +47,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="skipToken"> Skiptoken is only provided if a previous response returned a partial result as a part of nextLink element. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public PolicyStatesGetQueryResultsForResourceGroupLevelPolicyAssignmentAsyncCollectionResultOfT(PolicyStates client, string subscriptionId, string resourceGroupName, string policyStatesResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public PolicyStatesGetQueryResultsForPolicySetDefinitionPolicyStatesAsyncCollectionResultOfT(PolicyStates client, string subscriptionId, string policyStatesResource, string policySetDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
             _policyStatesResource = policyStatesResource;
-            _policyAssignmentName = policyAssignmentName;
+            _policySetDefinitionName = policySetDefinitionName;
             _maxCount = maxCount;
             _orderBy = orderBy;
             _select = @select;
@@ -68,10 +65,10 @@ namespace Azure.ResourceManager.PolicyInsights
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of PolicyStatesGetQueryResultsForResourceGroupLevelPolicyAssignmentAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PolicyStatesGetQueryResultsForPolicySetDefinitionPolicyStatesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of PolicyStatesGetQueryResultsForResourceGroupLevelPolicyAssignmentAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of PolicyStatesGetQueryResultsForPolicySetDefinitionPolicyStatesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<PolicyState>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -98,7 +95,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetQueryResultsForResourceGroupLevelPolicyAssignmentRequest(nextLink, _subscriptionId, _resourceGroupName, _policyStatesResource, _policyAssignmentName, _maxCount, _orderBy, _select, _from, _to, _filter, _apply, _skipToken, _context) : _client.CreateGetQueryResultsForResourceGroupLevelPolicyAssignmentRequest(_subscriptionId, _resourceGroupName, _policyStatesResource, _policyAssignmentName, _maxCount, _orderBy, _select, _from, _to, _filter, _apply, _skipToken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetQueryResultsForPolicySetDefinitionPolicyStatesRequest(nextLink, _subscriptionId, _policyStatesResource, _policySetDefinitionName, _maxCount, _orderBy, _select, _from, _to, _filter, _apply, _skipToken, _context) : _client.CreateGetQueryResultsForPolicySetDefinitionPolicyStatesRequest(_subscriptionId, _policyStatesResource, _policySetDefinitionName, _maxCount, _orderBy, _select, _from, _to, _filter, _apply, _skipToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
