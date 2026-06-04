@@ -140,11 +140,11 @@ namespace Azure.Identity
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
 
-        public virtual async ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySourceResult> GetManagedIdentitySourceAsync(TokenRequestContext context, CancellationToken cancellationToken)
+        public virtual async ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesAsync(TokenRequestContext context, CancellationToken cancellationToken)
         {
             IManagedIdentityApplication client = await GetClientAsync(true, context.IsCaeEnabled, context.IsProofOfPossessionEnabled, cancellationToken).ConfigureAwait(false);
             ManagedIdentityApplication app = client as ManagedIdentityApplication;
-            return await app.GetManagedIdentitySourceAsync(cancellationToken).ConfigureAwait(false);
+            return await app.GetManagedIdentityCapabilitiesAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

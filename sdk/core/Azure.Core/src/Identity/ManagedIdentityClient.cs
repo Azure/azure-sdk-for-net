@@ -73,9 +73,9 @@ namespace Azure.Identity
         {
             AuthenticationResult result;
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
-            MSAL.ManagedIdentitySourceResult availableSource = async ?
-                await _msalManagedIdentityClient.GetManagedIdentitySourceAsync(context, cancellationToken).ConfigureAwait(false) :
-                _msalManagedIdentityClient.GetManagedIdentitySourceAsync(context, cancellationToken).EnsureCompleted();
+            MSAL.ManagedIdentityCapabilities availableSource = async ?
+                await _msalManagedIdentityClient.GetManagedIdentityCapabilitiesAsync(context, cancellationToken).ConfigureAwait(false) :
+                _msalManagedIdentityClient.GetManagedIdentityCapabilitiesAsync(context, cancellationToken).EnsureCompleted();
 #pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.Source.ToString(), _options.ManagedIdentityId.ToString());

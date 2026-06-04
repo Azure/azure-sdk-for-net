@@ -59,8 +59,7 @@ namespace Azure.Core.Tests.Identity.Mock
 #pragma warning disable CS0618 // DefaultToImds is obsolete
             if (Pipeline != null &&
                 (_detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.DefaultToImds ||
-                 _detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.Imds ||
-                 _detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.ImdsV2))
+                 _detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.Imds))
 #pragma warning restore CS0618
             {
                 return new ValueTask<AuthenticationResult>(SendDirectImdsRequest(requestContext, cancellationToken));
@@ -69,13 +68,16 @@ namespace Azure.Core.Tests.Identity.Mock
             return base.AcquireTokenForManagedIdentityAsyncCore(async, requestContext, isTokenBindingAvailable, cancellationToken);
         }
 
-        public override ValueTask<ManagedIdentitySourceResult> GetManagedIdentitySourceAsync(TokenRequestContext context, CancellationToken cancellationToken)
+        public override ValueTask<ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesAsync(TokenRequestContext context, CancellationToken cancellationToken)
         {
             // Use the static method to avoid real network probing in tests.
 #pragma warning disable CS0618 // GetManagedIdentitySource is obsolete
             _detectedSource = ManagedIdentityApplication.GetManagedIdentitySource();
 #pragma warning restore CS0618
-            return new ValueTask<ManagedIdentitySourceResult>(new ManagedIdentitySourceResult(_detectedSource));
+            // ManagedIdentityCapabilities has no public constructor; use reflection to create an instance for testing.
+            var ctor = typeof(ManagedIdentityCapabilities).GetConstructors(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)[0];
+            var capabilities = (ManagedIdentityCapabilities)ctor.Invoke(new object[] { _detectedSource, null, null });
+            return new ValueTask<ManagedIdentityCapabilities>(capabilities);
         }
 
         private AuthenticationResult SendDirectImdsRequest(TokenRequestContext requestContext, CancellationToken cancellationToken)
