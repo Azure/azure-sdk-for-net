@@ -47,7 +47,7 @@ Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-c
 ## Guardrails
 
 - **NEVER modify generated SDK code files directly for customizations.** Always use `azure-sdk-mcp:azsdk_customized_code_update`. It handles classification, TypeSpec decorators, code patches, regeneration, and build as a single atomic workflow.
-- If `azsdk_customized_code_update` fails or times out, **report the error to the user** and suggest retrying. Do not attempt to replicate its behavior by editing files manually.
+- If `azure-sdk-mcp:azsdk_customized_code_update` fails or times out, **report the error to the user** and suggest retrying. Do not attempt to replicate its behavior by editing files manually.
 - Only the customization tool understands the correct layering of TypeSpec decorators vs code patches and ensures regenerated code stays consistent.
 
 ## Examples
@@ -72,5 +72,5 @@ Prerequisites: azure-sdk-mcp server must be running. Without MCP, use `npx tsp-c
 - Run `azure-sdk-mcp:azsdk_verify_setup` to confirm MCP and tools.
 - If build fails with type conflicts, breaking changes, analyzer errors, or customization drift, use `azure-sdk-mcp:azsdk_customized_code_update` to apply customizations.
 - The customization tool uses a two-phase approach: TypeSpec decorators first (Phase A), then code repairs if needed (Phase B).
-- If `azsdk_customized_code_update` fails or times out, report the error and retry. Do not manually edit generated SDK code — manual edits will be overwritten on the next regeneration.
+- If `azure-sdk-mcp:azsdk_customized_code_update` fails or times out, report the error and retry. Do not manually edit generated SDK code — manual edits will be overwritten on the next regeneration.
 - Without MCP, use `npx tsp-client` CLI.
