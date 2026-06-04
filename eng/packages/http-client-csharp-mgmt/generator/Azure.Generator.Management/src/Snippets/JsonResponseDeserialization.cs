@@ -183,15 +183,6 @@ namespace Azure.Generator.Management.Snippets
                 return nested;
             }
 
-            if (type.IsFrameworkType && type.FrameworkType == typeof(BinaryData))
-            {
-                // This is hit for Record<unknown> values: the Record itself is a dictionary, while each
-                // dictionary value is represented as BinaryData.
-                return Static(typeof(BinaryData)).Invoke(
-                    nameof(BinaryData.FromString),
-                    element.Invoke(nameof(JsonElement.GetRawText)));
-            }
-
             // Scalar or model leaf: delegate to the AOT-safe per-value deserialization (JsonElement.GetXxx for
             // scalars, ModelReaderWriter.Read with a generated context for models).
             return ManagementClientGenerator.Instance.TypeFactory.DeserializeJsonValue(
