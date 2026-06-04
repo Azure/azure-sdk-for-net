@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspacePrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        internal MonitorWorkspacePrivateEndpointConnectionProperties(MonitorWorkspacesPrivateLinkServiceConnectionState privateLinkServiceConnectionState)
+        internal MonitorWorkspacePrivateEndpointConnectionProperties(MonitorWorkspacePrivateLinkServiceConnectionState privateLinkServiceConnectionState)
         {
             GroupIds = new ChangeTrackingList<string>();
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorWorkspacePrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, PrivateEndpoint privateEndpoint, MonitorWorkspacesPrivateLinkServiceConnectionState privateLinkServiceConnectionState, MonitorWorkspacesPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorWorkspacePrivateEndpointConnectionProperties(IReadOnlyList<string> groupIds, PrivateEndpoint privateEndpoint, MonitorWorkspacePrivateLinkServiceConnectionState privateLinkServiceConnectionState, MonitorWorkspacePrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GroupIds = groupIds;
             PrivateEndpoint = privateEndpoint;
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         internal PrivateEndpoint PrivateEndpoint { get; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public MonitorWorkspacesPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
+        public MonitorWorkspacePrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
 
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        public MonitorWorkspacesPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public MonitorWorkspacePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
         public ResourceIdentifier PrivateEndpointId

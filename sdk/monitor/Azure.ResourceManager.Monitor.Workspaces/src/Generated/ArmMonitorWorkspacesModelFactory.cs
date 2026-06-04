@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="Workspaces.MonitorWorkspaceData"/> instance for mocking. </returns>
-        public static MonitorWorkspaceData MonitorWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MonitorWorkspaceProperties properties = default, ManagedServiceIdentity identity = default, string eTag = default)
+        public static MonitorWorkspaceData MonitorWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MonitorWorkspaceProperties properties = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -53,16 +53,16 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to Azure Monitor Workspace. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspaceProperties"/> instance for mocking. </returns>
-        public static MonitorWorkspaceProperties MonitorWorkspaceProperties(string accountId = default, MonitorWorkspaceMetrics metrics = default, MonitorWorkspaceProvisioningState? provisioningState = default, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = default, IEnumerable<MonitorWorkspacesPrivateEndpointConnection> privateEndpointConnections = default, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = default)
+        public static MonitorWorkspaceProperties MonitorWorkspaceProperties(string accountId = default, MonitorWorkspaceMetrics metrics = default, MonitorWorkspaceProvisioningState? provisioningState = default, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = default, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = default, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = default)
         {
-            privateEndpointConnections ??= new ChangeTrackingList<MonitorWorkspacesPrivateEndpointConnection>();
+            privateEndpointConnections ??= new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>();
 
             return new MonitorWorkspaceProperties(
                 accountId,
                 metrics,
                 provisioningState,
                 defaultIngestionSettings,
-                (privateEndpointConnections ?? new ChangeTrackingList<MonitorWorkspacesPrivateEndpointConnection>()).ToList(),
+                (privateEndpointConnections ?? new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>()).ToList(),
                 publicNetworkAccess,
                 default);
         }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="dataCollectionRuleImmutableId"> The immutable Id of the default data collection rule for this Azure Monitor Workspace. </param>
         /// <param name="ingestionEndpointsMetrics"> The metrics ingestion endpoint for this Azure Monitor Workspace. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspaceDefaultIngestionSettings"/> instance for mocking. </returns>
-        public static MonitorWorkspaceDefaultIngestionSettings MonitorWorkspaceDefaultIngestionSettings(string dataCollectionRuleResourceId = default, string dataCollectionEndpointResourceId = default, string dataCollectionRuleImmutableId = default, string ingestionEndpointsMetrics = default)
+        public static MonitorWorkspaceDefaultIngestionSettings MonitorWorkspaceDefaultIngestionSettings(ResourceIdentifier dataCollectionRuleResourceId = default, ResourceIdentifier dataCollectionEndpointResourceId = default, string dataCollectionRuleImmutableId = default, string ingestionEndpointsMetrics = default)
         {
             return new MonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId, dataCollectionEndpointResourceId, dataCollectionRuleImmutableId, ingestionEndpointsMetrics is null ? default : new IngestionEndpoints(ingestionEndpointsMetrics, default), default);
         }
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <returns> A new <see cref="Models.MonitorWorkspacesPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static MonitorWorkspacesPrivateEndpointConnection MonitorWorkspacesPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorWorkspacePrivateEndpointConnectionProperties properties = default)
+        /// <returns> A new <see cref="Models.MonitorWorkspacePrivateEndpointConnection"/> instance for mocking. </returns>
+        public static MonitorWorkspacePrivateEndpointConnection MonitorWorkspacePrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorWorkspacePrivateEndpointConnectionProperties properties = default)
         {
-            return new MonitorWorkspacesPrivateEndpointConnection(
+            return new MonitorWorkspacePrivateEndpointConnection(
                 id,
                 name,
                 resourceType,
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspacePrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static MonitorWorkspacePrivateEndpointConnectionProperties MonitorWorkspacePrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, MonitorWorkspacesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, MonitorWorkspacesPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        public static MonitorWorkspacePrivateEndpointConnectionProperties MonitorWorkspacePrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, MonitorWorkspacePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, MonitorWorkspacePrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
 
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.MonitorWorkspacesPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static MonitorWorkspacesPrivateLinkServiceConnectionState MonitorWorkspacesPrivateLinkServiceConnectionState(MonitorWorkspacesPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        /// <returns> A new <see cref="Models.MonitorWorkspacePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static MonitorWorkspacePrivateLinkServiceConnectionState MonitorWorkspacePrivateLinkServiceConnectionState(MonitorWorkspacesPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
         {
-            return new MonitorWorkspacesPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+            return new MonitorWorkspacePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -208,14 +208,14 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <param name="updateTypes"> The types of updates that trigger notifications. </param>
         /// <param name="actionGroupIds"> The action group IDs to notify. </param>
-        /// <param name="excludeDefaultActionGroups"> Whether to exclude default action groups from notifications. </param>
+        /// <param name="shouldExcludeDefaultActionGroups"> Whether to exclude default action groups from notifications. </param>
         /// <returns> A new <see cref="Models.IssueNotifications"/> instance for mocking. </returns>
-        public static IssueNotifications IssueNotifications(IEnumerable<IssueNotificationType> updateTypes = default, IEnumerable<string> actionGroupIds = default, bool? excludeDefaultActionGroups = default)
+        public static IssueNotifications IssueNotifications(IEnumerable<IssueNotificationType> updateTypes = default, IEnumerable<ResourceIdentifier> actionGroupIds = default, bool? shouldExcludeDefaultActionGroups = default)
         {
             updateTypes ??= new ChangeTrackingList<IssueNotificationType>();
-            actionGroupIds ??= new ChangeTrackingList<string>();
+            actionGroupIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new IssueNotifications((updateTypes ?? new ChangeTrackingList<IssueNotificationType>()).ToList(), (actionGroupIds ?? new ChangeTrackingList<string>()).ToList(), excludeDefaultActionGroups, default);
+            return new IssueNotifications((updateTypes ?? new ChangeTrackingList<IssueNotificationType>()).ToList(), (actionGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), shouldExcludeDefaultActionGroups, default);
         }
 
         /// <param name="updateType"> The type of update that triggers the notification. </param>
@@ -311,12 +311,12 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <param name="value"> The RelatedAlert items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.PagedRelatedAlert"/> instance for mocking. </returns>
-        public static PagedRelatedAlert PagedRelatedAlert(IEnumerable<IssueRelatedAlertProperties> value = default, Uri nextLink = default)
+        /// <returns> A new <see cref="Models.PagedIssueRelatedAlertProperties"/> instance for mocking. </returns>
+        public static PagedIssueRelatedAlertProperties PagedIssueRelatedAlertProperties(IEnumerable<IssueRelatedAlertProperties> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<IssueRelatedAlertProperties>();
 
-            return new PagedRelatedAlert((value ?? new ChangeTrackingList<IssueRelatedAlertProperties>()).ToList(), nextLink, default);
+            return new PagedIssueRelatedAlertProperties((value ?? new ChangeTrackingList<IssueRelatedAlertProperties>()).ToList(), nextLink, default);
         }
 
         /// <param name="id"> The alert ID. </param>
@@ -347,12 +347,12 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <param name="value"> The RelatedResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.PagedRelatedResource"/> instance for mocking. </returns>
-        public static PagedRelatedResource PagedRelatedResource(IEnumerable<IssueRelatedResourceProperties> value = default, Uri nextLink = default)
+        /// <returns> A new <see cref="Models.PagedIssueRelatedResourceProperties"/> instance for mocking. </returns>
+        public static PagedIssueRelatedResourceProperties PagedIssueRelatedResourceProperties(IEnumerable<IssueRelatedResourceProperties> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<IssueRelatedResourceProperties>();
 
-            return new PagedRelatedResource((value ?? new ChangeTrackingList<IssueRelatedResourceProperties>()).ToList(), nextLink, default);
+            return new PagedIssueRelatedResourceProperties((value ?? new ChangeTrackingList<IssueRelatedResourceProperties>()).ToList(), nextLink, default);
         }
 
         /// <param name="id"> The resource ID. </param>

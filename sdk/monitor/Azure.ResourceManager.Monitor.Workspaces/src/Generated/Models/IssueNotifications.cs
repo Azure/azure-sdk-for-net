@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Monitor.Workspaces;
 
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
@@ -21,19 +22,19 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         public IssueNotifications()
         {
             UpdateTypes = new ChangeTrackingList<IssueNotificationType>();
-            ActionGroupIds = new ChangeTrackingList<string>();
+            ActionGroupIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IssueNotifications"/>. </summary>
         /// <param name="updateTypes"> The types of updates that trigger notifications. </param>
         /// <param name="actionGroupIds"> The action group IDs to notify. </param>
-        /// <param name="excludeDefaultActionGroups"> Whether to exclude default action groups from notifications. </param>
+        /// <param name="shouldExcludeDefaultActionGroups"> Whether to exclude default action groups from notifications. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssueNotifications(IList<IssueNotificationType> updateTypes, IList<string> actionGroupIds, bool? excludeDefaultActionGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IssueNotifications(IList<IssueNotificationType> updateTypes, IList<ResourceIdentifier> actionGroupIds, bool? shouldExcludeDefaultActionGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UpdateTypes = updateTypes;
             ActionGroupIds = actionGroupIds;
-            ExcludeDefaultActionGroups = excludeDefaultActionGroups;
+            ShouldExcludeDefaultActionGroups = shouldExcludeDefaultActionGroups;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,9 +42,9 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         public IList<IssueNotificationType> UpdateTypes { get; }
 
         /// <summary> The action group IDs to notify. </summary>
-        public IList<string> ActionGroupIds { get; }
+        public IList<ResourceIdentifier> ActionGroupIds { get; }
 
         /// <summary> Whether to exclude default action groups from notifications. </summary>
-        public bool? ExcludeDefaultActionGroups { get; set; }
+        public bool? ShouldExcludeDefaultActionGroups { get; set; }
     }
 }

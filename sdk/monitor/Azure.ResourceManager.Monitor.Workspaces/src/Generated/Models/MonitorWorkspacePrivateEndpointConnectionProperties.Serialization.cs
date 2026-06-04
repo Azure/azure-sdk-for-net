@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             }
             IReadOnlyList<string> groupIds = default;
             PrivateEndpoint privateEndpoint = default;
-            MonitorWorkspacesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
-            MonitorWorkspacesPrivateEndpointConnectionProvisioningState? provisioningState = default;
+            MonitorWorkspacePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            MonitorWorkspacePrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = MonitorWorkspacesPrivateLinkServiceConnectionState.DeserializeMonitorWorkspacesPrivateLinkServiceConnectionState(prop.Value, options);
+                    privateLinkServiceConnectionState = MonitorWorkspacePrivateLinkServiceConnectionState.DeserializeMonitorWorkspacePrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     {
                         continue;
                     }
-                    provisioningState = new MonitorWorkspacesPrivateEndpointConnectionProvisioningState(prop.Value.GetString());
+                    provisioningState = new MonitorWorkspacePrivateEndpointConnectionProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

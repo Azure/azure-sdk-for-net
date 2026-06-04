@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
-                foreach (MonitorWorkspacesPrivateEndpointConnection item in PrivateEndpointConnections)
+                foreach (MonitorWorkspacePrivateEndpointConnection item in PrivateEndpointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             MonitorWorkspaceMetrics metrics = default;
             MonitorWorkspaceProvisioningState? provisioningState = default;
             MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = default;
-            IReadOnlyList<MonitorWorkspacesPrivateEndpointConnection> privateEndpointConnections = default;
+            IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = default;
             MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     {
                         continue;
                     }
-                    List<MonitorWorkspacesPrivateEndpointConnection> array = new List<MonitorWorkspacesPrivateEndpointConnection>();
+                    List<MonitorWorkspacePrivateEndpointConnection> array = new List<MonitorWorkspacePrivateEndpointConnection>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MonitorWorkspacesPrivateEndpointConnection.DeserializeMonitorWorkspacesPrivateEndpointConnection(item, options));
+                        array.Add(MonitorWorkspacePrivateEndpointConnection.DeserializeMonitorWorkspacePrivateEndpointConnection(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 metrics,
                 provisioningState,
                 defaultIngestionSettings,
-                privateEndpointConnections ?? new ChangeTrackingList<MonitorWorkspacesPrivateEndpointConnection>(),
+                privateEndpointConnections ?? new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>(),
                 publicNetworkAccess,
                 additionalBinaryDataProperties);
         }

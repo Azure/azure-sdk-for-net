@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> The private endpoint connection resource. </summary>
-    public partial class MonitorWorkspacesPrivateEndpointConnection : ResourceData
+    public partial class MonitorWorkspacePrivateEndpointConnection : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitorWorkspacesPrivateEndpointConnection"/>. </summary>
-        internal MonitorWorkspacesPrivateEndpointConnection()
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspacePrivateEndpointConnection"/>. </summary>
+        internal MonitorWorkspacePrivateEndpointConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitorWorkspacesPrivateEndpointConnection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorWorkspacePrivateEndpointConnection"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorWorkspacesPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorWorkspacePrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal MonitorWorkspacePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorWorkspacePrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

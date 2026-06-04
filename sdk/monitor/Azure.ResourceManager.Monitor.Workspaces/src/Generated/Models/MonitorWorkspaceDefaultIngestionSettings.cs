@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="dataCollectionRuleImmutableId"> The immutable Id of the default data collection rule for this Azure Monitor Workspace. </param>
         /// <param name="ingestionEndpoints"> The ingestion endpoints for this Azure Monitor Workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorWorkspaceDefaultIngestionSettings(string dataCollectionRuleResourceId, string dataCollectionEndpointResourceId, string dataCollectionRuleImmutableId, IngestionEndpoints ingestionEndpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorWorkspaceDefaultIngestionSettings(ResourceIdentifier dataCollectionRuleResourceId, ResourceIdentifier dataCollectionEndpointResourceId, string dataCollectionRuleImmutableId, IngestionEndpoints ingestionEndpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataCollectionRuleResourceId = dataCollectionRuleResourceId;
             DataCollectionEndpointResourceId = dataCollectionEndpointResourceId;
@@ -37,10 +38,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         }
 
         /// <summary> The Azure resource Id of the default data collection rule for this Azure Monitor Workspace. </summary>
-        public string DataCollectionRuleResourceId { get; }
+        public ResourceIdentifier DataCollectionRuleResourceId { get; }
 
         /// <summary> The Azure resource Id of the default data collection endpoint for this Azure Monitor Workspace. </summary>
-        public string DataCollectionEndpointResourceId { get; }
+        public ResourceIdentifier DataCollectionEndpointResourceId { get; }
 
         /// <summary> The immutable Id of the default data collection rule for this Azure Monitor Workspace. </summary>
         public string DataCollectionRuleImmutableId { get; }

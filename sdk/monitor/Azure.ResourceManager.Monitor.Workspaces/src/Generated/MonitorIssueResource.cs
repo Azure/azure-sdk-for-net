@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PagedRelatedAlert>> GetAlertsAsync(IssueListContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PagedIssueRelatedAlertProperties>> GetAlertsAsync(IssueListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _issueRestClient.CreateGetAlertsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IssueListContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PagedRelatedAlert> response = Response.FromValue(PagedRelatedAlert.FromResponse(result), result);
+                Response<PagedIssueRelatedAlertProperties> response = Response.FromValue(PagedIssueRelatedAlertProperties.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -982,7 +982,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PagedRelatedAlert> GetAlerts(IssueListContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PagedIssueRelatedAlertProperties> GetAlerts(IssueListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _issueRestClient.CreateGetAlertsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IssueListContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PagedRelatedAlert> response = Response.FromValue(PagedRelatedAlert.FromResponse(result), result);
+                Response<PagedIssueRelatedAlertProperties> response = Response.FromValue(PagedIssueRelatedAlertProperties.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1034,7 +1034,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PagedRelatedResource>> GetResourcesAsync(IssueListContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PagedIssueRelatedResourceProperties>> GetResourcesAsync(IssueListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1048,7 +1048,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _issueRestClient.CreateGetResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IssueListContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PagedRelatedResource> response = Response.FromValue(PagedRelatedResource.FromResponse(result), result);
+                Response<PagedIssueRelatedResourceProperties> response = Response.FromValue(PagedIssueRelatedResourceProperties.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1086,7 +1086,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PagedRelatedResource> GetResources(IssueListContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PagedIssueRelatedResourceProperties> GetResources(IssueListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1100,7 +1100,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
                 };
                 HttpMessage message = _issueRestClient.CreateGetResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IssueListContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PagedRelatedResource> response = Response.FromValue(PagedRelatedResource.FromResponse(result), result);
+                Response<PagedIssueRelatedResourceProperties> response = Response.FromValue(PagedIssueRelatedResourceProperties.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

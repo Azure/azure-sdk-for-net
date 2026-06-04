@@ -15,63 +15,63 @@ using Azure.ResourceManager.Monitor.Workspaces;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> Paged collection of RelatedResource items. </summary>
-    public partial class PagedRelatedResource : IJsonModel<PagedRelatedResource>
+    public partial class PagedIssueRelatedResourceProperties : IJsonModel<PagedIssueRelatedResourceProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="PagedRelatedResource"/> for deserialization. </summary>
-        internal PagedRelatedResource()
+        /// <summary> Initializes a new instance of <see cref="PagedIssueRelatedResourceProperties"/> for deserialization. </summary>
+        internal PagedIssueRelatedResourceProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PagedRelatedResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PagedIssueRelatedResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedRelatedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PagedIssueRelatedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePagedRelatedResource(document.RootElement, options);
+                        return DeserializePagedIssueRelatedResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PagedRelatedResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PagedIssueRelatedResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedRelatedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PagedIssueRelatedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorWorkspacesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PagedRelatedResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PagedIssueRelatedResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedRelatedResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PagedIssueRelatedResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PagedRelatedResource IPersistableModel<PagedRelatedResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PagedIssueRelatedResourceProperties IPersistableModel<PagedIssueRelatedResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedRelatedResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PagedIssueRelatedResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedRelatedResource"/> from. </param>
-        internal static PagedRelatedResource FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedIssueRelatedResourceProperties"/> from. </param>
+        internal static PagedIssueRelatedResourceProperties FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePagedRelatedResource(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializePagedIssueRelatedResourceProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PagedRelatedResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PagedIssueRelatedResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedRelatedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PagedIssueRelatedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PagedRelatedResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PagedIssueRelatedResourceProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PagedRelatedResource IJsonModel<PagedRelatedResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PagedIssueRelatedResourceProperties IJsonModel<PagedIssueRelatedResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PagedRelatedResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PagedIssueRelatedResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedRelatedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PagedIssueRelatedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PagedRelatedResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PagedIssueRelatedResourceProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePagedRelatedResource(document.RootElement, options);
+            return DeserializePagedIssueRelatedResourceProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PagedRelatedResource DeserializePagedRelatedResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static PagedIssueRelatedResourceProperties DeserializePagedIssueRelatedResourceProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PagedRelatedResource(value, nextLink, additionalBinaryDataProperties);
+            return new PagedIssueRelatedResourceProperties(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

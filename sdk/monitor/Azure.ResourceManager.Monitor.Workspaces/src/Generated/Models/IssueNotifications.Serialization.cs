@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Monitor.Workspaces;
 
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 writer.WritePropertyName("actionGroupIds"u8);
                 writer.WriteStartArray();
-                foreach (string item in ActionGroupIds)
+                foreach (ResourceIdentifier item in ActionGroupIds)
                 {
                     if (item == null)
                     {
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExcludeDefaultActionGroups))
+            if (Optional.IsDefined(ShouldExcludeDefaultActionGroups))
             {
                 writer.WritePropertyName("excludeDefaultActionGroups"u8);
-                writer.WriteBooleanValue(ExcludeDefaultActionGroups.Value);
+                writer.WriteBooleanValue(ShouldExcludeDefaultActionGroups.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -147,8 +148,8 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 return null;
             }
             IList<IssueNotificationType> updateTypes = default;
-            IList<string> actionGroupIds = default;
-            bool? excludeDefaultActionGroups = default;
+            IList<ResourceIdentifier> actionGroupIds = default;
+            bool? shouldExcludeDefaultActionGroups = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                         }
                         else
                         {
-                            array.Add(item.GetString());
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     actionGroupIds = array;
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     {
                         continue;
                     }
-                    excludeDefaultActionGroups = prop.Value.GetBoolean();
+                    shouldExcludeDefaultActionGroups = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IssueNotifications(updateTypes ?? new ChangeTrackingList<IssueNotificationType>(), actionGroupIds ?? new ChangeTrackingList<string>(), excludeDefaultActionGroups, additionalBinaryDataProperties);
+            return new IssueNotifications(updateTypes ?? new ChangeTrackingList<IssueNotificationType>(), actionGroupIds ?? new ChangeTrackingList<ResourceIdentifier>(), shouldExcludeDefaultActionGroups, additionalBinaryDataProperties);
         }
     }
 }

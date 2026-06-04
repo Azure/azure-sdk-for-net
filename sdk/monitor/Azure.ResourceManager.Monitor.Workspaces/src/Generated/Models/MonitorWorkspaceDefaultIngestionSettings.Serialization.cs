@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Monitor.Workspaces;
 
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
@@ -136,8 +137,8 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 return null;
             }
-            string dataCollectionRuleResourceId = default;
-            string dataCollectionEndpointResourceId = default;
+            ResourceIdentifier dataCollectionRuleResourceId = default;
+            ResourceIdentifier dataCollectionEndpointResourceId = default;
             string dataCollectionRuleImmutableId = default;
             IngestionEndpoints ingestionEndpoints = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -145,12 +146,20 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             {
                 if (prop.NameEquals("dataCollectionRuleResourceId"u8))
                 {
-                    dataCollectionRuleResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataCollectionRuleResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dataCollectionEndpointResourceId"u8))
                 {
-                    dataCollectionEndpointResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataCollectionEndpointResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dataCollectionRuleImmutableId"u8))

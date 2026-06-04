@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceProperties"/>. </summary>
         public MonitorWorkspaceProperties()
         {
-            PrivateEndpointConnections = new ChangeTrackingList<MonitorWorkspacesPrivateEndpointConnection>();
+            PrivateEndpointConnections = new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceProperties"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to Azure Monitor Workspace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorWorkspaceProperties(string accountId, MonitorWorkspaceMetrics metrics, MonitorWorkspaceProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, IReadOnlyList<MonitorWorkspacesPrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorWorkspaceProperties(string accountId, MonitorWorkspaceMetrics metrics, MonitorWorkspaceProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountId = accountId;
             Metrics = metrics;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         public MonitorWorkspaceDefaultIngestionSettings DefaultIngestionSettings { get; }
 
         /// <summary> List of private endpoint connections. </summary>
-        public IReadOnlyList<MonitorWorkspacesPrivateEndpointConnection> PrivateEndpointConnections { get; }
+        public IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> PrivateEndpointConnections { get; }
 
         /// <summary> Gets or sets allow or disallow public network access to Azure Monitor Workspace. </summary>
         public MonitorWorkspacePublicNetworkAccess? PublicNetworkAccess { get; set; }

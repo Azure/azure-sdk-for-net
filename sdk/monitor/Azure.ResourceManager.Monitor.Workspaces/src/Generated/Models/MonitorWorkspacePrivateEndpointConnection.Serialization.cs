@@ -17,51 +17,51 @@ using Azure.ResourceManager.Monitor.Workspaces;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> The private endpoint connection resource. </summary>
-    public partial class MonitorWorkspacesPrivateEndpointConnection : ResourceData, IJsonModel<MonitorWorkspacesPrivateEndpointConnection>
+    public partial class MonitorWorkspacePrivateEndpointConnection : ResourceData, IJsonModel<MonitorWorkspacePrivateEndpointConnection>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspacesPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspacePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMonitorWorkspacesPrivateEndpointConnection(document.RootElement, options);
+                        return DeserializeMonitorWorkspacePrivateEndpointConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorWorkspacesPrivateEndpointConnection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspacePrivateEndpointConnection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspacesPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspacePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorWorkspacesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorWorkspacesPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspacePrivateEndpointConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonitorWorkspacesPrivateEndpointConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MonitorWorkspacePrivateEndpointConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorWorkspacesPrivateEndpointConnection IPersistableModel<MonitorWorkspacesPrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => (MonitorWorkspacesPrivateEndpointConnection)PersistableModelCreateCore(data, options);
+        MonitorWorkspacePrivateEndpointConnection IPersistableModel<MonitorWorkspacePrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => (MonitorWorkspacePrivateEndpointConnection)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonitorWorkspacesPrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitorWorkspacePrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonitorWorkspacesPrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitorWorkspacePrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspacesPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspacePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorWorkspacesPrivateEndpointConnection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspacePrivateEndpointConnection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorWorkspacesPrivateEndpointConnection IJsonModel<MonitorWorkspacesPrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MonitorWorkspacesPrivateEndpointConnection)JsonModelCreateCore(ref reader, options);
+        MonitorWorkspacePrivateEndpointConnection IJsonModel<MonitorWorkspacePrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MonitorWorkspacePrivateEndpointConnection)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspacesPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspacePrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorWorkspacesPrivateEndpointConnection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspacePrivateEndpointConnection)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonitorWorkspacesPrivateEndpointConnection(document.RootElement, options);
+            return DeserializeMonitorWorkspacePrivateEndpointConnection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MonitorWorkspacesPrivateEndpointConnection DeserializeMonitorWorkspacesPrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options)
+        internal static MonitorWorkspacePrivateEndpointConnection DeserializeMonitorWorkspacePrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MonitorWorkspacesPrivateEndpointConnection(
+            return new MonitorWorkspacePrivateEndpointConnection(
                 id,
                 name,
                 resourceType,
