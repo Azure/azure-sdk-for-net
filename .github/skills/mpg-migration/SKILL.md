@@ -120,7 +120,7 @@ This preserves the purpose of model factories: callers can provide arbitrary val
 
 | Problem | Fix |
 |---------|-----|
-| Base model/base type changed | Add a custom partial model in `src/Customization/` that declares the intended base model (use `[CodeGenType]` only when the custom type name differs from the generated/type-spec name), then regenerate so the generator honors the customization. Do **not** use `@@hierarchyBuilding`. |
+| Base model/base type changed | Add a custom partial model in `src/Customization/` that declares the intended base model (use `[CodeGenType]` only when the custom type name differs from the generated/TypeSpec name), then regenerate so the generator honors the customization. Do **not** use `@@hierarchyBuilding`. |
 | Flattened properties lost (polymorphic type) | Shim properties delegating to `Properties` bag |
 | Protected constructor missing (discriminated base) | `protected` ctor in partial class |
 | Property lost due to `@@alternateType` model swap | Add property in partial class |
