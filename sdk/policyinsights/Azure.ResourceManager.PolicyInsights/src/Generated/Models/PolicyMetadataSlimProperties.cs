@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
         /// <param name="metadata"> Additional metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyMetadataSlimProperties(string metadataId, string category, string title, string owner, string additionalContentUri, BinaryData metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyMetadataSlimProperties(string metadataId, string category, string title, string owner, Uri additionalContentUri, BinaryData metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MetadataId = metadataId;
             Category = category;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public string Owner { get; }
 
         /// <summary> Url for getting additional content about the resource metadata. </summary>
-        public string AdditionalContentUri { get; }
+        public Uri AdditionalContentUri { get; }
 
         /// <summary>
         /// Additional metadata.

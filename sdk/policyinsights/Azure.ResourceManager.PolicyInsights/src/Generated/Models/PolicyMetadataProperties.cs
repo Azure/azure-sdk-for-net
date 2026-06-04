@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="description"> The description of the policy metadata. </param>
         /// <param name="requirements"> The requirements of the policy metadata. </param>
-        internal PolicyMetadataProperties(string metadataId, string category, string title, string owner, string additionalContentUri, BinaryData metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string requirements) : base(metadataId, category, title, owner, additionalContentUri, metadata, additionalBinaryDataProperties)
+        internal PolicyMetadataProperties(string metadataId, string category, string title, string owner, Uri additionalContentUri, BinaryData metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string requirements) : base(metadataId, category, title, owner, additionalContentUri, metadata, additionalBinaryDataProperties)
         {
             Description = description;
             Requirements = requirements;

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.PolicyInsights
     public partial class PolicyMetadataData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.PolicyMetadataData>
     {
         internal PolicyMetadataData() { }
-        public string AdditionalContentUri { get { throw null; } }
+        public System.Uri AdditionalContentUri { get { throw null; } }
         public string Category { get { throw null; } }
         public string Description { get { throw null; } }
         public System.BinaryData Metadata { get { throw null; } }
@@ -428,7 +428,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationResult PolicyEvaluationResult(Azure.ResourceManager.PolicyInsights.Models.PolicyReference policyInfo = null, string evaluationResult = null, Azure.ResourceManager.PolicyInsights.Models.PolicyEvaluationDetails evaluationDetails = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyEvent PolicyEvent(string odataId = null, string odataContext = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier resourceId = null, Azure.Core.ResourceIdentifier policyAssignmentId = null, Azure.Core.ResourceIdentifier policyDefinitionId = null, string effectiveParameters = null, bool? isCompliant = default(bool?), string subscriptionId = null, string resourceTypeString = null, Azure.Core.AzureLocation? resourceLocation = default(Azure.Core.AzureLocation?), string resourceGroup = null, string resourceTags = null, string policyAssignmentName = null, string policyAssignmentOwner = null, string policyAssignmentParameters = null, string policyAssignmentScope = null, string policyDefinitionName = null, string policyDefinitionAction = null, string policyDefinitionCategory = null, Azure.Core.ResourceIdentifier policySetDefinitionId = null, string policySetDefinitionName = null, string policySetDefinitionOwner = null, string policySetDefinitionCategory = null, string policySetDefinitionParameters = null, string managementGroupIds = null, string policyDefinitionReferenceId = null, string complianceState = null, System.Guid? tenantId = default(System.Guid?), string principalOid = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.Models.ComponentEventDetails> components = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyGroupSummary PolicyGroupSummary(string policyGroupName = null, Azure.ResourceManager.PolicyInsights.Models.PolicySummaryResults results = null) { throw null; }
-        public static Azure.ResourceManager.PolicyInsights.PolicyMetadataData PolicyMetadataData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string metadataId = null, string category = null, string title = null, string owner = null, string additionalContentUri = null, System.BinaryData metadata = null, string description = null, string requirements = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.PolicyMetadataData PolicyMetadataData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string metadataId = null, string category = null, string title = null, string owner = null, System.Uri additionalContentUri = null, System.BinaryData metadata = null, string description = null, string requirements = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyQuerySettings PolicyQuerySettings(int? top = default(int?), string orderBy = null, string select = null, System.DateTimeOffset? from = default(System.DateTimeOffset?), System.DateTimeOffset? to = default(System.DateTimeOffset?), string filter = null, string apply = null, string expand = null, string skipToken = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.PolicyReference PolicyReference(Azure.Core.ResourceIdentifier policyDefinitionId = null, Azure.Core.ResourceIdentifier policySetDefinitionId = null, string policyDefinitionReferenceId = null, Azure.Core.ResourceIdentifier policyAssignmentId = null) { throw null; }
@@ -442,7 +441,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static Azure.ResourceManager.PolicyInsights.Models.RemediationDeploymentSummary RemediationDeploymentSummary(int? totalDeployments = default(int?), int? successfulDeployments = default(int?), int? failedDeployments = default(int?)) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.RemediationFilters RemediationFilters(System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> resourceIds = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata SlimPolicyMetadata(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string metadataId = null, string category = null, string title = null, string owner = null, System.Uri additionalContentUri = null, System.BinaryData metadata = null) { throw null; }
-        public static Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata SlimPolicyMetadata(string metadataId = null, string category = null, string title = null, string owner = null, string additionalContentUri = null, System.BinaryData metadata = null, string id = null, string type = null, string name = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.SummarizeResults SummarizeResults(string odataContext = null, int? odataCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.PolicyInsights.Models.PolicySummary> value = null) { throw null; }
         public static Azure.ResourceManager.PolicyInsights.Models.TrackedResourceModificationDetails TrackedResourceModificationDetails(Azure.ResourceManager.PolicyInsights.Models.PolicyDetails policyDetails = null, Azure.Core.ResourceIdentifier deploymentId = null, System.DateTimeOffset? deploymentOn = default(System.DateTimeOffset?)) { throw null; }
     }
@@ -1249,21 +1247,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static bool operator !=(Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode left, Azure.ResourceManager.PolicyInsights.Models.ResourceDiscoveryMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SlimPolicyMetadata : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata>
+    public partial class SlimPolicyMetadata : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata>
     {
         internal SlimPolicyMetadata() { }
-        public string AdditionalContentUri { get { throw null; } }
+        public System.Uri AdditionalContentUri { get { throw null; } }
         public string Category { get { throw null; } }
-        public string Id { get { throw null; } }
         public System.BinaryData Metadata { get { throw null; } }
         public string MetadataId { get { throw null; } }
-        public string Name { get { throw null; } }
         public string Owner { get { throw null; } }
         public string Title { get { throw null; } }
-        public string Type { get { throw null; } }
-        protected virtual Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PolicyInsights.Models.SlimPolicyMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

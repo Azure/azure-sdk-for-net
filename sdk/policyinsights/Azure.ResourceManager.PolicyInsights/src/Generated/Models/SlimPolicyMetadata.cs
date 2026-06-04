@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Slim version of policy metadata resource definition, excluding properties with large strings. </summary>
-    public partial class SlimPolicyMetadata
+    public partial class SlimPolicyMetadata : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,31 +24,20 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SlimPolicyMetadata"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the policy metadata. </param>
-        /// <param name="id"> The ID of the policy metadata. </param>
-        /// <param name="type"> The type of the policy metadata. </param>
-        /// <param name="name"> The name of the policy metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SlimPolicyMetadata(PolicyMetadataSlimProperties properties, string id, string @type, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SlimPolicyMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PolicyMetadataSlimProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            Id = id;
-            Type = @type;
-            Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the policy metadata. </summary>
         internal PolicyMetadataSlimProperties Properties { get; }
-
-        /// <summary> The ID of the policy metadata. </summary>
-        public string Id { get; }
-
-        /// <summary> The type of the policy metadata. </summary>
-        public string Type { get; }
-
-        /// <summary> The name of the policy metadata. </summary>
-        public string Name { get; }
 
         /// <summary> The policy metadata identifier. </summary>
         public string MetadataId
@@ -85,7 +76,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Url for getting additional content about the resource metadata. </summary>
-        public string AdditionalContentUri
+        public Uri AdditionalContentUri
         {
             get
             {

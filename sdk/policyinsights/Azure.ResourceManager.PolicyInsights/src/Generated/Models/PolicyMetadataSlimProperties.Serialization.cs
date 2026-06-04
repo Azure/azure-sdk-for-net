@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(AdditionalContentUri))
             {
                 writer.WritePropertyName("additionalContentUrl"u8);
-                writer.WriteStringValue(AdditionalContentUri);
+                writer.WriteStringValue(AdditionalContentUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             string category = default;
             string title = default;
             string owner = default;
-            string additionalContentUri = default;
+            Uri additionalContentUri = default;
             BinaryData metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -184,7 +184,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (prop.NameEquals("additionalContentUrl"u8))
                 {
-                    additionalContentUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalContentUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))

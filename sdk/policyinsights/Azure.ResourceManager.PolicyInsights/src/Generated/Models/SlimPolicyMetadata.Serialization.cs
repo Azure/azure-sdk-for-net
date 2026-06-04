@@ -8,17 +8,20 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Slim version of policy metadata resource definition, excluding properties with large strings. </summary>
-    public partial class SlimPolicyMetadata : IJsonModel<SlimPolicyMetadata>
+    public partial class SlimPolicyMetadata : ResourceData, IJsonModel<SlimPolicyMetadata>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SlimPolicyMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SlimPolicyMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,7 +54,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SlimPolicyMetadata IPersistableModel<SlimPolicyMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SlimPolicyMetadata IPersistableModel<SlimPolicyMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => (SlimPolicyMetadata)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SlimPolicyMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -67,32 +70,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SlimPolicyMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -113,11 +102,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SlimPolicyMetadata IJsonModel<SlimPolicyMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SlimPolicyMetadata IJsonModel<SlimPolicyMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SlimPolicyMetadata)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SlimPolicyMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<SlimPolicyMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -136,13 +125,46 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            PolicyMetadataSlimProperties properties = default;
-            string id = default;
-            string @type = default;
+            ResourceIdentifier id = default;
             string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            PolicyMetadataSlimProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPolicyInsightsContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -152,27 +174,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     properties = PolicyMetadataSlimProperties.DeserializePolicyMetadataSlimProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SlimPolicyMetadata(properties, id, @type, name, additionalBinaryDataProperties);
+            return new SlimPolicyMetadata(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                additionalBinaryDataProperties);
         }
     }
 }

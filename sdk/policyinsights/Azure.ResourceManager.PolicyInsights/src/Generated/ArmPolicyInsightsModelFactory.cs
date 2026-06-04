@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="description"> The description of the policy metadata. </param>
         /// <param name="requirements"> The requirements of the policy metadata. </param>
         /// <returns> A new <see cref="PolicyInsights.PolicyMetadataData"/> instance for mocking. </returns>
-        public static PolicyMetadataData PolicyMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string metadataId = default, string category = default, string title = default, string owner = default, string additionalContentUri = default, BinaryData metadata = default, string description = default, string requirements = default)
+        public static PolicyMetadataData PolicyMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string metadataId = default, string category = default, string title = default, string owner = default, Uri additionalContentUri = default, BinaryData metadata = default, string description = default, string requirements = default)
         {
             return new PolicyMetadataData(
                 id,
@@ -197,26 +197,33 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="metadataId"> The policy metadata identifier. </param>
         /// <param name="category"> The category of the policy metadata. </param>
         /// <param name="title"> The title of the policy metadata. </param>
         /// <param name="owner"> The owner of the policy metadata. </param>
         /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
         /// <param name="metadata"> Additional metadata. </param>
-        /// <param name="id"> The ID of the policy metadata. </param>
-        /// <param name="type"> The type of the policy metadata. </param>
-        /// <param name="name"> The name of the policy metadata. </param>
         /// <returns> A new <see cref="Models.SlimPolicyMetadata"/> instance for mocking. </returns>
-        public static SlimPolicyMetadata SlimPolicyMetadata(string metadataId = default, string category = default, string title = default, string owner = default, string additionalContentUri = default, BinaryData metadata = default, string id = default, string @type = default, string name = default)
+        public static SlimPolicyMetadata SlimPolicyMetadata(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string metadataId = default, string category = default, string title = default, string owner = default, Uri additionalContentUri = default, BinaryData metadata = default)
         {
-            return new SlimPolicyMetadata(metadataId is null && category is null && title is null && owner is null && additionalContentUri is null && metadata is null ? default : new PolicyMetadataSlimProperties(
-                metadataId,
-                category,
-                title,
-                owner,
-                additionalContentUri,
-                metadata,
-                default), id, @type, name, default);
+            return new SlimPolicyMetadata(
+                id,
+                name,
+                resourceType,
+                systemData,
+                metadataId is null && category is null && title is null && owner is null && additionalContentUri is null && metadata is null ? default : new PolicyMetadataSlimProperties(
+                    metadataId,
+                    category,
+                    title,
+                    owner,
+                    additionalContentUri,
+                    metadata,
+                    default),
+                default);
         }
 
         /// <param name="odataId"> OData entity ID; always set to null since policy event records do not have an entity ID. </param>
@@ -930,66 +937,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 timestamp,
                 complianceState,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PolicyInsights.PolicyMetadataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="metadataId"> The policy metadata identifier. </param>
-        /// <param name="category"> The category of the policy metadata. </param>
-        /// <param name="title"> The title of the policy metadata. </param>
-        /// <param name="owner"> The owner of the policy metadata. </param>
-        /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
-        /// <param name="metadata"> Additional metadata. </param>
-        /// <param name="description"> The description of the policy metadata. </param>
-        /// <param name="requirements"> The requirements of the policy metadata. </param>
-        /// <returns> A new <see cref="PolicyInsights.PolicyMetadataData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PolicyMetadataData PolicyMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string metadataId = default, string category = default, string title = default, string owner = default, Uri additionalContentUri = default, BinaryData metadata = default, string description = default, string requirements = default)
-        {
-            return new PolicyMetadataData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                metadataId is null && category is null && title is null && owner is null && metadata is null && description is null && requirements is null ? default : new PolicyMetadataProperties(
-                    metadataId,
-                    category,
-                    title,
-                    owner,
-                    default,
-                    metadata,
-                    default,
-                    description,
-                    requirements),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SlimPolicyMetadata"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="metadataId"> The policy metadata identifier. </param>
-        /// <param name="category"> The category of the policy metadata. </param>
-        /// <param name="title"> The title of the policy metadata. </param>
-        /// <param name="owner"> The owner of the policy metadata. </param>
-        /// <param name="additionalContentUri"> Url for getting additional content about the resource metadata. </param>
-        /// <param name="metadata"> Additional metadata. </param>
-        /// <returns> A new <see cref="Models.SlimPolicyMetadata"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SlimPolicyMetadata SlimPolicyMetadata(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string metadataId = default, string category = default, string title = default, string owner = default, Uri additionalContentUri = default, BinaryData metadata = default)
-        {
-            return new SlimPolicyMetadata(metadataId is null && category is null && title is null && owner is null && metadata is null ? default : new PolicyMetadataSlimProperties(
-                metadataId,
-                category,
-                title,
-                owner,
-                default,
-                metadata,
-                default), default, default, name, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CheckPolicyRestrictionsContent"/>. </summary>

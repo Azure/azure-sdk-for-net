@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> Url for getting additional content about the resource metadata. </summary>
-        public string AdditionalContentUri
+        public Uri AdditionalContentUri
         {
             get
             {
