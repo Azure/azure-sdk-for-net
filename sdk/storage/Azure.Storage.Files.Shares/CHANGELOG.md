@@ -15,11 +15,6 @@
 ### Features Added
 - Includes all features from 12.27.0-beta.1
 
-## 12.27.0 (2026-06-04)
-
-### Features Added
-- Includes all features from 12.27.0-beta.1
-
 ## 12.26.0 (2026-05-12)
 
 ### Features Added
