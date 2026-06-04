@@ -233,7 +233,7 @@ Console.WriteLine(text);
 //       figure illustrating monthly values, and describes the AI Document
 //       Intelligence service...
 //   ---
-//   <!-- page 1 -->
+//   <!-- InputPageNumber: 1 -->
 //   # ==This is title==
 //   ## 1. Text
 //   [Latin](https://en.wikipedia.org/wiki/Latin) refers to an ancient Italic language...

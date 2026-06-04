@@ -51,7 +51,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.That(text, Does.Contain("contentType: document"));
             Assert.That(text, Does.Contain("fields:"));
             Assert.That(text, Does.Contain("VendorName:"));
-            Assert.That(text, Does.Contain("<!-- page 1 -->"));
+            Assert.That(text, Does.Contain("<!-- InputPageNumber: 1 -->"));
             Console.WriteLine("Default output verified");
             #endregion
 
@@ -83,12 +83,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Assertion:ContentUnderstandingToLlmInputOptions
             // Fields-only: has fields, no markdown body
             Assert.That(fieldsOnly, Does.Contain("fields:"));
-            Assert.That(fieldsOnly, Does.Not.Contain("<!-- page"));
+            Assert.That(fieldsOnly, Does.Not.Contain("<!-- InputPageNumber:"));
             Assert.That(fieldsOnly.TrimEnd(), Does.EndWith("---"));
 
             // Markdown-only: has markdown, no fields
             Assert.That(markdownOnly, Does.Not.Contain("fields:"));
-            Assert.That(markdownOnly, Does.Contain("<!-- page 1 -->"));
+            Assert.That(markdownOnly, Does.Contain("<!-- InputPageNumber: 1 -->"));
 
             // Metadata: metadata appears between contentType and fields
             Assert.That(withMetadata, Does.Contain("source: invoice.pdf"));
@@ -111,7 +111,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Analyze specific pages using ContentRange.
             // Page markers in the output will use the original document page numbers,
             // so even though we only requested pages 2-3 and 5, the markers will say
-            // <!-- page 2 -->, <!-- page 3 -->, <!-- page 5 --> (not 1, 2, 3).
+            // <!-- InputPageNumber: 2 -->, <!-- InputPageNumber: 3 -->, <!-- InputPageNumber: 5 -->
+            // (not 1, 2, 3).
             Operation<AnalysisResult> multiPageOperation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
