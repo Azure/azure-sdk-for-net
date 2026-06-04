@@ -646,12 +646,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <param name="policyInfo"> The details of the policy that was evaluated. </param>
         /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </param>
-        /// <param name="checkRestrictionEvaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
+        /// <param name="evaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
         /// <param name="policyEffect"> The effect that was applied to the resource. http://aka.ms/policyeffects. </param>
         /// <returns> A new <see cref="Models.PolicyEvaluationResult"/> instance for mocking. </returns>
-        public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = default, string evaluationResult = default, CheckRestrictionEvaluationDetails checkRestrictionEvaluationDetails = default, string policyEffect = default)
+        public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = default, string evaluationResult = default, PolicyEvaluationDetails evaluationDetails = default, string policyEffect = default)
         {
-            return new PolicyEvaluationResult(policyInfo, evaluationResult, checkRestrictionEvaluationDetails, policyEffect is null ? default : new PolicyEffectDetails(policyEffect, default), default);
+            return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, policyEffect is null ? default : new PolicyEffectDetails(policyEffect, default), default);
         }
 
         /// <param name="evaluatedExpressions"> Details of the evaluated expressions. </param>
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = default, string evaluationResult = default, PolicyEvaluationDetails evaluationDetails = default)
         {
-            return new PolicyEvaluationResult(policyInfo, evaluationResult, default, default, default);
+            return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, default, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComponentEventDetails"/>. </summary>
@@ -937,6 +937,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 timestamp,
                 complianceState,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PolicyEvaluationResult"/>. </summary>
+        /// <param name="policyInfo"> The details of the policy that was evaluated. </param>
+        /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </param>
+        /// <param name="checkRestrictionEvaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
+        /// <param name="policyEffect"> The details of the effect that was applied to the resource. </param>
+        /// <returns> A new <see cref="Models.PolicyEvaluationResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = default, string evaluationResult = default, CheckRestrictionEvaluationDetails checkRestrictionEvaluationDetails = default, string policyEffect = default)
+        {
+            return new PolicyEvaluationResult(policyInfo, evaluationResult, default, policyEffect is null ? default : new PolicyEffectDetails(policyEffect, default), default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CheckPolicyRestrictionsContent"/>. </summary>
