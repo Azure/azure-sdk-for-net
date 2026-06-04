@@ -20,6 +20,8 @@ namespace Azure.AI.VoiceLive
         private const string AzureStandardValue = "azure-standard";
         /// <summary> Azure personal voice. </summary>
         private const string AzurePersonalValue = "azure-personal";
+        /// <summary> Azure avatar voice sync. </summary>
+        private const string AvatarVoiceSyncValue = "avatar-voice-sync";
 
         /// <summary> Initializes a new instance of <see cref="AzureVoiceType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,6 +41,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Azure personal voice. </summary>
         public static AzureVoiceType AzurePersonal { get; } = new AzureVoiceType(AzurePersonalValue);
+
+        /// <summary> Azure avatar voice sync. </summary>
+        public static AzureVoiceType AvatarVoiceSync { get; } = new AzureVoiceType(AvatarVoiceSyncValue);
 
         /// <summary> Determines if two <see cref="AzureVoiceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

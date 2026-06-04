@@ -61,6 +61,63 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             Assert.True((request.Request as PreflightRequest).IsValid);
         }
 
+        [TestCase]
+        public void ContextAttribute_LegacyConnection_NullOrEmpty_DoesNotPopulateConnections()
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            var attributeWithNull = new WebPubSubContextAttribute
+            {
+                Connection = null,
+            };
+
+            var attributeWithEmpty = new WebPubSubContextAttribute
+            {
+                Connection = string.Empty,
+            };
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            Assert.IsNull(attributeWithNull.Connections);
+            Assert.IsNull(attributeWithEmpty.Connections);
+        }
+
+        [TestCase]
+        public void ContextAttribute_LegacyConnection_WithValue_PopulatesConnections()
+        {
+            var attribute = new WebPubSubContextAttribute();
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            attribute.Connection = "connectionA";
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            Assert.NotNull(attribute.Connections);
+            Assert.AreEqual(1, attribute.Connections.Length);
+            Assert.AreEqual("connectionA", attribute.Connections[0]);
+        }
+
+        [TestCase]
+        public void ContextAttribute_LegacyConnection_DoesNotOverrideConnections_WhenAlreadySet()
+        {
+            var attribute = new WebPubSubContextAttribute("connectionA", "connectionB");
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            attribute.Connection = "connectionC";
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            Assert.AreEqual(2, attribute.Connections.Length);
+            Assert.AreEqual("connectionA", attribute.Connections[0]);
+            Assert.AreEqual("connectionB", attribute.Connections[1]);
+        }
+
+        [TestCase]
+        public void ContextAttribute_LegacyConnection_Getter_ReturnsFirstConnection()
+        {
+            var attribute = new WebPubSubContextAttribute("connectionA", "connectionB");
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            Assert.AreEqual("connectionA", attribute.Connection);
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+
         public static void TestFunc(
             [WebPubSubContext] WebPubSubContext request)
         {

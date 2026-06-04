@@ -22,12 +22,24 @@ namespace Azure.ResourceManager.Storage
     public partial class BlobContainerCollection
     {
         // Backward-compatible overload with int maxpagesize: Lists all containers.
+        /// <summary> Lists all containers in the storage account via the Storage management API. Unlike the data-plane blob service, this management API does not support prefix-based filtering and the response is returned as a single page (no continuation token). </summary>
+        /// <param name="maxpagesize"> Optional. The maximum number of containers that can be included in the list. </param>
+        /// <param name="filter"> Optional. When specified, only container names starting with the filter are listed. </param>
+        /// <param name="include"> Optional. Used to include properties for soft-deleted blob containers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual Pageable<BlobContainerResource> GetAll(int? maxpagesize, string filter, BlobContainerState? include, CancellationToken cancellationToken)
             => GetAll(maxpagesize?.ToString(), filter, include, cancellationToken);
 
         // Backward-compatible overload with int maxpagesize: Lists all containers.
+        /// <summary> Lists all containers in the storage account via the Storage management API. Unlike the data-plane blob service, this management API does not support prefix-based filtering and the response is returned as a single page (no continuation token). </summary>
+        /// <param name="maxpagesize"> Optional. The maximum number of containers that can be included in the list. </param>
+        /// <param name="filter"> Optional. When specified, only container names starting with the filter are listed. </param>
+        /// <param name="include"> Optional. Used to include properties for soft-deleted blob containers. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BlobContainerResource"/> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual AsyncPageable<BlobContainerResource> GetAllAsync(int? maxpagesize, string filter, BlobContainerState? include, CancellationToken cancellationToken)

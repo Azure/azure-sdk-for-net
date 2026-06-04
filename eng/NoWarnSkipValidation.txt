@@ -35,7 +35,6 @@ Azure.AI.Language.Text.Authoring
 Azure.AI.OpenAI
 Azure.AI.OpenAI.Assistants
 Azure.AI.Personalizer
-Azure.AI.Projects
 Azure.AI.Projects.Agents
 Azure.AI.Speech.Transcription
 Azure.AI.TextAnalytics
@@ -162,7 +161,6 @@ Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
 Azure.ResourceManager.MachineLearning
 Azure.ResourceManager.Network
 Azure.ResourceManager.RecoveryServicesBackup
-Azure.ResourceManager.Storage
 Azure.Search.Documents
 Azure.Security.Attestation
 Azure.Security.CodeTransparency
