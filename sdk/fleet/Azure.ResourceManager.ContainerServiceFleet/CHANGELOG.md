@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.4 (2026-06-04)
 
 ### Features Added
 
@@ -14,10 +14,6 @@
   - `ManagedNamespaceProperties` → `ContainerServiceFleetManagedNamespaceProperties`
   - `UpdateRunGateStatus` → `ContainerServiceFleetUpdateRunGateStatus`
   - `UpdateRunGateTargetProperties` → `ContainerServiceFleetUpdateRunGateTargetProperties`
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0-beta.3 (2026-04-14)
 
