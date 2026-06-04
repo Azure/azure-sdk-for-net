@@ -8,10 +8,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    // Preserve the previously shipped settable ProvisioningState member while honoring
-    // the TypeSpec contract, where provisioningState is read-only.
     public partial class CosmosDBFleetData
     {
+        // Preserve the previously shipped settable ProvisioningState member while honoring
+        // the TypeSpec contract, where provisioningState is read-only.
         /// <summary> A provisioning state of the Fleet. </summary>
         [WirePath("properties.provisioningState")]
         public CosmosDBStatus? ProvisioningState

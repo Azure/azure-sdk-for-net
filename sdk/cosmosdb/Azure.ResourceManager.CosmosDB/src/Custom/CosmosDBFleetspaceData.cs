@@ -4,14 +4,12 @@
 using System;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    // Restore { get; set; } for ProvisioningState (baseline AutoRest surface).
-    [CodeGenSuppress("ProvisioningState")]
     public partial class CosmosDBFleetspaceData
     {
+        // Restore { get; set; } for ProvisioningState (baseline AutoRest surface).
         /// <summary> A provisioning state of the Fleetspace. </summary>
         [WirePath("properties.provisioningState")]
         public CosmosDBStatus? ProvisioningState
