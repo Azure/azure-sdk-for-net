@@ -213,7 +213,15 @@ namespace Azure.Generator.Management.Models
         public override bool Equals(object? obj) => obj is RequestPathPattern other && Equals(other);
 
         /// <inheritdoc />
-        public override int GetHashCode() => _path.GetHashCode();
+        public override int GetHashCode()
+        {
+            var hash = new HashCode();
+            foreach (var segment in _segments)
+            {
+                hash.Add(segment);
+            }
+            return hash.ToHashCode();
+        }
 
         /// <inheritdoc />
         public override string ToString() => _path;

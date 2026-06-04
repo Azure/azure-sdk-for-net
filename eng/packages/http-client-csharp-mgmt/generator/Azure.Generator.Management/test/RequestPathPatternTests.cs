@@ -109,5 +109,25 @@ namespace Azure.Generator.Management.Tests
                 RequestPathPattern.GetMaximumSharingSegmentsCount(right, left),
                 Is.EqualTo(RequestPathPattern.GetMaximumSharingSegmentsCount(left, right)));
         }
+
+        [Test]
+        public void GetHashCode_EqualPatternsUseEqualHashCodes()
+        {
+            var fromString = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var fromSegments = new RequestPathPattern(fromString.AsEnumerable());
+
+            Assert.That(fromSegments, Is.EqualTo(fromString));
+            Assert.That(fromSegments.GetHashCode(), Is.EqualTo(fromString.GetHashCode()));
+        }
+
+        [Test]
+        public void GetHashCode_DifferentPatternsUseDifferentHashCodes()
+        {
+            var resourceGroup = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+            var subscription = new RequestPathPattern("/subscriptions/{subscriptionId}");
+
+            Assert.That(resourceGroup, Is.Not.EqualTo(subscription));
+            Assert.That(resourceGroup.GetHashCode(), Is.Not.EqualTo(subscription.GetHashCode()));
+        }
     }
 }
