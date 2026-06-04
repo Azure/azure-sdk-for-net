@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             TryGetApiVersion(MongoClusterResource.ResourceType, out string mongoClusterApiVersion);
             _mongoClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", MongoClusterResource.ResourceType.Namespace, Diagnostics);
-            _mongoClustersRestClient = new MongoClusters(_mongoClustersClientDiagnostics, Pipeline, Endpoint, mongoClusterApiVersion ?? "2025-09-01");
+            _mongoClustersRestClient = new MongoClusters(_mongoClustersClientDiagnostics, Pipeline, Endpoint, mongoClusterApiVersion ?? "2026-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MongoCluster
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MongoCluster
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

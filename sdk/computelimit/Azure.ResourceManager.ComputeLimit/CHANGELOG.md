@@ -1,10 +1,14 @@
 # Release History
 
-## 1.1.0 (2026-06-01)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
-- Added optional parameter `ComputeLimitFeatureEnableContent content` to `ComputeLimitFeatureResource.Enable` and `ComputeLimitFeatureResource.EnableAsync` methods.
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.0.0 (2026-04-30)
 
