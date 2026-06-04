@@ -4,7 +4,6 @@
 
 ### Other Changes
 
-- Migrated from AutoRest/Swagger to TypeSpec-based code generation using `@azure-typespec/http-client-csharp-mgmt` emitter.
 - Upgraded dependent Azure.Core to 1.57.0.
 - Upgraded dependent Azure.ResourceManager to 1.14.0.
 
