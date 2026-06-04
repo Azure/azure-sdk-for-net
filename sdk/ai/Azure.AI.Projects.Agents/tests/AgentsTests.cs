@@ -381,7 +381,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
         // Two limits.
-        backwards = await toolboxClient.GetToolboxesAsync(order: AgentListOrder.Descending, after: records[records.Count -1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        backwards = await toolboxClient.GetToolboxesAsync(order: AgentListOrder.Descending, after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
@@ -518,7 +518,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(session.VersionIndicator, Is.InstanceOf<VersionRefIndicator>());
         Assert.That(((VersionRefIndicator)session.VersionIndicator).AgentVersion, Is.EqualTo(agentVersion.Version));
         // List
-        HashSet<string> sessions = [..await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
+        HashSet<string> sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
         Assert.That(sessions, Has.Count.EqualTo(2));
         Assert.That(sessions, Does.Contain(session1.AgentSessionId));
         Assert.That(sessions, Does.Contain(session2.AgentSessionId));
@@ -936,7 +936,7 @@ public class AgentsTests : AgentsTestBase
         ZipFile.ExtractToDirectory(temporaryFile, directoryPath);
     }
 
-    private async Task<ProjectsAgentVersion> CreateHostedAgent(AgentAdministrationClient agentsClient, string suffix=default)
+    private async Task<ProjectsAgentVersion> CreateHostedAgent(AgentAdministrationClient agentsClient, string suffix = default)
     {
         Uri uriEndpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));

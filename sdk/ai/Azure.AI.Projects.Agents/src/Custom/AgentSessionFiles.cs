@@ -37,7 +37,7 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/>, <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<ClientResult<SessionFileWriteResponse>> UploadSessionFileAsync(string agentName, string sessionId, string sessionStoragePath, string localPath, string userIsolationKey=default, CancellationToken cancellationToken=default)
+    public virtual async Task<ClientResult<SessionFileWriteResponse>> UploadSessionFileAsync(string agentName, string sessionId, string sessionStoragePath, string localPath, string userIsolationKey = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
@@ -68,7 +68,7 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/>, <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public ClientResult<SessionFileWriteResponse> UploadSessionFile(string agentName, string sessionId, string sessionStoragePath, string localPath, string userIsolationKey=default, CancellationToken cancellationToken = default)
+    public ClientResult<SessionFileWriteResponse> UploadSessionFile(string agentName, string sessionId, string sessionStoragePath, string localPath, string userIsolationKey = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
@@ -123,7 +123,7 @@ public partial class AgentSessionFiles
                     userIsolationKey: localCollectionOptions.Filters.Count > 3 ? localCollectionOptions.Filters[3] : null,
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
-                    after:localCollectionOptions.AfterId,
+                    after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
             dataItemDeserializer: (e, o) => SessionDirectoryEntry.DeserializeSessionDirectoryEntry(e, o),
@@ -192,7 +192,7 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/>, <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/>, <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<BinaryData> DownloadSessionFileAsync(string agentName, string sessionId, string sessionStoragePath, string localPath, string userIsolationKey=default, CancellationToken cancellationToken = default)
+    public virtual async Task<BinaryData> DownloadSessionFileAsync(string agentName, string sessionId, string sessionStoragePath, string localPath, string userIsolationKey = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
@@ -214,7 +214,7 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/>, <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/>, <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual BinaryData DownloadSessionFile(string agentName, string sessionId, string sessionStoragePath, string localPath, string userIsolationKey=default, CancellationToken cancellationToken = default)
+    public virtual BinaryData DownloadSessionFile(string agentName, string sessionId, string sessionStoragePath, string localPath, string userIsolationKey = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
@@ -239,7 +239,7 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="path"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult DeleteSessionFile(string agentName, string sessionId, string path, bool? recursive = default, string userIsolationKey=default, CancellationToken cancellationToken = default)
+    public virtual ClientResult DeleteSessionFile(string agentName, string sessionId, string path, bool? recursive = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));
@@ -261,7 +261,7 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="path"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="sessionId"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string sessionId, string path, bool? recursive = default, string userIsolationKey=default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult> DeleteSessionFileAsync(string agentName, string sessionId, string path, bool? recursive = default, string userIsolationKey = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
         Argument.AssertNotNullOrEmpty(sessionId, nameof(sessionId));

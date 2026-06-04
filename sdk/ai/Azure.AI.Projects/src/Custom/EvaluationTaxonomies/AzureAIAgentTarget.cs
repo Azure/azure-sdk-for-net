@@ -15,5 +15,5 @@ public partial class AzureAIAgentTarget
     internal IList<InternalTool> InternalTools { get; }
 
     /// <summary> Gets the Tools. </summary>
-    public IList<ProjectsAgentTool> Tools { get => [..InternalTools.Select(x => ProjectsAgentTool.AsProjectTool(x))]; }
+    public IList<ProjectsAgentTool> Tools { get => [.. InternalTools.Select(x => ProjectsAgentTool.AsProjectTool(x))]; }
 }

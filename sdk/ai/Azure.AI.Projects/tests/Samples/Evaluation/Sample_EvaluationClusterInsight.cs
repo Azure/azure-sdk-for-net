@@ -173,7 +173,7 @@ public class Sample_EvaluationClusterInsight : EvaluationSampleBase
                 displayName: "Cluster analysis",
                 request: new EvaluationRunClusterInsightRequest(
                     evalId: evaluationId,
-                    runIds: [ runId ])
+                    runIds: [runId])
                 {
                     ModelConfiguration = new InsightModelConfiguration(modelDeploymentName)
                 }));
@@ -318,7 +318,7 @@ public class Sample_EvaluationClusterInsight : EvaluationSampleBase
                 displayName: "Cluster analysis",
                 request: new EvaluationRunClusterInsightRequest(
                     evalId: evaluationId,
-                    runIds: [ runId ])
+                    runIds: [runId])
                 {
                     ModelConfiguration = new InsightModelConfiguration(modelDeploymentName)
                 }));

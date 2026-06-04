@@ -233,7 +233,7 @@ public partial class AIProjectMemoryStores
     /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<MemoryItem> GetMemories(string name, string scope, MemoryItemKind? kind=default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<MemoryItem> GetMemories(string name, string scope, MemoryItemKind? kind = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         ListMemoriesRequest spreadModel = new ListMemoriesRequest(scope, default);
