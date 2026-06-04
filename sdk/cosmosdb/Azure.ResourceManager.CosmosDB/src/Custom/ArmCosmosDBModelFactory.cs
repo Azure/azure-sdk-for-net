@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -16,25 +15,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
     // parameters; the regenerated factory adds an 18th parameter `isLatestModel`.
     // Add a back-compat 17-parameter overload that forwards to the generated
     // 18-parameter factory with isLatestModel set to default(bool?).
-    [CodeGenSuppress(
-        "CassandraClusterDataCenterNodeItem",
-        typeof(string),
-        typeof(CassandraNodeState?),
-        typeof(string),
-        typeof(string),
-        typeof(string),
-        typeof(IEnumerable<string>),
-        typeof(int?),
-        typeof(Guid?),
-        typeof(string),
-        typeof(string),
-        typeof(long?),
-        typeof(long?),
-        typeof(long?),
-        typeof(long?),
-        typeof(long?),
-        typeof(long?),
-        typeof(double?))]
     public static partial class ArmCosmosDBModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterDataCenterNodeItem"/>. </summary>

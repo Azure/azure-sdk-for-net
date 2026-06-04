@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    // Preserve the previously shipped overloads without duplicating generated request logic.
+    // The generated overload now includes the x-ms-force-deallocate header; these overloads
+    // delegate with a null header value to keep the old API surface behavior.
     public partial class CassandraClusterResource
     {
         /// <summary>
