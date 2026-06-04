@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _credentialsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CredentialData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<CredentialResource> operation = new DeviceRegistryArmOperation<CredentialResource>(
-                    new CredentialOperationSource(Client),
+                    new CredentialResourceOperationSource(Client),
                     _credentialsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _credentialsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CredentialData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<CredentialResource> operation = new DeviceRegistryArmOperation<CredentialResource>(
-                    new CredentialOperationSource(Client),
+                    new CredentialResourceOperationSource(Client),
                     _credentialsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _credentialsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CredentialPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<CredentialResource> operation = new DeviceRegistryArmOperation<CredentialResource>(
-                    new CredentialOperationSource(Client),
+                    new CredentialResourceOperationSource(Client),
                     _credentialsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _credentialsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, CredentialPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<CredentialResource> operation = new DeviceRegistryArmOperation<CredentialResource>(
-                    new CredentialOperationSource(Client),
+                    new CredentialResourceOperationSource(Client),
                     _credentialsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.Avs.Models
     public static partial class ArmAvsModelFactory
     {
 
-        /// <summary> An addon resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,41 +34,34 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary>
-        /// The properties of an addon
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AddonSrmProperties"/>, <see cref="Models.AddonVrProperties"/>, <see cref="Models.AddonHcxProperties"/>, and <see cref="Models.AddonArcProperties"/>.
-        /// </summary>
         /// <param name="addonType"> Addon type. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <returns> A new <see cref="Models.AvsPrivateCloudAddonProperties"/> instance for mocking. </returns>
         public static AvsPrivateCloudAddonProperties AvsPrivateCloudAddonProperties(string addonType = default, AddonProvisioningState? provisioningState = default)
         {
-            return new UnknownAddonProperties(new AddonType(addonType), provisioningState, additionalBinaryDataProperties: null);
+            return new UnknownAddonProperties(default, provisioningState, default);
         }
 
-        /// <summary> The properties of a Site Recovery Manager (SRM) addon. </summary>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="licenseKey"> The Site Recovery Manager (SRM) license. </param>
         /// <returns> A new <see cref="Models.AddonSrmProperties"/> instance for mocking. </returns>
         public static AddonSrmProperties AddonSrmProperties(AddonProvisioningState? provisioningState = default, string licenseKey = default)
         {
-            return new AddonSrmProperties(AddonType.SRM, provisioningState, additionalBinaryDataProperties: null, licenseKey);
+            return new AddonSrmProperties(default, provisioningState, default, licenseKey);
         }
 
-        /// <summary> The properties of a vSphere Replication (VR) addon. </summary>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="vrsCount"> The vSphere Replication Server (VRS) count. </param>
         /// <returns> A new <see cref="Models.AddonVrProperties"/> instance for mocking. </returns>
         public static AddonVrProperties AddonVrProperties(AddonProvisioningState? provisioningState = default, int vrsCount = default)
         {
-            return new AddonVrProperties(AddonType.VR, provisioningState, additionalBinaryDataProperties: null, vrsCount);
+            return new AddonVrProperties(default, provisioningState, default, vrsCount);
         }
 
-        /// <summary> The properties of an HCX addon. </summary>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="offer"> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </param>
         /// <param name="managementNetwork"> HCX management network. </param>
@@ -78,21 +70,20 @@ namespace Azure.ResourceManager.Avs.Models
         public static AddonHcxProperties AddonHcxProperties(AddonProvisioningState? provisioningState = default, string offer = default, string managementNetwork = default, string uplinkNetwork = default)
         {
             return new AddonHcxProperties(
-                AddonType.HCX,
+                default,
                 provisioningState,
-                additionalBinaryDataProperties: null,
+                default,
                 offer,
                 managementNetwork,
                 uplinkNetwork);
         }
 
-        /// <summary> The properties of an Arc addon. </summary>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
         /// <param name="vCenter"> The VMware vCenter resource ID. </param>
         /// <returns> A new <see cref="Models.AddonArcProperties"/> instance for mocking. </returns>
         public static AddonArcProperties AddonArcProperties(AddonProvisioningState? provisioningState = default, string vCenter = default)
         {
-            return new AddonArcProperties(AddonType.Arc, provisioningState, additionalBinaryDataProperties: null, vCenter);
+            return new AddonArcProperties(default, provisioningState, default, vCenter);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -111,8 +102,8 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && expressRouteAuthorizationId is null && expressRouteAuthorizationKey is null && expressRouteId is null ? default : new ExpressRouteAuthorizationProperties(provisioningState, expressRouteAuthorizationId, expressRouteAuthorizationKey, expressRouteId, null));
+                provisioningState is null && expressRouteAuthorizationId is null && expressRouteAuthorizationKey is null && expressRouteId is null ? default : new ExpressRouteAuthorizationProperties(provisioningState, expressRouteAuthorizationId, expressRouteAuthorizationKey, expressRouteId, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -130,21 +121,45 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && status is null && linkedCloud is null ? default : new CloudLinkProperties(provisioningState, status, linkedCloud, null));
+                provisioningState is null && status is null && linkedCloud is null ? default : new CloudLinkProperties(provisioningState, status, linkedCloud, default),
+                default);
         }
 
-        /// <summary> List of all zones and associated hosts for a cluster. </summary>
+        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
+        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
+        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
+        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
+        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
+        /// <returns> A new <see cref="Models.AvsSku"/> instance for mocking. </returns>
+        public static AvsSku AvsSku(string name = default, AvsSkuTier? tier = default, string size = default, string family = default, int? capacity = default)
+        {
+            return new AvsSku(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                default);
+        }
+
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="clusterSize"> The cluster size. </param>
+        /// <param name="hosts"> The hosts. </param>
+        /// <returns> A new <see cref="Models.AvsPrivateCloudClusterPatch"/> instance for mocking. </returns>
+        public static AvsPrivateCloudClusterPatch AvsPrivateCloudClusterPatch(AvsSku sku = default, int? clusterSize = default, IEnumerable<string> hosts = default)
+        {
+            return new AvsPrivateCloudClusterPatch(sku, clusterSize is null && hosts is null ? default : new ClusterUpdateProperties(clusterSize, (hosts ?? new ChangeTrackingList<string>()).ToList(), default), default);
+        }
+
         /// <param name="zones"> Zone and associated hosts info. </param>
         /// <returns> A new <see cref="Models.AvsClusterZoneListResult"/> instance for mocking. </returns>
         public static AvsClusterZoneListResult AvsClusterZoneListResult(IEnumerable<AvsClusterZone> zones = default)
         {
             zones ??= new ChangeTrackingList<AvsClusterZone>();
 
-            return new AvsClusterZoneListResult(zones.ToList(), additionalBinaryDataProperties: null);
+            return new AvsClusterZoneListResult((zones ?? new ChangeTrackingList<AvsClusterZone>()).ToList(), default);
         }
 
-        /// <summary> Zone and associated hosts info. </summary>
         /// <param name="hosts"> List of hosts belonging to the availability zone in a cluster. </param>
         /// <param name="zone"> Availability zone identifier. </param>
         /// <returns> A new <see cref="Models.AvsClusterZone"/> instance for mocking. </returns>
@@ -152,10 +167,38 @@ namespace Azure.ResourceManager.Avs.Models
         {
             hosts ??= new ChangeTrackingList<string>();
 
-            return new AvsClusterZone(hosts.ToList(), zone, additionalBinaryDataProperties: null);
+            return new AvsClusterZone((hosts ?? new ChangeTrackingList<string>()).ToList(), zone, default);
         }
 
-        /// <summary> An iSCSI volume from Microsoft.StoragePool provider. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The state of the datastore provisioning. </param>
+        /// <param name="diskPoolVolume"> An iSCSI volume. </param>
+        /// <param name="pureStorageVolume"> A Pure Storage volume. </param>
+        /// <param name="status"> The operational status of the datastore. </param>
+        /// <param name="netAppVolumeId"> Azure resource ID of the NetApp volume. </param>
+        /// <param name="elasticSanVolumeTargetId"> Azure resource ID of the Elastic SAN Volume. </param>
+        /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
+        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AvsPrivateCloudDatastoreProvisioningState? provisioningState = default, DiskPoolVolume diskPoolVolume = default, AvsPureStorageVolume pureStorageVolume = default, DatastoreStatus? status = default, ResourceIdentifier netAppVolumeId = default, ResourceIdentifier elasticSanVolumeTargetId = default)
+        {
+            return new AvsPrivateCloudDatastoreData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && netAppVolumeId is null && diskPoolVolume is null && elasticSanVolumeTargetId is null && pureStorageVolume is null && status is null ? default : new DatastoreProperties(
+                    provisioningState,
+                    new NetAppVolume(netAppVolumeId, default),
+                    diskPoolVolume,
+                    new ElasticSanVolume(elasticSanVolumeTargetId, default),
+                    pureStorageVolume,
+                    status,
+                    default),
+                default);
+        }
+
         /// <param name="targetId"> Azure resource ID of the iSCSI target. </param>
         /// <param name="lunName"> Name of the LUN to be used for datastore. </param>
         /// <param name="mountOption">
@@ -166,7 +209,15 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.DiskPoolVolume"/> instance for mocking. </returns>
         public static DiskPoolVolume DiskPoolVolume(ResourceIdentifier targetId = default, string lunName = default, LunMountMode? mountOption = default, string path = default)
         {
-            return new DiskPoolVolume(targetId, lunName, mountOption, path, additionalBinaryDataProperties: null);
+            return new DiskPoolVolume(targetId, lunName, mountOption, path, default);
+        }
+
+        /// <param name="storagePoolId"> Azure resource ID of the Pure Storage Pool. </param>
+        /// <param name="sizeGb"> Volume size to be used to create a Virtual Volumes (vVols) datastore. </param>
+        /// <returns> A new <see cref="Models.AvsPureStorageVolume"/> instance for mocking. </returns>
+        public static AvsPureStorageVolume AvsPureStorageVolume(ResourceIdentifier storagePoolId = default, int sizeGb = default)
+        {
+            return new AvsPureStorageVolume(storagePoolId, sizeGb, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -199,7 +250,6 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 provisioningState is null && addressPrefix is null && authorizationKey is null && circuitConnectionStatus is null && peerExpressRouteCircuit is null && expressRouteId is null ? default : new GlobalReachConnectionProperties(
                     provisioningState,
                     addressPrefix,
@@ -207,7 +257,8 @@ namespace Azure.ResourceManager.Avs.Models
                     circuitConnectionStatus,
                     peerExpressRouteCircuit,
                     expressRouteId,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -225,11 +276,10 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && activationKey is null && status is null ? default : new HcxEnterpriseSiteProperties(provisioningState, activationKey, status, null));
+                provisioningState is null && activationKey is null && status is null ? default : new HcxEnterpriseSiteProperties(provisioningState, activationKey, status, default),
+                default);
         }
 
-        /// <summary> A host resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -247,16 +297,12 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
-                zones.ToList(),
-                sku);
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                sku,
+                default);
         }
 
-        /// <summary>
-        /// The properties of a host.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.GeneralAvsHostProperties"/> and <see cref="Models.SpecializedAvsHostProperties"/>.
-        /// </summary>
         /// <param name="kind"> The kind of host. </param>
         /// <param name="provisioningState"> The state of the host provisioning. </param>
         /// <param name="displayName"> Display name of the host in VMware vCenter. </param>
@@ -268,17 +314,16 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsHostProperties AvsHostProperties(string kind = default, AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
         {
             return new UnknownAvsHostProperties(
-                new HostKind(kind),
+                default,
                 provisioningState,
                 displayName,
                 moRefId,
                 fqdn,
                 maintenance,
                 faultDomain,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The properties of a general host. </summary>
         /// <param name="provisioningState"> The state of the host provisioning. </param>
         /// <param name="displayName"> Display name of the host in VMware vCenter. </param>
         /// <param name="moRefId"> vCenter managed object reference ID of the host. </param>
@@ -289,17 +334,16 @@ namespace Azure.ResourceManager.Avs.Models
         public static GeneralAvsHostProperties GeneralAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
         {
             return new GeneralAvsHostProperties(
-                HostKind.General,
+                default,
                 provisioningState,
                 displayName,
                 moRefId,
                 fqdn,
                 maintenance,
                 faultDomain,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The properties of a specialized host. </summary>
         /// <param name="provisioningState"> The state of the host provisioning. </param>
         /// <param name="displayName"> Display name of the host in VMware vCenter. </param>
         /// <param name="moRefId"> vCenter managed object reference ID of the host. </param>
@@ -310,14 +354,14 @@ namespace Azure.ResourceManager.Avs.Models
         public static SpecializedAvsHostProperties SpecializedAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
         {
             return new SpecializedAvsHostProperties(
-                HostKind.Specialized,
+                default,
                 provisioningState,
                 displayName,
                 moRefId,
                 fqdn,
                 maintenance,
                 faultDomain,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -334,11 +378,10 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && networkBlock is null ? default : new IscsiPathProperties(provisioningState, networkBlock, null));
+                provisioningState is null && networkBlock is null ? default : new IscsiPathProperties(provisioningState, networkBlock, default),
+                default);
         }
 
-        /// <summary> A license resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -352,23 +395,18 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary>
-        /// The properties of a license
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VMwareFirewallLicenseProperties"/>.
-        /// </summary>
         /// <param name="kind"> License kind. </param>
         /// <param name="provisioningState"> The state of the license provisioning. </param>
         /// <returns> A new <see cref="Models.AvsLicenseProperties"/> instance for mocking. </returns>
         public static AvsLicenseProperties AvsLicenseProperties(string kind = default, AvsLicenseProvisioningState? provisioningState = default)
         {
-            return new UnknownAvsLicenseProperties(new LicenseKind(kind), provisioningState, additionalBinaryDataProperties: null);
+            return new UnknownAvsLicenseProperties(default, provisioningState, default);
         }
 
-        /// <summary> The properties of a VMware Firewall license. </summary>
         /// <param name="provisioningState"> The state of the license provisioning. </param>
         /// <param name="licenseKey"> License key. </param>
         /// <param name="cores"> Number of cores included in the license, measured per hour. </param>
@@ -382,27 +420,33 @@ namespace Azure.ResourceManager.Avs.Models
             labels ??= new ChangeTrackingList<AvsLicenseLabel>();
 
             return new VMwareFirewallLicenseProperties(
-                LicenseKind.VMwareFirewall,
+                default,
                 provisioningState,
-                additionalBinaryDataProperties: null,
+                default,
                 licenseKey,
                 cores,
                 endOn,
                 broadcomSiteId,
                 broadcomContractNumber,
-                labels.ToList());
+                (labels ?? new ChangeTrackingList<AvsLicenseLabel>()).ToList());
         }
 
-        /// <summary> Subscription trial availability. </summary>
+        /// <param name="key"> The key of the label. </param>
+        /// <param name="value"> The value of the label. </param>
+        /// <returns> A new <see cref="Models.AvsLicenseLabel"/> instance for mocking. </returns>
+        public static AvsLicenseLabel AvsLicenseLabel(string key = default, string value = default)
+        {
+            return new AvsLicenseLabel(key, value, default);
+        }
+
         /// <param name="status"> Trial status. </param>
         /// <param name="availableHosts"> Number of trial hosts available. </param>
         /// <returns> A new <see cref="Models.AvsSubscriptionTrialAvailabilityResult"/> instance for mocking. </returns>
         public static AvsSubscriptionTrialAvailabilityResult AvsSubscriptionTrialAvailabilityResult(AvsSubscriptionTrialStatus? status = default, int? availableHosts = default)
         {
-            return new AvsSubscriptionTrialAvailabilityResult(status, availableHosts, additionalBinaryDataProperties: null);
+            return new AvsSubscriptionTrialAvailabilityResult(status, availableHosts, default);
         }
 
-        /// <summary> Subscription quotas. </summary>
         /// <param name="hostsRemaining"> Remaining hosts quota by sku type. </param>
         /// <param name="quotaEnabled"> Host quota is active for current subscription. </param>
         /// <returns> A new <see cref="Models.AvsSubscriptionQuotaAvailabilityResult"/> instance for mocking. </returns>
@@ -410,10 +454,9 @@ namespace Azure.ResourceManager.Avs.Models
         {
             hostsRemaining ??= new ChangeTrackingDictionary<string, int>();
 
-            return new AvsSubscriptionQuotaAvailabilityResult(hostsRemaining, quotaEnabled, additionalBinaryDataProperties: null);
+            return new AvsSubscriptionQuotaAvailabilityResult(hostsRemaining ?? new ChangeTrackingDictionary<string, int>(), quotaEnabled, default);
         }
 
-        /// <summary> A cluster resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -427,11 +470,10 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> properties of a maintenance. </summary>
         /// <param name="component"> type of maintenance. </param>
         /// <param name="displayName"> Display name for maintenance. </param>
         /// <param name="clusterId"> Cluster ID for on which maintenance will be applied. Empty if maintenance is at private cloud level. </param>
@@ -460,12 +502,11 @@ namespace Azure.ResourceManager.Avs.Models
                 scheduledStartOn,
                 estimatedDurationInMinutes,
                 provisioningState,
-                operations.ToList(),
+                (operations ?? new ChangeTrackingList<AvsMaintenanceManagementOperation>()).ToList(),
                 maintenanceReadiness,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> state of the maintenance. </summary>
         /// <param name="name"> Customer presentable maintenance state. </param>
         /// <param name="message"> Failure/Success info. </param>
         /// <param name="startedOn"> Time when current state started. </param>
@@ -473,10 +514,16 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvsMaintenanceState"/> instance for mocking. </returns>
         public static AvsMaintenanceState AvsMaintenanceState(AvsMaintenanceStateName? name = default, string message = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default)
         {
-            return new AvsMaintenanceState(name, message, startedOn, endedOn, additionalBinaryDataProperties: null);
+            return new AvsMaintenanceState(name, message, startedOn, endedOn, default);
         }
 
-        /// <summary> Scheduling window constraint. </summary>
+        /// <param name="kind"> The kind of operation. </param>
+        /// <returns> A new <see cref="Models.AvsMaintenanceManagementOperation"/> instance for mocking. </returns>
+        public static AvsMaintenanceManagementOperation AvsMaintenanceManagementOperation(string kind = default)
+        {
+            return new UnknownAvsMaintenanceManagementOperation(default, default);
+        }
+
         /// <param name="isDisabled"> If scheduling is disabled. </param>
         /// <param name="disabledReason"> Reason for schedule disabled. </param>
         /// <param name="constraints"> Constraints for scheduling maintenance. </param>
@@ -485,28 +532,32 @@ namespace Azure.ResourceManager.Avs.Models
         {
             constraints ??= new ChangeTrackingList<AvsScheduleOperationConstraint>();
 
-            return new AvsScheduleOperation(MaintenanceManagementOperationKind.Schedule, additionalBinaryDataProperties: null, isDisabled, disabledReason, constraints.ToList());
+            return new AvsScheduleOperation(default, default, isDisabled, disabledReason, (constraints ?? new ChangeTrackingList<AvsScheduleOperationConstraint>()).ToList());
         }
 
-        /// <summary> Time window in which Customer has option to schedule maintenance. </summary>
+        /// <param name="kind"> The kind of operation. </param>
+        /// <returns> A new <see cref="Models.AvsScheduleOperationConstraint"/> instance for mocking. </returns>
+        public static AvsScheduleOperationConstraint AvsScheduleOperationConstraint(string kind = default)
+        {
+            return new UnknownAvsScheduleOperationConstraint(default, default);
+        }
+
         /// <param name="startsOn"> Start date time. </param>
         /// <param name="endsOn"> End date Time. </param>
         /// <returns> A new <see cref="Models.AvsSchedulingWindow"/> instance for mocking. </returns>
         public static AvsSchedulingWindow AvsSchedulingWindow(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default)
         {
-            return new AvsSchedulingWindow(ScheduleOperationConstraintKind.SchedulingWindow, additionalBinaryDataProperties: null, startsOn, endsOn);
+            return new AvsSchedulingWindow(default, default, startsOn, endsOn);
         }
 
-        /// <summary> Time window in which Customer can to schedule maintenance. </summary>
         /// <param name="startsOn"> Start date time. </param>
         /// <param name="endsOn"> End date Time. </param>
         /// <returns> A new <see cref="Models.AvailableWindowForMaintenanceWhileScheduleOperation"/> instance for mocking. </returns>
         public static AvailableWindowForMaintenanceWhileScheduleOperation AvailableWindowForMaintenanceWhileScheduleOperation(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default)
         {
-            return new AvailableWindowForMaintenanceWhileScheduleOperation(ScheduleOperationConstraintKind.AvailableWindowForMaintenanceWhileScheduleOperation, additionalBinaryDataProperties: null, startsOn, endsOn);
+            return new AvailableWindowForMaintenanceWhileScheduleOperation(default, default, startsOn, endsOn);
         }
 
-        /// <summary> Time ranges blocked for scheduling maintenance. </summary>
         /// <param name="category"> Category of blocked date. </param>
         /// <param name="timeRanges"> Date ranges blocked for schedule. </param>
         /// <returns> A new <see cref="Models.BlockedWhileScheduleOperation"/> instance for mocking. </returns>
@@ -514,20 +565,18 @@ namespace Azure.ResourceManager.Avs.Models
         {
             timeRanges ??= new ChangeTrackingList<BlockedDatesConstraintTimeRange>();
 
-            return new BlockedWhileScheduleOperation(ScheduleOperationConstraintKind.BlockedWhileScheduleOperation, additionalBinaryDataProperties: null, category, timeRanges.ToList());
+            return new BlockedWhileScheduleOperation(default, default, category, (timeRanges ?? new ChangeTrackingList<BlockedDatesConstraintTimeRange>()).ToList());
         }
 
-        /// <summary> Blocked Time range Constraints for maintenance. </summary>
         /// <param name="startsOn"> Start date time. </param>
         /// <param name="endsOn"> End date Time. </param>
         /// <param name="reason"> Reason category for blocking maintenance reschedule. </param>
         /// <returns> A new <see cref="Models.BlockedDatesConstraintTimeRange"/> instance for mocking. </returns>
         public static BlockedDatesConstraintTimeRange BlockedDatesConstraintTimeRange(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, string reason = default)
         {
-            return new BlockedDatesConstraintTimeRange(startsOn, endsOn, reason, additionalBinaryDataProperties: null);
+            return new BlockedDatesConstraintTimeRange(startsOn, endsOn, reason, default);
         }
 
-        /// <summary> Constraints for rescheduling maintenance. </summary>
         /// <param name="isDisabled"> If rescheduling is disabled. </param>
         /// <param name="disabledReason"> Reason for reschedule disabled. </param>
         /// <param name="constraints"> Constraints for rescheduling maintenance. </param>
@@ -536,19 +585,24 @@ namespace Azure.ResourceManager.Avs.Models
         {
             constraints ??= new ChangeTrackingList<AvsRescheduleOperationConstraint>();
 
-            return new AvsRescheduleOperation(MaintenanceManagementOperationKind.Reschedule, additionalBinaryDataProperties: null, isDisabled, disabledReason, constraints.ToList());
+            return new AvsRescheduleOperation(default, default, isDisabled, disabledReason, (constraints ?? new ChangeTrackingList<AvsRescheduleOperationConstraint>()).ToList());
         }
 
-        /// <summary> Time window in which Customer can reschedule maintenance. </summary>
+        /// <param name="kind"> The kind of operation. </param>
+        /// <returns> A new <see cref="Models.AvsRescheduleOperationConstraint"/> instance for mocking. </returns>
+        public static AvsRescheduleOperationConstraint AvsRescheduleOperationConstraint(string kind = default)
+        {
+            return new UnknownAvsRescheduleOperationConstraint(default, default);
+        }
+
         /// <param name="startsOn"> Start date time. </param>
         /// <param name="endsOn"> End date Time. </param>
         /// <returns> A new <see cref="Models.AvailableWindowForMaintenanceWhileRescheduleOperation"/> instance for mocking. </returns>
         public static AvailableWindowForMaintenanceWhileRescheduleOperation AvailableWindowForMaintenanceWhileRescheduleOperation(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default)
         {
-            return new AvailableWindowForMaintenanceWhileRescheduleOperation(RescheduleOperationConstraintKind.AvailableWindowForMaintenanceWhileRescheduleOperation, additionalBinaryDataProperties: null, startsOn, endsOn);
+            return new AvailableWindowForMaintenanceWhileRescheduleOperation(default, default, startsOn, endsOn);
         }
 
-        /// <summary> Time ranges blocked for rescheduling maintenance. </summary>
         /// <param name="category"> Category of blocked date. </param>
         /// <param name="timeRanges"> Date ranges blocked for schedule. </param>
         /// <returns> A new <see cref="Models.BlockedWhileRescheduleOperation"/> instance for mocking. </returns>
@@ -556,10 +610,9 @@ namespace Azure.ResourceManager.Avs.Models
         {
             timeRanges ??= new ChangeTrackingList<BlockedDatesConstraintTimeRange>();
 
-            return new BlockedWhileRescheduleOperation(RescheduleOperationConstraintKind.BlockedWhileRescheduleOperation, additionalBinaryDataProperties: null, category, timeRanges.ToList());
+            return new BlockedWhileRescheduleOperation(default, default, category, (timeRanges ?? new ChangeTrackingList<BlockedDatesConstraintTimeRange>()).ToList());
         }
 
-        /// <summary> Refresh MaintenanceReadiness status. </summary>
         /// <param name="isDisabled"> If maintenanceReadiness refresh is disabled. </param>
         /// <param name="disabledReason"> Reason disabling refresh for maintenanceReadiness. </param>
         /// <param name="status"> Status of the operation. </param>
@@ -569,8 +622,8 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsMaintenanceReadinessRefreshOperation AvsMaintenanceReadinessRefreshOperation(bool? isDisabled = default, string disabledReason = default, AvsMaintenanceReadinessRefreshOperationStatus? status = default, bool? isRefreshedByMicrosoft = default, string message = default)
         {
             return new AvsMaintenanceReadinessRefreshOperation(
-                MaintenanceManagementOperationKind.MaintenanceReadinessRefresh,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 isDisabled,
                 disabledReason,
                 status,
@@ -578,7 +631,6 @@ namespace Azure.ResourceManager.Avs.Models
                 message);
         }
 
-        /// <summary> Maintenance readiness details. </summary>
         /// <param name="type"> The type of maintenance readiness check. </param>
         /// <param name="status"> The current readiness status of maintenance. </param>
         /// <param name="message"> A summary message of the readiness check result. </param>
@@ -593,12 +645,11 @@ namespace Azure.ResourceManager.Avs.Models
                 @type,
                 status,
                 message,
-                failedChecks.ToList(),
+                (failedChecks ?? new ChangeTrackingList<AvsMaintenanceFailedCheck>()).ToList(),
                 lastUpdatedOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Details about a failed maintenance check. </summary>
         /// <param name="name"> The name of the failed check. </param>
         /// <param name="impactedResources"> A list of resources impacted by the failed check. </param>
         /// <returns> A new <see cref="Models.AvsMaintenanceFailedCheck"/> instance for mocking. </returns>
@@ -606,10 +657,9 @@ namespace Azure.ResourceManager.Avs.Models
         {
             impactedResources ??= new ChangeTrackingList<ImpactedMaintenanceResourceDetails>();
 
-            return new AvsMaintenanceFailedCheck(name, impactedResources.ToList(), additionalBinaryDataProperties: null);
+            return new AvsMaintenanceFailedCheck(name, (impactedResources ?? new ChangeTrackingList<ImpactedMaintenanceResourceDetails>()).ToList(), default);
         }
 
-        /// <summary> Details about a resource impacted by a failed check. </summary>
         /// <param name="id"> The ID of the impacted resource. </param>
         /// <param name="errors"> A list of errors associated with the impacted resource. </param>
         /// <returns> A new <see cref="Models.ImpactedMaintenanceResourceDetails"/> instance for mocking. </returns>
@@ -617,10 +667,9 @@ namespace Azure.ResourceManager.Avs.Models
         {
             errors ??= new ChangeTrackingList<ImpactedMaintenanceResourceError>();
 
-            return new ImpactedMaintenanceResourceDetails(id, errors.ToList(), additionalBinaryDataProperties: null);
+            return new ImpactedMaintenanceResourceDetails(id, (errors ?? new ChangeTrackingList<ImpactedMaintenanceResourceError>()).ToList(), default);
         }
 
-        /// <summary> Details about an error affecting a resource. </summary>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="name"> The name of the error. </param>
         /// <param name="details"> Additional details about the error. </param>
@@ -635,12 +684,27 @@ namespace Azure.ResourceManager.Avs.Models
                 errorCode,
                 name,
                 details,
-                resolutionSteps.ToList(),
+                (resolutionSteps ?? new ChangeTrackingList<string>()).ToList(),
                 isActionRequired,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> A vSphere Distributed Resource Scheduler (DRS) placement policy. </summary>
+        /// <param name="rescheduleOn"> reschedule time. </param>
+        /// <param name="message"> rescheduling reason. </param>
+        /// <returns> A new <see cref="Models.AvsMaintenanceReschedule"/> instance for mocking. </returns>
+        public static AvsMaintenanceReschedule AvsMaintenanceReschedule(DateTimeOffset? rescheduleOn = default, string message = default)
+        {
+            return new AvsMaintenanceReschedule(rescheduleOn, message, default);
+        }
+
+        /// <param name="scheduleOn"> schedule time. </param>
+        /// <param name="message"> scheduling message. </param>
+        /// <returns> A new <see cref="Models.AvsMaintenanceSchedule"/> instance for mocking. </returns>
+        public static AvsMaintenanceSchedule AvsMaintenanceSchedule(DateTimeOffset? scheduleOn = default, string message = default)
+        {
+            return new AvsMaintenanceSchedule(scheduleOn, message, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -654,14 +718,10 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary>
-        /// Abstract placement policy properties
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VmPlacementPolicyProperties"/> and <see cref="Models.VmHostPlacementPolicyProperties"/>.
-        /// </summary>
         /// <param name="type"> Placement Policy type. </param>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>
@@ -669,10 +729,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.PlacementPolicyProperties"/> instance for mocking. </returns>
         public static PlacementPolicyProperties PlacementPolicyProperties(string @type = default, PlacementPolicyState? state = default, string displayName = default, PlacementPolicyProvisioningState? provisioningState = default)
         {
-            return new UnknownPlacementPolicyProperties(new PlacementPolicyType(@type), state, displayName, provisioningState, additionalBinaryDataProperties: null);
+            return new UnknownPlacementPolicyProperties(default, state, displayName, provisioningState, default);
         }
 
-        /// <summary> VM-VM placement policy properties. </summary>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -684,16 +743,15 @@ namespace Azure.ResourceManager.Avs.Models
             vmMembers ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new VmPlacementPolicyProperties(
-                PlacementPolicyType.VmVm,
+                default,
                 state,
                 displayName,
                 provisioningState,
-                additionalBinaryDataProperties: null,
-                vmMembers.ToList(),
+                default,
+                (vmMembers ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 affinityType);
         }
 
-        /// <summary> VM-Host placement policy properties. </summary>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -709,16 +767,33 @@ namespace Azure.ResourceManager.Avs.Models
             hostMembers ??= new ChangeTrackingList<string>();
 
             return new VmHostPlacementPolicyProperties(
-                PlacementPolicyType.VmHost,
+                default,
                 state,
                 displayName,
                 provisioningState,
-                additionalBinaryDataProperties: null,
-                vmMembers.ToList(),
-                hostMembers.ToList(),
+                default,
+                (vmMembers ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                (hostMembers ?? new ChangeTrackingList<string>()).ToList(),
                 affinityType,
                 affinityStrength,
                 azureHybridBenefitType);
+        }
+
+        /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
+        /// <param name="vmMembers"> Virtual machine members list. </param>
+        /// <param name="hostMembers"> Host members list. </param>
+        /// <param name="affinityStrength"> vm-host placement policy affinity strength (should/must). </param>
+        /// <param name="azureHybridBenefitType"> placement policy azure hybrid benefit opt-in type. </param>
+        /// <returns> A new <see cref="Models.PlacementPolicyPatch"/> instance for mocking. </returns>
+        public static PlacementPolicyPatch PlacementPolicyPatch(PlacementPolicyState? state = default, IEnumerable<ResourceIdentifier> vmMembers = default, IEnumerable<string> hostMembers = default, VmHostPlacementPolicyAffinityStrength? affinityStrength = default, AzureHybridBenefitType? azureHybridBenefitType = default)
+        {
+            return new PlacementPolicyPatch(state is null && vmMembers is null && hostMembers is null && affinityStrength is null && azureHybridBenefitType is null ? default : new PlacementPolicyUpdateProperties(
+                state,
+                (vmMembers ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                (hostMembers ?? new ChangeTrackingList<string>()).ToList(),
+                affinityStrength,
+                azureHybridBenefitType,
+                default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -779,8 +854,7 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 managementCluster is null && internet is null && identitySources is null && availability is null && encryption is null && extendedNetworkBlocks is null && provisioningState is null && circuit is null && endpoints is null && networkBlock is null && managementNetwork is null && provisioningNetwork is null && vMotionNetwork is null && vCenterPassword is null && nsxtPassword is null && vCenterCertificateThumbprint is null && nsxtCertificateThumbprint is null && externalCloudLinks is null && secondaryCircuit is null && nsxPublicIPQuotaRaised is null && virtualNetworkId is null && dnsZoneType is null && vcfLicense is null ? default : new PrivateCloudProperties(
                     managementCluster,
@@ -806,13 +880,63 @@ namespace Azure.ResourceManager.Avs.Models
                     virtualNetworkId,
                     dnsZoneType,
                     vcfLicense,
-                    null),
+                    default),
                 sku,
                 identity,
-                zones.ToList());
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
-        /// <summary> An Encryption Key. </summary>
+        /// <param name="name"> The name of the identity source. </param>
+        /// <param name="alias"> The domain's NetBIOS name. </param>
+        /// <param name="domain"> The domain's DNS name. </param>
+        /// <param name="baseUserDN"> The base distinguished name for users. </param>
+        /// <param name="baseGroupDN"> The base distinguished name for groups. </param>
+        /// <param name="primaryServer"> Primary server URL. </param>
+        /// <param name="secondaryServer"> Secondary server URL. </param>
+        /// <param name="ssl"> Protect LDAP communication using SSL certificate (LDAPS). </param>
+        /// <param name="username">
+        /// The ID of an Active Directory user with a minimum of read-only access to Base
+        /// DN for users and group
+        /// </param>
+        /// <param name="password">
+        /// The password of the Active Directory user with a minimum of read-only access to
+        /// Base DN for users and groups.
+        /// </param>
+        /// <returns> A new <see cref="Models.SingleSignOnIdentitySource"/> instance for mocking. </returns>
+        public static SingleSignOnIdentitySource SingleSignOnIdentitySource(string name = default, string @alias = default, string domain = default, string baseUserDN = default, string baseGroupDN = default, Uri primaryServer = default, Uri secondaryServer = default, SslCertificateStatus? ssl = default, string username = default, string password = default)
+        {
+            return new SingleSignOnIdentitySource(
+                name,
+                @alias,
+                domain,
+                baseUserDN,
+                baseGroupDN,
+                primaryServer,
+                secondaryServer,
+                ssl,
+                username,
+                password,
+                default);
+        }
+
+        /// <param name="strategy"> The availability strategy for the private cloud. </param>
+        /// <param name="zone"> The primary availability zone for the private cloud. </param>
+        /// <param name="secondaryZone"> The secondary availability zone for the private cloud. </param>
+        /// <returns> A new <see cref="Models.PrivateCloudAvailabilityProperties"/> instance for mocking. </returns>
+        public static PrivateCloudAvailabilityProperties PrivateCloudAvailabilityProperties(AvailabilityStrategy? strategy = default, int? zone = default, int? secondaryZone = default)
+        {
+            return new PrivateCloudAvailabilityProperties(strategy, zone, secondaryZone, default);
+        }
+
+        /// <param name="status"> Status of customer managed encryption key. </param>
+        /// <param name="keyVaultProperties"> The key vault where the encryption key is stored. </param>
+        /// <returns> A new <see cref="Models.CustomerManagedEncryption"/> instance for mocking. </returns>
+        public static CustomerManagedEncryption CustomerManagedEncryption(AvsEncryptionState? status = default, AvsEncryptionKeyVaultProperties keyVaultProperties = default)
+        {
+            return new CustomerManagedEncryption(status, keyVaultProperties, default);
+        }
+
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="keyVersion"> The version of the key. </param>
         /// <param name="autoDetectedKeyVersion"> The auto-detected version of the key if versionType is auto-detected. </param>
@@ -829,10 +953,9 @@ namespace Azure.ResourceManager.Avs.Models
                 keyVaultUri,
                 keyState,
                 versionType,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> An ExpressRoute Circuit. </summary>
         /// <param name="primarySubnet"> CIDR of primary subnet. </param>
         /// <param name="secondarySubnet"> CIDR of secondary subnet. </param>
         /// <param name="expressRouteId"> Identifier of the ExpressRoute Circuit (Microsoft Colo only). </param>
@@ -840,10 +963,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.ExpressRouteCircuit"/> instance for mocking. </returns>
         public static ExpressRouteCircuit ExpressRouteCircuit(string primarySubnet = default, string secondarySubnet = default, ResourceIdentifier expressRouteId = default, ResourceIdentifier expressRoutePrivatePeeringId = default)
         {
-            return new ExpressRouteCircuit(primarySubnet, secondarySubnet, expressRouteId, expressRoutePrivatePeeringId, additionalBinaryDataProperties: null);
+            return new ExpressRouteCircuit(primarySubnet, secondarySubnet, expressRouteId, expressRoutePrivatePeeringId, default);
         }
 
-        /// <summary> Endpoint addresses. </summary>
         /// <param name="nsxtManager"> Endpoint FQDN for the NSX-T Data Center manager. </param>
         /// <param name="vcsa"> Endpoint FQDN for Virtual Center Server Appliance. </param>
         /// <param name="hcxCloudManager"> Endpoint FQDN for the HCX Cloud Manager. </param>
@@ -860,22 +982,17 @@ namespace Azure.ResourceManager.Avs.Models
                 nsxtManagerIP,
                 vcenterIP,
                 hcxCloudManagerIP,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary>
-        /// A VMware Cloud Foundation license
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Vcf5License"/>.
-        /// </summary>
         /// <param name="kind"> License kind. </param>
         /// <param name="provisioningState"> The state of the license provisioning. </param>
         /// <returns> A new <see cref="Models.VcfLicense"/> instance for mocking. </returns>
         public static VcfLicense VcfLicense(string kind = default, AvsLicenseProvisioningState? provisioningState = default)
         {
-            return new UnknownVcfLicense(new VcfLicenseKind(kind), provisioningState, additionalBinaryDataProperties: null);
+            return new UnknownVcfLicense(default, provisioningState, default);
         }
 
-        /// <summary> A VMware Cloud Foundation (VCF) 5.0 license. </summary>
         /// <param name="provisioningState"> The state of the license provisioning. </param>
         /// <param name="licenseKey"> License key. </param>
         /// <param name="cores"> Number of cores included in the license. </param>
@@ -889,15 +1006,15 @@ namespace Azure.ResourceManager.Avs.Models
             labels ??= new ChangeTrackingList<AvsLicenseLabel>();
 
             return new Vcf5License(
-                VcfLicenseKind.Vcf5,
+                default,
                 provisioningState,
-                additionalBinaryDataProperties: null,
+                default,
                 licenseKey,
                 cores,
                 endOn,
                 broadcomSiteId,
                 broadcomContractNumber,
-                labels.ToList());
+                (labels ?? new ChangeTrackingList<AvsLicenseLabel>()).ToList());
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -920,7 +1037,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AvsPrivateCloudPatch(tags, sku, identity, managementCluster is null && internet is null && identitySources is null && availability is null && encryption is null && extendedNetworkBlocks is null && dnsZoneType is null ? default : new PrivateCloudUpdateProperties(
+            return new AvsPrivateCloudPatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku, identity, managementCluster is null && internet is null && identitySources is null && availability is null && encryption is null && extendedNetworkBlocks is null && dnsZoneType is null ? default : new PrivateCloudUpdateProperties(
                 managementCluster,
                 internet,
                 (identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>()).ToList(),
@@ -928,10 +1045,9 @@ namespace Azure.ResourceManager.Avs.Models
                 encryption,
                 (extendedNetworkBlocks ?? new ChangeTrackingList<string>()).ToList(),
                 dnsZoneType,
-                null), additionalBinaryDataProperties: null);
+                default), default);
         }
 
-        /// <summary> Administrative credentials for accessing vCenter and NSX-T. </summary>
         /// <param name="nsxtUsername"> NSX-T Manager username. </param>
         /// <param name="nsxtPassword"> NSX-T Manager password. </param>
         /// <param name="vCenterUsername"> vCenter admin username. </param>
@@ -939,10 +1055,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AdminCredentials"/> instance for mocking. </returns>
         public static AdminCredentials AdminCredentials(string nsxtUsername = default, string nsxtPassword = default, string vCenterUsername = default, string vCenterPassword = default)
         {
-            return new AdminCredentials(nsxtUsername, nsxtPassword, vCenterUsername, vCenterPassword, additionalBinaryDataProperties: null);
+            return new AdminCredentials(nsxtUsername, nsxtPassword, vCenterUsername, vCenterPassword, default);
         }
 
-        /// <summary> A provisioned network resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -956,21 +1071,19 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The properties of a provisioned network. </summary>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="addressPrefix"> The address prefixes of the provisioned network in CIDR notation. </param>
         /// <param name="networkType"> The type of network provisioned. </param>
         /// <returns> A new <see cref="Models.AvsProvisionedNetworkProperties"/> instance for mocking. </returns>
         public static AvsProvisionedNetworkProperties AvsProvisionedNetworkProperties(AvsProvisionedNetworkProvisioningState? provisioningState = default, string addressPrefix = default, AvsProvisionedNetworkType? networkType = default)
         {
-            return new AvsProvisionedNetworkProperties(provisioningState, addressPrefix, networkType, additionalBinaryDataProperties: null);
+            return new AvsProvisionedNetworkProperties(provisioningState, addressPrefix, networkType, default);
         }
 
-        /// <summary> An instance describing a Pure Storage Policy Based Management policy. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -984,18 +1097,17 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Properties of a Pure Storage Policy Based Management policy. </summary>
         /// <param name="storagePolicyDefinition"> Definition of a Pure Storage Policy Based Management policy. </param>
         /// <param name="storagePoolId"> Azure resource ID of the Pure Storage Pool associated with the storage policy. </param>
         /// <param name="provisioningState"> The state of the Pure Storage Policy Based Management policy provisioning. </param>
         /// <returns> A new <see cref="Models.AvsPureStoragePolicyProperties"/> instance for mocking. </returns>
         public static AvsPureStoragePolicyProperties AvsPureStoragePolicyProperties(string storagePolicyDefinition = default, string storagePoolId = default, AvsPureStoragePolicyProvisioningState? provisioningState = default)
         {
-            return new AvsPureStoragePolicyProperties(storagePolicyDefinition, storagePoolId, provisioningState, additionalBinaryDataProperties: null);
+            return new AvsPureStoragePolicyProperties(storagePolicyDefinition, storagePoolId, provisioningState, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1015,17 +1127,16 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 provisioningState is null && description is null && timeout is null && audience is null && parameters is null ? default : new ScriptCmdletProperties(
                     provisioningState,
                     description,
                     timeout,
                     audience,
                     (parameters ?? new ChangeTrackingList<ScriptParameter>()).ToList(),
-                    null));
+                    default),
+                default);
         }
 
-        /// <summary> An parameter that the script will accept. </summary>
         /// <param name="parameterType">
         /// The type of parameter the script is expecting. psCredential is a
         /// PSCredentialObject
@@ -1046,7 +1157,7 @@ namespace Azure.ResourceManager.Avs.Models
                 description,
                 visibility,
                 optional,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1082,7 +1193,6 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 scriptCmdletId is null && parameters is null && hiddenParameters is null && failureReason is null && timeout is null && retention is null && submittedOn is null && startedOn is null && finishedOn is null && provisioningState is null && output is null && namedOutputs is null && information is null && warnings is null && errors is null ? default : new ScriptExecutionProperties(
                     scriptCmdletId,
                     (parameters ?? new ChangeTrackingList<ScriptExecutionParameterDetails>()).ToList(),
@@ -1099,7 +1209,41 @@ namespace Azure.ResourceManager.Avs.Models
                     (information ?? new ChangeTrackingList<string>()).ToList(),
                     (warnings ?? new ChangeTrackingList<string>()).ToList(),
                     (errors ?? new ChangeTrackingList<string>()).ToList(),
-                    null));
+                    default),
+                default);
+        }
+
+        /// <param name="type"> script execution parameter type. </param>
+        /// <param name="name"> The parameter name. </param>
+        /// <returns> A new <see cref="Models.ScriptExecutionParameterDetails"/> instance for mocking. </returns>
+        public static ScriptExecutionParameterDetails ScriptExecutionParameterDetails(string @type = default, string name = default)
+        {
+            return new UnknownScriptExecutionParameter(default, name, default);
+        }
+
+        /// <param name="name"> The parameter name. </param>
+        /// <param name="secureValue"> A secure value for the passed parameter, not to be stored in logs. </param>
+        /// <returns> A new <see cref="Models.ScriptSecureStringExecutionParameterDetails"/> instance for mocking. </returns>
+        public static ScriptSecureStringExecutionParameterDetails ScriptSecureStringExecutionParameterDetails(string name = default, string secureValue = default)
+        {
+            return new ScriptSecureStringExecutionParameterDetails(default, name, default, secureValue);
+        }
+
+        /// <param name="name"> The parameter name. </param>
+        /// <param name="value"> The value for the passed parameter. </param>
+        /// <returns> A new <see cref="Models.ScriptStringExecutionParameterDetails"/> instance for mocking. </returns>
+        public static ScriptStringExecutionParameterDetails ScriptStringExecutionParameterDetails(string name = default, string value = default)
+        {
+            return new ScriptStringExecutionParameterDetails(default, name, default, value);
+        }
+
+        /// <param name="name"> The parameter name. </param>
+        /// <param name="username"> username for login. </param>
+        /// <param name="password"> password for login. </param>
+        /// <returns> A new <see cref="Models.PSCredentialExecutionParameterDetails"/> instance for mocking. </returns>
+        public static PSCredentialExecutionParameterDetails PSCredentialExecutionParameterDetails(string name = default, string username = default, string password = default)
+        {
+            return new PSCredentialExecutionParameterDetails(default, name, default, username, password);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1119,17 +1263,16 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 provisioningState is null && description is null && version is null && company is null && uri is null ? default : new ScriptPackageProperties(
                     provisioningState,
                     description,
                     version,
                     company,
                     uri,
-                    null));
+                    default),
+                default);
         }
 
-        /// <summary> A SKU for a resource. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="tier"> The tier of virtual machines in a scale set. </param>
@@ -1153,14 +1296,13 @@ namespace Azure.ResourceManager.Avs.Models
                 tier,
                 size,
                 family,
-                locations.ToList(),
-                locationInfo.ToList(),
-                capabilities.ToList(),
-                restrictions.ToList(),
-                additionalBinaryDataProperties: null);
+                (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                (locationInfo ?? new ChangeTrackingList<AvsResourceSkuLocationInfo>()).ToList(),
+                (capabilities ?? new ChangeTrackingList<AvsResourceSkuCapabilities>()).ToList(),
+                (restrictions ?? new ChangeTrackingList<AvsResourceSkuRestrictions>()).ToList(),
+                default);
         }
 
-        /// <summary> Describes an available Compute SKU Location Information. </summary>
         /// <param name="location"> Location of the SKU. </param>
         /// <param name="zones"> List of availability zones where the SKU is supported. </param>
         /// <param name="zoneDetails"> Gets details of capabilities available to a SKU in specific zones. </param>
@@ -1170,10 +1312,9 @@ namespace Azure.ResourceManager.Avs.Models
             zones ??= new ChangeTrackingList<string>();
             zoneDetails ??= new ChangeTrackingList<AvsResourceSkuZoneDetails>();
 
-            return new AvsResourceSkuLocationInfo(location, zones.ToList(), zoneDetails.ToList(), additionalBinaryDataProperties: null);
+            return new AvsResourceSkuLocationInfo(location, (zones ?? new ChangeTrackingList<string>()).ToList(), (zoneDetails ?? new ChangeTrackingList<AvsResourceSkuZoneDetails>()).ToList(), default);
         }
 
-        /// <summary> Describes The zonal capabilities of a SKU. </summary>
         /// <param name="name"> Gets the set of zones that the SKU is available in with the specified capabilities. </param>
         /// <param name="capabilities"> A list of capabilities that are available for the SKU in the specified list of zones. </param>
         /// <returns> A new <see cref="Models.AvsResourceSkuZoneDetails"/> instance for mocking. </returns>
@@ -1182,19 +1323,17 @@ namespace Azure.ResourceManager.Avs.Models
             name ??= new ChangeTrackingList<string>();
             capabilities ??= new ChangeTrackingList<AvsResourceSkuCapabilities>();
 
-            return new AvsResourceSkuZoneDetails(name.ToList(), capabilities.ToList(), additionalBinaryDataProperties: null);
+            return new AvsResourceSkuZoneDetails((name ?? new ChangeTrackingList<string>()).ToList(), (capabilities ?? new ChangeTrackingList<AvsResourceSkuCapabilities>()).ToList(), default);
         }
 
-        /// <summary> Describes The SKU capabilities object. </summary>
         /// <param name="name"> The name of the SKU capability. </param>
         /// <param name="value"> The value of the SKU capability. </param>
         /// <returns> A new <see cref="Models.AvsResourceSkuCapabilities"/> instance for mocking. </returns>
         public static AvsResourceSkuCapabilities AvsResourceSkuCapabilities(string name = default, string value = default)
         {
-            return new AvsResourceSkuCapabilities(name, value, additionalBinaryDataProperties: null);
+            return new AvsResourceSkuCapabilities(name, value, default);
         }
 
-        /// <summary> The restrictions of the SKU. </summary>
         /// <param name="type"> the type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
@@ -1204,10 +1343,9 @@ namespace Azure.ResourceManager.Avs.Models
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new AvsResourceSkuRestrictions(@type, values.ToList(), restrictionInfo, reasonCode, additionalBinaryDataProperties: null);
+            return new AvsResourceSkuRestrictions(@type, (values ?? new ChangeTrackingList<string>()).ToList(), restrictionInfo, reasonCode, default);
         }
 
-        /// <summary> Describes an available Compute SKU Restriction Information. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         /// <returns> A new <see cref="Models.AvsResourceSkuRestrictionInfo"/> instance for mocking. </returns>
@@ -1216,7 +1354,7 @@ namespace Azure.ResourceManager.Avs.Models
             locations ??= new ChangeTrackingList<AzureLocation>();
             zones ??= new ChangeTrackingList<string>();
 
-            return new AvsResourceSkuRestrictionInfo(locations.ToList(), zones.ToList(), additionalBinaryDataProperties: null);
+            return new AvsResourceSkuRestrictionInfo((locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (zones ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1236,14 +1374,21 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 provisioningState is null && displayName is null && moRefId is null && folderPath is null && restrictMovement is null ? default : new VirtualMachineProperties(
                     provisioningState,
                     displayName,
                     moRefId,
                     folderPath,
                     restrictMovement,
-                    null));
+                    default),
+                default);
+        }
+
+        /// <param name="restrictMovement"> Whether VM DRS-driven movement is restricted (enabled) or not (disabled). </param>
+        /// <returns> A new <see cref="Models.AvsPrivateCloudClusterVirtualMachineRestrictMovement"/> instance for mocking. </returns>
+        public static AvsPrivateCloudClusterVirtualMachineRestrictMovement AvsPrivateCloudClusterVirtualMachineRestrictMovement(VirtualMachineRestrictMovementState? restrictMovement = default)
+        {
+            return new AvsPrivateCloudClusterVirtualMachineRestrictMovement(restrictMovement, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1259,11 +1404,10 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null ? default : new WorkloadNetworkProperties(provisioningState, null));
+                provisioningState is null ? default : new WorkloadNetworkProperties(provisioningState, default),
+                default);
         }
 
-        /// <summary> NSX DHCP. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1277,15 +1421,10 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary>
-        /// Base class for WorkloadNetworkDhcpServer and WorkloadNetworkDhcpRelay to
-        /// inherit from
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.WorkloadNetworkDhcpServer"/> and <see cref="Models.WorkloadNetworkDhcpRelay"/>.
-        /// </summary>
         /// <param name="dhcpType"> Type of DHCP: SERVER or RELAY. </param>
         /// <param name="displayName"> Display name of the DHCP entity. </param>
         /// <param name="segments"> NSX Segments consuming DHCP. </param>
@@ -1297,15 +1436,14 @@ namespace Azure.ResourceManager.Avs.Models
             segments ??= new ChangeTrackingList<string>();
 
             return new UnknownWorkloadNetworkDhcpEntity(
-                new DhcpTypeEnum(dhcpType),
+                default,
                 displayName,
-                segments.ToList(),
+                (segments ?? new ChangeTrackingList<string>()).ToList(),
                 provisioningState,
                 revision,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> NSX DHCP Server. </summary>
         /// <param name="displayName"> Display name of the DHCP entity. </param>
         /// <param name="segments"> NSX Segments consuming DHCP. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -1318,17 +1456,16 @@ namespace Azure.ResourceManager.Avs.Models
             segments ??= new ChangeTrackingList<string>();
 
             return new WorkloadNetworkDhcpServer(
-                DhcpTypeEnum.Server,
+                default,
                 displayName,
-                segments.ToList(),
+                (segments ?? new ChangeTrackingList<string>()).ToList(),
                 provisioningState,
                 revision,
-                additionalBinaryDataProperties: null,
+                default,
                 serverAddress,
                 leaseTime);
         }
 
-        /// <summary> NSX DHCP Relay. </summary>
         /// <param name="displayName"> Display name of the DHCP entity. </param>
         /// <param name="segments"> NSX Segments consuming DHCP. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -1341,13 +1478,13 @@ namespace Azure.ResourceManager.Avs.Models
             serverAddresses ??= new ChangeTrackingList<string>();
 
             return new WorkloadNetworkDhcpRelay(
-                DhcpTypeEnum.Relay,
+                default,
                 displayName,
-                segments.ToList(),
+                (segments ?? new ChangeTrackingList<string>()).ToList(),
                 provisioningState,
                 revision,
-                additionalBinaryDataProperties: null,
-                serverAddresses.ToList());
+                default,
+                (serverAddresses ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1370,7 +1507,6 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 displayName is null && dnsServiceIP is null && defaultDnsZone is null && fqdnZones is null && logLevel is null && status is null && provisioningState is null && revision is null ? default : new WorkloadNetworkDnsServiceProperties(
                     displayName,
                     dnsServiceIP,
@@ -1380,7 +1516,8 @@ namespace Azure.ResourceManager.Avs.Models
                     status,
                     provisioningState,
                     revision,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1402,7 +1539,6 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 displayName is null && domain is null && dnsServerIPs is null && sourceIP is null && dnsServices is null && provisioningState is null && revision is null ? default : new WorkloadNetworkDnsZoneProperties(
                     displayName,
                     (domain ?? new ChangeTrackingList<string>()).ToList(),
@@ -1411,7 +1547,8 @@ namespace Azure.ResourceManager.Avs.Models
                     dnsServices,
                     provisioningState,
                     revision,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1429,8 +1566,8 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && displayName is null && path is null ? default : new WorkloadNetworkGatewayProperties(provisioningState, displayName, path, null));
+                provisioningState is null && displayName is null && path is null ? default : new WorkloadNetworkGatewayProperties(provisioningState, displayName, path, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1452,7 +1589,6 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 displayName is null && direction is null && source is null && destination is null && status is null && provisioningState is null && revision is null ? default : new WorkloadNetworkPortMirroringProperties(
                     displayName,
                     direction,
@@ -1461,7 +1597,8 @@ namespace Azure.ResourceManager.Avs.Models
                     status,
                     provisioningState,
                     revision,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1480,8 +1617,8 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                displayName is null && numberOfPublicIPs is null && publicIPBlock is null && provisioningState is null ? default : new WorkloadNetworkPublicIPProperties(displayName, numberOfPublicIPs, publicIPBlock, provisioningState, null));
+                displayName is null && numberOfPublicIPs is null && publicIPBlock is null && provisioningState is null ? default : new WorkloadNetworkPublicIPProperties(displayName, numberOfPublicIPs, publicIPBlock, provisioningState, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1503,7 +1640,6 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 displayName is null && connectedGateway is null && subnet is null && portVif is null && status is null && provisioningState is null && revision is null ? default : new WorkloadNetworkSegmentProperties(
                     displayName,
                     connectedGateway,
@@ -1512,10 +1648,10 @@ namespace Azure.ResourceManager.Avs.Models
                     status,
                     provisioningState,
                     revision,
-                    null));
+                    default),
+                default);
         }
 
-        /// <summary> Subnet configuration for segment. </summary>
         /// <param name="dhcpRanges"> DHCP Range assigned for subnet. </param>
         /// <param name="gatewayAddress"> Gateway address. </param>
         /// <returns> A new <see cref="Models.WorkloadNetworkSegmentSubnet"/> instance for mocking. </returns>
@@ -1523,15 +1659,14 @@ namespace Azure.ResourceManager.Avs.Models
         {
             dhcpRanges ??= new ChangeTrackingList<string>();
 
-            return new WorkloadNetworkSegmentSubnet(dhcpRanges.ToList(), gatewayAddress, additionalBinaryDataProperties: null);
+            return new WorkloadNetworkSegmentSubnet((dhcpRanges ?? new ChangeTrackingList<string>()).ToList(), gatewayAddress, default);
         }
 
-        /// <summary> Ports and any VIF attached to segment. </summary>
         /// <param name="portName"> Name of port or VIF attached to segment. </param>
         /// <returns> A new <see cref="Models.WorkloadNetworkSegmentPortVif"/> instance for mocking. </returns>
         public static WorkloadNetworkSegmentPortVif WorkloadNetworkSegmentPortVif(string portName = default)
         {
-            return new WorkloadNetworkSegmentPortVif(portName, additionalBinaryDataProperties: null);
+            return new WorkloadNetworkSegmentPortVif(portName, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1549,8 +1684,8 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && displayName is null && vmType is null ? default : new WorkloadNetworkVirtualMachineProperties(provisioningState, displayName, vmType, null));
+                provisioningState is null && displayName is null && vmType is null ? default : new WorkloadNetworkVirtualMachineProperties(provisioningState, displayName, vmType, default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterData"/>. </summary>
@@ -1568,13 +1703,11 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudClusterData AvsPrivateCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsSku sku, int? clusterSize, AvsPrivateCloudClusterProvisioningState? provisioningState, int? clusterId, IEnumerable<string> hosts, string vsanDatastoreName)
         {
-
             return new AvsPrivateCloudClusterData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 clusterSize is null && provisioningState is null && clusterId is null && hosts is null && vsanDatastoreName is null ? default : new ClusterProperties(
                     clusterSize,
                     provisioningState,
@@ -1582,7 +1715,8 @@ namespace Azure.ResourceManager.Avs.Models
                     (hosts ?? new ChangeTrackingList<string>()).ToList(),
                     vsanDatastoreName,
                     default),
-                sku);
+                sku,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudData"/>. </summary>
@@ -1636,7 +1770,42 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IEnumerable<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IEnumerable<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IEnumerable<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, AvsDnsZoneType? dnsZoneType, AvsSku sku, ManagedServiceIdentity identity, IEnumerable<string> zones)
         {
-            return AvsPrivateCloudData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, managementCluster: managementCluster, internet: internet, identitySources: identitySources, availability: availability, encryption: encryption, extendedNetworkBlocks: extendedNetworkBlocks, provisioningState: provisioningState, circuit: circuit, endpoints: endpoints, networkBlock: networkBlock, managementNetwork: managementNetwork, provisioningNetwork: provisioningNetwork, vMotionNetwork: vMotionNetwork, vCenterPassword: vCenterPassword, nsxtPassword: nsxtPassword, vCenterCertificateThumbprint: vCenterCertificateThumbprint, nsxtCertificateThumbprint: nsxtCertificateThumbprint, externalCloudLinks: externalCloudLinks, secondaryCircuit: secondaryCircuit, nsxPublicIPQuotaRaised: nsxPublicIPQuotaRaised, virtualNetworkId: virtualNetworkId, dnsZoneType: dnsZoneType, vcfLicense: default, sku: sku, identity: identity, zones: zones);
+            return new AvsPrivateCloudData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                managementCluster is null && internet is null && identitySources is null && availability is null && encryption is null && extendedNetworkBlocks is null && provisioningState is null && circuit is null && endpoints is null && networkBlock is null && managementNetwork is null && provisioningNetwork is null && vMotionNetwork is null && vCenterPassword is null && nsxtPassword is null && vCenterCertificateThumbprint is null && nsxtCertificateThumbprint is null && externalCloudLinks is null && secondaryCircuit is null && nsxPublicIPQuotaRaised is null && virtualNetworkId is null && dnsZoneType is null ? default : new PrivateCloudProperties(
+                    managementCluster,
+                    internet,
+                    (identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>()).ToList(),
+                    availability,
+                    encryption,
+                    (extendedNetworkBlocks ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    circuit,
+                    endpoints,
+                    networkBlock,
+                    managementNetwork,
+                    provisioningNetwork,
+                    vMotionNetwork,
+                    vCenterPassword,
+                    nsxtPassword,
+                    vCenterCertificateThumbprint,
+                    nsxtCertificateThumbprint,
+                    (externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    secondaryCircuit,
+                    nsxPublicIPQuotaRaised,
+                    virtualNetworkId,
+                    dnsZoneType,
+                    default,
+                    default),
+                sku,
+                identity,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudDatastoreData"/>. </summary>
@@ -1651,6 +1820,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="pureStorageVolume"> A Pure Storage volume. </param>
         /// <param name="status"> The operational status of the datastore. </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AvsPrivateCloudDatastoreProvisioningState? provisioningState = default, ResourceIdentifier netAppVolumeId = default, DiskPoolVolume diskPoolVolume = default, ResourceIdentifier elasticSanVolumeTargetId = default, AvsPureStorageVolume pureStorageVolume = default, DatastoreStatus? status = default)
         {
             return new AvsPrivateCloudDatastoreData(
@@ -1658,7 +1828,14 @@ namespace Azure.ResourceManager.Avs.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
+                provisioningState is null && netAppVolumeId is null && diskPoolVolume is null && elasticSanVolumeTargetId is null && pureStorageVolume is null && status is null ? default : new DatastoreProperties(
+                    provisioningState,
+                    new NetAppVolume(netAppVolumeId, default),
+                    diskPoolVolume,
+                    new ElasticSanVolume(elasticSanVolumeTargetId, default),
+                    pureStorageVolume,
+                    status,
+                    default),
                 default);
         }
 
@@ -1712,7 +1889,42 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AvsSku sku, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IEnumerable<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IEnumerable<string> extendedNetworkBlocks, AvsPrivateCloudProvisioningState? provisioningState, ExpressRouteCircuit circuit, AvsPrivateCloudEndpoints endpoints, string networkBlock, string managementNetwork, string provisioningNetwork, string vMotionNetwork, string vCenterPassword, string nsxtPassword, string vCenterCertificateThumbprint, string nsxtCertificateThumbprint, IEnumerable<ResourceIdentifier> externalCloudLinks, ExpressRouteCircuit secondaryCircuit, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised, ResourceIdentifier virtualNetworkId, AvsDnsZoneType? dnsZoneType)
         {
-            return AvsPrivateCloudData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, managementCluster: managementCluster, internet: internet, identitySources: identitySources, availability: availability, encryption: encryption, extendedNetworkBlocks: extendedNetworkBlocks, provisioningState: provisioningState, circuit: circuit, endpoints: endpoints, networkBlock: networkBlock, managementNetwork: managementNetwork, provisioningNetwork: provisioningNetwork, vMotionNetwork: vMotionNetwork, vCenterPassword: vCenterPassword, nsxtPassword: nsxtPassword, vCenterCertificateThumbprint: vCenterCertificateThumbprint, nsxtCertificateThumbprint: nsxtCertificateThumbprint, externalCloudLinks: externalCloudLinks, secondaryCircuit: secondaryCircuit, nsxPublicIPQuotaRaised: nsxPublicIPQuotaRaised, virtualNetworkId: virtualNetworkId, dnsZoneType: dnsZoneType, vcfLicense: default, sku: sku, identity: identity, zones: default);
+            return new AvsPrivateCloudData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                managementCluster is null && internet is null && identitySources is null && availability is null && encryption is null && extendedNetworkBlocks is null && provisioningState is null && circuit is null && endpoints is null && networkBlock is null && managementNetwork is null && provisioningNetwork is null && vMotionNetwork is null && vCenterPassword is null && nsxtPassword is null && vCenterCertificateThumbprint is null && nsxtCertificateThumbprint is null && externalCloudLinks is null && secondaryCircuit is null && nsxPublicIPQuotaRaised is null && virtualNetworkId is null && dnsZoneType is null ? default : new PrivateCloudProperties(
+                    managementCluster,
+                    internet,
+                    (identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>()).ToList(),
+                    availability,
+                    encryption,
+                    (extendedNetworkBlocks ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    circuit,
+                    endpoints,
+                    networkBlock,
+                    managementNetwork,
+                    provisioningNetwork,
+                    vMotionNetwork,
+                    vCenterPassword,
+                    nsxtPassword,
+                    vCenterCertificateThumbprint,
+                    nsxtCertificateThumbprint,
+                    (externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    secondaryCircuit,
+                    nsxPublicIPQuotaRaised,
+                    virtualNetworkId,
+                    dnsZoneType,
+                    default,
+                    default),
+                sku,
+                identity,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddonHcxProperties"/>. </summary>
@@ -1722,7 +1934,13 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AddonHcxProperties AddonHcxProperties(AddonProvisioningState? provisioningState, string offer)
         {
-            return AddonHcxProperties(provisioningState: provisioningState, offer: offer, managementNetwork: default, uplinkNetwork: default);
+            return new AddonHcxProperties(
+                default,
+                provisioningState,
+                default,
+                offer,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvsPrivateCloudEndpoints"/>. </summary>
@@ -1733,7 +1951,14 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudEndpoints AvsPrivateCloudEndpoints(string nsxtManager, string vcsa, string hcxCloudManager)
         {
-            return AvsPrivateCloudEndpoints(nsxtManager: nsxtManager, vcsa: vcsa, hcxCloudManager: hcxCloudManager, nsxtManagerIP: default, vcenterIP: default, hcxCloudManagerIP: default);
+            return new AvsPrivateCloudEndpoints(
+                nsxtManager,
+                vcsa,
+                hcxCloudManager,
+                default,
+                default,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.HcxEnterpriseSiteData"/>. </summary>
@@ -1747,7 +1972,13 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HcxEnterpriseSiteData HcxEnterpriseSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string activationKey, HcxEnterpriseSiteStatus? status)
         {
-            return HcxEnterpriseSiteData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, activationKey: activationKey, status: status);
+            return new HcxEnterpriseSiteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                activationKey is null && status is null ? default : new HcxEnterpriseSiteProperties(default, activationKey, status, default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkData"/>. </summary>
@@ -1759,7 +1990,13 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkloadNetworkData WorkloadNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData)
         {
-            return WorkloadNetworkData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default);
+            return new WorkloadNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkGatewayData"/>. </summary>
@@ -1773,7 +2010,13 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkloadNetworkGatewayData WorkloadNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string path)
         {
-            return WorkloadNetworkGatewayData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, displayName: displayName, path: path);
+            return new WorkloadNetworkGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && path is null ? default : new WorkloadNetworkGatewayProperties(default, displayName, path, default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkVirtualMachineData"/>. </summary>
@@ -1787,7 +2030,13 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkloadNetworkVirtualMachineData WorkloadNetworkVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, WorkloadNetworkVmType? vmType)
         {
-            return WorkloadNetworkVirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, displayName: displayName, vmType: vmType);
+            return new WorkloadNetworkVirtualMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && vmType is null ? default : new WorkloadNetworkVirtualMachineProperties(default, displayName, vmType, default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsCloudLinkData"/>. </summary>
@@ -1801,7 +2050,13 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsCloudLinkData AvsCloudLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsCloudLinkStatus? status, ResourceIdentifier linkedCloud)
         {
-            return AvsCloudLinkData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, status: status, linkedCloud: linkedCloud);
+            return new AvsCloudLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                status is null && linkedCloud is null ? default : new CloudLinkProperties(default, status, linkedCloud, default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterVirtualMachineData"/>. </summary>
@@ -1817,7 +2072,19 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvsPrivateCloudClusterVirtualMachineData AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string moRefId, string folderPath, VirtualMachineRestrictMovementState? restrictMovement)
         {
-            return AvsPrivateCloudClusterVirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, displayName: displayName, moRefId: moRefId, folderPath: folderPath, restrictMovement: restrictMovement);
+            return new AvsPrivateCloudClusterVirtualMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && moRefId is null && folderPath is null && restrictMovement is null ? default : new VirtualMachineProperties(
+                    default,
+                    displayName,
+                    moRefId,
+                    folderPath,
+                    restrictMovement,
+                    default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.ScriptPackageData"/>. </summary>
@@ -1833,7 +2100,19 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ScriptPackageData ScriptPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string version, string company, Uri uri)
         {
-            return ScriptPackageData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, description: description, version: version, company: company, uri: uri);
+            return new ScriptPackageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && version is null && company is null && uri is null ? default : new ScriptPackageProperties(
+                    default,
+                    description,
+                    version,
+                    company,
+                    uri,
+                    default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.ScriptCmdletData"/>. </summary>
@@ -1848,7 +2127,19 @@ namespace Azure.ResourceManager.Avs.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ScriptCmdletData ScriptCmdletData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, TimeSpan? timeout, IEnumerable<ScriptParameter> parameters)
         {
-            return ScriptCmdletData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: default, description: description, timeout: timeout, audience: default, parameters: parameters);
+            return new ScriptCmdletData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && timeout is null && parameters is null ? default : new ScriptCmdletProperties(
+                    default,
+                    description,
+                    timeout,
+                    default,
+                    (parameters ?? new ChangeTrackingList<ScriptParameter>()).ToList(),
+                    default),
+                default);
         }
     }
 }

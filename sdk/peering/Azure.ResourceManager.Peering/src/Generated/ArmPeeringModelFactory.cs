@@ -20,6 +20,13 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmPeeringModelFactory
     {
+        /// <param name="peeringServiceLocation"> Gets or sets the peering service location. </param>
+        /// <param name="peeringServiceProvider"> Gets or sets the peering service provider. </param>
+        /// <returns> A new <see cref="Models.CheckPeeringServiceProviderAvailabilityContent"/> instance for mocking. </returns>
+        public static CheckPeeringServiceProviderAvailabilityContent CheckPeeringServiceProviderAvailabilityContent(string peeringServiceLocation = default, string peeringServiceProvider = default)
+        {
+            return new CheckPeeringServiceProviderAvailabilityContent(peeringServiceLocation, peeringServiceProvider, default);
+        }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -38,14 +45,23 @@ namespace Azure.ResourceManager.Peering.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 peerAsn is null && peerContactDetail is null && peerName is null && validationState is null && errorMessage is null ? default : new PeerAsnProperties(
                     peerAsn,
                     (peerContactDetail ?? new ChangeTrackingList<PeerAsnContactDetail>()).ToList(),
                     peerName,
                     validationState,
                     errorMessage,
-                    null));
+                    default),
+                default);
+        }
+
+        /// <param name="role"> The role of the contact. </param>
+        /// <param name="email"> The e-mail address of the contact. </param>
+        /// <param name="phone"> The phone number of the contact. </param>
+        /// <returns> A new <see cref="Models.PeerAsnContactDetail"/> instance for mocking. </returns>
+        public static PeerAsnContactDetail PeerAsnContactDetail(PeeringRole? role = default, string email = default, string phone = default)
+        {
+            return new PeerAsnContactDetail(role, email, phone, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -71,8 +87,7 @@ namespace Azure.ResourceManager.Peering.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 direct is null && exchange is null && connectivityProbes is null && peeringLocation is null && provisioningState is null ? default : new PeeringProperties(
                     direct,
@@ -80,12 +95,12 @@ namespace Azure.ResourceManager.Peering.Models
                     (connectivityProbes ?? new ChangeTrackingList<PeeringConnectivityProbe>()).ToList(),
                     peeringLocation,
                     provisioningState,
-                    null),
+                    default),
                 sku,
-                kind);
+                kind,
+                default);
         }
 
-        /// <summary> The properties that define a direct peering. </summary>
         /// <param name="connections"> The set of connections that constitute a direct peering. </param>
         /// <param name="useForPeeringService"> The flag that indicates whether or not the peering is used for peering service. </param>
         /// <param name="peerAsnId"> The reference of the peer ASN. </param>
@@ -95,10 +110,9 @@ namespace Azure.ResourceManager.Peering.Models
         {
             connections ??= new ChangeTrackingList<PeeringDirectConnection>();
 
-            return new DirectPeeringProperties(connections.ToList(), useForPeeringService, peerAsnId, directPeeringType, additionalBinaryDataProperties: null);
+            return new DirectPeeringProperties((connections ?? new ChangeTrackingList<PeeringDirectConnection>()).ToList(), useForPeeringService, peerAsnId, directPeeringType, default);
         }
 
-        /// <summary> The properties that define a direct connection. </summary>
         /// <param name="bandwidthInMbps"> The bandwidth of the connection. </param>
         /// <param name="provisionedBandwidthInMbps"> The bandwidth that is actually provisioned. </param>
         /// <param name="sessionAddressProvider"> The field indicating if Microsoft provides session ip addresses. </param>
@@ -123,10 +137,9 @@ namespace Azure.ResourceManager.Peering.Models
                 bgpSession,
                 connectionIdentifier,
                 errorMessage,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The properties that define a BGP session. </summary>
         /// <param name="sessionPrefixV4"> The IPv4 prefix that contains both ends' IPv4 addresses. </param>
         /// <param name="sessionPrefixV6"> The IPv6 prefix that contains both ends' IPv6 addresses. </param>
         /// <param name="microsoftSessionIPv4Address"> The IPv4 session address on Microsoft's end. </param>
@@ -153,10 +166,9 @@ namespace Azure.ResourceManager.Peering.Models
                 maxPrefixesAdvertisedV4,
                 maxPrefixesAdvertisedV6,
                 md5AuthenticationKey,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The properties that define an exchange peering. </summary>
         /// <param name="connections"> The set of connections that constitute an exchange peering. </param>
         /// <param name="peerAsnId"> The reference of the peer ASN. </param>
         /// <returns> A new <see cref="Models.ExchangePeeringProperties"/> instance for mocking. </returns>
@@ -164,10 +176,9 @@ namespace Azure.ResourceManager.Peering.Models
         {
             connections ??= new ChangeTrackingList<PeeringExchangeConnection>();
 
-            return new ExchangePeeringProperties(connections.ToList(), peerAsnId, additionalBinaryDataProperties: null);
+            return new ExchangePeeringProperties((connections ?? new ChangeTrackingList<PeeringExchangeConnection>()).ToList(), peerAsnId, default);
         }
 
-        /// <summary> The properties that define an exchange connection. </summary>
         /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility at which the connection has to be set up. </param>
         /// <param name="connectionState"> The state of the connection. </param>
         /// <param name="bgpSession"> The BGP session associated with the connection. </param>
@@ -182,15 +193,9 @@ namespace Azure.ResourceManager.Peering.Models
                 bgpSession,
                 connectionIdentifier,
                 errorMessage,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary>
-        /// Represents a connectivity probe, a configuration peers can add to direct and exchange peerings to create ping tests. These ping
-        /// tests will allow us to generate availability, jitter, and latency data for traffic (using ICMP or TCP) from Azure to an endpoint
-        /// IP address given by the customer. This data will be emitted such that the peer can view these metrics in the Azure portal in the
-        /// Connectivity probe blade of their peering.
-        /// </summary>
         /// <param name="endpoint"> The endpoint IP address where traffic will be sent to from Azure for the connectivity probe. </param>
         /// <param name="azureRegion"> The Azure region where traffic will originate from for the connectivity probe. </param>
         /// <param name="protocol"> The protocol of the traffic that will be sent for the connectivity probe. </param>
@@ -203,10 +208,9 @@ namespace Azure.ResourceManager.Peering.Models
         {
             prefixesToAccesslist ??= new ChangeTrackingList<string>();
 
-            return new PeeringConnectivityProbe(endpoint, azureRegion, protocol, prefixesToAccesslist.ToList(), additionalBinaryDataProperties: null);
+            return new PeeringConnectivityProbe(endpoint, azureRegion, protocol, (prefixesToAccesslist ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The SKU that defines the tier and kind of the peering. </summary>
         /// <param name="name"> The name of the peering SKU. </param>
         /// <param name="tier"> The tier of the peering SKU. </param>
         /// <param name="family"> The family of the peering SKU. </param>
@@ -214,17 +218,16 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.PeeringSku"/> instance for mocking. </returns>
         public static PeeringSku PeeringSku(string name = default, PeeringTier? tier = default, PeeringFamily? family = default, PeeringSize? size = default)
         {
-            return new PeeringSku(name, tier, family, size, additionalBinaryDataProperties: null);
+            return new PeeringSku(name, tier, family, size, default);
         }
 
-        /// <summary> The resource tags. </summary>
         /// <param name="tags"> Gets or sets the tags, a dictionary of descriptors arm object. </param>
         /// <returns> A new <see cref="Models.PeeringResourceTagsPatch"/> instance for mocking. </returns>
         public static PeeringResourceTagsPatch PeeringResourceTagsPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PeeringResourceTagsPatch(tags, additionalBinaryDataProperties: null);
+            return new PeeringResourceTagsPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -246,7 +249,6 @@ namespace Azure.ResourceManager.Peering.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 sourceAgent is null && destination is null && destinationPort is null && testFrequencyInSec is null && isTestSuccessful is null && path is null && provisioningState is null ? default : new ConnectionMonitorTestProperties(
                     sourceAgent,
                     destination,
@@ -255,10 +257,47 @@ namespace Azure.ResourceManager.Peering.Models
                     isTestSuccessful,
                     (path ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
-                    null));
+                    default),
+                default);
         }
 
-        /// <summary> The properties that define a Log Analytics Workspace. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="peeringServiceLocation"> The location (state/province) of the customer. </param>
+        /// <param name="peeringServiceProvider"> The name of the service provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="providerPrimaryPeeringLocation"> The primary peering (Microsoft/service provider) location to be used for customer traffic. </param>
+        /// <param name="providerBackupPeeringLocation"> The backup peering (Microsoft/service provider) location to be used for customer traffic. </param>
+        /// <param name="logAnalyticsWorkspaceProperties"> The Log Analytics Workspace Properties. </param>
+        /// <param name="skuName"> The name of the peering service SKU. </param>
+        /// <returns> A new <see cref="Peering.PeeringServiceData"/> instance for mocking. </returns>
+        public static PeeringServiceData PeeringServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string peeringServiceLocation = default, string peeringServiceProvider = default, PeeringProvisioningState? provisioningState = default, string providerPrimaryPeeringLocation = default, string providerBackupPeeringLocation = default, PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties = default, string skuName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PeeringServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                peeringServiceLocation is null && peeringServiceProvider is null && provisioningState is null && providerPrimaryPeeringLocation is null && providerBackupPeeringLocation is null && logAnalyticsWorkspaceProperties is null ? default : new PeeringServiceProperties(
+                    peeringServiceLocation,
+                    peeringServiceProvider,
+                    provisioningState,
+                    providerPrimaryPeeringLocation,
+                    providerBackupPeeringLocation,
+                    logAnalyticsWorkspaceProperties,
+                    default),
+                skuName is null ? default : new PeeringServiceSku(skuName, default),
+                default);
+        }
+
         /// <param name="workspaceId"> The Workspace ID. </param>
         /// <param name="key"> The Workspace Key. </param>
         /// <param name="connectedAgents"> The list of connected agents. </param>
@@ -267,7 +306,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             connectedAgents ??= new ChangeTrackingList<string>();
 
-            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId, key, connectedAgents.ToList(), additionalBinaryDataProperties: null);
+            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId, key, (connectedAgents ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -285,11 +324,10 @@ namespace Azure.ResourceManager.Peering.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                asn is null && peeringServicePrefixKey is null && provisioningState is null ? default : new PeeringRegisteredAsnProperties(asn, peeringServicePrefixKey, provisioningState, null));
+                asn is null && peeringServicePrefixKey is null && provisioningState is null ? default : new PeeringRegisteredAsnProperties(asn, peeringServicePrefixKey, provisioningState, default),
+                default);
         }
 
-        /// <summary> The properties that define a received route. </summary>
         /// <param name="prefix"> The prefix. </param>
         /// <param name="nextHop"> The next hop for the prefix. </param>
         /// <param name="asPath"> The AS path for the prefix. </param>
@@ -308,17 +346,16 @@ namespace Azure.ResourceManager.Peering.Models
                 rpkiValidationState,
                 trustAnchor,
                 receivedTimestamp,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The Routing Preference unbilled prefix. </summary>
         /// <param name="prefix"> The prefix. </param>
         /// <param name="azureRegion"> The Azure region. </param>
         /// <param name="peerAsn"> The peer ASN. </param>
         /// <returns> A new <see cref="Models.RoutingPreferenceUnbilledPrefix"/> instance for mocking. </returns>
         public static RoutingPreferenceUnbilledPrefix RoutingPreferenceUnbilledPrefix(string prefix = default, AzureLocation? azureRegion = default, int? peerAsn = default)
         {
-            return new RoutingPreferenceUnbilledPrefix(prefix, azureRegion, peerAsn, additionalBinaryDataProperties: null);
+            return new RoutingPreferenceUnbilledPrefix(prefix, azureRegion, peerAsn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -338,14 +375,14 @@ namespace Azure.ResourceManager.Peering.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 prefix is null && prefixValidationState is null && peeringServicePrefixKey is null && errorMessage is null && provisioningState is null ? default : new PeeringRegisteredPrefixProperties(
                     prefix,
                     prefixValidationState,
                     peeringServicePrefixKey,
                     errorMessage,
                     provisioningState,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -367,7 +404,6 @@ namespace Azure.ResourceManager.Peering.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 prefix is null && prefixValidationState is null && learnedType is null && errorMessage is null && events is null && peeringServicePrefixKey is null && provisioningState is null ? default : new PeeringServicePrefixProperties(
                     prefix,
                     prefixValidationState,
@@ -376,10 +412,10 @@ namespace Azure.ResourceManager.Peering.Models
                     (events ?? new ChangeTrackingList<PeeringServicePrefixEvent>()).ToList(),
                     peeringServicePrefixKey,
                     provisioningState,
-                    null));
+                    default),
+                default);
         }
 
-        /// <summary> The details of the event associated with a prefix. </summary>
         /// <param name="eventTimestamp"> The timestamp of the event associated with a prefix. </param>
         /// <param name="eventType"> The type of the event associated with a prefix. </param>
         /// <param name="eventSummary"> The summary of the event associated with a prefix. </param>
@@ -394,7 +430,7 @@ namespace Azure.ResourceManager.Peering.Models
                 eventSummary,
                 eventLevel,
                 eventDescription,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -414,26 +450,53 @@ namespace Azure.ResourceManager.Peering.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 prefix is null && azureRegion is null && azureService is null && isPrimaryRegion is null && bgpCommunity is null ? default : new CdnPeeringPrefixProperties(
                     prefix,
                     azureRegion,
                     azureService,
                     isPrimaryRegion,
                     bgpCommunity,
-                    null));
+                    default),
+                default);
         }
 
-        /// <summary> Looking glass output model. </summary>
         /// <param name="command"> Invoked command. </param>
         /// <param name="output"> Output of the command. </param>
         /// <returns> A new <see cref="Models.LookingGlassOutput"/> instance for mocking. </returns>
         public static LookingGlassOutput LookingGlassOutput(LookingGlassCommand? command = default, string output = default)
         {
-            return new LookingGlassOutput(command, output, additionalBinaryDataProperties: null);
+            return new LookingGlassOutput(command, output, default);
         }
 
-        /// <summary> The properties that define a direct peering location. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> The kind of peering that the peering location supports. </param>
+        /// <param name="direct"> The properties that define a direct peering location. </param>
+        /// <param name="peeringLocationValue"> The name of the peering location. </param>
+        /// <param name="country"> The country in which the peering location exists. </param>
+        /// <param name="azureRegion"> The Azure region associated with the peering location. </param>
+        /// <param name="exchangePeeringFacilities"> The list of exchange peering facilities at the peering location. </param>
+        /// <returns> A new <see cref="Models.PeeringLocation"/> instance for mocking. </returns>
+        public static PeeringLocation PeeringLocation(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PeeringKind? kind = default, DirectPeeringLocationProperties direct = default, string peeringLocationValue = default, string country = default, AzureLocation? azureRegion = default, IEnumerable<ExchangePeeringFacility> exchangePeeringFacilities = default)
+        {
+            return new PeeringLocation(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                direct is null && exchangePeeringFacilities is null && peeringLocationValue is null && country is null && azureRegion is null ? default : new PeeringLocationProperties(
+                    direct,
+                    new PeeringLocationPropertiesExchange((exchangePeeringFacilities ?? new ChangeTrackingList<ExchangePeeringFacility>()).ToList(), default),
+                    peeringLocationValue,
+                    country,
+                    azureRegion,
+                    default),
+                default);
+        }
+
         /// <param name="peeringFacilities"> The list of direct peering facilities at the peering location. </param>
         /// <param name="bandwidthOffers"> The list of bandwidth offers available at the peering location. </param>
         /// <returns> A new <see cref="Models.DirectPeeringLocationProperties"/> instance for mocking. </returns>
@@ -442,10 +505,50 @@ namespace Azure.ResourceManager.Peering.Models
             peeringFacilities ??= new ChangeTrackingList<DirectPeeringFacility>();
             bandwidthOffers ??= new ChangeTrackingList<PeeringBandwidthOffer>();
 
-            return new DirectPeeringLocationProperties(peeringFacilities.ToList(), bandwidthOffers.ToList(), additionalBinaryDataProperties: null);
+            return new DirectPeeringLocationProperties((peeringFacilities ?? new ChangeTrackingList<DirectPeeringFacility>()).ToList(), (bandwidthOffers ?? new ChangeTrackingList<PeeringBandwidthOffer>()).ToList(), default);
         }
 
-        /// <summary> The peering service country. </summary>
+        /// <param name="address"> The address of the direct peering facility. </param>
+        /// <param name="directPeeringType"> The type of the direct peering. </param>
+        /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
+        /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
+        /// <returns> A new <see cref="Models.DirectPeeringFacility"/> instance for mocking. </returns>
+        public static DirectPeeringFacility DirectPeeringFacility(string address = default, DirectPeeringType? directPeeringType = default, int? peeringDBFacilityId = default, string peeringDBFacilityLink = default)
+        {
+            return new DirectPeeringFacility(address, directPeeringType, peeringDBFacilityId, peeringDBFacilityLink, default);
+        }
+
+        /// <param name="offerName"> The name of the bandwidth offer. </param>
+        /// <param name="valueInMbps"> The value of the bandwidth offer in Mbps. </param>
+        /// <returns> A new <see cref="Models.PeeringBandwidthOffer"/> instance for mocking. </returns>
+        public static PeeringBandwidthOffer PeeringBandwidthOffer(string offerName = default, int? valueInMbps = default)
+        {
+            return new PeeringBandwidthOffer(offerName, valueInMbps, default);
+        }
+
+        /// <param name="exchangeName"> The name of the exchange peering facility. </param>
+        /// <param name="bandwidthInMbps"> The bandwidth of the connection between Microsoft and the exchange peering facility. </param>
+        /// <param name="microsoftIPv4Address"> The IPv4 address of Microsoft at the exchange peering facility. </param>
+        /// <param name="microsoftIPv6Address"> The IPv6 address of Microsoft at the exchange peering facility. </param>
+        /// <param name="facilityIPv4Prefix"> The IPv4 prefixes associated with the exchange peering facility. </param>
+        /// <param name="facilityIPv6Prefix"> The IPv6 prefixes associated with the exchange peering facility. </param>
+        /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility. </param>
+        /// <param name="peeringDBFacilityLink"> The PeeringDB.com URL of the facility. </param>
+        /// <returns> A new <see cref="Models.ExchangePeeringFacility"/> instance for mocking. </returns>
+        public static ExchangePeeringFacility ExchangePeeringFacility(string exchangeName = default, int? bandwidthInMbps = default, IPAddress microsoftIPv4Address = default, IPAddress microsoftIPv6Address = default, string facilityIPv4Prefix = default, string facilityIPv6Prefix = default, int? peeringDBFacilityId = default, string peeringDBFacilityLink = default)
+        {
+            return new ExchangePeeringFacility(
+                exchangeName,
+                bandwidthInMbps,
+                microsoftIPv4Address,
+                microsoftIPv6Address,
+                facilityIPv4Prefix,
+                facilityIPv6Prefix,
+                peeringDBFacilityId,
+                peeringDBFacilityLink,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -453,7 +556,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.PeeringServiceCountry"/> instance for mocking. </returns>
         public static PeeringServiceCountry PeeringServiceCountry(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default)
         {
-            return new PeeringServiceCountry(id, name, resourceType, systemData, additionalBinaryDataProperties: null);
+            return new PeeringServiceCountry(id, name, resourceType, systemData, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -471,8 +574,8 @@ namespace Azure.ResourceManager.Peering.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                country is null && state is null && azureRegion is null ? default : new PeeringServiceLocationProperties(country, state, azureRegion, null));
+                country is null && state is null && azureRegion is null ? default : new PeeringServiceLocationProperties(country, state, azureRegion, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -489,8 +592,8 @@ namespace Azure.ResourceManager.Peering.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                serviceProviderName is null && peeringLocations is null ? default : new PeeringServiceProviderProperties(serviceProviderName, (peeringLocations ?? new ChangeTrackingList<string>()).ToList(), null));
+                serviceProviderName is null && peeringLocations is null ? default : new PeeringServiceProviderProperties(serviceProviderName, (peeringLocations ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Peering.PeeringData"/>. </summary>
@@ -510,7 +613,23 @@ namespace Azure.ResourceManager.Peering.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PeeringData PeeringData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringSku sku, PeeringKind kind, DirectPeeringProperties direct, ExchangePeeringProperties exchange, string peeringLocation, PeeringProvisioningState? provisioningState)
         {
-            return PeeringData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, direct: direct, exchange: exchange, connectivityProbes: default, peeringLocation: peeringLocation, provisioningState: provisioningState, sku: sku, kind: kind);
+            return new PeeringData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                direct is null && exchange is null && peeringLocation is null && provisioningState is null ? default : new PeeringProperties(
+                    direct,
+                    exchange,
+                    default,
+                    peeringLocation,
+                    provisioningState,
+                    default),
+                sku,
+                kind,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringLocation"/>. </summary>
@@ -525,17 +644,22 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="country"> The country in which the peering location exists. </param>
         /// <param name="azureRegion"> The Azure region associated with the peering location. </param>
         /// <returns> A new <see cref="Models.PeeringLocation"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PeeringLocation PeeringLocation(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PeeringKind? kind = default, DirectPeeringLocationProperties direct = default, IEnumerable<ExchangePeeringFacility> exchangePeeringFacilities = default, string peeringLocationValue = default, string country = default, AzureLocation? azureRegion = default)
         {
-            exchangePeeringFacilities ??= new ChangeTrackingList<ExchangePeeringFacility>();
-
             return new PeeringLocation(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 kind,
+                direct is null && exchangePeeringFacilities is null && peeringLocationValue is null && country is null && azureRegion is null ? default : new PeeringLocationProperties(
+                    direct,
+                    new PeeringLocationPropertiesExchange((exchangePeeringFacilities ?? new ChangeTrackingList<ExchangePeeringFacility>()).ToList(), default),
+                    peeringLocationValue,
+                    country,
+                    azureRegion,
+                    default),
                 default);
         }
 
@@ -554,19 +678,25 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="providerBackupPeeringLocation"> The backup peering (Microsoft/service provider) location to be used for customer traffic. </param>
         /// <param name="logAnalyticsWorkspaceProperties"> The Log Analytics Workspace Properties. </param>
         /// <returns> A new <see cref="Peering.PeeringServiceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PeeringServiceData PeeringServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string skuName = default, string peeringServiceLocation = default, string peeringServiceProvider = default, PeeringProvisioningState? provisioningState = default, string providerPrimaryPeeringLocation = default, string providerBackupPeeringLocation = default, PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
             return new PeeringServiceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                peeringServiceLocation is null && peeringServiceProvider is null && provisioningState is null && providerPrimaryPeeringLocation is null && providerBackupPeeringLocation is null && logAnalyticsWorkspaceProperties is null ? default : new PeeringServiceProperties(
+                    peeringServiceLocation,
+                    peeringServiceProvider,
+                    provisioningState,
+                    providerPrimaryPeeringLocation,
+                    providerBackupPeeringLocation,
+                    logAnalyticsWorkspaceProperties,
+                    default),
+                skuName is null ? default : new PeeringServiceSku(skuName, default),
                 default);
         }
     }

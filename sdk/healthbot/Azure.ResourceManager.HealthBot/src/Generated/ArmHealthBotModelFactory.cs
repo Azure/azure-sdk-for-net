@@ -20,7 +20,33 @@ namespace Azure.ResourceManager.HealthBot.Models
     public static partial class ArmHealthBotModelFactory
     {
 
-        /// <summary> The properties of a Azure Health Bot. The Health Bot Service is a cloud platform that empowers developers in Healthcare organizations to build and deploy their compliant, AI-powered virtual health assistants and health bots, that help them improve processes and reduce costs. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
+        /// <param name="skuName"> The name of the Azure Health Bot SKU. </param>
+        /// <param name="identity"> The identity of the Azure Health Bot. </param>
+        /// <returns> A new <see cref="HealthBot.HealthBotData"/> instance for mocking. </returns>
+        public static HealthBotData HealthBotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthBotProperties properties = default, HealthBotSkuName skuName = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HealthBotData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                new HealthBotSku(skuName, default),
+                identity,
+                default);
+        }
+
         /// <param name="provisioningState"> The provisioning state of the Azure Health Bot resource. </param>
         /// <param name="botManagementPortalLink"> The link. </param>
         /// <param name="keyVaultProperties"> KeyVault properties for the resource encryption. </param>
@@ -28,7 +54,24 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <returns> A new <see cref="Models.HealthBotProperties"/> instance for mocking. </returns>
         public static HealthBotProperties HealthBotProperties(string provisioningState = default, Uri botManagementPortalLink = default, HealthBotKeyVaultProperties keyVaultProperties = default, string accessControlMethod = default)
         {
-            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, accessControlMethod, additionalBinaryDataProperties: null);
+            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, accessControlMethod, default);
+        }
+
+        /// <param name="keyName"> The name of the key vault key. </param>
+        /// <param name="keyVersion"> The version of the key vault key. </param>
+        /// <param name="keyVaultUri"> The Uri of the key vault. </param>
+        /// <param name="userIdentity"> The user assigned identity (ARM resource id) that has access to the key. </param>
+        /// <returns> A new <see cref="Models.HealthBotKeyVaultProperties"/> instance for mocking. </returns>
+        public static HealthBotKeyVaultProperties HealthBotKeyVaultProperties(string keyName = default, string keyVersion = default, Uri keyVaultUri = default, string userIdentity = default)
+        {
+            return new HealthBotKeyVaultProperties(keyName, keyVersion, keyVaultUri, userIdentity, default);
+        }
+
+        /// <param name="name"> The name of the Azure Health Bot SKU. </param>
+        /// <returns> A new <see cref="Models.HealthBotSku"/> instance for mocking. </returns>
+        public static HealthBotSku HealthBotSku(HealthBotSkuName name = default)
+        {
+            return new HealthBotSku(name, default);
         }
 
         /// <param name="properties"> Properties of Azure Health Bot. </param>
@@ -43,30 +86,28 @@ namespace Azure.ResourceManager.HealthBot.Models
 
             return new HealthBotPatch(
                 properties,
-                tags,
-                skuName is null ? default : new HealthBotSku(skuName.GetValueOrDefault(), null),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                skuName is null ? default : new HealthBotSku(skuName.GetValueOrDefault(), default),
                 identity,
                 location,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Health Bot Keys Response. </summary>
         /// <param name="secrets"> Array of Azure Health Bot Secrets. </param>
         /// <returns> A new <see cref="Models.HealthBotKeysResult"/> instance for mocking. </returns>
         public static HealthBotKeysResult HealthBotKeysResult(IEnumerable<HealthBotKey> secrets = default)
         {
             secrets ??= new ChangeTrackingList<HealthBotKey>();
 
-            return new HealthBotKeysResult(secrets.ToList(), additionalBinaryDataProperties: null);
+            return new HealthBotKeysResult((secrets ?? new ChangeTrackingList<HealthBotKey>()).ToList(), default);
         }
 
-        /// <summary> An entry of HealthBotKeysResponse. </summary>
         /// <param name="keyName"> The name of the key. </param>
         /// <param name="value"> The value of the key. </param>
         /// <returns> A new <see cref="Models.HealthBotKey"/> instance for mocking. </returns>
         public static HealthBotKey HealthBotKey(string keyName = default, string value = default)
         {
-            return new HealthBotKey(keyName, value, additionalBinaryDataProperties: null);
+            return new HealthBotKey(keyName, value, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthBot.HealthBotData"/>. </summary>
@@ -80,21 +121,20 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <param name="identity"> The identity of the Azure Health Bot. </param>
         /// <param name="properties"> The set of properties specific to Azure Health Bot resource. </param>
         /// <returns> A new <see cref="HealthBot.HealthBotData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static HealthBotData HealthBotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HealthBotSkuName? skuName = default, ManagedServiceIdentity identity = default, HealthBotProperties properties = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
             return new HealthBotData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                default,
-                identity);
+                skuName is null ? default : new HealthBotSku(skuName.GetValueOrDefault(), default),
+                identity,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HealthBotProperties"/>. </summary>
@@ -105,7 +145,7 @@ namespace Azure.ResourceManager.HealthBot.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HealthBotProperties HealthBotProperties(string provisioningState, Uri botManagementPortalLink, HealthBotKeyVaultProperties keyVaultProperties)
         {
-            return HealthBotProperties(provisioningState: provisioningState, botManagementPortalLink: botManagementPortalLink, keyVaultProperties: keyVaultProperties, accessControlMethod: default);
+            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, default, default);
         }
     }
 }

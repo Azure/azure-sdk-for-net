@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataflowName, IotOperationsDataflowData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsDataflowResource> operation = new IotOperationsArmOperation<IotOperationsDataflowResource>(
-                    new IotOperationsDataflowOperationSource(Client),
+                    new IotOperationsDataflowResourceOperationSource(Client),
                     _dataflowClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataflowName, IotOperationsDataflowData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsDataflowResource> operation = new IotOperationsArmOperation<IotOperationsDataflowResource>(
-                    new IotOperationsDataflowOperationSource(Client),
+                    new IotOperationsDataflowResourceOperationSource(Client),
                     _dataflowClientDiagnostics,
                     Pipeline,
                     message.Request,

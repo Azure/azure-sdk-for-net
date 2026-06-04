@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _fleetMembersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, ContainerServiceFleetMemberData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource>(
-                    new ContainerServiceFleetMemberOperationSource(Client),
+                    new ContainerServiceFleetMemberResourceOperationSource(Client),
                     _fleetMembersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 HttpMessage message = _fleetMembersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, fleetMemberName, ContainerServiceFleetMemberData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource> operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetMemberResource>(
-                    new ContainerServiceFleetMemberOperationSource(Client),
+                    new ContainerServiceFleetMemberResourceOperationSource(Client),
                     _fleetMembersClientDiagnostics,
                     Pipeline,
                     message.Request,
