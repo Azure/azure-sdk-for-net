@@ -59,7 +59,6 @@ Azure.Communication.Messages
 Azure.Communication.ShortCodes
 Azure.Compute.Batch
 Azure.Containers.ContainerRegistry
-Azure.Core
 Azure.Core.Experimental
 Azure.Data.AppConfiguration
 Azure.Developer.DevCenter
