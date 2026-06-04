@@ -3,6 +3,7 @@
 ## 4.11.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added the `ExternalKey` model and the new methods `CreateExternalKey` and `CreateExternalKeyAsync` in `KeyClient` for registering a Key Vault key whose material is held in an external HSM.
 
 ### Breaking Changes
 
