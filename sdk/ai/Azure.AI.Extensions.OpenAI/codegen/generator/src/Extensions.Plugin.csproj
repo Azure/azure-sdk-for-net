@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <!--Ensure all dependencies are copied to the output directory so that they can be packaged up for npm.-->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="stable-types.yaml" LogicalName="stable-types.yaml" />
+  </ItemGroup>
+
+  <!-- Copy output to package dist path for npm package consumption -->
+  <Target Name="CopyForNpmPackage" AfterTargets="Build">
+    <Message Text="Copying Extensions.Plugin output to dist path" Importance="high" />
+    <ItemGroup>
+      <SourceDir Include="$(OutputPath)**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\dist\%(RecursiveDir)" />
+  </Target>
+</Project>

@@ -1,0 +1,9 @@
+{
+  "name": "extensions-openai-plugin",
+  "version": "1.0.0",
+  "description": "Code generation plugin for Azure.AI.Extensions.OpenAI that applies library-specific visitors.",
+  "license": "MIT",
+  "files": [
+    "dist/**"
+  ]
+}

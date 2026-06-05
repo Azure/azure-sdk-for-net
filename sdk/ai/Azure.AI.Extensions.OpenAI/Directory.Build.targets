@@ -1,0 +1,13 @@
+<Project>
+  <!-- Auto-build the local Extensions.Plugin before code generation so that
+       'dotnet build /t:GenerateCode' from the src directory works without a
+       separate script invocation. -->
+  <Target Name="BuildExtensionsPlugin"
+          BeforeTargets="GenerateCode"
+          Condition="'$(TypeSpecInput)' != '' AND Exists('$(MSBuildProjectDirectory)\..\codegen\generator\src\Extensions.Plugin.csproj')">
+    <Message Text="Building Extensions.Plugin..." Importance="high" />
+    <Exec Command="dotnet build &quot;$(MSBuildProjectDirectory)\..\codegen\generator\src\Extensions.Plugin.csproj&quot;" />
+  </Target>
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.targets))\Directory.Build.targets" />
+</Project>
