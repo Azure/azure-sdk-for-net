@@ -18,8 +18,9 @@ name: SDK build repair (cloud agent)
 #   * The triggering actor must have write access (prompt-injection / abuse guard).
 #   * The agent is launched with a fixed, templated prompt — no PR-controlled free
 #     text (title/body) is ever interpolated into the prompt.
-#   * Kickoff uses a stored user-to-server token (COPILOT_AGENT_TASKS_TOKEN), never
-#     the default GITHUB_TOKEN (installation tokens cannot start agent tasks).
+#   * Kickoff uses the stored user-to-server token (COPILOT_GITHUB_TOKEN, the
+#     existing `azure-sdk` bot identity), never the default GITHUB_TOKEN
+#     (installation tokens cannot start agent tasks).
 
 # `pull_request_target` (not `pull_request`) so the trusted, default-branch copy of
 # this workflow runs with access to the kickoff secret — a malicious same-repo PR
@@ -145,7 +146,7 @@ jobs:
       - name: Start cloud-agent repair task
         uses: actions/github-script@v7
         env:
-          AGENT_TASKS_TOKEN: ${{ secrets.COPILOT_AGENT_TASKS_TOKEN }}
+          AGENT_TASKS_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
           PR_NUMBER: ${{ needs.gate.outputs.pr_number }}
           HEAD_REF: ${{ needs.gate.outputs.head_ref }}
           BASE_REF: ${{ needs.gate.outputs.base_ref }}
@@ -153,7 +154,7 @@ jobs:
           script: |
             const token = process.env.AGENT_TASKS_TOKEN;
             if (!token) {
-              core.setFailed('COPILOT_AGENT_TASKS_TOKEN secret is not configured. ' +
+              core.setFailed('COPILOT_GITHUB_TOKEN secret is not configured. ' +
                 'A user-to-server token is required; the default GITHUB_TOKEN cannot start agent tasks.');
               return;
             }
