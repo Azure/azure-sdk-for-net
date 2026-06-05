@@ -151,5 +151,52 @@ nowarn:CS0618 N:Azure.Foo.Models
             var result = AllowListParser.Parse("nowarn:");
             Assert.That(result, Is.Empty);
         }
+
+        // Inline trailing comments must be stripped on entry lines, but only when
+        // '#' is preceded by whitespace — DocIds like "M:Foo.#ctor(...)" must
+        // survive intact.
+
+        [Test]
+        public void Parse_UnscopedEntry_StripsTrailingInlineComment()
+        {
+            var result = AllowListParser.Parse("nowarn:AZC0102 # explanatory comment");
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result[0].Code, Is.EqualTo("AZC0102"));
+            Assert.That(result[0].Target, Is.Null);
+            Assert.That(result[0].IsScoped, Is.False);
+        }
+
+        [Test]
+        public void Parse_ScopedTypeEntry_StripsTrailingInlineComment()
+        {
+            var result = AllowListParser.Parse("nowarn:AZC0034 T:Azure.Foo.Bar # reason");
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result[0].Code, Is.EqualTo("AZC0034"));
+            Assert.That(result[0].Target, Is.EqualTo("T:Azure.Foo.Bar"));
+        }
+
+        [Test]
+        public void Parse_ScopedNamespaceEntry_StripsTrailingInlineComment()
+        {
+            var result = AllowListParser.Parse("nowarn:CS0618 N:Azure.Foo.Models    # justification");
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result[0].Target, Is.EqualTo("N:Azure.Foo.Models"));
+        }
+
+        [Test]
+        public void Parse_ConstructorDocId_PreservesHashCtor()
+        {
+            var result = AllowListParser.Parse("nowarn:AZC0007 M:Azure.Foo.Bar.#ctor(System.String)");
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result[0].Target, Is.EqualTo("M:Azure.Foo.Bar.#ctor(System.String)"));
+        }
+
+        [Test]
+        public void Parse_ConstructorDocId_WithTrailingComment_PreservesHashCtorAndStripsComment()
+        {
+            var result = AllowListParser.Parse("nowarn:AZC0007 M:Azure.Foo.Bar.#ctor(System.String) # mocking exception");
+            Assert.That(result, Has.Count.EqualTo(1));
+            Assert.That(result[0].Target, Is.EqualTo("M:Azure.Foo.Bar.#ctor(System.String)"));
+        }
     }
 }

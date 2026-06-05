@@ -68,7 +68,7 @@ namespace Azure.SdkAnalyzers
                 return null;
             }
 
-            string line = rawLine.Trim();
+            string line = StripTrailingInlineComment(rawLine).Trim();
             if (line.Length == 0 || line[0] == '#')
             {
                 return null;
@@ -166,6 +166,30 @@ namespace Azure.SdkAnalyzers
             }
 
             return -1;
+        }
+
+        /// <summary>
+        /// Removes a trailing inline comment (anything after a <c>#</c> that is
+        /// preceded by whitespace). Required because Roslyn DocumentationCommentIds
+        /// contain raw <c>#</c> in tokens like <c>#ctor</c>; we only treat
+        /// <c> #</c> as a comment delimiter when it's clearly outside an identifier.
+        /// </summary>
+        internal static string StripTrailingInlineComment(string line)
+        {
+            if (line == null)
+            {
+                return null;
+            }
+
+            for (int i = 1; i < line.Length; i++)
+            {
+                if (line[i] == '#' && char.IsWhiteSpace(line[i - 1]))
+                {
+                    return line.Substring(0, i);
+                }
+            }
+
+            return line;
         }
     }
 }
