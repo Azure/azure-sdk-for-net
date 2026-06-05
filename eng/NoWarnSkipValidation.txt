@@ -16,7 +16,6 @@
 #
 # To remove a project from this list, see the workflow in eng/analyzerallowlist/README.md.
 Azure.AI.Agents.Persistent
-Azure.AI.AgentServer.Core
 Azure.AI.AgentServer.Invocations
 Azure.AI.AgentServer.Responses
 Azure.AI.AnomalyDetector
@@ -139,7 +138,6 @@ Azure.Provisioning.WebPubSub
 Azure.ResourceManager
 Azure.ResourceManager.AppService
 Azure.ResourceManager.Batch
-Azure.ResourceManager.Cdn
 Azure.ResourceManager.Chaos
 Azure.ResourceManager.Compute
 Azure.ResourceManager.ContainerRegistry

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CustomerCertificateProperties
     {
         // Backward compatibility: old API used ctor(WritableSubResource)
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public CustomerCertificateProperties(WritableSubResource secretSource) : this()
         {
