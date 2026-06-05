@@ -545,10 +545,11 @@ namespace Azure.AI.Projects
         /// <summary> Evaluation rule action for continuous evaluation. </summary>
         /// <param name="evalId"> Eval Id to add continuous evaluation runs to. </param>
         /// <param name="maxHourlyRuns"> Maximum number of evaluation runs allowed per hour. </param>
+        /// <param name="samplingRate"> Percentage (0-100] chance that a matching event triggers an evaluation. When omitted, the service-default is to evaluate every event, which is equivalent to setting a sampling rate of 100. </param>
         /// <returns> A new <see cref="Evaluation.ContinuousEvaluationRuleAction"/> instance for mocking. </returns>
-        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId = default, int? maxHourlyRuns = default)
+        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId = default, int? maxHourlyRuns = default, double? samplingRate = default)
         {
-            return new ContinuousEvaluationRuleAction(EvaluationRuleActionType.ContinuousEvaluation, additionalBinaryDataProperties: null, evalId, maxHourlyRuns);
+            return new ContinuousEvaluationRuleAction(EvaluationRuleActionType.ContinuousEvaluation, additionalBinaryDataProperties: null, evalId, maxHourlyRuns, samplingRate);
         }
 
         /// <summary> Evaluation rule action for human evaluation. </summary>
@@ -1995,6 +1996,16 @@ namespace Azure.AI.Projects
         public static DataGenerationTokenUsage DataGenerationTokenUsage(long promptTokens = default, long completionTokens = default, long totalTokens = default)
         {
             return new DataGenerationTokenUsage(promptTokens, completionTokens, totalTokens, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Evaluation rule action for continuous evaluation. </summary>
+        /// <param name="evalId"> Eval Id to add continuous evaluation runs to. </param>
+        /// <param name="maxHourlyRuns"> Maximum number of evaluation runs allowed per hour. </param>
+        /// <returns> A new <see cref="Evaluation.ContinuousEvaluationRuleAction"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId, int? maxHourlyRuns)
+        {
+            return ContinuousEvaluationRuleAction(evalId: evalId, maxHourlyRuns: maxHourlyRuns, samplingRate: default);
         }
 
         /// <summary> Evaluator Definition. </summary>
