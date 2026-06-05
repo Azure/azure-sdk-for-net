@@ -1,6 +1,6 @@
 # Release History
 
-## 1.58.0-beta.1 (Unreleased)
+## 1.59.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,10 +8,18 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.58.0 (2026-06-04)
+
+### Features Added
+
+- Adopt System.ClientModel 1.14.0
+
+### Bugs Fixed
+
 - Fixed `NullReferenceException` thrown by `Operation.RehydrateAsync` / `ArmOperation.RehydrateAsync` (and the resulting operation's `UpdateStatusAsync` / `Value`) when the rehydrated long-running operation has completed with a failure. `OperationState.Failure` and `OperationState<T>.Failure` now honor their documented contract and materialize a default `RequestFailedException` from the raw response when the caller passes `null`, matching the behavior of the non-rehydration polling path.
 - Fixed `DiagnosticScope` to mark the parent `ActivityContext` as remote (`IsRemote = true`) when a traceparent is provided via `SetTraceContext` or `AddLink`. The traceparent in these paths is always extracted from an external source (e.g. a messaging broker's application properties), so samplers that distinguish local vs. remote parents — such as the `RateLimitedSampler` used by the Azure Monitor OpenTelemetry exporter — can now make correct decisions for activities started from incoming messages.
-
-### Other Changes
 
 ## 1.57.0 (2026-05-21)
 

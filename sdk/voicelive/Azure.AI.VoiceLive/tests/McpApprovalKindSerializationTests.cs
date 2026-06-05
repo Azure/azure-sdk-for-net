@@ -88,7 +88,7 @@ namespace Azure.AI.VoiceLive.Tests
         [Test]
         public void RequireApproval_AssignDirectlyOnServer_Works()
         {
-            var server = new VoiceLiveMcpServerDefinition("test-server", "https://example.com/mcp")
+            var server = new VoiceLiveMcpServerDefinition("test-server", new Uri("https://example.com/mcp"))
             {
                 RequireApproval = McpApprovalKind.Never
             };

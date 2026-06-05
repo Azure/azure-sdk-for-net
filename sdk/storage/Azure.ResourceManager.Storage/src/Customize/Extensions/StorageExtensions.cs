@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Storage
     public static partial class StorageExtensions
     {
         // Backward-compatible overload: Lists deleted accounts under the subscription.
+        /// <summary> Lists deleted accounts under the subscription. </summary>
+        /// <param name="subscriptionResource"> The subscription resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedAccountResource"/> that may take multiple service requests to iterate over. </returns>
         [Obsolete("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
@@ -26,6 +30,10 @@ namespace Azure.ResourceManager.Storage
         }
 
         // Backward-compatible overload: Lists deleted accounts under the subscription.
+        /// <summary> Lists deleted accounts under the subscription. </summary>
+        /// <param name="subscriptionResource"> The subscription resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedAccountResource"/> that may take multiple service requests to iterate over. </returns>
         [Obsolete("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<DeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
