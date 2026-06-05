@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Azure.SdkAnalyzers
 {
-    internal static class StringBuilderExtensions
+    public static class StringBuilderExtensions
     {
         private const char Newline = '\n';
         public static StringBuilder AppendNormalizedLine(this StringBuilder sb, string value)

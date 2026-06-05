@@ -22,6 +22,21 @@
   </PropertyGroup>
 
   <!--
+    Expose the allow-list file to the AllowListDiagnosticSuppressor analyzer in
+    Azure.SdkAnalyzers. The suppressor finds it by enumerating AdditionalFiles
+    and filtering on the AzureSdkAllowList="true" metadata, which is surfaced
+    via build_metadata.AdditionalFiles.AzureSdkAllowList by the corresponding
+    CompilerVisibleItemMetadata below.
+  -->
+  <ItemGroup Condition="'$(IsShippingClientLibrary)' == 'true' and Exists('$(_AnalyzerAllowListFile)')">
+    <AdditionalFiles Include="$(_AnalyzerAllowListFile)" AzureSdkAllowList="true" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsShippingClientLibrary)' == 'true'">
+    <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="AzureSdkAllowList" />
+  </ItemGroup>
+
+  <!--
     Read the allow-list file and extract nowarn: entries into _ProjectAllowedNoWarn.
 
     Parsing rules (intentionally lenient so a human-written file isn't silently misread):
@@ -61,8 +76,23 @@
       </_AllowListNoWarn>
     </ItemGroup>
 
+    <!--
+      Split each entry's Code into whole-assembly vs scoped:
+        whole-assembly: just `CODE`     (e.g., `AZC0102`)
+        scoped:         `CODE Target`   (e.g., `AZC0034 T:Foo`)
+      Only whole-assembly entries are auto-injected into $(NoWarn); scoped entries
+      are handled at-site by Azure.SdkAnalyzers' AllowListDiagnosticSuppressor,
+      which reads the same allow-list file via AdditionalFiles. Injecting scoped
+      entries into $(NoWarn) would silence the diagnostic globally, defeating the
+      whole point of point-suppression.
+    -->
+    <ItemGroup>
+      <_AllowListWholeAssembly Include="%(_AllowListNoWarn.Code)"
+                               Condition=" '%(_AllowListNoWarn.Code)' != '' and !$([System.String]::Copy('%(_AllowListNoWarn.Code)').Contains(' ')) " />
+    </ItemGroup>
+
     <PropertyGroup>
-      <_ProjectAllowedNoWarn>@(_AllowListNoWarn -> '%(Code)', ';')</_ProjectAllowedNoWarn>
+      <_ProjectAllowedNoWarn>@(_AllowListWholeAssembly, ';')</_ProjectAllowedNoWarn>
     </PropertyGroup>
   </Target>
 
