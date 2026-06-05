@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != IotOperationsInstanceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowProfileRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataflowProfileName, IotOperationsDataflowProfileData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsDataflowProfileResource> operation = new IotOperationsArmOperation<IotOperationsDataflowProfileResource>(
-                    new IotOperationsDataflowProfileOperationSource(Client),
+                    new IotOperationsDataflowProfileResourceOperationSource(Client),
                     _dataflowProfileClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowProfileRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dataflowProfileName, IotOperationsDataflowProfileData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsDataflowProfileResource> operation = new IotOperationsArmOperation<IotOperationsDataflowProfileResource>(
-                    new IotOperationsDataflowProfileOperationSource(Client),
+                    new IotOperationsDataflowProfileResourceOperationSource(Client),
                     _dataflowProfileClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new DataflowProfileGetByResourceGroupAsyncCollectionResultOfT(_dataflowProfileRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsDataflowProfileResource(Client, data));
+            return new AsyncPageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new DataflowProfileGetByResourceGroupAsyncCollectionResultOfT(
+                _dataflowProfileRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsDataflowProfileCollection.GetAll"), data => new IotOperationsDataflowProfileResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new DataflowProfileGetByResourceGroupCollectionResultOfT(_dataflowProfileRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsDataflowProfileResource(Client, data));
+            return new PageableWrapper<IotOperationsDataflowProfileData, IotOperationsDataflowProfileResource>(new DataflowProfileGetByResourceGroupCollectionResultOfT(
+                _dataflowProfileRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsDataflowProfileCollection.GetAll"), data => new IotOperationsDataflowProfileResource(Client, data));
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != HciVmNetworkSecurityGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciVmNetworkSecurityGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciVmNetworkSecurityGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _securityRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityRuleName, HciVmSecurityRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmSecurityRuleResource> operation = new VmArmOperation<HciVmSecurityRuleResource>(
-                    new HciVmSecurityRuleOperationSource(Client),
+                    new HciVmSecurityRuleResourceOperationSource(Client),
                     _securityRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _securityRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securityRuleName, HciVmSecurityRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmSecurityRuleResource> operation = new VmArmOperation<HciVmSecurityRuleResource>(
-                    new HciVmSecurityRuleOperationSource(Client),
+                    new HciVmSecurityRuleResourceOperationSource(Client),
                     _securityRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmSecurityRuleData, HciVmSecurityRuleResource>(new SecurityRulesGetByNetworkSecurityGroupAsyncCollectionResultOfT(_securityRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciVmSecurityRuleResource(Client, data));
+            return new AsyncPageableWrapper<HciVmSecurityRuleData, HciVmSecurityRuleResource>(new SecurityRulesGetByNetworkSecurityGroupAsyncCollectionResultOfT(
+                _securityRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciVmSecurityRuleCollection.GetAll"), data => new HciVmSecurityRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmSecurityRuleData, HciVmSecurityRuleResource>(new SecurityRulesGetByNetworkSecurityGroupCollectionResultOfT(_securityRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciVmSecurityRuleResource(Client, data));
+            return new PageableWrapper<HciVmSecurityRuleData, HciVmSecurityRuleResource>(new SecurityRulesGetByNetworkSecurityGroupCollectionResultOfT(
+                _securityRulesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciVmSecurityRuleCollection.GetAll"), data => new HciVmSecurityRuleResource(Client, data));
         }
 
         /// <summary>

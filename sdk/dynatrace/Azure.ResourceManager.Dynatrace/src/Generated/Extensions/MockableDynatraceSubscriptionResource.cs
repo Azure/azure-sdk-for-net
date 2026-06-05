@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetBySubscriptionIdAsyncCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DynatraceMonitorResource(Client, data));
+            return new AsyncPageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetBySubscriptionIdAsyncCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDynatraceSubscriptionResource.GetDynatraceMonitors"), data => new DynatraceMonitorResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetBySubscriptionIdCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DynatraceMonitorResource(Client, data));
+            return new PageableWrapper<DynatraceMonitorData, DynatraceMonitorResource>(new MonitorsGetBySubscriptionIdCollectionResultOfT(MonitorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableDynatraceSubscriptionResource.GetDynatraceMonitors"), data => new DynatraceMonitorResource(Client, data));
         }
 
         /// <summary>

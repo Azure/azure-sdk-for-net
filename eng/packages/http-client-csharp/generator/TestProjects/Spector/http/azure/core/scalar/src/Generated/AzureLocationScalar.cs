@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,6 +17,8 @@ namespace Specs.Azure.Core.Scalar
     public partial class AzureLocationScalar
     {
         protected AzureLocationScalar() => throw null;
+
+        internal AzureLocationScalar(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

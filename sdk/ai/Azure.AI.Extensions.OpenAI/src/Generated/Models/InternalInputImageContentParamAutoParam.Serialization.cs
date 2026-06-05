@@ -131,7 +131,7 @@ namespace Azure.AI.Extensions.OpenAI
             string @type = default;
             Uri imageUrl = default;
             string fileId = default;
-            DetailEnum? detail = default;
+            ImageDetailLevel? detail = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -167,7 +167,7 @@ namespace Azure.AI.Extensions.OpenAI
                         detail = null;
                         continue;
                     }
-                    detail = prop.Value.GetString().ToDetailEnum();
+                    detail = prop.Value.GetString().ToImageDetailLevel();
                     continue;
                 }
                 if (options.Format != "W")

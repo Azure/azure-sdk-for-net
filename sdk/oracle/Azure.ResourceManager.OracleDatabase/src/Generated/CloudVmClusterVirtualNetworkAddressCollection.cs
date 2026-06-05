@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != CloudVmClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CloudVmClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CloudVmClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _virtualNetworkAddressesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualnetworkaddressname, CloudVmClusterVirtualNetworkAddressData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource> operation = new OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource>(
-                    new CloudVmClusterVirtualNetworkAddressOperationSource(Client),
+                    new CloudVmClusterVirtualNetworkAddressResourceOperationSource(Client),
                     _virtualNetworkAddressesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _virtualNetworkAddressesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, virtualnetworkaddressname, CloudVmClusterVirtualNetworkAddressData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource> operation = new OracleDatabaseArmOperation<CloudVmClusterVirtualNetworkAddressResource>(
-                    new CloudVmClusterVirtualNetworkAddressOperationSource(Client),
+                    new CloudVmClusterVirtualNetworkAddressResourceOperationSource(Client),
                     _virtualNetworkAddressesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CloudVmClusterVirtualNetworkAddressData, CloudVmClusterVirtualNetworkAddressResource>(new VirtualNetworkAddressesGetByParentAsyncCollectionResultOfT(_virtualNetworkAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CloudVmClusterVirtualNetworkAddressResource(Client, data));
+            return new AsyncPageableWrapper<CloudVmClusterVirtualNetworkAddressData, CloudVmClusterVirtualNetworkAddressResource>(new VirtualNetworkAddressesGetByParentAsyncCollectionResultOfT(
+                _virtualNetworkAddressesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CloudVmClusterVirtualNetworkAddressCollection.GetAll"), data => new CloudVmClusterVirtualNetworkAddressResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.OracleDatabase
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CloudVmClusterVirtualNetworkAddressData, CloudVmClusterVirtualNetworkAddressResource>(new VirtualNetworkAddressesGetByParentCollectionResultOfT(_virtualNetworkAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new CloudVmClusterVirtualNetworkAddressResource(Client, data));
+            return new PageableWrapper<CloudVmClusterVirtualNetworkAddressData, CloudVmClusterVirtualNetworkAddressResource>(new VirtualNetworkAddressesGetByParentCollectionResultOfT(
+                _virtualNetworkAddressesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CloudVmClusterVirtualNetworkAddressCollection.GetAll"), data => new CloudVmClusterVirtualNetworkAddressResource(Client, data));
         }
 
         /// <summary>

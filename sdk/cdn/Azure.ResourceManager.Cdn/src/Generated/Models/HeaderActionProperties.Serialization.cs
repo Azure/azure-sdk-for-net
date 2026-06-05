@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class HeaderActionProperties : IUtf8JsonSerializable, IJsonModel<HeaderActionProperties>
+    /// <summary> Defines the parameters for the request header action. </summary>
+    public partial class HeaderActionProperties : DeliveryRuleActionProperties, IJsonModel<HeaderActionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HeaderActionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/> for deserialization. </summary>
+        internal HeaderActionProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DeliveryRuleActionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HeaderActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHeaderActionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HeaderActionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HeaderActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HeaderActionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HeaderActionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HeaderActionProperties IPersistableModel<HeaderActionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (HeaderActionProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HeaderActionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HeaderActionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HeaderActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HeaderActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HeaderActionProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("headerAction"u8);
             writer.WriteStringValue(HeaderAction.ToString());
@@ -47,179 +91,64 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        HeaderActionProperties IJsonModel<HeaderActionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HeaderActionProperties IJsonModel<HeaderActionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HeaderActionProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DeliveryRuleActionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HeaderActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HeaderActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HeaderActionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHeaderActionProperties(document.RootElement, options);
         }
 
-        internal static HeaderActionProperties DeserializeHeaderActionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HeaderActionProperties DeserializeHeaderActionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            DeliveryRuleActionParametersType typeName = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             HeaderAction headerAction = default;
             string headerName = default;
             string value = default;
-            DeliveryRuleActionParametersType typeName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("headerAction"u8))
+                if (prop.NameEquals("typeName"u8))
                 {
-                    headerAction = new HeaderAction(property.Value.GetString());
+                    typeName = new DeliveryRuleActionParametersType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("headerName"u8))
+                if (prop.NameEquals("headerAction"u8))
                 {
-                    headerName = property.Value.GetString();
+                    headerAction = new HeaderAction(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"u8))
+                if (prop.NameEquals("headerName"u8))
                 {
-                    value = property.Value.GetString();
+                    headerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeName"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    typeName = new DeliveryRuleActionParametersType(property.Value.GetString());
+                    value = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new HeaderActionProperties(typeName, serializedAdditionalRawData, headerAction, headerName, value);
+            return new HeaderActionProperties(typeName, additionalBinaryDataProperties, headerAction, headerName, value);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HeaderAction), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  headerAction: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  headerAction: ");
-                builder.AppendLine($"'{HeaderAction.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HeaderName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  headerName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HeaderName))
-                {
-                    builder.Append("  headerName: ");
-                    if (HeaderName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{HeaderName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{HeaderName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  value: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Value))
-                {
-                    builder.Append("  value: ");
-                    if (Value.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Value}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Value}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TypeName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  typeName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  typeName: ");
-                builder.AppendLine($"'{TypeName.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<HeaderActionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HeaderActionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(HeaderActionProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HeaderActionProperties IPersistableModel<HeaderActionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HeaderActionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHeaderActionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HeaderActionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HeaderActionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

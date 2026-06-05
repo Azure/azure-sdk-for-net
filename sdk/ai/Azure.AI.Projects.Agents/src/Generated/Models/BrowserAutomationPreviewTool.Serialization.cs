@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
-    public partial class BrowserAutomationPreviewTool : AgentTool, IJsonModel<BrowserAutomationPreviewTool>
+    public partial class BrowserAutomationPreviewTool : ProjectsAgentTool, IJsonModel<BrowserAutomationPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/> for deserialization. </summary>
         internal BrowserAutomationPreviewTool()
@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -77,8 +77,29 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(BrowserAutomationPreviewTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
             writer.WritePropertyName("browser_automation_preview"u8);
-            writer.WriteObjectValue(BrowserAutomationPreview, options);
+            writer.WriteObjectValue(ToolParameters, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -87,7 +108,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BrowserAutomationPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -108,7 +129,10 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            BrowserAutomationToolParameters browserAutomationPreview = default;
+            string name = default;
+            string description = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
+            BrowserAutomationToolOptions toolParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -116,9 +140,33 @@ namespace Azure.AI.Projects.Agents
                     @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
+                    continue;
+                }
                 if (prop.NameEquals("browser_automation_preview"u8))
                 {
-                    browserAutomationPreview = BrowserAutomationToolParameters.DeserializeBrowserAutomationToolParameters(prop.Value, options);
+                    toolParameters = BrowserAutomationToolOptions.DeserializeBrowserAutomationToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +174,13 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BrowserAutomationPreviewTool(@type, additionalBinaryDataProperties, browserAutomationPreview);
+            return new BrowserAutomationPreviewTool(
+                @type,
+                additionalBinaryDataProperties,
+                name,
+                description,
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
+                toolParameters);
         }
     }
 }

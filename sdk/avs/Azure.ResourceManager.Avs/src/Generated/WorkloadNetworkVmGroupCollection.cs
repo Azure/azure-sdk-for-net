@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != WorkloadNetworkResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkloadNetworkResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, WorkloadNetworkResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _workloadNetworksRestClient.CreateCreateVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkVmGroupResource> operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(
-                    new WorkloadNetworkVmGroupOperationSource(Client),
+                    new WorkloadNetworkVmGroupResourceOperationSource(Client),
                     _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _workloadNetworksRestClient.CreateCreateVMGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, vmGroupId, WorkloadNetworkVmGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkVmGroupResource> operation = new AvsArmOperation<WorkloadNetworkVmGroupResource>(
-                    new WorkloadNetworkVmGroupOperationSource(Client),
+                    new WorkloadNetworkVmGroupResourceOperationSource(Client),
                     _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworksGetVMGroupsAsyncCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkVmGroupResource(Client, data));
+            return new AsyncPageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworksGetVMGroupsAsyncCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkVmGroupCollection.GetAll"), data => new WorkloadNetworkVmGroupResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Avs
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworksGetVMGroupsCollectionResultOfT(_workloadNetworksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context), data => new WorkloadNetworkVmGroupResource(Client, data));
+            return new PageableWrapper<WorkloadNetworkVmGroupData, WorkloadNetworkVmGroupResource>(new WorkloadNetworksGetVMGroupsCollectionResultOfT(
+                _workloadNetworksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                context,
+                "WorkloadNetworkVmGroupCollection.GetAll"), data => new WorkloadNetworkVmGroupResource(Client, data));
         }
 
         /// <summary>

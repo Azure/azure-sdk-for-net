@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Triage resource properties. </param>
-        internal AdvisorTriageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AdvisorTriageProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AdvisorTriageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdvisorTriageProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Triage resource properties. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ReviewId;
+                return Properties is null ? default : Properties.ReviewId;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.RecommendationId;
+                return Properties is null ? default : Properties.RecommendationId;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.SubscriptionId;
+                return Properties is null ? default : Properties.SubscriptionId;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ResourceGroup;
+                return Properties is null ? default : Properties.ResourceGroup;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.TriageResourceType;
+                return Properties is null ? default : Properties.TriageResourceType;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ResourceId;
+                return Properties is null ? default : Properties.ResourceId;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ResourceName;
+                return Properties is null ? default : Properties.ResourceName;
             }
         }
     }

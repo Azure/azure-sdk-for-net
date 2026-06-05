@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Advisor resiliency review properties. </param>
-        internal AdvisorTriageRecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AdvisorTriageRecommendationProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AdvisorTriageRecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdvisorTriageRecommendationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Advisor resiliency review properties. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.ReviewId;
+                return Properties is null ? default : Properties.ReviewId;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Title;
+                return Properties is null ? default : Properties.Title;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Priority;
+                return Properties is null ? default : Properties.Priority;
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.AppliesToSubscriptions;
+                return Properties is null ? default : Properties.AppliesToSubscriptions;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.RecommendationStatus;
+                return Properties is null ? default : Properties.RecommendationStatus;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.UpdatedOn;
+                return Properties is null ? default : Properties.UpdatedOn;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.RejectReason;
+                return Properties is null ? default : Properties.RejectReason;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.PotentialBenefits;
+                return Properties is null ? default : Properties.PotentialBenefits;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Advisor
         {
             get
             {
-                return Properties.Notes;
+                return Properties is null ? default : Properties.Notes;
             }
         }
     }

@@ -3,58 +3,31 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using Microsoft.TypeSpec.Generator.Customizations;
+
+// NOTE: The following customization is intentionally to support boolean serialization and deserialization from a string value property.
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Live trace category configuration of a Microsoft.SignalRService resource. </summary>
+    [CodeGenSerialization(nameof(IsEnabled), SerializationValueHook = nameof(SerializationIsEnabled), DeserializationValueHook = nameof(DeserializeIsEnabled))]
     public partial class LiveTraceCategory
     {
-        /// <summary> Initializes a new instance of LiveTraceCategory. </summary>
-        public LiveTraceCategory()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void SerializationIsEnabled(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStringValue(IsEnabled.HasValue ? IsEnabled.Value.ToString().ToLower(new System.Globalization.CultureInfo("en-us")) : null);
         }
 
-        /// <summary> Initializes a new instance of LiveTraceCategory. </summary>
-        /// <param name="name">
-        /// Gets or sets the live trace category&apos;s name.
-        /// Available values: ConnectivityLogs, MessagingLogs.
-        /// Case insensitive.
-        /// </param>
-        /// <param name="enabled">
-        /// Indicates whether or the live trace category is enabled.
-        /// Available values: true, false.
-        /// Case insensitive.
-        /// </param>
-        internal LiveTraceCategory(string name, string enabled)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void DeserializeIsEnabled(JsonProperty property, ref bool? isEnabled)
         {
-            Name = name;
-            Enabled = enabled;
-        }
-
-        /// <summary>
-        /// Gets or sets the live trace category&apos;s name.
-        /// Available values: ConnectivityLogs, MessagingLogs.
-        /// Case insensitive.
-        /// </summary>
-        public string Name { get; set; }
-        /// <summary>
-        /// Indicates whether or the live trace category is enabled.
-        /// Available values: true, false.
-        /// Case insensitive.
-        /// </summary>
-        private string Enabled { get; set; }
-        /// <summary>
-        /// Indicates whether or the live trace category is enabled.
-        /// </summary>
-        public bool? IsEnabled
-        {
-            get
+            if (property.Value.ValueKind == JsonValueKind.Null)
             {
-                return bool.Parse(Enabled);
+                return;
             }
-            set
-            {
-                Enabled = value.ToString().ToLower(new System.Globalization.CultureInfo("en-us"));
-            }
+            isEnabled = bool.Parse(property.Value.GetString());
         }
     }
 }

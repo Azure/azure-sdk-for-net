@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != EdgeSolutionResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSolutionResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSolutionResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _solutionVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, solutionVersionName, EdgeSolutionVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
-                    new EdgeSolutionVersionOperationSource(Client),
+                    new EdgeSolutionVersionResourceOperationSource(Client),
                     _solutionVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _solutionVersionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, solutionVersionName, EdgeSolutionVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionVersionResource>(
-                    new EdgeSolutionVersionOperationSource(Client),
+                    new EdgeSolutionVersionResourceOperationSource(Client),
                     _solutionVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeSolutionVersionResource(Client, data));
+                context,
+                "EdgeSolutionVersionCollection.GetAll"), data => new EdgeSolutionVersionResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new EdgeSolutionVersionResource(Client, data));
+                context,
+                "EdgeSolutionVersionCollection.GetAll"), data => new EdgeSolutionVersionResource(Client, data));
         }
 
         /// <summary>

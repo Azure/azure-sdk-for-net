@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _trafficControllerInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, TrafficControllerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceNetworkingArmOperation<TrafficControllerResource> operation = new ServiceNetworkingArmOperation<TrafficControllerResource>(
-                    new TrafficControllerOperationSource(Client),
+                    new TrafficControllerResourceOperationSource(Client),
                     _trafficControllerInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _trafficControllerInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, trafficControllerName, TrafficControllerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceNetworkingArmOperation<TrafficControllerResource> operation = new ServiceNetworkingArmOperation<TrafficControllerResource>(
-                    new TrafficControllerOperationSource(Client),
+                    new TrafficControllerResourceOperationSource(Client),
                     _trafficControllerInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficControllerData, TrafficControllerResource>(new TrafficControllerInterfaceGetByResourceGroupAsyncCollectionResultOfT(_trafficControllerInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new TrafficControllerResource(Client, data));
+            return new AsyncPageableWrapper<TrafficControllerData, TrafficControllerResource>(new TrafficControllerInterfaceGetByResourceGroupAsyncCollectionResultOfT(_trafficControllerInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "TrafficControllerCollection.GetAll"), data => new TrafficControllerResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficControllerData, TrafficControllerResource>(new TrafficControllerInterfaceGetByResourceGroupCollectionResultOfT(_trafficControllerInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new TrafficControllerResource(Client, data));
+            return new PageableWrapper<TrafficControllerData, TrafficControllerResource>(new TrafficControllerInterfaceGetByResourceGroupCollectionResultOfT(_trafficControllerInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "TrafficControllerCollection.GetAll"), data => new TrafficControllerResource(Client, data));
         }
 
         /// <summary>

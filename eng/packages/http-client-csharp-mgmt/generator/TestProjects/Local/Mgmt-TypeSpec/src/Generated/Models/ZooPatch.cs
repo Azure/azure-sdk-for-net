@@ -40,24 +40,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        internal ZooUpdateProperties Properties { get; set; }
-
-        /// <summary> something. </summary>
-        [WirePath("properties.something")]
-        public string ZooUpdateSomething
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Something;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ZooUpdateProperties();
-                }
-                Properties.Something = value;
-            }
-        }
+        public ZooUpdateProperties Properties { get; set; }
     }
 }

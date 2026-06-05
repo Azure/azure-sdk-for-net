@@ -1,0 +1,6 @@
+{
+  "apiVersions": {
+    "ServiceOne": "2024-01-01",
+    "ServiceTwo": "2024-06-01"
+  }
+}

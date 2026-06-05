@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="DiffDiskSettings"/>. </summary>
         /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
         /// <param name="placement"> Specifies the ephemeral disk placement for operating system disk. Possible values are: **CacheDisk,** **ResourceDisk,** **NvmeDisk.** The defaulting behavior is: **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk** or **NvmeDisk** is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. Minimum api-version for NvmeDisk: 2024-03-01. </param>
+        /// <param name="enableFullCaching"> Specifies whether or not to enable full caching for this VM which will cache the OS disk locally on the host and make this VM more resilient to storage outages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiffDiskSettings(DiffDiskOption? option, DiffDiskPlacement? placement, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiffDiskSettings(DiffDiskOption? option, DiffDiskPlacement? placement, bool? enableFullCaching, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Option = option;
             Placement = placement;
+            EnableFullCaching = enableFullCaching;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
         public DiffDiskOption? Option { get; set; }
         /// <summary> Specifies the ephemeral disk placement for operating system disk. Possible values are: **CacheDisk,** **ResourceDisk,** **NvmeDisk.** The defaulting behavior is: **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk** or **NvmeDisk** is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. Minimum api-version for NvmeDisk: 2024-03-01. </summary>
         public DiffDiskPlacement? Placement { get; set; }
+        /// <summary> Specifies whether or not to enable full caching for this VM which will cache the OS disk locally on the host and make this VM more resilient to storage outages. </summary>
+        public bool? EnableFullCaching { get; set; }
     }
 }

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _pureStoragePoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsPureStoragePolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsPureStoragePolicyResource> operation = new AvsArmOperation<AvsPureStoragePolicyResource>(
-                    new AvsPureStoragePolicyOperationSource(Client),
+                    new AvsPureStoragePolicyResourceOperationSource(Client),
                     _pureStoragePoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _pureStoragePoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsPureStoragePolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsPureStoragePolicyResource> operation = new AvsArmOperation<AvsPureStoragePolicyResource>(
-                    new AvsPureStoragePolicyOperationSource(Client),
+                    new AvsPureStoragePolicyResourceOperationSource(Client),
                     _pureStoragePoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

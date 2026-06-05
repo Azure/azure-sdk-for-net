@@ -83,6 +83,18 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="ExpansionJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpansionJobResource.CreateResourceIdentifier" /> to create an <see cref="ExpansionJobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExpansionJobResource"/> object. </returns>
+        public virtual ExpansionJobResource GetExpansionJobResource(ResourceIdentifier id)
+        {
+            ExpansionJobResource.ValidateResourceId(id);
+            return new ExpansionJobResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="StorageCacheResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageCacheResource.CreateResourceIdentifier" /> to create a <see cref="StorageCacheResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

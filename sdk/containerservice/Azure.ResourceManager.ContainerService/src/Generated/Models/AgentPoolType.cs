@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct AgentPoolType : IEquatable<AgentPoolType>
     {
         private readonly string _value;
+        /// <summary> Create an Agent Pool backed by a Virtual Machine Scale Set. </summary>
+        private const string VirtualMachineScaleSetsValue = "VirtualMachineScaleSets";
+        /// <summary> Use of this is strongly discouraged. </summary>
+        private const string AvailabilitySetValue = "AvailabilitySet";
+        /// <summary> Create an Agent Pool backed by a Single Instance VM orchestration mode. </summary>
+        private const string VirtualMachinesValue = "VirtualMachines";
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AgentPoolType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VirtualMachineScaleSetsValue = "VirtualMachineScaleSets";
-        private const string AvailabilitySetValue = "AvailabilitySet";
-        private const string VirtualMachinesValue = "VirtualMachines";
+            _value = value;
+        }
 
         /// <summary> Create an Agent Pool backed by a Virtual Machine Scale Set. </summary>
         public static AgentPoolType VirtualMachineScaleSets { get; } = new AgentPoolType(VirtualMachineScaleSetsValue);
+
         /// <summary> Use of this is strongly discouraged. </summary>
         public static AgentPoolType AvailabilitySet { get; } = new AgentPoolType(AvailabilitySetValue);
+
         /// <summary> Create an Agent Pool backed by a Single Instance VM orchestration mode. </summary>
         public static AgentPoolType VirtualMachines { get; } = new AgentPoolType(VirtualMachinesValue);
+
         /// <summary> Determines if two <see cref="AgentPoolType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AgentPoolType left, AgentPoolType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AgentPoolType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AgentPoolType left, AgentPoolType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentPoolType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AgentPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AgentPoolType(string value) => new AgentPoolType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AgentPoolType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AgentPoolType?(string value) => value == null ? null : new AgentPoolType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AgentPoolType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AgentPoolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

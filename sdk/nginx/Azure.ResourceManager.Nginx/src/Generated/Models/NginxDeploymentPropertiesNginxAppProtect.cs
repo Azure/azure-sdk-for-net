@@ -17,6 +17,12 @@ namespace Azure.ResourceManager.Nginx.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentPropertiesNginxAppProtect"/>. </summary>
+        public NginxDeploymentPropertiesNginxAppProtect()
+        {
+
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentPropertiesNginxAppProtect"/>. </summary>
         /// <param name="webApplicationFirewallSettings"> Settings for the NGINX App Protect Web Application Firewall (WAF). </param>
         /// <param name="webApplicationFirewallStatus"> The status of the NGINX App Protect Web Application Firewall. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

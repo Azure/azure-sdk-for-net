@@ -12,12 +12,13 @@ namespace Azure.AI.Extensions.OpenAI.Tests
 {
     public class ProjectsOpenAITestEnvironment : TestEnvironment
     {
-        public string PROJECT_ENDPOINT => GetRecordedVariable(nameof(PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
-        public string AGENT_NAME => WrappedGetRecordedVariable("AZURE_AI_FOUNDRY_AGENT_NAME", isSecret: false);
-        public string MODELDEPLOYMENTNAME => WrappedGetRecordedVariable("MODEL_DEPLOYMENT_NAME", isSecret: false);
-        public string EMBEDDINGMODELDEPLOYMENTNAME => WrappedGetRecordedVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME", isSecret: false);
+        public string FOUNDRY_PROJECT_ENDPOINT => GetRecordedVariable(nameof(FOUNDRY_PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
+        public string FOUNDRY_AGENT_NAME => WrappedGetRecordedVariable(nameof(FOUNDRY_AGENT_NAME), isSecret: false);
+        public string FOUNDRY_MODEL_NAME => WrappedGetRecordedVariable(nameof(FOUNDRY_MODEL_NAME), isSecret: false);
+        public string MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME => WrappedGetRecordedVariable(nameof(MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME), isSecret: false);
+        public string MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME => WrappedGetRecordedVariable(nameof(MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME), isSecret: false);
         public string INGRESS_SUBDOMAIN_SUFFIX => WrappedGetRecordedVariable(nameof(INGRESS_SUBDOMAIN_SUFFIX), isSecret: false);
-        public string OPENAI_FILE_ID => WrappedGetRecordedVariable(nameof(OPENAI_FILE_ID), isSecret: false    );
+        public string OPENAI_FILE_ID => WrappedGetRecordedVariable(nameof(OPENAI_FILE_ID), isSecret: false);
         public string COMPUTER_SCREENSHOTS => WrappedGetRecordedVariable(nameof(COMPUTER_SCREENSHOTS), isSecret: false);
         public string IMAGE_GENERATION_DEPLOYMENT_NAME => WrappedGetRecordedVariable(nameof(IMAGE_GENERATION_DEPLOYMENT_NAME), isSecret: false);
         public string COMPUTER_USE_DEPLOYMENT_NAME => WrappedGetRecordedVariable(nameof(COMPUTER_USE_DEPLOYMENT_NAME), isSecret: false);
@@ -32,12 +33,16 @@ namespace Azure.AI.Extensions.OpenAI.Tests
         public string PLAYWRIGHT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(PLAYWRIGHT_CONNECTION_NAME));
         public string SHAREPOINT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(SHAREPOINT_CONNECTION_NAME));
         public string FABRIC_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(FABRIC_CONNECTION_NAME));
+        public string FABRIC_IQ_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(FABRIC_IQ_PROJECT_CONNECTION_NAME));
         public string A2A_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(A2A_CONNECTION_NAME));
         public string A2A_BASE_URI => GetRecordedOptionalVariable(nameof(A2A_BASE_URI));
         public string PUBLISHED_ENDPOINT => GetRecordedOptionalVariable(nameof(PUBLISHED_ENDPOINT));
         public string APPLICATIONINSIGHTS_CONNECTION_STRING => WrappedGetRecordedVariable(nameof(APPLICATIONINSIGHTS_CONNECTION_STRING), isSecret: true);
         public string AGENT_DOCKER_IMAGE => GetRecordedOptionalVariable(nameof(AGENT_DOCKER_IMAGE));
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
+        public string FOUNDRY_AGENT_CONTAINER_IMAGE => GetRecordedVariable(nameof(FOUNDRY_AGENT_CONTAINER_IMAGE));
+        public string WORKIQ_CONNECTION_NAME => GetRecordedVariable(nameof(WORKIQ_CONNECTION_NAME));
+        public string RAI_POLICY_NAME => GetRecordedVariable(nameof(RAI_POLICY_NAME));
         public string WrappedGetRecordedVariable(string key, bool isSecret = true)
         {
             try

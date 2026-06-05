@@ -5,18 +5,23 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Service.MultiService.Combined
 {
     public partial class CombinedClientOptions : ClientOptions
     {
-        private const ServiceAVersion LatestServiceAVersion = ServiceAVersion.Vav2;
-        private const ServiceBVersion LatestServiceBVersion = ServiceBVersion.Vbv2;
+        private const ServiceAServiceVersion LatestServiceAVersion = ServiceAServiceVersion.Vav2;
+        private const ServiceBServiceVersion LatestServiceBVersion = ServiceBServiceVersion.Vbv2;
 
-        public CombinedClientOptions(ServiceAVersion serviceAVersion = LatestServiceAVersion, ServiceBVersion serviceBVersion = LatestServiceBVersion) => throw null;
+        public CombinedClientOptions(ServiceAServiceVersion serviceAServiceVersion = LatestServiceAVersion, ServiceBServiceVersion serviceBServiceVersion = LatestServiceBVersion) => throw null;
 
-        public enum ServiceAVersion
+        [Experimental("SCME0002")]
+        internal CombinedClientOptions(IConfigurationSection section) : base(section, null) => throw null;
+
+        public enum ServiceAServiceVersion
         {
             /// <summary> Vav1. </summary>
             Vav1 = 1,
@@ -24,7 +29,7 @@ namespace Service.MultiService.Combined
             Vav2 = 2
         }
 
-        public enum ServiceBVersion
+        public enum ServiceBServiceVersion
         {
             /// <summary> Vbv1. </summary>
             Vbv1 = 1,

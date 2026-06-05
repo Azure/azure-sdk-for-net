@@ -56,12 +56,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The disk name. </param>
         /// <param name="encryptionSettings"> Specifies the encryption settings for the OS Disk. &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
         /// <param name="statuses"> The resource status information. </param>
+        /// <param name="storageAlignmentStatus"> Specifies the storage alignment status for the disk. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskInstanceView(string name, IReadOnlyList<DiskEncryptionSettings> encryptionSettings, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskInstanceView(string name, IReadOnlyList<DiskEncryptionSettings> encryptionSettings, IReadOnlyList<InstanceViewStatus> statuses, StorageAlignmentStatus? storageAlignmentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EncryptionSettings = encryptionSettings;
             Statuses = statuses;
+            StorageAlignmentStatus = storageAlignmentStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,5 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<DiskEncryptionSettings> EncryptionSettings { get; }
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }
+        /// <summary> Specifies the storage alignment status for the disk. </summary>
+        public StorageAlignmentStatus? StorageAlignmentStatus { get; }
     }
 }

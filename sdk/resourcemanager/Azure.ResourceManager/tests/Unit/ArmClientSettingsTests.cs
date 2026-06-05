@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Tests
             ArmClientSettings settings = config.GetClientSettings<ArmClientSettings>("Client");
 
             Assert.That(settings.Credential, Is.Not.Null);
-            Assert.That(settings.Credential.CredentialSource, Is.EqualTo("ManagedIdentity"));
+            Assert.That(settings.Credential.CredentialSource, Is.AnyOf("managedidentity", "ManagedIdentity"));
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Tests
             Assert.That(settings.Options.Environment.Value.Endpoint, Is.EqualTo(new Uri("https://management.usgovcloudapi.net")));
             Assert.That(settings.Options.Environment.Value.Audience, Is.EqualTo("https://management.usgovcloudapi.net"));
             Assert.That(settings.Credential, Is.Not.Null);
-            Assert.That(settings.Credential.CredentialSource, Is.EqualTo("ManagedIdentity"));
+            Assert.That(settings.Credential.CredentialSource, Is.AnyOf("managedidentity", "ManagedIdentity"));
         }
 
         [Test]

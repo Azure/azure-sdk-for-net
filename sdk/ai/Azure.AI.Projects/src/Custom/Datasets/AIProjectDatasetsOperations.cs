@@ -12,6 +12,7 @@ using Azure.Storage.Blobs;
 
 namespace Azure.AI.Projects
 {
+    [CodeGenType("AIProjectDatasetsOperations")]
     public partial class AIProjectDatasetsOperations
     {
         private readonly AuthenticationTokenProvider _tokenProvider;
@@ -186,7 +187,7 @@ namespace Azure.AI.Projects
             var pendingUploadConfiguration = new PendingUploadConfiguration(
                 pendingUploadId: null,
                 connectionName: connectionName,
-                pendingUploadType: PendingUploadType.BlobReference,
+                pendingUploadType: PendingUploadType.TemporaryBlobReference,
                 additionalBinaryDataProperties: null);
 
             PendingUploadResult pendingUploadResult = PendingUpload(
@@ -252,7 +253,7 @@ namespace Azure.AI.Projects
             PendingUploadConfiguration pendingUploadRequest = new(
                 pendingUploadId: null,
                 connectionName: connectionName,
-                pendingUploadType: PendingUploadType.BlobReference,
+                pendingUploadType: PendingUploadType.TemporaryBlobReference,
                 additionalBinaryDataProperties: null);
 
             PendingUploadResult pendingUploadResult = await PendingUploadAsync(

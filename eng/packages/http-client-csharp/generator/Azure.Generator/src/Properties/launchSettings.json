@@ -50,6 +50,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-azure-client-generator-core-client-doc": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/client-doc -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-azure-client-generator-core-client-initialization-default": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/client-initialization/default -g AzureStubGenerator",
       "commandName": "Executable",
@@ -57,6 +62,11 @@
     },
     "http-azure-client-generator-core-client-initialization-individually": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/client-initialization/individually -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
+    "http-azure-client-generator-core-client-initialization-individuallyParent": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/client-initialization/individuallyParent -g AzureStubGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
@@ -92,6 +102,11 @@
     },
     "http-azure-client-generator-core-override": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/override -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
+    "http-azure-client-generator-core-response-as-bool": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/client-generator-core/response-as-bool -g AzureStubGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
@@ -275,6 +290,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-payload-head": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/payload/head -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-payload-json-merge-patch": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/payload/json-merge-patch -g AzureStubGenerator",
       "commandName": "Executable",
@@ -347,6 +367,11 @@
     },
     "http-service-multi-service": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/service/multi-service -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
+    "http-service-multiple-services": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/service/multiple-services -g AzureStubGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },

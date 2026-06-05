@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(decompileOperationContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(decompileOperationContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

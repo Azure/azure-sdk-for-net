@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Threading;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects.Memory;
 
 #pragma warning disable AZC0007
 
@@ -21,15 +23,40 @@ namespace Azure.AI.Projects
     {
         private const int _defaultMaxCacheSize = 100;
         private readonly ClientConnectionCacheManager _cacheManager;
+        /// <summary> A credential provider used to authenticate to the service. </summary>
+        private readonly AuthenticationTokenProvider _tokenProvider;
         private static readonly string[] AuthorizationScopes = ["https://ai.azure.com/.default"];
         private ProjectOpenAIClient _cachedOpenAIClient;
-        private AgentsClient _cachedAgentsClient;
+        private AgentAdministrationClient _cachedAgentsClient;
         private readonly TelemetryDetails _telemetryDetails;
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
         protected AIProjectClient()
             : base(maxCacheSize: _defaultMaxCacheSize)
         {
+        }
+
+        /// <summary> Initializes a new instance of AIProjectClient from a <see cref="AIProjectClientSettings"/>. </summary>
+        /// <param name="settings"> The settings for AIProjectClient. </param>
+        [System.Diagnostics.CodeAnalysis.Experimental("SCME0002")]
+        public AIProjectClient(AIProjectClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of AIProjectClient. </summary>
+        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        internal AIProjectClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AIProjectClientOptions options)
+            : base(maxCacheSize: _defaultMaxCacheSize)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new AIProjectClientOptions();
+
+            _endpoint = endpoint;
+            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AIProjectClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+            _apiVersion = options.Version;
         }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
@@ -56,14 +83,14 @@ namespace Azure.AI.Projects
             _apiVersion = options.Version;
             _endpoint = endpoint;
             _tokenProvider = tokenProvider;
-            _telemetryDetails = new(typeof(AgentsClient).Assembly, options?.UserAgentApplicationId);
+            _telemetryDetails = new(typeof(AgentAdministrationClient).Assembly, options?.UserAgentApplicationId);
 
             PipelinePolicyHelpers.AddQueryParameterPolicyIf(
                 options,
                 "api-version",
                 _apiVersion,
                 conditionToEvaluate: request => request?.Uri?.AbsolutePath?.ToLowerInvariant()?.Contains("openai/v1") != true);
-            PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,HostedAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview");
+            PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,HostedAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,Toolboxes=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,CodeAgents=V1Preview,Models=V1Preview,AgentsOptimization=V1Preview,Routines=V1Preview,ExternalAgents=V1Preview");
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", _telemetryDetails.UserAgent.ToString());
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
             PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
@@ -117,7 +144,7 @@ namespace Azure.AI.Projects
             return Volatile.Read(ref _cachedOpenAIClient) ?? Interlocked.CompareExchange(ref _cachedOpenAIClient, this.GetProjectOpenAIClient(), null) ?? _cachedOpenAIClient;
         }
 
-        internal virtual AgentsClient GetCachedAgentsClient()
+        internal virtual AgentAdministrationClient GetCachedAgentsClient()
         {
             return Volatile.Read(ref _cachedAgentsClient) ?? Interlocked.CompareExchange(ref _cachedAgentsClient, this.GetProjectAgentsClient(), null) ?? _cachedAgentsClient;
         }
@@ -140,30 +167,53 @@ namespace Azure.AI.Projects
             return Volatile.Read(ref _cachedEvaluationTaxonomies) ?? Interlocked.CompareExchange(ref _cachedEvaluationTaxonomies, new EvaluationTaxonomies(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluationTaxonomies;
         }
 
-        /// <summary> Initializes a new instance of Evaluators. </summary>
-        internal virtual Evaluators GetEvaluatorsClient()
+        /// <summary> Initializes a new instance of ProjectEvaluators. </summary>
+        internal virtual ProjectEvaluators GetProjectEvaluatorsClient()
         {
-            return Volatile.Read(ref _cachedEvaluators) ?? Interlocked.CompareExchange(ref _cachedEvaluators, new Evaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluators;
+            return Volatile.Read(ref _cachedProjectEvaluators) ?? Interlocked.CompareExchange(ref _cachedProjectEvaluators, new ProjectEvaluators(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectEvaluators;
         }
 
-        /// <summary> Initializes a new instance of Insights. </summary>
-        internal virtual Insights GetInsightsClient()
+        /// <summary> Initializes a new instance of ProjectInsights. </summary>
+        internal virtual ProjectInsights GetProjectInsightsClient()
         {
-            return Volatile.Read(ref _cachedInsights) ?? Interlocked.CompareExchange(ref _cachedInsights, new Insights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedInsights;
+            return Volatile.Read(ref _cachedProjectInsights) ?? Interlocked.CompareExchange(ref _cachedProjectInsights, new ProjectInsights(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectInsights;
         }
 
-        /// <summary> Initializes a new instance of Schedules. </summary>
-        internal virtual Schedules GetSchedulesClient()
+        /// <summary> Initializes a new instance of ProjectSchedules. </summary>
+        internal virtual ProjectSchedules GetProjectSchedulesClient()
         {
-            return Volatile.Read(ref _cachedSchedules) ?? Interlocked.CompareExchange(ref _cachedSchedules, new Schedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedSchedules;
+            return Volatile.Read(ref _cachedProjectSchedules) ?? Interlocked.CompareExchange(ref _cachedProjectSchedules, new ProjectSchedules(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectSchedules;
         }
 
         /// <summary> Initializes a new instance of AIProjectMemoryStoresOperations. </summary>
-        internal virtual AIProjectMemoryStoresOperations GetAIProjectMemoryStoresOperationsClient()
+        internal virtual AIProjectMemoryStores GetAIProjectMemoryStoresOperationsClient()
         {
-            return Volatile.Read(ref _cachedAIProjectMemoryStoresOperations) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStoresOperations, new AIProjectMemoryStoresOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStoresOperations;
+            return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;
         }
 
+        /// <summary> Initializes a new instance of AIProjectModels. </summary>
+        internal virtual AIProjectModels GetAIProjectModelsClient()
+        {
+            return Volatile.Read(ref _cachedAIProjectModels) ?? Interlocked.CompareExchange(ref _cachedAIProjectModels, new AIProjectModels(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectModels;
+        }
+
+        /// <summary> Initializes a new instance of DataGenerationJobs. </summary>
+        internal virtual DataGenerationJobs GetDataGenerationJobsClient()
+        {
+            return Volatile.Read(ref _cachedDataGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedDataGenerationJobs, new DataGenerationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDataGenerationJobs;
+        }
+
+        /// <summary> Initializes a new instance of EvaluatorGenerationJobs. </summary>
+        internal virtual EvaluatorGenerationJobs GetEvaluatorGenerationJobsClient()
+        {
+            return Volatile.Read(ref _cachedEvaluatorGenerationJobs) ?? Interlocked.CompareExchange(ref _cachedEvaluatorGenerationJobs, new EvaluatorGenerationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluatorGenerationJobs;
+        }
+
+        /// <summary> Initializes a new instance of AIProjectRoutines. </summary>
+        internal virtual AIProjectRoutines GetAIProjectRoutinesClient()
+        {
+            return Volatile.Read(ref _cachedAIProjectRoutines) ?? Interlocked.CompareExchange(ref _cachedAIProjectRoutines, new AIProjectRoutines(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectRoutines;
+        }
         /// <summary> Gets the client for managing connections. </summary>
         public virtual AIProjectConnectionsOperations Connections { get => GetAIProjectConnectionsOperationsClient(); }
         /// <summary> Gets the client for managing datasets. </summary>
@@ -172,15 +222,32 @@ namespace Azure.AI.Projects
         public virtual AIProjectDeploymentsOperations Deployments { get => GetAIProjectDeploymentsOperationsClient(); }
         /// <summary> Gets the client for managing indexes. </summary>
         public virtual AIProjectIndexesOperations Indexes { get => GetAIProjectIndexesOperationsClient(); }
-        public virtual ProjectOpenAIClient OpenAI => GetCachedOpenAIClient();
-        public virtual AgentsClient Agents => GetCachedAgentsClient();
-        public virtual AIProjectMemoryStoresOperations MemoryStores => GetAIProjectMemoryStoresOperationsClient();
+        /// <summary> Gets the client for invoking Azure OpenAI operations scoped to this project. </summary>
+        public virtual ProjectOpenAIClient ProjectOpenAIClient => GetCachedOpenAIClient();
+        /// <summary> Gets the client for administering agents in this project. </summary>
+        public virtual AgentAdministrationClient AgentAdministrationClient => GetCachedAgentsClient();
+        /// <summary> Gets the client for managing memory stores. </summary>
+        public virtual AIProjectMemoryStores MemoryStores => GetAIProjectMemoryStoresClient();
+        /// <summary> Gets the client for managing red team scans. </summary>
         public virtual RedTeams RedTeams => GetRedTeamsClient();
+        /// <summary> Gets the client for managing evaluation rules. </summary>
         public virtual EvaluationRules EvaluationRules => GetEvaluationRulesClient();
+        /// <summary> Gets the client for managing evaluation taxonomies. </summary>
         public virtual EvaluationTaxonomies EvaluationTaxonomies => GetEvaluationTaxonomiesClient();
-        public virtual Evaluators Evaluators => GetEvaluatorsClient();
-        public virtual Insights Insights => GetInsightsClient();
-        public virtual Schedules Schedules => GetSchedulesClient();
+        /// <summary> Gets the client for managing project evaluators. </summary>
+        public virtual ProjectEvaluators Evaluators => GetProjectEvaluatorsClient();
+        /// <summary> Gets the client for retrieving project insights. </summary>
+        public virtual ProjectInsights Insights => GetProjectInsightsClient();
+        /// <summary> Gets the client for managing project schedules. </summary>
+        public virtual ProjectSchedules Schedules => GetProjectSchedulesClient();
+        /// <summary> Gets the client for managing model deployments and capabilities. </summary>
+        public virtual AIProjectModels Models => GetAIProjectModelsClient();
+        /// <summary> Gets the client for managing evaluator generation jobs. </summary>
+        public virtual EvaluatorGenerationJobs EvaluatorGenerationJobs => GetEvaluatorGenerationJobsClient();
+        /// <summary> Gets the client for managing data generation jobs. </summary>
+        public virtual DataGenerationJobs DataGenerationJobs => GetDataGenerationJobsClient();
+        /// <summary> Gets the client for routines operations. </summary>
+        public virtual AIProjectRoutines Routines => GetAIProjectRoutinesClient();
         /// <summary> Gets the client for telemetry operations. </summary>
         public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
 

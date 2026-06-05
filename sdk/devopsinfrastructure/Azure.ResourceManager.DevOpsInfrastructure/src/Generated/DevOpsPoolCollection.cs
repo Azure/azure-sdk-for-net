@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     {
         private readonly ClientDiagnostics _poolsClientDiagnostics;
         private readonly Pools _poolsRestClient;
-        private readonly ClientDiagnostics _resourceDetailsClientDiagnostics;
-        private readonly ResourceDetails _resourceDetailsRestClient;
 
         /// <summary> Initializes a new instance of DevOpsPoolCollection for mocking. </summary>
         protected DevOpsPoolCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             TryGetApiVersion(DevOpsPoolResource.ResourceType, out string devOpsPoolApiVersion);
             _poolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", DevOpsPoolResource.ResourceType.Namespace, Diagnostics);
             _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, devOpsPoolApiVersion ?? "2025-09-20");
-            _resourceDetailsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure", DevOpsPoolResource.ResourceType.Namespace, Diagnostics);
-            _resourceDetailsRestClient = new ResourceDetails(_resourceDetailsClientDiagnostics, Pipeline, Endpoint, devOpsPoolApiVersion ?? "2025-09-20");
             ValidateResourceId(id);
         }
 
@@ -55,7 +51,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -98,7 +94,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 HttpMessage message = _poolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, poolName, DevOpsPoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevOpsInfrastructureArmOperation<DevOpsPoolResource> operation = new DevOpsInfrastructureArmOperation<DevOpsPoolResource>(
-                    new DevOpsPoolOperationSource(Client),
+                    new DevOpsPoolResourceOperationSource(Client),
                     _poolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
                 HttpMessage message = _poolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, poolName, DevOpsPoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevOpsInfrastructureArmOperation<DevOpsPoolResource> operation = new DevOpsInfrastructureArmOperation<DevOpsPoolResource>(
-                    new DevOpsPoolOperationSource(Client),
+                    new DevOpsPoolResourceOperationSource(Client),
                     _poolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -298,7 +294,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetByResourceGroupAsyncCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DevOpsPoolResource(Client, data));
+            return new AsyncPageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetByResourceGroupAsyncCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DevOpsPoolCollection.GetAll"), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>
@@ -326,7 +322,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetByResourceGroupCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DevOpsPoolResource(Client, data));
+            return new PageableWrapper<DevOpsPoolData, DevOpsPoolResource>(new PoolsGetByResourceGroupCollectionResultOfT(_poolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DevOpsPoolCollection.GetAll"), data => new DevOpsPoolResource(Client, data));
         }
 
         /// <summary>

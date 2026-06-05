@@ -1,0 +1,146 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "HeaderParamClient": {
+          "type": "object",
+          "description": "Configuration for HeaderParamClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/specsAzureTcgcClientInitDefaultClientOptions"
+            }
+          }
+        },
+        "MultipleParamsClient": {
+          "type": "object",
+          "description": "Configuration for MultipleParamsClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Region": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/specsAzureTcgcClientInitDefaultClientOptions"
+            }
+          }
+        },
+        "MixedParamsClient": {
+          "type": "object",
+          "description": "Configuration for MixedParamsClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Name": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/specsAzureTcgcClientInitDefaultClientOptions"
+            }
+          }
+        },
+        "PathParamClient": {
+          "type": "object",
+          "description": "Configuration for PathParamClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/specsAzureTcgcClientInitDefaultClientOptions"
+            }
+          }
+        },
+        "ParamAliasClient": {
+          "type": "object",
+          "description": "Configuration for ParamAliasClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/specsAzureTcgcClientInitDefaultClientOptions"
+            }
+          }
+        },
+        "QueryParamClient": {
+          "type": "object",
+          "description": "Configuration for QueryParamClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "BlobName": {
+              "type": "string"
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/specsAzureTcgcClientInitDefaultClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "specsAzureTcgcClientInitDefaultClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    }
+  }
+}

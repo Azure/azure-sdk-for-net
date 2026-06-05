@@ -1,6 +1,6 @@
 # Release History
 
-## 4.8.0-beta.1 (Unreleased)
+## 4.9.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.9.0-beta.1 (2026-06-04)
+
+### Features Added
+- Added `KeyVaultEkmClient` to support External Key Management operations.
+
+### Other Changes
+- The default service version is now `2026-01-01-preview`.
+
+## 4.8.0 (2026-05-05)
+
+### Features Added
+
+- Added `KeyVaultAccessControlClientSettings` to support creating a `KeyVaultAccessControlClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+- Added `KeyVaultRestClientSettings` to support creating a `KeyVaultRestClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 
 ## 4.7.0 (2026-03-04)
 

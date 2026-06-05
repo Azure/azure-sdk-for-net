@@ -26,15 +26,15 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="BingGroundingSearchConfiguration"/>. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
         /// <param name="market"> The market where the results come from. </param>
-        /// <param name="setLang"> The language to use for user interface strings when calling Bing API. </param>
+        /// <param name="bingUserInterfaceLanguage"> The language to use for user interface strings when calling Bing API. </param>
         /// <param name="count"> The number of search results to return in the bing api response. </param>
         /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BingGroundingSearchConfiguration(string projectConnectionId, string market, string setLang, long? count, string freshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BingGroundingSearchConfiguration(string projectConnectionId, string market, string bingUserInterfaceLanguage, long? count, string freshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             Market = market;
-            SetLang = setLang;
+            BingUserInterfaceLanguage = bingUserInterfaceLanguage;
             Count = count;
             Freshness = freshness;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,7 +47,7 @@ namespace Azure.AI.Projects.Agents
         public string Market { get; set; }
 
         /// <summary> The language to use for user interface strings when calling Bing API. </summary>
-        public string SetLang { get; set; }
+        public string BingUserInterfaceLanguage { get; set; }
 
         /// <summary> The number of search results to return in the bing api response. </summary>
         public long? Count { get; set; }

@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects;
+namespace Azure.AI.Projects.Memory;
 
+/// <summary> Options that describe a memory-store search request. </summary>
 public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
 {
     /*
@@ -15,11 +16,17 @@ public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
      * collision of Azure.AI.Projects.OpenAI and OpenAI.Responses
      */
 
+    /// <summary> The conversation items used as context for the search. </summary>
     public IList<ResponseItem> Items { get; private set; }
+    /// <summary> The scope (for example, user or session identifier) that partitions the memory store. </summary>
     public string Scope { get; }
+    /// <summary> The identifier of the previous search, used to continue or refine a prior search. </summary>
     public string PreviousSearchId { get; set; }
+    /// <summary> Options controlling how the search results are shaped (limits, ranking, etc.). </summary>
     public MemorySearchResultOptions ResultOptions { get; set; }
 
+    /// <summary> Initializes a new instance of <see cref="MemorySearchOptions"/>. </summary>
+    /// <param name="scope"> The scope that partitions the memory store. </param>
     public MemorySearchOptions(string scope)
     {
         Scope = scope;

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, HciVmNetworkInterfaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmNetworkInterfaceResource> operation = new VmArmOperation<HciVmNetworkInterfaceResource>(
-                    new HciVmNetworkInterfaceOperationSource(Client),
+                    new HciVmNetworkInterfaceResourceOperationSource(Client),
                     _networkInterfacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _networkInterfacesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, networkInterfaceName, HciVmNetworkInterfaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmNetworkInterfaceResource> operation = new VmArmOperation<HciVmNetworkInterfaceResource>(
-                    new HciVmNetworkInterfaceOperationSource(Client),
+                    new HciVmNetworkInterfaceResourceOperationSource(Client),
                     _networkInterfacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmNetworkInterfaceData, HciVmNetworkInterfaceResource>(new NetworkInterfacesGetByResourceGroupAsyncCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmNetworkInterfaceResource(Client, data));
+            return new AsyncPageableWrapper<HciVmNetworkInterfaceData, HciVmNetworkInterfaceResource>(new NetworkInterfacesGetByResourceGroupAsyncCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNetworkInterfaceCollection.GetAll"), data => new HciVmNetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmNetworkInterfaceData, HciVmNetworkInterfaceResource>(new NetworkInterfacesGetByResourceGroupCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmNetworkInterfaceResource(Client, data));
+            return new PageableWrapper<HciVmNetworkInterfaceData, HciVmNetworkInterfaceResource>(new NetworkInterfacesGetByResourceGroupCollectionResultOfT(_networkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmNetworkInterfaceCollection.GetAll"), data => new HciVmNetworkInterfaceResource(Client, data));
         }
 
         /// <summary>

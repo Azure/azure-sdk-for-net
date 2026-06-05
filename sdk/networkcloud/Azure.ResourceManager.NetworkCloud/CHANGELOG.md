@@ -4,11 +4,12 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for API version `2026-01-01-preview`.
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.52.0.
+- Upgraded Azure.ResourceManager from 1.14.0.
 
 ## 1.3.0 (2026-01-26)
 

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _publicIPAddressesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmPublicIPAddressPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmPublicIPAddressResource> operation = new VmArmOperation<HciVmPublicIPAddressResource>(
-                    new HciVmPublicIPAddressOperationSource(Client),
+                    new HciVmPublicIPAddressResourceOperationSource(Client),
                     _publicIPAddressesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _publicIPAddressesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmPublicIPAddressPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmPublicIPAddressResource> operation = new VmArmOperation<HciVmPublicIPAddressResource>(
-                    new HciVmPublicIPAddressOperationSource(Client),
+                    new HciVmPublicIPAddressResourceOperationSource(Client),
                     _publicIPAddressesClientDiagnostics,
                     Pipeline,
                     message.Request,

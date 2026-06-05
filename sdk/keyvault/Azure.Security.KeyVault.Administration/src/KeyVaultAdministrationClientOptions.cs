@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.KeyVault.Administration
@@ -34,6 +36,25 @@ namespace Azure.Security.KeyVault.Administration
             Version = version;
 
             this.ConfigureLogging();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="KeyVaultAdministrationClientOptions"/> from configuration.
+        /// </summary>
+        /// <param name="section">The configuration section.</param>
+        [Experimental("SCME0002")]
+        internal KeyVaultAdministrationClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = LatestVersion;
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version && TryGetServiceVersion(version, out ServiceVersion serviceVersion))
+            {
+                Version = serviceVersion;
+            }
+            ConfigureLogging();
         }
 
         /// <summary> The version of the service to use. </summary>
@@ -69,6 +90,11 @@ namespace Azure.Security.KeyVault.Administration
             /// The Key Vault API version 2025-07-01.
             /// </summary>
             V2025_07_01 = 6,
+
+            /// <summary>
+            /// The Key Vault API version 2026-01-01-preview.
+            /// </summary>
+            V2026_01_01_Preview = 7,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -87,8 +113,40 @@ namespace Azure.Security.KeyVault.Administration
                 ServiceVersion.V7_5 => "7.5",
                 ServiceVersion.V7_6 => "7.6",
                 ServiceVersion.V2025_07_01 => "2025-07-01",
+                ServiceVersion.V2026_01_01_Preview => "2026-01-01-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(Version), Version, null)
             };
+        }
+
+        internal static bool TryGetServiceVersion(string version, out ServiceVersion serviceVersion)
+        {
+            serviceVersion = ServiceVersion.V7_2;
+            switch (version)
+            {
+                case "7.2":
+                    serviceVersion = ServiceVersion.V7_2;
+                    return true;
+                case "7.3":
+                    serviceVersion = ServiceVersion.V7_3;
+                    return true;
+                case "7.4":
+                    serviceVersion = ServiceVersion.V7_4;
+                    return true;
+                case "7.5":
+                    serviceVersion = ServiceVersion.V7_5;
+                    return true;
+                case "7.6":
+                    serviceVersion = ServiceVersion.V7_6;
+                    return true;
+                case "2025-07-01":
+                    serviceVersion = ServiceVersion.V2025_07_01;
+                    return true;
+                case "2026-01-01-preview":
+                    serviceVersion = ServiceVersion.V2026_01_01_Preview;
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

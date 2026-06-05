@@ -18,6 +18,17 @@ public partial class A2APreviewTool
     public Uri BaseUri { get; set; }
 
     /// <summary>
+    /// The uri of agent card.
+    /// If not provided, defaults to  `${base_url}/.well-known/agent-card.json`
+    /// </summary>
+    public Uri AgentCardUri { get => new(BaseUri, AgentCardPath); set => AgentCardPath = value.AbsolutePath; }
+    /// <summary>
+    /// The path to the agent card relative to the `base_url`.
+    /// If not provided, defaults to  `/.well-known/agent-card.json`
+    /// </summary>
+    internal string AgentCardPath { get; set; }
+
+    /// <summary>
     /// Initializes a new instance of <see cref="A2APreviewTool"/>.
     /// </summary>
     /// <param name="baseUri"></param>

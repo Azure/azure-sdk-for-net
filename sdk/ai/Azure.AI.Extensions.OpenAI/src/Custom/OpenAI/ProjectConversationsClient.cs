@@ -9,13 +9,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Extensions.OpenAI;
 using OpenAI;
 using OpenAI.Conversations;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
+/// <summary> Provides conversation operations for an Azure AI project through the OpenAI conversation API. </summary>
 public partial class ProjectConversationsClient : ConversationClient
 {
     /*
@@ -24,12 +24,19 @@ public partial class ProjectConversationsClient : ConversationClient
 
     private readonly Uri _endpoint;
 
+    /// <summary> Initializes a new instance of <see cref="ProjectConversationsClient"/>. </summary>
+    /// <param name="pipeline"> The client pipeline used to send requests. </param>
+    /// <param name="options"> The options used to configure the client. </param>
     public ProjectConversationsClient(ClientPipeline pipeline, OpenAIClientOptions options)
         : base(pipeline, options)
     {
         _endpoint = options.Endpoint;
     }
 
+    /// <summary> Creates a project conversation. </summary>
+    /// <param name="options"> The options used to create the conversation. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created project conversation. </returns>
     public virtual ClientResult<ProjectConversation> CreateProjectConversation(ProjectConversationCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
@@ -37,6 +44,10 @@ public partial class ProjectConversationsClient : ConversationClient
         return protocolResult.ToAgentClientResult<ProjectConversation>();
     }
 
+    /// <summary> Asynchronously creates a project conversation. </summary>
+    /// <param name="options"> The options used to create the conversation. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created project conversation. </returns>
     public virtual async Task<ClientResult<ProjectConversation>> CreateProjectConversationAsync(ProjectConversationCreationOptions options = null, CancellationToken cancellationToken = default)
     {
         options ??= new();
@@ -44,30 +55,31 @@ public partial class ProjectConversationsClient : ConversationClient
         return protocolResult.ToAgentClientResult<ProjectConversation>();
     }
 
-    /// <summary> Returns the list of all conversations. </summary>
+    /// <summary> Gets the project conversations. </summary>
     /// <param name="agent">
-    /// If provided, only conversations associated with the referenced agent will be retrieved.
+    /// If provided, retrieves only conversations associated with the referenced agent.
     /// </param>
     /// <param name="limit">
-    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+    /// The maximum number of objects to return. The value can range between 1 and 100, and the
     /// default is 20.
     /// </param>
     /// <param name="order">
-    /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+    /// The sort order by the `created_at` timestamp of the objects. Use `asc` for ascending order and `desc`
     /// for descending order.
     /// </param>
     /// <param name="after">
-    /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-    /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+    /// A pagination cursor. `after` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects ending with obj_foo, your
+    /// subsequent call can include after=obj_foo to fetch the next page of the list.
     /// </param>
     /// <param name="before">
-    /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-    /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+    /// A pagination cursor. `before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects ending with obj_foo, your
+    /// subsequent call can include before=obj_foo to fetch the previous page of the list.
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The project conversations. </returns>
+    /// <exception cref="ClientResultException"> The service returned a non-success status code. </exception>
     public virtual CollectionResult<ProjectConversation> GetProjectConversations(AgentReference agent = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         string agentNameToUse = string.IsNullOrEmpty(agent?.Version) ? agent?.Name : null;
@@ -89,30 +101,31 @@ public partial class ProjectConversationsClient : ConversationClient
             cancellationToken.ToRequestOptions());
     }
 
-    /// <summary> Returns the list of all conversations. </summary>
+    /// <summary> Asynchronously gets the project conversations. </summary>
     /// <param name="agent">
-    /// If provided, only conversations associated with the referenced agent will be retrieved.
+    /// If provided, retrieves only conversations associated with the referenced agent.
     /// </param>
     /// <param name="limit">
-    /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
+    /// The maximum number of objects to return. The value can range between 1 and 100, and the
     /// default is 20.
     /// </param>
     /// <param name="order">
-    /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+    /// The sort order by the `created_at` timestamp of the objects. Use `asc` for ascending order and `desc`
     /// for descending order.
     /// </param>
     /// <param name="after">
-    /// A cursor for use in pagination. `after` is an object ID that defines your place in the list.
-    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-    /// subsequent call can include after=obj_foo in order to fetch the next page of the list.
+    /// A pagination cursor. `after` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects ending with obj_foo, your
+    /// subsequent call can include after=obj_foo to fetch the next page of the list.
     /// </param>
     /// <param name="before">
-    /// A cursor for use in pagination. `before` is an object ID that defines your place in the list.
-    /// For instance, if you make a list request and receive 100 objects, ending with obj_foo, your
-    /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
+    /// A pagination cursor. `before` is an object ID that defines your place in the list.
+    /// For instance, if you make a list request and receive 100 objects ending with obj_foo, your
+    /// subsequent call can include before=obj_foo to fetch the previous page of the list.
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <returns> The project conversations. </returns>
+    /// <exception cref="ClientResultException"> The service returned a non-success status code. </exception>
     public virtual AsyncCollectionResult<ProjectConversation> GetProjectConversationsAsync(AgentReference agent = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         string agentNameToUse = string.IsNullOrEmpty(agent?.Version) ? agent?.Name : null;
@@ -134,6 +147,10 @@ public partial class ProjectConversationsClient : ConversationClient
             cancellationToken.ToRequestOptions());
     }
 
+    /// <summary> Gets a project conversation by ID. </summary>
+    /// <param name="conversationId"> The ID of the conversation to retrieve. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The requested project conversation. </returns>
     public virtual ClientResult<ProjectConversation> GetProjectConversation(string conversationId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
@@ -141,6 +158,10 @@ public partial class ProjectConversationsClient : ConversationClient
         return protocolResult.ToAgentClientResult<ProjectConversation>();
     }
 
+    /// <summary> Asynchronously gets a project conversation by ID. </summary>
+    /// <param name="conversationId"> The ID of the conversation to retrieve. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The requested project conversation. </returns>
     public virtual async Task<ClientResult<ProjectConversation>> GetProjectConversationAsync(string conversationId, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
@@ -148,6 +169,16 @@ public partial class ProjectConversationsClient : ConversationClient
         return protocolResult.ToAgentClientResult<ProjectConversation>();
     }
 
+    /// <summary> Gets the items in a project conversation. </summary>
+    /// <param name="conversationId"> The ID of the conversation whose items should be retrieved. </param>
+    /// <param name="itemKind"> The item kind used to filter the returned items. </param>
+    /// <param name="limit"> The maximum number of items to return. </param>
+    /// <param name="order"> The order used to sort returned items. </param>
+    /// <param name="after"> The item ID after which results should be returned. </param>
+    /// <param name="before"> The item ID before which results should be returned. </param>
+    /// <param name="include"> The additional item properties to include in the response. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The project conversation items. </returns>
     public virtual CollectionResult<AgentResponseItem> GetProjectConversationItems(
         string conversationId,
         AgentResponseItemKind? itemKind = null,
@@ -175,6 +206,16 @@ public partial class ProjectConversationsClient : ConversationClient
             cancellationToken.ToRequestOptions());
     }
 
+    /// <summary> Asynchronously gets the items in a project conversation. </summary>
+    /// <param name="conversationId"> The ID of the conversation whose items should be retrieved. </param>
+    /// <param name="itemKind"> The item kind used to filter the returned items. </param>
+    /// <param name="limit"> The maximum number of items to return. </param>
+    /// <param name="order"> The order used to sort returned items. </param>
+    /// <param name="after"> The item ID after which results should be returned. </param>
+    /// <param name="before"> The item ID before which results should be returned. </param>
+    /// <param name="include"> The additional item properties to include in the response. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The project conversation items. </returns>
     public virtual AsyncCollectionResult<AgentResponseItem> GetProjectConversationItemsAsync(
         string conversationId,
         AgentResponseItemKind? itemKind = null,
@@ -202,29 +243,42 @@ public partial class ProjectConversationsClient : ConversationClient
             cancellationToken.ToRequestOptions());
     }
 
+    /// <summary> Gets a single item from a project conversation. </summary>
+    /// <param name="conversationId"> The ID of the conversation that contains the item. </param>
+    /// <param name="itemId"> The ID of the item to retrieve. </param>
+    /// <param name="include"> The additional item properties to include in the response. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The requested project conversation item. </returns>
     public virtual ClientResult<AgentResponseItem> GetProjectConversationItem(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
     {
         ClientResult protocolResult = GetConversationItem(conversationId, itemId, include, cancellationToken.ToRequestOptions());
         return protocolResult.ToAgentClientResult<AgentResponseItem>();
     }
 
+    /// <summary> Asynchronously gets a single item from a project conversation. </summary>
+    /// <param name="conversationId"> The ID of the conversation that contains the item. </param>
+    /// <param name="itemId"> The ID of the item to retrieve. </param>
+    /// <param name="include"> The additional item properties to include in the response. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The requested project conversation item. </returns>
     public virtual async Task<ClientResult<AgentResponseItem>> GetProjectConversationItemAsync(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
     {
         ClientResult protocolResult = await GetConversationItemAsync(conversationId, itemId, include, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return protocolResult.ToAgentClientResult<AgentResponseItem>();
     }
 
-    /// <summary> Create items in a conversation with the given ID. </summary>
-    /// <param name="conversationId"> The id of the conversation on which the item needs to be created. </param>
+    /// <summary> Creates items in a conversation with the given ID. </summary>
+    /// <param name="conversationId"> The ID of the conversation in which to create the items. </param>
     /// <param name="items"> The items to add to the conversation. You may add up to 20 items at a time. </param>
     /// <param name="include">
     /// Additional fields to include in the response.
-    /// See the `include` parameter for listing Conversation items for more information.
+    /// See the `include` parameter for listing conversation items for more information.
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created conversation items. </returns>
     /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="items"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string when a non-empty value was expected. </exception>
+    /// <exception cref="ClientResultException"> The service returned a non-success status code. </exception>
     public virtual ClientResult<ReadOnlyCollection<ResponseItem>> CreateProjectConversationItems(string conversationId, IEnumerable<ResponseItem> items, IEnumerable<IncludedConversationItemProperty> include = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
@@ -239,17 +293,18 @@ public partial class ProjectConversationsClient : ConversationClient
             protocolResult.GetRawResponse());
     }
 
-    /// <summary> Create items in a conversation with the given ID. </summary>
-    /// <param name="conversationId"> The id of the conversation on which the item needs to be created. </param>
+    /// <summary> Asynchronously creates items in a conversation with the given ID. </summary>
+    /// <param name="conversationId"> The ID of the conversation in which to create the items. </param>
     /// <param name="items"> The items to add to the conversation. You may add up to 20 items at a time. </param>
     /// <param name="include">
     /// Additional fields to include in the response.
-    /// See the `include` parameter for listing Conversation items for more information.
+    /// See the `include` parameter for listing conversation items for more information.
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The created conversation items. </returns>
     /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="items"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string when a non-empty value was expected. </exception>
+    /// <exception cref="ClientResultException"> The service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<ReadOnlyCollection<ResponseItem>>> CreateProjectConversationItemsAsync(string conversationId, IEnumerable<ResponseItem> items, IEnumerable<IncludedConversationItemProperty> include = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
@@ -264,18 +319,29 @@ public partial class ProjectConversationsClient : ConversationClient
             protocolResult.GetRawResponse());
     }
 
+    /// <summary> Updates a project conversation. </summary>
+    /// <param name="conversationId"> The ID of the conversation to update. </param>
+    /// <param name="options"> The options containing the conversation updates. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The updated project conversation. </returns>
     public virtual ClientResult<ProjectConversation> UpdateProjectConversation(string conversationId, ProjectConversationUpdateOptions options, CancellationToken cancellationToken = default)
     {
         ClientResult protocolResult = base.UpdateConversation(conversationId, BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions());
         return protocolResult.ToAgentClientResult<ProjectConversation>();
     }
 
+    /// <summary> Asynchronously updates a project conversation. </summary>
+    /// <param name="conversationId"> The ID of the conversation to update. </param>
+    /// <param name="options"> The options containing the conversation updates. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <returns> The updated project conversation. </returns>
     public virtual async Task<ClientResult<ProjectConversation>> UpdateProjectConversationAsync(string conversationId, ProjectConversationUpdateOptions options, CancellationToken cancellationToken = default)
     {
         ClientResult protocolResult = await base.UpdateConversationAsync(conversationId, BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return protocolResult.ToAgentClientResult<ProjectConversation>();
     }
 
+    /// <summary> Initializes a new instance of <see cref="ProjectConversationsClient"/> for mocking. </summary>
     protected ProjectConversationsClient()
     { }
 }

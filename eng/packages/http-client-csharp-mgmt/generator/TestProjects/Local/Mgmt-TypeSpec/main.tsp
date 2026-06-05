@@ -28,8 +28,15 @@ import "./trafficmanager.tsp";
 import "./extensionresources.tsp";
 import "./flatten-with-customized-property.tsp";
 import "./extensionresourcename.tsp";
+import "./custom-base-type-resource.tsp";
 import "./testcertificate.tsp";
 import "./sharedmodel.tsp";
+import "./entityresource.tsp";
+import "./sharedparamrepro.tsp";
+import "./discriminatedextensionresource.tsp";
+import "./inherited-flatten-grandparent.tsp";
+import "./basetype-cycle-proxy-resource.tsp";
+import "./routedoperations.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -46,6 +53,7 @@ namespace MgmtTypeSpec {
 
   /** The available API versions. */
   enum Versions {
+    v2024_04_01: "2024-04-01",
     v2024_05_01: "2024-05-01",
   }
 
@@ -71,6 +79,8 @@ namespace MgmtTypeSpec {
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(Foo.properties);
   #suppress "deprecated"
   @@Azure.ClientGenerator.Core.Legacy.flattenProperty(MultiFlattenTest.properties);
+  #suppress "deprecated"
+  @@Azure.ClientGenerator.Core.Legacy.flattenProperty(CycleTestConnectionReference.properties);
 
   @@alternateType(FooProperties.something, Azure.ResourceManager.Foundations.ManagedServiceIdentity, "csharp");
   @@clientName(Employees.listByParent, "GetEmployees", "csharp");
@@ -84,6 +94,15 @@ namespace MgmtTypeSpec {
   // ManagedServiceIdentityType in Legacy conflicts with CommonTypes.ManagedServiceIdentityType.
   @@clientName(Azure.ResourceManager.Legacy.ExtendedLocationOptional, "ExtendedLocationOptionalModel", "csharp");
   @@clientName(Azure.ResourceManager.Legacy.ManagedServiceIdentityType, "ManagedServiceIdentityTypeV4", "csharp");
+
+  // Verify that resource update model auto-rename respects user-provided @@clientName.
+  // Without this decorator, JobResourceUpdateParameter would be auto-renamed to JobResourcePatch.
+  @@clientName(JobResourceUpdateParameter, "JobResourceCustomUpdate", "csharp");
+
+  // Verify that subscription-extension list method auto-rename respects user-provided @@clientName.
+  // Without this decorator, Zoos.listBySubscription would be auto-renamed to GetZoosAsync/GetZoos
+  // on MockableSubscriptionResource (via GetExtensionOperationMethodName).
+  @@clientName(Zoos.listBySubscription, "GetZoosCustom", "csharp");
 }
 
 // We define this model here to test if the generated code would be replaced by Azure.ResourceManager.Models.SubResource and WritableSubResource via alternateType

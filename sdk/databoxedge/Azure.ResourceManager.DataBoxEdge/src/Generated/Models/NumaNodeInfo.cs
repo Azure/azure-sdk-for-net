@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> NUMA node data. </summary>
     public partial class NumaNodeInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NumaNodeInfo"/>. </summary>
         public NumaNodeInfo()
@@ -61,8 +33,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="freeVCpuIndexesForHpn"> The free VCPU indices for the Hpn VMs. </param>
         /// <param name="vCpuIndexesForHpn"> The VCPU indices for Hpn VMs. </param>
         /// <param name="vCpuIndexesForRoot"> The VCPU indices for the root. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NumaNodeInfo(int? numaNodeIndex, long? totalMemoryInMB, int? logicalCoreCountPerCore, long? effectiveAvailableMemoryInMB, IList<int> freeVCpuIndexesForHpn, IList<int> vCpuIndexesForHpn, IList<int> vCpuIndexesForRoot, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NumaNodeInfo(int? numaNodeIndex, long? totalMemoryInMB, int? logicalCoreCountPerCore, long? effectiveAvailableMemoryInMB, IList<int> freeVCpuIndexesForHpn, IList<int> vCpuIndexesForHpn, IList<int> vCpuIndexesForRoot, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NumaNodeIndex = numaNodeIndex;
             TotalMemoryInMB = totalMemoryInMB;
@@ -71,21 +43,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             FreeVCpuIndexesForHpn = freeVCpuIndexesForHpn;
             VCpuIndexesForHpn = vCpuIndexesForHpn;
             VCpuIndexesForRoot = vCpuIndexesForRoot;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The NUMA node index. </summary>
         public int? NumaNodeIndex { get; set; }
+
         /// <summary> The total memory on the NUMA node. </summary>
         public long? TotalMemoryInMB { get; set; }
+
         /// <summary> The logical cores per core count. </summary>
         public int? LogicalCoreCountPerCore { get; set; }
+
         /// <summary> The effective available memory on the NUMA node in MB. </summary>
         public long? EffectiveAvailableMemoryInMB { get; set; }
+
         /// <summary> The free VCPU indices for the Hpn VMs. </summary>
         public IList<int> FreeVCpuIndexesForHpn { get; }
+
         /// <summary> The VCPU indices for Hpn VMs. </summary>
         public IList<int> VCpuIndexesForHpn { get; }
+
         /// <summary> The VCPU indices for the root. </summary>
         public IList<int> VCpuIndexesForRoot { get; }
     }

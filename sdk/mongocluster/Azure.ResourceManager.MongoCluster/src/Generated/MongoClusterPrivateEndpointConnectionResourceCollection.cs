@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             TryGetApiVersion(MongoClusterPrivateEndpointConnectionResource.ResourceType, out string mongoClusterPrivateEndpointConnectionResourceApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", MongoClusterPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, mongoClusterPrivateEndpointConnectionResourceApiVersion ?? "2025-09-01");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, mongoClusterPrivateEndpointConnectionResourceApiVersion ?? "2026-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             if (id.ResourceType != MongoClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MongoClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MongoClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByMongoClusterAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MongoClusterPrivateEndpointConnectionResource(Client, data));
+            return new AsyncPageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByMongoClusterAsyncCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoClusterPrivateEndpointConnectionResourceCollection.GetAll"), data => new MongoClusterPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -309,7 +315,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByMongoClusterCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MongoClusterPrivateEndpointConnectionResource(Client, data));
+            return new PageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByMongoClusterCollectionResultOfT(
+                _privateEndpointConnectionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MongoClusterPrivateEndpointConnectionResourceCollection.GetAll"), data => new MongoClusterPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary>
@@ -337,7 +349,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -394,7 +406,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -451,7 +463,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -512,7 +524,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

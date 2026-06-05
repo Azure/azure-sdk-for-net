@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configuration of the model used in the insight generation. </summary>
     public partial class InsightModelConfiguration

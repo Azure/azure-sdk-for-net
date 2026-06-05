@@ -10,7 +10,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
-ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -23,12 +23,13 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To cancel a training job, call CancelTrainingJob on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object, which contains the cancellation status, and the operation-location header can be used to track the cancellation process.
 
 ```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJob
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 string jobId = "{jobId}";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
 Operation<ConversationAuthoringTrainingJobResult> cancelOperation = projectClient.CancelTrainingJob(
     waitUntil: WaitUntil.Completed,
+    projectName: projectName,
     jobId: jobId
 );
 
@@ -44,12 +45,13 @@ Console.WriteLine($"Training job cancellation completed with status: {cancelOper
 To cancel a training job asynchronously, call CancelTrainingJobAsync on the `ConversationAuthoringProject` client. The method returns an Operation<TrainingJobResult> object, which contains the cancellation status, and the operation-location header can be used to track the cancellation process.
 
 ```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 string jobId = "{jobId}";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
 Operation<ConversationAuthoringTrainingJobResult> cancelOperation = await projectClient.CancelTrainingJobAsync(
     waitUntil: WaitUntil.Completed,
+    projectName: projectName,
     jobId: jobId
 );
 

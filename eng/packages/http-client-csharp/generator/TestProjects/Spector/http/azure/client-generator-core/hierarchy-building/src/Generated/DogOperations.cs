@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,6 +17,8 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
     public partial class DogOperations
     {
         protected DogOperations() => throw null;
+
+        internal DogOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

@@ -5,88 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceGraph;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ResourceGraph.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableResourceGraphSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _resourceGraphQueryGraphQueryClientDiagnostics;
-        private GraphQueryRestOperations _resourceGraphQueryGraphQueryRestClient;
+        private ClientDiagnostics _graphQueryClientDiagnostics;
+        private GraphQuery _graphQueryRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourceGraphSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableResourceGraphSubscriptionResource for mocking. </summary>
         protected MockableResourceGraphSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourceGraphSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableResourceGraphSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableResourceGraphSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ResourceGraphQueryGraphQueryClientDiagnostics => _resourceGraphQueryGraphQueryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceGraph", ResourceGraphQueryResource.ResourceType.Namespace, Diagnostics);
-        private GraphQueryRestOperations ResourceGraphQueryGraphQueryRestClient => _resourceGraphQueryGraphQueryRestClient ??= new GraphQueryRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ResourceGraphQueryResource.ResourceType));
+        private ClientDiagnostics GraphQueryClientDiagnostics => _graphQueryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceGraph.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private GraphQuery GraphQueryRestClient => _graphQueryRestClient ??= new GraphQuery(GraphQueryClientDiagnostics, Pipeline, Endpoint, "2024-04-01");
 
         /// <summary>
         /// Get all graph queries defined within a specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceGraph/queries</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ResourceGraph/queries. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GraphQuery_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> GraphQueryResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGraphQueryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGraphQueryResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGraphQueryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGraphQueryResource> GetResourceGraphQueriesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceGraphQueryGraphQueryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceGraphQueryGraphQueryRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceGraphQueryResource(Client, ResourceGraphQueryData.DeserializeResourceGraphQueryData(e)), ResourceGraphQueryGraphQueryClientDiagnostics, Pipeline, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryGetBySubscriptionAsyncCollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
         }
 
         /// <summary>
         /// Get all graph queries defined within a specified subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ResourceGraph/queries</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ResourceGraph/queries. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GraphQuery_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> GraphQueryResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResourceGraphQueryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +87,11 @@ namespace Azure.ResourceManager.ResourceGraph.Mocking
         /// <returns> A collection of <see cref="ResourceGraphQueryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGraphQueryResource> GetResourceGraphQueries(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceGraphQueryGraphQueryRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceGraphQueryGraphQueryRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceGraphQueryResource(Client, ResourceGraphQueryData.DeserializeResourceGraphQueryData(e)), ResourceGraphQueryGraphQueryClientDiagnostics, Pipeline, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ResourceGraphQueryData, ResourceGraphQueryResource>(new GraphQueryGetBySubscriptionCollectionResultOfT(GraphQueryRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableResourceGraphSubscriptionResource.GetResourceGraphQueries"), data => new ResourceGraphQueryResource(Client, data));
         }
     }
 }

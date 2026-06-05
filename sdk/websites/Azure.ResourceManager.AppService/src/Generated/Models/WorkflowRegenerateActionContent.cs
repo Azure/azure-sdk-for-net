@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The access key regenerate action content. </summary>
+    /// <summary>
+    /// The access key regenerate action content.
+    /// Serialized Name: RegenerateActionParameter
+    /// </summary>
     public partial class WorkflowRegenerateActionContent
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRegenerateActionContent"/>. </summary>
-        /// <param name="keyType"> The key type. </param>
+        /// <param name="keyType">
+        /// The key type.
+        /// Serialized Name: RegenerateActionParameter.keyType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowRegenerateActionContent(WebAppKeyType? keyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The key type. </summary>
+        /// <summary>
+        /// The key type.
+        /// Serialized Name: RegenerateActionParameter.keyType
+        /// </summary>
         [WirePath("keyType")]
         public WebAppKeyType? KeyType { get; set; }
     }

@@ -187,14 +187,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FooSettingsResource"/>. </description>
+        /// <description> <see cref="FooConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
-        public virtual FooSettingsResource GetFooSettings()
+        /// <returns> Returns a <see cref="FooConfigurationResource"/> object. </returns>
+        public virtual FooConfigurationResource GetFooConfiguration()
         {
-            return new FooSettingsResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "FooSettings", "default"));
+            return new FooConfigurationResource(Client, Id.AppendProviderResource("MgmtTypeSpec", "FooSettings", "default"));
         }
 
         /// <summary> Gets a collection of Bazs in the <see cref="ResourceGroupResource"/>. </summary>
@@ -784,214 +784,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetAllWorkloadNetworks().Get(workloadNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of WorkloadNetworkVmGroups in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of WorkloadNetworkVmGroups and their operations over a WorkloadNetworkVmGroupResource. </returns>
-        public virtual WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups()
-        {
-            return GetCachedClient(client => new WorkloadNetworkVmGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a VM Group by name.
-        /// Uses
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vmGroupId"> The name of the WorkloadNetworkVmGroup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkloadNetworkVmGroupResource>> GetWorkloadNetworkVmGroupAsync(string vmGroupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
-
-            return await GetWorkloadNetworkVmGroups().GetAsync(vmGroupId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a VM Group by name.
-        /// Uses
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkVmGroups_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vmGroupId"> The name of the WorkloadNetworkVmGroup. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<WorkloadNetworkVmGroupResource> GetWorkloadNetworkVmGroup(string vmGroupId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
-
-            return GetWorkloadNetworkVmGroups().Get(vmGroupId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of WorkloadNetworkSegments in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of WorkloadNetworkSegments and their operations over a WorkloadNetworkSegmentResource. </returns>
-        public virtual WorkloadNetworkSegmentCollection GetWorkloadNetworkSegments()
-        {
-            return GetCachedClient(client => new WorkloadNetworkSegmentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a Segment by name.
-        /// Uses
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="segmentId"> The name of the WorkloadNetworkSegment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<WorkloadNetworkSegmentResource>> GetWorkloadNetworkSegmentAsync(string segmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
-
-            return await GetWorkloadNetworkSegments().GetAsync(segmentId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Segment by name.
-        /// Uses
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="segmentId"> The name of the WorkloadNetworkSegment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<WorkloadNetworkSegmentResource> GetWorkloadNetworkSegment(string segmentId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
-
-            return GetWorkloadNetworkSegments().Get(segmentId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of Targets in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
-        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
-        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
-        /// <returns> An object representing collection of Targets and their operations over a TargetResource. </returns>
-        public virtual TargetCollection GetTargets(string parentProviderNamespace, string parentResourceType, string parentResourceName)
-        {
-            return GetCachedClient(client => new TargetCollection(client, Id, parentProviderNamespace, parentResourceType, parentResourceName));
-        }
-
-        /// <summary>
-        /// Get a Target resource that extends a tracked regional resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
-        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
-        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
-        /// <param name="targetName"> String that represents a Target resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TargetResource>> GetTargetAsync(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
-
-            return await GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).GetAsync(targetName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Target resource that extends a tracked regional resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/MgmtTypeSpec/targets/{targetName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Targets_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="parentProviderNamespace"> The parentProviderNamespace for the resource. </param>
-        /// <param name="parentResourceType"> The parentResourceType for the resource. </param>
-        /// <param name="parentResourceName"> The parentResourceName for the resource. </param>
-        /// <param name="targetName"> String that represents a Target resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<TargetResource> GetTarget(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
-
-            return GetTargets(parentProviderNamespace, parentResourceType, parentResourceName).Get(targetName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of Clusters in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Clusters and their operations over a ClusterResource. </returns>
         public virtual ClusterCollection GetClusters()
@@ -1187,24 +979,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetTrafficProfiles().Get(profileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PolicyVmAssignments in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <param name="vmName"> The vmName for the resource. </param>
-        /// <returns> An object representing collection of PolicyVmAssignments and their operations over a PolicyVmAssignmentResource. </returns>
-        public virtual PolicyVmAssignmentCollection GetPolicyVmAssignments(string vmName)
+        /// <summary> Gets a collection of CustomBaseTypeResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CustomBaseTypeResources and their operations over a CustomBaseTypeResource. </returns>
+        public virtual CustomBaseTypeResourceCollection GetCustomBaseTypeResources()
         {
-            return GetCachedClient(client => new PolicyVmAssignmentCollection(client, Id, vmName));
+            return GetCachedClient(client => new CustomBaseTypeResourceCollection(client, Id));
         }
 
         /// <summary>
-        /// Get a PolicyAssignment
+        /// Get a CustomBaseTypeResource
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeResources/{customBaseTypeResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicyVmAssignments_Get. </description>
+        /// <description> CustomBaseTypeResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -1212,29 +1003,28 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vmName"> The vmName for the resource. </param>
-        /// <param name="policyAssignmentName"></param>
+        /// <param name="customBaseTypeResourceName"> The name of the CustomBaseTypeResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customBaseTypeResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customBaseTypeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PolicyVmAssignmentResource>> GetPolicyVmAssignmentAsync(string vmName, string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CustomBaseTypeResource>> GetCustomBaseTypeResourceAsync(string customBaseTypeResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+            Argument.AssertNotNullOrEmpty(customBaseTypeResourceName, nameof(customBaseTypeResourceName));
 
-            return await GetPolicyVmAssignments(vmName).GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetCustomBaseTypeResources().GetAsync(customBaseTypeResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get a PolicyAssignment
+        /// Get a CustomBaseTypeResource
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeResources/{customBaseTypeResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PolicyVmAssignments_Get. </description>
+        /// <description> CustomBaseTypeResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -1242,85 +1032,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="vmName"> The vmName for the resource. </param>
-        /// <param name="policyAssignmentName"></param>
+        /// <param name="customBaseTypeResourceName"> The name of the CustomBaseTypeResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customBaseTypeResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customBaseTypeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PolicyVmAssignmentResource> GetPolicyVmAssignment(string vmName, string policyAssignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<CustomBaseTypeResource> GetCustomBaseTypeResource(string customBaseTypeResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
+            Argument.AssertNotNullOrEmpty(customBaseTypeResourceName, nameof(customBaseTypeResourceName));
 
-            return GetPolicyVmAssignments(vmName).Get(policyAssignmentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PolicyArcAssignments in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <param name="machineName"> The machineName for the resource. </param>
-        /// <returns> An object representing collection of PolicyArcAssignments and their operations over a PolicyArcAssignmentResource. </returns>
-        public virtual PolicyArcAssignmentCollection GetPolicyArcAssignments(string machineName)
-        {
-            return GetCachedClient(client => new PolicyArcAssignmentCollection(client, Id, machineName));
-        }
-
-        /// <summary>
-        /// Get a PolicyAssignment
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyArcAssignments_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="machineName"> The machineName for the resource. </param>
-        /// <param name="policyAssignmentName"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PolicyArcAssignmentResource>> GetPolicyArcAssignmentAsync(string machineName, string policyAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return await GetPolicyArcAssignments(machineName).GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a PolicyAssignment
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/MgmtTypeSpec/policyAssignments/{policyAssignmentName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyArcAssignments_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="machineName"> The machineName for the resource. </param>
-        /// <param name="policyAssignmentName"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PolicyArcAssignmentResource> GetPolicyArcAssignment(string machineName, string policyAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetPolicyArcAssignments(machineName).Get(policyAssignmentName, cancellationToken);
+            return GetCustomBaseTypeResources().Get(customBaseTypeResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of TestCertificates in the <see cref="ResourceGroupResource"/>. </summary>
@@ -1453,6 +1174,335 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetSharedConfigs().Get(configName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of CycleTestStores in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CycleTestStores and their operations over a CycleTestStoreResource. </returns>
+        public virtual CycleTestStoreCollection GetCycleTestStores()
+        {
+            return GetCachedClient(client => new CycleTestStoreCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a CycleTestStore
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/cycleTestStores/{cycleTestStoreName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CycleTestStores_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cycleTestStoreName"> The name of the CycleTestStore. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cycleTestStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cycleTestStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CycleTestStoreResource>> GetCycleTestStoreAsync(string cycleTestStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cycleTestStoreName, nameof(cycleTestStoreName));
+
+            return await GetCycleTestStores().GetAsync(cycleTestStoreName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a CycleTestStore
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/cycleTestStores/{cycleTestStoreName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CycleTestStores_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cycleTestStoreName"> The name of the CycleTestStore. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cycleTestStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cycleTestStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CycleTestStoreResource> GetCycleTestStore(string cycleTestStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(cycleTestStoreName, nameof(cycleTestStoreName));
+
+            return GetCycleTestStores().Get(cycleTestStoreName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EventGridTopics in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of EventGridTopics and their operations over a EventGridTopicResource. </returns>
+        public virtual EventGridTopicCollection GetEventGridTopics()
+        {
+            return GetCachedClient(client => new EventGridTopicCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a EventGridTopic
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{topicName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventGridTopics_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> The name of the EventGridTopic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventGridTopicResource>> GetEventGridTopicAsync(string topicName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+
+            return await GetEventGridTopics().GetAsync(topicName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a EventGridTopic
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridTopics/{topicName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventGridTopics_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> The name of the EventGridTopic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventGridTopicResource> GetEventGridTopic(string topicName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+
+            return GetEventGridTopics().Get(topicName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of EventGridDomains in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of EventGridDomains and their operations over a EventGridDomainResource. </returns>
+        public virtual EventGridDomainCollection GetEventGridDomains()
+        {
+            return GetCachedClient(client => new EventGridDomainCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a EventGridDomain
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventGridDomains_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="domainName"> The name of the EventGridDomain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EventGridDomainResource>> GetEventGridDomainAsync(string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            return await GetEventGridDomains().GetAsync(domainName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a EventGridDomain
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/eventGridDomains/{domainName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EventGridDomains_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="domainName"> The name of the EventGridDomain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EventGridDomainResource> GetEventGridDomain(string domainName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+
+            return GetEventGridDomains().Get(domainName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WorkloadNetworkVmGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of WorkloadNetworkVmGroups and their operations over a WorkloadNetworkVmGroupResource. </returns>
+        public virtual WorkloadNetworkVmGroupCollection GetWorkloadNetworkVmGroups()
+        {
+            return GetCachedClient(client => new WorkloadNetworkVmGroupCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a VM Group by name.
+        /// Uses
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkloadNetworkVmGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmGroupId"> The name of the WorkloadNetworkVmGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkloadNetworkVmGroupResource>> GetWorkloadNetworkVmGroupAsync(string vmGroupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
+
+            return await GetWorkloadNetworkVmGroups().GetAsync(vmGroupId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a VM Group by name.
+        /// Uses
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/vmGroups/{vmGroupId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkloadNetworkVmGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmGroupId"> The name of the WorkloadNetworkVmGroup. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmGroupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmGroupId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkloadNetworkVmGroupResource> GetWorkloadNetworkVmGroup(string vmGroupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmGroupId, nameof(vmGroupId));
+
+            return GetWorkloadNetworkVmGroups().Get(vmGroupId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WorkloadNetworkSegments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of WorkloadNetworkSegments and their operations over a WorkloadNetworkSegmentResource. </returns>
+        public virtual WorkloadNetworkSegmentCollection GetWorkloadNetworkSegments()
+        {
+            return GetCachedClient(client => new WorkloadNetworkSegmentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Segment by name.
+        /// Uses
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkloadNetworkSegments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="segmentId"> The name of the WorkloadNetworkSegment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkloadNetworkSegmentResource>> GetWorkloadNetworkSegmentAsync(string segmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
+
+            return await GetWorkloadNetworkSegments().GetAsync(segmentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Segment by name.
+        /// Uses
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/segments/{segmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkloadNetworkSegments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="segmentId"> The name of the WorkloadNetworkSegment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="segmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="segmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkloadNetworkSegmentResource> GetWorkloadNetworkSegment(string segmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(segmentId, nameof(segmentId));
+
+            return GetWorkloadNetworkSegments().Get(segmentId, cancellationToken);
+        }
+
         /// <summary>
         /// list private links on the given resource
         /// <list type="bullet">
@@ -1478,7 +1528,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+            return new PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAllPrivateLinkResources");
         }
 
         /// <summary>
@@ -1506,7 +1556,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PrivateLinksGetAllPrivateLinkResourcesCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context);
+            return new PrivateLinksGetAllPrivateLinkResourcesCollectionResultOfT(PrivateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAllPrivateLinkResources");
         }
     }
 }

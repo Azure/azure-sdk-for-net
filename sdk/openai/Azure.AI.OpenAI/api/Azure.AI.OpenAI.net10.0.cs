@@ -117,9 +117,9 @@ namespace Azure.AI.OpenAI
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AOAI001")]
         public override OpenAI.Files.OpenAIFileClient GetOpenAIFileClient() { throw null; }
         public override OpenAI.Models.OpenAIModelClient GetOpenAIModelClient() { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI002")]
         public override OpenAI.Realtime.RealtimeClient GetRealtimeClient() { throw null; }
-        public override OpenAI.Responses.ResponsesClient GetResponsesClient(string deploymentName) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+        public override OpenAI.Responses.ResponsesClient GetResponsesClient() { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public override OpenAI.VectorStores.VectorStoreClient GetVectorStoreClient() { throw null; }
         public override OpenAI.Videos.VideoClient GetVideoClient() { throw null; }

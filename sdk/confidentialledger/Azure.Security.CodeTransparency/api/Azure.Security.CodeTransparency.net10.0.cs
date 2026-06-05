@@ -32,6 +32,8 @@ namespace Azure.Security.CodeTransparency
     {
         public static readonly string UnknownIssuerPrefix;
         protected CodeTransparencyClient() { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+        public CodeTransparencyClient(Azure.Security.CodeTransparency.CodeTransparencyClientSettings settings) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options = null) { }
@@ -63,6 +65,14 @@ namespace Azure.Security.CodeTransparency
         public virtual void RunTransparentStatementVerification(byte[] signedStatementCoseSign1Bytes, byte[] receiptCoseSign1Bytes) { }
         public static void VerifyTransparentStatement(byte[] transparentStatementCoseSign1Bytes, Azure.Security.CodeTransparency.CodeTransparencyVerificationOptions verificationOptions = null, Azure.Security.CodeTransparency.CodeTransparencyClientOptions clientOptions = null) { }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class CodeTransparencyClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddCodeTransparencyClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddCodeTransparencyClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Security.CodeTransparency.CodeTransparencyClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedCodeTransparencyClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedCodeTransparencyClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Security.CodeTransparency.CodeTransparencyClientSettings> configureSettings) { throw null; }
+    }
     public partial class CodeTransparencyClientOptions : Azure.Core.ClientOptions
     {
         public CodeTransparencyClientOptions(Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion version = Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion.V2025_01_31_Preview) { }
@@ -73,6 +83,14 @@ namespace Azure.Security.CodeTransparency
         {
             V2025_01_31_Preview = 1,
         }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class CodeTransparencyClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public CodeTransparencyClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.CodeTransparencyClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class CodeTransparencyModelFactory
     {
@@ -192,15 +210,5 @@ namespace Azure.Security.CodeTransparency.Receipt
     {
         public CcfReceiptVerifier() { }
         public static void VerifyTransparentStatementReceipt(Azure.Security.CodeTransparency.JsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatementBytes) { }
-    }
-}
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class CodeTransparencyClientBuilderExtensions
-    {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Security.CodeTransparency.CodeTransparencyClient, Azure.Security.CodeTransparency.CodeTransparencyClientOptions> AddCodeTransparencyClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Security.CodeTransparency.CodeTransparencyClient, Azure.Security.CodeTransparency.CodeTransparencyClientOptions> AddCodeTransparencyClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Security.CodeTransparency.CodeTransparencyClient, Azure.Security.CodeTransparency.CodeTransparencyClientOptions> AddCodeTransparencyClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

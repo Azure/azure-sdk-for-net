@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory item containing a summary extracted from conversations. </summary>
-    public partial class ChatSummaryMemoryItem : MemoryItem, IJsonModel<ChatSummaryMemoryItem>
+    public partial class ChatSummaryMemoryItem : MemoryOutputItem, IJsonModel<ChatSummaryMemoryItem>
     {
         /// <summary> Initializes a new instance of <see cref="ChatSummaryMemoryItem"/> for deserialization. </summary>
         internal ChatSummaryMemoryItem()
@@ -19,7 +19,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MemoryItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override MemoryOutputItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ChatSummaryMemoryItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -84,7 +84,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MemoryItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override MemoryOutputItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ChatSummaryMemoryItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

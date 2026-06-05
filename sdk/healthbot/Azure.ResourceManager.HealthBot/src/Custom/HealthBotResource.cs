@@ -21,6 +21,14 @@ namespace Azure.ResourceManager.HealthBot
     /// </summary>
     public partial class HealthBotResource : ArmResource
     {
+        // Customization rationale:
+        // The previous SDK exposed synchronous and asynchronous `Update(HealthBotPatch, ...)` overloads
+        // that did not accept a `WaitUntil` parameter (the patch endpoint is non-LRO in this RP and
+        // the legacy SDK returned a direct Response<HealthBotResource>). The TypeSpec emitter now
+        // generates only the `Update(WaitUntil, HealthBotPatch, ...)` overloads. Dropping the legacy
+        // overloads would be a breaking change for callers, so we re-add them here as forwarders that
+        // pass `WaitUntil.Completed` and unwrap the operation result. They are hidden from IntelliSense
+        // via `[EditorBrowsable(Never)]` to steer new code toward the LRO-shaped API.
         /// <summary>
         /// Patch a HealthBot.
         /// <list type="bullet">

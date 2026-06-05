@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,41 +15,72 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct AgentPoolMode : IEquatable<AgentPoolMode>
     {
         private readonly string _value;
+        /// <summary> System agent pools are primarily for hosting critical system pods such as CoreDNS and metrics-server. System agent pools osType must be Linux. System agent pools VM SKU must have at least 2vCPUs and 4GB of memory. </summary>
+        private const string SystemValue = "System";
+        /// <summary> User agent pools are primarily for hosting your application pods. </summary>
+        private const string UserValue = "User";
+        /// <summary> Gateway agent pools are dedicated to providing static egress IPs to pods. For more details, see https://aka.ms/aks/static-egress-gateway. </summary>
+        private const string GatewayValue = "Gateway";
+        /// <summary> ManagedSystem is a system pool managed by AKS. The pool scales dynamically according to cluster usage, and has additional automated monitoring and healing capabilities. There can only be one ManagedSystem pool, and it is recommended to delete all other system pools for the best experience. </summary>
+        private const string ManagedSystemValue = "ManagedSystem";
+        /// <summary> Machines agent pools are dedicated to hosting machines. Only limited operations, such as creation and deletion, are allowed at the pool level. Please use the machine APIs to manage the full machine lifecycle. </summary>
+        private const string MachinesValue = "Machines";
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AgentPoolMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SystemValue = "System";
-        private const string UserValue = "User";
-        private const string GatewayValue = "Gateway";
+            _value = value;
+        }
 
         /// <summary> System agent pools are primarily for hosting critical system pods such as CoreDNS and metrics-server. System agent pools osType must be Linux. System agent pools VM SKU must have at least 2vCPUs and 4GB of memory. </summary>
         public static AgentPoolMode System { get; } = new AgentPoolMode(SystemValue);
+
         /// <summary> User agent pools are primarily for hosting your application pods. </summary>
         public static AgentPoolMode User { get; } = new AgentPoolMode(UserValue);
+
         /// <summary> Gateway agent pools are dedicated to providing static egress IPs to pods. For more details, see https://aka.ms/aks/static-egress-gateway. </summary>
         public static AgentPoolMode Gateway { get; } = new AgentPoolMode(GatewayValue);
+
+        /// <summary> ManagedSystem is a system pool managed by AKS. The pool scales dynamically according to cluster usage, and has additional automated monitoring and healing capabilities. There can only be one ManagedSystem pool, and it is recommended to delete all other system pools for the best experience. </summary>
+        public static AgentPoolMode ManagedSystem { get; } = new AgentPoolMode(ManagedSystemValue);
+
+        /// <summary> Machines agent pools are dedicated to hosting machines. Only limited operations, such as creation and deletion, are allowed at the pool level. Please use the machine APIs to manage the full machine lifecycle. </summary>
+        public static AgentPoolMode Machines { get; } = new AgentPoolMode(MachinesValue);
+
         /// <summary> Determines if two <see cref="AgentPoolMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AgentPoolMode left, AgentPoolMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AgentPoolMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AgentPoolMode left, AgentPoolMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentPoolMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AgentPoolMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AgentPoolMode(string value) => new AgentPoolMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AgentPoolMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AgentPoolMode?(string value) => value == null ? null : new AgentPoolMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AgentPoolMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AgentPoolMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

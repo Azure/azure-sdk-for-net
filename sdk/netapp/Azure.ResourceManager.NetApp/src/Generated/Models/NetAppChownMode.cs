@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppChownMode : IEquatable<NetAppChownMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NetAppChownMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NetAppChownMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RestrictedValue = "Restricted";
         private const string UnrestrictedValue = "Unrestricted";
 
-        /// <summary> Restricted. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppChownMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NetAppChownMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Restricted. </summary>
         public static NetAppChownMode Restricted { get; } = new NetAppChownMode(RestrictedValue);
-        /// <summary> Unrestricted. </summary>
+
+        /// <summary> Gets the Unrestricted. </summary>
         public static NetAppChownMode Unrestricted { get; } = new NetAppChownMode(UnrestrictedValue);
+
         /// <summary> Determines if two <see cref="NetAppChownMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppChownMode left, NetAppChownMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppChownMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppChownMode left, NetAppChownMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppChownMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppChownMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppChownMode(string value) => new NetAppChownMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppChownMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppChownMode?(string value) => value == null ? null : new NetAppChownMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppChownMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppChownMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

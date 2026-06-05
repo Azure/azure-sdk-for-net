@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
@@ -18,7 +17,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="serverLabel"></param>
         /// <param name="serverUrl"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> or <paramref name="serverUrl"/> is null. </exception>
-        public VoiceLiveMcpServerDefinition(string serverLabel, string serverUrl) : base(ToolType.Mcp)
+        public VoiceLiveMcpServerDefinition(string serverLabel, Uri serverUrl) : base(ToolType.Mcp)
         {
             Argument.AssertNotNull(serverLabel, nameof(serverLabel));
             Argument.AssertNotNull(serverUrl, nameof(serverUrl));
@@ -38,21 +37,21 @@ namespace Azure.AI.VoiceLive
         /// <param name="headers"></param>
         /// <param name="allowedTools"></param>
         /// <param name="requireApproval"></param>
-        internal VoiceLiveMcpServerDefinition(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, string serverUrl, string authorization, IDictionary<string, string> headers, IList<string> allowedTools, BinaryData requireApproval) : base(@type, additionalBinaryDataProperties)
+        internal VoiceLiveMcpServerDefinition(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUrl, string authorization, IDictionary<string, string> headers, IList<string> allowedTools, BinaryData requireApproval) : base(@type, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUrl = serverUrl;
             Authorization = authorization;
             Headers = headers;
             AllowedTools = allowedTools;
-            RequireApproval = requireApproval;
+            _requireApproval = requireApproval;
         }
 
         /// <summary> Gets or sets the ServerLabel. </summary>
         public string ServerLabel { get; set; }
 
         /// <summary> Gets or sets the ServerUrl. </summary>
-        public string ServerUrl { get; set; }
+        public Uri ServerUrl { get; set; }
 
         /// <summary> Gets or sets the Authorization. </summary>
         public string Authorization { get; set; }
@@ -62,46 +61,5 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the AllowedTools. </summary>
         public IList<string> AllowedTools { get; }
-
-        /// <summary>
-        /// Gets or sets the RequireApproval.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="MCPApprovalType"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="IDictionary{TKey,TValue}"/> where <c>TKey</c> is of type <see cref="string"/>, where <c>TValue</c> is of type <c>IList{string}</c>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData RequireApproval { get; set; }
     }
 }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _datastoresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AvsPrivateCloudDatastoreData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsPrivateCloudDatastoreResource> operation = new AvsArmOperation<AvsPrivateCloudDatastoreResource>(
-                    new AvsPrivateCloudDatastoreOperationSource(Client),
+                    new AvsPrivateCloudDatastoreResourceOperationSource(Client),
                     _datastoresClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _datastoresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AvsPrivateCloudDatastoreData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsPrivateCloudDatastoreResource> operation = new AvsArmOperation<AvsPrivateCloudDatastoreResource>(
-                    new AvsPrivateCloudDatastoreOperationSource(Client),
+                    new AvsPrivateCloudDatastoreResourceOperationSource(Client),
                     _datastoresClientDiagnostics,
                     Pipeline,
                     message.Request,

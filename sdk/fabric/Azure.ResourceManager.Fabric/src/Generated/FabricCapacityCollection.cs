@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Fabric
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Fabric
                 HttpMessage message = _fabricCapacitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, FabricCapacityData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FabricArmOperation<FabricCapacityResource> operation = new FabricArmOperation<FabricCapacityResource>(
-                    new FabricCapacityOperationSource(Client),
+                    new FabricCapacityResourceOperationSource(Client),
                     _fabricCapacitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Fabric
                 HttpMessage message = _fabricCapacitiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, capacityName, FabricCapacityData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FabricArmOperation<FabricCapacityResource> operation = new FabricArmOperation<FabricCapacityResource>(
-                    new FabricCapacityOperationSource(Client),
+                    new FabricCapacityResourceOperationSource(Client),
                     _fabricCapacitiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetByResourceGroupAsyncCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FabricCapacityResource(Client, data));
+            return new AsyncPageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetByResourceGroupAsyncCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FabricCapacityCollection.GetAll"), data => new FabricCapacityResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetByResourceGroupCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new FabricCapacityResource(Client, data));
+            return new PageableWrapper<FabricCapacityData, FabricCapacityResource>(new FabricCapacitiesGetByResourceGroupCollectionResultOfT(_fabricCapacitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "FabricCapacityCollection.GetAll"), data => new FabricCapacityResource(Client, data));
         }
 
         /// <summary>

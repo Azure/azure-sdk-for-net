@@ -5,12 +5,14 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Management.Visitors;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
@@ -113,10 +115,48 @@ namespace Azure.Generator.Management.Snippets
             statements.Add(resultDeclaration);
 
             // For enum/extensible enum types: Response<T> response = Response.FromValue(new T(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString()), result);
+            // For string types: read JSON directly; MRW's AOT-safe context overload needs a String builder that generated contexts don't provide.
+            // For BinaryData responses (e.g. TypeSpec `unknown` body): use result.Content directly, since BinaryData has no FromResponse and does not implement IPersistableModel<BinaryData>.
+            // For framework collection types (e.g. IDictionary<string, BinaryData> from TypeSpec `Record<unknown>`): deserialize inline with JsonDocument,
+            //   since they are not IPersistableModel<T> and ModelReaderWriter.Read<T> would be both AOT-incompatible (IL2026/IL3050) and incorrect at runtime.
+            // For framework/system model types (e.g. OperationStatusResult): use the AOT-safe ModelReaderWriter.Read<T>(content, options, context) overload since they don't have a FromResponse method.
             // For model types: Response<T> response = Response.FromValue(T.FromResponse(result), result);
-            ValueExpression deserializedValue = responseGenericType.IsEnum
-                ? New.Instance(responseGenericType, Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [resultVariable.Property("Content"), Static<ModelSerializationExtensionsDefinition>().Property("JsonDocumentOptions")]).Property(nameof(JsonDocument.RootElement)).Invoke(nameof(JsonElement.GetString)))
-                : Static(responseGenericType).Invoke(SerializationVisitor.FromResponseMethodName, [resultVariable]);
+            ValueExpression deserializedValue;
+            if (responseGenericType.IsEnum)
+            {
+                deserializedValue = New.Instance(responseGenericType, Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [resultVariable.Property("Content"), Static<ModelSerializationExtensionsDefinition>().Property("JsonDocumentOptions")]).Property(nameof(JsonDocument.RootElement)).Invoke(nameof(JsonElement.GetString)));
+            }
+            else if (responseGenericType.IsFrameworkType && responseGenericType.FrameworkType == typeof(string))
+            {
+                deserializedValue = Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [resultVariable.Property("Content"), Static(new ModelSerializationExtensionsDefinition().Type).Property("JsonDocumentOptions")]).Property(nameof(JsonDocument.RootElement)).Invoke(nameof(JsonElement.GetString));
+            }
+            else if (responseGenericType.IsFrameworkType && responseGenericType.FrameworkType == typeof(BinaryData))
+            {
+                // BinaryData has no static FromResponse and does not implement IPersistableModel<BinaryData>,
+                // so the content of the response is already a BinaryData; use it directly.
+                deserializedValue = resultVariable.Property(nameof(Response.Content));
+            }
+            else if (JsonResponseDeserialization.IsInlineJsonDeserializable(responseGenericType))
+            {
+                statements.AddRange(JsonResponseDeserialization.BuildDeserializeFromContent(
+                    responseGenericType,
+                    resultVariable.Property(nameof(Response.Content)),
+                    "value",
+                    out deserializedValue));
+            }
+            else if (responseGenericType.IsFrameworkType)
+            {
+                // AOT-safe ModelReaderWriter.Read<T>(content, options, context) overload.
+                deserializedValue = Static(typeof(ModelReaderWriter)).Invoke(
+                    nameof(ModelReaderWriter.Read),
+                    [resultVariable.Property("Content"), ModelSerializationExtensionsSnippets.Wire, ModelReaderWriterContextSnippets.Default],
+                    [responseGenericType],
+                    false);
+            }
+            else
+            {
+                deserializedValue = Static(responseGenericType).Invoke(SerializationVisitor.FromResponseMethodName, [resultVariable]);
+            }
             var responseDeclaration = Declare(
                 "response",
                 new CSharpType(typeof(Response<>), responseGenericType),
@@ -164,7 +204,7 @@ namespace Azure.Generator.Management.Snippets
                 [new AttributeStatement(typeof(ConditionalAttribute), Literal("DEBUG"))]);
             var bodyStatements = new IfStatement(idParameter.As<ResourceIdentifier>().ResourceType().NotEqual(resourceType))
             {
-                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.As<ResourceIdentifier>().ResourceType(), resourceType), false))
+                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.As<ResourceIdentifier>().ResourceType(), resourceType), wrapInNameOf: true))
             };
             return new MethodProvider(signature, bodyStatements, enclosingType);
         }

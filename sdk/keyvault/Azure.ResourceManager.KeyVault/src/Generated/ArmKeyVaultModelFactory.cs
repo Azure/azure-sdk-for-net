@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -18,31 +19,6 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKeyVaultModelFactory
     {
-        /// <summary> Resource information with extended details. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties of the vault. </param>
-        /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        /// <returns> A new <see cref="KeyVault.KeyVaultData"/> instance for mocking. </returns>
-        public static KeyVaultData KeyVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, KeyVaultProperties properties = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new KeyVaultData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                properties,
-                tags);
-        }
-
-        /// <summary> Properties of the vault. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="accessPolicies"> An array of 0 to 1024 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. When `createMode` is set to `recover`, access policies are not required. Otherwise, access policies are required. </param>
@@ -69,7 +45,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultProperties(
                 tenantId,
                 sku,
-                accessPolicies.ToList(),
+                (accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>()).ToList(),
                 vaultUri,
                 hsmPoolResourceId,
                 enabledForDeployment,
@@ -82,12 +58,29 @@ namespace Azure.ResourceManager.KeyVault.Models
                 enablePurgeProtection,
                 networkRuleSet,
                 provisioningState,
-                privateEndpointConnections.ToList(),
+                (privateEndpointConnections ?? new ChangeTrackingList<KeyVaultPrivateEndpointConnectionItemData>()).ToList(),
                 publicNetworkAccess,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Permissions the identity has for keys, secrets, certificates and storage. </summary>
+        /// <param name="family"> SKU family name. </param>
+        /// <param name="name"> SKU name to specify whether the key vault is a standard vault or a premium vault. </param>
+        /// <returns> A new <see cref="Models.KeyVaultSku"/> instance for mocking. </returns>
+        public static KeyVaultSku KeyVaultSku(KeyVaultSkuFamily family = default, KeyVaultSkuName name = default)
+        {
+            return new KeyVaultSku(family, name, default);
+        }
+
+        /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
+        /// <param name="objectId"> The object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. </param>
+        /// <param name="applicationId"> Application ID of the client making request on behalf of a principal. </param>
+        /// <param name="permissions"> Permissions the identity has for keys, secrets and certificates. </param>
+        /// <returns> A new <see cref="Models.KeyVaultAccessPolicy"/> instance for mocking. </returns>
+        public static KeyVaultAccessPolicy KeyVaultAccessPolicy(Guid tenantId = default, string objectId = default, Guid? applicationId = default, IdentityAccessPermissions permissions = default)
+        {
+            return new KeyVaultAccessPolicy(tenantId, objectId, applicationId, permissions, default);
+        }
+
         /// <param name="keys"> Permissions to keys. </param>
         /// <param name="secrets"> Permissions to secrets. </param>
         /// <param name="certificates"> Permissions to certificates. </param>
@@ -100,10 +93,9 @@ namespace Azure.ResourceManager.KeyVault.Models
             certificates ??= new ChangeTrackingList<IdentityAccessCertificatePermission>();
             storage ??= new ChangeTrackingList<IdentityAccessStoragePermission>();
 
-            return new IdentityAccessPermissions(keys.ToList(), secrets.ToList(), certificates.ToList(), storage.ToList(), additionalBinaryDataProperties: null);
+            return new IdentityAccessPermissions((keys ?? new ChangeTrackingList<IdentityAccessKeyPermission>()).ToList(), (secrets ?? new ChangeTrackingList<IdentityAccessSecretPermission>()).ToList(), (certificates ?? new ChangeTrackingList<IdentityAccessCertificatePermission>()).ToList(), (storage ?? new ChangeTrackingList<IdentityAccessStoragePermission>()).ToList(), default);
         }
 
-        /// <summary> A set of rules governing the network accessibility of a vault. </summary>
         /// <param name="bypass"> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </param>
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
@@ -114,7 +106,22 @@ namespace Azure.ResourceManager.KeyVault.Models
             ipRules ??= new ChangeTrackingList<KeyVaultIPRule>();
             virtualNetworkRules ??= new ChangeTrackingList<KeyVaultVirtualNetworkRule>();
 
-            return new KeyVaultNetworkRuleSet(bypass, defaultAction, ipRules.ToList(), virtualNetworkRules.ToList(), additionalBinaryDataProperties: null);
+            return new KeyVaultNetworkRuleSet(bypass, defaultAction, (ipRules ?? new ChangeTrackingList<KeyVaultIPRule>()).ToList(), (virtualNetworkRules ?? new ChangeTrackingList<KeyVaultVirtualNetworkRule>()).ToList(), default);
+        }
+
+        /// <param name="addressRange"> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </param>
+        /// <returns> A new <see cref="Models.KeyVaultIPRule"/> instance for mocking. </returns>
+        public static KeyVaultIPRule KeyVaultIPRule(string addressRange = default)
+        {
+            return new KeyVaultIPRule(addressRange, default);
+        }
+
+        /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
+        /// <param name="ignoreMissingVnetServiceEndpoint"> Property to specify whether NRP will ignore the check if parent subnet has serviceEndpoints configured. </param>
+        /// <returns> A new <see cref="Models.KeyVaultVirtualNetworkRule"/> instance for mocking. </returns>
+        public static KeyVaultVirtualNetworkRule KeyVaultVirtualNetworkRule(string id = default, bool? ignoreMissingVnetServiceEndpoint = default)
+        {
+            return new KeyVaultVirtualNetworkRule(id, ignoreMissingVnetServiceEndpoint, default);
         }
 
         /// <param name="id"> Id of private endpoint connection. </param>
@@ -125,10 +132,18 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.KeyVaultPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
         public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = default, ETag? etag = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
-            return new KeyVaultPrivateEndpointConnectionItemData(id, etag, connectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, null), additionalBinaryDataProperties: null);
+            return new KeyVaultPrivateEndpointConnectionItemData(id, etag, privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default), default);
         }
 
-        /// <summary> Parameters for creating or updating a vault. </summary>
+        /// <param name="status"> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </param>
+        /// <param name="description"> The reason for approval or rejection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.KeyVaultPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static KeyVaultPrivateLinkServiceConnectionState KeyVaultPrivateLinkServiceConnectionState(KeyVaultPrivateEndpointServiceConnectionStatus? status = default, string description = default, KeyVaultActionsRequiredMessage? actionsRequired = default)
+        {
+            return new KeyVaultPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
         /// <param name="location"> The supported Azure location where the key vault should be created. </param>
         /// <param name="tags"> The tags that will be assigned to the key vault. </param>
         /// <param name="properties"> Properties of the vault. </param>
@@ -137,10 +152,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new KeyVaultCreateOrUpdateContent(location, tags, properties, additionalBinaryDataProperties: null);
+            return new KeyVaultCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <summary> Parameters for creating or updating a vault. </summary>
         /// <param name="tags"> The tags that will be assigned to the key vault. </param>
         /// <param name="properties"> Properties of the vault. </param>
         /// <returns> A new <see cref="Models.KeyVaultPatch"/> instance for mocking. </returns>
@@ -148,10 +162,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new KeyVaultPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new KeyVaultPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <summary> Properties of the vault. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </param>
@@ -173,7 +186,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultPatchProperties(
                 tenantId,
                 sku,
-                accessPolicies.ToList(),
+                (accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>()).ToList(),
                 enabledForDeployment,
                 enabledForDiskEncryption,
                 enabledForTemplateDeployment,
@@ -184,36 +197,16 @@ namespace Azure.ResourceManager.KeyVault.Models
                 enablePurgeProtection,
                 networkRuleSet,
                 publicNetworkAccess,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="name"> The resource name of the access policy. </param>
-        /// <param name="location"> The resource type of the access policy. </param>
-        /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </param>
-        /// <returns> A new <see cref="Models.KeyVaultAccessPolicyParameters"/> instance for mocking. </returns>
-        public static KeyVaultAccessPolicyParameters KeyVaultAccessPolicyParameters(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string name = default, AzureLocation? location = default, IEnumerable<KeyVaultAccessPolicy> accessPolicies = default)
-        {
-            return new KeyVaultAccessPolicyParameters(
-                id,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                name,
-                location,
-                accessPolicies is null ? default : new KeyVaultAccessPolicyProperties((accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>()).ToList(), null));
-        }
-
-        /// <summary> Properties of the vault access policy. </summary>
         /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </param>
         /// <returns> A new <see cref="Models.KeyVaultAccessPolicyProperties"/> instance for mocking. </returns>
         public static KeyVaultAccessPolicyProperties KeyVaultAccessPolicyProperties(IEnumerable<KeyVaultAccessPolicy> accessPolicies = default)
         {
             accessPolicies ??= new ChangeTrackingList<KeyVaultAccessPolicy>();
 
-            return new KeyVaultAccessPolicyProperties(accessPolicies.ToList(), additionalBinaryDataProperties: null);
+            return new KeyVaultAccessPolicyProperties((accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -235,13 +228,12 @@ namespace Azure.ResourceManager.KeyVault.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new KeyVaultPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null),
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new KeyVaultPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
                 location,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
-        /// <summary> Deleted vault information with extended details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -255,11 +247,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Properties of the deleted vault. </summary>
         /// <param name="vaultId"> The resource id of the original vault. </param>
         /// <param name="location"> The location of the original vault. </param>
         /// <param name="deletedOn"> The deleted date. </param>
@@ -276,9 +267,9 @@ namespace Azure.ResourceManager.KeyVault.Models
                 location,
                 deletedOn,
                 scheduledPurgeOn,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 purgeProtectionEnabled,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -301,42 +292,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                connectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, null),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 location,
-                tags,
-                etag);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                etag,
+                default);
         }
 
-        /// <summary> Resource information with extended details. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties of the managed HSM. </param>
-        /// <param name="sku"> SKU details. </param>
-        /// <param name="identity"> Managed service identity. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="KeyVault.ManagedHsmData"/> instance for mocking. </returns>
-        public static ManagedHsmData ManagedHsmData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ManagedHsmProperties properties = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ManagedHsmData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                properties,
-                sku,
-                identity,
-                tags);
-        }
-
-        /// <summary> Properties of the managed HSM Pool. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the managed HSM pool. </param>
         /// <param name="initialAdminObjectIds"> Array of initial administrators object ids for this managed hsm pool. </param>
         /// <param name="hsmUri"> The URI of the managed hsm pool for performing operations on keys. </param>
@@ -361,7 +323,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
             return new ManagedHsmProperties(
                 tenantId,
-                initialAdminObjectIds.ToList(),
+                (initialAdminObjectIds ?? new ChangeTrackingList<string>()).ToList(),
                 hsmUri,
                 enableSoftDelete,
                 softDeleteRetentionInDays,
@@ -370,15 +332,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 statusMessage,
                 provisioningState,
                 networkRuleSet,
-                regions.ToList(),
-                privateEndpointConnections.ToList(),
+                (regions ?? new ChangeTrackingList<ManagedHsmGeoReplicatedRegion>()).ToList(),
+                (privateEndpointConnections ?? new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData>()).ToList(),
                 publicNetworkAccess,
                 scheduledPurgeOn,
                 securityDomainProperties,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> A set of rules governing the network accessibility of a managed hsm pool. </summary>
         /// <param name="bypass"> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </param>
         /// <param name="defaultAction"> The default action when no rule from ipRules and from virtualNetworkRules match. This is only used after the bypass property has been evaluated. </param>
         /// <param name="ipRules"> The list of IP address rules. </param>
@@ -394,20 +355,40 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmNetworkRuleSet(
                 bypass,
                 defaultAction,
-                ipRules.ToList(),
-                serviceTags.ToList(),
-                virtualNetworkRules.ToList(),
-                additionalBinaryDataProperties: null);
+                (ipRules ?? new ChangeTrackingList<ManagedHsmIPRule>()).ToList(),
+                (serviceTags ?? new ChangeTrackingList<ManagedHsmServiceTagRule>()).ToList(),
+                (virtualNetworkRules ?? new ChangeTrackingList<ManagedHsmVirtualNetworkRule>()).ToList(),
+                default);
         }
 
-        /// <summary> A region that this managed HSM Pool has been extended to. </summary>
+        /// <param name="addressRange"> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </param>
+        /// <returns> A new <see cref="Models.ManagedHsmIPRule"/> instance for mocking. </returns>
+        public static ManagedHsmIPRule ManagedHsmIPRule(string addressRange = default)
+        {
+            return new ManagedHsmIPRule(addressRange, default);
+        }
+
+        /// <param name="tag"> Name of the service tag. </param>
+        /// <returns> A new <see cref="Models.ManagedHsmServiceTagRule"/> instance for mocking. </returns>
+        public static ManagedHsmServiceTagRule ManagedHsmServiceTagRule(string tag = default)
+        {
+            return new ManagedHsmServiceTagRule(tag, default);
+        }
+
+        /// <param name="subnetId"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
+        /// <returns> A new <see cref="Models.ManagedHsmVirtualNetworkRule"/> instance for mocking. </returns>
+        public static ManagedHsmVirtualNetworkRule ManagedHsmVirtualNetworkRule(ResourceIdentifier subnetId = default)
+        {
+            return new ManagedHsmVirtualNetworkRule(subnetId, default);
+        }
+
         /// <param name="name"> Name of the geo replicated region. </param>
         /// <param name="provisioningState"> Provisioning state of the geo replicated region. </param>
         /// <param name="isPrimary"> A boolean value that indicates whether the region is the primary region or a secondary region. </param>
         /// <returns> A new <see cref="Models.ManagedHsmGeoReplicatedRegion"/> instance for mocking. </returns>
         public static ManagedHsmGeoReplicatedRegion ManagedHsmGeoReplicatedRegion(string name = default, ManagedHsmGeoReplicatedRegionProvisioningState? provisioningState = default, bool? isPrimary = default)
         {
-            return new ManagedHsmGeoReplicatedRegion(name, provisioningState, isPrimary, additionalBinaryDataProperties: null);
+            return new ManagedHsmGeoReplicatedRegion(name, provisioningState, isPrimary, default);
         }
 
         /// <param name="id"> Id of private endpoint connection. </param>
@@ -418,19 +399,34 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <returns> A new <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
         public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id = default, ETag? etag = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
-            return new ManagedHsmPrivateEndpointConnectionItemData(id, etag, privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null), additionalBinaryDataProperties: null);
+            return new ManagedHsmPrivateEndpointConnectionItemData(id, etag, privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default), default);
         }
 
-        /// <summary> The security domain properties of the managed hsm. </summary>
+        /// <param name="status"> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </param>
+        /// <param name="description"> The reason for approval or rejection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.ManagedHsmPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static ManagedHsmPrivateLinkServiceConnectionState ManagedHsmPrivateLinkServiceConnectionState(ManagedHsmPrivateEndpointServiceConnectionStatus? status = default, string description = default, ManagedHsmActionsRequiredMessage? actionsRequired = default)
+        {
+            return new ManagedHsmPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
         /// <param name="activationStatus"> Activation Status. </param>
         /// <param name="activationStatusMessage"> Activation Status Message. </param>
         /// <returns> A new <see cref="Models.ManagedHSMSecurityDomainProperties"/> instance for mocking. </returns>
         public static ManagedHSMSecurityDomainProperties ManagedHSMSecurityDomainProperties(ManagedHSMSecurityDomainActivationStatus? activationStatus = default, string activationStatusMessage = default)
         {
-            return new ManagedHSMSecurityDomainProperties(activationStatus, activationStatusMessage, additionalBinaryDataProperties: null);
+            return new ManagedHSMSecurityDomainProperties(activationStatus, activationStatusMessage, default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="family"> SKU Family of the managed HSM Pool. </param>
+        /// <param name="name"> SKU of the managed HSM Pool. </param>
+        /// <returns> A new <see cref="Models.ManagedHsmSku"/> instance for mocking. </returns>
+        public static ManagedHsmSku ManagedHsmSku(ManagedHsmSkuFamily family = default, ManagedHsmSkuName name = default)
+        {
+            return new ManagedHsmSku(family, name, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -444,11 +440,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Properties of the deleted managed HSM. </summary>
         /// <param name="managedHsmId"> The resource id of the original managed HSM. </param>
         /// <param name="location"> The location of the original managed HSM. </param>
         /// <param name="deletedOn"> The deleted date. </param>
@@ -466,42 +461,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 deletedOn,
                 scheduledPurgeOn,
                 purgeProtectionEnabled,
-                tags,
-                additionalBinaryDataProperties: null);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
-        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
-        /// <param name="sku"> SKU details. </param>
-        /// <param name="identity"> Managed service identity. </param>
-        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default, ETag? etag = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ManagedHsmPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                location,
-                privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null),
-                sku,
-                identity,
-                etag,
-                tags);
-        }
-
-        /// <summary> Resource information with extended details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -519,13 +482,12 @@ namespace Azure.ResourceManager.KeyVault.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
                 location,
-                tags);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
-        /// <summary> Properties of the secret. </summary>
         /// <param name="value"> The value of the secret. NOTE: 'value' will never be returned from the service, as APIs using this model are is intended for internal use in ARM deployments. Users should use the data-plane REST service for interaction with vault secrets. </param>
         /// <param name="contentType"> The content type of the secret. </param>
         /// <param name="attributes"> The attributes of the secret. </param>
@@ -540,10 +502,9 @@ namespace Azure.ResourceManager.KeyVault.Models
                 attributes,
                 secretUri,
                 secretUriWithVersion,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The secret management attributes. </summary>
         /// <param name="enabled"> Determines whether the object is enabled. </param>
         /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
@@ -558,10 +519,9 @@ namespace Azure.ResourceManager.KeyVault.Models
                 expires,
                 created,
                 updated,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The object attributes managed by the KeyVault service. </summary>
         /// <param name="enabled"> Determines whether the object is enabled. </param>
         /// <param name="notBefore"> Not before date in seconds since 1970-01-01T00:00:00Z. </param>
         /// <param name="expires"> Expiry date in seconds since 1970-01-01T00:00:00Z. </param>
@@ -576,10 +536,9 @@ namespace Azure.ResourceManager.KeyVault.Models
                 expires,
                 created,
                 updated,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Parameters for creating or updating a secret. </summary>
         /// <param name="tags"> The tags that will be assigned to the secret. </param>
         /// <param name="properties"> Properties of the secret. </param>
         /// <returns> A new <see cref="Models.KeyVaultSecretCreateOrUpdateContent"/> instance for mocking. </returns>
@@ -587,10 +546,9 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new KeyVaultSecretCreateOrUpdateContent(tags, properties, additionalBinaryDataProperties: null);
+            return new KeyVaultSecretCreateOrUpdateContent(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <summary> Parameters for patching a secret. </summary>
         /// <param name="tags"> The tags that will be assigned to the secret. </param>
         /// <param name="properties"> Properties of the secret. </param>
         /// <returns> A new <see cref="Models.KeyVaultSecretPatch"/> instance for mocking. </returns>
@@ -598,44 +556,92 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new KeyVaultSecretPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new KeyVaultSecretPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <summary> The parameters used to check the availability of the vault name. </summary>
+        /// <param name="value"> The value of the secret. </param>
+        /// <param name="contentType"> The content type of the secret. </param>
+        /// <param name="attributes"> The attributes of the secret. </param>
+        /// <returns> A new <see cref="Models.SecretPatchProperties"/> instance for mocking. </returns>
+        public static SecretPatchProperties SecretPatchProperties(string value = default, string contentType = default, SecretAttributes attributes = default)
+        {
+            return new SecretPatchProperties(value, contentType, attributes, default);
+        }
+
         /// <param name="name"> The vault name. </param>
         /// <param name="resourceType"> The type of resource, Microsoft.KeyVault/vaults. </param>
         /// <returns> A new <see cref="Models.KeyVaultNameAvailabilityContent"/> instance for mocking. </returns>
         public static KeyVaultNameAvailabilityContent KeyVaultNameAvailabilityContent(string name = default, ResourceType resourceType = default)
         {
-            return new KeyVaultNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties: null);
+            return new KeyVaultNameAvailabilityContent(name, resourceType, default);
         }
 
-        /// <summary> The CheckNameAvailability operation response. </summary>
         /// <param name="nameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> The reason that a vault name could not be used. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
         /// <returns> A new <see cref="Models.KeyVaultNameAvailabilityResult"/> instance for mocking. </returns>
         public static KeyVaultNameAvailabilityResult KeyVaultNameAvailabilityResult(bool? nameAvailable = default, KeyVaultNameUnavailableReason? reason = default, string message = default)
         {
-            return new KeyVaultNameAvailabilityResult(nameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new KeyVaultNameAvailabilityResult(nameAvailable, reason, message, default);
         }
 
-        /// <summary> The parameters used to check the availability of the managed hsm name. </summary>
         /// <param name="name"> The managed hsm name. </param>
         /// <returns> A new <see cref="Models.ManagedHsmNameAvailabilityContent"/> instance for mocking. </returns>
         public static ManagedHsmNameAvailabilityContent ManagedHsmNameAvailabilityContent(string name = default)
         {
-            return new ManagedHsmNameAvailabilityContent(name, additionalBinaryDataProperties: null);
+            return new ManagedHsmNameAvailabilityContent(name, default);
         }
 
-        /// <summary> The CheckMhsmNameAvailability operation response. </summary>
         /// <param name="isNameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> The reason that a managed hsm name could not be used. The reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
         /// <returns> A new <see cref="Models.ManagedHsmNameAvailabilityResult"/> instance for mocking. </returns>
         public static ManagedHsmNameAvailabilityResult ManagedHsmNameAvailabilityResult(bool? isNameAvailable = default, ManagedHsmNameUnavailableReason? reason = default, string message = default)
         {
-            return new ManagedHsmNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new ManagedHsmNameAvailabilityResult(isNameAvailable, reason, message, default);
+        }
+
+        /// <summary> Resource information with extended details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        /// <param name="tags"> Tags assigned to the key vault resource. </param>
+        /// <returns> A new <see cref="KeyVault.KeyVaultData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KeyVaultData KeyVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, KeyVaultProperties properties = default, IDictionary<string, string> tags = default)
+        {
+            return new KeyVaultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="name"> The resource name of the access policy. </param>
+        /// <param name="location"> The resource type of the access policy. </param>
+        /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </param>
+        /// <returns> A new <see cref="Models.KeyVaultAccessPolicyParameters"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KeyVaultAccessPolicyParameters KeyVaultAccessPolicyParameters(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string name = default, AzureLocation? location = default, IEnumerable<KeyVaultAccessPolicy> accessPolicies = default)
+        {
+            return new KeyVaultAccessPolicyParameters(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                accessPolicies is null ? default : new KeyVaultAccessPolicyProperties((accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>()).ToList(), default),
+                default);
         }
     }
 }

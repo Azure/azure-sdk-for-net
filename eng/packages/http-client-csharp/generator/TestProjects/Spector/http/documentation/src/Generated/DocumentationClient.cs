@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Documentation._Lists;
 using Documentation._TextFormatting;
@@ -16,7 +17,12 @@ namespace Documentation
     {
         public DocumentationClient() : this(new Uri("http://localhost:3000"), new DocumentationClientOptions()) => throw null;
 
-        public DocumentationClient(Uri endpoint, DocumentationClientOptions options) => throw null;
+        internal DocumentationClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, DocumentationClientOptions options) => throw null;
+
+        public DocumentationClient(Uri endpoint, DocumentationClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public DocumentationClient(DocumentationClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

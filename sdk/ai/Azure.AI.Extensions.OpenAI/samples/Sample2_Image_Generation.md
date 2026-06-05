@@ -5,8 +5,8 @@ In this example we will demonstrate how to generate an image based on prompt.
 1. First, we need to create project client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateClient_ImageGeneration
-var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var imageGenerationModelName = System.Environment.GetEnvironmentVariable("IMAGE_GENERATION_DEPLOYMENT_NAME");
 AIProjectClientOptions projectOptions = new();
 projectOptions.AddPolicy(new HeaderPolicy(imageGenerationModelName), PipelinePosition.PerCall);
@@ -21,7 +21,7 @@ AIProjectClient projectClient = new(
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_ImageGeneration_Sync
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "Generate images based on user prompts.",
     Tools = {
@@ -32,14 +32,14 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         )
     }
 };
-AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_ImageGeneration_Async
-PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "Generate images based on user prompts.",
     Tools = {
@@ -50,7 +50,7 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         )
     }
 };
-AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -114,10 +114,10 @@ foreach (ResponseItem item in response.OutputItems)
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_ImageGeneration_Sync
-projectClient.Agents.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_ImageGeneration_Async
-await projectClient.Agents.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

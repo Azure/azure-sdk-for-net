@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceCertificateOrderData, AppServiceCertificateOrderResource>(new AppServiceCertificateOrdersGetAllAsyncCollectionResultOfT(AppServiceCertificateOrdersRestClient, Id.SubscriptionId, context), data => new AppServiceCertificateOrderResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceCertificateOrderData, AppServiceCertificateOrderResource>(new AppServiceCertificateOrdersGetAllAsyncCollectionResultOfT(AppServiceCertificateOrdersRestClient, Id.SubscriptionId, context, "MockableCertificateRegistrationSubscriptionResource.GetAppServiceCertificateOrders"), data => new AppServiceCertificateOrderResource(Client, data));
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceCertificateOrderData, AppServiceCertificateOrderResource>(new AppServiceCertificateOrdersGetAllCollectionResultOfT(AppServiceCertificateOrdersRestClient, Id.SubscriptionId, context), data => new AppServiceCertificateOrderResource(Client, data));
+            return new PageableWrapper<AppServiceCertificateOrderData, AppServiceCertificateOrderResource>(new AppServiceCertificateOrdersGetAllCollectionResultOfT(AppServiceCertificateOrdersRestClient, Id.SubscriptionId, context, "MockableCertificateRegistrationSubscriptionResource.GetAppServiceCertificateOrders"), data => new AppServiceCertificateOrderResource(Client, data));
         }
 
         /// <summary>

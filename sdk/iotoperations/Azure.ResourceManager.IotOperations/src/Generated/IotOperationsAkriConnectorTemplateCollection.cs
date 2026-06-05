@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             if (id.ResourceType != IotOperationsInstanceResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotOperationsInstanceResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, IotOperationsAkriConnectorTemplateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource>(
-                    new IotOperationsAkriConnectorTemplateOperationSource(Client),
+                    new IotOperationsAkriConnectorTemplateResourceOperationSource(Client),
                     _akriConnectorTemplateClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, akriConnectorTemplateName, IotOperationsAkriConnectorTemplateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource>(
-                    new IotOperationsAkriConnectorTemplateOperationSource(Client),
+                    new IotOperationsAkriConnectorTemplateResourceOperationSource(Client),
                     _akriConnectorTemplateClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IotOperationsAkriConnectorTemplateData, IotOperationsAkriConnectorTemplateResource>(new AkriConnectorTemplateGetByInstanceResourceAsyncCollectionResultOfT(_akriConnectorTemplateRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsAkriConnectorTemplateResource(Client, data));
+            return new AsyncPageableWrapper<IotOperationsAkriConnectorTemplateData, IotOperationsAkriConnectorTemplateResource>(new AkriConnectorTemplateGetByInstanceResourceAsyncCollectionResultOfT(
+                _akriConnectorTemplateRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsAkriConnectorTemplateCollection.GetAll"), data => new IotOperationsAkriConnectorTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IotOperationsAkriConnectorTemplateData, IotOperationsAkriConnectorTemplateResource>(new AkriConnectorTemplateGetByInstanceResourceCollectionResultOfT(_akriConnectorTemplateRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new IotOperationsAkriConnectorTemplateResource(Client, data));
+            return new PageableWrapper<IotOperationsAkriConnectorTemplateData, IotOperationsAkriConnectorTemplateResource>(new AkriConnectorTemplateGetByInstanceResourceCollectionResultOfT(
+                _akriConnectorTemplateRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "IotOperationsAkriConnectorTemplateCollection.GetAll"), data => new IotOperationsAkriConnectorTemplateResource(Client, data));
         }
 
         /// <summary>

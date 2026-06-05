@@ -12,8 +12,10 @@ namespace Azure.AI.Projects
     /// Please note <see cref="AIProjectDataset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FileDataset"/> and <see cref="FolderDataset"/>.
     /// </summary>
+    [CodeGenType("AIProjectDataset")]
     public abstract partial class AIProjectDataset
     {
+        /// <summary> Gets or sets the URI that identifies the backing data for this dataset. </summary>
         public Uri DataUri { get; set; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Batch.Models
     public readonly partial struct BatchHostEndpointSettingsModeType : IEquatable<BatchHostEndpointSettingsModeType>
     {
         private readonly string _value;
+        /// <summary> In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. </summary>
+        private const string AuditValue = "Audit";
+        /// <summary> Enforce mode is the recommended mode of operation and system will enforce the access control policy. This property cannot be used together with 'inVMAccessControlProfileReferenceId'. </summary>
+        private const string EnforceValue = "Enforce";
 
         /// <summary> Initializes a new instance of <see cref="BatchHostEndpointSettingsModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BatchHostEndpointSettingsModeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AuditValue = "Audit";
-        private const string EnforceValue = "Enforce";
+            _value = value;
+        }
 
         /// <summary> In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. </summary>
         public static BatchHostEndpointSettingsModeType Audit { get; } = new BatchHostEndpointSettingsModeType(AuditValue);
+
         /// <summary> Enforce mode is the recommended mode of operation and system will enforce the access control policy. This property cannot be used together with 'inVMAccessControlProfileReferenceId'. </summary>
         public static BatchHostEndpointSettingsModeType Enforce { get; } = new BatchHostEndpointSettingsModeType(EnforceValue);
+
         /// <summary> Determines if two <see cref="BatchHostEndpointSettingsModeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BatchHostEndpointSettingsModeType left, BatchHostEndpointSettingsModeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BatchHostEndpointSettingsModeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BatchHostEndpointSettingsModeType left, BatchHostEndpointSettingsModeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchHostEndpointSettingsModeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BatchHostEndpointSettingsModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BatchHostEndpointSettingsModeType(string value) => new BatchHostEndpointSettingsModeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BatchHostEndpointSettingsModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BatchHostEndpointSettingsModeType?(string value) => value == null ? null : new BatchHostEndpointSettingsModeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BatchHostEndpointSettingsModeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BatchHostEndpointSettingsModeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

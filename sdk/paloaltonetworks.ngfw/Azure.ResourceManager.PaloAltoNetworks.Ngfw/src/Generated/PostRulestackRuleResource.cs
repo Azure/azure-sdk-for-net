@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, PostRulestackRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<PostRulestackRuleResource> operation = new NgfwArmOperation<PostRulestackRuleResource>(
-                    new PostRulestackRuleOperationSource(Client),
+                    new PostRulestackRuleResourceOperationSource(Client),
                     _postRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _postRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, PostRulestackRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<PostRulestackRuleResource> operation = new NgfwArmOperation<PostRulestackRuleResource>(
-                    new PostRulestackRuleOperationSource(Client),
+                    new PostRulestackRuleResourceOperationSource(Client),
                     _postRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

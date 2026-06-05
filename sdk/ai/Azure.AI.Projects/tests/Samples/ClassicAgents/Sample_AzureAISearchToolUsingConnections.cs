@@ -20,14 +20,14 @@ public class Sample_AzureAISearchToolUsingConnections : SamplesBase
     {
         #region Snippet:AI_Projects_AzureAISearchInitializeProjectClient
 #if SNIPPET
-        var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var endpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
+        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
         var indexName = Environment.GetEnvironmentVariable("INDEX_NAME");
         var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION");
         var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME");
 #else
-        var endpoint = TestEnvironment.PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var endpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
+        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var indexName = TestEnvironment.INDEX_NAME ?? "my-index";
         var indexVersion = TestEnvironment.INDEX_VERSION ?? "1.0";
         var aiSearchIndexName = TestEnvironment.AI_SEARCH_INDEX_NAME ?? "my-ai-search-index-name";

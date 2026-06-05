@@ -24,6 +24,7 @@ namespace Azure.AI.Language.Text.Authoring
         private readonly int? _skip;
         private readonly int? _maxPageSize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TextAuthoringTrainedModel client used to send requests. </param>
@@ -34,7 +35,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT(TextAuthoringTrainedModel client, string projectName, string trainedModelLabel, string stringIndexType, int? maxCount, int? skip, int? maxPageSize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT(TextAuthoringTrainedModel client, string projectName, string trainedModelLabel, string stringIndexType, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
@@ -44,6 +46,7 @@ namespace Azure.AI.Language.Text.Authoring
             _skip = skip;
             _maxPageSize = maxPageSize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TextAuthoringTrainedModelGetModelEvaluationResultsAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -77,7 +80,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetModelEvaluationResultsRequest(nextLink, pageSize, _context) : _client.CreateGetModelEvaluationResultsRequest(_projectName, _trainedModelLabel, _stringIndexType, _maxCount, _skip, pageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TextAuthoringTrainedModel.GetModelEvaluationResults");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

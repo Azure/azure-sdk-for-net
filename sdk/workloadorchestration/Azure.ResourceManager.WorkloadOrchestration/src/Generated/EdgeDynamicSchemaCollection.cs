@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != EdgeSchemaResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSchemaResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeSchemaResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _dynamicSchemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dynamicSchemaName, EdgeDynamicSchemaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource> operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource>(
-                    new EdgeDynamicSchemaOperationSource(Client),
+                    new EdgeDynamicSchemaResourceOperationSource(Client),
                     _dynamicSchemasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _dynamicSchemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dynamicSchemaName, EdgeDynamicSchemaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource> operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource>(
-                    new EdgeDynamicSchemaOperationSource(Client),
+                    new EdgeDynamicSchemaResourceOperationSource(Client),
                     _dynamicSchemasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new DynamicSchemasGetBySchemaAsyncCollectionResultOfT(_dynamicSchemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeDynamicSchemaResource(Client, data));
+            return new AsyncPageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new DynamicSchemasGetBySchemaAsyncCollectionResultOfT(
+                _dynamicSchemasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeDynamicSchemaCollection.GetAll"), data => new EdgeDynamicSchemaResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new DynamicSchemasGetBySchemaCollectionResultOfT(_dynamicSchemasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeDynamicSchemaResource(Client, data));
+            return new PageableWrapper<EdgeDynamicSchemaData, EdgeDynamicSchemaResource>(new DynamicSchemasGetBySchemaCollectionResultOfT(
+                _dynamicSchemasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "EdgeDynamicSchemaCollection.GetAll"), data => new EdgeDynamicSchemaResource(Client, data));
         }
 
         /// <summary>

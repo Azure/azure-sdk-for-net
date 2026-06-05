@@ -7,11 +7,20 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
 
+/// <summary>
+/// Extension methods that convert OpenAI <see cref="ResponseTool"/> instances into the
+/// equivalent <see cref="ProjectsAgentTool"/> representation.
+/// </summary>
 public static partial class ResponseToolExtensions
 {
-    public static AgentTool AsAgentTool(this ResponseTool responseTool)
+    /// <summary>
+    /// Reinterprets an OpenAI <see cref="ResponseTool"/> as a <see cref="ProjectsAgentTool"/>
+    /// by round-tripping through the wire format.
+    /// </summary>
+    /// <param name="responseTool">The OpenAI response tool to convert.</param>
+    public static ProjectsAgentTool AsAgentTool(this ResponseTool responseTool)
     {
-        return ModelReaderWriter.Read<AgentTool>(
+        return ModelReaderWriter.Read<ProjectsAgentTool>(
             ModelReaderWriter.Write(responseTool, ModelSerializationExtensions.WireOptions, OpenAIContext.Default),
             ModelSerializationExtensions.WireOptions,
             AzureAIProjectsAgentsContext.Default);

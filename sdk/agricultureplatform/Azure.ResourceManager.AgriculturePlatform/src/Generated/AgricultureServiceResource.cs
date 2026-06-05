@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 HttpMessage message = _agriServiceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AgricultureServicePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AgriculturePlatformArmOperation<AgricultureServiceResource> operation = new AgriculturePlatformArmOperation<AgricultureServiceResource>(
-                    new AgricultureServiceOperationSource(Client),
+                    new AgricultureServiceResourceOperationSource(Client),
                     _agriServiceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AgriculturePlatform
                 HttpMessage message = _agriServiceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AgricultureServicePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AgriculturePlatformArmOperation<AgricultureServiceResource> operation = new AgriculturePlatformArmOperation<AgricultureServiceResource>(
-                    new AgricultureServiceOperationSource(Client),
+                    new AgricultureServiceResourceOperationSource(Client),
                     _agriServiceClientDiagnostics,
                     Pipeline,
                     message.Request,

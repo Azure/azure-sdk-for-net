@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _contextsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, contextName, EdgeContextData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeContextResource> operation = new WorkloadOrchestrationArmOperation<EdgeContextResource>(
-                    new EdgeContextOperationSource(Client),
+                    new EdgeContextResourceOperationSource(Client),
                     _contextsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _contextsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, contextName, EdgeContextData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeContextResource> operation = new WorkloadOrchestrationArmOperation<EdgeContextResource>(
-                    new EdgeContextOperationSource(Client),
+                    new EdgeContextResourceOperationSource(Client),
                     _contextsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeContextData, EdgeContextResource>(new ContextsGetByResourceGroupAsyncCollectionResultOfT(_contextsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeContextResource(Client, data));
+            return new AsyncPageableWrapper<EdgeContextData, EdgeContextResource>(new ContextsGetByResourceGroupAsyncCollectionResultOfT(_contextsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeContextCollection.GetAll"), data => new EdgeContextResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeContextData, EdgeContextResource>(new ContextsGetByResourceGroupCollectionResultOfT(_contextsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new EdgeContextResource(Client, data));
+            return new PageableWrapper<EdgeContextData, EdgeContextResource>(new ContextsGetByResourceGroupCollectionResultOfT(_contextsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "EdgeContextCollection.GetAll"), data => new EdgeContextResource(Client, data));
         }
 
         /// <summary>

@@ -21,6 +21,7 @@ namespace Azure.AI.Language.Text.Authoring
         private readonly int? _skip;
         private readonly int? _maxPageSize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of TextAnalysisAuthoringClientGetDeploymentResourcesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The TextAnalysisAuthoringClient client used to send requests. </param>
@@ -29,7 +30,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TextAnalysisAuthoringClientGetDeploymentResourcesCollectionResultOfT(TextAnalysisAuthoringClient client, string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public TextAnalysisAuthoringClientGetDeploymentResourcesCollectionResultOfT(TextAnalysisAuthoringClient client, string projectName, int? maxCount, int? skip, int? maxPageSize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _projectName = projectName;
@@ -37,6 +39,7 @@ namespace Azure.AI.Language.Text.Authoring
             _skip = skip;
             _maxPageSize = maxPageSize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of TextAnalysisAuthoringClientGetDeploymentResourcesCollectionResultOfT as an enumerable collection. </summary>
@@ -70,7 +73,7 @@ namespace Azure.AI.Language.Text.Authoring
         {
             int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             HttpMessage message = nextLink != null ? _client.CreateNextGetDeploymentResourcesRequest(nextLink, pageSize, _context) : _client.CreateGetDeploymentResourcesRequest(_projectName, _maxCount, _skip, pageSize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("TextAnalysisAuthoringClient.GetDeploymentResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

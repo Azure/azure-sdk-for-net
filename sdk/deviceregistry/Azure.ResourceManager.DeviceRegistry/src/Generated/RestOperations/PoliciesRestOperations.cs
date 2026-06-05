@@ -185,5 +185,55 @@ namespace Azure.ResourceManager.DeviceRegistry
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateRevokeIssuerRequest(Guid subscriptionId, string resourceGroupName, string namespaceName, string policyName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DeviceRegistry/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/credentials/default/policies/", false);
+            uri.AppendPath(policyName, true);
+            uri.AppendPath("/revokeIssuer", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            return message;
+        }
+
+        internal HttpMessage CreateActivateBringYourOwnRootRequest(Guid subscriptionId, string resourceGroupName, string namespaceName, string policyName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DeviceRegistry/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/credentials/default/policies/", false);
+            uri.AppendPath(policyName, true);
+            uri.AppendPath("/activateBringYourOwnRoot", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
     }
 }

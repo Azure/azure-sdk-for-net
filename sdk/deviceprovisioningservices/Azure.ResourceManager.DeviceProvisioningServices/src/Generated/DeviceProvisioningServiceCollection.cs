@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, DeviceProvisioningServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(
-                    new DeviceProvisioningServiceOperationSource(Client),
+                    new DeviceProvisioningServiceResourceOperationSource(Client),
                     _provisioningServiceDescriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 HttpMessage message = _provisioningServiceDescriptionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, provisioningServiceName, DeviceProvisioningServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource> operation = new DeviceProvisioningServicesArmOperation<DeviceProvisioningServiceResource>(
-                    new DeviceProvisioningServiceOperationSource(Client),
+                    new DeviceProvisioningServiceResourceOperationSource(Client),
                     _provisioningServiceDescriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetByResourceGroupAsyncCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DeviceProvisioningServiceResource(Client, data));
+            return new AsyncPageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetByResourceGroupAsyncCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DeviceProvisioningServiceCollection.GetAll"), data => new DeviceProvisioningServiceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetByResourceGroupCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new DeviceProvisioningServiceResource(Client, data));
+            return new PageableWrapper<DeviceProvisioningServiceData, DeviceProvisioningServiceResource>(new ProvisioningServiceDescriptionsGetByResourceGroupCollectionResultOfT(_provisioningServiceDescriptionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "DeviceProvisioningServiceCollection.GetAll"), data => new DeviceProvisioningServiceResource(Client, data));
         }
 
         /// <summary>

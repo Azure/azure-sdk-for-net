@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             if (id.ResourceType != TrafficControllerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _frontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, TrafficControllerFrontendData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceNetworkingArmOperation<TrafficControllerFrontendResource> operation = new ServiceNetworkingArmOperation<TrafficControllerFrontendResource>(
-                    new TrafficControllerFrontendOperationSource(Client),
+                    new TrafficControllerFrontendResourceOperationSource(Client),
                     _frontendsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _frontendsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, frontendName, TrafficControllerFrontendData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceNetworkingArmOperation<TrafficControllerFrontendResource> operation = new ServiceNetworkingArmOperation<TrafficControllerFrontendResource>(
-                    new TrafficControllerFrontendOperationSource(Client),
+                    new TrafficControllerFrontendResourceOperationSource(Client),
                     _frontendsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficControllerFrontendData, TrafficControllerFrontendResource>(new FrontendsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(_frontendsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new TrafficControllerFrontendResource(Client, data));
+            return new AsyncPageableWrapper<TrafficControllerFrontendData, TrafficControllerFrontendResource>(new FrontendsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
+                _frontendsInterfaceRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "TrafficControllerFrontendCollection.GetAll"), data => new TrafficControllerFrontendResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficControllerFrontendData, TrafficControllerFrontendResource>(new FrontendsInterfaceGetByTrafficControllerCollectionResultOfT(_frontendsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new TrafficControllerFrontendResource(Client, data));
+            return new PageableWrapper<TrafficControllerFrontendData, TrafficControllerFrontendResource>(new FrontendsInterfaceGetByTrafficControllerCollectionResultOfT(
+                _frontendsInterfaceRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "TrafficControllerFrontendCollection.GetAll"), data => new TrafficControllerFrontendResource(Client, data));
         }
 
         /// <summary>

@@ -3,11 +3,10 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -54,16 +53,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ProjectConversationCreationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="projectConversationCreationOptions"> The <see cref="ProjectConversationCreationOptions"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(ProjectConversationCreationOptions projectConversationCreationOptions)
-        {
-            if (projectConversationCreationOptions == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(projectConversationCreationOptions, ModelSerializationExtensions.WireOptions);
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProjectConversationCreationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -99,7 +88,7 @@ namespace Azure.AI.Extensions.OpenAI
                 return null;
             }
             InternalMetadataContainer internalMetadata = default;
-            IList<global::OpenAI.Responses.ResponseItem> items = default;
+            IList<ResponseItem> items = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -123,7 +112,7 @@ namespace Azure.AI.Extensions.OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectConversationCreationOptions(internalMetadata, items ?? new ChangeTrackingList<global::OpenAI.Responses.ResponseItem>(), additionalBinaryDataProperties);
+            return new ProjectConversationCreationOptions(internalMetadata, items ?? new ChangeTrackingList<ResponseItem>(), additionalBinaryDataProperties);
         }
     }
 }

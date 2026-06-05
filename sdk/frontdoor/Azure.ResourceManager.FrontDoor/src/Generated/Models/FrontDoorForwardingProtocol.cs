@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontDoorForwardingProtocol : IEquatable<FrontDoorForwardingProtocol>
     {
         private readonly string _value;
+        /// <summary> HttpOnly. </summary>
+        private const string HttpOnlyValue = "HttpOnly";
+        /// <summary> HttpsOnly. </summary>
+        private const string HttpsOnlyValue = "HttpsOnly";
+        /// <summary> MatchRequest. </summary>
+        private const string MatchRequestValue = "MatchRequest";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorForwardingProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontDoorForwardingProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HttpOnlyValue = "HttpOnly";
-        private const string HttpsOnlyValue = "HttpsOnly";
-        private const string MatchRequestValue = "MatchRequest";
+            _value = value;
+        }
 
         /// <summary> HttpOnly. </summary>
         public static FrontDoorForwardingProtocol HttpOnly { get; } = new FrontDoorForwardingProtocol(HttpOnlyValue);
+
         /// <summary> HttpsOnly. </summary>
         public static FrontDoorForwardingProtocol HttpsOnly { get; } = new FrontDoorForwardingProtocol(HttpsOnlyValue);
+
         /// <summary> MatchRequest. </summary>
         public static FrontDoorForwardingProtocol MatchRequest { get; } = new FrontDoorForwardingProtocol(MatchRequestValue);
+
         /// <summary> Determines if two <see cref="FrontDoorForwardingProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontDoorForwardingProtocol left, FrontDoorForwardingProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontDoorForwardingProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontDoorForwardingProtocol left, FrontDoorForwardingProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorForwardingProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontDoorForwardingProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontDoorForwardingProtocol(string value) => new FrontDoorForwardingProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontDoorForwardingProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontDoorForwardingProtocol?(string value) => value == null ? null : new FrontDoorForwardingProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontDoorForwardingProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontDoorForwardingProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

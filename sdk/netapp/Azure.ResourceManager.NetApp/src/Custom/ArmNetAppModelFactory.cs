@@ -12,12 +12,39 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetApp.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Model factory for models. </summary>
+    // The generated backward-compat overload becomes ambiguous after microsoft/typespec#10397
+    // switched generated overload dispatch to named arguments because NetApp also has a GA
+    // compatibility overload with float? customThroughputMibps. Keep this one shim using
+    // positional dispatch to target the generated primary overload unambiguously.
+    [CodeGenSuppress("CapacityPoolData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ETag?), typeof(Guid?), typeof(long), typeof(NetAppFileServiceLevel), typeof(string), typeof(float?), typeof(float?), typeof(CapacityPoolQosType?), typeof(bool?), typeof(CapacityPoolEncryptionType?))]
     public static partial class ArmNetAppModelFactory
     {
+        /// <summary> Source Cluster properties for a cluster peer request. </summary>
+        /// <param name="peerIPAddresses"> A list of IC-LIF IPs that can be used to connect to the On-prem cluster. </param>
+        /// <returns> A new <see cref="Models.PeerClusterForVolumeMigrationContent"/> instance for mocking. </returns>
+        public static PeerClusterForVolumeMigrationContent PeerClusterForVolumeMigrationContent(IEnumerable<string> peerIPAddresses = default)
+        {
+            peerIPAddresses ??= new ChangeTrackingList<string>();
+
+            return new PeerClusterForVolumeMigrationContent(peerIPAddresses.ToList());
+        }
+
+        /// <summary> Migrate Backups Request. </summary>
+        /// <param name="backupVaultId"> The ResourceId of the Backup Vault. </param>
+        /// <returns> A new <see cref="Models.BackupsMigrationContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupsMigrationContent BackupsMigrationContent(string backupVaultId = default)
+        {
+            return new BackupsMigrationContent(
+                backupVaultId is null ? null : new ResourceIdentifier(backupVaultId),
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of NetAppBackupData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -38,21 +65,20 @@ namespace Azure.ResourceManager.NetApp.Models
 
         public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, AzureLocation location, string backupId = null, DateTimeOffset? createdOn = null, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, string volumeName = null, bool? useExistingSnapshot = null)
         {
-            return NetAppBackupData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                backupId: backupId,
-                createdOn: createdOn,
-                snapshotCreationOn: null,
-                provisioningState: provisioningState,
-                size: size,
-                label: label,
-                backupType: backupType,
-                failureReason: failureReason,
-                useExistingSnapshot: useExistingSnapshot
-            );
+            NetAppBackupData data = NetAppBackupData(id, name, resourceType, systemData, backupId, createdOn, provisioningState, size, label, backupType, failureReason, volumeResourceId: null, useExistingSnapshot, snapshotName: null, backupPolicyResourceId: (string)null);
+            data.Location = location;
+            return data;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ClusterPeerCommandResult"/>. </summary>
+        /// <param name="peerAcceptCommand"> Cluster peering command to run to accept the cluster peer. Kept with this name for backward compatibility. </param>
+        /// <returns> A new <see cref="Models.ClusterPeerCommandResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ClusterPeerCommandResult ClusterPeerCommandResult(string peerAcceptCommand = null)
+        {
+            return new ClusterPeerCommandResult(
+                new ClusterPeerCommandResponseProperties(peerAcceptCommand, passphrase: null, additionalBinaryDataProperties: null),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeGroupMetadata"/>. </summary>
@@ -65,7 +91,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <returns> A new <see cref="Models.NetAppVolumeGroupMetadata"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppVolumeGroupMetadata NetAppVolumeGroupMetadata(string groupDescription, NetAppApplicationType? applicationType, string applicationIdentifier, IEnumerable<NetAppVolumePlacementRule> globalPlacementRules, string deploymentSpecId, long? volumesCount)
-            => NetAppVolumeGroupMetadata(groupDescription, applicationType, applicationIdentifier, globalPlacementRules, volumesCount);
+        {
+            NetAppVolumeGroupMetadata metadata = NetAppVolumeGroupMetadata(groupDescription, applicationType, applicationIdentifier, globalPlacementRules, volumesCount);
+            metadata.DeploymentSpecId = deploymentSpecId;
+            return metadata;
+        }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailabilityZoneMapping"/>. </summary>
         /// <param name="availabilityZone"> Logical availability zone. </param>
@@ -74,7 +104,7 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvailabilityZoneMapping AvailabilityZoneMapping(string availabilityZone = null, bool? isAvailable = null)
         {
-            return new AvailabilityZoneMapping(availabilityZone, isAvailable, serializedAdditionalRawData: null);
+            return new AvailabilityZoneMapping(availabilityZone, isAvailable, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumePatch"/>. </summary>
@@ -106,36 +136,32 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="smbNonBrowsable"> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </param>
         /// <returns> A new <see cref="Models.NetAppVolumePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetAppFileServiceLevel? serviceLevel = null, long? usageThreshold = null, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = null, float? throughputMibps = null, ResourceIdentifier snapshotPolicyId = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, string unixPermissions = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, bool? isSnapshotDirectoryVisible = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null)
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, float? throughputMibps, ResourceIdentifier snapshotPolicyId = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, string unixPermissions = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, bool? isSnapshotDirectoryVisible = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null)
         {
-            tags ??= new Dictionary<string, string>();
-            exportRules ??= new List<NetAppVolumeExportPolicyRule>();
-
-            return new NetAppVolumePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                serviceLevel,
-                usageThreshold,
-                exportRules != null ? new VolumePatchPropertiesExportPolicy(exportRules?.ToList(), serializedAdditionalRawData: null) : null,
-                null, //protocolTypes
-                throughputMibps,
-                snapshotPolicyId != null ? new NetAppVolumePatchDataProtection(null, new VolumeSnapshotProperties(snapshotPolicyId, serializedAdditionalRawData: null), null, serializedAdditionalRawData: null) : null,
-                isDefaultQuotaEnabled,
-                defaultUserQuotaInKiBs,
-                defaultGroupQuotaInKiBs,
-                unixPermissions,
-                isCoolAccessEnabled,
-                coolnessPeriod,
-                coolAccessRetrievalPolicy,
-                null,
-                isSnapshotDirectoryVisible,
-                smbAccessBasedEnumeration,
-                smbNonBrowsable,
-                serializedAdditionalRawData: null);
+            return CreateNetAppVolumePatchCompat(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                serviceLevel: serviceLevel,
+                usageThreshold: usageThreshold,
+                protocolTypes: default,
+                throughputMibps: throughputMibps,
+                dataProtection: snapshotPolicyId != null ? new NetAppVolumePatchDataProtection { SnapshotPolicyId = snapshotPolicyId } : default,
+                isDefaultQuotaEnabled: isDefaultQuotaEnabled,
+                defaultUserQuotaInKiBs: defaultUserQuotaInKiBs,
+                defaultGroupQuotaInKiBs: defaultGroupQuotaInKiBs,
+                unixPermissions: unixPermissions,
+                isCoolAccessEnabled: isCoolAccessEnabled,
+                coolnessPeriod: coolnessPeriod,
+                coolAccessRetrievalPolicy: coolAccessRetrievalPolicy,
+                coolAccessTieringPolicy: default,
+                isSnapshotDirectoryVisible: isSnapshotDirectoryVisible,
+                smbAccessBasedEnumeration: smbAccessBasedEnumeration,
+                smbNonBrowsable: smbNonBrowsable,
+                exportRules: exportRules);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppBackupData"/>. </summary>
@@ -156,24 +182,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="backupPolicyResourceId"> ResourceId used to identify the backup policy. </param>
         /// <returns> A new <see cref="NetApp.NetAppBackupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string backupId, DateTimeOffset? createdOn, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, ResourceIdentifier volumeResourceId = null, bool? useExistingSnapshot = null, string snapshotName = null, string backupPolicyResourceId = null)
+        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, ResourceIdentifier volumeResourceId = null, bool? useExistingSnapshot = null, string snapshotName = null, string backupPolicyResourceId = null)
         {
-            return NetAppBackupData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                backupId: backupId,
-                createdOn: createdOn,
-                provisioningState: provisioningState,
-                size: size,
-                label: label,
-                backupType: backupType,
-                failureReason: failureReason,
-                volumeResourceId: volumeResourceId,
-                useExistingSnapshot: useExistingSnapshot,
-                snapshotName: snapshotName,
-                new ResourceIdentifier(backupPolicyResourceId));
+            return CreateNetAppBackupDataCompat(id, name, resourceType, systemData, backupId, createdOn, snapshotCreationOn: null, completionOn: null, provisioningState, size, label, backupType, failureReason, volumeResourceId, useExistingSnapshot, snapshotName, backupPolicyResourceId is null ? null : new ResourceIdentifier(backupPolicyResourceId), isLargeVolume: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppKeyVaultProperties"/>. </summary>
@@ -183,150 +194,365 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
         /// <param name="status"> Status of the KeyVault connection. </param>
         /// <returns> A new <see cref="Models.NetAppKeyVaultProperties"/> instance for mocking. </returns>
-        public static NetAppKeyVaultProperties NetAppKeyVaultProperties(string keyVaultId = null, Uri keyVaultUri = null, string keyName = null, string keyVaultResourceId = null, NetAppKeyVaultStatus? status = null)
+        public static NetAppKeyVaultProperties NetAppKeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, string keyVaultResourceId, NetAppKeyVaultStatus? status = null)
         {
-            ResourceIdentifier _keyVaultResourceId = new ResourceIdentifier(keyVaultResourceId);
-            return new NetAppKeyVaultProperties(
+            return NetAppKeyVaultProperties(
                 keyVaultId,
                 keyVaultUri,
                 keyName,
-                _keyVaultResourceId,
-                status,
-                serializedAdditionalRawData: null);
+                keyVaultResourceId != null ? new ResourceIdentifier(keyVaultResourceId) : null,
+                status);
         }
 
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.NetAppSubscriptionQuotaItemData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="current"> The current quota value. </param>
+        /// <param name="default"> The default quota value. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppSubscriptionQuotaItem" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, Guid? poolId = null, long size = default, NetAppFileServiceLevel serviceLevel = default, string provisioningState = null, float? totalThroughputMibps = null, float? utilizedThroughputMibps = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, CapacityPoolEncryptionType? encryptionType = null)
+        public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default)
         {
-            return CapacityPoolData(id, name, resourceType, systemData, tags, location, etag, poolId, size, serviceLevel, provisioningState, totalThroughputMibps, utilizedThroughputMibps, customThroughputMibps: null, qosType, isCoolAccessEnabled, encryptionType);
+            return new NetAppSubscriptionQuotaItem(id, name, resourceType, systemData, current, @default, null);
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, Guid? poolId = null, long size = default, NetAppFileServiceLevel serviceLevel = default, string provisioningState = null, float? totalThroughputMibps = null, float? utilizedThroughputMibps = null, float? customThroughputMibps = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, CapacityPoolEncryptionType? encryptionType = null)
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeReplicationStatus"/>. </summary>
+        /// <param name="isHealthy"> Replication health check. </param>
+        /// <param name="relationshipStatus"> Status of the mirror relationship. </param>
+        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a replication. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
+        /// <param name="totalProgress"> The progress of the replication. </param>
+        /// <param name="errorMessage"> Displays error message if the replication is in an error state. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumeReplicationStatus"/> instance for mocking. </returns>
+        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
         {
-            return CapacityPoolData(id, name, resourceType, systemData, tags, location, etag, poolId, size, serviceLevel, provisioningState, totalThroughputMibps, utilizedThroughputMibps, customThroughputMibps.HasValue ? (int?)customThroughputMibps.Value : null, qosType, isCoolAccessEnabled, encryptionType);
+            return new NetAppVolumeReplicationStatus(
+                isHealthy,
+                relationshipStatus.HasValue ? new VolumeReplicationRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeReplicationRelationshipStatus?)null,
+                mirrorState,
+                totalProgress,
+                errorMessage,
+                additionalBinaryDataProperties: null);
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, Guid? poolId = null, long size = default, NetAppFileServiceLevel serviceLevel = default, string provisioningState = null, float? totalThroughputMibps = null, float? utilizedThroughputMibps = null, int? customThroughputMibps = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, CapacityPoolEncryptionType? encryptionType = null)
+        /// <summary> Initializes a new instance of <see cref="NetApp.CapacityPoolData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="poolId"> UUID v4 used to identify the Pool. </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="serviceLevel"> The service level of the file system. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="totalThroughputMibps"> Total throughput of pool in MiB/s. </param>
+        /// <param name="utilizedThroughputMibps"> Utilized throughput of pool in MiB/s. </param>
+        /// <param name="customThroughputMibps"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
+        /// <param name="qosType"> The qos type of the pool. </param>
+        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
+        /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
+        /// <returns> A new <see cref="NetApp.CapacityPoolData"/> instance for mocking. </returns>
+        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, Guid? poolId = null, long size = default, NetAppFileServiceLevel serviceLevel = default, string provisioningState = null, float? totalThroughputMibps = null, float? utilizedThroughputMibps = null, float? customThroughputMibps = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, CapacityPoolEncryptionType? encryptionType = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CapacityPoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                etag,
-                poolId,
-                size,
-                serviceLevel,
-                provisioningState,
-                totalThroughputMibps,
-                utilizedThroughputMibps,
-                customThroughputMibps,
-                qosType,
-                isCoolAccessEnabled,
-                encryptionType,
-                serializedAdditionalRawData: null);
+            return CapacityPoolData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, poolId: poolId, size: size, serviceLevel: serviceLevel, provisioningState: provisioningState, totalThroughputMibps: totalThroughputMibps, utilizedThroughputMibps: utilizedThroughputMibps, customThroughputMibpsInt: customThroughputMibps.HasValue ? (int?)customThroughputMibps.Value : null, qosType: qosType, isCoolAccessEnabled: isCoolAccessEnabled, encryptionType: encryptionType, eTag: etag);
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, long? size = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, int? customThroughputMibpsInt = null)
+        /// <summary> Initializes a new instance of <see cref="Models.CapacityPoolPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="qosType"> The qos type of the pool. </param>
+        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
+        /// <param name="customThroughputMibps"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
+        /// <returns> A new <see cref="Models.CapacityPoolPatch"/> instance for mocking. </returns>
+        public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, long? size = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, float? customThroughputMibps = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CapacityPoolPatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                size,
-                qosType,
-                isCoolAccessEnabled,
-                customThroughputMibpsInt,
-                serializedAdditionalRawData: null);
+            return CapacityPoolPatch(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                size: size,
+                qosType: qosType,
+                isCoolAccessEnabled: isCoolAccessEnabled,
+                customThroughputMibpsInt: customThroughputMibps.HasValue ? (int?)Convert.ToInt32(customThroughputMibps.Value) : null);
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityPoolPatch CapacityPoolPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, long? size = null, CapacityPoolQosType? qosType = null, bool? isCoolAccessEnabled = null, float? customThroughputMibps = null)
-        {
-            return CapacityPoolPatch(id, name, resourceType, systemData, tags, location, size, qosType, isCoolAccessEnabled, customThroughputMibpsInt: customThroughputMibps.HasValue ? (int?)customThroughputMibps.Value : null);
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
-        {
-            VolumeRestoreRelationshipStatus? legacyRelationshipStatus = relationshipStatus.HasValue ? new VolumeRestoreRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeRestoreRelationshipStatus?)null;
-            return NetAppRestoreStatus(isHealthy, legacyRelationshipStatus, mirrorState, unhealthyReason, errorMessage, totalTransferBytes);
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, VolumeRestoreRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
-        {
-            return NetAppRestoreStatus(isHealthy, relationshipStatus, mirrorState, unhealthyReason, errorMessage, totalTransferBytes);
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, VolumeBackupRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
-        {
-            return NetAppVolumeBackupStatus(isHealthy, relationshipStatus, mirrorState, unhealthyReason, errorMessage, lastTransferSize, lastTransferType, totalTransferBytes, transferProgressBytes);
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy = null, VolumeReplicationRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
-        {
-            return NetAppVolumeReplicationStatus(isHealthy, relationshipStatus, mirrorState, totalProgress, errorMessage);
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
-        {
-            VolumeReplicationRelationshipStatus? legacyRelationshipStatus = relationshipStatus.HasValue ? new VolumeReplicationRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeReplicationRelationshipStatus?)null;
-            return NetAppVolumeReplicationStatus(isHealthy, legacyRelationshipStatus, mirrorState, totalProgress, errorMessage);
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeBackupStatus"/>. </summary>
+        /// <param name="isHealthy"> Backup health status. </param>
+        /// <param name="relationshipStatus"> Status of the backup mirror relationship. </param>
+        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a backup. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
+        /// <param name="unhealthyReason"> Reason for the unhealthy backup relationship. </param>
+        /// <param name="errorMessage"> Displays error message if the backup is in an error state. </param>
+        /// <param name="lastTransferSize"> Displays the last transfer size. </param>
+        /// <param name="lastTransferType"> Displays the last transfer type. </param>
+        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
+        /// <param name="transferProgressBytes"> Displays the total number of bytes transferred for the ongoing operation. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumeBackupStatus"/> instance for mocking. </returns>
         public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
         {
-            VolumeBackupRelationshipStatus? legacyRelationshipStatus = relationshipStatus.HasValue ? new VolumeBackupRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeBackupRelationshipStatus?)null;
-            return NetAppVolumeBackupStatus(isHealthy, legacyRelationshipStatus, mirrorState, unhealthyReason, errorMessage, lastTransferSize, lastTransferType, totalTransferBytes, transferProgressBytes);
+            return new NetAppVolumeBackupStatus(
+                isHealthy,
+                relationshipStatus.HasValue ? new VolumeBackupRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeBackupRelationshipStatus?)null,
+                mirrorState,
+                unhealthyReason,
+                errorMessage,
+                lastTransferSize,
+                lastTransferType,
+                totalTransferBytes,
+                transferProgressBytes,
+                additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Initializes a new instance of NetAppVolumeBackupStatus. </summary>
+        /// <param name="isHealthy"> Backup health status. </param>
+        /// <param name="relationshipStatus"> Status of the backup mirror relationship. </param>
+        /// <param name="mirrorState"> The status of the backup. </param>
+        /// <param name="unhealthyReason"> Reason for the unhealthy backup relationship. </param>
+        /// <param name="errorMessage"> Displays error message if the backup is in an error state. </param>
+        /// <param name="lastTransferSize"> Displays the last transfer size. </param>
+        /// <param name="lastTransferType"> Displays the last transfer type. </param>
+        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppVolumeBackupStatus" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null)
+        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? lastTransferSize, string lastTransferType, long? totalTransferBytes)
         {
-            return NetAppVolumeBackupStatus(isHealthy, relationshipStatus, mirrorState, unhealthyReason, errorMessage, lastTransferSize, lastTransferType, totalTransferBytes, transferProgressBytes: null);
+            return NetAppVolumeBackupStatus(isHealthy: isHealthy, relationshipStatus: relationshipStatus, mirrorState: mirrorState, unhealthyReason: unhealthyReason, errorMessage: errorMessage, lastTransferSize: lastTransferSize, lastTransferType: lastTransferType, totalTransferBytes: totalTransferBytes, transferProgressBytes: default);
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, int? current = null, int? @default = null)
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppRestoreStatus"/>. </summary>
+        /// <param name="isHealthy"> Restore health status. </param>
+        /// <param name="relationshipStatus"> Status of the restore SnapMirror relationship. </param>
+        /// <param name="mirrorState"> The mirror state property describes the current status of data replication for a restore. It provides insight into whether the data is actively being mirrored, if the replication process has been paused, or if it has yet to be initialized. </param>
+        /// <param name="unhealthyReason"> Reason for the unhealthy restore relationship. </param>
+        /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
+        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
+        /// <returns> A new <see cref="Models.NetAppRestoreStatus"/> instance for mocking. </returns>
+        public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy = null, NetAppRelationshipStatus? relationshipStatus = null, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
         {
-            return NetAppSubscriptionQuotaItem(id, name, resourceType, systemData, current, @default, usage: null);
+            return new NetAppRestoreStatus(
+                isHealthy,
+                relationshipStatus.HasValue ? new VolumeRestoreRelationshipStatus(relationshipStatus.Value.ToString()) : (VolumeRestoreRelationshipStatus?)null,
+                mirrorState,
+                unhealthyReason,
+                errorMessage,
+                totalTransferBytes,
+                additionalBinaryDataProperties: null);
         }
 
+        // Backward-compat ModelFactory overloads with specific status types
+        // Backward-compat: NetAppVolumeReplicationStatus factory with VolumeReplicationRelationshipStatus.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, int? current = null, int? @default = null, int? usage = null)
+        public static NetAppVolumeReplicationStatus NetAppVolumeReplicationStatus(bool? isHealthy, VolumeReplicationRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState = null, string totalProgress = null, string errorMessage = null)
+        {
+            return new NetAppVolumeReplicationStatus(isHealthy, relationshipStatus, mirrorState, totalProgress, errorMessage, additionalBinaryDataProperties: null);
+        }
+
+        // Backward-compat: NetAppVolumeBackupStatus factory with VolumeBackupRelationshipStatus.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeBackupStatus NetAppVolumeBackupStatus(bool? isHealthy, VolumeBackupRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? lastTransferSize = null, string lastTransferType = null, long? totalTransferBytes = null, long? transferProgressBytes = null)
+        {
+            return new NetAppVolumeBackupStatus(isHealthy, relationshipStatus, mirrorState, unhealthyReason, errorMessage, lastTransferSize, lastTransferType, totalTransferBytes, transferProgressBytes, additionalBinaryDataProperties: null);
+        }
+
+        // Backward-compat: NetAppRestoreStatus factory with VolumeRestoreRelationshipStatus.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppRestoreStatus NetAppRestoreStatus(bool? isHealthy, VolumeRestoreRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState = null, string unhealthyReason = null, string errorMessage = null, long? totalTransferBytes = null)
+        {
+            return new NetAppRestoreStatus(isHealthy, relationshipStatus, mirrorState, unhealthyReason, errorMessage, totalTransferBytes, additionalBinaryDataProperties: null);
+        }
+
+        // Backward-compat: NetAppSubscriptionQuotaItem factory (7-arg overload).
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppSubscriptionQuotaItem NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default, int? usage)
         {
             return new NetAppSubscriptionQuotaItem(id, name, resourceType, systemData, current, @default, usage);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeQuotaRuleData NetAppVolumeQuotaRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetAppProvisioningState? provisioningState = null, long? quotaSizeInKiBs = null, NetAppVolumeQuotaType? quotaType = null, string quotaTarget = null)
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = null, NetAppAccountEncryption encryption = null, bool? disableShowmount = null, string nfsV4IdDomain = null, MultiAdStatus? multiAdStatus = null)
         {
-            NetAppVolumeQuotaRuleProvisioningState? quotaRuleProvisioningState = provisioningState.HasValue ? new NetAppVolumeQuotaRuleProvisioningState(provisioningState.Value.ToString()) : (NetAppVolumeQuotaRuleProvisioningState?)null;
-            return NetAppVolumeQuotaRuleData(id, name, resourceType, systemData, tags, location, quotaRuleProvisioningState, quotaSizeInKiBs, quotaType, quotaTarget);
+            _ = provisioningState;
+            _ = disableShowmount;
+            _ = multiAdStatus;
+            return NetAppAccountPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, identity: identity, tags: tags, activeDirectories: activeDirectories, encryption: encryption, nfsV4IdDomain: nfsV4IdDomain, ldapConfiguration: default, entraIdConfig: default);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppVolumeQuotaRulePatch NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags = null, NetAppProvisioningState? provisioningState = null, long? quotaSizeInKiBs = null, NetAppVolumeQuotaType? quotaType = null, string quotaTarget = null)
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = null, NetAppAccountEncryption encryption = null, bool? disableShowmount = null)
         {
-            NetAppVolumeQuotaRuleProvisioningState? quotaRuleProvisioningState = provisioningState.HasValue ? new NetAppVolumeQuotaRuleProvisioningState(provisioningState.Value.ToString()) : (NetAppVolumeQuotaRuleProvisioningState?)null;
-            return NetAppVolumeQuotaRulePatch(tags, quotaRuleProvisioningState, quotaSizeInKiBs, quotaType, quotaTarget);
+            _ = provisioningState;
+            _ = disableShowmount;
+            return NetAppAccountPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, identity: identity, tags: tags, activeDirectories: activeDirectories, encryption: encryption, nfsV4IdDomain: default, ldapConfiguration: default, entraIdConfig: default);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType)
+        {
+            return CapacityPoolData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, poolId: poolId, size: size, serviceLevel: serviceLevel, provisioningState: provisioningState, totalThroughputMibps: totalThroughputMibps, utilizedThroughputMibps: utilizedThroughputMibps, customThroughputMibpsInt: default, qosType: qosType, isCoolAccessEnabled: isCoolAccessEnabled, encryptionType: encryptionType, eTag: etag);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, Guid? poolId, long size, NetAppFileServiceLevel serviceLevel, string provisioningState, float? totalThroughputMibps, float? utilizedThroughputMibps, int? customThroughputMibps, CapacityPoolQosType? qosType, bool? isCoolAccessEnabled, CapacityPoolEncryptionType? encryptionType)
+        {
+            return CapacityPoolData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, poolId: poolId, size: size, serviceLevel: serviceLevel, provisioningState: provisioningState, totalThroughputMibps: totalThroughputMibps, utilizedThroughputMibps: utilizedThroughputMibps, customThroughputMibpsInt: customThroughputMibps, qosType: qosType, isCoolAccessEnabled: isCoolAccessEnabled, encryptionType: encryptionType, eTag: etag);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
+        {
+            return CreateNetAppVolumePatchCompat(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                serviceLevel: serviceLevel,
+                usageThreshold: usageThreshold,
+                protocolTypes: protocolTypes,
+                throughputMibps: throughputMibps,
+                dataProtection: dataProtection,
+                isDefaultQuotaEnabled: isDefaultQuotaEnabled,
+                defaultUserQuotaInKiBs: defaultUserQuotaInKiBs,
+                defaultGroupQuotaInKiBs: defaultGroupQuotaInKiBs,
+                unixPermissions: unixPermissions,
+                isCoolAccessEnabled: isCoolAccessEnabled,
+                coolnessPeriod: coolnessPeriod,
+                coolAccessRetrievalPolicy: coolAccessRetrievalPolicy,
+                coolAccessTieringPolicy: coolAccessTieringPolicy,
+                isSnapshotDirectoryVisible: isSnapshotDirectoryVisible,
+                smbAccessBasedEnumeration: smbAccessBasedEnumeration,
+                smbNonBrowsable: smbNonBrowsable,
+                exportRules: exportRules);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumePatch NetAppVolumePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable)
+        {
+            return CreateNetAppVolumePatchCompat(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                serviceLevel: serviceLevel,
+                usageThreshold: usageThreshold,
+                protocolTypes: protocolTypes,
+                throughputMibps: throughputMibps,
+                dataProtection: dataProtection,
+                isDefaultQuotaEnabled: isDefaultQuotaEnabled,
+                defaultUserQuotaInKiBs: defaultUserQuotaInKiBs,
+                defaultGroupQuotaInKiBs: defaultGroupQuotaInKiBs,
+                unixPermissions: unixPermissions,
+                isCoolAccessEnabled: isCoolAccessEnabled,
+                coolnessPeriod: coolnessPeriod,
+                coolAccessRetrievalPolicy: coolAccessRetrievalPolicy,
+                coolAccessTieringPolicy: default,
+                isSnapshotDirectoryVisible: isSnapshotDirectoryVisible,
+                smbAccessBasedEnumeration: smbAccessBasedEnumeration,
+                smbNonBrowsable: smbNonBrowsable,
+                exportRules: exportRules);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyResourceId, bool? isLargeVolume)
+        {
+            return CreateNetAppBackupDataCompat(id, name, resourceType, systemData, backupId, createdOn, snapshotCreationOn, completionOn, provisioningState, size, label, backupType, failureReason, volumeResourceId, useExistingSnapshot, snapshotName, backupPolicyResourceId, isLargeVolume);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyResourceId)
+        {
+            return CreateNetAppBackupDataCompat(id, name, resourceType, systemData, backupId, createdOn, snapshotCreationOn: null, completionOn: null, provisioningState, size, label, backupType, failureReason, volumeResourceId, useExistingSnapshot, snapshotName, backupPolicyResourceId, isLargeVolume: null);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IEnumerable<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes)
+        {
+            return CreateNetAppVolumeDataCompat(id, name, resourceType, systemData, tags, location, etag, zones, fileSystemId, creationToken, serviceLevel, usageThreshold, exportRules, protocolTypes, provisioningState, snapshotId, deleteBaseSnapshot, backupId, baremetalTenantId, subnetId, networkFeatures, effectiveNetworkFeatures, networkSiblingSetId, storageToNetworkProximity, mountTargets, volumeType, dataProtection, acceptGrowCapacityPoolForShortTermCloneSplit, isRestoring, isSnapshotDirectoryVisible, isKerberosEnabled, securityStyle, isSmbEncryptionEnabled, smbAccessBasedEnumeration, smbNonBrowsable, isSmbContinuouslyAvailable, throughputMibps, actualThroughputMibps, encryptionKeySource, keyVaultPrivateEndpointResourceId, isLdapEnabled, isCoolAccessEnabled, coolnessPeriod, coolAccessRetrievalPolicy, coolAccessTieringPolicy, unixPermissions, cloneProgress, fileAccessLogs, avsDataStore, dataStoreResourceId, isDefaultQuotaEnabled, defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs, maximumNumberOfFiles, volumeGroupName, capacityPoolResourceId, proximityPlacementGroupId, t2Network, volumeSpecName, isEncrypted, placementRules, enableSubvolumes, provisionedAvailabilityZone, isLargeVolume, originatingResourceId, inheritedSizeInBytes);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IEnumerable<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId)
+        {
+            return CreateNetAppVolumeDataCompat(id, name, resourceType, systemData, tags, location, etag, zones, fileSystemId, creationToken, serviceLevel, usageThreshold, exportRules, protocolTypes, provisioningState, snapshotId, deleteBaseSnapshot, backupId, baremetalTenantId, subnetId, networkFeatures, effectiveNetworkFeatures, networkSiblingSetId, storageToNetworkProximity, mountTargets, volumeType, dataProtection, default, isRestoring, isSnapshotDirectoryVisible, isKerberosEnabled, securityStyle, isSmbEncryptionEnabled, smbAccessBasedEnumeration, smbNonBrowsable, isSmbContinuouslyAvailable, throughputMibps, actualThroughputMibps, encryptionKeySource, keyVaultPrivateEndpointResourceId, isLdapEnabled, isCoolAccessEnabled, coolnessPeriod, coolAccessRetrievalPolicy, coolAccessTieringPolicy, unixPermissions, cloneProgress, fileAccessLogs, avsDataStore, dataStoreResourceId, isDefaultQuotaEnabled, defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs, maximumNumberOfFiles, volumeGroupName, capacityPoolResourceId, proximityPlacementGroupId, t2Network, volumeSpecName, isEncrypted, placementRules, enableSubvolumes, provisionedAvailabilityZone, isLargeVolume, originatingResourceId, default);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IEnumerable<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId)
+        {
+            return CreateNetAppVolumeDataCompat(id, name, resourceType, systemData, tags, location, etag, zones, fileSystemId, creationToken, serviceLevel, usageThreshold, exportRules, protocolTypes, provisioningState, snapshotId, deleteBaseSnapshot, backupId, baremetalTenantId, subnetId, networkFeatures, effectiveNetworkFeatures, networkSiblingSetId, storageToNetworkProximity, mountTargets, volumeType, dataProtection, default, isRestoring, isSnapshotDirectoryVisible, isKerberosEnabled, securityStyle, isSmbEncryptionEnabled, smbAccessBasedEnumeration, smbNonBrowsable, isSmbContinuouslyAvailable, throughputMibps, actualThroughputMibps, encryptionKeySource, keyVaultPrivateEndpointResourceId, isLdapEnabled, isCoolAccessEnabled, coolnessPeriod, coolAccessRetrievalPolicy, default, unixPermissions, cloneProgress, fileAccessLogs, avsDataStore, dataStoreResourceId, isDefaultQuotaEnabled, defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs, maximumNumberOfFiles, volumeGroupName, capacityPoolResourceId, proximityPlacementGroupId, t2Network, volumeSpecName, isEncrypted, placementRules, enableSubvolumes, provisionedAvailabilityZone, isLargeVolume, originatingResourceId, default);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IEnumerable<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId)
+        {
+            return CreateNetAppVolumeDataCompat(id, name, resourceType, systemData, tags, location, etag, zones, fileSystemId, creationToken, serviceLevel, usageThreshold, exportRules, protocolTypes, provisioningState, snapshotId, deleteBaseSnapshot, backupId, baremetalTenantId, subnetId, networkFeatures, default, networkSiblingSetId, storageToNetworkProximity, mountTargets, volumeType, dataProtection, default, isRestoring, isSnapshotDirectoryVisible, isKerberosEnabled, securityStyle, isSmbEncryptionEnabled, smbAccessBasedEnumeration, smbNonBrowsable, isSmbContinuouslyAvailable, throughputMibps, actualThroughputMibps, encryptionKeySource, keyVaultPrivateEndpointResourceId, isLdapEnabled, isCoolAccessEnabled, coolnessPeriod, coolAccessRetrievalPolicy, default, unixPermissions, cloneProgress, fileAccessLogs, avsDataStore, dataStoreResourceId, isDefaultQuotaEnabled, defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs, maximumNumberOfFiles, volumeGroupName, capacityPoolResourceId, proximityPlacementGroupId, t2Network, volumeSpecName, isEncrypted, placementRules, enableSubvolumes, provisionedAvailabilityZone, isLargeVolume, originatingResourceId, default);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IEnumerable<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId)
+        {
+            return CreateNetAppVolumeDataCompat(id, name, resourceType, systemData, tags, location, etag, zones, fileSystemId, creationToken, serviceLevel, usageThreshold, exportRules, protocolTypes, provisioningState, snapshotId, deleteBaseSnapshot, backupId, baremetalTenantId, subnetId, networkFeatures, default, networkSiblingSetId, storageToNetworkProximity, mountTargets, volumeType, dataProtection, default, isRestoring, isSnapshotDirectoryVisible, isKerberosEnabled, securityStyle, isSmbEncryptionEnabled, smbAccessBasedEnumeration, smbNonBrowsable, isSmbContinuouslyAvailable, throughputMibps, actualThroughputMibps, encryptionKeySource, keyVaultPrivateEndpointResourceId, isLdapEnabled, isCoolAccessEnabled, coolnessPeriod, default, default, unixPermissions, cloneProgress, fileAccessLogs, avsDataStore, dataStoreResourceId, isDefaultQuotaEnabled, defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs, maximumNumberOfFiles, volumeGroupName, capacityPoolResourceId, proximityPlacementGroupId, t2Network, volumeSpecName, isEncrypted, placementRules, enableSubvolumes, provisionedAvailabilityZone, isLargeVolume, originatingResourceId, default);
+        }
+
+        private static NetAppVolumePatch CreateNetAppVolumePatchCompat(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppFileServiceLevel? serviceLevel, long? usageThreshold, IEnumerable<string> protocolTypes, float? throughputMibps, NetAppVolumePatchDataProtection dataProtection, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, string unixPermissions, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, bool? isSnapshotDirectoryVisible, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, IEnumerable<NetAppVolumeExportPolicyRule> exportRules)
+        {
+            tags ??= new Dictionary<string, string>();
+            return new NetAppVolumePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                serviceLevel is null && usageThreshold is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && exportRules is null ? default : new VolumePatchProperties(
+                    serviceLevel,
+                    usageThreshold,
+                    new VolumePatchPropertiesExportPolicy((exportRules ?? Array.Empty<NetAppVolumeExportPolicyRule>()).ToList(), null),
+                    (protocolTypes ?? Array.Empty<string>()).ToList(),
+                    throughputMibps,
+                    dataProtection,
+                    isDefaultQuotaEnabled,
+                    defaultUserQuotaInKiBs,
+                    defaultGroupQuotaInKiBs,
+                    unixPermissions,
+                    isCoolAccessEnabled,
+                    coolnessPeriod,
+                    coolAccessRetrievalPolicy,
+                    coolAccessTieringPolicy,
+                    isSnapshotDirectoryVisible,
+                    smbAccessBasedEnumeration,
+                    smbNonBrowsable,
+                    null),
+                additionalBinaryDataProperties: null);
+        }
+
+        private static NetAppVolumeData CreateNetAppVolumeDataCompat(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IEnumerable<string> zones, Guid? fileSystemId, string creationToken, NetAppFileServiceLevel? serviceLevel, long usageThreshold, IEnumerable<NetAppVolumeExportPolicyRule> exportRules, IEnumerable<string> protocolTypes, string provisioningState, string snapshotId, bool? deleteBaseSnapshot, string backupId, string baremetalTenantId, ResourceIdentifier subnetId, NetAppNetworkFeature? networkFeatures, NetAppNetworkFeature? effectiveNetworkFeatures, Guid? networkSiblingSetId, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity, IEnumerable<NetAppVolumeMountTarget> mountTargets, string volumeType, NetAppVolumeDataProtection dataProtection, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit, bool? isRestoring, bool? isSnapshotDirectoryVisible, bool? isKerberosEnabled, NetAppVolumeSecurityStyle? securityStyle, bool? isSmbEncryptionEnabled, SmbAccessBasedEnumeration? smbAccessBasedEnumeration, SmbNonBrowsable? smbNonBrowsable, bool? isSmbContinuouslyAvailable, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource? encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, bool? isLdapEnabled, bool? isCoolAccessEnabled, int? coolnessPeriod, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy, CoolAccessTieringPolicy? coolAccessTieringPolicy, string unixPermissions, int? cloneProgress, NetAppFileAccessLog? fileAccessLogs, NetAppAvsDataStore? avsDataStore, IEnumerable<ResourceIdentifier> dataStoreResourceId, bool? isDefaultQuotaEnabled, long? defaultUserQuotaInKiBs, long? defaultGroupQuotaInKiBs, long? maximumNumberOfFiles, string volumeGroupName, ResourceIdentifier capacityPoolResourceId, ResourceIdentifier proximityPlacementGroupId, string t2Network, string volumeSpecName, bool? isEncrypted, IEnumerable<NetAppVolumePlacementRule> placementRules, EnableNetAppSubvolume? enableSubvolumes, string provisionedAvailabilityZone, bool? isLargeVolume, ResourceIdentifier originatingResourceId, long? inheritedSizeInBytes)
+        {
+            _ = etag;
+            return NetAppVolumeData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, fileSystemId: fileSystemId, creationToken: creationToken, serviceLevel: serviceLevel, usageThreshold: usageThreshold, protocolTypes: protocolTypes, provisioningState: provisioningState, snapshotId: snapshotId, deleteBaseSnapshot: deleteBaseSnapshot, backupId: backupId, baremetalTenantId: baremetalTenantId, subnetId: subnetId, networkFeatures: networkFeatures, effectiveNetworkFeatures: effectiveNetworkFeatures, networkSiblingSetId: networkSiblingSetId, storageToNetworkProximity: storageToNetworkProximity, mountTargets: mountTargets, volumeType: volumeType, dataProtection: dataProtection, acceptGrowCapacityPoolForShortTermCloneSplit: acceptGrowCapacityPoolForShortTermCloneSplit, isRestoring: isRestoring, isSnapshotDirectoryVisible: isSnapshotDirectoryVisible, isKerberosEnabled: isKerberosEnabled, securityStyle: securityStyle, isSmbEncryptionEnabled: isSmbEncryptionEnabled, smbAccessBasedEnumeration: smbAccessBasedEnumeration, smbNonBrowsable: smbNonBrowsable, isSmbContinuouslyAvailable: isSmbContinuouslyAvailable, throughputMibps: throughputMibps, actualThroughputMibps: actualThroughputMibps, encryptionKeySource: encryptionKeySource, keyVaultPrivateEndpointResourceId: keyVaultPrivateEndpointResourceId, isLdapEnabled: isLdapEnabled, ldapServerType: default, isCoolAccessEnabled: isCoolAccessEnabled, coolnessPeriod: coolnessPeriod, coolAccessRetrievalPolicy: coolAccessRetrievalPolicy, coolAccessTieringPolicy: coolAccessTieringPolicy, unixPermissions: unixPermissions, cloneProgress: cloneProgress, fileAccessLogs: fileAccessLogs, avsDataStore: avsDataStore, dataStoreResourceId: dataStoreResourceId, isDefaultQuotaEnabled: isDefaultQuotaEnabled, defaultUserQuotaInKiBs: defaultUserQuotaInKiBs, defaultGroupQuotaInKiBs: defaultGroupQuotaInKiBs, maximumNumberOfFiles: maximumNumberOfFiles, volumeGroupName: volumeGroupName, capacityPoolResourceId: capacityPoolResourceId, proximityPlacementGroupId: proximityPlacementGroupId, t2Network: t2Network, volumeSpecName: volumeSpecName, isEncrypted: isEncrypted, placementRules: placementRules, enableSubvolumes: enableSubvolumes, provisionedAvailabilityZone: provisionedAvailabilityZone, isLargeVolume: isLargeVolume, largeVolumeType: default, originatingResourceId: originatingResourceId, inheritedSizeInBytes: inheritedSizeInBytes, language: default, breakthroughMode: default, exportRules: exportRules, zones: zones);
+        }
+
+        private static NetAppBackupData CreateNetAppBackupDataCompat(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyResourceId, bool? isLargeVolume)
+        {
+            var properties = new BackupProperties(backupId, createdOn, snapshotCreationOn, completionOn, provisioningState, size, label, backupType, failureReason, volumeResourceId, useExistingSnapshot, snapshotName, backupPolicyResourceId, isLargeVolume, null);
+            return new NetAppBackupData(id, name, resourceType, systemData, properties, additionalBinaryDataProperties: null);
         }
     }
 }

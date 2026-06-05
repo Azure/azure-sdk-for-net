@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.StorageActions
         private readonly string _storageTaskName;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of StorageTaskAssignmentGetStorageTaskAssignmentsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The StorageTaskAssignment client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="storageTaskName"> The name of the storage task within the specified resource group. Storage task names must be between 3 and 18 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public StorageTaskAssignmentGetStorageTaskAssignmentsCollectionResultOfT(StorageTaskAssignment client, Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public StorageTaskAssignmentGetStorageTaskAssignmentsCollectionResultOfT(StorageTaskAssignment client, Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.StorageActions
             _storageTaskName = storageTaskName;
             _maxpagesize = maxpagesize;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of StorageTaskAssignmentGetStorageTaskAssignmentsCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.StorageActions
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetStorageTaskAssignmentsRequest(nextLink, _subscriptionId, _resourceGroupName, _storageTaskName, _maxpagesize, _context) : _client.CreateGetStorageTaskAssignmentsRequest(_subscriptionId, _resourceGroupName, _storageTaskName, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTaskResource.GetStorageTaskAssignments");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

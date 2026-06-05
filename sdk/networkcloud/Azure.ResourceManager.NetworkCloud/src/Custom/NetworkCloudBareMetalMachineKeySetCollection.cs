@@ -9,13 +9,9 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudBareMetalMachineKeySetResource"/> and their operations.
-    /// Each <see cref="NetworkCloudBareMetalMachineKeySetResource"/> in the collection will belong to the same instance of <see cref="NetworkCloudClusterResource"/>.
-    /// To get a <see cref="NetworkCloudBareMetalMachineKeySetCollection"/> instance call the GetNetworkCloudBareMetalMachineKeySets method from an instance of <see cref="NetworkCloudClusterResource"/>.
-    /// </summary>
     public partial class NetworkCloudBareMetalMachineKeySetCollection : ArmCollection, IEnumerable<NetworkCloudBareMetalMachineKeySetResource>, IAsyncEnumerable<NetworkCloudBareMetalMachineKeySetResource>
     {
         /// <summary>
@@ -43,7 +39,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, bareMetalMachineKeySetName, data, null, null, cancellationToken);
+            => CreateOrUpdate(waitUntil, bareMetalMachineKeySetName, data, null, cancellationToken);
 
         /// <summary>
         /// Create a new bare metal machine key set or update the existing one for the provided cluster.
@@ -70,7 +66,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, bareMetalMachineKeySetName, data, null, null, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, bareMetalMachineKeySetName, data, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Get a list of bare metal machine key sets for the provided cluster.
@@ -82,10 +78,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BareMetalMachineKeySets_ListByCluster</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -111,10 +103,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>BareMetalMachineKeySets_ListByCluster</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
         /// </item>
@@ -125,5 +113,63 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<NetworkCloudBareMetalMachineKeySetResource> GetAll(CancellationToken cancellationToken)
             => GetAll(null, null, cancellationToken);
+
+        /// <summary>
+        /// Create a new bare metal machine key set or update the existing one for the provided cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BareMetalMachineKeySets_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
+        /// <param name="data"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> or <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, bareMetalMachineKeySetName, data, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken);
+
+        /// <summary>
+        /// Create a new bare metal machine key set or update the existing one for the provided cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BareMetalMachineKeySets_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBareMetalMachineKeySetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
+        /// <param name="data"> The request body. </param>
+        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="bareMetalMachineKeySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> or <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, bareMetalMachineKeySetName, data, new MatchConditions { IfMatch = ifMatch != null ? new Azure.ETag(ifMatch) : default(Azure.ETag?), IfNoneMatch = ifNoneMatch != null ? new Azure.ETag(ifNoneMatch) : default(Azure.ETag?) }, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -1,19 +1,76 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.15.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.14.0 (2026-06-03)
+
+### Features Added
+
+- Added experimental `FileBinaryContent` type for representing a file part within an HTTP request payload, typically as part of a `multipart/form-data` request.
+- Added experimental `MultiPartFormContent` type for building `multipart/form-data` request payloads.
+- Added a chain-aware `CredentialResolver.TryResolve(IConfigurationSection, Func<IConfigurationSection, AuthenticationTokenProvider?>, out AuthenticationTokenProvider?)` virtual overload. The callback lets a chain-owning resolver resolve child sections back through the active engine — preserving caching, normalization, and ordering — without needing to know about credential sources owned by other packages. The default implementation forwards to the existing two-arg overload (experimental `SCME0002`).
+
+## 1.13.0 (2026-05-18)
+
+### Features Added
+
+- Added `CredentialSettings.TokenProvider` to hold the resolved `AuthenticationTokenProvider` for the credential.
+
+### Breaking Changes
+
+- `IConfiguration.GetCredential(...)` renamed to `IConfiguration.GetCredentialSettings(...)` and its return type changed from `AuthenticationTokenProvider?` to `CredentialSettings?` (experimental `SCME0002`).
+
+### Other Changes
+
+- `ClientSettings.CredentialProvider` will be removed in a future release; migrate to `settings.Credential.TokenProvider` (experimental `SCME0002`).
+
+## 1.12.0 (2026-05-12)
+
+### Features Added
+
+- Added `CredentialSettings.this[string key]` indexer for reading custom properties from the credential configuration section.
+
+### Other Changes
+
+- `AuthenticationPolicy.Create` no longer throws when an ApiKey credential section carries a `Scope` value; `Scope` is ignored for ApiKey auth.
+
+## 1.11.0 (2026-05-05)
+
+### Features Added
+
+- Added `CredentialResolver` abstract class — an extensibility hook that lets credential providers participate in the configuration-driven credential resolution pipeline. Resolvers are invoked in registration order until one produces an `AuthenticationTokenProvider` for a given configuration section.
+- Added `IConfiguration.GetCredential(...)` extension overloads on `ConfigurationExtensions` that walk a chain of `CredentialResolver` instances against a named credential section, with optional `configureOverrides` to mutate the section in-flight.
+- Added `IConfiguration.GetClientSettings<T>(...)` extension overloads that bind a `ClientSettings`-derived type and resolve its `Credential` via the resolver chain.
+- Added `AddCredentialResolver<T>` extension methods on `IServiceCollection` and `IHostApplicationBuilder` that register a `CredentialResolver` once per implementation type (idempotent).
+- The DI `AddClient<TClient, TSettings>` / `AddKeyedClient<TClient, TSettings>` paths now auto-resolve credentials from the registered resolver chain, so callers no longer need to wire up provider-specific helpers like `WithAzureCredential` explicitly when a resolver is registered.
+- Resolving the same credential section more than once returns the same `AuthenticationTokenProvider` instance.
+
+### Breaking Changes
+
+- `IClientBuilder` no longer inherits from `IHostApplicationBuilder`. The internal `ClientBuilder` implementation now uses composition instead of inheritance. `PostConfigure` return type changed from `IHostApplicationBuilder` to `IClientBuilder`. `AddClient` and `AddKeyedClient` continue to return `IClientBuilder`.
+
+## 1.10.0 (2026-03-16)
 
 ### Features Added
 
 - Added `JsonPatch.EnumerateArray` method that iterates over JSON array elements at a specified path, yielding each element as raw UTF-8 bytes.
-- Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing. 
+- Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing.
 - Added `IsReadOnly` property to `ClientPipelineOptions` and `ClientLoggingOptions` so callers can check whether options can still be modified without catching an exception.
 - Added `Clone()` method to `ClientPipelineOptions` and `ClientLoggingOptions` that creates a new mutable instance from an existing instance that may be read-only.
+- Added `ConfigurationSchema.json` to the NuGet package via the MSBuild `JsonSchemaSegment` feature, enabling automatic JSON IntelliSense and validation for `appsettings.json` when configuring System.ClientModel-based clients.
+- Updated BCL dependencies to 10.x.
 
 ### Bugs Fixed
 
 - Fixed implicit conversion operator for `ClientResult<T>` to not throw exceptions on null inputs per Framework Design Guidelines. Null inputs now return `default`.
-
-### Other Changes
 
 ### Breaking Changes
 

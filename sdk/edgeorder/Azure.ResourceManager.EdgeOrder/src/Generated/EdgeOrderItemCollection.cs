@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 HttpMessage message = _orderItemResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, EdgeOrderItemData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeOrderArmOperation<EdgeOrderItemResource> operation = new EdgeOrderArmOperation<EdgeOrderItemResource>(
-                    new EdgeOrderItemOperationSource(Client),
+                    new EdgeOrderItemResourceOperationSource(Client),
                     _orderItemResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 HttpMessage message = _orderItemResourcesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, orderItemName, EdgeOrderItemData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeOrderArmOperation<EdgeOrderItemResource> operation = new EdgeOrderArmOperation<EdgeOrderItemResource>(
-                    new EdgeOrderItemOperationSource(Client),
+                    new EdgeOrderItemResourceOperationSource(Client),
                     _orderItemResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -310,7 +310,8 @@ namespace Azure.ResourceManager.EdgeOrder
                 expand,
                 skipToken,
                 top,
-                context), data => new EdgeOrderItemResource(Client, data));
+                context,
+                "EdgeOrderItemCollection.GetAll"), data => new EdgeOrderItemResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +351,8 @@ namespace Azure.ResourceManager.EdgeOrder
                 expand,
                 skipToken,
                 top,
-                context), data => new EdgeOrderItemResource(Client, data));
+                context,
+                "EdgeOrderItemCollection.GetAll"), data => new EdgeOrderItemResource(Client, data));
         }
 
         /// <summary>

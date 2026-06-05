@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the A2A agent card that was called. </param>
         /// <param name="status"> The status of the tool call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="name"/> is null. </exception>
-        public A2AToolCallOutput(string callId, string name, ToolCallStatus status) : base(AgentResponseItemKind.A2aPreviewCallOutput)
+        public A2AToolCallOutput(string callId, string name, ToolCallStatus status) : base(AgentResponseItemKind.A2APreviewCallOutput)
         {
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(name, nameof(name));

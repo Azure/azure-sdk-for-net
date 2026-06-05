@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             if (id.ResourceType != AppServiceCertificateOrderResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceCertificateOrderResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AppServiceCertificateOrderResource.ResourceType), nameof(id));
             }
         }
 
@@ -183,7 +183,13 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceDetectorData, AppServiceDetectorResource>(new CertificateOrdersDiagnosticsGetAppServiceCertificateOrderDetectorResponseAsyncCollectionResultOfT(_certificateOrdersDiagnosticsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new AppServiceDetectorResource(Client, data));
+            return new AsyncPageableWrapper<AppServiceDetectorData, AppServiceDetectorResource>(new CertificateOrdersDiagnosticsGetAppServiceCertificateOrderDetectorResponseAsyncCollectionResultOfT(
+                _certificateOrdersDiagnosticsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppServiceDetectorCollection.GetAll"), data => new AppServiceDetectorResource(Client, data));
         }
 
         /// <summary>
@@ -211,7 +217,13 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceDetectorData, AppServiceDetectorResource>(new CertificateOrdersDiagnosticsGetAppServiceCertificateOrderDetectorResponseCollectionResultOfT(_certificateOrdersDiagnosticsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new AppServiceDetectorResource(Client, data));
+            return new PageableWrapper<AppServiceDetectorData, AppServiceDetectorResource>(new CertificateOrdersDiagnosticsGetAppServiceCertificateOrderDetectorResponseCollectionResultOfT(
+                _certificateOrdersDiagnosticsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AppServiceDetectorCollection.GetAll"), data => new AppServiceDetectorResource(Client, data));
         }
 
         /// <summary>

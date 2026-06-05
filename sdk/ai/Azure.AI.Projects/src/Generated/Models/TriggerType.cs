@@ -5,9 +5,8 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Type of the trigger. </summary>
     internal readonly partial struct TriggerType : IEquatable<TriggerType>
     {
         private readonly string _value;
@@ -20,11 +19,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="TriggerType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TriggerType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             _value = value;
         }
 

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Chaos
         {
             TryGetApiVersion(ChaosExperimentResource.ResourceType, out string chaosExperimentApiVersion);
             _experimentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosExperimentResource.ResourceType.Namespace, Diagnostics);
-            _experimentsRestClient = new Experiments(_experimentsClientDiagnostics, Pipeline, Endpoint, chaosExperimentApiVersion ?? "2025-01-01");
+            _experimentsRestClient = new Experiments(_experimentsClientDiagnostics, Pipeline, Endpoint, chaosExperimentApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Chaos
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _experimentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, experimentName, ChaosExperimentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ChaosArmOperation<ChaosExperimentResource> operation = new ChaosArmOperation<ChaosExperimentResource>(
-                    new ChaosExperimentOperationSource(Client),
+                    new ChaosExperimentResourceOperationSource(Client),
                     _experimentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Chaos
                 HttpMessage message = _experimentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, experimentName, ChaosExperimentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ChaosArmOperation<ChaosExperimentResource> operation = new ChaosArmOperation<ChaosExperimentResource>(
-                    new ChaosExperimentOperationSource(Client),
+                    new ChaosExperimentResourceOperationSource(Client),
                     _experimentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,13 +296,14 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsListAsyncCollectionResultOfT(
                 _experimentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 running,
                 continuationToken,
-                context), data => new ChaosExperimentResource(Client, data));
+                context,
+                "ChaosExperimentCollection.GetAll"), data => new ChaosExperimentResource(Client, data));
         }
 
         /// <summary>
@@ -318,7 +319,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,13 +333,14 @@ namespace Azure.ResourceManager.Chaos
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetAllCollectionResultOfT(
+            return new PageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsListCollectionResultOfT(
                 _experimentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 running,
                 continuationToken,
-                context), data => new ChaosExperimentResource(Client, data));
+                context,
+                "ChaosExperimentCollection.GetAll"), data => new ChaosExperimentResource(Client, data));
         }
 
         /// <summary>
@@ -354,7 +356,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,7 +413,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -468,7 +470,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -529,7 +531,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

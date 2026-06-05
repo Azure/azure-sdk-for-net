@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             if (id.ResourceType != TrafficControllerResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TrafficControllerResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _associationsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, TrafficControllerAssociationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceNetworkingArmOperation<TrafficControllerAssociationResource> operation = new ServiceNetworkingArmOperation<TrafficControllerAssociationResource>(
-                    new TrafficControllerAssociationOperationSource(Client),
+                    new TrafficControllerAssociationResourceOperationSource(Client),
                     _associationsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 HttpMessage message = _associationsInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, associationName, TrafficControllerAssociationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceNetworkingArmOperation<TrafficControllerAssociationResource> operation = new ServiceNetworkingArmOperation<TrafficControllerAssociationResource>(
-                    new TrafficControllerAssociationOperationSource(Client),
+                    new TrafficControllerAssociationResourceOperationSource(Client),
                     _associationsInterfaceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(_associationsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new TrafficControllerAssociationResource(Client, data));
+            return new AsyncPageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerAsyncCollectionResultOfT(
+                _associationsInterfaceRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "TrafficControllerAssociationCollection.GetAll"), data => new TrafficControllerAssociationResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerCollectionResultOfT(_associationsInterfaceRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new TrafficControllerAssociationResource(Client, data));
+            return new PageableWrapper<TrafficControllerAssociationData, TrafficControllerAssociationResource>(new AssociationsInterfaceGetByTrafficControllerCollectionResultOfT(
+                _associationsInterfaceRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "TrafficControllerAssociationCollection.GetAll"), data => new TrafficControllerAssociationResource(Client, data));
         }
 
         /// <summary>

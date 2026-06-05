@@ -1,17 +1,106 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.Generator.Management.Visitors;
+using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace Azure.Generator.Mgmt.Tests
 {
-    internal class InheritableSystemObjectModelVisitorTests
+    public class InheritableSystemObjectModelVisitorTests
     {
+        [Test]
+        public void EnsureFrameworkTypeRegistered_RegistersBothTypes()
+        {
+            // Set up the mock plugin to get access to CSharpTypeMap
+            var proxyResourceModel = InputFactory.Model(
+                "ProxyResource",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            // Set crossLanguageDefinitionId via reflection since it's not exposed in the factory
+            var crossLangProp = typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId));
+            crossLangProp!.GetSetMethod(true)!.Invoke(proxyResourceModel, ["Azure.ResourceManager.CommonTypes.ProxyResource"]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [proxyResourceModel]);
+
+            // Force creation of the model which triggers the visitor
+            var modelProvider = plugin.Object.TypeFactory.CreateModel(proxyResourceModel);
+            Assert.That(modelProvider, Is.Not.Null);
+            Assert.That(modelProvider, Is.InstanceOf<SystemObjectModelProvider>());
+
+            // The CSharpTypeMap should now have both framework and non-framework entries
+            var typeMap = plugin.Object.TypeFactory.CSharpTypeMap;
+
+            // Check that a framework CSharpType for ResourceData can be found
+            var frameworkResourceData = new CSharpType(typeof(ResourceData));
+            Assert.That(typeMap.ContainsKey(frameworkResourceData), Is.True,
+                "CSharpTypeMap should contain a framework CSharpType entry for ResourceData after EnsureFrameworkTypeRegistered");
+        }
+
+        [Test]
+        public void ModelWithInheritableSystemBase_PropertiesAreFiltered()
+        {
+            // Create ProxyResource (maps to ResourceData)
+            var proxyResourceModel = InputFactory.Model(
+                "ProxyResource",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            var crossLangProp = typeof(InputModelType).GetProperty(nameof(InputModelType.CrossLanguageDefinitionId));
+            crossLangProp!.GetSetMethod(true)!.Invoke(proxyResourceModel, ["Azure.ResourceManager.CommonTypes.ProxyResource"]);
+
+            // Create child model that extends ProxyResource
+            var childModel = InputFactory.Model(
+                "ChildModel",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("customProp", InputPrimitiveType.String),
+                ],
+                baseModel: proxyResourceModel,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [proxyResourceModel, childModel]);
+
+            var childProvider = plugin.Object.TypeFactory.CreateModel(childModel);
+            Assert.That(childProvider, Is.Not.Null);
+
+            // The base type properties (id, name, type, systemData) should be filtered out
+            // Only customProp should remain
+            var propertyNames = childProvider!.Properties.Select(p => p.Name).ToList();
+            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should be filtered (from base ResourceData)");
+            Assert.That(propertyNames.Contains("Name"), Is.False, "Name should be filtered (from base ResourceData)");
+            Assert.That(propertyNames.Contains("ResourceType"), Is.False, "ResourceType should be filtered (from base ResourceData)");
+            Assert.That(propertyNames.Contains("SystemData"), Is.False, "SystemData should be filtered (from base ResourceData)");
+            Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain as model-specific property");
+        }
+
         /// <summary>
         /// Verifies that creating a discriminated model extending ARM Resource does not cause
         /// a stack overflow. Before the fix, UpdateSerialization accessed Methods during
@@ -105,12 +194,110 @@ namespace Azure.Generator.Mgmt.Tests
             var usageDetailType = plugin.Object.TypeFactory.CreateModel(usageDetailModel);
 
             // Assert the model was created successfully
-            Assert.IsNotNull(usageDetailType);
-            Assert.IsNotNull(usageDetailType!.BaseModelProvider);
+            Assert.That(usageDetailType, Is.Not.Null);
+            Assert.That(usageDetailType!.BaseModelProvider, Is.Not.Null);
 
             // Also verify derived models can be created without issues
             var legacyType = plugin.Object.TypeFactory.CreateModel(legacyModel);
-            Assert.IsNotNull(legacyType);
+            Assert.That(legacyType, Is.Not.Null);
+        }
+
+        /// <summary>
+        /// Verifies that when custom code overrides a model's base type to an inheritable
+        /// system type (e.g., TrackedResourceData) that is NOT present as an
+        /// InheritableSystemObjectModelProvider, the visitor uses CLR reflection to enumerate
+        /// base properties and filters them from the model.
+        /// </summary>
+        [Test]
+        public void CustomCodeBaseTypeOverride_UsesClrReflectionFallback()
+        {
+            // Create a TrackedResource input model with all the base properties
+            var trackedResourceInputModel = InputFactory.Model(
+                "TrackedResource",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            // Create a simple model with properties that overlap TrackedResourceData's properties
+            var inputModel = InputFactory.Model(
+                "MyTrackedModel",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", InputPrimitiveType.String),
+                    InputFactory.Property("customProp", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            // Load mock plugin (needed for ManagementClientGenerator.Instance)
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel, trackedResourceInputModel]);
+
+            // Register a SystemObjectModelProvider for TrackedResourceData in CSharpTypeMap
+            var trackedResourceType = new CSharpType(typeof(TrackedResourceData));
+            var systemBase = new SystemObjectModelProvider(trackedResourceType, trackedResourceInputModel);
+            var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
+            typeMap[trackedResourceType] = systemBase;
+
+            // Create model directly (not via TypeFactory to avoid the automatic visitor pass)
+            var model = new ModelProvider(inputModel);
+
+            // Set custom code view with BaseType = TrackedResourceData
+            SetCustomCodeView(model, new TrackedResourceDataCustomCodeView());
+
+            // Create a testable visitor and invoke PreVisitModel
+            var visitor = new TestableInheritableSystemObjectModelVisitor();
+            var result = visitor.InvokePreVisitModel(inputModel, model);
+
+            Assert.That(result, Is.Not.Null);
+
+            // Properties from TrackedResourceData (Id, Name, ResourceType, SystemData, Tags, Location)
+            // should be filtered out by the base generator's native property dedup.
+            // Only CustomProp should remain.
+            var propertyNames = result!.Properties.Select(p => p.Name).ToList();
+            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("Name"), Is.False, "Name should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("ResourceType"), Is.False, "ResourceType should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("SystemData"), Is.False, "SystemData should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("Tags"), Is.False, "Tags should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("Location"), Is.False, "Location should be filtered (from TrackedResourceData base)");
+            Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain as model-specific property");
+        }
+
+        private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
+        {
+            typeProvider.GetType().BaseType!.GetField(
+                    "_customCodeView",
+                    BindingFlags.NonPublic | BindingFlags.Instance)?
+                .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+        }
+
+        /// <summary>
+        /// A custom code view that declares TrackedResourceData as the base type,
+        /// simulating custom code like: public partial class MyTrackedModel : TrackedResourceData { }
+        /// </summary>
+        private class TrackedResourceDataCustomCodeView : TypeProvider
+        {
+            protected override CSharpType BuildBaseType() => new CSharpType(typeof(TrackedResourceData));
+            protected override string BuildName() => "MyTrackedModel";
+            protected override string BuildRelativeFilePath() => "MyTrackedModel.cs";
+        }
+
+        private class TestableInheritableSystemObjectModelVisitor : InheritableSystemObjectModelVisitor
+        {
+            public ModelProvider? InvokePreVisitModel(InputModelType inputType, ModelProvider? type)
+            {
+                return base.PreVisitModel(inputType, type);
+            }
         }
     }
 }

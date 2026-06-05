@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             TryGetApiVersion(ResourceType, out string durableTaskRetentionPolicyApiVersion);
             _retentionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
-            _retentionPoliciesRestClient = new RetentionPolicies(_retentionPoliciesClientDiagnostics, Pipeline, Endpoint, durableTaskRetentionPolicyApiVersion ?? "2025-11-01");
+            _retentionPoliciesRestClient = new RetentionPolicies(_retentionPoliciesClientDiagnostics, Pipeline, Endpoint, durableTaskRetentionPolicyApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _retentionPoliciesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DurableTaskRetentionPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DurableTaskArmOperation<DurableTaskRetentionPolicyResource> operation = new DurableTaskArmOperation<DurableTaskRetentionPolicyResource>(
-                    new DurableTaskRetentionPolicyOperationSource(Client),
+                    new DurableTaskRetentionPolicyResourceOperationSource(Client),
                     _retentionPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _retentionPoliciesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DurableTaskRetentionPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DurableTaskArmOperation<DurableTaskRetentionPolicyResource> operation = new DurableTaskArmOperation<DurableTaskRetentionPolicyResource>(
-                    new DurableTaskRetentionPolicyOperationSource(Client),
+                    new DurableTaskRetentionPolicyResourceOperationSource(Client),
                     _retentionPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _retentionPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DurableTaskRetentionPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DurableTaskArmOperation<DurableTaskRetentionPolicyResource> operation = new DurableTaskArmOperation<DurableTaskRetentionPolicyResource>(
-                    new DurableTaskRetentionPolicyOperationSource(Client),
+                    new DurableTaskRetentionPolicyResourceOperationSource(Client),
                     _retentionPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _retentionPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DurableTaskRetentionPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DurableTaskArmOperation<DurableTaskRetentionPolicyResource> operation = new DurableTaskArmOperation<DurableTaskRetentionPolicyResource>(
-                    new DurableTaskRetentionPolicyOperationSource(Client),
+                    new DurableTaskRetentionPolicyResourceOperationSource(Client),
                     _retentionPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

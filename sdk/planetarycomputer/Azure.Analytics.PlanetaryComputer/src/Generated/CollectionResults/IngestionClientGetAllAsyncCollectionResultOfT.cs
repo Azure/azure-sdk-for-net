@@ -21,6 +21,7 @@ namespace Azure.Analytics.PlanetaryComputer
         private readonly int? _maxCount;
         private readonly int? _skip;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of IngestionClientGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The IngestionClient client used to send requests. </param>
@@ -28,13 +29,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="maxCount"> The number of items to return. </param>
         /// <param name="skip"> The number of items to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public IngestionClientGetAllAsyncCollectionResultOfT(IngestionClient client, string collectionId, int? maxCount, int? skip, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public IngestionClientGetAllAsyncCollectionResultOfT(IngestionClient client, string collectionId, int? maxCount, int? skip, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _collectionId = collectionId;
             _maxCount = maxCount;
             _skip = skip;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of IngestionClientGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -67,7 +70,7 @@ namespace Azure.Analytics.PlanetaryComputer
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _collectionId, _maxCount, _skip, _context) : _client.CreateGetAllRequest(_collectionId, _maxCount, _skip, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("IngestionClient.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

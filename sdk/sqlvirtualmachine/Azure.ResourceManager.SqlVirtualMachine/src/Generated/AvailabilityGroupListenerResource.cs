@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 HttpMessage message = _availabilityGroupListenersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvailabilityGroupListenerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource> operation = new SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource>(
-                    new AvailabilityGroupListenerOperationSource(Client),
+                    new AvailabilityGroupListenerResourceOperationSource(Client),
                     _availabilityGroupListenersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 HttpMessage message = _availabilityGroupListenersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvailabilityGroupListenerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource> operation = new SqlVirtualMachineArmOperation<AvailabilityGroupListenerResource>(
-                    new AvailabilityGroupListenerOperationSource(Client),
+                    new AvailabilityGroupListenerResourceOperationSource(Client),
                     _availabilityGroupListenersClientDiagnostics,
                     Pipeline,
                     message.Request,

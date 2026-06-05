@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Represents a target specifying an Azure AI agent. </summary>
-    public partial class AzureAIAgentTarget : Target
+    public partial class AzureAIAgentTarget : EvaluationTarget
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
         /// <param name="name"> The unique identifier of the Azure AI agent. </param>
@@ -19,6 +20,7 @@ namespace Azure.AI.Projects
 
             Name = name;
             ToolDescriptions = new ChangeTrackingList<ToolDescription>();
+            InternalTools = new ChangeTrackingList<InternalTool>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
@@ -27,11 +29,13 @@ namespace Azure.AI.Projects
         /// <param name="name"> The unique identifier of the Azure AI agent. </param>
         /// <param name="version"> The version of the Azure AI agent. </param>
         /// <param name="toolDescriptions"> The parameters used to control the sampling behavior of the agent during text generation. </param>
-        internal AzureAIAgentTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version, IList<ToolDescription> toolDescriptions) : base(@type, additionalBinaryDataProperties)
+        /// <param name="internalTools"></param>
+        internal AzureAIAgentTarget(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string version, IList<ToolDescription> toolDescriptions, IList<InternalTool> internalTools) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Version = version;
             ToolDescriptions = toolDescriptions;
+            InternalTools = internalTools;
         }
 
         /// <summary> The unique identifier of the Azure AI agent. </summary>

@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="ApiCenterMetadataSchemaResource"/> and their operations.
     /// Each <see cref="ApiCenterMetadataSchemaResource"/> in the collection will belong to the same instance of <see cref="ApiCenterServiceResource"/>.
-    /// To get an <see cref="ApiCenterMetadataSchemaCollection"/> instance call the GetApiCenterMetadataSchemas method from an instance of <see cref="ApiCenterServiceResource"/>.
+    /// To get a <see cref="ApiCenterMetadataSchemaCollection"/> instance call the GetApiCenterMetadataSchemas method from an instance of <see cref="ApiCenterServiceResource"/>.
     /// </summary>
     public partial class ApiCenterMetadataSchemaCollection : ArmCollection, IEnumerable<ApiCenterMetadataSchemaResource>, IAsyncEnumerable<ApiCenterMetadataSchemaResource>
     {
-        private readonly ClientDiagnostics _apiCenterMetadataSchemaMetadataSchemasClientDiagnostics;
-        private readonly MetadataSchemasRestOperations _apiCenterMetadataSchemaMetadataSchemasRestClient;
+        private readonly ClientDiagnostics _metadataSchemasClientDiagnostics;
+        private readonly MetadataSchemas _metadataSchemasRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApiCenterMetadataSchemaCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApiCenterMetadataSchemaCollection for mocking. </summary>
         protected ApiCenterMetadataSchemaCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiCenterMetadataSchemaCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterMetadataSchemaCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiCenterMetadataSchemaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiCenterMetadataSchemaMetadataSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterMetadataSchemaResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiCenterMetadataSchemaResource.ResourceType, out string apiCenterMetadataSchemaMetadataSchemasApiVersion);
-            _apiCenterMetadataSchemaMetadataSchemasRestClient = new MetadataSchemasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiCenterMetadataSchemaMetadataSchemasApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ApiCenterMetadataSchemaResource.ResourceType, out string apiCenterMetadataSchemaApiVersion);
+            _metadataSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterMetadataSchemaResource.ResourceType.Namespace, Diagnostics);
+            _metadataSchemasRestClient = new MetadataSchemas(_metadataSchemasClientDiagnostics, Pipeline, Endpoint, apiCenterMetadataSchemaApiVersion ?? "2024-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ApiCenterServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiCenterServiceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApiCenterServiceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates new or updates existing metadata schema.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetadataSchemas_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataSchemas_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterMetadataSchemaResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="metadataSchemaName"> The name of the metadata schema. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataSchemaName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ApiCenterMetadataSchemaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metadataSchemaName, ApiCenterMetadataSchemaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataSchemaName, nameof(metadataSchemaName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiCenterMetadataSchemaMetadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _metadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _apiCenterMetadataSchemaMetadataSchemasRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _apiCenterMetadataSchemaMetadataSchemasRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiCenterArmOperation<ApiCenterMetadataSchemaResource>(Response.FromValue(new ApiCenterMetadataSchemaResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _metadataSchemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, ApiCenterMetadataSchemaData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiCenterMetadataSchemaData> response = Response.FromValue(ApiCenterMetadataSchemaData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiCenterArmOperation<ApiCenterMetadataSchemaResource> operation = new ApiCenterArmOperation<ApiCenterMetadataSchemaResource>(Response.FromValue(new ApiCenterMetadataSchemaResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.ApiCenter
         /// Creates new or updates existing metadata schema.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetadataSchemas_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataSchemas_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterMetadataSchemaResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="metadataSchemaName"> The name of the metadata schema. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataSchemaName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ApiCenterMetadataSchemaResource> CreateOrUpdate(WaitUntil waitUntil, string metadataSchemaName, ApiCenterMetadataSchemaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataSchemaName, nameof(metadataSchemaName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiCenterMetadataSchemaMetadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _metadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _apiCenterMetadataSchemaMetadataSchemasRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, data, cancellationToken);
-                var uri = _apiCenterMetadataSchemaMetadataSchemasRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApiCenterArmOperation<ApiCenterMetadataSchemaResource>(Response.FromValue(new ApiCenterMetadataSchemaResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _metadataSchemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, ApiCenterMetadataSchemaData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiCenterMetadataSchemaData> response = Response.FromValue(ApiCenterMetadataSchemaData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApiCenterArmOperation<ApiCenterMetadataSchemaResource> operation = new ApiCenterArmOperation<ApiCenterMetadataSchemaResource>(Response.FromValue(new ApiCenterMetadataSchemaResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.ApiCenter
         /// Returns details of the metadata schema.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetadataSchemas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataSchemas_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterMetadataSchemaResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="metadataSchemaName"> The name of the metadata schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataSchemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ApiCenterMetadataSchemaResource>> GetAsync(string metadataSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataSchemaName, nameof(metadataSchemaName));
 
-            using var scope = _apiCenterMetadataSchemaMetadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.Get");
+            using DiagnosticScope scope = _metadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.Get");
             scope.Start();
             try
             {
-                var response = await _apiCenterMetadataSchemaMetadataSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _metadataSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApiCenterMetadataSchemaData> response = Response.FromValue(ApiCenterMetadataSchemaData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiCenterMetadataSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.ApiCenter
         /// Returns details of the metadata schema.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetadataSchemas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataSchemas_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterMetadataSchemaResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="metadataSchemaName"> The name of the metadata schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataSchemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ApiCenterMetadataSchemaResource> Get(string metadataSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataSchemaName, nameof(metadataSchemaName));
 
-            using var scope = _apiCenterMetadataSchemaMetadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.Get");
+            using DiagnosticScope scope = _metadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.Get");
             scope.Start();
             try
             {
-                var response = _apiCenterMetadataSchemaMetadataSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _metadataSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApiCenterMetadataSchemaData> response = Response.FromValue(ApiCenterMetadataSchemaData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiCenterMetadataSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,98 +266,122 @@ namespace Azure.ResourceManager.ApiCenter
         /// Returns a collection of metadata schemas.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetadataSchemas_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataSchemas_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterMetadataSchemaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> OData filter parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiCenterMetadataSchemaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiCenterMetadataSchemaResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiCenterMetadataSchemaMetadataSchemasRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiCenterMetadataSchemaMetadataSchemasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiCenterMetadataSchemaResource(Client, ApiCenterMetadataSchemaData.DeserializeApiCenterMetadataSchemaData(e)), _apiCenterMetadataSchemaMetadataSchemasClientDiagnostics, Pipeline, "ApiCenterMetadataSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns a collection of metadata schemas.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetadataSchemas_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterMetadataSchemaResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiCenterMetadataSchemaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiCenterMetadataSchemaResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiCenterMetadataSchemaResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiCenterMetadataSchemaMetadataSchemasRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiCenterMetadataSchemaMetadataSchemasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiCenterMetadataSchemaResource(Client, ApiCenterMetadataSchemaData.DeserializeApiCenterMetadataSchemaData(e)), _apiCenterMetadataSchemaMetadataSchemasClientDiagnostics, Pipeline, "ApiCenterMetadataSchemaCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApiCenterMetadataSchemaData, ApiCenterMetadataSchemaResource>(new MetadataSchemasGetAllAsyncCollectionResultOfT(
+                _metadataSchemasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                context,
+                "ApiCenterMetadataSchemaCollection.GetAll"), data => new ApiCenterMetadataSchemaResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns a collection of metadata schemas.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataSchemas_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ApiCenterMetadataSchemaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiCenterMetadataSchemaResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApiCenterMetadataSchemaData, ApiCenterMetadataSchemaResource>(new MetadataSchemasGetAllCollectionResultOfT(
+                _metadataSchemasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                context,
+                "ApiCenterMetadataSchemaCollection.GetAll"), data => new ApiCenterMetadataSchemaResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetadataSchemas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataSchemas_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterMetadataSchemaResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="metadataSchemaName"> The name of the metadata schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataSchemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string metadataSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataSchemaName, nameof(metadataSchemaName));
 
-            using var scope = _apiCenterMetadataSchemaMetadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.Exists");
+            using DiagnosticScope scope = _metadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _apiCenterMetadataSchemaMetadataSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _metadataSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiCenterMetadataSchemaData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiCenterMetadataSchemaData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiCenterMetadataSchemaData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -352,36 +395,50 @@ namespace Azure.ResourceManager.ApiCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetadataSchemas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataSchemas_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterMetadataSchemaResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="metadataSchemaName"> The name of the metadata schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataSchemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string metadataSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataSchemaName, nameof(metadataSchemaName));
 
-            using var scope = _apiCenterMetadataSchemaMetadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.Exists");
+            using DiagnosticScope scope = _metadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.Exists");
             scope.Start();
             try
             {
-                var response = _apiCenterMetadataSchemaMetadataSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _metadataSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiCenterMetadataSchemaData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiCenterMetadataSchemaData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiCenterMetadataSchemaData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -395,38 +452,54 @@ namespace Azure.ResourceManager.ApiCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetadataSchemas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataSchemas_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterMetadataSchemaResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="metadataSchemaName"> The name of the metadata schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataSchemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ApiCenterMetadataSchemaResource>> GetIfExistsAsync(string metadataSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataSchemaName, nameof(metadataSchemaName));
 
-            using var scope = _apiCenterMetadataSchemaMetadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.GetIfExists");
+            using DiagnosticScope scope = _metadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _apiCenterMetadataSchemaMetadataSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _metadataSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApiCenterMetadataSchemaData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiCenterMetadataSchemaData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiCenterMetadataSchemaData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApiCenterMetadataSchemaResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiCenterMetadataSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -440,38 +513,54 @@ namespace Azure.ResourceManager.ApiCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/metadataSchemas/{metadataSchemaName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MetadataSchemas_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataSchemas_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiCenterMetadataSchemaResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="metadataSchemaName"> The name of the metadata schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metadataSchemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metadataSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ApiCenterMetadataSchemaResource> GetIfExists(string metadataSchemaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(metadataSchemaName, nameof(metadataSchemaName));
 
-            using var scope = _apiCenterMetadataSchemaMetadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.GetIfExists");
+            using DiagnosticScope scope = _metadataSchemasClientDiagnostics.CreateScope("ApiCenterMetadataSchemaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _apiCenterMetadataSchemaMetadataSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _metadataSchemasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, metadataSchemaName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApiCenterMetadataSchemaData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApiCenterMetadataSchemaData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApiCenterMetadataSchemaData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApiCenterMetadataSchemaResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApiCenterMetadataSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -491,6 +580,7 @@ namespace Azure.ResourceManager.ApiCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ApiCenterMetadataSchemaResource> IAsyncEnumerable<ApiCenterMetadataSchemaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

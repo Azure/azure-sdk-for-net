@@ -23,7 +23,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="fileId"></param>
         /// <param name="detail"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalInputImageContentParamAutoParam(string @type, Uri imageUrl, string fileId, DetailEnum? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalInputImageContentParamAutoParam(string @type, Uri imageUrl, string fileId, ImageDetailLevel? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ImageUrl = imageUrl;
@@ -33,7 +33,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The type of the input item. Always `input_image`. </summary>
-        internal string Type { get; } = "input_image";
+        public string Type { get; } = "input_image";
 
         /// <summary> Gets or sets the ImageUrl. </summary>
         public Uri ImageUrl { get; set; }
@@ -42,6 +42,6 @@ namespace Azure.AI.Extensions.OpenAI
         public string FileId { get; set; }
 
         /// <summary> Gets or sets the Detail. </summary>
-        public DetailEnum? Detail { get; set; }
+        public ImageDetailLevel? Detail { get; set; }
     }
 }

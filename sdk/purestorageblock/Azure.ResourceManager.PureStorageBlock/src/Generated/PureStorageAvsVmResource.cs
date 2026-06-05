@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _avsVmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PureStorageAvsVmPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation<PureStorageAvsVmResource> operation = new PureStorageBlockArmOperation<PureStorageAvsVmResource>(
-                    new PureStorageAvsVmOperationSource(Client),
+                    new PureStorageAvsVmResourceOperationSource(Client),
                     _avsVmsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _avsVmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PureStorageAvsVmPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation<PureStorageAvsVmResource> operation = new PureStorageBlockArmOperation<PureStorageAvsVmResource>(
-                    new PureStorageAvsVmOperationSource(Client),
+                    new PureStorageAvsVmResourceOperationSource(Client),
                     _avsVmsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -14,8 +16,28 @@ namespace Azure.AI.DocumentIntelligence
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_30;
 
+        /// <summary> Initializes a new instance of DocumentIntelligenceClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal DocumentIntelligenceClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2024-11-30";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
+        }
+
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion

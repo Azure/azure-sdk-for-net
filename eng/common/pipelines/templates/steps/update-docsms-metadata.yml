@@ -32,6 +32,9 @@ parameters:
   - name: NpmConfigUserConfig
     type: string
     default: ''
+  - name: NpmConfigRegistry
+    type: string
+    default: ''
 steps:
   - ${{ if eq(length(parameters.PackageInfoLocations), 0) }}:
     - pwsh: |
@@ -96,7 +99,9 @@ steps:
       displayName: Apply Documentation Updates
       env:
         ${{ if ne(parameters.NpmConfigUserConfig, '') }}:
-          NPM_CONFIG_USERCONFIG: ${{ parameters.NpmConfigUserConfig }}
+          npm_config_userconfig: ${{ parameters.NpmConfigUserConfig }}
+        ${{ if ne(parameters.NpmConfigRegistry, '') }}:
+          npm_config_registry: ${{ parameters.NpmConfigRegistry }}
 
     - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
       parameters:

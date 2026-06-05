@@ -10,11 +10,11 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Security details for OpenApi anonymous authentication. </summary>
-    public partial class OpenAPIAnonymousAuthenticationDetails : OpenAPIAuthenticationDetails, IJsonModel<OpenAPIAnonymousAuthenticationDetails>
+    public partial class OpenAPIAnonymousAuthenticationDetails : OpenApiAuthenticationDetails, IJsonModel<OpenAPIAnonymousAuthenticationDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OpenAPIAuthenticationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override OpenApiAuthenticationDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OpenAPIAnonymousAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -79,7 +79,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OpenAPIAuthenticationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override OpenApiAuthenticationDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OpenAPIAnonymousAuthenticationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 HttpMessage message = _dedicatedHsmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DedicatedHsmData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
-                    new DedicatedHsmOperationSource(Client),
+                    new DedicatedHsmResourceOperationSource(Client),
                     _dedicatedHsmsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 HttpMessage message = _dedicatedHsmsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DedicatedHsmData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
-                    new DedicatedHsmOperationSource(Client),
+                    new DedicatedHsmResourceOperationSource(Client),
                     _dedicatedHsmsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -295,7 +295,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetByResourceGroupAsyncCollectionResultOfT(_dedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new DedicatedHsmResource(Client, data));
+            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetByResourceGroupAsyncCollectionResultOfT(
+                _dedicatedHsmsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "DedicatedHsmCollection.GetAll"), data => new DedicatedHsmResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +330,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetByResourceGroupCollectionResultOfT(_dedicatedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, top, context), data => new DedicatedHsmResource(Client, data));
+            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetByResourceGroupCollectionResultOfT(
+                _dedicatedHsmsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                top,
+                context,
+                "DedicatedHsmCollection.GetAll"), data => new DedicatedHsmResource(Client, data));
         }
 
         /// <summary>

@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzureUpdateReplicationProtectedItemContent : IUtf8JsonSerializable, IJsonModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>
+    /// <summary> HyperV replica Azure input to update replication protected item. </summary>
+    public partial class HyperVReplicaAzureUpdateReplicationProtectedItemContent : UpdateReplicationProtectedItemProviderContent, IJsonModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override UpdateReplicationProtectedItemProviderContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHyperVReplicaAzureUpdateReplicationProtectedItemContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVReplicaAzureUpdateReplicationProtectedItemContent IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (HyperVReplicaAzureUpdateReplicationProtectedItemContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(RecoveryAzureV1ResourceGroupId))
             {
@@ -57,6 +98,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 foreach (var item in DiskIdToDiskEncryptionMap)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -78,6 +124,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 foreach (var item in TargetVmTags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -89,6 +140,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 foreach (var item in TargetManagedDiskTags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -100,6 +156,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 foreach (var item in TargetNicTags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -123,34 +184,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in VmDisks)
+                foreach (UpdateDiskContent item in VmDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(TargetCapacityReservationGroupId))
+            {
+                writer.WritePropertyName("targetCapacityReservationGroupId"u8);
+                writer.WriteStringValue(TargetCapacityReservationGroupId);
+            }
         }
 
-        HyperVReplicaAzureUpdateReplicationProtectedItemContent IJsonModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVReplicaAzureUpdateReplicationProtectedItemContent IJsonModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HyperVReplicaAzureUpdateReplicationProtectedItemContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override UpdateReplicationProtectedItemProviderContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVReplicaAzureUpdateReplicationProtectedItemContent(document.RootElement, options);
         }
 
-        internal static HyperVReplicaAzureUpdateReplicationProtectedItemContent DeserializeHyperVReplicaAzureUpdateReplicationProtectedItemContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HyperVReplicaAzureUpdateReplicationProtectedItemContent DeserializeHyperVReplicaAzureUpdateReplicationProtectedItemContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "HyperVReplicaAzure";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier recoveryAzureV1ResourceGroupId = default;
             ResourceIdentifier recoveryAzureV2ResourceGroupId = default;
             string useManagedDisks = default;
@@ -164,155 +237,185 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
             string userSelectedOSName = default;
             IList<UpdateDiskContent> vmDisks = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string targetCapacityReservationGroupId = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryAzureV1ResourceGroupId"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    instanceType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryAzureV1ResourceGroupId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryAzureV1ResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryAzureV1ResourceGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureV2ResourceGroupId"u8))
+                if (prop.NameEquals("recoveryAzureV2ResourceGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryAzureV2ResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryAzureV2ResourceGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("useManagedDisks"u8))
+                if (prop.NameEquals("useManagedDisks"u8))
                 {
-                    useManagedDisks = property.Value.GetString();
+                    useManagedDisks = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskIdToDiskEncryptionMap"u8))
+                if (prop.NameEquals("diskIdToDiskEncryptionMap"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     diskIdToDiskEncryptionMap = dictionary;
                     continue;
                 }
-                if (property.NameEquals("targetProximityPlacementGroupId"u8))
+                if (prop.NameEquals("targetProximityPlacementGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
+                    targetProximityPlacementGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetAvailabilityZone"u8))
+                if (prop.NameEquals("targetAvailabilityZone"u8))
                 {
-                    targetAvailabilityZone = property.Value.GetString();
+                    targetAvailabilityZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetVmTags"u8))
+                if (prop.NameEquals("targetVmTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     targetVmTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("targetManagedDiskTags"u8))
+                if (prop.NameEquals("targetManagedDiskTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     targetManagedDiskTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("targetNicTags"u8))
+                if (prop.NameEquals("targetNicTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     targetNicTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("sqlServerLicenseType"u8))
+                if (prop.NameEquals("sqlServerLicenseType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sqlServerLicenseType = new SiteRecoverySqlServerLicenseType(property.Value.GetString());
+                    sqlServerLicenseType = new SiteRecoverySqlServerLicenseType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("linuxLicenseType"u8))
+                if (prop.NameEquals("linuxLicenseType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userSelectedOSName"u8))
+                if (prop.NameEquals("userSelectedOSName"u8))
                 {
-                    userSelectedOSName = property.Value.GetString();
+                    userSelectedOSName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmDisks"u8))
+                if (prop.NameEquals("vmDisks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<UpdateDiskContent> array = new List<UpdateDiskContent>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(UpdateDiskContent.DeserializeUpdateDiskContent(item, options));
                     }
                     vmDisks = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"u8))
+                if (prop.NameEquals("targetCapacityReservationGroupId"u8))
                 {
-                    instanceType = property.Value.GetString();
+                    targetCapacityReservationGroupId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVReplicaAzureUpdateReplicationProtectedItemContent(
                 instanceType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 recoveryAzureV1ResourceGroupId,
                 recoveryAzureV2ResourceGroupId,
                 useManagedDisks,
@@ -325,38 +428,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 sqlServerLicenseType,
                 linuxLicenseType,
                 userSelectedOSName,
-                vmDisks ?? new ChangeTrackingList<UpdateDiskContent>());
+                vmDisks ?? new ChangeTrackingList<UpdateDiskContent>(),
+                targetCapacityReservationGroupId);
         }
-
-        BinaryData IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HyperVReplicaAzureUpdateReplicationProtectedItemContent IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHyperVReplicaAzureUpdateReplicationProtectedItemContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

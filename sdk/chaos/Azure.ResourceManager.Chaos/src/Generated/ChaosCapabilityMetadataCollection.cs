@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos
         {
             TryGetApiVersion(ChaosCapabilityMetadataResource.ResourceType, out string chaosCapabilityMetadataApiVersion);
             _capabilityTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosCapabilityMetadataResource.ResourceType.Namespace, Diagnostics);
-            _capabilityTypesRestClient = new CapabilityTypes(_capabilityTypesClientDiagnostics, Pipeline, Endpoint, chaosCapabilityMetadataApiVersion ?? "2025-01-01");
+            _capabilityTypesRestClient = new CapabilityTypes(_capabilityTypesClientDiagnostics, Pipeline, Endpoint, chaosCapabilityMetadataApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Chaos
         {
             if (id.ResourceType != ChaosTargetMetadataResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ChaosTargetMetadataResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ChaosTargetMetadataResource.ResourceType), nameof(id));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,8 @@ namespace Azure.ResourceManager.Chaos
                 Id.Parent.Name,
                 Id.Name,
                 continuationToken,
-                context), data => new ChaosCapabilityMetadataResource(Client, data));
+                context,
+                "ChaosCapabilityMetadataCollection.GetAll"), data => new ChaosCapabilityMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,7 +220,8 @@ namespace Azure.ResourceManager.Chaos
                 Id.Parent.Name,
                 Id.Name,
                 continuationToken,
-                context), data => new ChaosCapabilityMetadataResource(Client, data));
+                context,
+                "ChaosCapabilityMetadataCollection.GetAll"), data => new ChaosCapabilityMetadataResource(Client, data));
         }
 
         /// <summary>
@@ -235,7 +237,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,7 +294,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +351,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,7 +412,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

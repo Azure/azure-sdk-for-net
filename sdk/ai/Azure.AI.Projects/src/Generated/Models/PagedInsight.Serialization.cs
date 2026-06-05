@@ -8,6 +8,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
+using Azure.AI.Projects.Evaluation;
 
 namespace Azure.Core
 {
@@ -87,7 +88,7 @@ namespace Azure.Core
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (Insight item in Value)
+            foreach (ProjectsInsight item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -139,17 +140,17 @@ namespace Azure.Core
             {
                 return null;
             }
-            IList<Insight> value = default;
+            IList<ProjectsInsight> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<Insight> array = new List<Insight>();
+                    List<ProjectsInsight> array = new List<ProjectsInsight>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Insight.DeserializeInsight(item, options));
+                        array.Add(ProjectsInsight.DeserializeProjectsInsight(item, options));
                     }
                     value = array;
                     continue;

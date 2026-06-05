@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualHardDisksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, HciVmVirtualHardDiskData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmVirtualHardDiskResource> operation = new VmArmOperation<HciVmVirtualHardDiskResource>(
-                    new HciVmVirtualHardDiskOperationSource(Client),
+                    new HciVmVirtualHardDiskResourceOperationSource(Client),
                     _virtualHardDisksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualHardDisksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, HciVmVirtualHardDiskData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmVirtualHardDiskResource> operation = new VmArmOperation<HciVmVirtualHardDiskResource>(
-                    new HciVmVirtualHardDiskOperationSource(Client),
+                    new HciVmVirtualHardDiskResourceOperationSource(Client),
                     _virtualHardDisksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetByResourceGroupAsyncCollectionResultOfT(_virtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmVirtualHardDiskResource(Client, data));
+            return new AsyncPageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetByResourceGroupAsyncCollectionResultOfT(_virtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmVirtualHardDiskCollection.GetAll"), data => new HciVmVirtualHardDiskResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetByResourceGroupCollectionResultOfT(_virtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmVirtualHardDiskResource(Client, data));
+            return new PageableWrapper<HciVmVirtualHardDiskData, HciVmVirtualHardDiskResource>(new VirtualHardDisksGetByResourceGroupCollectionResultOfT(_virtualHardDisksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmVirtualHardDiskCollection.GetAll"), data => new HciVmVirtualHardDiskResource(Client, data));
         }
 
         /// <summary>

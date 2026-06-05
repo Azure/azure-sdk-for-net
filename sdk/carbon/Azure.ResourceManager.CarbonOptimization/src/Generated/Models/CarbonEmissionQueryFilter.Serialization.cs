@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(carbonEmissionQueryFilter, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(carbonEmissionQueryFilter, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -132,7 +130,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 writer.WriteStartArray();
                 foreach (ResourceType item in ResourceTypeList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }

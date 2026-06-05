@@ -3,9 +3,11 @@
 
 using System;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
+    [CodeGenSuppress(nameof(SearchIndexerDataUserAssignedIdentity), typeof(string))]
     public partial class SearchIndexerDataUserAssignedIdentity
     {
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataUserAssignedIdentity"/>. </summary>

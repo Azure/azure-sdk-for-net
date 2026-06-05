@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     internal static partial class RedisEnterpriseAccessKeyTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RedisEnterpriseAccessKeyType value) => value switch
         {
             RedisEnterpriseAccessKeyType.Primary => "Primary",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedisEnterpriseAccessKeyType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static RedisEnterpriseAccessKeyType ToRedisEnterpriseAccessKeyType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return RedisEnterpriseAccessKeyType.Primary;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return RedisEnterpriseAccessKeyType.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary"))
+            {
+                return RedisEnterpriseAccessKeyType.Primary;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary"))
+            {
+                return RedisEnterpriseAccessKeyType.Secondary;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RedisEnterpriseAccessKeyType value.");
         }
     }

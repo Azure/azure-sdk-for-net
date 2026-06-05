@@ -18,8 +18,6 @@ namespace Azure.Security.KeyVault.Administration
     internal partial class KeyVaultRestClient
     {
         private readonly Uri _endpoint;
-        /// <summary> A credential used to authenticate to the service. </summary>
-        private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
         private readonly string _apiVersion;
 

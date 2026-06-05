@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             if (id.ResourceType != AvsPrivateCloudClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudClusterResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _datastoresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, AvsPrivateCloudDatastoreData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsPrivateCloudDatastoreResource> operation = new AvsArmOperation<AvsPrivateCloudDatastoreResource>(
-                    new AvsPrivateCloudDatastoreOperationSource(Client),
+                    new AvsPrivateCloudDatastoreResourceOperationSource(Client),
                     _datastoresClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _datastoresRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, AvsPrivateCloudDatastoreData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsPrivateCloudDatastoreResource> operation = new AvsArmOperation<AvsPrivateCloudDatastoreResource>(
-                    new AvsPrivateCloudDatastoreOperationSource(Client),
+                    new AvsPrivateCloudDatastoreResourceOperationSource(Client),
                     _datastoresClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -299,7 +299,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new AvsPrivateCloudDatastoreResource(Client, data));
+                context,
+                "AvsPrivateCloudDatastoreCollection.GetAll"), data => new AvsPrivateCloudDatastoreResource(Client, data));
         }
 
         /// <summary>
@@ -333,7 +334,8 @@ namespace Azure.ResourceManager.Avs
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                context), data => new AvsPrivateCloudDatastoreResource(Client, data));
+                context,
+                "AvsPrivateCloudDatastoreCollection.GetAll"), data => new AvsPrivateCloudDatastoreResource(Client, data));
         }
 
         /// <summary>

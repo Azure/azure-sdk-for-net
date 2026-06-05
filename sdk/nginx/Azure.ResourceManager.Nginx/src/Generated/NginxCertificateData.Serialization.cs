@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(nginxCertificateData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(nginxCertificateData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NginxCertificateData"/> from. </param>
@@ -108,6 +106,21 @@ namespace Azure.ResourceManager.Nginx
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -139,9 +152,9 @@ namespace Azure.ResourceManager.Nginx
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NginxCertificateProperties properties = default;
             AzureLocation? location = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -204,9 +217,9 @@ namespace Azure.ResourceManager.Nginx
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 properties,
-                location);
+                location,
+                additionalBinaryDataProperties);
         }
     }
 }

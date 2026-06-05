@@ -6,7 +6,7 @@ using System;
 using System.ComponentModel;
 using Azure.AI.Projects;
 
-namespace Azure.Core.Foundations
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Enum describing allowed operation states. </summary>
     public readonly partial struct OperationStatus : IEquatable<OperationStatus>

@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The parameters used to create the server endpoint. </param>
-        internal StorageSyncServerEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerEndpointCreateParametersProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageSyncServerEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServerEndpointCreateParametersProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The parameters used to create the server endpoint. </summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.CloudTiering = value.Value;
+                Properties.CloudTiering = value;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.VolumeFreeSpacePercent = value.Value;
+                Properties.VolumeFreeSpacePercent = value;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.TierFilesOlderThanDays = value.Value;
+                Properties.TierFilesOlderThanDays = value;
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.OfflineDataTransfer = value.Value;
+                Properties.OfflineDataTransfer = value;
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.InitialDownloadPolicy = value.Value;
+                Properties.InitialDownloadPolicy = value;
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.LocalCacheMode = value.Value;
+                Properties.LocalCacheMode = value;
             }
         }
 
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     Properties = new ServerEndpointCreateParametersProperties();
                 }
-                Properties.InitialUploadPolicy = value.Value;
+                Properties.InitialUploadPolicy = value;
             }
         }
     }

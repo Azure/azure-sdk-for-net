@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dataReplicationProtectedItemPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(dataReplicationProtectedItemPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -94,6 +92,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
         }
 
@@ -123,11 +136,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            ResourceType resourceType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DataReplicationProtectedItemPropertiesUpdate properties = default;
             string name = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
+            DataReplicationProtectedItemPropertiesUpdate properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -139,6 +152,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -146,20 +164,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         continue;
                     }
                     resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = DataReplicationProtectedItemPropertiesUpdate.DeserializeDataReplicationProtectedItemPropertiesUpdate(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -171,6 +175,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = DataReplicationProtectedItemPropertiesUpdate.DeserializeDataReplicationProtectedItemPropertiesUpdate(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -178,11 +191,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             return new DataReplicationProtectedItemPatch(
                 id,
-                resourceType,
-                additionalBinaryDataProperties,
-                properties,
                 name,
-                systemData);
+                resourceType,
+                systemData,
+                properties,
+                additionalBinaryDataProperties);
         }
     }
 }

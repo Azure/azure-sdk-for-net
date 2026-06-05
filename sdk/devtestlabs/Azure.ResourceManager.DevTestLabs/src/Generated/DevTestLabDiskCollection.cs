@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             if (id.ResourceType != DevTestLabUserResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabUserResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabUserResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabDiskData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabDiskResource> operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(
-                    new DevTestLabDiskOperationSource(Client),
+                    new DevTestLabDiskResourceOperationSource(Client),
                     _disksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabDiskData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabDiskResource> operation = new DevTestLabsArmOperation<DevTestLabDiskResource>(
-                    new DevTestLabDiskOperationSource(Client),
+                    new DevTestLabDiskResourceOperationSource(Client),
                     _disksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -309,7 +309,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabDiskResource(Client, data));
+                context,
+                "DevTestLabDiskCollection.GetAll"), data => new DevTestLabDiskResource(Client, data));
         }
 
         /// <summary>
@@ -351,7 +352,8 @@ namespace Azure.ResourceManager.DevTestLabs
                 filter,
                 top,
                 @orderby,
-                context), data => new DevTestLabDiskResource(Client, data));
+                context,
+                "DevTestLabDiskCollection.GetAll"), data => new DevTestLabDiskResource(Client, data));
         }
 
         /// <summary>

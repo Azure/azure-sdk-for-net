@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _publicIPAddressesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicIPAddressName, HciVmPublicIPAddressData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmPublicIPAddressResource> operation = new VmArmOperation<HciVmPublicIPAddressResource>(
-                    new HciVmPublicIPAddressOperationSource(Client),
+                    new HciVmPublicIPAddressResourceOperationSource(Client),
                     _publicIPAddressesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _publicIPAddressesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, publicIPAddressName, HciVmPublicIPAddressData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmPublicIPAddressResource> operation = new VmArmOperation<HciVmPublicIPAddressResource>(
-                    new HciVmPublicIPAddressOperationSource(Client),
+                    new HciVmPublicIPAddressResourceOperationSource(Client),
                     _publicIPAddressesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmPublicIPAddressData, HciVmPublicIPAddressResource>(new PublicIPAddressesGetByResourceGroupAsyncCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmPublicIPAddressResource(Client, data));
+            return new AsyncPageableWrapper<HciVmPublicIPAddressData, HciVmPublicIPAddressResource>(new PublicIPAddressesGetByResourceGroupAsyncCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmPublicIPAddressCollection.GetAll"), data => new HciVmPublicIPAddressResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmPublicIPAddressData, HciVmPublicIPAddressResource>(new PublicIPAddressesGetByResourceGroupCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new HciVmPublicIPAddressResource(Client, data));
+            return new PageableWrapper<HciVmPublicIPAddressData, HciVmPublicIPAddressResource>(new PublicIPAddressesGetByResourceGroupCollectionResultOfT(_publicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "HciVmPublicIPAddressCollection.GetAll"), data => new HciVmPublicIPAddressResource(Client, data));
         }
 
         /// <summary>

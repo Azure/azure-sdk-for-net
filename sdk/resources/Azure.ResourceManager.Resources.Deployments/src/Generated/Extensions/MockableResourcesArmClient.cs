@@ -5,45 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableResourcesArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableResourcesArmClient for mocking. </summary>
         protected MockableResourcesArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableResourcesArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableResourcesArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableResourcesArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableResourcesArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ArmDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArmDeploymentResource.CreateResourceIdentifier" /> to create an <see cref="ArmDeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ArmDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ArmDeploymentResource"/> object. </returns>
         public virtual ArmDeploymentResource GetArmDeploymentResource(ResourceIdentifier id)
         {
             ArmDeploymentResource.ValidateResourceId(id);
             return new ArmDeploymentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ArmDeploymentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ArmDeploymentResource"/> objects. </returns>
+        public virtual ArmDeploymentCollection GetArmDeployments(ResourceIdentifier scope)
+        {
+            return new ArmDeploymentCollection(Client, scope);
+        }
+
+        /// <summary> Gets a deployment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ArmDeploymentResource> GetArmDeployment(ResourceIdentifier scope, string deploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            return GetArmDeployments(scope).Get(deploymentName, cancellationToken);
+        }
+
+        /// <summary> Gets a deployment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="deploymentName"> The name of the deployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(ResourceIdentifier scope, string deploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            return await GetArmDeployments(scope).GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -5,12 +5,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Base evaluator configuration with discriminator
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeBasedEvaluatorDefinition"/> and <see cref="PromptBasedEvaluatorDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CodeBasedEvaluatorDefinition"/>, <see cref="PromptBasedEvaluatorDefinition"/>, and <see cref="RubricBasedEvaluatorDefinition"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEvaluatorDefinition))]
     public abstract partial class EvaluatorDefinition : IJsonModel<EvaluatorDefinition>
@@ -165,6 +166,8 @@ namespace Azure.AI.Projects
                         return CodeBasedEvaluatorDefinition.DeserializeCodeBasedEvaluatorDefinition(element, options);
                     case "prompt":
                         return PromptBasedEvaluatorDefinition.DeserializePromptBasedEvaluatorDefinition(element, options);
+                    case "rubric":
+                        return RubricBasedEvaluatorDefinition.DeserializeRubricBasedEvaluatorDefinition(element, options);
                 }
             }
             return UnknownEvaluatorDefinition.DeserializeUnknownEvaluatorDefinition(element, options);

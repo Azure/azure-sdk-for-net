@@ -17,7 +17,7 @@ pr:
     include:
       - eng/packages/http-client-csharp-mgmt
       - eng/scripts/typespec
-      
+
 parameters:
   - name: UseTypeSpecNext
     displayName: "Use TypeSpec Next"
@@ -48,6 +48,10 @@ extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
     InitializationSteps:
+      - task: UseNode@1
+        displayName: 'Install Node.js'
+        inputs:
+          version: '22.x'
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
     EmitterPackageJsonOutputPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
     EmitterPackagePath: eng/packages/http-client-csharp-mgmt
@@ -59,15 +63,22 @@ extends:
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       ${{ if eq(variables['Build.Reason'], 'Manual') }}:
-        ShouldPublish: ${{ parameters.ShouldPublish }}
-        ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
-        HasNugetPackages: ${{ parameters.PublishNugetPackages }}
-        ${{ if startswith(variables['Build.SourceBranch'], 'refs/pull/') }}:  # PR ref's can't be published to public, even in a manual run
-          PublishPublic: false
+        ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+          ShouldPublish: true
+          ShouldRegenerate: true
+          PublishPublic: true
           PublishDependsOnTest: false
-        ${{ else }}: # Any other manual run can go to public
-           PublishPublic: ${{ parameters.PublishPublic }}
-           PublishDependsOnTest: ${{ parameters.PublishPublic }}
+          HasNugetPackages: true
+        ${{ else }}:
+          ShouldPublish: ${{ parameters.ShouldPublish }}
+          ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
+          HasNugetPackages: ${{ parameters.PublishNugetPackages }}
+          ${{ if startswith(variables['Build.SourceBranch'], 'refs/pull/') }}:  # PR refs can't be published to public, even in a manual run
+            PublishPublic: false
+            PublishDependsOnTest: false
+          ${{ else }}: # Any other manual run can go to public
+            PublishPublic: ${{ parameters.PublishPublic }}
+            PublishDependsOnTest: ${{ parameters.PublishPublic }}
       ${{ else }}: # All automatic runs publish, but only CI of main goes public
         ShouldPublish: true
         ShouldRegenerate: true
@@ -77,6 +88,7 @@ extends:
       RegenerationJobCount: 5
       MinimumPerJob: 10
       OnlyGenerateTypespec: true
+      DirectoryFilterPattern: 'Azure.ResourceManager*,Azure.Provisioning*'
     TestMatrix:
       All:
         TestArguments: -UnitTests -GenerationChecks -Filter .NET

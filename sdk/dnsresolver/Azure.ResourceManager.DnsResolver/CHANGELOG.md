@@ -1,31 +1,32 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.3.0-beta.2 (2026-06-03)
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.3.0-beta.1 (2025-11-12)
 
 ### Features Added
-- Upgraded api-version tag from 'package-2025-05' to 'package-preview-2025-10'
-- Adds new managedDomainList property in DnsSecurityRule to allow users to use managed domain lists such as AzureDnsThreatIntel
+
+- Upgraded api-version tag from 'package-2025-05' to 'package-preview-2025-10'.
+- Adds new managedDomainList property in DnsSecurityRule to allow users to use managed domain lists such as AzureDnsThreatIntel.
 
 ### Other Changes
+
 - Domain list is no longer required for a DNS Security rule if managed domain list is being used.
 
 ## 1.2.0 (2025-06-10)
 
 ### Features Added
+
 - Upgraded api-version tag from 'package-preview-2023-07' to 'package-2025-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8600539fa5ba6c774b4454a401d9cd3cf01a36a7/specification/dnsresolver/resource-manager/readme.md.
 - Adds new POST bulk API for large domain list usage.
 
 ### Other Changes
+
 - BlockResponseCode has been removed from the DnsSecurityRule Action type in api-version `2025-05-01` from `2023-07-01-preview`.
 
 ## 1.2.0-beta.1 (2024-10-24)

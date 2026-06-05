@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _storagePoolsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, PureStoragePoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation<PureStoragePoolResource> operation = new PureStorageBlockArmOperation<PureStoragePoolResource>(
-                    new PureStoragePoolOperationSource(Client),
+                    new PureStoragePoolResourceOperationSource(Client),
                     _storagePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _storagePoolsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, storagePoolName, PureStoragePoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation<PureStoragePoolResource> operation = new PureStorageBlockArmOperation<PureStoragePoolResource>(
-                    new PureStoragePoolOperationSource(Client),
+                    new PureStoragePoolResourceOperationSource(Client),
                     _storagePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetByResourceGroupAsyncCollectionResultOfT(_storagePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PureStoragePoolResource(Client, data));
+            return new AsyncPageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetByResourceGroupAsyncCollectionResultOfT(_storagePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStoragePoolCollection.GetAll"), data => new PureStoragePoolResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetByResourceGroupCollectionResultOfT(_storagePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new PureStoragePoolResource(Client, data));
+            return new PageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetByResourceGroupCollectionResultOfT(_storagePoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "PureStoragePoolCollection.GetAll"), data => new PureStoragePoolResource(Client, data));
         }
 
         /// <summary>

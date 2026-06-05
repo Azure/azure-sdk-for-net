@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _resourceAnchorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OracleResourceAnchorPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<OracleResourceAnchorResource> operation = new OracleDatabaseArmOperation<OracleResourceAnchorResource>(
-                    new OracleResourceAnchorOperationSource(Client),
+                    new OracleResourceAnchorResourceOperationSource(Client),
                     _resourceAnchorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _resourceAnchorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OracleResourceAnchorPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<OracleResourceAnchorResource> operation = new OracleDatabaseArmOperation<OracleResourceAnchorResource>(
-                    new OracleResourceAnchorOperationSource(Client),
+                    new OracleResourceAnchorResourceOperationSource(Client),
                     _resourceAnchorsClientDiagnostics,
                     Pipeline,
                     message.Request,

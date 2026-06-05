@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> Plan data of NewRelic Monitor resource. </summary>
     public partial class NewRelicPlanDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NewRelicPlanDetails"/>. </summary>
         public NewRelicPlanDetails()
@@ -55,25 +27,28 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="newRelicPlanBillingCycle"> Different billing cycles like Monthly/Weekly. </param>
         /// <param name="planDetails"> plan id as published by NewRelic. </param>
         /// <param name="effectiveOn"> date when plan was applied. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NewRelicPlanDetails(NewRelicObservabilityUsageType? usageType, string newRelicPlanBillingCycle, string planDetails, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicPlanDetails(NewRelicObservabilityUsageType? usageType, string newRelicPlanBillingCycle, string planDetails, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UsageType = usageType;
             NewRelicPlanBillingCycle = newRelicPlanBillingCycle;
             PlanDetails = planDetails;
             EffectiveOn = effectiveOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Different usage type like PAYG/COMMITTED. this could be enum. </summary>
         [WirePath("usageType")]
         public NewRelicObservabilityUsageType? UsageType { get; set; }
+
         /// <summary> Different billing cycles like Monthly/Weekly. </summary>
         [WirePath("billingCycle")]
         public string NewRelicPlanBillingCycle { get; set; }
+
         /// <summary> plan id as published by NewRelic. </summary>
         [WirePath("planDetails")]
         public string PlanDetails { get; set; }
+
         /// <summary> date when plan was applied. </summary>
         [WirePath("effectiveDate")]
         public DateTimeOffset? EffectiveOn { get; set; }

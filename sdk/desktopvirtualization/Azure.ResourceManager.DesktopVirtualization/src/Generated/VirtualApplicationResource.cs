@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualApplicationResource>> UpdateAsync(VirtualApplicationPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualApplicationResource>> UpdateAsync(VirtualApplicationPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("VirtualApplicationResource.Update");
             scope.Start();
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualApplicationResource> Update(VirtualApplicationPatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualApplicationResource> Update(VirtualApplicationPatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("VirtualApplicationResource.Update");
             scope.Start();

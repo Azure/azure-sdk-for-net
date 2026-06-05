@@ -3389,6 +3389,7 @@ namespace Azure.AI.Language.Text
     public partial class TextAnalysisClient
     {
         protected TextAnalysisClient() { }
+        public TextAnalysisClient(Azure.AI.Language.Text.TextAnalysisClientSettings settings) { }
         public TextAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public TextAnalysisClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Text.TextAnalysisClientOptions options) { }
         public TextAnalysisClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -3415,9 +3416,13 @@ namespace Azure.AI.Language.Text
     }
     public static partial class TextAnalysisClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Text.TextAnalysisClient, Azure.AI.Language.Text.TextAnalysisClientOptions> AddTextAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Text.TextAnalysisClient, Azure.AI.Language.Text.TextAnalysisClientOptions> AddTextAnalysisClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Text.TextAnalysisClient, Azure.AI.Language.Text.TextAnalysisClientOptions> AddTextAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+    }
+    public static partial class TextAnalysisClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedTextAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedTextAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Language.Text.TextAnalysisClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddTextAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddTextAnalysisClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Language.Text.TextAnalysisClientSettings> configureSettings) { throw null; }
     }
     public partial class TextAnalysisClientOptions : Azure.Core.ClientOptions
     {
@@ -3431,6 +3436,13 @@ namespace Azure.AI.Language.Text
             V2025_05_15_Preview = 5,
             V2025_11_15_Preview = 6,
         }
+    }
+    public partial class TextAnalysisClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public TextAnalysisClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.AI.Language.Text.TextAnalysisClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class TextAnalysisModelFactory
     {

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
       The official .NET library for extended OpenAI API capabilities in Microsoft Foundry, including those used by the Foundry Agents Service.
@@ -8,7 +8,9 @@
       ongoing forward compatibility.
     </Description>
     <AssemblyTitle>Microsoft Foundry OpenAI .NET Extensions</AssemblyTitle>
-    <Version>2.0.0-beta.1</Version>
+    <Version>2.1.0-beta.4</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>2.0.0</ApiCompatVersion>
     <PackageTags>Azure.AI.Extensions.OpenAI</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>latest</LangVersion>
@@ -16,19 +18,8 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <!-- Acknowledge experimental OpenAI features -->
-    <NoWarn>$(NoWarn);OPENAI001</NoWarn>
-    <!-- Temporary suppression of XML doc requirement -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <!-- Ignore ModelFactory error (applied to externally originating types) -->
-    <NoWarn>$(NoWarn);AZC0035</NoWarn>
-    <!-- Ignore warnings about the experimental features -->
-    <NoWarn>$(NoWarn);AAIP001</NoWarn>
-  </PropertyGroup>
-  
   <ItemGroup>
-    <PackageReference Include="OpenAI"/>
+    <PackageReference Include="OpenAI" />
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 

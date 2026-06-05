@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryPointId"> The recovery point Id. </param>
         /// <param name="networkId"> The test network Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> or <paramref name="networkId"/> is null. </exception>
-        public VMwareCbtTestMigrateContent(ResourceIdentifier recoveryPointId, ResourceIdentifier networkId)
+        public VMwareCbtTestMigrateContent(ResourceIdentifier recoveryPointId, ResourceIdentifier networkId) : base("VMwareCbt")
         {
             Argument.AssertNotNull(recoveryPointId, nameof(recoveryPointId));
             Argument.AssertNotNull(networkId, nameof(networkId));
@@ -27,40 +28,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             NetworkId = networkId;
             VmNics = new ChangeTrackingList<VMwareCbtNicContent>();
             PostMigrationSteps = new ChangeTrackingList<ManagedRunCommandScriptContent>();
-            InstanceType = "VMwareCbt";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtTestMigrateContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointId"> The recovery point Id. </param>
         /// <param name="networkId"> The test network Id. </param>
         /// <param name="vmNics"> The list of NIC details. </param>
         /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
         /// <param name="postMigrationSteps"> The managed run command script input. </param>
-        internal VMwareCbtTestMigrateContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryPointId, ResourceIdentifier networkId, IList<VMwareCbtNicContent> vmNics, string osUpgradeVersion, IList<ManagedRunCommandScriptContent> postMigrationSteps) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareCbtTestMigrateContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier recoveryPointId, ResourceIdentifier networkId, IList<VMwareCbtNicContent> vmNics, string osUpgradeVersion, IList<ManagedRunCommandScriptContent> postMigrationSteps) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryPointId = recoveryPointId;
             NetworkId = networkId;
             VmNics = vmNics;
             OSUpgradeVersion = osUpgradeVersion;
             PostMigrationSteps = postMigrationSteps;
-            InstanceType = instanceType ?? "VMwareCbt";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VMwareCbtTestMigrateContent"/> for deserialization. </summary>
-        internal VMwareCbtTestMigrateContent()
-        {
         }
 
         /// <summary> The recovery point Id. </summary>
         public ResourceIdentifier RecoveryPointId { get; }
+
         /// <summary> The test network Id. </summary>
         public ResourceIdentifier NetworkId { get; }
+
         /// <summary> The list of NIC details. </summary>
         public IList<VMwareCbtNicContent> VmNics { get; }
+
         /// <summary> A value indicating the inplace OS Upgrade version. </summary>
         public string OSUpgradeVersion { get; set; }
+
         /// <summary> The managed run command script input. </summary>
         public IList<ManagedRunCommandScriptContent> PostMigrationSteps { get; }
     }

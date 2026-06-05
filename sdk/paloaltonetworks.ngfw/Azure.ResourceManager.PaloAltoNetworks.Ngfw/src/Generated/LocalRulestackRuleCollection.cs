@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             if (id.ResourceType != LocalRulestackResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LocalRulestackResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, LocalRulestackResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _localRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, priority, LocalRulestackRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<LocalRulestackRuleResource> operation = new NgfwArmOperation<LocalRulestackRuleResource>(
-                    new LocalRulestackRuleOperationSource(Client),
+                    new LocalRulestackRuleResourceOperationSource(Client),
                     _localRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _localRulesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, priority, LocalRulestackRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<LocalRulestackRuleResource> operation = new NgfwArmOperation<LocalRulestackRuleResource>(
-                    new LocalRulestackRuleOperationSource(Client),
+                    new LocalRulestackRuleResourceOperationSource(Client),
                     _localRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<LocalRulestackRuleData, LocalRulestackRuleResource>(new LocalRulesGetByLocalRulestacksAsyncCollectionResultOfT(_localRulesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new LocalRulestackRuleResource(Client, data));
+            return new AsyncPageableWrapper<LocalRulestackRuleData, LocalRulestackRuleResource>(new LocalRulesGetByLocalRulestacksAsyncCollectionResultOfT(
+                _localRulesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "LocalRulestackRuleCollection.GetAll"), data => new LocalRulestackRuleResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<LocalRulestackRuleData, LocalRulestackRuleResource>(new LocalRulesGetByLocalRulestacksCollectionResultOfT(_localRulesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new LocalRulestackRuleResource(Client, data));
+            return new PageableWrapper<LocalRulestackRuleData, LocalRulestackRuleResource>(new LocalRulesGetByLocalRulestacksCollectionResultOfT(
+                _localRulesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "LocalRulestackRuleCollection.GetAll"), data => new LocalRulestackRuleResource(Client, data));
         }
 
         /// <summary>

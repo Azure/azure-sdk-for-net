@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
-    public partial class UserProfileMemoryItem : MemoryItem
+    public partial class UserProfileMemoryItem : MemoryOutputItem
     {
         /// <summary> Initializes a new instance of <see cref="UserProfileMemoryItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>

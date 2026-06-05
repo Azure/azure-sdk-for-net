@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Peering
         private readonly string _peeringName;
         private readonly bool? _consolidate;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RpUnbilledPrefixes client used to send requests. </param>
@@ -31,7 +32,8 @@ namespace Azure.ResourceManager.Peering
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="consolidate"> Flag to enable consolidation prefixes. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT(RpUnbilledPrefixes client, string subscriptionId, string resourceGroupName, string peeringName, bool? consolidate, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT(RpUnbilledPrefixes client, string subscriptionId, string resourceGroupName, string peeringName, bool? consolidate, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.Peering
             _peeringName = peeringName;
             _consolidate = consolidate;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of RpUnbilledPrefixesGetRpUnbilledPrefixesAsyncCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.Peering
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetRpUnbilledPrefixesRequest(nextLink, _subscriptionId, _resourceGroupName, _peeringName, _consolidate, _context) : _client.CreateGetRpUnbilledPrefixesRequest(_subscriptionId, _resourceGroupName, _peeringName, _consolidate, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PeeringResource.GetRpUnbilledPrefixes");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

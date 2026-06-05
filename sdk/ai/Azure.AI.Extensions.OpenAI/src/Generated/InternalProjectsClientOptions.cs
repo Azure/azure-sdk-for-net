@@ -4,6 +4,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -20,6 +22,22 @@ namespace Azure.AI.Extensions.OpenAI
                 ServiceVersion.V1 => "v1",
                 _ => throw new NotSupportedException()
             };
+        }
+
+        /// <summary> Initializes a new instance of InternalProjectsClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal InternalProjectsClientOptions(IConfigurationSection section) : base(section)
+        {
+            Version = "v1";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
         }
 
         /// <summary> Gets the Version. </summary>

@@ -25,16 +25,6 @@ namespace Azure.Search.Documents.Models
                     return FacetType.Value;
                 if (From != null || To != null)
                     return FacetType.Range;
-                if (Sum.HasValue)
-                    return FacetType.Sum;
-                if (Avg.HasValue)
-                    return FacetType.Average;
-                if (Min.HasValue)
-                    return FacetType.Minimum;
-                if (Max.HasValue)
-                    return FacetType.Maximum;
-                if (Cardinality.HasValue)
-                    return FacetType.Cardinality;
 
                 // Default to Value if no specific facet type can be determined
                 return FacetType.Value;
@@ -219,24 +209,17 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    Dictionary<string, IList<FacetResult>> dictionary = new Dictionary<string, IList<FacetResult>>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    Dictionary<string, IList<FacetResult>> nestedFacets = new Dictionary<string, IList<FacetResult>>();
+                    foreach (var facetProp in prop.Value.EnumerateObject())
                     {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        List<FacetResult> facetList = new List<FacetResult>();
+                        foreach (var item in facetProp.Value.EnumerateArray())
                         {
-                            dictionary.Add(prop0.Name, null);
+                            facetList.Add(DeserializeFacetResult(item, options));
                         }
-                        else
-                        {
-                            List<FacetResult> array = new List<FacetResult>();
-                            foreach (var item in prop0.Value.EnumerateArray())
-                            {
-                                array.Add(DeserializeFacetResult(item, options));
-                            }
-                            dictionary.Add(prop0.Name, array);
-                        }
+                        nestedFacets.Add(facetProp.Name, facetList);
                     }
-                    facets = dictionary;
+                    facets = nestedFacets;
                     continue;
                 }
                 if (options.Format != "W")
@@ -251,7 +234,7 @@ namespace Azure.Search.Documents.Models
                 max,
                 sum,
                 cardinality,
-                facets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
+                facets,
                 additionalProperties);
         }
     }

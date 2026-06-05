@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             if (id.ResourceType != HciVmVirtualNetworkResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciVmVirtualNetworkResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HciVmVirtualNetworkResource.ResourceType), nameof(id));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualNetworkSubnetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subnetName, HciVmVirtualNetworkSubnetData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmVirtualNetworkSubnetResource> operation = new VmArmOperation<HciVmVirtualNetworkSubnetResource>(
-                    new HciVmVirtualNetworkSubnetOperationSource(Client),
+                    new HciVmVirtualNetworkSubnetResourceOperationSource(Client),
                     _virtualNetworkSubnetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualNetworkSubnetsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, subnetName, HciVmVirtualNetworkSubnetData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmVirtualNetworkSubnetResource> operation = new VmArmOperation<HciVmVirtualNetworkSubnetResource>(
-                    new HciVmVirtualNetworkSubnetOperationSource(Client),
+                    new HciVmVirtualNetworkSubnetResourceOperationSource(Client),
                     _virtualNetworkSubnetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -293,7 +293,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new VirtualNetworkSubnetsGetByVirtualNetworkAsyncCollectionResultOfT(_virtualNetworkSubnetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciVmVirtualNetworkSubnetResource(Client, data));
+            return new AsyncPageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new VirtualNetworkSubnetsGetByVirtualNetworkAsyncCollectionResultOfT(
+                _virtualNetworkSubnetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciVmVirtualNetworkSubnetCollection.GetAll"), data => new HciVmVirtualNetworkSubnetResource(Client, data));
         }
 
         /// <summary>
@@ -321,7 +327,13 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new VirtualNetworkSubnetsGetByVirtualNetworkCollectionResultOfT(_virtualNetworkSubnetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new HciVmVirtualNetworkSubnetResource(Client, data));
+            return new PageableWrapper<HciVmVirtualNetworkSubnetData, HciVmVirtualNetworkSubnetResource>(new VirtualNetworkSubnetsGetByVirtualNetworkCollectionResultOfT(
+                _virtualNetworkSubnetsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "HciVmVirtualNetworkSubnetCollection.GetAll"), data => new HciVmVirtualNetworkSubnetResource(Client, data));
         }
 
         /// <summary>

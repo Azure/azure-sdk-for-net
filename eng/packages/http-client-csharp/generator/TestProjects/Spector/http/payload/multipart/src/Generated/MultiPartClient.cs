@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Pipeline;
 using Payload.MultiPart._FormData;
 
@@ -15,7 +16,12 @@ namespace Payload.MultiPart
     {
         public MultiPartClient() : this(new Uri("http://localhost:3000"), new MultiPartClientOptions()) => throw null;
 
-        public MultiPartClient(Uri endpoint, MultiPartClientOptions options) => throw null;
+        internal MultiPartClient(HttpPipelinePolicy authenticationPolicy, Uri endpoint, MultiPartClientOptions options) => throw null;
+
+        public MultiPartClient(Uri endpoint, MultiPartClientOptions options) : this(null, endpoint, options) => throw null;
+
+        [Experimental("SCME0002")]
+        public MultiPartClient(MultiPartClientSettings settings) : this(null, settings?.Endpoint, settings?.Options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

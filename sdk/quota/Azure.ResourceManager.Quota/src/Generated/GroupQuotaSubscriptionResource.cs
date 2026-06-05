@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Quota
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotaSubscriptionIdsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotaSubscriptionResource> operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(
-                    new GroupQuotaSubscriptionOperationSource(Client),
+                    new GroupQuotaSubscriptionResourceOperationSource(Client),
                     _groupQuotaSubscriptionIdsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotaSubscriptionIdsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Guid.Parse(Id.Name), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotaSubscriptionResource> operation = new QuotaArmOperation<GroupQuotaSubscriptionResource>(
-                    new GroupQuotaSubscriptionOperationSource(Client),
+                    new GroupQuotaSubscriptionResourceOperationSource(Client),
                     _groupQuotaSubscriptionIdsClientDiagnostics,
                     Pipeline,
                     message.Request,

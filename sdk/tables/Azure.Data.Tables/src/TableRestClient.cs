@@ -151,7 +151,11 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                using HttpMessage message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, format, select, filter, context);
+                // Do not dispose the HttpMessage here; the caller needs the Response's ContentStream
+                // to remain readable for deserialization (e.g., in GetEntityInternalAsync).
+                // Disposing the message would dispose the response, which on some runtimes disposes
+                // seekable non-MemoryStream content streams, causing ObjectDisposedException.
+                HttpMessage message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, format, select, filter, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -184,7 +188,9 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                using HttpMessage message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, format, select, filter, context);
+                // Do not dispose the HttpMessage here; the caller needs the Response's ContentStream
+                // to remain readable for deserialization (e.g., in GetEntityInternalAsync).
+                HttpMessage message = CreateQueryEntityWithPartitionAndRowKeyRequest(table, partitionKey, rowKey, timeout, format, select, filter, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private readonly string _vmssName;
         private readonly string _name;
         private readonly RequestContext _context;
+        private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportsVMSSGetReportsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The GuestConfigurationAssignmentReportsVMSS client used to send requests. </param>
@@ -30,7 +31,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="vmssName"> The name of the virtual machine scale set. </param>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public GuestConfigurationAssignmentReportsVMSSGetReportsCollectionResultOfT(GuestConfigurationAssignmentReportsVMSS client, string subscriptionId, string resourceGroupName, string vmssName, string name, RequestContext context) : base(context?.CancellationToken ?? default)
+        /// <param name="diagnosticScope"> The diagnostic scope name. </param>
+        public GuestConfigurationAssignmentReportsVMSSGetReportsCollectionResultOfT(GuestConfigurationAssignmentReportsVMSS client, string subscriptionId, string resourceGroupName, string vmssName, string name, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             _vmssName = vmssName;
             _name = name;
             _context = context;
+            _diagnosticScope = diagnosticScope;
         }
 
         /// <summary> Gets the pages of GuestConfigurationAssignmentReportsVMSSGetReportsCollectionResultOfT as an enumerable collection. </summary>
@@ -71,7 +74,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetReportsRequest(nextLink, _subscriptionId, _resourceGroupName, _vmssName, _name, _context) : _client.CreateGetReportsRequest(_subscriptionId, _resourceGroupName, _vmssName, _name, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReports");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {

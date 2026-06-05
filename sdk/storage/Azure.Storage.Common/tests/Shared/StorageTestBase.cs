@@ -42,6 +42,7 @@ namespace Azure.Storage.Test.Shared
         private const string PreviousSnapshotUrl = "x-ms-previous-snapshot-url";
         private const string FileRenameSource = "x-ms-file-rename-source";
         private const string SasVersion = "sv";
+        private const string SasSignedTenantId = "sktid";
 
         public StorageTestBase(bool async, RecordedTestMode? mode = null)
             : base(async, mode)
@@ -87,6 +88,7 @@ namespace Azure.Storage.Test.Shared
             HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(CopySourceAuthorization));
 
             SanitizedQueryParametersInHeaders.Add((CopySourceName, SignatureQueryName));
+            SanitizedQueryParametersInHeaders.Add((CopySourceName, SasSignedTenantId));
             SanitizedQueryParametersInHeaders.Add((RenameSource, SignatureQueryName));
             SanitizedQueryParametersInHeaders.Add((PreviousSnapshotUrl, SignatureQueryName));
             SanitizedQueryParametersInHeaders.Add((FileRenameSource, SignatureQueryName));

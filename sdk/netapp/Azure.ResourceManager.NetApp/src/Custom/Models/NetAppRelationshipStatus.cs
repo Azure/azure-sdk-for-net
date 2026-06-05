@@ -8,6 +8,8 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
+    // Provides constructor, backing field, static members, and IEquatable implementation
+    // for the generated NetAppRelationshipStatus struct.
     /// <summary> Status of the mirror relationship. </summary>
     public readonly partial struct NetAppRelationshipStatus : IEquatable<NetAppRelationshipStatus>
     {

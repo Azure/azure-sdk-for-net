@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Predefined action to be taken. </summary>
+    /// <summary>
+    /// Predefined action to be taken.
+    /// Serialized Name: AutoHealActionType
+    /// </summary>
     public enum AutoHealActionType
     {
-        /// <summary> Recycle. </summary>
+        /// <summary>
+        /// Recycle
+        /// Serialized Name: AutoHealActionType.Recycle
+        /// </summary>
         Recycle,
-        /// <summary> LogEvent. </summary>
+        /// <summary>
+        /// LogEvent
+        /// Serialized Name: AutoHealActionType.LogEvent
+        /// </summary>
         LogEvent,
-        /// <summary> CustomAction. </summary>
+        /// <summary>
+        /// CustomAction
+        /// Serialized Name: AutoHealActionType.CustomAction
+        /// </summary>
         CustomAction
     }
 }

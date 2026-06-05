@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Encode._Array
 {
     public partial class ArrayClientOptions : ClientOptions
     {
+        public ArrayClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal ArrayClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

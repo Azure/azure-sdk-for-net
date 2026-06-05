@@ -12,6 +12,8 @@ namespace System.ClientModel.Primitives;
 [Experimental("SCME0002")]
 public sealed class CredentialSettings
 {
+    private readonly IConfigurationSection? _section;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="CredentialSettings"/> class.
     /// </summary>
@@ -23,18 +25,44 @@ public sealed class CredentialSettings
             return;
         }
 
+        _section = section;
         CredentialSource = section["CredentialSource"];
         Key = section["Key"];
         AdditionalProperties = section.GetSection("AdditionalProperties");
     }
 
     /// <summary>
+    /// Reads an arbitrary value from the underlying credential configuration
+    /// section. Library authors can extend the credential schema with custom
+    /// properties (for example, a service-specific name or region) and surface
+    /// them via extension methods that read through this indexer, without
+    /// exposing the underlying <see cref="IConfigurationSection"/>. Supports
+    /// the standard configuration <c>:</c> delimiter for nested paths. Returns
+    /// <see langword="null"/> when no section was bound or if the specified value does not exist.
+    /// </summary>
+    /// <param name="key">The configuration key to read, relative to the credential section.</param>
+    public string? this[string key] => _section?[key];
+
+    /// <summary>
     /// Gets or sets the source of the credential.
     /// </summary>
     /// <remarks>
-    /// This value determines the type of authentication policy to use. For example, "ApiKey" creates an <see cref="ApiKeyAuthenticationPolicy"/>.
+    /// This value determines the type of authentication policy to use. For example, "ApiKeyCredential" creates an <see cref="ApiKeyAuthenticationPolicy"/>.
+    /// <para>
+    /// Matching is case-insensitive: values read from configuration are normalized to lowercase before storage,
+    /// so resolvers should compare against lowercase constants. Each resolver decides which forms it accepts
+    /// (for example, both short <c>"broker"</c> and long <c>"brokercredential"</c>).
+    /// </para>
     /// </remarks>
-    public string? CredentialSource { get; set; }
+    public string? CredentialSource
+    {
+        get => field;
+        set
+        {
+            string? lower = value?.ToLowerInvariant();
+            field = lower == "apikey" ? "apikeycredential" : lower;
+        }
+    }
 
     /// <summary>
     /// Gets or sets the ApiKey.
@@ -45,4 +73,9 @@ public sealed class CredentialSettings
     /// Gets or sets additional properties for the credential.
     /// </summary>
     public IConfigurationSection? AdditionalProperties { get; set; }
+
+    /// <summary>
+    /// Gets or sets the <see cref="AuthenticationTokenProvider"/> for this credential.
+    /// </summary>
+    public AuthenticationTokenProvider? TokenProvider { get; set; }
 }

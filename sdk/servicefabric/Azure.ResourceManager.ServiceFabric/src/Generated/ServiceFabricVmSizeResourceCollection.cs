@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ServiceFabric
@@ -25,72 +26,79 @@ namespace Azure.ResourceManager.ServiceFabric
     /// </summary>
     public partial class ServiceFabricVmSizeResourceCollection : ArmCollection, IEnumerable<ServiceFabricVmSizeResource>, IAsyncEnumerable<ServiceFabricVmSizeResource>
     {
-        private readonly ClientDiagnostics _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics;
-        private readonly UnsupportedVmSizesRestOperations _serviceFabricVmSizeResourceUnsupportedVmSizesRestClient;
+        private readonly ClientDiagnostics _unsupportedVmSizesClientDiagnostics;
+        private readonly UnsupportedVmSizes _unsupportedVmSizesRestClient;
+        /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceFabricVmSizeResourceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceFabricVmSizeResourceCollection for mocking. </summary>
         protected ServiceFabricVmSizeResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceFabricVmSizeResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricVmSizeResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The location parameter. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
         internal ServiceFabricVmSizeResourceCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
+            TryGetApiVersion(ServiceFabricVmSizeResource.ResourceType, out string serviceFabricVmSizeResourceApiVersion);
             _location = location;
-            _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ServiceFabricVmSizeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceFabricVmSizeResource.ResourceType, out string serviceFabricVmSizeResourceUnsupportedVmSizesApiVersion);
-            _serviceFabricVmSizeResourceUnsupportedVmSizesRestClient = new UnsupportedVmSizesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricVmSizeResourceUnsupportedVmSizesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _unsupportedVmSizesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ServiceFabricVmSizeResource.ResourceType.Namespace, Diagnostics);
+            _unsupportedVmSizesRestClient = new UnsupportedVmSizes(_unsupportedVmSizesClientDiagnostics, Pipeline, Endpoint, serviceFabricVmSizeResourceApiVersion ?? "2026-03-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get unsupported vm size for Service Fabric Clusters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UnsupportedVmSizes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VMSizeResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricVmSizeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmSize"> VM Size name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ServiceFabricVmSizeResource>> GetAsync(string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
-            using var scope = _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.Get");
+            using DiagnosticScope scope = _unsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceFabricVmSizeResourceUnsupportedVmSizesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), vmSize, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceFabricVmSizeResourceData> response = Response.FromValue(ServiceFabricVmSizeResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceFabricVmSizeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -104,38 +112,42 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Get unsupported vm size for Service Fabric Clusters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UnsupportedVmSizes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VMSizeResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricVmSizeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmSize"> VM Size name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ServiceFabricVmSizeResource> Get(string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
-            using var scope = _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.Get");
+            using DiagnosticScope scope = _unsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceFabricVmSizeResourceUnsupportedVmSizesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), vmSize, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceFabricVmSizeResourceData> response = Response.FromValue(ServiceFabricVmSizeResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceFabricVmSizeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -149,50 +161,44 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Get the lists of unsupported vm sizes for Service Fabric Clusters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UnsupportedVmSizes_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VMSizeResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricVmSizeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricVmSizeResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceFabricVmSizeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricVmSizeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricVmSizeResourceUnsupportedVmSizesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricVmSizeResourceUnsupportedVmSizesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricVmSizeResource(Client, ServiceFabricVmSizeResourceData.DeserializeServiceFabricVmSizeResourceData(e)), _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics, Pipeline, "ServiceFabricVmSizeResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ServiceFabricVmSizeResourceData, ServiceFabricVmSizeResource>(new UnsupportedVmSizesGetAllAsyncCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context, "ServiceFabricVmSizeResourceCollection.GetAll"), data => new ServiceFabricVmSizeResource(Client, data));
         }
 
         /// <summary>
         /// Get the lists of unsupported vm sizes for Service Fabric Clusters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UnsupportedVmSizes_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VMSizeResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricVmSizeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,45 +206,61 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <returns> A collection of <see cref="ServiceFabricVmSizeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricVmSizeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricVmSizeResourceUnsupportedVmSizesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricVmSizeResourceUnsupportedVmSizesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricVmSizeResource(Client, ServiceFabricVmSizeResourceData.DeserializeServiceFabricVmSizeResourceData(e)), _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics, Pipeline, "ServiceFabricVmSizeResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ServiceFabricVmSizeResourceData, ServiceFabricVmSizeResource>(new UnsupportedVmSizesGetAllCollectionResultOfT(_unsupportedVmSizesRestClient, Id.SubscriptionId, _location, context, "ServiceFabricVmSizeResourceCollection.GetAll"), data => new ServiceFabricVmSizeResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UnsupportedVmSizes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VMSizeResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricVmSizeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmSize"> VM Size name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
-            using var scope = _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.Exists");
+            using DiagnosticScope scope = _unsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceFabricVmSizeResourceUnsupportedVmSizesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), vmSize, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ServiceFabricVmSizeResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceFabricVmSizeResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceFabricVmSizeResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -252,36 +274,50 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UnsupportedVmSizes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VMSizeResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricVmSizeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmSize"> VM Size name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
-            using var scope = _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.Exists");
+            using DiagnosticScope scope = _unsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceFabricVmSizeResourceUnsupportedVmSizesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), vmSize, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ServiceFabricVmSizeResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceFabricVmSizeResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceFabricVmSizeResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -295,38 +331,54 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UnsupportedVmSizes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VMSizeResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricVmSizeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmSize"> VM Size name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ServiceFabricVmSizeResource>> GetIfExistsAsync(string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
-            using var scope = _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _unsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceFabricVmSizeResourceUnsupportedVmSizesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), vmSize, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ServiceFabricVmSizeResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceFabricVmSizeResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceFabricVmSizeResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceFabricVmSizeResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceFabricVmSizeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,38 +392,54 @@ namespace Azure.ResourceManager.ServiceFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UnsupportedVmSizes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VMSizeResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceFabricVmSizeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmSize"> VM Size name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ServiceFabricVmSizeResource> GetIfExists(string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
-            using var scope = _serviceFabricVmSizeResourceUnsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _unsupportedVmSizesClientDiagnostics.CreateScope("ServiceFabricVmSizeResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceFabricVmSizeResourceUnsupportedVmSizesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), vmSize, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _unsupportedVmSizesRestClient.CreateGetRequest(Id.SubscriptionId, _location, vmSize, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ServiceFabricVmSizeResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceFabricVmSizeResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceFabricVmSizeResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceFabricVmSizeResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceFabricVmSizeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -391,6 +459,7 @@ namespace Azure.ResourceManager.ServiceFabric
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ServiceFabricVmSizeResource> IAsyncEnumerable<ServiceFabricVmSizeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
