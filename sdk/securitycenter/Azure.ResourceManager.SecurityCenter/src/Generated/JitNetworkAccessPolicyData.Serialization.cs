@@ -209,6 +209,11 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (prop.NameEquals("location"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        location = null;
+                        continue;
+                    }
                     location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
