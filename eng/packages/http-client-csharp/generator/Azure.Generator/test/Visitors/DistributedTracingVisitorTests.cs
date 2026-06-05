@@ -249,21 +249,8 @@ namespace Azure.Generator.Tests.Visitors
             }
         }
 
-        private class TestDistributedTracingVisitor : DistributedTracingVisitor
+        private class TestDistributedTracingVisitor : AzureDistributedTracingVisitor
         {
-            public TestDistributedTracingVisitor()
-                : base(new CSharpType(typeof(ClientDiagnostics)), new CSharpType(typeof(DiagnosticScope)), IsPagingMethod)
-            {
-            }
-
-            private static bool IsPagingMethod(ScmMethodProvider method)
-            {
-                var returnType = method.Signature.ReturnType;
-                return returnType != null &&
-                    returnType.IsFrameworkType &&
-                    (returnType.FrameworkType == typeof(Pageable<>) || returnType.FrameworkType == typeof(AsyncPageable<>));
-            }
-
             public ClientProvider? InvokeVisit(InputClient client, ClientProvider? clientProvider)
             {
                 return base.Visit(client, clientProvider);

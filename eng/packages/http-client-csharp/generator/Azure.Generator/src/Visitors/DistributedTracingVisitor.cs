@@ -28,27 +28,18 @@ namespace Azure.Generator.Visitors
 
         private readonly CSharpType _clientDiagnosticsType;
         private readonly CSharpType _diagnosticScopeType;
-        private readonly Func<ScmMethodProvider, bool>? _shouldPassScopeToPageableConstructor;
 
         /// <summary>
         /// Creates a new instance of <see cref="DistributedTracingVisitor"/> with the specified types.
         /// </summary>
         /// <param name="clientDiagnosticsType">The CSharpType for ClientDiagnostics (e.g., Azure.Core.Pipeline.ClientDiagnostics or System.ClientModel.Primitives.ClientDiagnostics).</param>
         /// <param name="diagnosticScopeType">The CSharpType for DiagnosticScope (e.g., Azure.Core.Pipeline.DiagnosticScope or System.ClientModel.Primitives.DiagnosticScope).</param>
-        /// <param name="shouldPassScopeToPageableConstructor">Optional delegate to determine if a paging method should have its scope name
-        /// passed to the pageable collection result constructor via <see cref="UpdatePagingMethodWithScope"/>.
-        /// When provided and returns true, the scope name is appended as a constructor argument
-        /// (required for types like AzureCollectionResultDefinition that accept a diagnosticScope parameter).
-        /// When null or returns false, paging methods are still excluded from protocol-level tracing,
-        /// and tracing is handled by <see cref="WrapCollectionResultMethodWithTracing"/> on the base CollectionResultDefinition.</param>
         public DistributedTracingVisitor(
             CSharpType clientDiagnosticsType,
-            CSharpType diagnosticScopeType,
-            Func<ScmMethodProvider, bool>? shouldPassScopeToPageableConstructor = null)
+            CSharpType diagnosticScopeType)
         {
             _clientDiagnosticsType = clientDiagnosticsType;
             _diagnosticScopeType = diagnosticScopeType;
-            _shouldPassScopeToPageableConstructor = shouldPassScopeToPageableConstructor;
         }
 
         /// <summary>
@@ -67,9 +58,9 @@ namespace Azure.Generator.Visitors
         /// </summary>
         /// <param name="method">The method to check.</param>
         /// <returns>True if the scope name should be passed to the pageable constructor; otherwise, false.</returns>
-        protected bool ShouldPassScopeToPageableConstructor(ScmMethodProvider method)
+        protected virtual bool ShouldPassScopeToPageableConstructor(ScmMethodProvider method)
         {
-            return _shouldPassScopeToPageableConstructor?.Invoke(method) ?? false;
+            return false;
         }
 
         protected override ClientProvider? Visit(InputClient client, ClientProvider? clientProvider)

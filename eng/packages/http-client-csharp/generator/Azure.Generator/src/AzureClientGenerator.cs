@@ -2,15 +2,12 @@
 // Licensed under the MIT License.
 
 using Azure;
-using Azure.Core.Pipeline;
 using Azure.Core.Expressions.DataFactory;
 using Azure.Generator.Providers;
 using Azure.Generator.Visitors;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
-using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -95,10 +92,7 @@ public class AzureClientGenerator : ScmCodeModelGenerator
 
         // Rest of the visitors can be added in any order.
         AddVisitor(new NamespaceVisitor());
-        AddVisitor(new DistributedTracingVisitor(
-            new CSharpType(typeof(ClientDiagnostics)),
-            new CSharpType(typeof(DiagnosticScope)),
-            IsPagingMethod));
+        AddVisitor(new AzureDistributedTracingVisitor());
         AddVisitor(new PipelinePropertyVisitor());
         AddVisitor(new LroVisitor());
         AddVisitor(new MatchConditionsHeadersVisitor());
@@ -108,21 +102,5 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         AddVisitor(new InvokeDelimitedMethodVisitor());
         AddVisitor(new XmlSerializableVisitor());
         AddVisitor(new ClientSettingsVisitor());
-    }
-
-    /// <summary>
-    /// Checks if the method returns a paging collection type (Pageable or AsyncPageable).
-    /// </summary>
-    private static bool IsPagingMethod(ScmMethodProvider method)
-    {
-        var returnType = method.Signature.ReturnType;
-        if (returnType == null || !returnType.IsFrameworkType)
-        {
-            return false;
-        }
-
-        // Check if the return type is Pageable<T> or AsyncPageable<T>
-        return returnType.FrameworkType == typeof(Pageable<>) ||
-               returnType.FrameworkType == typeof(AsyncPageable<>);
     }
 }
