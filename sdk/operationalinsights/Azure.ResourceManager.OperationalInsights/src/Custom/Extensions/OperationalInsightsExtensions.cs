@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.OperationalInsights
     {
         /// <summary> Gets recently deleted workspaces in a resource group, available for recovery. </summary>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-            => resourceGroupResource.GetByResourceGroupAsync(cancellationToken);
+            => GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetDeletedWorkspacesAsync(cancellationToken);
 
         /// <summary> Gets recently deleted workspaces in a resource group, available for recovery. </summary>
         public static Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-            => resourceGroupResource.GetByResourceGroup(cancellationToken);
+            => GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetDeletedWorkspaces(cancellationToken);
 
         /// <summary> Gets recently deleted workspaces in a subscription, available for recovery. </summary>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-            => subscriptionResource.GetAllAsync(cancellationToken);
+            => GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetDeletedWorkspacesAsync(cancellationToken);
 
         /// <summary> Gets recently deleted workspaces in a subscription, available for recovery. </summary>
         public static Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-            => subscriptionResource.GetAll(cancellationToken);
+            => GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetDeletedWorkspaces(cancellationToken);
     }
 }
