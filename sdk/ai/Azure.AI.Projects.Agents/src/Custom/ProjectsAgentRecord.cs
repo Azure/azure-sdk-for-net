@@ -10,5 +10,6 @@ public partial class ProjectsAgentRecord
 {
     internal AgentObjectVersions Versions { get; }
 
+    /// <summary> Returns the most recent version of this agent. </summary>
     public ProjectsAgentVersion GetLatestVersion() => Versions.Latest;
 }
