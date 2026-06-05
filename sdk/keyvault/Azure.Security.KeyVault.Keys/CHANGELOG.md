@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for service API version `2026-03-01-preview` (now the default).
+
 ### Breaking Changes
 
 ### Bugs Fixed
