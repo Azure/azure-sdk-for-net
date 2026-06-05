@@ -8,24 +8,18 @@ using Azure.Core;
 using Azure.ResourceManager.Billing.Mocking;
 using Azure.ResourceManager.Billing.Models;
 using Azure.ResourceManager.Resources;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Billing
 {
-    // Back-compat wrappers for GA 1.2.2 TenantResource extension methods. Each method
-    // forwards to MockableBillingTenantResource (custom partial below), which then
-    // builds the parent ResourceIdentifier and constructs the child collection.
-    // The two-layer split mirrors the canonical Mockable-extension pattern used by
-    // every existing extension in the generated BillingExtensions.cs.
-    //
-    // The two [CodeGenSuppress] entries below remove the generator-emitted
-    // DownloadDocumentsByBillingSubscriptionInvoice overloads that ship with broken
-    // XML <see cref> docs (generator bug #59626 emits unqualified 'IEnumerable' instead
-    // of 'IEnumerable{T}', producing CS1574/CS1580). Our re-emitted versions below use
-    // a parameter-less cref that resolves cleanly. TODO: remove [CodeGenSuppress] once
-    // #59626 is fixed in the generator.
-    [CodeGenSuppress("DownloadDocumentsByBillingSubscriptionInvoiceAsync", typeof(TenantResource), typeof(WaitUntil), typeof(string), typeof(IEnumerable<BillingDocumentDownloadRequestContent>), typeof(CancellationToken))]
-    [CodeGenSuppress("DownloadDocumentsByBillingSubscriptionInvoice", typeof(TenantResource), typeof(WaitUntil), typeof(string), typeof(IEnumerable<BillingDocumentDownloadRequestContent>), typeof(CancellationToken))]
+    // Back-compat wrappers for GA 1.2.2 TenantResource extension methods. The new MPG
+    // generator no longer emits these convenience extensions on TenantResource (the
+    // collection accessors / per-resource Get / ValidateAddres / DownloadDocuments-
+    // ByBillingSubscriptionInvoice that GA 1.2.2 exposed are now only reachable via
+    // the mockable type). Each method forwards to MockableBillingTenantResource (custom
+    // partial in Extensions/MockableBillingTenantResource.cs), which then builds the
+    // parent ResourceIdentifier and constructs the child collection. The two-layer
+    // split mirrors the canonical Mockable-extension pattern used by every existing
+    // extension in the generated BillingExtensions.cs.
     public static partial class BillingExtensions
     {
         /// <summary> Gets a collection of <see cref="BillingSubscriptionResource"/> objects under the given billing account. </summary>
@@ -134,7 +128,7 @@ namespace Azure.ResourceManager.Billing
             return await GetMockableBillingTenantResource(tenantResource).ValidateAddresAsync(details, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Downloads multiple invoice documents as a zip file for a billing subscription. Re-emitted with a parameter-less cref to work around generator bug #59626. </summary>
+        /// <summary> Downloads multiple invoice documents as a zip file for a billing subscription. Back-compat shim for GA 1.2.2 — the new MPG generator no longer emits this as a static TenantResource extension. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>
@@ -146,7 +140,7 @@ namespace Azure.ResourceManager.Billing
             return GetMockableBillingTenantResource(tenantResource).DownloadDocumentsByBillingSubscriptionInvoice(waitUntil, subscriptionId, arrayOfDocumentDownloadRequest, cancellationToken);
         }
 
-        /// <summary> Downloads multiple invoice documents as a zip file for a billing subscription. Re-emitted with a parameter-less cref to work around generator bug #59626. </summary>
+        /// <summary> Downloads multiple invoice documents as a zip file for a billing subscription. Back-compat shim for GA 1.2.2 — the new MPG generator no longer emits this as a static TenantResource extension. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="subscriptionId"> The ID that uniquely identifies a billing subscription. </param>

@@ -12,15 +12,20 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing.Mocking
 {
+    // Back-compat shims for GA 1.2.2 callers: TenantResource exposed shortcut accessors
+    // that took a billingAccountName (and billingProfileName) and returned the child
+    // collection without first materializing a BillingAccountResource handle. The new
+    // MPG generator no longer emits these convenience overloads on the mockable type.
+    // Each accessor follows the GA pattern verbatim: build the parent ResourceIdentifier
+    // and return `new Child(Client, parentId)`. No new wire behavior is introduced.
+    //
+    // ValidateAddres{Async}: GA 1.2.2 exposed this action on TenantResource. The new MPG
+    // generator drops the action because the underlying spec op moved away from the
+    // Tenant scope, so it is hand-written here using AddressRestClient.CreateValidateRequest
+    // + Pipeline. Note: GA spelled the method "ValidateAddres" (single 's' — typo
+    // preserved for binary compat).
     public partial class MockableBillingTenantResource
     {
-        // Back-compat shims for GA 1.2.2 callers: TenantResource exposed shortcut accessors
-        // that took a billingAccountName (and billingProfileName) and returned the child
-        // collection without first materializing a BillingAccountResource handle. The new
-        // MPG generator no longer emits these convenience overloads on the mockable type.
-        // Each method follows the GA pattern verbatim: build the parent ResourceIdentifier
-        // and return `new Child(Client, parentId)`. No new wire behavior is introduced.
-
         /// <summary> Gets a collection of <see cref="BillingSubscriptionResource"/> objects under the given billing account. </summary>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         public virtual BillingSubscriptionCollection GetBillingSubscriptions(string billingAccountName)
@@ -105,11 +110,6 @@ namespace Azure.ResourceManager.Billing.Mocking
         {
             return await GetBillingPaymentMethodLinks(billingAccountName, billingProfileName).GetAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
-
-        // ValidateAddres — GA 1.2.2 exposed this on TenantResource. The new MPG generator
-        // drops the action because the underlying spec op moved away from the Tenant scope.
-        // Hand-written using the available AddressRestClient.CreateValidateRequest + Pipeline.
-        // Note: GA spelled the method "ValidateAddres" (single 's' — typo preserved).
 
         /// <summary> Validates an address. Use this before using it as a soldTo or billTo address. </summary>
         public virtual async Task<Response<BillingAddressValidationResult>> ValidateAddresAsync(BillingAddressDetails details, CancellationToken cancellationToken = default)

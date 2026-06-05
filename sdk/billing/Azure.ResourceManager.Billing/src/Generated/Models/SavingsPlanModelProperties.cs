@@ -12,7 +12,6 @@ using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> Savings plan properties. </summary>
     internal partial class SavingsPlanModelProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -81,10 +80,6 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Display name. </summary>
         [WirePath("displayName")]
         public string DisplayName { get; set; }
-
-        /// <summary> The provisioning state of the resource during a long-running operation. </summary>
-        [WirePath("provisioningState")]
-        public BillingProvisioningState? ProvisioningState { get; }
 
         /// <summary> The provisioning state of the savings plan for display, e.g. Succeeded. </summary>
         [WirePath("displayProvisioningState")]

@@ -1965,7 +1965,7 @@ namespace Azure.ResourceManager.Billing
         public Azure.ResourceManager.Billing.Models.ExtendedStatusInfo ExtendedStatusInfo { get { throw null; } }
         public bool? IsRenewed { get { throw null; } set { } }
         public string ProductCode { get { throw null; } set { } }
-        public Azure.ResourceManager.Billing.Models.BillingProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Billing.Models.BillingProvisioningState? ProvisioningState { get { throw null; } set { } }
         public System.DateTimeOffset? PurchaseOn { get { throw null; } }
         public string RenewDestination { get { throw null; } set { } }
         public Azure.ResourceManager.Billing.Models.BillingPurchaseProperties RenewPurchaseProperties { get { throw null; } set { } }
@@ -2036,7 +2036,8 @@ namespace Azure.ResourceManager.Billing
         public BillingSubscriptionAliasData() { }
         public Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState? AutoRenew { get { throw null; } set { } }
         public Azure.ResourceManager.Billing.Models.BillingBeneficiary Beneficiary { get { throw null; } set { } }
-        public System.Guid? BeneficiaryTenantId { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionAliasBeneficiaryTenantId` moving forward.")]
+        public string BeneficiaryTenantId { get { throw null; } set { } }
         public string BillingFrequency { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> BillingPolicies { get { throw null; } }
         public string BillingProfileDisplayName { get { throw null; } }
@@ -2046,6 +2047,7 @@ namespace Azure.ResourceManager.Billing
         public Azure.Core.ResourceIdentifier BillingSubscriptionId { get { throw null; } }
         public string ConsumptionCostCenter { get { throw null; } set { } }
         public string CustomerDisplayName { get { throw null; } }
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionAliasCustomerId` moving forward.")]
         public string CustomerId { get { throw null; } set { } }
         public string CustomerName { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
@@ -2148,7 +2150,8 @@ namespace Azure.ResourceManager.Billing
         public BillingSubscriptionData() { }
         public Azure.ResourceManager.Billing.Models.BillingSubscriptionAutoRenewState? AutoRenew { get { throw null; } set { } }
         public Azure.ResourceManager.Billing.Models.BillingBeneficiary Beneficiary { get { throw null; } set { } }
-        public System.Guid? BeneficiaryTenantId { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionBeneficiaryTenantId` moving forward.")]
+        public string BeneficiaryTenantId { get { throw null; } set { } }
         public string BillingFrequency { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> BillingPolicies { get { throw null; } }
         public string BillingProfileDisplayName { get { throw null; } }
@@ -2156,6 +2159,7 @@ namespace Azure.ResourceManager.Billing
         public string BillingProfileName { get { throw null; } }
         public string ConsumptionCostCenter { get { throw null; } set { } }
         public string CustomerDisplayName { get { throw null; } }
+        [System.ObsoleteAttribute("This property is now deprecated. Please use the new property `SubscriptionCustomerId` moving forward.")]
         public string CustomerId { get { throw null; } set { } }
         public string CustomerName { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
@@ -5708,7 +5712,7 @@ namespace Azure.ResourceManager.Billing.Models
     {
         internal BillingTransferValidationResult() { }
         public string ProductId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Billing.Models.BillingTransferValidationResultProperties> Results { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Billing.Models.BillingTransferValidationResultProperties> Results { get { throw null; } }
         public string Status { get { throw null; } }
         protected virtual Azure.ResourceManager.Billing.Models.BillingTransferValidationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

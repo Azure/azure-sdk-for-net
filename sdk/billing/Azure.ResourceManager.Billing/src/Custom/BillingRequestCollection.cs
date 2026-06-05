@@ -7,6 +7,11 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
+    // Back-compat overloads for GA 1.2.2 callers that pass an Options aggregate.
+    // The MPG generator emits GetAll with individual query parameters (filter,
+    // orderBy, top, skip, count, search) per the OData query convention; these
+    // hand-written shims forward the GA Options instance to the generated method
+    // so existing call sites keep working.
     public partial class BillingRequestCollection
     {
         /// <summary> Back-compat overload for GA 1.2.2 callers that pass an Options aggregate. </summary>

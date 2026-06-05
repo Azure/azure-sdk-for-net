@@ -1,3 +1,12 @@
+# WirePath attribute drift on flatten proxies. The 2024-04-01 TypeSpec nests several flattened
+# properties one level deeper than the 2021-10-01 swagger that GA 1.2.2 was generated from
+# (utilization.aggregates / utilization.trend / enrollmentAccountSubscriptionDetails.* /
+# renewProperties.purchaseProperties / reservedResourceProperties.instanceFlexibility). The
+# C# property names and run-time values are unchanged; only the [WirePath] hint (used by
+# diagnostics and a few model-factory helpers) points at the new wire path. Re-rolling the
+# attribute on the SDK side would require either reverting the spec (against the new model)
+# or unflattening via @@Legacy.flattenProperty (which loses the strongly-typed inner models),
+# so accept the [WirePath] change as a safe non-breaking drift.
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.Billing.WirePathAttribute' on 'Azure.ResourceManager.Billing.BillingReservationData.Aggregates' changed from '[WirePathAttribute("properties.aggregates")]' in the contract to '[WirePathAttribute("properties.utilization.aggregates")]' in the implementation.
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.Billing.WirePathAttribute' on 'Azure.ResourceManager.Billing.BillingReservationData.Trend' changed from '[WirePathAttribute("properties.trend")]' in the contract to '[WirePathAttribute("properties.utilization.trend")]' in the implementation.
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.Billing.WirePathAttribute' on 'Azure.ResourceManager.Billing.BillingSubscriptionAliasData.EnrollmentAccountStartOn' changed from '[WirePathAttribute("properties.enrollmentAccountStartDate")]' in the contract to '[WirePathAttribute("properties.enrollmentAccountSubscriptionDetails.enrollmentAccountStartDate")]' in the implementation.
@@ -8,19 +17,14 @@ CannotChangeAttribute : Attribute 'Azure.ResourceManager.Billing.WirePathAttribu
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.Billing.WirePathAttribute' on 'Azure.ResourceManager.Billing.Models.BillingSubscriptionPatch.EnrollmentAccountStartOn' changed from '[WirePathAttribute("properties.enrollmentAccountStartDate")]' in the contract to '[WirePathAttribute("properties.enrollmentAccountSubscriptionDetails.enrollmentAccountStartDate")]' in the implementation.
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.Billing.WirePathAttribute' on 'Azure.ResourceManager.Billing.Models.BillingSubscriptionPatch.SubscriptionEnrollmentAccountStatus' changed from '[WirePathAttribute("properties.subscriptionEnrollmentAccountStatus")]' in the contract to '[WirePathAttribute("properties.enrollmentAccountSubscriptionDetails.subscriptionEnrollmentAccountStatus")]' in the implementation.
 CannotChangeAttribute : Attribute 'Azure.ResourceManager.Billing.WirePathAttribute' on 'Azure.ResourceManager.Billing.Models.ReservationPurchaseRequest.InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility' changed from '[WirePathAttribute("properties.instanceFlexibility")]' in the contract to '[WirePathAttribute("properties.reservedResourceProperties.instanceFlexibility")]' in the implementation.
+
+# BillingAccountResource.GetByBillingAccountSavingsPlan{,Async} — the operation cannot be
+# emitted for C# because the spec's `SavingsPlanModelList is Page<SavingsPlanModel>` pattern
+# (via savingsPlansListByBillingAccount) is rejected by the management-plane emitter (it
+# cannot resolve inherited value/nextLink properties through the legacy Page<> envelope).
+# We drop the operation from C# emission via `@@scope(BillingAccounts.savingsPlansListByBillingAccount, "!csharp")`
+# in client.tsp; a Custom shim cannot replace it because the underlying REST client method
+# is also gone. GA 1.2.2 users of GetByBillingAccountSavingsPlan must migrate to
+# BillingSavingsPlanModelCollection.GetAll on a BillingAccountResource child collection.
 MembersMustExist : Member 'public Azure.Pageable<Azure.ResourceManager.Billing.BillingSavingsPlanModelResource> Azure.ResourceManager.Billing.BillingAccountResource.GetByBillingAccountSavingsPlan(Azure.ResourceManager.Billing.Models.BillingAccountResourceGetByBillingAccountSavingsPlanOptions, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
 MembersMustExist : Member 'public Azure.AsyncPageable<Azure.ResourceManager.Billing.BillingSavingsPlanModelResource> Azure.ResourceManager.Billing.BillingAccountResource.GetByBillingAccountSavingsPlanAsync(Azure.ResourceManager.Billing.Models.BillingAccountResourceGetByBillingAccountSavingsPlanOptions, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public Azure.ResourceManager.ArmOperation Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource.Delete(Azure.WaitUntil, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource.DeleteAsync(Azure.WaitUntil, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public Azure.Pageable<Azure.ResourceManager.Billing.Models.BillingTransferValidationResult> Azure.ResourceManager.Billing.RecipientTransferDetailResource.Validate(Azure.ResourceManager.Billing.Models.AcceptTransferContent, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public Azure.AsyncPageable<Azure.ResourceManager.Billing.Models.BillingTransferValidationResult> Azure.ResourceManager.Billing.RecipientTransferDetailResource.ValidateAsync(Azure.ResourceManager.Billing.Models.AcceptTransferContent, System.Threading.CancellationToken)' does not exist in the implementation but it does exist in the contract.
-CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.ResourceManager.Billing.BillingSubscriptionAliasData.BeneficiaryTenantId' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.ResourceManager.Billing.BillingSubscriptionAliasData.CustomerId' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.ResourceManager.Billing.BillingSubscriptionData.BeneficiaryTenantId' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.ObsoleteAttribute' exists on 'Azure.ResourceManager.Billing.BillingSubscriptionData.CustomerId' in the contract but not the implementation.
-MembersMustExist : Member 'public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Billing.Models.BillingTransferValidationResultProperties> Azure.ResourceManager.Billing.Models.BillingTransferValidationResult.Results.get()' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public System.String Azure.ResourceManager.Billing.BillingSubscriptionAliasData.BeneficiaryTenantId.get()' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public System.String Azure.ResourceManager.Billing.BillingSubscriptionData.BeneficiaryTenantId.get()' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public void Azure.ResourceManager.Billing.BillingSavingsPlanModelData.ProvisioningState.set(System.Nullable<Azure.ResourceManager.Billing.Models.BillingProvisioningState>)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public void Azure.ResourceManager.Billing.BillingSubscriptionAliasData.BeneficiaryTenantId.set(System.String)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public void Azure.ResourceManager.Billing.BillingSubscriptionData.BeneficiaryTenantId.set(System.String)' does not exist in the implementation but it does exist in the contract.

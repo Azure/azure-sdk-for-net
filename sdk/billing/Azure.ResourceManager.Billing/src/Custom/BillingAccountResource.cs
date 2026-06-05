@@ -13,17 +13,22 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Billing
 {
-    // Back-compat rename: GA 1.2.2 exposed this as DownloadDocumentsByBillingAccountInvoice
-    // (note the trailing "Invoice"); the new generator emits without that suffix. The
-    // [CodeGenSuppress] below removes the generator's no-suffix method so the GA spelling
-    // (provided in the methods below) is preserved.
-    //
     // CancelPaymentTerms workaround: the generator emits an invalid
     //   DateTimeOffset.ToRequestContent(parameters)
-    // call (https://github.com/Azure/azure-sdk-for-net/issues/59539). The [CodeGenSuppress]
-    // below removes the broken method and CancelPaymentTerms{,Async} are hand-written using
-    // the BillingRequestContentHelper.ToRequestContent extension. TODO: remove the
-    // [CodeGenSuppress] + replacement once #59539 ships.
+    // call when an action body's TypeSpec type is a primitive (CS0117: no
+    // extension method on DateTimeOffset). The [CodeGenSuppress] entries below
+    // remove the broken method pair and CancelPaymentTerms{,Async} are
+    // hand-written using the BillingRequestContentHelper.ToRequestContent
+    // extension to wrap the DateTimeOffset payload as JSON.
+    // Tracking issue: https://github.com/Azure/azure-sdk-for-net/issues/59539
+    // TODO(#59539): drop the [CodeGenSuppress] + replacement once the upstream
+    //               generator fix ships and regen no longer emits the broken call.
+    //
+    // GetBillingRequests/GetReservations{Async}(Options): back-compat overloads
+    // for GA 1.2.2 callers that pass an Options aggregate. The new MPG generator
+    // emits methods with individual query parameters (Get*ByBillingAccount);
+    // these shims forward the aggregate to the generated method so existing
+    // call sites keep working. No tracking issue — purely a back-compat shim.
     [CodeGenSuppress("CancelPaymentTermsAsync", typeof(WaitUntil), typeof(DateTimeOffset), typeof(CancellationToken))]
     [CodeGenSuppress("CancelPaymentTerms", typeof(WaitUntil), typeof(DateTimeOffset), typeof(CancellationToken))]
     public partial class BillingAccountResource

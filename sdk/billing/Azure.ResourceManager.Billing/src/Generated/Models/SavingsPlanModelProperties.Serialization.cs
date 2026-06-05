@@ -14,7 +14,6 @@ using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> Savings plan properties. </summary>
     internal partial class SavingsPlanModelProperties : IJsonModel<SavingsPlanModelProperties>
     {
         /// <param name="data"> The data to parse. </param>
