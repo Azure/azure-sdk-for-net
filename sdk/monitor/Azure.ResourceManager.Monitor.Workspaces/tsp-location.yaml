@@ -1,4 +1,4 @@
 directory: specification/monitoringservice/resource-manager/Microsoft.Monitor/Accounts
-commit: 54e5181f10db4f6781c98fc6f0e710bf7206d743
+commit: ac9e34e847f6602c94b8ad3452b70e68253e5f30
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

@@ -930,32 +930,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PagedIssueRelatedAlertInfo>> GetAlertsAsync(IssueListContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IssueRelatedAlertInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IssueRelatedAlertInfo> GetAlertsAsync(IssueListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _issueClientDiagnostics.CreateScope("MonitorIssueResource.GetAlerts");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _issueRestClient.CreateGetAlertsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IssueListContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PagedIssueRelatedAlertInfo> response = Response.FromValue(PagedIssueRelatedAlertInfo.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new IssueGetAlertsAsyncCollectionResultOfT(
+                _issueRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                IssueListContent.ToRequestContent(content),
+                context,
+                "MonitorIssueResource.GetAlerts");
         }
 
         /// <summary>
@@ -982,32 +974,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PagedIssueRelatedAlertInfo> GetAlerts(IssueListContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IssueRelatedAlertInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IssueRelatedAlertInfo> GetAlerts(IssueListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _issueClientDiagnostics.CreateScope("MonitorIssueResource.GetAlerts");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _issueRestClient.CreateGetAlertsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IssueListContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PagedIssueRelatedAlertInfo> response = Response.FromValue(PagedIssueRelatedAlertInfo.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new IssueGetAlertsCollectionResultOfT(
+                _issueRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                IssueListContent.ToRequestContent(content),
+                context,
+                "MonitorIssueResource.GetAlerts");
         }
 
         /// <summary>
@@ -1034,32 +1018,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PagedIssueRelatedResourceInfo>> GetResourcesAsync(IssueListContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IssueRelatedResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IssueRelatedResourceInfo> GetResourcesAsync(IssueListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _issueClientDiagnostics.CreateScope("MonitorIssueResource.GetResources");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _issueRestClient.CreateGetResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IssueListContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PagedIssueRelatedResourceInfo> response = Response.FromValue(PagedIssueRelatedResourceInfo.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new IssueGetResourcesAsyncCollectionResultOfT(
+                _issueRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                IssueListContent.ToRequestContent(content),
+                context,
+                "MonitorIssueResource.GetResources");
         }
 
         /// <summary>
@@ -1086,32 +1062,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PagedIssueRelatedResourceInfo> GetResources(IssueListContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IssueRelatedResourceInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IssueRelatedResourceInfo> GetResources(IssueListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _issueClientDiagnostics.CreateScope("MonitorIssueResource.GetResources");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _issueRestClient.CreateGetResourcesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IssueListContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PagedIssueRelatedResourceInfo> response = Response.FromValue(PagedIssueRelatedResourceInfo.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new IssueGetResourcesCollectionResultOfT(
+                _issueRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                IssueListContent.ToRequestContent(content),
+                context,
+                "MonitorIssueResource.GetResources");
         }
 
         /// <summary>

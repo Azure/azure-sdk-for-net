@@ -15,63 +15,63 @@ using Azure.ResourceManager.Monitor.Workspaces;
 namespace Azure.ResourceManager.Monitor.Workspaces.Models
 {
     /// <summary> Paged collection of RelatedAlert items. </summary>
-    public partial class PagedIssueRelatedAlertInfo : IJsonModel<PagedIssueRelatedAlertInfo>
+    internal partial class PagedRelatedAlert : IJsonModel<PagedRelatedAlert>
     {
-        /// <summary> Initializes a new instance of <see cref="PagedIssueRelatedAlertInfo"/> for deserialization. </summary>
-        internal PagedIssueRelatedAlertInfo()
+        /// <summary> Initializes a new instance of <see cref="PagedRelatedAlert"/> for deserialization. </summary>
+        internal PagedRelatedAlert()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PagedIssueRelatedAlertInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PagedRelatedAlert PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedIssueRelatedAlertInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PagedRelatedAlert>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePagedIssueRelatedAlertInfo(document.RootElement, options);
+                        return DeserializePagedRelatedAlert(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PagedIssueRelatedAlertInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PagedRelatedAlert)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedIssueRelatedAlertInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PagedRelatedAlert>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorWorkspacesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PagedIssueRelatedAlertInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PagedRelatedAlert)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PagedIssueRelatedAlertInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PagedRelatedAlert>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PagedIssueRelatedAlertInfo IPersistableModel<PagedIssueRelatedAlertInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PagedRelatedAlert IPersistableModel<PagedRelatedAlert>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PagedIssueRelatedAlertInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PagedRelatedAlert>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedIssueRelatedAlertInfo"/> from. </param>
-        internal static PagedIssueRelatedAlertInfo FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedRelatedAlert"/> from. </param>
+        internal static PagedRelatedAlert FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePagedIssueRelatedAlertInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializePagedRelatedAlert(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PagedIssueRelatedAlertInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PagedRelatedAlert>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedIssueRelatedAlertInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PagedRelatedAlert>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PagedIssueRelatedAlertInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PagedRelatedAlert)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PagedIssueRelatedAlertInfo IJsonModel<PagedIssueRelatedAlertInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PagedRelatedAlert IJsonModel<PagedRelatedAlert>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PagedIssueRelatedAlertInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PagedRelatedAlert JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PagedIssueRelatedAlertInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PagedRelatedAlert>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PagedIssueRelatedAlertInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PagedRelatedAlert)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePagedIssueRelatedAlertInfo(document.RootElement, options);
+            return DeserializePagedRelatedAlert(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PagedIssueRelatedAlertInfo DeserializePagedIssueRelatedAlertInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static PagedRelatedAlert DeserializePagedRelatedAlert(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PagedIssueRelatedAlertInfo(value, nextLink, additionalBinaryDataProperties);
+            return new PagedRelatedAlert(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

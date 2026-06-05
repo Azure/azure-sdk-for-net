@@ -309,16 +309,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new IssueListContent(filter, default);
         }
 
-        /// <param name="value"> The RelatedAlert items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.PagedIssueRelatedAlertInfo"/> instance for mocking. </returns>
-        public static PagedIssueRelatedAlertInfo PagedIssueRelatedAlertInfo(IEnumerable<IssueRelatedAlertInfo> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<IssueRelatedAlertInfo>();
-
-            return new PagedIssueRelatedAlertInfo((value ?? new ChangeTrackingList<IssueRelatedAlertInfo>()).ToList(), nextLink, default);
-        }
-
         /// <param name="id"> The alert ID. </param>
         /// <param name="relevance"> The alerts's relevance status. </param>
         /// <param name="origin"> The source that related the alert to the issue. </param>
@@ -343,16 +333,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             value ??= new ChangeTrackingList<IssueRelatedAlertInfo>();
 
             return new IssueRelatedAlertInfoList((value ?? new ChangeTrackingList<IssueRelatedAlertInfo>()).ToList(), default);
-        }
-
-        /// <param name="value"> The RelatedResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.PagedIssueRelatedResourceInfo"/> instance for mocking. </returns>
-        public static PagedIssueRelatedResourceInfo PagedIssueRelatedResourceInfo(IEnumerable<IssueRelatedResourceInfo> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<IssueRelatedResourceInfo>();
-
-            return new PagedIssueRelatedResourceInfo((value ?? new ChangeTrackingList<IssueRelatedResourceInfo>()).ToList(), nextLink, default);
         }
 
         /// <param name="id"> The resource ID. </param>
