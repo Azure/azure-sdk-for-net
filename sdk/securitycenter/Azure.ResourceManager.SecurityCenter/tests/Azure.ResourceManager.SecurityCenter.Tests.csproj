@@ -1,4 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Suppress CS0618: restored tests exercise obsolete compatibility shims kept for the migrated API surface. -->
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Generated\**" />
+    <!-- These restored scenario tests target legacy/deprecated operations that are not generated from the current SecurityCenter TypeSpec. -->
+    <Compile Remove="Scenario\AdaptiveApplicationControlGroupTests.cs" />
+    <Compile Remove="Scenario\AdaptiveNetworkHardening.cs" />
+    <Compile Remove="Scenario\AscLocationLocationAlertTests.cs" />
+    <Compile Remove="Scenario\AscLocationLocationTaskTests.cs" />
+    <Compile Remove="Scenario\CustomAssessmentAutomationTests.cs" />
+    <Compile Remove="Scenario\CustomEntityStoreAssignmentTests.cs" />
+    <Compile Remove="Scenario\ResourceGroupLocationTaskTests.cs" />
+    <Compile Remove="Scenario\ServerVulnerabilityAssessmentTests.cs" />
+    <Compile Remove="Scenario\SoftwareTests.cs" />
+    <Compile Remove="Scenario\SubscriptionAssessmentMetadataTests.cs" />
+    <Compile Remove="Scenario\SubscriptionGovernanceRuleTests.cs" />
+    <Compile Remove="Scenario\AlertsSuppressionRuleTests.cs" />
+    <Compile Remove="Scenario\AutomationCollectionTests.cs" />
+    <Compile Remove="Scenario\DiscoveredSecuritySolutionTests.cs" />
+    <Compile Remove="Scenario\ExternalSecuritySolutionTests.cs" />
+    <Compile Remove="Scenario\IotSecurityAggregatedAlertTests.cs" />
+    <Compile Remove="Scenario\IotSecurityAggregatedRecommendationTests.cs" />
+    <Compile Remove="Scenario\SecurityConnectorDevOpsTests.cs" />
+    <Compile Remove="Scenario\SecuritySolutionTests.cs" />
+    <Compile Remove="Scenario\SettingTests.cs" />
+    <EmbeddedResource Remove="Generated\**" />
+    <None Remove="Generated\**" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Compute" />
     <PackageReference Include="Azure.ResourceManager.IotHub" />

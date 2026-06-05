@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class SubscriptionApplicationTests : SecurityCenterManagementTestBase
     {
-        private SubscriptionSecurityApplicationCollection _subAppCollection => DefaultSubscription.GetSubscriptionSecurityApplications();
+        private ApplicationCollection _subAppCollection => DefaultSubscription.GetApplications();
         public SubscriptionApplicationTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             }
         }
 
-        private async Task<SubscriptionSecurityApplicationResource> CreateSubscriptionApplicationResource(string applicationId)
+        private async Task<ApplicationResource> CreateSubscriptionApplicationResource(string applicationId)
         {
-            SecurityApplicationData data = new SecurityApplicationData()
+            SecurityConnectorApplicationData data = new SecurityConnectorApplicationData()
             {
                 DisplayName = "GCP Admin's application",
                 Description = "An application on critical GCP recommendations",
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsFalse(flag);
         }
 
-        private void ValidateSubscriptionApplication(SubscriptionSecurityApplicationResource subApp, string applicationId)
+        private void ValidateSubscriptionApplication(ApplicationResource subApp, string applicationId)
         {
             Assert.IsNotNull(subApp);
             Assert.IsNotNull(subApp.Data.Id);

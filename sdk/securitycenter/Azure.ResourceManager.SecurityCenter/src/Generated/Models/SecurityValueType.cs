@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct SecurityValueType : IEquatable<SecurityValueType>
     {
         private readonly string _value;
+        /// <summary> An IP range in CIDR format (e.g. '192.168.0.1/8'). </summary>
+        private const string IpCidrValue = "IpCidr";
+        /// <summary> Any string value. </summary>
+        private const string StringValue = "String";
 
         /// <summary> Initializes a new instance of <see cref="SecurityValueType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityValueType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string IPCidrValue = "IpCidr";
-        private const string StringValue = "String";
-
         /// <summary> An IP range in CIDR format (e.g. '192.168.0.1/8'). </summary>
-        public static SecurityValueType IPCidr { get; } = new SecurityValueType(IPCidrValue);
+        public static SecurityValueType IpCidr { get; } = new SecurityValueType(IpCidrValue);
+
         /// <summary> Any string value. </summary>
         public static SecurityValueType String { get; } = new SecurityValueType(StringValue);
+
         /// <summary> Determines if two <see cref="SecurityValueType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityValueType left, SecurityValueType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityValueType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityValueType left, SecurityValueType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityValueType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityValueType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityValueType(string value) => new SecurityValueType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityValueType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityValueType?(string value) => value == null ? null : new SecurityValueType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityValueType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityValueType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

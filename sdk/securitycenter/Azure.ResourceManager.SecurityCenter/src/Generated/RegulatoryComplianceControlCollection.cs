@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class RegulatoryComplianceControlCollection : ArmCollection, IEnumerable<RegulatoryComplianceControlResource>, IAsyncEnumerable<RegulatoryComplianceControlResource>
     {
-        private readonly ClientDiagnostics _regulatoryComplianceControlClientDiagnostics;
-        private readonly RegulatoryComplianceControlsRestOperations _regulatoryComplianceControlRestClient;
+        private readonly ClientDiagnostics _regulatoryComplianceControlsClientDiagnostics;
+        private readonly RegulatoryComplianceControls _regulatoryComplianceControlsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RegulatoryComplianceControlCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RegulatoryComplianceControlCollection for mocking. </summary>
         protected RegulatoryComplianceControlCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RegulatoryComplianceControlCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceControlCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RegulatoryComplianceControlCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _regulatoryComplianceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", RegulatoryComplianceControlResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RegulatoryComplianceControlResource.ResourceType, out string regulatoryComplianceControlApiVersion);
-            _regulatoryComplianceControlRestClient = new RegulatoryComplianceControlsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, regulatoryComplianceControlApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _regulatoryComplianceControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", RegulatoryComplianceControlResource.ResourceType.Namespace, Diagnostics);
+            _regulatoryComplianceControlsRestClient = new RegulatoryComplianceControls(_regulatoryComplianceControlsClientDiagnostics, Pipeline, Endpoint, regulatoryComplianceControlApiVersion ?? "2019-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != RegulatoryComplianceStandardResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RegulatoryComplianceStandardResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RegulatoryComplianceStandardResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Selected regulatory compliance control details and state
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegulatoryComplianceControls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegulatoryComplianceControls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegulatoryComplianceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<RegulatoryComplianceControlResource>> GetAsync(string regulatoryComplianceControlName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(regulatoryComplianceControlName, nameof(regulatoryComplianceControlName));
 
-            using var scope = _regulatoryComplianceControlClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.Get");
+            using DiagnosticScope scope = _regulatoryComplianceControlsClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.Get");
             scope.Start();
             try
             {
-                var response = await _regulatoryComplianceControlRestClient.GetAsync(Id.SubscriptionId, Id.Name, regulatoryComplianceControlName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RegulatoryComplianceControlData> response = Response.FromValue(RegulatoryComplianceControlData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RegulatoryComplianceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Selected regulatory compliance control details and state
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegulatoryComplianceControls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegulatoryComplianceControls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegulatoryComplianceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<RegulatoryComplianceControlResource> Get(string regulatoryComplianceControlName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(regulatoryComplianceControlName, nameof(regulatoryComplianceControlName));
 
-            using var scope = _regulatoryComplianceControlClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.Get");
+            using DiagnosticScope scope = _regulatoryComplianceControlsClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.Get");
             scope.Start();
             try
             {
-                var response = _regulatoryComplianceControlRestClient.Get(Id.SubscriptionId, Id.Name, regulatoryComplianceControlName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RegulatoryComplianceControlData> response = Response.FromValue(RegulatoryComplianceControlData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RegulatoryComplianceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,98 +156,120 @@ namespace Azure.ResourceManager.SecurityCenter
         /// All supported regulatory compliance controls details and state for selected standard
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegulatoryComplianceControls_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegulatoryComplianceControls_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegulatoryComplianceControlResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> OData filter. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RegulatoryComplianceControlResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RegulatoryComplianceControlResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceControlRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceControlRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceControlResource(Client, RegulatoryComplianceControlData.DeserializeRegulatoryComplianceControlData(e)), _regulatoryComplianceControlClientDiagnostics, Pipeline, "RegulatoryComplianceControlCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// All supported regulatory compliance controls details and state for selected standard
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegulatoryComplianceControls_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegulatoryComplianceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RegulatoryComplianceControlResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RegulatoryComplianceControlResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RegulatoryComplianceControlResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _regulatoryComplianceControlRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regulatoryComplianceControlRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RegulatoryComplianceControlResource(Client, RegulatoryComplianceControlData.DeserializeRegulatoryComplianceControlData(e)), _regulatoryComplianceControlClientDiagnostics, Pipeline, "RegulatoryComplianceControlCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RegulatoryComplianceControlData, RegulatoryComplianceControlResource>(new RegulatoryComplianceControlsGetAllAsyncCollectionResultOfT(
+                _regulatoryComplianceControlsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Name,
+                filter,
+                context,
+                "RegulatoryComplianceControlCollection.GetAll"), data => new RegulatoryComplianceControlResource(Client, data));
+        }
+
+        /// <summary>
+        /// All supported regulatory compliance controls details and state for selected standard
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RegulatoryComplianceControls_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> OData filter. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RegulatoryComplianceControlResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RegulatoryComplianceControlResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RegulatoryComplianceControlData, RegulatoryComplianceControlResource>(new RegulatoryComplianceControlsGetAllCollectionResultOfT(
+                _regulatoryComplianceControlsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Name,
+                filter,
+                context,
+                "RegulatoryComplianceControlCollection.GetAll"), data => new RegulatoryComplianceControlResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegulatoryComplianceControls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegulatoryComplianceControls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegulatoryComplianceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string regulatoryComplianceControlName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(regulatoryComplianceControlName, nameof(regulatoryComplianceControlName));
 
-            using var scope = _regulatoryComplianceControlClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.Exists");
+            using DiagnosticScope scope = _regulatoryComplianceControlsClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _regulatoryComplianceControlRestClient.GetAsync(Id.SubscriptionId, Id.Name, regulatoryComplianceControlName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RegulatoryComplianceControlData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RegulatoryComplianceControlData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RegulatoryComplianceControlData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -250,36 +283,50 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegulatoryComplianceControls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegulatoryComplianceControls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegulatoryComplianceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string regulatoryComplianceControlName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(regulatoryComplianceControlName, nameof(regulatoryComplianceControlName));
 
-            using var scope = _regulatoryComplianceControlClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.Exists");
+            using DiagnosticScope scope = _regulatoryComplianceControlsClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.Exists");
             scope.Start();
             try
             {
-                var response = _regulatoryComplianceControlRestClient.Get(Id.SubscriptionId, Id.Name, regulatoryComplianceControlName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RegulatoryComplianceControlData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RegulatoryComplianceControlData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RegulatoryComplianceControlData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -293,38 +340,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegulatoryComplianceControls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegulatoryComplianceControls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegulatoryComplianceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<RegulatoryComplianceControlResource>> GetIfExistsAsync(string regulatoryComplianceControlName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(regulatoryComplianceControlName, nameof(regulatoryComplianceControlName));
 
-            using var scope = _regulatoryComplianceControlClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.GetIfExists");
+            using DiagnosticScope scope = _regulatoryComplianceControlsClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _regulatoryComplianceControlRestClient.GetAsync(Id.SubscriptionId, Id.Name, regulatoryComplianceControlName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RegulatoryComplianceControlData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RegulatoryComplianceControlData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RegulatoryComplianceControlData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RegulatoryComplianceControlResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RegulatoryComplianceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -338,38 +401,54 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RegulatoryComplianceControls_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RegulatoryComplianceControls_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RegulatoryComplianceControlResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2019-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<RegulatoryComplianceControlResource> GetIfExists(string regulatoryComplianceControlName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(regulatoryComplianceControlName, nameof(regulatoryComplianceControlName));
 
-            using var scope = _regulatoryComplianceControlClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.GetIfExists");
+            using DiagnosticScope scope = _regulatoryComplianceControlsClientDiagnostics.CreateScope("RegulatoryComplianceControlCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _regulatoryComplianceControlRestClient.Get(Id.SubscriptionId, Id.Name, regulatoryComplianceControlName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _regulatoryComplianceControlsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, regulatoryComplianceControlName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RegulatoryComplianceControlData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RegulatoryComplianceControlData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RegulatoryComplianceControlData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RegulatoryComplianceControlResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RegulatoryComplianceControlResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,6 +468,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<RegulatoryComplianceControlResource> IAsyncEnumerable<RegulatoryComplianceControlResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

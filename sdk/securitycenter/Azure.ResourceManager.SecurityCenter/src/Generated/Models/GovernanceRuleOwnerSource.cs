@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Describe the owner source of governance rule. </summary>
     public partial class GovernanceRuleOwnerSource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GovernanceRuleOwnerSource"/>. </summary>
         public GovernanceRuleOwnerSource()
@@ -51,18 +22,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GovernanceRuleOwnerSource"/>. </summary>
-        /// <param name="sourceType"> The owner type for the governance rule owner source. </param>
+        /// <param name="type"> The owner type for the governance rule owner source. </param>
         /// <param name="value"> The source value e.g. tag key like owner name or email address. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GovernanceRuleOwnerSource(GovernanceRuleOwnerSourceType? sourceType, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GovernanceRuleOwnerSource(GovernanceRuleOwnerSourceType? @type, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SourceType = sourceType;
+            Type = @type;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The owner type for the governance rule owner source. </summary>
-        public GovernanceRuleOwnerSourceType? SourceType { get; set; }
+        public GovernanceRuleOwnerSourceType? Type { get; set; }
+
         /// <summary> The source value e.g. tag key like owner name or email address. </summary>
         public string Value { get; set; }
     }

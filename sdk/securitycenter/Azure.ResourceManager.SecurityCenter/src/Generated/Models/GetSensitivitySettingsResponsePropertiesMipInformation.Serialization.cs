@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GetSensitivitySettingsResponsePropertiesMipInformation : IUtf8JsonSerializable, IJsonModel<GetSensitivitySettingsResponsePropertiesMipInformation>
+    /// <summary> Microsoft information protection built-in and custom information types, labels, and integration status. </summary>
+    public partial class GetSensitivitySettingsResponsePropertiesMipInformation : IJsonModel<GetSensitivitySettingsResponsePropertiesMipInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetSensitivitySettingsResponsePropertiesMipInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetSensitivitySettingsResponsePropertiesMipInformation IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GetSensitivitySettingsResponsePropertiesMipInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(MipIntegrationStatus))
             {
                 writer.WritePropertyName("mipIntegrationStatus"u8);
@@ -43,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
-                foreach (var item in Labels)
+                foreach (Label item in Labels)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -53,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("customInfoTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in CustomInfoTypes)
+                foreach (InfoType item in CustomInfoTypes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -63,21 +103,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("builtInInfoTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in BuiltInInfoTypes)
+                foreach (BuiltInInfoType item in BuiltInInfoTypes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,79 +126,83 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        GetSensitivitySettingsResponsePropertiesMipInformation IJsonModel<GetSensitivitySettingsResponsePropertiesMipInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetSensitivitySettingsResponsePropertiesMipInformation IJsonModel<GetSensitivitySettingsResponsePropertiesMipInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetSensitivitySettingsResponsePropertiesMipInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(document.RootElement, options);
         }
 
-        internal static GetSensitivitySettingsResponsePropertiesMipInformation DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GetSensitivitySettingsResponsePropertiesMipInformation DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MipIntegrationStatus? mipIntegrationStatus = default;
-            IReadOnlyList<MipSensitivityLabel> labels = default;
-            IReadOnlyList<UserDefinedInformationType> customInfoTypes = default;
-            IReadOnlyList<BuiltInInfoType> builtInInfoTypes = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<Label> labels = default;
+            IList<InfoType> customInfoTypes = default;
+            IList<BuiltInInfoType> builtInInfoTypes = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("mipIntegrationStatus"u8))
+                if (prop.NameEquals("mipIntegrationStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mipIntegrationStatus = new MipIntegrationStatus(property.Value.GetString());
+                    mipIntegrationStatus = new MipIntegrationStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("labels"u8))
+                if (prop.NameEquals("labels"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<MipSensitivityLabel> array = new List<MipSensitivityLabel>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<Label> array = new List<Label>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MipSensitivityLabel.DeserializeMipSensitivityLabel(item, options));
+                        array.Add(Label.DeserializeLabel(item, options));
                     }
                     labels = array;
                     continue;
                 }
-                if (property.NameEquals("customInfoTypes"u8))
+                if (prop.NameEquals("customInfoTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<UserDefinedInformationType> array = new List<UserDefinedInformationType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<InfoType> array = new List<InfoType>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UserDefinedInformationType.DeserializeUserDefinedInformationType(item, options));
+                        array.Add(InfoType.DeserializeInfoType(item, options));
                     }
                     customInfoTypes = array;
                     continue;
                 }
-                if (property.NameEquals("builtInInfoTypes"u8))
+                if (prop.NameEquals("builtInInfoTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<BuiltInInfoType> array = new List<BuiltInInfoType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(BuiltInInfoType.DeserializeBuiltInInfoType(item, options));
                     }
@@ -167,42 +211,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GetSensitivitySettingsResponsePropertiesMipInformation(mipIntegrationStatus, labels ?? new ChangeTrackingList<MipSensitivityLabel>(), customInfoTypes ?? new ChangeTrackingList<UserDefinedInformationType>(), builtInInfoTypes ?? new ChangeTrackingList<BuiltInInfoType>(), serializedAdditionalRawData);
+            return new GetSensitivitySettingsResponsePropertiesMipInformation(mipIntegrationStatus, labels ?? new ChangeTrackingList<Label>(), customInfoTypes ?? new ChangeTrackingList<InfoType>(), builtInInfoTypes ?? new ChangeTrackingList<BuiltInInfoType>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GetSensitivitySettingsResponsePropertiesMipInformation IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGetSensitivitySettingsResponsePropertiesMipInformation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GetSensitivitySettingsResponsePropertiesMipInformation)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GetSensitivitySettingsResponsePropertiesMipInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

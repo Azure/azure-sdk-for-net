@@ -1237,9 +1237,11 @@
         "paloalto",
         "qualys",
         "saas",
+        "tacr",
         "vmuuid",
         "vnets",
-        "wdatp"
+        "wdatp",
+        "wdatpexcludelinuxpublicpreview"
       ],
       "ignoreWords": [
         "AKIARPZCNODDNAEQFSOE",

@@ -7,112 +7,124 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the SecurityAutomation data model.
-    /// The security automation resource.
-    /// </summary>
+    /// <summary> The security automation resource. </summary>
     public partial class SecurityAutomationData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SecurityAutomationData(AzureLocation location) : base(location)
         {
-            Scopes = new ChangeTrackingList<SecurityAutomationScope>();
-            Sources = new ChangeTrackingList<SecurityAutomationSource>();
-            Actions = new ChangeTrackingList<SecurityAutomationAction>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="description"> The security automation description. </param>
-        /// <param name="isEnabled"> Indicates whether the security automation is enabled. </param>
-        /// <param name="scopes"> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </param>
-        /// <param name="sources"> A collection of the source event types which evaluate the security automation set of rules. </param>
-        /// <param name="actions">
-        /// A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true.
-        /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
-        /// </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Security automation data. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAutomationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, bool? isEnabled, IList<SecurityAutomationScope> scopes, IList<SecurityAutomationSource> sources, IList<SecurityAutomationAction> actions, string kind, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAutomationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AutomationProperties properties, string kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Description = description;
-            IsEnabled = isEnabled;
-            Scopes = scopes;
-            Sources = sources;
-            Actions = actions;
+            Properties = properties;
             Kind = kind;
             ETag = eTag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/> for deserialization. </summary>
-        internal SecurityAutomationData()
-        {
-        }
+        /// <summary> Security automation data. </summary>
+        internal AutomationProperties Properties { get; set; }
 
-        /// <summary> The security automation description. </summary>
-        public string Description { get; set; }
-        /// <summary> Indicates whether the security automation is enabled. </summary>
-        public bool? IsEnabled { get; set; }
-        /// <summary> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </summary>
-        public IList<SecurityAutomationScope> Scopes { get; }
-        /// <summary> A collection of the source event types which evaluate the security automation set of rules. </summary>
-        public IList<SecurityAutomationSource> Sources { get; }
-        /// <summary>
-        /// A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true.
-        /// Please note <see cref="SecurityAutomationAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityAutomationActionEventHub"/>, <see cref="SecurityAutomationActionLogicApp"/> and <see cref="SecurityAutomationActionWorkspace"/>.
-        /// </summary>
-        public IList<SecurityAutomationAction> Actions { get; }
         /// <summary> Kind of the resource. </summary>
         public string Kind { get; set; }
+
         /// <summary> Entity tag is used for comparing two or more entities from the same requested resource. </summary>
         public ETag? ETag { get; set; }
+
+        /// <summary> The security automation description. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Indicates whether the security automation is enabled. </summary>
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationProperties();
+                }
+                Properties.IsEnabled = value;
+            }
+        }
+
+        /// <summary> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </summary>
+        public IList<AutomationScope> Scopes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationProperties();
+                }
+                return Properties.Scopes;
+            }
+        }
+
+        /// <summary> A collection of the source event types which evaluate the security automation set of rules. </summary>
+        public IList<AutomationSource> Sources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationProperties();
+                }
+                return Properties.Sources;
+            }
+        }
+
+        /// <summary> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </summary>
+        public IList<AutomationAction> Actions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationProperties();
+                }
+                return Properties.Actions;
+            }
+        }
     }
 }

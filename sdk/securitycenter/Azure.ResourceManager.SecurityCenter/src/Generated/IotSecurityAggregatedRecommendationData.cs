@@ -13,104 +13,127 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the IotSecurityAggregatedRecommendation data model.
-    /// IoT Security solution recommendation information.
-    /// </summary>
+    /// <summary> IoT Security solution recommendation information. </summary>
     public partial class IotSecurityAggregatedRecommendationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedRecommendationData"/>. </summary>
-        public IotSecurityAggregatedRecommendationData()
+        internal IotSecurityAggregatedRecommendationData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedRecommendationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="recommendationName"> Name of the recommendation. </param>
-        /// <param name="recommendationDisplayName"> Display name of the recommendation type. </param>
-        /// <param name="description"> Description of the suspected vulnerability and meaning. </param>
-        /// <param name="recommendationTypeId"> Recommendation-type GUID. </param>
-        /// <param name="detectedBy"> Name of the organization that made the recommendation. </param>
-        /// <param name="remediationSteps"> Recommended steps for remediation. </param>
-        /// <param name="reportedSeverity"> Assessed recommendation severity. </param>
-        /// <param name="healthyDevices"> Number of healthy devices within the IoT Security solution. </param>
-        /// <param name="unhealthyDeviceCount"> Number of unhealthy devices within the IoT Security solution. </param>
-        /// <param name="logAnalyticsQuery"> Log analytics query for getting the list of affected devices/alerts. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Security Solution data. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotSecurityAggregatedRecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationName, string recommendationDisplayName, string description, string recommendationTypeId, string detectedBy, string remediationSteps, ReportedSeverity? reportedSeverity, long? healthyDevices, long? unhealthyDeviceCount, string logAnalyticsQuery, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecurityAggregatedRecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IoTSecurityAggregatedRecommendationProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            RecommendationName = recommendationName;
-            RecommendationDisplayName = recommendationDisplayName;
-            Description = description;
-            RecommendationTypeId = recommendationTypeId;
-            DetectedBy = detectedBy;
-            RemediationSteps = remediationSteps;
-            ReportedSeverity = reportedSeverity;
-            HealthyDevices = healthyDevices;
-            UnhealthyDeviceCount = unhealthyDeviceCount;
-            LogAnalyticsQuery = logAnalyticsQuery;
+            Properties = properties;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Name of the recommendation. </summary>
-        public string RecommendationName { get; set; }
-        /// <summary> Display name of the recommendation type. </summary>
-        public string RecommendationDisplayName { get; }
-        /// <summary> Description of the suspected vulnerability and meaning. </summary>
-        public string Description { get; }
-        /// <summary> Recommendation-type GUID. </summary>
-        public string RecommendationTypeId { get; }
-        /// <summary> Name of the organization that made the recommendation. </summary>
-        public string DetectedBy { get; }
-        /// <summary> Recommended steps for remediation. </summary>
-        public string RemediationSteps { get; }
-        /// <summary> Assessed recommendation severity. </summary>
-        public ReportedSeverity? ReportedSeverity { get; }
-        /// <summary> Number of healthy devices within the IoT Security solution. </summary>
-        public long? HealthyDevices { get; }
-        /// <summary> Number of unhealthy devices within the IoT Security solution. </summary>
-        public long? UnhealthyDeviceCount { get; }
-        /// <summary> Log analytics query for getting the list of affected devices/alerts. </summary>
-        public string LogAnalyticsQuery { get; }
+        /// <summary> Security Solution data. </summary>
+        internal IoTSecurityAggregatedRecommendationProperties Properties { get; }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Name of the recommendation. </summary>
+        public string RecommendationName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecommendationName;
+            }
+        }
+
+        /// <summary> Display name of the recommendation type. </summary>
+        public string RecommendationDisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecommendationDisplayName;
+            }
+        }
+
+        /// <summary> Description of the suspected vulnerability and meaning. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
+        /// <summary> Recommendation-type GUID. </summary>
+        public string RecommendationTypeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecommendationTypeId;
+            }
+        }
+
+        /// <summary> Name of the organization that made the recommendation. </summary>
+        public string DetectedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DetectedBy;
+            }
+        }
+
+        /// <summary> Recommended steps for remediation. </summary>
+        public string RemediationSteps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemediationSteps;
+            }
+        }
+
+        /// <summary> Assessed recommendation severity. </summary>
+        public ReportedSeverity? ReportedSeverity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReportedSeverity;
+            }
+        }
+
+        /// <summary> Number of healthy devices within the IoT Security solution. </summary>
+        public long? HealthyDevices
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthyDevices;
+            }
+        }
+
+        /// <summary> Number of unhealthy devices within the IoT Security solution. </summary>
+        public long? UnhealthyDeviceCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UnhealthyDeviceCount;
+            }
+        }
+
+        /// <summary> Log analytics query for getting the list of affected devices/alerts. </summary>
+        public string LogAnalyticsQuery
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LogAnalyticsQuery;
+            }
+        }
     }
 }

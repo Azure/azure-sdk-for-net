@@ -13,115 +13,121 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the SecuritySubAssessment data model.
-    /// Security sub-assessment on a resource
-    /// </summary>
+    /// <summary> Security sub-assessment on a resource. </summary>
     public partial class SecuritySubAssessmentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentData"/>. </summary>
-        public SecuritySubAssessmentData()
+        internal SecuritySubAssessmentData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="vulnerabilityId"> Vulnerability ID. </param>
-        /// <param name="displayName"> User friendly display name of the sub-assessment. </param>
-        /// <param name="status"> Status of the sub-assessment. </param>
-        /// <param name="remediation"> Information on how to remediate this sub-assessment. </param>
-        /// <param name="impact"> Description of the impact of this sub-assessment. </param>
-        /// <param name="category"> Category of the sub-assessment. </param>
-        /// <param name="description"> Human readable description of the assessment status. </param>
-        /// <param name="generatedOn"> The date and time the sub-assessment was generated. </param>
-        /// <param name="resourceDetails">
-        /// Details of the resource that was assessed
-        /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
-        /// </param>
-        /// <param name="additionalData">
-        /// Details of the sub-assessment
-        /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecuritySubAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vulnerabilityId, string displayName, SubAssessmentStatus status, string remediation, string impact, string category, string description, DateTimeOffset? generatedOn, SecurityCenterResourceDetails resourceDetails, SecuritySubAssessmentAdditionalInfo additionalData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Describes properties of an sub-assessment. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecuritySubAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecuritySubAssessmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            VulnerabilityId = vulnerabilityId;
-            DisplayName = displayName;
-            Status = status;
-            Remediation = remediation;
-            Impact = impact;
-            Category = category;
-            Description = description;
-            GeneratedOn = generatedOn;
-            ResourceDetails = resourceDetails;
-            AdditionalData = additionalData;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Describes properties of an sub-assessment. </summary>
+        internal SecuritySubAssessmentProperties Properties { get; }
 
         /// <summary> Vulnerability ID. </summary>
-        public string VulnerabilityId { get; }
+        public string VulnerabilityId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VulnerabilityId;
+            }
+        }
+
         /// <summary> User friendly display name of the sub-assessment. </summary>
-        public string DisplayName { get; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
         /// <summary> Status of the sub-assessment. </summary>
-        public SubAssessmentStatus Status { get; set; }
+        public SubAssessmentStatus Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> Information on how to remediate this sub-assessment. </summary>
-        public string Remediation { get; }
+        public string Remediation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Remediation;
+            }
+        }
+
         /// <summary> Description of the impact of this sub-assessment. </summary>
-        public string Impact { get; }
+        public string Impact
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Impact;
+            }
+        }
+
         /// <summary> Category of the sub-assessment. </summary>
-        public string Category { get; }
+        public string Category
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Category;
+            }
+        }
+
         /// <summary> Human readable description of the assessment status. </summary>
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
         /// <summary> The date and time the sub-assessment was generated. </summary>
-        public DateTimeOffset? GeneratedOn { get; }
-        /// <summary>
-        /// Details of the resource that was assessed
-        /// Please note <see cref="SecurityCenterResourceDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureResourceDetails"/>, <see cref="OnPremiseResourceDetails"/> and <see cref="OnPremiseSqlResourceDetails"/>.
-        /// </summary>
-        public SecurityCenterResourceDetails ResourceDetails { get; set; }
-        /// <summary>
-        /// Details of the sub-assessment
-        /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
-        /// </summary>
-        public SecuritySubAssessmentAdditionalInfo AdditionalData { get; set; }
+        public DateTimeOffset? TimeGenerated
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeGenerated;
+            }
+        }
+
+        /// <summary> Details of the resource that was assessed. </summary>
+        public SecurityCenterResourceDetails ResourceDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceDetails;
+            }
+        }
+
+        /// <summary> Details of the sub-assessment. </summary>
+        public SecuritySubAssessmentAdditionalInfo AdditionalData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalData;
+            }
+        }
     }
 }

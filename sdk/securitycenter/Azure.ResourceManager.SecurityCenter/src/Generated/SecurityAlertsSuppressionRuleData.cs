@@ -13,43 +13,11 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the SecurityAlertsSuppressionRule data model.
-    /// Describes the suppression rule
-    /// </summary>
+    /// <summary> Describes the suppression rule. </summary>
     public partial class SecurityAlertsSuppressionRuleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertsSuppressionRuleData"/>. </summary>
         public SecurityAlertsSuppressionRuleData()
@@ -57,49 +25,129 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityAlertsSuppressionRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use '*'. </param>
-        /// <param name="lastModifiedOn"> The last time this rule was modified. </param>
-        /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </param>
-        /// <param name="reason"> The reason for dismissing the alert. </param>
-        /// <param name="state"> Possible states of the rule. </param>
-        /// <param name="comment"> Any comment regarding the rule. </param>
-        /// <param name="suppressionAlertsScope"> The suppression conditions. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAlertsSuppressionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string alertType, DateTimeOffset? lastModifiedOn, DateTimeOffset? expireOn, string reason, SecurityAlertsSuppressionRuleState? state, string comment, SuppressionAlertsScope suppressionAlertsScope, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> describes AlertsSuppressionRule properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAlertsSuppressionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertsSuppressionRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            AlertType = alertType;
-            LastModifiedOn = lastModifiedOn;
-            ExpireOn = expireOn;
-            Reason = reason;
-            State = state;
-            Comment = comment;
-            SuppressionAlertsScope = suppressionAlertsScope;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> describes AlertsSuppressionRule properties. </summary>
+        internal AlertsSuppressionRuleProperties Properties { get; set; }
+
         /// <summary> Type of the alert to automatically suppress. For all alert types, use '*'. </summary>
-        public string AlertType { get; set; }
+        public string AlertType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AlertType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AlertsSuppressionRuleProperties();
+                }
+                Properties.AlertType = value;
+            }
+        }
+
         /// <summary> The last time this rule was modified. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedUtc;
+            }
+        }
+
         /// <summary> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpirationDateUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpirationDateUtc;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AlertsSuppressionRuleProperties();
+                }
+                Properties.ExpirationDateUtc = value;
+            }
+        }
+
         /// <summary> The reason for dismissing the alert. </summary>
-        public string Reason { get; set; }
+        public string Reason
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Reason;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AlertsSuppressionRuleProperties();
+                }
+                Properties.Reason = value;
+            }
+        }
+
         /// <summary> Possible states of the rule. </summary>
-        public SecurityAlertsSuppressionRuleState? State { get; set; }
+        public RuleState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new AlertsSuppressionRuleProperties();
+                    }
+                    Properties.State = value.Value;
+                }
+            }
+        }
+
         /// <summary> Any comment regarding the rule. </summary>
-        public string Comment { get; set; }
-        /// <summary> The suppression conditions. </summary>
-        internal SuppressionAlertsScope SuppressionAlertsScope { get; set; }
+        public string Comment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Comment;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AlertsSuppressionRuleProperties();
+                }
+                Properties.Comment = value;
+            }
+        }
+
         /// <summary> All the conditions inside need to be true in order to suppress the alert. </summary>
         public IList<SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf
         {
-            get => SuppressionAlertsScope is null ? default : SuppressionAlertsScope.AllOf;
-            set => SuppressionAlertsScope = new SuppressionAlertsScope(value);
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AlertsSuppressionRuleProperties();
+                }
+                return Properties.SuppressionAlertsScopeAllOf;
+            }
         }
     }
 }

@@ -12,55 +12,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// Details of the sub-assessment
-    /// Please note <see cref="SecuritySubAssessmentAdditionalInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ContainerRegistryVulnerabilityProperties"/>, <see cref="ServerVulnerabilityProperties"/> and <see cref="SqlServerVulnerabilityProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SqlServerVulnerabilityProperties"/>, <see cref="ContainerRegistryVulnerabilityProperties"/>, and <see cref="ServerVulnerabilityProperties"/>.
     /// </summary>
     public abstract partial class SecuritySubAssessmentAdditionalInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentAdditionalInfo"/>. </summary>
-        protected SecuritySubAssessmentAdditionalInfo()
+        /// <param name="assessedResourceType"> Sub-assessment resource type. </param>
+        private protected SecuritySubAssessmentAdditionalInfo(AssessedResourceType assessedResourceType)
         {
+            AssessedResourceType = assessedResourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentAdditionalInfo"/>. </summary>
         /// <param name="assessedResourceType"> Sub-assessment resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecuritySubAssessmentAdditionalInfo(AssessedResourceType assessedResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecuritySubAssessmentAdditionalInfo(AssessedResourceType assessedResourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssessedResourceType = assessedResourceType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Sub-assessment resource type. </summary>

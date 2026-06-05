@@ -14,19 +14,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class AzureResourceDetails : SecurityCenterResourceDetails
     {
         /// <summary> Initializes a new instance of <see cref="AzureResourceDetails"/>. </summary>
-        public AzureResourceDetails()
+        public AzureResourceDetails() : base(Source.Azure)
         {
-            Source = HealthReportSource.Azure;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureResourceDetails"/>. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> Azure resource Id of the assessed resource. </param>
-        internal AzureResourceDetails(HealthReportSource source, IDictionary<string, BinaryData> serializedAdditionalRawData, string id) : base(source, serializedAdditionalRawData)
+        internal AzureResourceDetails(Source source, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(source, additionalBinaryDataProperties)
         {
             Id = id;
-            Source = source;
         }
 
         /// <summary> Azure resource Id of the assessed resource. </summary>
