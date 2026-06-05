@@ -212,3 +212,5 @@ namespace Azure.ResourceManager.Batch.Models
         }
     }
 }
+
+// Test comment for weighted batching validation - DO NOT MERGE
