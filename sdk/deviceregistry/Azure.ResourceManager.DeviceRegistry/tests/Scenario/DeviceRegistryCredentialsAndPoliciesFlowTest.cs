@@ -94,38 +94,20 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Namespace retrieved successfully\n");
 
             // Test Credential Flow
-            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 3: Checking if credential exists...");
-            var credentialCollection = namespaceResource.GetCredentials();
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] Step 3: Creating or updating credential...");
+            CredentialResource credentialResource = namespaceResource.GetCredential();
+            var credentialData = new CredentialData(_region);
+            var credentialOperation = await credentialResource.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                credentialData,
+                CancellationToken.None);
+            credentialResource = credentialOperation.Value;
+            Assert.IsNotNull(credentialResource);
+            Assert.AreEqual(credentialResource.Data.Location, _region);
+            Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Credential created or updated successfully\n");
 
-            CredentialResource credentialResource;
-            bool credentialExists = await credentialCollection.ExistsAsync(CancellationToken.None);
-
-            if (!credentialExists)
-            {
-                // Create credential
-                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Creating new credential (this may take several minutes)...");
-                var credentialData = new CredentialData(_region);
-                var credentialOperation = await credentialCollection.CreateOrUpdateAsync(
-                    WaitUntil.Completed,
-                    credentialData,
-                    CancellationToken.None);
-                credentialResource = credentialOperation.Value;
-                Assert.IsNotNull(credentialResource);
-                Assert.AreEqual(credentialResource.Data.Location, _region);
-                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Credential created successfully\n");
-
-                // Allow backend propagation after credential creation
-                // await DelayForPropagationAsync(10, "Waiting for credential propagation...", sw);
-            }
-            else
-            {
-                // Get existing credential
-                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}]   Credential already exists, retrieving...");
-                var credentialResponse = await credentialCollection.GetAsync(CancellationToken.None);
-                credentialResource = credentialResponse.Value;
-                Assert.IsNotNull(credentialResource);
-                Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Credential retrieved successfully\n");
-            }
+            // Allow backend propagation after credential creation
+            // await DelayForPropagationAsync(10, "Waiting for credential propagation...", sw);
 
             // Verify credential was created or retrieved successfully
             Assert.IsNotNull(credentialResource.Data);
@@ -622,9 +604,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             // Allow backend cleanup after credential deletion
             // await DelayForPropagationAsync(10, "Waiting for credential deletion propagation...", sw);
 
-            // Verify credential no longer exists
-            bool credentialExistsAfterDelete = await credentialCollection.ExistsAsync(CancellationToken.None);
-            Assert.IsFalse(credentialExistsAfterDelete);
             Console.WriteLine($"[{sw.Elapsed:mm\\:ss}] ✓ Credential deleted successfully\n");
 
             Console.WriteLine($"{'=' * 60}");

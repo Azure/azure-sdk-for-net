@@ -330,6 +330,68 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
+        /// Registers a Managed HSM key that points at material managed by an external HSM.
+        /// This operation requires the keys/create permission. Only available with service version
+        /// <see cref="KeyClientOptions.ServiceVersion.V2026_01_01_Preview"/> and newer, and only supported on Managed HSM.
+        /// </summary>
+        /// <param name="externalKeyOptions">The key options object containing the name and external key reference for the key being registered.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="externalKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual Response<KeyVaultKey> CreateExternalKey(CreateExternalKeyOptions externalKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(externalKeyOptions, nameof(externalKeyOptions));
+
+            var parameters = new KeyRequestParameters(externalKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateExternalKey)}");
+            scope.AddAttribute(OTelKeyNameKey, externalKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return _pipeline.SendRequest(RequestMethod.Post, parameters, () => new KeyVaultKey(externalKeyOptions.Name), cancellationToken, KeysPath, externalKeyOptions.Name, "/create");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Registers a Managed HSM key that points at material managed by an external HSM.
+        /// This operation requires the keys/create permission. Only available with service version
+        /// <see cref="KeyClientOptions.ServiceVersion.V2026_01_01_Preview"/> and newer, and only supported on Managed HSM.
+        /// </summary>
+        /// <param name="externalKeyOptions">The key options object containing the name and external key reference for the key being registered.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="externalKeyOptions"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual async Task<Response<KeyVaultKey>> CreateExternalKeyAsync(CreateExternalKeyOptions externalKeyOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(externalKeyOptions, nameof(externalKeyOptions));
+
+            var parameters = new KeyRequestParameters(externalKeyOptions);
+
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(KeyClient)}.{nameof(CreateExternalKey)}");
+            scope.AddAttribute(OTelKeyNameKey, externalKeyOptions.Name);
+            scope.Start();
+
+            try
+            {
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, parameters, () => new KeyVaultKey(externalKeyOptions.Name), cancellationToken, KeysPath, externalKeyOptions.Name, "/create").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// The update key operation changes specified attributes of a stored key and
         /// can be applied to any key type and key version stored in Azure Key Vault.
         /// </summary>

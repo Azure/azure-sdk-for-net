@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _jwtAuthenticatorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jwtAuthenticatorName, ManagedClusterJwtAuthenticatorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ManagedClusterJwtAuthenticatorResource> operation = new ContainerServiceArmOperation<ManagedClusterJwtAuthenticatorResource>(
-                    new ManagedClusterJwtAuthenticatorOperationSource(Client),
+                    new ManagedClusterJwtAuthenticatorResourceOperationSource(Client),
                     _jwtAuthenticatorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _jwtAuthenticatorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jwtAuthenticatorName, ManagedClusterJwtAuthenticatorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ManagedClusterJwtAuthenticatorResource> operation = new ContainerServiceArmOperation<ManagedClusterJwtAuthenticatorResource>(
-                    new ManagedClusterJwtAuthenticatorOperationSource(Client),
+                    new ManagedClusterJwtAuthenticatorResourceOperationSource(Client),
                     _jwtAuthenticatorsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -68,6 +68,7 @@ import {
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
   extensionResourceOperationName,
+  isResourceCollectionAction,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
   builtInResourceOperationName
@@ -198,10 +199,13 @@ export function resolveArmResources(
   // Step 1: expand resources with dynamic parent type segments (e.g.
   // `{parentType}/{parentName}` where `{parentType}` is an enum) into one
   // concrete resource per enum value.
-  const { expandedResources, expandedToOriginal } = expandArmResources(resources, {
-    serviceMethods: methodMap,
-    diagnosticReporter: reportWarning
-  });
+  const { expandedResources, expandedToOriginal } = expandArmResources(
+    resources,
+    {
+      serviceMethods: methodMap,
+      diagnosticReporter: reportWarning
+    }
+  );
 
   // Step 2: build the parent-lookup context. This path computes parents from
   // the ResolvedResource.parent chain returned by the ARM library and also
@@ -416,6 +420,8 @@ function convertResolvedResourceToMetadata(
           methodId,
           kind: isResourceList
             ? ResourceOperationKind.List
+            : isResourceCollectionAction(sdkMethod)
+            ? ResourceOperationKind.CollectionAction
             : ResourceOperationKind.Action,
           operationPath: opPath,
           scope: buildScopeInfoFromPath(opPath)

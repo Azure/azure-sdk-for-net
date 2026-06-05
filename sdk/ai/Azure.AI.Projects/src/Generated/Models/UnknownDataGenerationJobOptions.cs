@@ -15,7 +15,7 @@ namespace Azure.AI.Projects
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDataGenerationJobOptions(DataGenerationJobType @type, int maxSamples, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties)
+        internal UnknownDataGenerationJobOptions(DataGenerationJobKind @type, int maxSamples, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties)
         {
         }
     }

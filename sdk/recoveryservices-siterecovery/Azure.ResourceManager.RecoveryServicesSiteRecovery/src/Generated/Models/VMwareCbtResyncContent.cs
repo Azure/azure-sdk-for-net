@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -16,27 +17,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="VMwareCbtResyncContent"/>. </summary>
         /// <param name="skipCbtReset"> A value indicating whether CBT is to be reset. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skipCbtReset"/> is null. </exception>
-        public VMwareCbtResyncContent(string skipCbtReset)
+        public VMwareCbtResyncContent(string skipCbtReset) : base("VMwareCbt")
         {
             Argument.AssertNotNull(skipCbtReset, nameof(skipCbtReset));
 
             SkipCbtReset = skipCbtReset;
-            InstanceType = "VMwareCbt";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtResyncContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="skipCbtReset"> A value indicating whether CBT is to be reset. </param>
-        internal VMwareCbtResyncContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string skipCbtReset) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareCbtResyncContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string skipCbtReset) : base(instanceType, additionalBinaryDataProperties)
         {
             SkipCbtReset = skipCbtReset;
-            InstanceType = instanceType ?? "VMwareCbt";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VMwareCbtResyncContent"/> for deserialization. </summary>
-        internal VMwareCbtResyncContent()
-        {
         }
 
         /// <summary> A value indicating whether CBT is to be reset. </summary>

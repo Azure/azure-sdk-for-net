@@ -7,7 +7,7 @@ namespace Azure.AI.Projects.Memory;
 [CodeGenType("DeleteMemoryStoreResponse")] public partial class DeleteMemoryStoreResponse { }
 [CodeGenType("DeleteScopeRequest")] internal partial class DeleteScopeRequest { }
 [CodeGenType("MemoryItem")] public abstract partial class MemoryItem { }
-[CodeGenType("MemoryItemKind")] internal readonly partial struct MemoryItemKind { }
+[CodeGenType("MemoryItemKind")] public readonly partial struct MemoryItemKind { }
 [CodeGenType("MemoryOperation")] public partial class MemoryOperation { }
 [CodeGenType("MemoryOperationKind")] public readonly partial struct MemoryOperationKind { }
 [CodeGenType("MemorySearchItem")] public partial class MemorySearchItem { }
@@ -19,7 +19,9 @@ namespace Azure.AI.Projects.Memory;
 [CodeGenType("MemoryStoreKind")] internal readonly partial struct MemoryStoreKind { }
 [CodeGenType("MemoryStoreObjectType")] public readonly partial struct MemoryStoreObjectType { }
 [CodeGenType("MemoryStoreOperationUsage")] public partial class MemoryStoreOperationUsage { }
+/// <summary> Token usage details for the input portion of a memory-store operation. </summary>
 [CodeGenType("MemoryStoreOperationUsageInputTokensDetails")] public partial class MemoryStoreOperationUsageInputTokensDetails { }
+/// <summary> Token usage details for the output portion of a memory-store operation. </summary>
 [CodeGenType("MemoryStoreOperationUsageOutputTokensDetails")] public partial class MemoryStoreOperationUsageOutputTokensDetails { }
 [CodeGenType("MemoryStoreSearchResponse")] public partial class MemoryStoreSearchResponse { }
 [CodeGenType("MemoryUpdateResultDetails")] public partial class MemoryUpdateResultDetails { }

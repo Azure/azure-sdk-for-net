@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SubscriptionQuotaAllocationsListData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<SubscriptionQuotaAllocationsListResource> operation = new QuotaArmOperation<SubscriptionQuotaAllocationsListResource>(
-                    new SubscriptionQuotaAllocationsListOperationSource(Client),
+                    new SubscriptionQuotaAllocationsListResourceOperationSource(Client),
                     _subscriptionQuotaAllocationsListsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateUpdateRequest(Id.Parent.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, SubscriptionQuotaAllocationsListData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<SubscriptionQuotaAllocationsListResource> operation = new QuotaArmOperation<SubscriptionQuotaAllocationsListResource>(
-                    new SubscriptionQuotaAllocationsListOperationSource(Client),
+                    new SubscriptionQuotaAllocationsListResourceOperationSource(Client),
                     _subscriptionQuotaAllocationsListsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppConnectedEnvironmentStorageCollection : ArmCollection, IEnumerable<ContainerAppConnectedEnvironmentStorageResource>, IAsyncEnumerable<ContainerAppConnectedEnvironmentStorageResource>
     {
-        private readonly ClientDiagnostics _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics;
-        private readonly ConnectedEnvironmentsStoragesRestOperations _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient;
+        private readonly ClientDiagnostics _connectedEnvironmentsStoragesClientDiagnostics;
+        private readonly ConnectedEnvironmentsStorages _connectedEnvironmentsStoragesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentStorageCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentStorageCollection for mocking. </summary>
         protected ContainerAppConnectedEnvironmentStorageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerAppConnectedEnvironmentStorageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppConnectedEnvironmentStorageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppConnectedEnvironmentStorageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppConnectedEnvironmentStorageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerAppConnectedEnvironmentStorageResource.ResourceType, out string containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesApiVersion);
-            _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient = new ConnectedEnvironmentsStoragesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ContainerAppConnectedEnvironmentStorageResource.ResourceType, out string containerAppConnectedEnvironmentStorageApiVersion);
+            _connectedEnvironmentsStoragesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppConnectedEnvironmentStorageResource.ResourceType.Namespace, Diagnostics);
+            _connectedEnvironmentsStoragesRestClient = new ConnectedEnvironmentsStorages(_connectedEnvironmentsStoragesClientDiagnostics, Pipeline, Endpoint, containerAppConnectedEnvironmentStorageApiVersion ?? "2025-10-02-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerAppConnectedEnvironmentResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppConnectedEnvironmentResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppConnectedEnvironmentResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update storage for a connectedEnvironment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsStorages_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironmentsStorages_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="storageName"> Name of the storage. </param>
         /// <param name="data"> Configuration details of storage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ContainerAppConnectedEnvironmentStorageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string storageName, ContainerAppConnectedEnvironmentStorageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(new ContainerAppConnectedEnvironmentStorageOperationSource(Client), _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics, Pipeline, _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsStoragesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageName, ContainerAppConnectedEnvironmentStorageData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(
+                    new ContainerAppConnectedEnvironmentStorageResourceOperationSource(Client),
+                    _connectedEnvironmentsStoragesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.AppContainers
         /// Create or update storage for a connectedEnvironment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsStorages_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironmentsStorages_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="storageName"> Name of the storage. </param>
         /// <param name="data"> Configuration details of storage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ContainerAppConnectedEnvironmentStorageResource> CreateOrUpdate(WaitUntil waitUntil, string storageName, ContainerAppConnectedEnvironmentStorageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _connectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(new ContainerAppConnectedEnvironmentStorageOperationSource(Client), _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics, Pipeline, _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsStoragesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageName, ContainerAppConnectedEnvironmentStorageData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(
+                    new ContainerAppConnectedEnvironmentStorageResourceOperationSource(Client),
+                    _connectedEnvironmentsStoragesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.AppContainers
         /// Get storage for a connectedEnvironment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsStorages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironmentsStorages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageName"> Name of the storage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ContainerAppConnectedEnvironmentStorageResource>> GetAsync(string storageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
-            using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.Get");
+            using DiagnosticScope scope = _connectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.Get");
             scope.Start();
             try
             {
-                var response = await _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsStoragesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerAppConnectedEnvironmentStorageData> response = Response.FromValue(ContainerAppConnectedEnvironmentStorageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.AppContainers
         /// Get storage for a connectedEnvironment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsStorages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironmentsStorages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageName"> Name of the storage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ContainerAppConnectedEnvironmentStorageResource> Get(string storageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
-            using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.Get");
+            using DiagnosticScope scope = _connectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.Get");
             scope.Start();
             try
             {
-                var response = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsStoragesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerAppConnectedEnvironmentStorageData> response = Response.FromValue(ContainerAppConnectedEnvironmentStorageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,49 +272,50 @@ namespace Azure.ResourceManager.AppContainers
         /// Get all storages for a connectedEnvironment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsStorages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironmentsStorages_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentStorageResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentStorageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppConnectedEnvironmentStorageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ContainerAppConnectedEnvironmentStorageResource(Client, ContainerAppConnectedEnvironmentStorageData.DeserializeContainerAppConnectedEnvironmentStorageData(e)), _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentStorageCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ContainerAppConnectedEnvironmentStorageData, ContainerAppConnectedEnvironmentStorageResource>(new ConnectedEnvironmentsStoragesGetAllAsyncCollectionResultOfT(
+                _connectedEnvironmentsStoragesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerAppConnectedEnvironmentStorageCollection.GetAll"), data => new ContainerAppConnectedEnvironmentStorageResource(Client, data));
         }
 
         /// <summary>
         /// Get all storages for a connectedEnvironment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsStorages_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironmentsStorages_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,44 +323,67 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentStorageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppConnectedEnvironmentStorageResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ContainerAppConnectedEnvironmentStorageResource(Client, ContainerAppConnectedEnvironmentStorageData.DeserializeContainerAppConnectedEnvironmentStorageData(e)), _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics, Pipeline, "ContainerAppConnectedEnvironmentStorageCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ContainerAppConnectedEnvironmentStorageData, ContainerAppConnectedEnvironmentStorageResource>(new ConnectedEnvironmentsStoragesGetAllCollectionResultOfT(
+                _connectedEnvironmentsStoragesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerAppConnectedEnvironmentStorageCollection.GetAll"), data => new ContainerAppConnectedEnvironmentStorageResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsStorages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironmentsStorages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageName"> Name of the storage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
-            using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.Exists");
+            using DiagnosticScope scope = _connectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsStoragesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerAppConnectedEnvironmentStorageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerAppConnectedEnvironmentStorageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerAppConnectedEnvironmentStorageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,36 +397,50 @@ namespace Azure.ResourceManager.AppContainers
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsStorages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironmentsStorages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageName"> Name of the storage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string storageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
-            using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.Exists");
+            using DiagnosticScope scope = _connectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.Exists");
             scope.Start();
             try
             {
-                var response = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsStoragesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerAppConnectedEnvironmentStorageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerAppConnectedEnvironmentStorageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerAppConnectedEnvironmentStorageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,38 +454,54 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsStorages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironmentsStorages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageName"> Name of the storage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ContainerAppConnectedEnvironmentStorageResource>> GetIfExistsAsync(string storageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
-            using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.GetIfExists");
+            using DiagnosticScope scope = _connectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsStoragesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerAppConnectedEnvironmentStorageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerAppConnectedEnvironmentStorageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerAppConnectedEnvironmentStorageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerAppConnectedEnvironmentStorageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,38 +515,54 @@ namespace Azure.ResourceManager.AppContainers
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/storages/{storageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectedEnvironmentsStorages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedEnvironmentsStorages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerAppConnectedEnvironmentStorageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageName"> Name of the storage. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ContainerAppConnectedEnvironmentStorageResource> GetIfExists(string storageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageName, nameof(storageName));
 
-            using var scope = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.GetIfExists");
+            using DiagnosticScope scope = _connectedEnvironmentsStoragesClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentStorageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _containerAppConnectedEnvironmentStorageConnectedEnvironmentsStoragesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _connectedEnvironmentsStoragesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, storageName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerAppConnectedEnvironmentStorageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerAppConnectedEnvironmentStorageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerAppConnectedEnvironmentStorageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerAppConnectedEnvironmentStorageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerAppConnectedEnvironmentStorageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -483,6 +582,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerAppConnectedEnvironmentStorageResource> IAsyncEnumerable<ContainerAppConnectedEnvironmentStorageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

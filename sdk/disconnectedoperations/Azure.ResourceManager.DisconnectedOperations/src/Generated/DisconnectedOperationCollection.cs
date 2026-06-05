@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 HttpMessage message = _disconnectedRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DisconnectedOperationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DisconnectedOperationsArmOperation<DisconnectedOperationResource> operation = new DisconnectedOperationsArmOperation<DisconnectedOperationResource>(
-                    new DisconnectedOperationOperationSource(Client),
+                    new DisconnectedOperationResourceOperationSource(Client),
                     _disconnectedClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 HttpMessage message = _disconnectedRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DisconnectedOperationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DisconnectedOperationsArmOperation<DisconnectedOperationResource> operation = new DisconnectedOperationsArmOperation<DisconnectedOperationResource>(
-                    new DisconnectedOperationOperationSource(Client),
+                    new DisconnectedOperationResourceOperationSource(Client),
                     _disconnectedClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Visitors;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -104,6 +105,57 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                         var createContent = Static(typeof(RequestContent)).Invoke(
                             nameof(RequestContent.Create),
                             [bodyParameter]);
+                        if (bodyParameter.Type.IsNullable)
+                        {
+                            arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
+                        }
+                        else
+                        {
+                            arguments.Add(createContent);
+                        }
+                    }
+                    else if (bodyParameter.Type.IsEnum)
+                    {
+                        // Enum/union body parameters do not have a generated ToRequestContent helper
+                        // (that helper is only synthesized on MRW model types by SerializationVisitor).
+                        // Serialize the enum value to its string form and route through RequestContent.Create.
+                        ValueExpression bodyExpr = bodyParameter;
+                        ValueExpression stringForm = bodyParameter.Type.IsStruct
+                            // Extensible enum (readonly struct): use ToString().
+                            ? (bodyParameter.Type.IsNullable
+                                ? bodyExpr.NullConditional().InvokeToString()
+                                : bodyExpr.InvokeToString())
+                            // Fixed enum: use generated ToSerialString() extension.
+                            : (bodyParameter.Type.IsNullable
+                                ? bodyExpr.NullConditional().Invoke("ToSerialString")
+                                : bodyExpr.Invoke("ToSerialString"));
+                        var createContent = Static(typeof(RequestContent)).Invoke(
+                            nameof(RequestContent.Create),
+                            [stringForm]);
+                        if (bodyParameter.Type.IsNullable)
+                        {
+                            arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
+                        }
+                        else
+                        {
+                            arguments.Add(createContent);
+                        }
+                    }
+                    else if (bodyParameter.Type.IsList)
+                    {
+                        var createContent = Static<BinaryContentHelperDefinition>().Invoke("FromEnumerable", [bodyParameter]);
+                        if (bodyParameter.Type.IsNullable)
+                        {
+                            arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));
+                        }
+                        else
+                        {
+                            arguments.Add(createContent);
+                        }
+                    }
+                    else if (bodyParameter.Type.IsDictionary)
+                    {
+                        var createContent = Static<BinaryContentHelperDefinition>().Invoke("FromDictionary", [bodyParameter]);
                         if (bodyParameter.Type.IsNullable)
                         {
                             arguments.Add(new TernaryConditionalExpression(bodyParameter.NotEqual(Null), createContent, Null));

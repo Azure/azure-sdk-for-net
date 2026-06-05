@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string TrueValue = "True";
         private const string FalseValue = "False";
 
-        /// <summary> True. </summary>
+        /// <summary> RedistributeConnectedSubnets-True. </summary>
         public static RedistributeConnectedSubnet True { get; } = new RedistributeConnectedSubnet(TrueValue);
-        /// <summary> False. </summary>
+        /// <summary> RedistributeConnectedSubnets-False. </summary>
         public static RedistributeConnectedSubnet False { get; } = new RedistributeConnectedSubnet(FalseValue);
         /// <summary> Determines if two <see cref="RedistributeConnectedSubnet"/> values are the same. </summary>
         public static bool operator ==(RedistributeConnectedSubnet left, RedistributeConnectedSubnet right) => left.Equals(right);

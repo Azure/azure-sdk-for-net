@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     {
         private readonly ClientDiagnostics _serversClientDiagnostics;
         private readonly Servers _serversRestClient;
-        private readonly ClientDiagnostics _replicasClientDiagnostics;
-        private readonly Replicas _replicasRestClient;
         private readonly ClientDiagnostics _migrationsClientDiagnostics;
         private readonly Migrations _migrationsRestClient;
         private readonly ClientDiagnostics _backupsLongTermRetentionClientDiagnostics;
@@ -38,6 +36,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly CapabilitiesByServer _capabilitiesByServerRestClient;
         private readonly ClientDiagnostics _capturedLogsClientDiagnostics;
         private readonly CapturedLogs _capturedLogsRestClient;
+        private readonly ClientDiagnostics _replicasClientDiagnostics;
+        private readonly Replicas _replicasRestClient;
         private readonly PostgreSqlFlexibleServerData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers";
@@ -64,8 +64,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-01-01-preview");
-            _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-01-01-preview");
             _migrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-01-01-preview");
             _backupsLongTermRetentionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
@@ -74,6 +72,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _capabilitiesByServerRestClient = new CapabilitiesByServer(_capabilitiesByServerClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-01-01-preview");
             _capturedLogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             _capturedLogsRestClient = new CapturedLogs(_capturedLogsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-01-01-preview");
+            _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlFlexibleServerPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(
-                    new PostgreSqlFlexibleServerOperationSource(Client),
+                    new PostgreSqlFlexibleServerResourceOperationSource(Client),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 HttpMessage message = _serversRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PostgreSqlFlexibleServerPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<PostgreSqlFlexibleServerResource> operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(
-                    new PostgreSqlFlexibleServerOperationSource(Client),
+                    new PostgreSqlFlexibleServerResourceOperationSource(Client),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -423,82 +423,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Lists all read replicas of a server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/replicas. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Servers_ReplicasListByServer. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PostgreSqlFlexibleServerResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerResource> GetReplicasAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ReplicasGetReplicasAsyncCollectionResultOfT(
-                _replicasRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "PostgreSqlFlexibleServerResource.GetReplicas"), data => new PostgreSqlFlexibleServerResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists all read replicas of a server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/replicas. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Servers_ReplicasListByServer. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="PostgreSqlFlexibleServerResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerResource> GetReplicas(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ReplicasGetReplicasCollectionResultOfT(
-                _replicasRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "PostgreSqlFlexibleServerResource.GetReplicas"), data => new PostgreSqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>
@@ -969,6 +893,82 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists all read replicas of a server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/replicas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Servers_ReplicasListByServer. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostgreSqlFlexibleServerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerResource> GetReplicasAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ReplicasGetReplicasAsyncCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PostgreSqlFlexibleServerResource.GetReplicas"), data => new PostgreSqlFlexibleServerResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all read replicas of a server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/replicas. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Servers_ReplicasListByServer. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PostgreSqlFlexibleServerResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerResource> GetReplicas(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PostgreSqlFlexibleServerData, PostgreSqlFlexibleServerResource>(new ReplicasGetReplicasCollectionResultOfT(
+                _replicasRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "PostgreSqlFlexibleServerResource.GetReplicas"), data => new PostgreSqlFlexibleServerResource(Client, data));
         }
 
         /// <summary>

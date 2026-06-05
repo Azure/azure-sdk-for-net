@@ -31,6 +31,8 @@ namespace Azure.AI.VoiceLive
         private const string ResponseCancelValue = "response.cancel";
         private const string SessionAvatarConnectValue = "session.avatar.connect";
         private const string McpApprovalResponseValue = "mcp_approval_response";
+        /// <summary> Client request to clear the avatar output buffer. </summary>
+        private const string OutputAudioBufferClearValue = "output_audio_buffer.clear";
 
         /// <summary> Initializes a new instance of <see cref="ClientEventType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -92,6 +94,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the McpApprovalResponse. </summary>
         public static ClientEventType McpApprovalResponse { get; } = new ClientEventType(McpApprovalResponseValue);
+
+        /// <summary> Client request to clear the avatar output buffer. </summary>
+        public static ClientEventType OutputAudioBufferClear { get; } = new ClientEventType(OutputAudioBufferClearValue);
 
         /// <summary> Determines if two <see cref="ClientEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
