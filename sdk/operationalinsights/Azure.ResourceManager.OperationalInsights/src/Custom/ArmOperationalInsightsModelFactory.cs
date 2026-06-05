@@ -11,29 +11,6 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress(
-        "OperationalInsightsWorkspacePatch",
-        typeof(ResourceIdentifier),
-        typeof(string),
-        typeof(ResourceType),
-        typeof(SystemData),
-        typeof(OperationalInsightsWorkspaceEntityStatus?),
-        typeof(Guid?),
-        typeof(OperationalInsightsWorkspaceSku),
-        typeof(int?),
-        typeof(OperationalInsightsWorkspaceCapping),
-        typeof(DateTimeOffset?),
-        typeof(DateTimeOffset?),
-        typeof(OperationalInsightsPublicNetworkAccessType?),
-        typeof(OperationalInsightsPublicNetworkAccessType?),
-        typeof(bool?),
-        typeof(IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo>),
-        typeof(OperationalInsightsWorkspaceFeatures),
-        typeof(ResourceIdentifier),
-        typeof(OperationalInsightsWorkspaceReplicationProperties),
-        typeof(OperationalInsightsWorkspaceFailoverProperties),
-        typeof(ManagedServiceIdentity),
-        typeof(IDictionary<string, string>))]
     public static partial class ArmOperationalInsightsModelFactory
     {
         /// <summary> The top level Workspace resource container. </summary>

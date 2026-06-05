@@ -13,8 +13,6 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     // Backward-compat justification: the GA SDK exposed AdditionalProperties with a WirePath attribute on workspace features.
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AdditionalProperties", typeof(IDictionary<string, BinaryData>))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("DeserializeOperationalInsightsWorkspaceFeatures", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class OperationalInsightsWorkspaceFeatures
     {
         /// <summary> Gets the AdditionalProperties. </summary>

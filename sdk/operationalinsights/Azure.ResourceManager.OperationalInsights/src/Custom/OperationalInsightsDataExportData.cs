@@ -9,9 +9,6 @@ using Azure.ResourceManager.OperationalInsights.Models;
 namespace Azure.ResourceManager.OperationalInsights
 {
     // Backward-compat justification: the GA SDK exposed flattened data export destination properties with legacy WirePath values.
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("ResourceId", typeof(ResourceIdentifier))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("DestinationType", typeof(OperationalInsightsDataExportDestinationType?))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("EventHubName", typeof(string))]
     public partial class OperationalInsightsDataExportData
     {
         /// <summary> The destination resource ID. This can be copied from the Properties entry of the destination resource in Azure. </summary>

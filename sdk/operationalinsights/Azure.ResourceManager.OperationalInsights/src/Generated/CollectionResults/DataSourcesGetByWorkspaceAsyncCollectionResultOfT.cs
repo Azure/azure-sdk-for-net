@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly string _resourceGroupName;
         private readonly string _workspaceName;
         private readonly string _filter;
-        private readonly string _skiptoken;
+        private readonly string _skipToken;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="skiptoken"> Starting point of the collection of data source instances. </param>
+        /// <param name="skipToken"> Starting point of the collection of data source instances. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DataSourcesGetByWorkspaceAsyncCollectionResultOfT(DataSources client, Guid subscriptionId, string resourceGroupName, string workspaceName, string filter, string skiptoken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DataSourcesGetByWorkspaceAsyncCollectionResultOfT(DataSources client, Guid subscriptionId, string resourceGroupName, string workspaceName, string filter, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _workspaceName = workspaceName;
             _filter = filter;
-            _skiptoken = skiptoken;
+            _skipToken = skipToken;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByWorkspaceRequest(nextLink, _subscriptionId, _resourceGroupName, _workspaceName, _filter, _skiptoken, _context) : _client.CreateGetByWorkspaceRequest(_subscriptionId, _resourceGroupName, _workspaceName, _filter, _skiptoken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByWorkspaceRequest(nextLink, _subscriptionId, _resourceGroupName, _workspaceName, _filter, _skipToken, _context) : _client.CreateGetByWorkspaceRequest(_subscriptionId, _resourceGroupName, _workspaceName, _filter, _skipToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

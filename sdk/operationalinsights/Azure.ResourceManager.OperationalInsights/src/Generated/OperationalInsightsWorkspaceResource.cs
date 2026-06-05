@@ -1030,12 +1030,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="gatewayId"> The Log Analytics gateway Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> DeleteGatewayAsync(string gatewayId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteGatewayAsync(Guid gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
-
             using DiagnosticScope scope = _gatewaysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.DeleteGateway");
             scope.Start();
             try
@@ -1078,12 +1074,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="gatewayId"> The Log Analytics gateway Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response DeleteGateway(string gatewayId, CancellationToken cancellationToken = default)
+        public virtual Response DeleteGateway(Guid gatewayId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayId, nameof(gatewayId));
-
             using DiagnosticScope scope = _gatewaysClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.DeleteGateway");
             scope.Start();
             try

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateDeleteGatewayRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string gatewayId, RequestContext context)
+        internal HttpMessage CreateDeleteGatewayRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, Guid gatewayId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.OperationalInsights
             uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
             uri.AppendPath(workspaceName, true);
             uri.AppendPath("/gateways/", false);
-            uri.AppendPath(gatewayId, true);
+            uri.AppendPath(gatewayId.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

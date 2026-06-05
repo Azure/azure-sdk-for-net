@@ -8,6 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
+    // Backward-compat justification: preserve the old enum-like retention alias after the generated model changed to a boolean property.
     /// <summary> True - Value originates from retention in days, False - Customer specific. </summary>
     public readonly partial struct TotalRetentionInDaysAsDefaultState : IEquatable<TotalRetentionInDaysAsDefaultState>
     {

@@ -15,8 +15,7 @@ using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("DeserializeOperationalInsightsWorkspacePatch", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
+    // Backward-compat justification: ResourceData restores the old base type but does not carry ETag, so preserve the old ETag API and wire behavior here.
     public partial class OperationalInsightsWorkspacePatch
     {
         private readonly ETag? _eTag;

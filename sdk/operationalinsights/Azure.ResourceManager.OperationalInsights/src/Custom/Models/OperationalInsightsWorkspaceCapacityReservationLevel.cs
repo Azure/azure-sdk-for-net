@@ -5,6 +5,7 @@
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
+    // Backward-compat justification: ApiCompat requires these enum values to match the previous SDK contract.
     /// <summary></summary>
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("OperationalInsightsWorkspaceCapacityReservationLevel")]
     public enum OperationalInsightsWorkspaceCapacityReservationLevel

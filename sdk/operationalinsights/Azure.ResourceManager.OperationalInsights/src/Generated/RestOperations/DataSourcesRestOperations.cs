@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.OperationalInsights
             return message;
         }
 
-        internal HttpMessage CreateGetByWorkspaceRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string filter, string skiptoken, RequestContext context)
+        internal HttpMessage CreateGetByWorkspaceRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, string filter, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.OperationalInsights
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             uri.AppendQuery("$filter", filter, true);
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.OperationalInsights
             return message;
         }
 
-        internal HttpMessage CreateNextGetByWorkspaceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string workspaceName, string filter, string skiptoken, RequestContext context)
+        internal HttpMessage CreateNextGetByWorkspaceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string workspaceName, string filter, string skipToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
