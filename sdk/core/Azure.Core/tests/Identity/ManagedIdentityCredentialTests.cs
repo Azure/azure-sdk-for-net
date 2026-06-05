@@ -172,7 +172,7 @@ namespace Azure.Core.Tests.Identity
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyImdsRequestWithClientIdMock()
+        public virtual async Task VerifyImdsRequestWithClientIdMock()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
@@ -198,7 +198,7 @@ namespace Azure.Core.Tests.Identity
 
         [NonParallelizable]
         [Test]
-        public async Task VerifyImdsSendsProbeOnlyOnFirstRequest()
+        public virtual async Task VerifyImdsSendsProbeOnlyOnFirstRequest()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 

@@ -143,7 +143,14 @@ namespace Azure.Identity
 
         public virtual async ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySourceResult> GetManagedIdentitySourceAsync(TokenRequestContext context, CancellationToken cancellationToken)
         {
-            IManagedIdentityApplication client = await GetClientAsync(true, context.IsCaeEnabled, context.IsProofOfPossessionEnabled, cancellationToken).ConfigureAwait(false);
+            // Managed identity source detection performs an IMDS probe that does not require a binding
+            // certificate. Always create the detection client with the HttpPipelineClientFactory attached
+            // (isTokenBindingAvailable: false) so the probe flows through the Azure.Core pipeline. This keeps
+            // probe traffic on our transport (consistent retry/logging and interceptable by test transports)
+            // instead of MSAL's default HttpClient. The actual mTLS proof-of-possession token request still
+            // uses a client without the factory (isTokenBindingAvailable: true) so MSAL can attach the
+            // per-request binding certificate.
+            IManagedIdentityApplication client = await GetClientAsync(true, context.IsCaeEnabled, isTokenBindingAvailable: false, cancellationToken).ConfigureAwait(false);
             ManagedIdentityApplication app = client as ManagedIdentityApplication;
             return await app.GetManagedIdentitySourceAsync(cancellationToken).ConfigureAwait(false);
         }

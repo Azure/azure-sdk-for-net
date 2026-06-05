@@ -19,6 +19,10 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
     {
         private readonly ConfigurableCredentialTestHelper<ManagedIdentityCredential> _helper;
 
+        // Tracks the probe-intercepting transport created by the most recent CreateConfiguredCredential
+        // call, so probe-focused tests can assert how many ImdsV2 source-detection probes MSAL issued.
+        private ProbeInterceptingTransport _lastProbeInterceptingTransport;
+
         public ManagedIdentityCredentialTests(bool isAsync) : base(isAsync)
         {
             _helper = new ConfigurableCredentialTestHelper<ManagedIdentityCredential>(
@@ -40,6 +44,17 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
             RetryMode? retryMode = null,
             TimeSpan? networkTimeout = null)
         {
+            // The ConfigurableCredentials path uses the real MsalManagedIdentityClient, which now
+            // routes MSAL's ImdsV2 source-detection probe through the pipeline (and thus the test
+            // transport). Wrap the transport so the probe is answered locally and never reaches the
+            // inner MockTransport, keeping its request queue limited to the actual token requests.
+            if (transport != null)
+            {
+                var probeInterceptingTransport = new ProbeInterceptingTransport(transport);
+                _lastProbeInterceptingTransport = probeInterceptingTransport;
+                transport = probeInterceptingTransport;
+            }
+
             IConfiguration config = isChained ? _helper.GetChainedConfiguration() : _helper.GetConfiguration();
             // For chained mode, MI-specific properties go under the source's section.
             string prefix = isChained ? "MyClient:Credential:Sources:0" : "MyClient:Credential";
@@ -254,6 +269,55 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
             Assert.That(ex.Message, Does.Contain("The operation was canceled"));
 
             await Task.CompletedTask;
+        }
+
+        // The base body seeds the inner transport with a 400-then-success queue, where the 400 is
+        // consumed by MSAL's source-detection probe. In the ConfigurableCredentials path the probe is
+        // intercepted by ProbeInterceptingTransport (and answered locally), so the inner transport
+        // must only return the token success response.
+        [NonParallelizable]
+        [Test]
+        public override async Task VerifyImdsRequestWithClientIdMock()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var response = CreateSuccessResponse(ExpectedToken);
+            var mockTransport = new MockTransport(response);
+            var credential = CreateCredentialForImds(mockTransport, clientId: "mock-client-id", isChained: true);
+
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+
+            Assert.AreEqual(ExpectedToken, actualToken.Token);
+
+            MockRequest request = mockTransport.Requests[0];
+
+            string query = request.Uri.Query;
+
+            Assert.AreEqual(request.Uri.Host, "169.254.169.254");
+            Assert.AreEqual(request.Uri.Path, "/metadata/identity/oauth2/token");
+            Assert.IsTrue(query.Contains("api-version=2018-02-01"));
+            Assert.IsTrue(query.Contains($"resource={ScopeUtilities.ScopesToResource(MockScopes.Default)}"));
+            Assert.IsTrue(query.Contains($"{Constants.ManagedIdentityClientId}=mock-client-id"));
+        }
+
+        // The base body detects the probe via the absence of the Metadata header on the inner
+        // transport. In the ConfigurableCredentials path the probe never reaches the inner transport
+        // (it is intercepted), so probe counting is observed on the ProbeInterceptingTransport instead.
+        [NonParallelizable]
+        [Test]
+        public override async Task VerifyImdsSendsProbeOnlyOnFirstRequest()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var mockTransport = new MockTransport(req => CreateSuccessResponse(ExpectedToken));
+            var credential = CreateCredentialForImds(mockTransport, clientId: "mock-client-id", isChained: true);
+            var probeTransport = _lastProbeInterceptingTransport;
+
+            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+
+            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.AreEqual(1, probeTransport.ProbeCount, "Probe was sent more than once.");
         }
     }
 }
