@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     // The old API is preserved here and bridges to TypeName.
     public partial class KeyVaultCertificateSource
     {
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public KeyVaultCertificateSource
             (
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SourceType = sourceType;
         }
 
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public KeyVaultCertificateSourceType SourceType
         {
