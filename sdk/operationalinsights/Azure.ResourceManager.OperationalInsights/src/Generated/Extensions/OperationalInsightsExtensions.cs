@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<OperationStatus>> GetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        public static async Task<Response<OperationalInsightsOperationStatus>> GetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<OperationStatus> Get(this SubscriptionResource subscriptionResource, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        public static Response<OperationalInsightsOperationStatus> Get(this SubscriptionResource subscriptionResource, AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

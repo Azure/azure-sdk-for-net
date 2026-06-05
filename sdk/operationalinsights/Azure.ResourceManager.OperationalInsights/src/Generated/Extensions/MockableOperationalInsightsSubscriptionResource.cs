@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationStatus>> GetAsync(AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationalInsightsOperationStatus>> GetAsync(AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
 
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
                 };
                 HttpMessage message = OperationStatusesRestClient.CreateGetRequest(location, asyncOperationId, Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OperationStatus> response = Response.FromValue(OperationStatus.FromResponse(result), result);
+                Response<OperationalInsightsOperationStatus> response = Response.FromValue(OperationalInsightsOperationStatus.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationStatus> Get(AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        public virtual Response<OperationalInsightsOperationStatus> Get(AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
 
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
                 };
                 HttpMessage message = OperationStatusesRestClient.CreateGetRequest(location, asyncOperationId, Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OperationStatus> response = Response.FromValue(OperationStatus.FromResponse(result), result);
+                Response<OperationalInsightsOperationStatus> response = Response.FromValue(OperationalInsightsOperationStatus.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

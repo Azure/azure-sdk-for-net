@@ -9,57 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> The AccessRulePropertiesSubscription. </summary>
-    public partial class AccessRulePropertiesSubscription : IJsonModel<AccessRulePropertiesSubscription>
+    /// <summary> Information about resource association. </summary>
+    public partial class OperationalInsightsNspResourceAssociation : IJsonModel<OperationalInsightsNspResourceAssociation>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessRulePropertiesSubscription PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OperationalInsightsNspResourceAssociation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRulePropertiesSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNspResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAccessRulePropertiesSubscription(document.RootElement, options);
+                        return DeserializeOperationalInsightsNspResourceAssociation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessRulePropertiesSubscription)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsNspResourceAssociation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRulePropertiesSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNspResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AccessRulePropertiesSubscription)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsNspResourceAssociation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AccessRulePropertiesSubscription>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OperationalInsightsNspResourceAssociation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccessRulePropertiesSubscription IPersistableModel<AccessRulePropertiesSubscription>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OperationalInsightsNspResourceAssociation IPersistableModel<OperationalInsightsNspResourceAssociation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AccessRulePropertiesSubscription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OperationalInsightsNspResourceAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AccessRulePropertiesSubscription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OperationalInsightsNspResourceAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,15 +69,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRulePropertiesSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNspResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessRulePropertiesSubscription)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsNspResourceAssociation)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(AccessMode))
+            {
+                writer.WritePropertyName("accessMode"u8);
+                writer.WriteStringValue(AccessMode.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -99,40 +103,46 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AccessRulePropertiesSubscription IJsonModel<AccessRulePropertiesSubscription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OperationalInsightsNspResourceAssociation IJsonModel<OperationalInsightsNspResourceAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AccessRulePropertiesSubscription JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OperationalInsightsNspResourceAssociation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AccessRulePropertiesSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNspResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessRulePropertiesSubscription)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsNspResourceAssociation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccessRulePropertiesSubscription(document.RootElement, options);
+            return DeserializeOperationalInsightsNspResourceAssociation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AccessRulePropertiesSubscription DeserializeAccessRulePropertiesSubscription(JsonElement element, ModelReaderWriterOptions options)
+        internal static OperationalInsightsNspResourceAssociation DeserializeOperationalInsightsNspResourceAssociation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string name = default;
+            OperationalInsightsNspResourceAssociationAccessMode? accessMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("accessMode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    accessMode = new OperationalInsightsNspResourceAssociationAccessMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +150,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccessRulePropertiesSubscription(id, additionalBinaryDataProperties);
+            return new OperationalInsightsNspResourceAssociation(name, accessMode, additionalBinaryDataProperties);
         }
     }
 }

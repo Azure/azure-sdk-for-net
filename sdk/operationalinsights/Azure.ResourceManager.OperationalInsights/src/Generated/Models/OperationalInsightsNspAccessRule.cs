@@ -12,21 +12,21 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Access rule in a network security perimeter configuration profile. </summary>
-    public partial class AccessRule
+    public partial class OperationalInsightsNspAccessRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
-        internal AccessRule()
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspAccessRule"/>. </summary>
+        internal OperationalInsightsNspAccessRule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspAccessRule"/>. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRule(string name, AccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsNspAccessRule(string name, OperationalInsightsNspAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Gets the Properties. </summary>
         [WirePath("properties")]
-        public AccessRuleProperties Properties { get; }
+        public OperationalInsightsNspAccessRuleProperties Properties { get; }
     }
 }

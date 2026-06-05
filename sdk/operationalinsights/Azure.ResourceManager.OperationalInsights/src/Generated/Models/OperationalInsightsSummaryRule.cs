@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="timeSelector"> The time cursor used in Summary rules bins processing, e.g. TimeGenerated. </param>
         /// <param name="destinationTable"> The destination table used for the Summary rule results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsSummaryRule(string query, int? binSize, int? binDelay, DateTimeOffset? binStartOn, TimeSelectorEnum? timeSelector, string destinationTable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsSummaryRule(string query, int? binSize, int? binDelay, DateTimeOffset? binStartOn, OperationalInsightsSummaryTimeSelector? timeSelector, string destinationTable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Query = query;
             BinSize = binSize;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> The time cursor used in Summary rules bins processing, e.g. TimeGenerated. </summary>
         [WirePath("timeSelector")]
-        public TimeSelectorEnum? TimeSelector { get; set; }
+        public OperationalInsightsSummaryTimeSelector? TimeSelector { get; set; }
 
         /// <summary> The destination table used for the Summary rule results. </summary>
         [WirePath("destinationTable")]

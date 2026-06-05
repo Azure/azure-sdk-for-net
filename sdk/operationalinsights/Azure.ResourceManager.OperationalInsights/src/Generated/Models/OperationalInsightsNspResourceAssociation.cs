@@ -12,21 +12,21 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Information about resource association. </summary>
-    public partial class ResourceAssociation
+    public partial class OperationalInsightsNspResourceAssociation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceAssociation"/>. </summary>
-        internal ResourceAssociation()
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspResourceAssociation"/>. </summary>
+        internal OperationalInsightsNspResourceAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspResourceAssociation"/>. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceAssociation(string name, ResourceAssociationAccessMode? accessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsNspResourceAssociation(string name, OperationalInsightsNspResourceAssociationAccessMode? accessMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AccessMode = accessMode;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Gets the AccessMode. </summary>
         [WirePath("accessMode")]
-        public ResourceAssociationAccessMode? AccessMode { get; }
+        public OperationalInsightsNspResourceAssociationAccessMode? AccessMode { get; }
     }
 }

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> SummaryRules rule type: User. </summary>
         [WirePath("properties.ruleType")]
-        public RuleTypeEnum? RuleType
+        public OperationalInsightsNspRuleType? RuleType
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> Indicates the reason for rule deactivation. </summary>
         [WirePath("properties.statusCode")]
-        public StatusCodeEnum? StatusCode
+        public OperationalInsightsNspStatusCode? StatusCode
         {
             get
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </summary>
         [WirePath("properties.provisioningState")]
-        public ProvisioningStateEnum? ProvisioningState
+        public OperationalInsightsNspProvisioningState? ProvisioningState
         {
             get
             {

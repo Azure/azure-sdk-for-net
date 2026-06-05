@@ -321,9 +321,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="resourceAssociation"></param>
         /// <param name="profile"></param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<ProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, ResourceAssociation resourceAssociation = default, NetworkSecurityProfile profile = default)
+        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<OperationalInsightsNspProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, OperationalInsightsNspResourceAssociation resourceAssociation = default, OperationalInsightsNetworkSecurityProfile profile = default)
         {
-            provisioningIssues ??= new ChangeTrackingList<ProvisioningIssue>();
+            provisioningIssues ??= new ChangeTrackingList<OperationalInsightsNspProvisioningIssue>();
 
             return new NetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
@@ -337,10 +337,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.ProvisioningIssue"/> instance for mocking. </returns>
-        public static ProvisioningIssue ProvisioningIssue(string name = default, ProvisioningIssueProperties properties = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNspProvisioningIssue"/> instance for mocking. </returns>
+        public static OperationalInsightsNspProvisioningIssue OperationalInsightsNspProvisioningIssue(string name = default, OperationalInsightsNspProvisioningIssueProperties properties = default)
         {
-            return new ProvisioningIssue(name, properties, additionalBinaryDataProperties: null);
+            return new OperationalInsightsNspProvisioningIssue(name, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
@@ -349,13 +349,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="description"> Description of the issue. </param>
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
-        /// <returns> A new <see cref="Models.ProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static ProvisioningIssueProperties ProvisioningIssueProperties(IssueType? issueType = default, Severity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<AccessRule> suggestedAccessRules = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNspProvisioningIssueProperties"/> instance for mocking. </returns>
+        public static OperationalInsightsNspProvisioningIssueProperties OperationalInsightsNspProvisioningIssueProperties(OperationalInsightsNspIssueType? issueType = default, OperationalInsightsNspSeverity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<OperationalInsightsNspAccessRule> suggestedAccessRules = default)
         {
             suggestedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            suggestedAccessRules ??= new ChangeTrackingList<AccessRule>();
+            suggestedAccessRules ??= new ChangeTrackingList<OperationalInsightsNspAccessRule>();
 
-            return new ProvisioningIssueProperties(
+            return new OperationalInsightsNspProvisioningIssueProperties(
                 issueType,
                 severity,
                 description,
@@ -367,10 +367,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Access rule in a network security perimeter configuration profile. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.AccessRule"/> instance for mocking. </returns>
-        public static AccessRule AccessRule(string name = default, AccessRuleProperties properties = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNspAccessRule"/> instance for mocking. </returns>
+        public static OperationalInsightsNspAccessRule OperationalInsightsNspAccessRule(string name = default, OperationalInsightsNspAccessRuleProperties properties = default)
         {
-            return new AccessRule(name, properties, additionalBinaryDataProperties: null);
+            return new OperationalInsightsNspAccessRule(name, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Properties of Access Rule. </summary>
@@ -381,17 +381,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="fullyQualifiedDomainNames"> Fully qualified domain names (FQDN) for outbound rules. </param>
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
-        /// <returns> A new <see cref="Models.AccessRuleProperties"/> instance for mocking. </returns>
-        public static AccessRuleProperties AccessRuleProperties(AccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<AccessRulePropertiesSubscription> subscriptions = default, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNspAccessRuleProperties"/> instance for mocking. </returns>
+        public static OperationalInsightsNspAccessRuleProperties OperationalInsightsNspAccessRuleProperties(OperationalInsightsNspAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<OperationalInsightsNspAccessRuleSubscription> subscriptions = default, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
         {
             addressPrefixes ??= new ChangeTrackingList<string>();
-            subscriptions ??= new ChangeTrackingList<AccessRulePropertiesSubscription>();
+            subscriptions ??= new ChangeTrackingList<OperationalInsightsNspAccessRuleSubscription>();
             networkSecurityPerimeters ??= new ChangeTrackingList<NetworkSecurityPerimeter>();
             fullyQualifiedDomainNames ??= new ChangeTrackingList<string>();
             emailAddresses ??= new ChangeTrackingList<string>();
             phoneNumbers ??= new ChangeTrackingList<string>();
 
-            return new AccessRuleProperties(
+            return new OperationalInsightsNspAccessRuleProperties(
                 direction,
                 addressPrefixes.ToList(),
                 subscriptions.ToList(),
@@ -402,12 +402,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The AccessRulePropertiesSubscription. </summary>
+        /// <summary> The OperationalInsightsNspAccessRuleSubscription. </summary>
         /// <param name="id"> The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000'). </param>
-        /// <returns> A new <see cref="Models.AccessRulePropertiesSubscription"/> instance for mocking. </returns>
-        public static AccessRulePropertiesSubscription AccessRulePropertiesSubscription(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNspAccessRuleSubscription"/> instance for mocking. </returns>
+        public static OperationalInsightsNspAccessRuleSubscription OperationalInsightsNspAccessRuleSubscription(ResourceIdentifier id = default)
         {
-            return new AccessRulePropertiesSubscription(id, additionalBinaryDataProperties: null);
+            return new OperationalInsightsNspAccessRuleSubscription(id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Information about a network security perimeter (NSP). </summary>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
         /// <param name="location"> Location of the network security perimeter. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, string location = default)
+        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, AzureLocation? location = default)
         {
             return new NetworkSecurityPerimeter(id, perimeterGuid, location, additionalBinaryDataProperties: null);
         }
@@ -423,10 +423,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Information about resource association. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"></param>
-        /// <returns> A new <see cref="Models.ResourceAssociation"/> instance for mocking. </returns>
-        public static ResourceAssociation ResourceAssociation(string name = default, ResourceAssociationAccessMode? accessMode = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNspResourceAssociation"/> instance for mocking. </returns>
+        public static OperationalInsightsNspResourceAssociation OperationalInsightsNspResourceAssociation(string name = default, OperationalInsightsNspResourceAssociationAccessMode? accessMode = default)
         {
-            return new ResourceAssociation(name, accessMode, additionalBinaryDataProperties: null);
+            return new OperationalInsightsNspResourceAssociation(name, accessMode, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Network security perimeter configuration profile. </summary>
@@ -435,13 +435,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="accessRules"> List of Access Rules. </param>
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityProfile"/> instance for mocking. </returns>
-        public static NetworkSecurityProfile NetworkSecurityProfile(string name = default, int? accessRulesVersion = default, IEnumerable<AccessRule> accessRules = default, int? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityProfile"/> instance for mocking. </returns>
+        public static OperationalInsightsNetworkSecurityProfile OperationalInsightsNetworkSecurityProfile(string name = default, int? accessRulesVersion = default, IEnumerable<OperationalInsightsNspAccessRule> accessRules = default, int? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
         {
-            accessRules ??= new ChangeTrackingList<AccessRule>();
+            accessRules ??= new ChangeTrackingList<OperationalInsightsNspAccessRule>();
             enabledLogCategories ??= new ChangeTrackingList<string>();
 
-            return new NetworkSecurityProfile(
+            return new OperationalInsightsNetworkSecurityProfile(
                 name,
                 accessRulesVersion,
                 accessRules.ToList(),
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="provisioningState"> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </param>
         /// <param name="ruleDefinition"> Rule definition parameters. </param>
         /// <returns> A new <see cref="OperationalInsights.SummaryLogsData"/> instance for mocking. </returns>
-        public static SummaryLogsData SummaryLogsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RuleTypeEnum? ruleType = default, string displayName = default, string description = default, bool? isActive = default, StatusCodeEnum? statusCode = default, ProvisioningStateEnum? provisioningState = default, OperationalInsightsSummaryRule ruleDefinition = default)
+        public static SummaryLogsData SummaryLogsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperationalInsightsNspRuleType? ruleType = default, string displayName = default, string description = default, bool? isActive = default, OperationalInsightsNspStatusCode? statusCode = default, OperationalInsightsNspProvisioningState? provisioningState = default, OperationalInsightsSummaryRule ruleDefinition = default)
         {
             return new SummaryLogsData(
                 id,
@@ -996,10 +996,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="endTime"> The end time of the operation. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
-        public static OperationStatus OperationStatus(string id = default, string name = default, string startTime = default, string endTime = default, string status = default, ResponseError error = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsOperationStatus"/> instance for mocking. </returns>
+        public static OperationalInsightsOperationStatus OperationalInsightsOperationStatus(string id = default, string name = default, string startTime = default, string endTime = default, string status = default, ResponseError error = default)
         {
-            return new OperationStatus(
+            return new OperationalInsightsOperationStatus(
                 id,
                 name,
                 startTime,

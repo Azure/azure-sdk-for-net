@@ -12,26 +12,26 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Network security perimeter configuration profile. </summary>
-    public partial class NetworkSecurityProfile
+    public partial class OperationalInsightsNetworkSecurityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityProfile"/>. </summary>
-        internal NetworkSecurityProfile()
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityProfile"/>. </summary>
+        internal OperationalInsightsNetworkSecurityProfile()
         {
-            AccessRules = new ChangeTrackingList<AccessRule>();
+            AccessRules = new ChangeTrackingList<OperationalInsightsNspAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityProfile"/>. </summary>
         /// <param name="name"> Name of the profile. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityProfile(string name, int? accessRulesVersion, IList<AccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsNetworkSecurityProfile(string name, int? accessRulesVersion, IList<OperationalInsightsNspAccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> List of Access Rules. </summary>
         [WirePath("accessRules")]
-        public IList<AccessRule> AccessRules { get; }
+        public IList<OperationalInsightsNspAccessRule> AccessRules { get; }
 
         /// <summary> Current diagnostic settings version. </summary>
         [WirePath("diagnosticSettingsVersion")]

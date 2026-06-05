@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             int? binSize = default;
             int? binDelay = default;
             DateTimeOffset? binStartOn = default;
-            TimeSelectorEnum? timeSelector = default;
+            OperationalInsightsSummaryTimeSelector? timeSelector = default;
             string destinationTable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    timeSelector = new TimeSelectorEnum(prop.Value.GetString());
+                    timeSelector = new OperationalInsightsSummaryTimeSelector(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("destinationTable"u8))

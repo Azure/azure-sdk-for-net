@@ -12,16 +12,16 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> SummaryRules rule type: User. </summary>
-    public readonly partial struct RuleTypeEnum : IEquatable<RuleTypeEnum>
+    public readonly partial struct OperationalInsightsNspRuleType : IEquatable<OperationalInsightsNspRuleType>
     {
         private readonly string _value;
         /// <summary> User defined summary rule. This is the definition for rules created and defined by users. </summary>
         private const string UserValue = "User";
 
-        /// <summary> Initializes a new instance of <see cref="RuleTypeEnum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RuleTypeEnum(string value)
+        public OperationalInsightsNspRuleType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> User defined summary rule. This is the definition for rules created and defined by users. </summary>
-        public static RuleTypeEnum User { get; } = new RuleTypeEnum(UserValue);
+        public static OperationalInsightsNspRuleType User { get; } = new OperationalInsightsNspRuleType(UserValue);
 
-        /// <summary> Determines if two <see cref="RuleTypeEnum"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="OperationalInsightsNspRuleType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RuleTypeEnum left, RuleTypeEnum right) => left.Equals(right);
+        public static bool operator ==(OperationalInsightsNspRuleType left, OperationalInsightsNspRuleType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RuleTypeEnum"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="OperationalInsightsNspRuleType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RuleTypeEnum left, RuleTypeEnum right) => !left.Equals(right);
+        public static bool operator !=(OperationalInsightsNspRuleType left, OperationalInsightsNspRuleType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RuleTypeEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="OperationalInsightsNspRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleTypeEnum(string value) => new RuleTypeEnum(value);
+        public static implicit operator OperationalInsightsNspRuleType(string value) => new OperationalInsightsNspRuleType(value);
 
-        /// <summary> Converts a string to a <see cref="RuleTypeEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="OperationalInsightsNspRuleType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RuleTypeEnum?(string value) => value == null ? null : new RuleTypeEnum(value);
+        public static implicit operator OperationalInsightsNspRuleType?(string value) => value == null ? null : new OperationalInsightsNspRuleType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RuleTypeEnum other && Equals(other);
+        public override bool Equals(object obj) => obj is OperationalInsightsNspRuleType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RuleTypeEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OperationalInsightsNspRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

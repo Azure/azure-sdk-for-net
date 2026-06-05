@@ -13,17 +13,17 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The status of operation. </summary>
-    public partial class OperationStatus
+    public partial class OperationalInsightsOperationStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
-        internal OperationStatus()
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsOperationStatus"/>. </summary>
+        internal OperationalInsightsOperationStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsOperationStatus"/>. </summary>
         /// <param name="id"> The operation Id. </param>
         /// <param name="name"> The operation name. </param>
         /// <param name="startTime"> The start time of the operation. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="status"> The status of the operation. </param>
         /// <param name="errorResponse"> The error detail of the operation if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationStatus(string id, string name, string startTime, string endTime, string status, ErrorResponse errorResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsOperationStatus(string id, string name, string startTime, string endTime, string status, ErrorResponse errorResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

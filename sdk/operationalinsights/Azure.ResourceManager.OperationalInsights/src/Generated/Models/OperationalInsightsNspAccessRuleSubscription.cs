@@ -12,21 +12,21 @@ using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> The AccessRulePropertiesSubscription. </summary>
-    public partial class AccessRulePropertiesSubscription
+    /// <summary> The OperationalInsightsNspAccessRuleSubscription. </summary>
+    public partial class OperationalInsightsNspAccessRuleSubscription
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AccessRulePropertiesSubscription"/>. </summary>
-        internal AccessRulePropertiesSubscription()
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspAccessRuleSubscription"/>. </summary>
+        internal OperationalInsightsNspAccessRuleSubscription()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessRulePropertiesSubscription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspAccessRuleSubscription"/>. </summary>
         /// <param name="id"> The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000'). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccessRulePropertiesSubscription(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsNspAccessRuleSubscription(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

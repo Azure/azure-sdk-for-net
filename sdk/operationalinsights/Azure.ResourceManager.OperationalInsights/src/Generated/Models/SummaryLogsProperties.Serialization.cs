@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            RuleTypeEnum? ruleType = default;
+            OperationalInsightsNspRuleType? ruleType = default;
             string displayName = default;
             string description = default;
             bool? isActive = default;
-            StatusCodeEnum? statusCode = default;
-            ProvisioningStateEnum? provisioningState = default;
+            OperationalInsightsNspStatusCode? statusCode = default;
+            OperationalInsightsNspProvisioningState? provisioningState = default;
             OperationalInsightsSummaryRule ruleDefinition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    ruleType = new RuleTypeEnum(prop.Value.GetString());
+                    ruleType = new OperationalInsightsNspRuleType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    statusCode = new StatusCodeEnum(prop.Value.GetString());
+                    statusCode = new OperationalInsightsNspStatusCode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningStateEnum(prop.Value.GetString());
+                    provisioningState = new OperationalInsightsNspProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ruleDefinition"u8))

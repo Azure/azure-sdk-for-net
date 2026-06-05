@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="provisioningState"> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </param>
         /// <param name="ruleDefinition"> Rule definition parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SummaryLogsProperties(RuleTypeEnum? ruleType, string displayName, string description, bool? isActive, StatusCodeEnum? statusCode, ProvisioningStateEnum? provisioningState, OperationalInsightsSummaryRule ruleDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SummaryLogsProperties(OperationalInsightsNspRuleType? ruleType, string displayName, string description, bool? isActive, OperationalInsightsNspStatusCode? statusCode, OperationalInsightsNspProvisioningState? provisioningState, OperationalInsightsSummaryRule ruleDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleType = ruleType;
             DisplayName = displayName;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> SummaryRules rule type: User. </summary>
         [WirePath("ruleType")]
-        public RuleTypeEnum? RuleType { get; set; }
+        public OperationalInsightsNspRuleType? RuleType { get; set; }
 
         /// <summary> The display name of the Summary rule. </summary>
         [WirePath("displayName")]
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Indicates the reason for rule deactivation. </summary>
         [WirePath("statusCode")]
-        public StatusCodeEnum? StatusCode { get; }
+        public OperationalInsightsNspStatusCode? StatusCode { get; }
 
         /// <summary> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </summary>
         [WirePath("provisioningState")]
-        public ProvisioningStateEnum? ProvisioningState { get; }
+        public OperationalInsightsNspProvisioningState? ProvisioningState { get; }
 
         /// <summary> Rule definition parameters. </summary>
         [WirePath("ruleDefinition")]

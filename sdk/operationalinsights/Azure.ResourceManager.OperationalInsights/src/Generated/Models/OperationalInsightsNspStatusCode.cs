@@ -12,7 +12,7 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Indicates the reason for rule deactivation. </summary>
-    public readonly partial struct StatusCodeEnum : IEquatable<StatusCodeEnum>
+    public readonly partial struct OperationalInsightsNspStatusCode : IEquatable<OperationalInsightsNspStatusCode>
     {
         private readonly string _value;
         /// <summary> Summary rule stop originated from a user action (Stop was called). </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Summary rule stop was caused due to data plane related error. </summary>
         private const string DataPlaneErrorValue = "DataPlaneError";
 
-        /// <summary> Initializes a new instance of <see cref="StatusCodeEnum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspStatusCode"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public StatusCodeEnum(string value)
+        public OperationalInsightsNspStatusCode(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Summary rule stop originated from a user action (Stop was called). </summary>
-        public static StatusCodeEnum UserAction { get; } = new StatusCodeEnum(UserActionValue);
+        public static OperationalInsightsNspStatusCode UserAction { get; } = new OperationalInsightsNspStatusCode(UserActionValue);
 
         /// <summary> Summary rule stop was caused due to data plane related error. </summary>
-        public static StatusCodeEnum DataPlaneError { get; } = new StatusCodeEnum(DataPlaneErrorValue);
+        public static OperationalInsightsNspStatusCode DataPlaneError { get; } = new OperationalInsightsNspStatusCode(DataPlaneErrorValue);
 
-        /// <summary> Determines if two <see cref="StatusCodeEnum"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="OperationalInsightsNspStatusCode"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(StatusCodeEnum left, StatusCodeEnum right) => left.Equals(right);
+        public static bool operator ==(OperationalInsightsNspStatusCode left, OperationalInsightsNspStatusCode right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="StatusCodeEnum"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="OperationalInsightsNspStatusCode"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(StatusCodeEnum left, StatusCodeEnum right) => !left.Equals(right);
+        public static bool operator !=(OperationalInsightsNspStatusCode left, OperationalInsightsNspStatusCode right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="StatusCodeEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="OperationalInsightsNspStatusCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StatusCodeEnum(string value) => new StatusCodeEnum(value);
+        public static implicit operator OperationalInsightsNspStatusCode(string value) => new OperationalInsightsNspStatusCode(value);
 
-        /// <summary> Converts a string to a <see cref="StatusCodeEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="OperationalInsightsNspStatusCode"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator StatusCodeEnum?(string value) => value == null ? null : new StatusCodeEnum(value);
+        public static implicit operator OperationalInsightsNspStatusCode?(string value) => value == null ? null : new OperationalInsightsNspStatusCode(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is StatusCodeEnum other && Equals(other);
+        public override bool Equals(object obj) => obj is OperationalInsightsNspStatusCode other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(StatusCodeEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OperationalInsightsNspStatusCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -12,7 +12,7 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </summary>
-    public readonly partial struct ProvisioningStateEnum : IEquatable<ProvisioningStateEnum>
+    public readonly partial struct OperationalInsightsNspProvisioningState : IEquatable<OperationalInsightsNspProvisioningState>
     {
         private readonly string _value;
         /// <summary> Table schema is still being built and updated, table is currently locked for any changes till the procedure is done. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Table state is canceled. </summary>
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningStateEnum"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProvisioningStateEnum(string value)
+        public OperationalInsightsNspProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Table schema is still being built and updated, table is currently locked for any changes till the procedure is done. </summary>
-        public static ProvisioningStateEnum Updating { get; } = new ProvisioningStateEnum(UpdatingValue);
+        public static OperationalInsightsNspProvisioningState Updating { get; } = new OperationalInsightsNspProvisioningState(UpdatingValue);
 
         /// <summary> Table state is stable and without changes, table is unlocked and open for new updates. </summary>
-        public static ProvisioningStateEnum Succeeded { get; } = new ProvisioningStateEnum(SucceededValue);
+        public static OperationalInsightsNspProvisioningState Succeeded { get; } = new OperationalInsightsNspProvisioningState(SucceededValue);
 
         /// <summary> Table state is deleting. </summary>
-        public static ProvisioningStateEnum Deleting { get; } = new ProvisioningStateEnum(DeletingValue);
+        public static OperationalInsightsNspProvisioningState Deleting { get; } = new OperationalInsightsNspProvisioningState(DeletingValue);
 
         /// <summary> Table state is failed. </summary>
-        public static ProvisioningStateEnum Failed { get; } = new ProvisioningStateEnum(FailedValue);
+        public static OperationalInsightsNspProvisioningState Failed { get; } = new OperationalInsightsNspProvisioningState(FailedValue);
 
         /// <summary> Table state is canceled. </summary>
-        public static ProvisioningStateEnum Canceled { get; } = new ProvisioningStateEnum(CanceledValue);
+        public static OperationalInsightsNspProvisioningState Canceled { get; } = new OperationalInsightsNspProvisioningState(CanceledValue);
 
-        /// <summary> Determines if two <see cref="ProvisioningStateEnum"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="OperationalInsightsNspProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProvisioningStateEnum left, ProvisioningStateEnum right) => left.Equals(right);
+        public static bool operator ==(OperationalInsightsNspProvisioningState left, OperationalInsightsNspProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProvisioningStateEnum"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="OperationalInsightsNspProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProvisioningStateEnum left, ProvisioningStateEnum right) => !left.Equals(right);
+        public static bool operator !=(OperationalInsightsNspProvisioningState left, OperationalInsightsNspProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningStateEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="OperationalInsightsNspProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningStateEnum(string value) => new ProvisioningStateEnum(value);
+        public static implicit operator OperationalInsightsNspProvisioningState(string value) => new OperationalInsightsNspProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningStateEnum"/>. </summary>
+        /// <summary> Converts a string to a <see cref="OperationalInsightsNspProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningStateEnum?(string value) => value == null ? null : new ProvisioningStateEnum(value);
+        public static implicit operator OperationalInsightsNspProvisioningState?(string value) => value == null ? null : new OperationalInsightsNspProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProvisioningStateEnum other && Equals(other);
+        public override bool Equals(object obj) => obj is OperationalInsightsNspProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProvisioningStateEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OperationalInsightsNspProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
