@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace Azure.AI.Projects.Tests.Samples;
 #pragma warning disable AAIP001
 
-public class Sample_RoutinesCRUD : SamplesBase
+public class Sample_RoutinesCRUD : SamplesRoutineBase
 {
     #region Snippet:Sample_HostedAgentDefinition_RoutinesCRUD
     private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
@@ -37,13 +37,16 @@ public class Sample_RoutinesCRUD : SamplesBase
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
+        string routineName = "sample-routine";
+        string agentName = "myHostedForRoutines";
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
+        string routineName = SAMPLE_ROUTINE_NAME_PREFIX;
+        string agentName = SAMPLE_AGEN_PREFIX;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AIProjectRoutines routinesClient = projectClient.Routines;
-        string routineName = "sample-routine";
         #endregion
         #region Snippet:Sample_CreateHostedAgent_RoutinesCRUD_Async
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
@@ -52,7 +55,7 @@ public class Sample_RoutinesCRUD : SamplesBase
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName: "myHostedForRoutines",
+            agentName: agentName,
             options: creationOptions);
         #endregion
         // Clean up any pre-existing routine with the same name.
@@ -123,14 +126,16 @@ public class Sample_RoutinesCRUD : SamplesBase
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
+        string routineName = "sample-routine";
+        string agentName = "myHostedForRoutines";
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
+        string routineName = SAMPLE_ROUTINE_NAME_PREFIX;
+        string agentName = SAMPLE_AGEN_PREFIX;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AIProjectRoutines routinesClient = projectClient.Routines;
-        string routineName = "sample-routine";
-
         // Clean up any pre-existing routine with the same name.
         try { routinesClient.DeleteRoutine(routineName); } catch { }
         #region Snippet:Sample_CreateHostedAgent_RoutinesCRUD_Sync
@@ -140,7 +145,7 @@ public class Sample_RoutinesCRUD : SamplesBase
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-            agentName: "myHostedForRoutines",
+            agentName: agentName,
             options: creationOptions);
         #endregion
         #region Snippet:Sample_CreateRoutine_RoutinesCRUD_Sync

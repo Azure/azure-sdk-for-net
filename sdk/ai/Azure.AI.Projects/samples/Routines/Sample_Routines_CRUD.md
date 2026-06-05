@@ -54,11 +54,10 @@ docker push <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
 ```C# Snippet:Sample_CreateClient_RoutinesCRUD
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
-AIProjectClientOptions options = new();
-options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
-AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-AIProjectRoutines routinesClient = projectClient.Routines;
 string routineName = "sample-routine";
+string agentName = "myHostedForRoutines";
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
+AIProjectRoutines routinesClient = projectClient.Routines;
 ```
 
 2. For brevity we will create the method, returning the `HostedAgentDefinition` object.
@@ -88,7 +87,7 @@ HostedAgentDefinition agentDefinition = GetAgentDefinition(
 ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
 creationOptions.Metadata["enableVnextExperience"] = "true";
 ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-    agentName: "myHostedForRoutines",
+    agentName: agentName,
     options: creationOptions);
 ```
 
@@ -100,7 +99,7 @@ HostedAgentDefinition agentDefinition = GetAgentDefinition(
 ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
 creationOptions.Metadata["enableVnextExperience"] = "true";
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
-    agentName: "myHostedForRoutines",
+    agentName: agentName,
     options: creationOptions);
 ```
 

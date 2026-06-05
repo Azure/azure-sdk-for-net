@@ -13,9 +13,9 @@ using NUnit.Framework;
 namespace Azure.AI.Projects.Tests.Samples;
 #pragma warning disable AAIP001
 
-public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
+public class Sample_RoutinesTimerTrigger : SamplesRoutineBase
 {
-    #region Snippet:Sample_HostedAgentDefinition_RoutinesScheduleTrigger
+    #region Snippet:Sample_HostedAgentDefinition_RoutinesTimerTrigger
     private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
     {
         HostedAgentDefinition agentDefinition = new(
@@ -32,9 +32,9 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
 
     [Test]
     [AsyncOnly]
-    public async Task RoutinesScheduleTriggerAsync()
+    public async Task RoutinesTimerTriggerAsync()
     {
-        #region Snippet:Sample_CreateClient_RoutinesScheduleTrigger
+        #region Snippet:Sample_CreateClient_RoutinesTimerTrigger
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
@@ -49,7 +49,7 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AIProjectRoutines routinesClient = projectClient.Routines;
         #endregion
-        #region Snippet:Sample_CreateHostedAgent_RoutinesScheduleTrigger_Async
+        #region Snippet:Sample_CreateHostedAgent_RoutinesTimerTrigger_Async
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage
         );
@@ -63,13 +63,13 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         try
         { await routinesClient.DeleteRoutineAsync(routineName); } catch { }
 
-        #region Snippet:Sample_CreateRoutine_RoutinesScheduleTrigger_Async
+        #region Snippet:Sample_CreateRoutine_RoutinesTimerTrigger_Async
         IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
         {
-            ["every_five_minutes"] = new ScheduleRoutineTrigger(
-                cronExpression: "*/5 * * * *",
-                timeZone: "UTC"
-            )
+            ["once"] = new TimerRoutineTrigger()
+            {
+                At = DateTime.Now + new TimeSpan(hours: 0, minutes: 0, seconds: 20),
+            },
         };
 
         RoutineAction action = new InvokeAgentResponsesApiRoutineAction
@@ -82,13 +82,13 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
             routineName: routineName,
             triggers: triggers,
             action: action,
-            description: "Routine used by the schedule-trigger sample.",
+            description: "Routine used by the timer-trigger sample.",
             enabled: true);
         Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
-        Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)triggers["every_five_minutes"]).TimeZone}");
+        Console.WriteLine($"Fire at: {((TimerRoutineTrigger)triggers["once"]).At.Value.ToString("o")}");
         #endregion
 
-        #region Snippet:Sample_WaitForTask_RoutinesScheduleTrigger_Async
+        #region Snippet:Sample_WaitForTask_RoutinesTimerTrigger_Async
         int minutesWait = 10;
         Console.WriteLine($"Waiting for run for {minutesWait} minutes...");
         DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: 10, seconds: 0);
@@ -125,14 +125,14 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         }
         #endregion
 
-        #region Snippet:Sample_PrintOutput_RoutinesScheduleTrigger_Async
+        #region Snippet:Sample_PrintOutput_RoutinesTimerTrigger_Async
         Console.WriteLine($"The response Id is {completedRun.ResponseId}");
         // Note: retrieving the response body produced by a routine-dispatched
         // run via `projectClient.GetProjectOpenAIClient().GetProjectResponsesClient().GetResponseAsync(completedRun.responseId)` is
         // not yet supported by the service for this scenario.
         #endregion
 
-        #region Snippet:Sample_DeleteRoutine_RoutinesScheduleTrigger_Async
+        #region Snippet:Sample_DeleteRoutine_RoutinesTimerTrigger_Async
         await routinesClient.DeleteRoutineAsync(routineName);
         Console.WriteLine("Routine deleted");
         await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
@@ -141,7 +141,7 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
 
     [Test]
     [SyncOnly]
-    public void RoutinesScheduleTriggerSync()
+    public void RoutinesTimerTriggerSync()
     {
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -156,7 +156,7 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AIProjectRoutines routinesClient = projectClient.Routines;
-        #region Snippet:Sample_CreateHostedAgent_RoutinesScheduleTrigger_Sync
+        #region Snippet:Sample_CreateHostedAgent_RoutinesTimerTrigger_Sync
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage
         );
@@ -171,13 +171,13 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         { routinesClient.DeleteRoutine(routineName); }
         catch { }
 
-        #region Snippet:Sample_CreateRoutine_RoutinesScheduleTrigger_Sync
+        #region Snippet:Sample_CreateRoutine_RoutinesTimerTrigger_Sync
         IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
         {
-            ["every_five_minutes"] = new ScheduleRoutineTrigger(
-                cronExpression: "*/5 * * * *",
-                timeZone: "UTC"
-            )
+            ["once"] = new TimerRoutineTrigger()
+            {
+                At = DateTime.Now + new TimeSpan(hours: 0, minutes: 0, seconds: 20),
+            },
         };
 
         RoutineAction action = new InvokeAgentResponsesApiRoutineAction
@@ -190,13 +190,13 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
             routineName: routineName,
             triggers: triggers,
             action: action,
-            description: "Routine used by the schedule-trigger sample.",
+            description: "Routine used by the timer-trigger sample.",
             enabled: true);
         Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
-        Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)triggers["every_five_minutes"]).TimeZone}");
+        Console.WriteLine($"Fire at: {((TimerRoutineTrigger)triggers["once"]).At.Value.ToString("o")}");
         #endregion
 
-        #region Snippet:Sample_WaitForTask_RoutinesScheduleTrigger_Sync
+        #region Snippet:Sample_WaitForTask_RoutinesTimerTrigger_Sync
         int minutesWait = 10;
         Console.WriteLine($"Waiting for run for {minutesWait} minutes...");
         DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: 10, seconds: 0);
@@ -233,20 +233,20 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         }
         #endregion
 
-        #region Snippet:Sample_PrintOutput_RoutinesScheduleTrigger_Sync
+        #region Snippet:Sample_PrintOutput_RoutinesTimerTrigger_Sync
         Console.WriteLine($"The response Id is {completedRun.ResponseId}");
         // Note: retrieving the response body produced by a routine-dispatched
         // run via `projectClient.GetProjectOpenAIClient().GetProjectResponsesClient().GetResponseAsync(completedRun.responseId)` is
         // not yet supported by the service for this scenario.
         #endregion
 
-        #region Snippet:Sample_DeleteRoutine_RoutinesScheduleTrigger_Sync
+        #region Snippet:Sample_DeleteRoutine_RoutinesTimerTrigger_Sync
         routinesClient.DeleteRoutine(routineName);
         Console.WriteLine("Routine deleted");
         projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         #endregion
     }
 
-    public Sample_RoutinesScheduleTrigger(bool isAsync) : base(isAsync)
+    public Sample_RoutinesTimerTrigger(bool isAsync) : base(isAsync)
     { }
 }

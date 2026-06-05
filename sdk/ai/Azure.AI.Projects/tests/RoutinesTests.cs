@@ -136,6 +136,91 @@ public class RoutinesTests : ProjectsClientTestBase
         Assert.That(backwards[1].Name, Is.EqualTo(records[records.Count - 3].Name));
     }
 
+    //[TestCase(true)]
+    [TestCase(false)]
+    public async Task TestRoutineE2E(bool isScheduledTask)
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        ProjectsAgentVersion agentVersion = await GetHostedAgent(projectClient);
+        RoutineTrigger trigger;
+        if (isScheduledTask)
+        {
+            trigger = new ScheduleRoutineTrigger(
+                cronExpression: "*/5 * * * *",
+                timeZone: "UTC"
+            );
+        }
+        else
+        {
+            trigger = new TimerRoutineTrigger()
+            {
+                At = DateTime.Now + new TimeSpan(hours: 0, minutes: 0, seconds: 20),
+            };
+        }
+        IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
+        {
+            ["test"] = trigger
+        };
+        RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+        {
+            AgentName = agentVersion.Name,
+            Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
+        };
+        string routineName = $"{ROUTINE_NAME_PREFIX}-0";
+        ProjectsRoutine created = await projectClient.Routines.CreateOrUpdateRoutineAsync(
+            routineName: routineName,
+            triggers: triggers,
+            action: action,
+            description: "Routine created by unit test.",
+            enabled: true);
+        Console.WriteLine("===========Routine=================");
+        Console.WriteLine($"CreatedAt: {toMillis(created.CreatedAt)})");
+        Console.WriteLine($"UpdatedAt: {toMillis(created.UpdatedAt)})");
+        Console.WriteLine("============================");
+        int minutesWait = 10;
+        DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: 10, seconds: 0);
+        RoutineRun completedRun = null;
+        while (DateTime.UtcNow < deadline)
+        {
+            await Delay(60000);
+            await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
+            {
+                Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
+                if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
+                    string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
+                    string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    completedRun = run;
+                }
+            }
+            if (completedRun is not null)
+            {
+                break;
+            }
+        }
+        Assert.That(completedRun, Is.Not.Null, $"The run did not completed within {minutesWait} minutes.");
+        Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("killed"), "The run was forcefully stopped.");
+        Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("failed"), $"The run has failed with the error. Type: {completedRun.ErrorType} Message: {completedRun.ErrorMessage}.");
+        Assert.That(completedRun.Status.ToLower(), Is.EqualTo("finished"));
+        Assert.That(completedRun.ResponseId, Is.Not.Null);
+        //
+        Console.WriteLine("===========Run=================");
+        Console.WriteLine($"triggeredAt: {toMillis(completedRun.TriggeredAt)})");
+        Console.WriteLine($"scheduledFireAt: {toMillis(completedRun.ScheduledFireAt)})");
+        Console.WriteLine($"startedAt: {toMillis(completedRun.StartedAt)})");
+        Console.WriteLine($"endedAt: {toMillis(completedRun.EndedAt)})");
+        Console.WriteLine("============================");
+        //
+    }
+
+    private static long toMillis(DateTimeOffset? date)
+    {
+        long? millis = date?.ToUnixTimeSeconds();
+        Assert.That(millis.HasValue, Is.True);
+        //Assert.That(DateTimeOffset.FromUnixTimeSeconds(millis ?? 0), Is.EqualTo(date));
+        return millis.Value;
+    }
+
     #region Helpers
     public async Task<ProjectsAgentVersion> GetHostedAgent(AIProjectClient projectClient, string suffix="1")
     {
@@ -174,7 +259,7 @@ public class RoutinesTests : ProjectsClientTestBase
         {
             try
             {
-                projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent);
+                projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent, force: true);
             }
             catch { }
         }
