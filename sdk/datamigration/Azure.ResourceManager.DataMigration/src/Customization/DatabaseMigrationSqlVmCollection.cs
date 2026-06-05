@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
+        // This supports customization pattern for scope for GA compat, but should be obsoleted in the future.
         private DatabaseMigrationSqlVmCollection GetCompatCollection(string sqlVirtualMachineName)
             => Id.ResourceType == "Microsoft.SqlVirtualMachine/sqlVirtualMachines" ? this : new DatabaseMigrationSqlVmCollection(Client, new ResourceIdentifier($"/subscriptions/{Id.SubscriptionId}/resourceGroups/{Id.ResourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}"));
 

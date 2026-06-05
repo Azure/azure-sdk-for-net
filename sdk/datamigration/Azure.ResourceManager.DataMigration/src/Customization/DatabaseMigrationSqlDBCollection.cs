@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.DataMigration
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("ValidateResourceId")]
     public partial class DatabaseMigrationSqlDBCollection
     {
+        // This supports customization pattern for scope for GA compat, but should be obsoleted in the future.
         private DatabaseMigrationSqlDBCollection GetCompatCollection(string sqlDBInstanceName)
             => Id.ResourceType == "Microsoft.Sql/servers" ? this : new DatabaseMigrationSqlDBCollection(Client, new ResourceIdentifier($"/subscriptions/{Id.SubscriptionId}/resourceGroups/{Id.ResourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}"));
 

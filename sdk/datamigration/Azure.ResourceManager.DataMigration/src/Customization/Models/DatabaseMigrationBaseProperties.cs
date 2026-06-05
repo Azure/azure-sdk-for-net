@@ -3,9 +3,6 @@
 
 #pragma warning disable CS1591
 
-using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.ResourceManager.DataMigration.Models
 {
     // Backward-compat justification: restore the GA-era protected constructor suppressed by the new generator for ApiCompat.
