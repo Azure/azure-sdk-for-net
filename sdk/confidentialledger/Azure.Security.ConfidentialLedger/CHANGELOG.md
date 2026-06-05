@@ -5,6 +5,7 @@
 ### Bugs Fixed
 
 - Improved redirect performance for write operations by caching the latest primary node URL from redirect responses and reusing it for subsequent non-GET requests. The cache is lazily populated and refreshed whenever the service redirects to a different primary node.
+- Hardened redirect handling so credential-preserving redirects are only followed when the target remains within the configured ledger endpoint's trust boundary.
 
 ## 1.4.1-beta.4 (2026-02-27)
 
