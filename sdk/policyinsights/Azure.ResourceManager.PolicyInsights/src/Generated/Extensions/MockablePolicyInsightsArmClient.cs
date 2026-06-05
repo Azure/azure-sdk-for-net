@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockablePolicyInsightsArmClient : ArmResource
     {
-        private ClientDiagnostics _remediationsClientDiagnostics;
-        private Remediations _remediationsRestClient;
         private ClientDiagnostics _policyEventsClientDiagnostics;
         private PolicyEvents _policyEventsRestClient;
         private ClientDiagnostics _policyStatesClientDiagnostics;
@@ -45,10 +43,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         {
         }
 
-        private ClientDiagnostics RemediationsClientDiagnostics => _remediationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Remediations RemediationsRestClient => _remediationsRestClient ??= new Remediations(RemediationsClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
-
         private ClientDiagnostics PolicyEventsClientDiagnostics => _policyEventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PolicyEvents PolicyEventsRestClient => _policyEventsRestClient ??= new PolicyEvents(PolicyEventsClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
@@ -68,15 +62,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         private ClientDiagnostics PolicyTrackedResourcesClientDiagnostics => _policyTrackedResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PolicyTrackedResources PolicyTrackedResourcesRestClient => _policyTrackedResourcesRestClient ??= new PolicyTrackedResources(PolicyTrackedResourcesClientDiagnostics, Pipeline, Endpoint, "2018-07-01-preview");
-
-        /// <summary> Gets an object representing a <see cref="PolicyRemediationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyRemediationResource"/> object. </returns>
-        public virtual PolicyRemediationResource GetPolicyRemediationResource(ResourceIdentifier id)
-        {
-            PolicyRemediationResource.ValidateResourceId(id);
-            return new PolicyRemediationResource(Client, id);
-        }
 
         /// <summary> Gets a collection of <see cref="PolicyRemediationCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
@@ -157,192 +142,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         {
             PolicyMetadataResource.ValidateResourceId(id);
             return new PolicyMetadataResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets all deployments for a remediation at management group scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RemediationsOperationGroup_ListDeploymentsAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="remediationName"></param>
-        /// <param name="queryOptions"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="remediationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="RemediationDeployment"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAtManagementGroupAsync(ResourceIdentifier scope, string remediationName, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new RemediationsGetDeploymentsAtManagementGroupAsyncCollectionResultOfT(
-                RemediationsRestClient,
-                scope.Name,
-                remediationName,
-                default,
-                context,
-                "MockablePolicyInsightsArmClient.GetDeploymentsAtManagementGroup");
-        }
-
-        /// <summary>
-        /// Gets all deployments for a remediation at management group scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/listDeployments. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RemediationsOperationGroup_ListDeploymentsAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="remediationName"></param>
-        /// <param name="queryOptions"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="remediationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="RemediationDeployment"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RemediationDeployment> GetDeploymentsAtManagementGroup(ResourceIdentifier scope, string remediationName, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new RemediationsGetDeploymentsAtManagementGroupCollectionResultOfT(
-                RemediationsRestClient,
-                scope.Name,
-                remediationName,
-                default,
-                context,
-                "MockablePolicyInsightsArmClient.GetDeploymentsAtManagementGroup");
-        }
-
-        /// <summary>
-        /// Cancels a remediation at management group scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RemediationsOperationGroup_CancelAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="remediationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PolicyRemediationResource>> CancelAtManagementGroupAsync(ResourceIdentifier scope, string remediationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
-
-            using DiagnosticScope scope0 = RemediationsClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.CancelAtManagementGroup");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = RemediationsRestClient.CreateCancelAtManagementGroupRequest(scope.Name, remediationName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new PolicyRemediationResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Cancels a remediation at management group scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /providers/{managementGroupsNamespace}/managementGroups/{managementGroupId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}/cancel. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> RemediationsOperationGroup_CancelAtManagementGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="remediationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PolicyRemediationResource> CancelAtManagementGroup(ResourceIdentifier scope, string remediationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
-
-            using DiagnosticScope scope0 = RemediationsClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.CancelAtManagementGroup");
-            scope0.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = RemediationsRestClient.CreateCancelAtManagementGroupRequest(scope.Name, remediationName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new PolicyRemediationResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>

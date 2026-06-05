@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PolicyRemediationResource(ArmClient client, PolicyRemediationData data) : this(client, data.Id)
         {
-            HasData = true;
+            this.HasData = true;
             _data = data;
         }
 
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicyRemediationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string policyRemediationApiVersion);
+            this.TryGetApiVersion(ResourceType, out string policyRemediationApiVersion);
             _remediationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ResourceType.Namespace, Diagnostics);
             _remediationsRestClient = new Remediations(_remediationsClientDiagnostics, Pipeline, Endpoint, policyRemediationApiVersion ?? "2024-10-01");
-            ValidateResourceId(id);
+            PolicyRemediationResource.ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>

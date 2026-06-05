@@ -15,37 +15,40 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    internal partial class RemediationsGetDeploymentsAtManagementGroupAsyncCollectionResultOfT : AsyncPageable<RemediationDeployment>
+    internal partial class RemediationsGetForResourceGroupAsyncCollectionResultOfT : AsyncPageable<PolicyRemediationData>
     {
         private readonly Remediations _client;
-        private readonly string _managementGroupId;
-        private readonly string _remediationName;
+        private readonly string _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly int? _maxCount;
+        private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of RemediationsGetDeploymentsAtManagementGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of RemediationsGetForResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Remediations client used to send requests. </param>
-        /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="maxCount"> Maximum number of records to return. </param>
+        /// <param name="filter"> OData filter expression. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RemediationsGetDeploymentsAtManagementGroupAsyncCollectionResultOfT(Remediations client, string managementGroupId, string remediationName, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RemediationsGetForResourceGroupAsyncCollectionResultOfT(Remediations client, string subscriptionId, string resourceGroupName, int? maxCount, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _managementGroupId = managementGroupId;
-            _remediationName = remediationName;
+            _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _maxCount = maxCount;
+            _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of RemediationsGetDeploymentsAtManagementGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of RemediationsGetForResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of RemediationsGetDeploymentsAtManagementGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<RemediationDeployment>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of RemediationsGetForResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<PolicyRemediationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,8 +58,8 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     yield break;
                 }
-                RemediationDeploymentsListResult result = RemediationDeploymentsListResult.FromResponse(response);
-                yield return Page<RemediationDeployment>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                RemediationListResult result = RemediationListResult.FromResponse(response);
+                yield return Page<PolicyRemediationData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDeploymentsAtManagementGroupRequest(nextLink, _managementGroupId, _remediationName, _maxCount, _context) : _client.CreateGetDeploymentsAtManagementGroupRequest(_managementGroupId, _remediationName, _maxCount, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetForResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _maxCount, _filter, _context) : _client.CreateGetForResourceGroupRequest(_subscriptionId, _resourceGroupName, _maxCount, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

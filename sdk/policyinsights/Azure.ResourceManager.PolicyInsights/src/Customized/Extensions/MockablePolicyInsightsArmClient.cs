@@ -14,17 +14,23 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PolicyInsights;
 using Azure.ResourceManager.PolicyInsights.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
-    // PolicyAttestation/PolicyRemediation used multiple templates in typespec for different path/scope but same resource.
-    // The Get*Resource methods are duplicated when generateing.
-    // Also adds GA back-compat aliases for cross-scope query/summarize ops that
-    // the new emitter would collide if renamed via spec @@clientName.
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetPolicyAttestationResource", typeof(ResourceIdentifier))]
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetPolicyRemediationResource")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetPolicyAttestationResource")]
     public partial class MockablePolicyInsightsArmClient : ArmResource
     {
+        /// <summary> Gets an object representing a <see cref="PolicyRemediationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PolicyRemediationResource"/> object. </returns>
+        public virtual PolicyRemediationResource GetPolicyRemediationResource(ResourceIdentifier id)
+        {
+            PolicyRemediationResource.ValidateResourceId(id);
+            return new PolicyRemediationResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="PolicyAttestationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="PolicyAttestationResource"/> object. </returns>
@@ -33,37 +39,5 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             PolicyAttestationResource.ValidateResourceId(id);
             return new PolicyAttestationResource(Client, id);
         }
-
-        /// <summary> Queries policy events at the specified scope. </summary>
-        public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-            => GetQueryResultsForResourceAsync(scope, policyEventType, policyQuerySettings, cancellationToken);
-
-        /// <summary> Queries policy events at the specified scope. </summary>
-        public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-            => GetQueryResultsForResource(scope, policyEventType, policyQuerySettings, cancellationToken);
-
-        /// <summary> Queries policy states at the specified scope. </summary>
-        public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-            => GetQueryResultsForResourceAsync(scope, policyStateType, policyQuerySettings, cancellationToken);
-
-        /// <summary> Queries policy states at the specified scope. </summary>
-        public virtual Pageable<PolicyState> GetPolicyStateQueryResults(ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-            => GetQueryResultsForResource(scope, policyStateType, policyQuerySettings, cancellationToken);
-
-        /// <summary> Queries policy tracked resources at the specified scope. </summary>
-        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-            => GetQueryResultsForResourceAsync(scope, policyTrackedResourceType, policyQuerySettings, cancellationToken);
-
-        /// <summary> Queries policy tracked resources at the specified scope. </summary>
-        public virtual Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-            => GetQueryResultsForResource(scope, policyTrackedResourceType, policyQuerySettings, cancellationToken);
-
-        /// <summary> Summarizes policy states at the specified scope. </summary>
-        public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-            => CompatHelpers.AsAsyncPageableAsync(ct => SummarizeForResourceAsync(scope, policyStateSummaryType, policyQuerySettings, ct), cancellationToken);
-
-        /// <summary> Summarizes policy states at the specified scope. </summary>
-        public virtual Pageable<PolicySummary> SummarizePolicyStates(ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-            => CompatHelpers.AsPageable(ct => SummarizeForResource(scope, policyStateSummaryType, policyQuerySettings, ct), cancellationToken);
     }
 }

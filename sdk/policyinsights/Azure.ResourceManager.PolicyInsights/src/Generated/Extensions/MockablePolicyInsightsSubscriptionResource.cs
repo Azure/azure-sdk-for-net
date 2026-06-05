@@ -64,6 +64,71 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
         private PolicyTrackedResources PolicyTrackedResourcesRestClient => _policyTrackedResourcesRestClient ??= new PolicyTrackedResources(PolicyTrackedResourcesClientDiagnostics, Pipeline, Endpoint, "2018-07-01-preview");
 
+        /// <summary> Gets a collection of PolicyRemediations in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of PolicyRemediations and their operations over a PolicyRemediationResource. </returns>
+        public virtual PolicyRemediationCollection GetPolicyRemediations()
+        {
+            return this.GetCachedClient(client => new PolicyRemediationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets an existing remediation at subscription scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Remediations_GetAtSubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="remediationName"> The name of the remediation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PolicyRemediationResource>> GetPolicyRemediationAsync(string remediationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
+
+            return await GetPolicyRemediations().GetAsync(remediationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an existing remediation at subscription scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Remediations_GetAtSubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="remediationName"> The name of the remediation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PolicyRemediationResource> GetPolicyRemediation(string remediationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
+
+            return GetPolicyRemediations().Get(remediationName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of PolicyAttestations in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of PolicyAttestations and their operations over a PolicyAttestationResource. </returns>
         public virtual PolicyAttestationCollection GetPolicyAttestations()

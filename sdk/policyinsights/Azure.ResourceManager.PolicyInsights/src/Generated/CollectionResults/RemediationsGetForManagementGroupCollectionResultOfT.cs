@@ -14,37 +14,37 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    internal partial class RemediationsGetDeploymentsAtManagementGroupCollectionResultOfT : Pageable<RemediationDeployment>
+    internal partial class RemediationsGetForManagementGroupCollectionResultOfT : Pageable<PolicyRemediationData>
     {
         private readonly Remediations _client;
         private readonly string _managementGroupId;
-        private readonly string _remediationName;
         private readonly int? _maxCount;
+        private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of RemediationsGetDeploymentsAtManagementGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of RemediationsGetForManagementGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Remediations client used to send requests. </param>
         /// <param name="managementGroupId"> The management group ID. </param>
-        /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="maxCount"> Maximum number of records to return. </param>
+        /// <param name="filter"> OData filter expression. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RemediationsGetDeploymentsAtManagementGroupCollectionResultOfT(Remediations client, string managementGroupId, string remediationName, int? maxCount, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RemediationsGetForManagementGroupCollectionResultOfT(Remediations client, string managementGroupId, int? maxCount, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _managementGroupId = managementGroupId;
-            _remediationName = remediationName;
             _maxCount = maxCount;
+            _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of RemediationsGetDeploymentsAtManagementGroupCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of RemediationsGetForManagementGroupCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of RemediationsGetDeploymentsAtManagementGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<RemediationDeployment>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of RemediationsGetForManagementGroupCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<PolicyRemediationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.PolicyInsights
                 {
                     yield break;
                 }
-                RemediationDeploymentsListResult result = RemediationDeploymentsListResult.FromResponse(response);
-                yield return Page<RemediationDeployment>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                RemediationListResult result = RemediationListResult.FromResponse(response);
+                yield return Page<PolicyRemediationData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDeploymentsAtManagementGroupRequest(nextLink, _managementGroupId, _remediationName, _maxCount, _context) : _client.CreateGetDeploymentsAtManagementGroupRequest(_managementGroupId, _remediationName, _maxCount, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetForManagementGroupRequest(nextLink, _managementGroupId, _maxCount, _filter, _context) : _client.CreateGetForManagementGroupRequest(_managementGroupId, _maxCount, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
