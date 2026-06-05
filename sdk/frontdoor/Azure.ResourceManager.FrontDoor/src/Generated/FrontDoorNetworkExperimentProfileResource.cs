@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.FrontDoor
                 HttpMessage message = _networkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FrontDoorNetworkExperimentProfilePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource> operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(
-                    new FrontDoorNetworkExperimentProfileOperationSource(Client),
+                    new FrontDoorNetworkExperimentProfileResourceOperationSource(Client),
                     _networkExperimentProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.FrontDoor
                 HttpMessage message = _networkExperimentProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FrontDoorNetworkExperimentProfilePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource> operation = new FrontDoorArmOperation<FrontDoorNetworkExperimentProfileResource>(
-                    new FrontDoorNetworkExperimentProfileOperationSource(Client),
+                    new FrontDoorNetworkExperimentProfileResourceOperationSource(Client),
                     _networkExperimentProfilesClientDiagnostics,
                     Pipeline,
                     message.Request,

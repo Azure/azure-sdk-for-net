@@ -714,8 +714,8 @@ namespace Azure.Storage.Files.DataLake
         internal static PathSystemProperties ToPathSystemProperties(this Response response)
             => new PathSystemProperties
             {
-                CreationTime = response.Headers.TryGetValue(CreationTimeHeader, out DateTimeOffset? creationTime) ? creationTime : null,
-                LastModifiedTime = response.Headers.TryGetValue(LastModifiedHeader, out DateTimeOffset? lastModifiedTime) ? lastModifiedTime : null,
+                CreatedOn = response.Headers.TryGetValue(CreationTimeHeader, out DateTimeOffset? creationTime) ? creationTime : null,
+                LastModifiedOn = response.Headers.TryGetValue(LastModifiedHeader, out DateTimeOffset? lastModifiedTime) ? lastModifiedTime : null,
                 ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string etag) ? new ETag(etag) : default,
                 ContentLength = response.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out long? contentLength) ? contentLength : null,
                 IsDirectory = response.Headers.TryGetValue(ResourceTypeHeader, out string resourceType) && resourceType == Constants.DataLake.DirectoryResourceType,

@@ -23,9 +23,11 @@ public partial class DeclarativeAgentDefinition
     [CodeGenMember("Tools")]
     public IList<global::OpenAI.Responses.ResponseTool> Tools { get; }
 
+    /// <summary> Reasoning options controlling how the model produces its chain-of-thought response. </summary>
     [CodeGenMember("Reasoning")]
     public global::OpenAI.Responses.ResponseReasoningOptions ReasoningOptions { get; set; }
 
+    /// <summary> Configuration options for a text response from the model. Can be plain text or structured JSON data. </summary>
     [CodeGenMember("Text")]
     public global::OpenAI.Responses.ResponseTextOptions TextOptions { get; set; }
 

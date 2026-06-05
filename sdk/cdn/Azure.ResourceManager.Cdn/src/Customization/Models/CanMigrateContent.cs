@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class CanMigrateContent
     {
         // Backward compatibility: old API used ctor(WritableSubResource)
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public CanMigrateContent(WritableSubResource classicResourceReference) : this()
         {

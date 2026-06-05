@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricApplicationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricArmOperation<ServiceFabricApplicationResource> operation = new ServiceFabricArmOperation<ServiceFabricApplicationResource>(
-                    new ServiceFabricApplicationOperationSource(Client),
+                    new ServiceFabricApplicationResourceOperationSource(Client),
                     _applicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricApplicationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricArmOperation<ServiceFabricApplicationResource> operation = new ServiceFabricArmOperation<ServiceFabricApplicationResource>(
-                    new ServiceFabricApplicationOperationSource(Client),
+                    new ServiceFabricApplicationResourceOperationSource(Client),
                     _applicationsClientDiagnostics,
                     Pipeline,
                     message.Request,

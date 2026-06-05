@@ -16,13 +16,11 @@
 #
 # To remove a project from this list, see the workflow in eng/analyzerallowlist/README.md.
 Azure.AI.Agents.Persistent
-Azure.AI.AgentServer.Core
 Azure.AI.AgentServer.Invocations
 Azure.AI.AgentServer.Responses
 Azure.AI.AnomalyDetector
 Azure.AI.ContentSafety
 Azure.AI.DocumentIntelligence
-Azure.AI.Extensions.OpenAI
 Azure.AI.FormRecognizer
 Azure.AI.Inference
 Azure.AI.Language.Conversations
@@ -35,8 +33,6 @@ Azure.AI.Language.Text.Authoring
 Azure.AI.OpenAI
 Azure.AI.OpenAI.Assistants
 Azure.AI.Personalizer
-Azure.AI.Projects
-Azure.AI.Projects.Agents
 Azure.AI.Speech.Transcription
 Azure.AI.TextAnalytics
 Azure.AI.TextAnalytics.Legacy
@@ -61,7 +57,6 @@ Azure.Communication.Messages
 Azure.Communication.ShortCodes
 Azure.Compute.Batch
 Azure.Containers.ContainerRegistry
-Azure.Core
 Azure.Core.Experimental
 Azure.Data.AppConfiguration
 Azure.Developer.DevCenter
@@ -143,7 +138,6 @@ Azure.Provisioning.WebPubSub
 Azure.ResourceManager
 Azure.ResourceManager.AppService
 Azure.ResourceManager.Batch
-Azure.ResourceManager.Cdn
 Azure.ResourceManager.Chaos
 Azure.ResourceManager.Compute
 Azure.ResourceManager.ContainerRegistry
@@ -162,7 +156,6 @@ Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
 Azure.ResourceManager.MachineLearning
 Azure.ResourceManager.Network
 Azure.ResourceManager.RecoveryServicesBackup
-Azure.ResourceManager.Storage
 Azure.Search.Documents
 Azure.Security.Attestation
 Azure.Security.CodeTransparency

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
                 HttpMessage message = _enclaveEndpointsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, enclaveEndpointName, VirtualEnclaveEndpointData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VirtualEnclavesArmOperation<VirtualEnclaveEndpointResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveEndpointResource>(
-                    new VirtualEnclaveEndpointOperationSource(Client),
+                    new VirtualEnclaveEndpointResourceOperationSource(Client),
                     _enclaveEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.VirtualEnclaves
                 HttpMessage message = _enclaveEndpointsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, enclaveEndpointName, VirtualEnclaveEndpointData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VirtualEnclavesArmOperation<VirtualEnclaveEndpointResource> operation = new VirtualEnclavesArmOperation<VirtualEnclaveEndpointResource>(
-                    new VirtualEnclaveEndpointOperationSource(Client),
+                    new VirtualEnclaveEndpointResourceOperationSource(Client),
                     _enclaveEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,

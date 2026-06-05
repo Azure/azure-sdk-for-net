@@ -160,19 +160,52 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
+            // If the request URI authority has changed since this policy last authorized this
+            // message, treat the message as having been redirected to a different host. Strip
+            // any Authorization header that an earlier authorization may have left in place,
+            // and skip both re-authorization and the WWW-Authenticate (CAE) 401 handler so
+            // that no bearer token issued for the original host is sent to — or fetched in
+            // response to a challenge from — a different host.
+            var authoritySuppressed = false;
+            var currentAuthority = GetRequestAuthority(message.Request);
+
+            if (message.TryGetProperty(typeof(AuthorizedRequestAuthorityKey), out var prior)
+                && prior is string priorAuthority
+                && !string.Equals(priorAuthority, currentAuthority, StringComparison.OrdinalIgnoreCase))
+            {
+                message.Request.Headers.Remove(HttpHeader.Names.Authorization);
+                authoritySuppressed = true;
+            }
+
+            if (!authoritySuppressed)
+            {
+                if (async)
+                {
+                    await AuthorizeRequestAsync(message).ConfigureAwait(false);
+                }
+                else
+                {
+                    AuthorizeRequest(message);
+                }
+                message.SetProperty(typeof(AuthorizedRequestAuthorityKey), currentAuthority);
+            }
+
             if (async)
             {
-                await AuthorizeRequestAsync(message).ConfigureAwait(false);
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
             else
             {
-                AuthorizeRequest(message);
                 ProcessNext(message, pipeline);
             }
 
             // Check if we have received a challenge or we have not yet issued the first request.
-            if (message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(HttpHeader.Names.WwwAuthenticate))
+            // Only honor a WWW-Authenticate challenge against the host that we authorized; if
+            // authority changed mid-pipeline, the challenge is from an unverified target and
+            // must not trigger a credential call or a retry with an Authorization header.
+            if (!authoritySuppressed
+                && message.Response.Status == (int)HttpStatusCode.Unauthorized
+                && message.Response.Headers.Contains(HttpHeader.Names.WwwAuthenticate))
             {
                 // Attempt to get the TokenRequestContext based on the challenge.
                 // If we fail to get the context, the challenge was not present or invalid.
@@ -215,6 +248,12 @@ namespace Azure.Core.Pipeline
             string headerValue = _accessTokenCache.GetAuthHeaderValueAsync(message, context, false).EnsureCompleted();
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
         }
+
+        // Composes a stable host:port string from the request URI builder without invoking
+        // ToUri(), which would throw on partially-constructed URIs. The string is intended
+        // for direct case-insensitive equality comparison, not for parsing.
+        private static string GetRequestAuthority(Request request)
+            => (request.Uri.Host ?? string.Empty) + ":" + request.Uri.Port.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
         internal class AccessTokenCache
         {
@@ -490,6 +529,13 @@ namespace Azure.Core.Pipeline
                     }
                 }
             }
+        }
+
+        // Private marker used as the HttpMessage property key to record the request URI
+        // authority that this policy last authorized against. Used to detect cross-host
+        // redirects so we can suppress re-authorization of the redirected request.
+        private class AuthorizedRequestAuthorityKey
+        {
         }
     }
 }

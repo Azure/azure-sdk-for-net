@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _brokerListenerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsBrokerListenerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsBrokerListenerResource> operation = new IotOperationsArmOperation<IotOperationsBrokerListenerResource>(
-                    new IotOperationsBrokerListenerOperationSource(Client),
+                    new IotOperationsBrokerListenerResourceOperationSource(Client),
                     _brokerListenerClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _brokerListenerRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsBrokerListenerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsBrokerListenerResource> operation = new IotOperationsArmOperation<IotOperationsBrokerListenerResource>(
-                    new IotOperationsBrokerListenerOperationSource(Client),
+                    new IotOperationsBrokerListenerResourceOperationSource(Client),
                     _brokerListenerClientDiagnostics,
                     Pipeline,
                     message.Request,
