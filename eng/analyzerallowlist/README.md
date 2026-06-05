@@ -48,9 +48,10 @@ in the central allow-list), the build fails with `AZSDK0002`.
 
 ### `nowarn:CODE Target` — per-symbol suppression
 
-Scoped entries narrow the suppression to a single symbol or scope. The `Target`
-is a Roslyn DocumentationCommentId; the kind prefix tells the analyzer what
-scope to apply:
+A scoped entry is written as `nowarn:CODE Target` where `CODE` and `Target` are
+separated by **a single space character** (not a tab or any other whitespace).
+The `Target` is a Roslyn DocumentationCommentId; the kind prefix tells the
+analyzer what scope to apply:
 
 | Prefix | Scope |
 |--------|-------|

@@ -79,14 +79,24 @@ namespace Azure.SdkAnalyzers
                 return null;
             }
 
-            string body = line.Substring(NoWarnPrefix.Length).TrimStart();
+            // Split into CODE and optional target on the first literal space.
+            // We use a literal ' ' (not generic whitespace) so the parser stays
+            // consistent with eng/AnalyzerAllowList.targets, which checks for a
+            // space character to decide whether an entry is whole-assembly or
+            // scoped. See eng/analyzerallowlist/README.md.
+            int wsIndex = line.IndexOf(' ');
+            int bodyStart = NoWarnPrefix.Length;
+            // Skip leading spaces between "nowarn:" and CODE (lenient).
+            while (bodyStart < line.Length && line[bodyStart] == ' ')
+            {
+                bodyStart++;
+            }
+            string body = line.Substring(bodyStart);
             if (body.Length == 0)
             {
                 return null;
             }
-
-            // Split into CODE and optional target.
-            int wsIndex = IndexOfWhitespace(body);
+            wsIndex = body.IndexOf(' ');
             string code;
             string targetPart;
             if (wsIndex < 0)
@@ -155,24 +165,12 @@ namespace Azure.SdkAnalyzers
             return s;
         }
 
-        private static int IndexOfWhitespace(string s)
-        {
-            for (int i = 0; i < s.Length; i++)
-            {
-                if (char.IsWhiteSpace(s[i]))
-                {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-
         /// <summary>
         /// Removes a trailing inline comment (anything after a <c>#</c> that is
-        /// preceded by whitespace). Required because Roslyn DocumentationCommentIds
-        /// contain raw <c>#</c> in tokens like <c>#ctor</c>; we only treat
-        /// <c> #</c> as a comment delimiter when it's clearly outside an identifier.
+        /// preceded by a literal space). Required because Roslyn
+        /// DocumentationCommentIds contain raw <c>#</c> in tokens like
+        /// <c>#ctor</c>; only treating <c> #</c> as a comment delimiter when
+        /// it is clearly outside an identifier keeps those DocIds intact.
         /// </summary>
         internal static string StripTrailingInlineComment(string line)
         {
@@ -183,7 +181,7 @@ namespace Azure.SdkAnalyzers
 
             for (int i = 1; i < line.Length; i++)
             {
-                if (line[i] == '#' && char.IsWhiteSpace(line[i - 1]))
+                if (line[i] == '#' && line[i - 1] == ' ')
                 {
                     return line.Substring(0, i);
                 }
