@@ -14,12 +14,14 @@ namespace Azure.ResourceManager.Cdn.Models
     // The old constructor and ActionType property (bridging to TypeName) are preserved here, marked as EditorBrowsable.Never.
     public partial class CacheExpirationActionProperties
     {
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public CacheExpirationActionProperties(CacheExpirationActionType actionType, CacheBehaviorSetting cacheBehavior, CdnCacheLevel cacheType) : this(cacheBehavior, cacheType)
         {
             ActionType = actionType;
         }
 
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public CacheExpirationActionType ActionType
         {
