@@ -136,8 +136,9 @@ public class RoutinesTests : ProjectsClientTestBase
         Assert.That(backwards[1].Name, Is.EqualTo(records[records.Count - 3].Name));
     }
 
-    //[TestCase(true)]
+    [TestCase(true)]
     [TestCase(false)]
+    [RecordedTest]
     public async Task TestRoutineE2E(bool isScheduledTask)
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -173,10 +174,6 @@ public class RoutinesTests : ProjectsClientTestBase
             action: action,
             description: "Routine created by unit test.",
             enabled: true);
-        Console.WriteLine("===========Routine=================");
-        Console.WriteLine($"CreatedAt: {toMillis(created.CreatedAt)})");
-        Console.WriteLine($"UpdatedAt: {toMillis(created.UpdatedAt)})");
-        Console.WriteLine("============================");
         int minutesWait = 10;
         DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: 10, seconds: 0);
         RoutineRun completedRun = null;
@@ -185,7 +182,6 @@ public class RoutinesTests : ProjectsClientTestBase
             await Delay(60000);
             await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
             {
-                Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
                 if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
@@ -203,14 +199,72 @@ public class RoutinesTests : ProjectsClientTestBase
         Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("failed"), $"The run has failed with the error. Type: {completedRun.ErrorType} Message: {completedRun.ErrorMessage}.");
         Assert.That(completedRun.Status.ToLower(), Is.EqualTo("finished"));
         Assert.That(completedRun.ResponseId, Is.Not.Null);
-        //
-        Console.WriteLine("===========Run=================");
-        Console.WriteLine($"triggeredAt: {toMillis(completedRun.TriggeredAt)})");
-        Console.WriteLine($"scheduledFireAt: {toMillis(completedRun.ScheduledFireAt)})");
-        Console.WriteLine($"startedAt: {toMillis(completedRun.StartedAt)})");
-        Console.WriteLine($"endedAt: {toMillis(completedRun.EndedAt)})");
-        Console.WriteLine("============================");
-        //
+    }
+
+    [RecordedTest]
+    public async Task TestRoutineRunPagination()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        ProjectsAgentVersion agentVersion = await GetHostedAgent(projectClient);
+        RoutineTrigger trigger= new ScheduleRoutineTrigger(
+            cronExpression: "*/5 * * * *",
+            timeZone: "UTC"
+        );
+        RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+        {
+            AgentName = agentVersion.Name,
+            Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
+        };
+        string routineName = $"{ROUTINE_NAME_PREFIX}-0";
+        ProjectsRoutine created = await projectClient.Routines.CreateOrUpdateRoutineAsync(
+            routineName: routineName,
+            triggers: new Dictionary<string, RoutineTrigger> { { "test", trigger} },
+            action: action,
+            description: "Routine created by unit test.",
+            enabled: true);
+        int minutesWait = 20;
+        DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: minutesWait, seconds: 0);
+        List<RoutineRun> runs = [];
+        while (DateTime.UtcNow < deadline)
+        {
+            await Delay(60000);
+            runs = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name).ToListAsync();
+            if (runs.Count > PAGE_SIZE)
+            {
+                // When we have generated enough run, disable the routine and check pahgination.
+                await projectClient.Routines.DisableRoutineAsync(routineName: created.Name);
+                // Make sure, we have all the runs after the routine was disabled.
+                runs = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name).ToListAsync();
+                break;
+            }
+        }
+        Assert.That(runs, Has.Count.GreaterThan(PAGE_SIZE));
+        // We cannot know, how many runs we have generated, so we set the new baseline here.
+        int runsGenerated = runs.Count;
+        List<RoutineRun> records = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, limit: PAGE_SIZE, order: "asc").ToListAsync();
+        Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
+        // Go forward.
+        List<RoutineRun> forward = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "asc", after: records[0].Id, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
+        //// Two limits:
+        // Pagination via before is not supported.
+        forward = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(2));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
+        // Go backwards.
+        List<RoutineRun> backwards = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "desc", after: records[3].Id, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
+        Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[0].Id));
+        //// Two limits.
+        // Pagination via before is not supported.
+        backwards = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(2));
+        Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
+        Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
     }
 
     private static long toMillis(DateTimeOffset? date)
