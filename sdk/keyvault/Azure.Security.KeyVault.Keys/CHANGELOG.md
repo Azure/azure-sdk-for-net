@@ -4,13 +4,15 @@
 
 ### Features Added
 
-- Added support for service API version `2026-03-01-preview` (now the default).
+- Added support for service API version `2026-03-01-preview` on `KeyClientOptions.ServiceVersion` and `CryptographyClientOptions.ServiceVersion`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- The default service version for `KeyClient` and `CryptographyClient` is now `2026-03-01-preview`.
 
 ## 4.11.0-beta.1 (2026-06-04)
 
