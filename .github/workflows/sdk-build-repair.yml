@@ -43,11 +43,6 @@ permissions:
   issues: write # createComment on a PR uses the issues comments endpoint
 
 env:
-  # Master kill-switch. Ships disabled so the workflow can be merged to the default
-  # branch (where pull_request_target / issue_comment take effect) while remaining
-  # dormant. Flip to 'true' during MVP rollout once the identity, safety gate, and
-  # cloud-agent environment are all in place.
-  ENABLED: 'false'
   REPAIR_LABEL: auto-sdk-build-fix
   REPAIR_COMMAND: /repair-build
   # Login of the release automation account that opens generated SDK PRs.
@@ -79,11 +74,6 @@ jobs:
               core.info(`Not eligible: ${reason}`);
               core.setOutput('eligible', 'false');
             };
-
-            // 0. Master kill-switch — keep dormant until rollout flips ENABLED to 'true'.
-            if (process.env.ENABLED !== 'true') {
-              return ineligible('workflow is disabled (ENABLED != true)');
-            }
 
             // 1. Resolve the PR and the request source from the triggering event.
             let prNumber;
