@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.Billing
     // [CodeGenSuppress] + replacement once #59539 ships.
     [CodeGenSuppress("CancelPaymentTermsAsync", typeof(WaitUntil), typeof(DateTimeOffset), typeof(CancellationToken))]
     [CodeGenSuppress("CancelPaymentTerms", typeof(WaitUntil), typeof(DateTimeOffset), typeof(CancellationToken))]
-    [CodeGenSuppress("DownloadDocumentsByBillingAccountAsync", typeof(WaitUntil), typeof(IEnumerable<BillingDocumentDownloadRequestContent>), typeof(CancellationToken))]
-    [CodeGenSuppress("DownloadDocumentsByBillingAccount", typeof(WaitUntil), typeof(IEnumerable<BillingDocumentDownloadRequestContent>), typeof(CancellationToken))]
     public partial class BillingAccountResource
     {
         /// <summary> Back-compat overload for GA 1.2.2 callers that pass an Options aggregate. </summary>
@@ -107,80 +105,6 @@ namespace Azure.ResourceManager.Billing
                 BillingArmOperation<BillingAccountResource> operation = new BillingArmOperation<BillingAccountResource>(
                     new BillingAccountResourceOperationSource(Client),
                     _billingAccountsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // Back-compat rename: GA 1.2.2 exposed this as DownloadDocumentsByBillingAccountInvoice
-        // (note the trailing "Invoice"); the new generator emits without that suffix.
-        // The [CodeGenSuppress] above removes the generated no-suffix method.
-
-        /// <summary> Downloads multiple invoice documents as a zip file. </summary>
-        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadDocumentsByBillingAccountInvoiceAsync(WaitUntil waitUntil, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
-
-            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingAccountResource.DownloadDocumentsByBillingAccountInvoice");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, BinaryContentHelper.FromEnumerable(arrayOfDocumentDownloadRequest), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
-                    new BillingDocumentDownloadResultOperationSource(),
-                    _invoicesClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Downloads multiple invoice documents as a zip file. </summary>
-        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadDocumentsByBillingAccountInvoice(WaitUntil waitUntil, IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(arrayOfDocumentDownloadRequest, nameof(arrayOfDocumentDownloadRequest));
-
-            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingAccountResource.DownloadDocumentsByBillingAccountInvoice");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _invoicesRestClient.CreateDownloadDocumentsByBillingAccountRequest(Id.Name, BinaryContentHelper.FromEnumerable(arrayOfDocumentDownloadRequest), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
-                    new BillingDocumentDownloadResultOperationSource(),
-                    _invoicesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,

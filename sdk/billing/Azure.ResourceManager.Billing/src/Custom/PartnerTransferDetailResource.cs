@@ -1,34 +1,27 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Billing
 {
-    // Generator tag-helper boilerplate (#58747) calls this.Update/UpdateAsync(WaitUntil,
-    // PartnerTransferDetailData, CT), but the actual generated Update method takes
-    // PartnerTransferDetailCreateOrUpdateContent (partner transfer details are only
-    // mutated via Initiate/Cancel actions, not via Data envelope). Provide a
-    // NotSupportedException overload so the tag-helper compiles; the happy path
-    // (tag-resource fallback) is unaffected.
+    // Generator bug: MPG emits AddTag/SetTags/RemoveTag because the resource data carries a
+    // `tags` field, then PopulateUpdateMethod() falls back to PUT (PartnerTransfers_Initiate).
+    // The tag-helper else-branch calls this.Update(WaitUntil, <Data>, CT) but the actual
+    // Update takes PartnerTransferDetailCreateOrUpdateContent (separate Request body),
+    // producing CS1503. Suppress the 6 helpers entirely — GA 1.2.2 never exposed them and
+    // ARM tags are still reachable via the resource's Tag* extension/TagResource. Remove
+    // these suppressions once https://github.com/Azure/azure-sdk-for-net/issues/58747 ships.
+    // TODO(#58747): drop the [CodeGenSuppress] block below after the generator fix lands.
+    [CodeGenSuppress("AddTagAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("AddTag", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("SetTagsAsync", typeof(IDictionary<string, string>), typeof(CancellationToken))]
+    [CodeGenSuppress("SetTags", typeof(IDictionary<string, string>), typeof(CancellationToken))]
+    [CodeGenSuppress("RemoveTagAsync", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("RemoveTag", typeof(string), typeof(CancellationToken))]
     public partial class PartnerTransferDetailResource
     {
-        /// <summary> Not supported. Partner transfer details are only mutated through Initiate and Cancel actions. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<ArmOperation<PartnerTransferDetailResource>> UpdateAsync(WaitUntil waitUntil, PartnerTransferDetailData data, CancellationToken cancellationToken = default)
-        {
-            throw new NotSupportedException("Updating PartnerTransferDetailResource via the resource data envelope is not supported. Use Initiate or Cancel instead.");
-        }
-
-        /// <summary> Not supported. Partner transfer details are only mutated through Initiate and Cancel actions. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual ArmOperation<PartnerTransferDetailResource> Update(WaitUntil waitUntil, PartnerTransferDetailData data, CancellationToken cancellationToken = default)
-        {
-            throw new NotSupportedException("Updating PartnerTransferDetailResource via the resource data envelope is not supported. Use Initiate or Cancel instead.");
-        }
     }
 }
