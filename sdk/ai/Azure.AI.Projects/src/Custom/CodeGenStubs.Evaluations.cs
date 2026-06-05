@@ -63,6 +63,7 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("PagedRedTeam")] internal partial class PagedRedTeam { }
 [CodeGenType("PagedSchedule")] internal partial class PagedSchedule { }
 [CodeGenType("PagedScheduleRun")] internal partial class PagedScheduleRun { }
+/// <summary> Represents an insight produced by a project insight run. </summary>
 [CodeGenType("ProjectInsight")] public partial class ProjectInsight { }
 [CodeGenType("RecurrenceSchedule")] public abstract partial class RecurrenceSchedule { }
 [CodeGenType("RecurrenceTrigger")] public partial class RecurrenceTrigger { }

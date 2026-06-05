@@ -39,11 +39,9 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgentClient_HostedAgent
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var containerImage = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_CONTAINER_IMAGE");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var containerImage = TestEnvironment.FOUNDRY_AGENT_CONTAINER_IMAGE;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
@@ -104,11 +102,9 @@ public class Sample_HostedAgent : ProjectsOpenAITestBase
         IgnoreSampleMayBe();
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var containerImage = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_CONTAINER_IMAGE");
         var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var containerImage = TestEnvironment.FOUNDRY_AGENT_CONTAINER_IMAGE;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
         Uri uriEndpoint = new(projectEndpoint);
