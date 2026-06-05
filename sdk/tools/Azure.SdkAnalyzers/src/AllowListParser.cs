@@ -16,7 +16,7 @@ namespace Azure.SdkAnalyzers
     /// <list type="bullet">
     ///   <item>Blank lines and lines whose first non-whitespace char is <c>#</c> are ignored.</item>
     ///   <item>An entry starts with <c>nowarn:</c> (case-insensitive). The rest of the line is
-    ///     <c>CODE [Prefix:Target]</c>, separated by whitespace.</item>
+    ///     <c>CODE [Prefix:Target]</c>, separated by a single space character.</item>
     ///   <item><c>CODE</c> is a diagnostic ID (e.g., <c>AZC0034</c>, <c>CS0618</c>).</item>
     ///   <item>If only <c>CODE</c> is present, it's a whole-assembly suppression
     ///     (current historical behavior).</item>
