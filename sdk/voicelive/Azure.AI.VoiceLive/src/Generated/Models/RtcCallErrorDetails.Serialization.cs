@@ -12,52 +12,57 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Echo cancellation configuration for server-side audio processing. </summary>
-    public partial class AudioEchoCancellation : IJsonModel<AudioEchoCancellation>
+    /// <summary> Error details for RTC call errors. </summary>
+    public partial class RtcCallErrorDetails : IJsonModel<RtcCallErrorDetails>
     {
+        /// <summary> Initializes a new instance of <see cref="RtcCallErrorDetails"/> for deserialization. </summary>
+        internal RtcCallErrorDetails()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AudioEchoCancellation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RtcCallErrorDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioEchoCancellation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RtcCallErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAudioEchoCancellation(document.RootElement, options);
+                        return DeserializeRtcCallErrorDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AudioEchoCancellation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RtcCallErrorDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioEchoCancellation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RtcCallErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AudioEchoCancellation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RtcCallErrorDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AudioEchoCancellation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RtcCallErrorDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AudioEchoCancellation IPersistableModel<AudioEchoCancellation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RtcCallErrorDetails IPersistableModel<RtcCallErrorDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AudioEchoCancellation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RtcCallErrorDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AudioEchoCancellation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RtcCallErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,23 +73,20 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioEchoCancellation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RtcCallErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioEchoCancellation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RtcCallErrorDetails)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ReferenceSource))
+            if (Optional.IsDefined(Code))
             {
-                writer.WritePropertyName("reference_source"u8);
-                writer.WriteStringValue(ReferenceSource.Value.ToString());
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Channels))
-            {
-                writer.WritePropertyName("channels"u8);
-                writer.WriteNumberValue(Channels.Value);
-            }
+            writer.WritePropertyName("message"u8);
+            writer.WriteStringValue(Message);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -104,32 +106,32 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AudioEchoCancellation IJsonModel<AudioEchoCancellation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RtcCallErrorDetails IJsonModel<RtcCallErrorDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AudioEchoCancellation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RtcCallErrorDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioEchoCancellation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RtcCallErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AudioEchoCancellation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RtcCallErrorDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAudioEchoCancellation(document.RootElement, options);
+            return DeserializeRtcCallErrorDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AudioEchoCancellation DeserializeAudioEchoCancellation(JsonElement element, ModelReaderWriterOptions options)
+        internal static RtcCallErrorDetails DeserializeRtcCallErrorDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string @type = default;
-            EchoCancellationReferenceSource? referenceSource = default;
-            int? channels = default;
+            string code = default;
+            string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,22 +140,14 @@ namespace Azure.AI.VoiceLive
                     @type = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("reference_source"u8))
+                if (prop.NameEquals("code"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    referenceSource = new EchoCancellationReferenceSource(prop.Value.GetString());
+                    code = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("channels"u8))
+                if (prop.NameEquals("message"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    channels = prop.Value.GetInt32();
+                    message = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +155,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AudioEchoCancellation(@type, referenceSource, channels, additionalBinaryDataProperties);
+            return new RtcCallErrorDetails(@type, code, message, additionalBinaryDataProperties);
         }
     }
 }
