@@ -17,9 +17,11 @@ namespace Azure.Identity
 {
     internal class MsalManagedIdentityClient
     {
+        private const string AttestationOptionsTypeFullName = "Azure.Identity.Broker.ManagedIdentityCredentialAttestationOptions";
         private readonly ConcurrentDictionary<(bool EnableCae, bool IsTokenBinding), AsyncLockWithValue<IManagedIdentityApplication>> _clientCache = new();
         private bool _isForceRefreshEnabled { get; }
         private readonly Action<AcquireTokenForManagedIdentityParameterBuilder> _beforeTokenAcquisition;
+        private readonly bool _isAttestationOptionsEnabled;
 
         internal bool IsSupportLoggingEnabled { get; }
         internal Microsoft.Identity.Client.AppConfig.ManagedIdentityId ManagedIdentityId { get; }
@@ -54,6 +56,7 @@ namespace Azure.Identity
 
             Pipeline = clientOptions.Pipeline;
             _isForceRefreshEnabled = clientOptions.IsForceRefreshEnabled;
+            _isAttestationOptionsEnabled = string.Equals(clientOptions.Options?.GetType().FullName, AttestationOptionsTypeFullName, StringComparison.Ordinal);
 
             if (clientOptions.Options is IMsalManagedIdentityInitializerOptions initializerOptions)
             {
@@ -121,7 +124,8 @@ namespace Azure.Identity
                 builder.WithClaims(requestContext.Claims);
             }
 
-            if (isTokenBindingAvailable)
+            bool shouldEnableMtlsPop = isTokenBindingAvailable && _isAttestationOptionsEnabled;
+            if (shouldEnableMtlsPop)
             {
                 builder.WithMtlsProofOfPossession();
                 AzureIdentityEventSource.Singleton.LogMsal(LogLevel.Verbose, $"MsalManagedIdentityClient called builder.WithMtlsProofOfPossession()");
@@ -141,11 +145,27 @@ namespace Azure.Identity
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
 
-        public virtual async ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySourceResult> GetManagedIdentitySourceAsync(TokenRequestContext context, CancellationToken cancellationToken)
+        public virtual async ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesAsync(TokenRequestContext context, CancellationToken cancellationToken)
         {
+            // Keep honoring PoP request intent when selecting the cached MSAL MI app,
+            // same behavior as GetManagedIdentitySourceAsync.
             IManagedIdentityApplication client = await GetClientAsync(true, context.IsCaeEnabled, context.IsProofOfPossessionEnabled, cancellationToken).ConfigureAwait(false);
             ManagedIdentityApplication app = client as ManagedIdentityApplication;
-            return await app.GetManagedIdentitySourceAsync(cancellationToken).ConfigureAwait(false);
+            return await app.GetManagedIdentityCapabilitiesAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        public virtual ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesCoreAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
+        {
+            return async
+                ? GetManagedIdentityCapabilitiesAsync(context, cancellationToken)
+                : new ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities>(GetManagedIdentityCapabilities(context, cancellationToken));
+        }
+
+        public virtual Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities GetManagedIdentityCapabilities(TokenRequestContext context, CancellationToken cancellationToken)
+        {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            return GetManagedIdentityCapabilitiesAsync(context, cancellationToken).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
     }
 }
