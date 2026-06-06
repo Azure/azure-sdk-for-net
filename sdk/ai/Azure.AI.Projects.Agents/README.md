@@ -24,7 +24,8 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Prompt Agents](#prompt-agents)
   - [Hosted Agents](#hosted-agents)
     - [Hosted Agents from Docker images](#hosted-docker-based)
-    - [Hosted Agents from Code](#hosted-code-based) 
+    - [Hosted Agents from Code](#hosted-code-based)
+  - [External Agents](#external-agents)
   - [Toolboxes](#toolboxes)
   - [Sessions](#sessions)
   - [Skills](#skills)
@@ -272,6 +273,37 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 {
     throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
 }
+```
+
+### External Agents
+
+**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `ExternalAgents=V1Preview`.
+The `AAIP001` warning needs to be ignored.
+
+In this example we will demonstrate management of External Agents step by step. External Agents are the third-party Agents
+hosted outside Foundry (for example, on GCP or AWS). Registration is metadata-only: Foundry records the agent definition to
+light up observability experiences (traces, evaluations) over customer-emitted OpenTelemetry data.
+
+To create External Agent, we need to provide the `ExternalAgentDefinition` with `OpenTelemetry` agent identifier,
+used to attribute customer-emitted spans to this Foundry agent, in the `CreateAgentVersionAsync` or `CreateAgentVersion` method.
+
+```C# Snippet:Sample_CreateAgentVersion_ExternalAgentsCRUD_Async
+ExternalAgentDefinition agentDefinition = new()
+{
+    OtelAgentId = "sample-external-agent",
+};
+ProjectsAgentVersionCreationOptions agentOptions = new(agentDefinition)
+{
+    Description = "External agent registered by the azure-ai-projects sample.",
+    Metadata = {
+        { "sample", "external_agents_crud" },
+        { "status", "created" }
+    }
+};
+ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
+    agentName: "myExternalAgent1",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
 
 ### Toolboxes
