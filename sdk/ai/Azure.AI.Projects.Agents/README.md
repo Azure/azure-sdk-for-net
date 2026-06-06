@@ -277,7 +277,7 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 
 ### External Agents
 
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `ExternalAgents=V1Preview`.
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `ExternalAgents=V1Preview`.
 The `AAIP001` warning needs to be ignored.
 
 In this example we will demonstrate management of External Agents step by step. External Agents are the third-party Agents
@@ -302,13 +302,13 @@ ProjectsAgentVersionCreationOptions agentOptions = new(agentDefinition)
 };
 ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
     agentName: "myExternalAgent1",
-    options: new(agentDefinition));
+    options: agentOptions);
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
 
 ### Toolboxes
 
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `Toolboxes=V1Preview`.
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `Toolboxes=V1Preview`.
 The `AAIP001` warning needs to be ignored.
 
 Toolboxes allow us to store tools in Azure so that they can be retrieved and used by the Agents.
@@ -359,7 +359,7 @@ Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 
 ### Sessions
 
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `HostedAgents=V1Preview`.
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `HostedAgents=V1Preview`.
 The `AAIP001` warning needs to be ignored.
 
 Sessions allow multiple users to use the same hosted Agent within their own sandboxed environment. In the example below we create two
@@ -436,7 +436,7 @@ File.Delete(filePath);
 
 ### Skills
 
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `Skills=V1Preview`.
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `Skills=V1Preview`.
 The `AAIP001` warning needs to be ignored.
 
 The skills can be used to provide the portable packages of instructions for Agents. `Azure.AI.Projects.Agents` allows
@@ -464,7 +464,7 @@ For more information on skills please see the [Microsoft learning](https://learn
 
 ### Agent endpoints
 
-**Note:** This is a preview feature and require the `Foundry-Features` request header to contain `AgentEndpoints=V1Preview`.
+**Note:** This is a preview feature and requires the `Foundry-Features` request header to contain `AgentEndpoints=V1Preview`.
 The `AAIP001` warning needs to be ignored. In the sample below the `Foundry-Features` header needs to be `HostedAgents=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview`
 because we are using three experimental features: hosted agents, skills and Agent endpoints.
 

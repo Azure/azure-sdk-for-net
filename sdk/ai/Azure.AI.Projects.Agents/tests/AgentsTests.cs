@@ -7,7 +7,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
-using Castle.Components.DictionaryAdapter;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -64,6 +63,10 @@ public class AgentsTests : AgentsTestBase
         Assert.That(AGENT_NAME, Is.EqualTo(agentVersion.Name));
         Assert.That(agentVersion.Description, Is.Empty);
         Assert.That(agentVersion.Metadata, Is.Empty);
+        agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(emptyAgentDefinition)
+        {
+            Metadata = { { "foo", "bar" } }
+        });
         // Get Version
         ProjectsAgentVersion agentVersionObject_ = await agentsClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         ValidateDefinition(agentVersionObject_, useExternalAgent);
@@ -75,26 +78,32 @@ public class AgentsTests : AgentsTestBase
         Assert.That(agentObject_.Name, Is.EqualTo(AGENT_NAME));
         // List Agents
         ProjectsAgentKind goodKind = useExternalAgent ? ProjectsAgentKind.External : ProjectsAgentKind.Prompt;
-        ProjectsAgentKind goodBad = ProjectsAgentKind.Workflow;
-        List<ProjectsAgentRecord> records = await agentsClient.GetAgentsAsync(kind: goodKind).ToListAsync();
+        ProjectsAgentKind badKind = ProjectsAgentKind.Workflow;
+        List<ProjectsAgentRecord> records = await agentsClient.GetAgentsAsync(kind: badKind).ToListAsync();
         List<ProjectsAgentRecord> test = [.. records.Where(x => string.Equals(x.Name, AGENT_NAME))];
+        Assert.That(test, Has.Count.EqualTo(0));
+        records = await agentsClient.GetAgentsAsync(kind: goodKind).ToListAsync();
+        test = [.. records.Where(x => string.Equals(x.Name, AGENT_NAME))];
         Assert.That(test, Has.Count.EqualTo(1));
         ValidateDefinition(test[0].Versions.Latest, useExternalAgent);
         test = [.. records.Where(x => string.Equals(x.Name, AGENT_NAME2))];
         Assert.That(test, Has.Count.EqualTo(1));
         ValidateDefinition(test[0].Versions.Latest, useExternalAgent);
+
         // List Versions
         List<ProjectsAgentVersion> recordVersions = await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME2).ToListAsync();
         Assert.That(recordVersions, Has.Count.EqualTo(1));
         ValidateDefinition(recordVersions[0], useExternalAgent);
 
         recordVersions = await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME).ToListAsync();
-        Assert.That(recordVersions, Has.Count.EqualTo(1));
+        Assert.That(recordVersions, Has.Count.EqualTo(2));
         ValidateDefinition(recordVersions[0], useExternalAgent);
         // DeleteVersion
         string expectedVersion = recordVersions[1].Version;
         await agentsClient.DeleteAgentVersionAsync(agentName: AGENT_NAME, agentVersion: recordVersions[0].Version);
-        Assert.ThrowsAsync<ClientResultException>(async () => await agentsClient.GetAgentVersionAsync(agentVersion.Name, agentVersion.Version));
+        recordVersions = await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME).ToListAsync();
+        Assert.That(recordVersions, Has.Count.EqualTo(1));
+        Assert.That(recordVersions[0].Version, Is.EqualTo(expectedVersion));
         // Delete
         await agentsClient.DeleteAgentAsync(agentName: AGENT_NAME2);
         records = await agentsClient.GetAgentsAsync(kind: goodKind).Where(x => string.Equals(x.Name, AGENT_NAME2)).ToListAsync();
@@ -105,7 +114,7 @@ public class AgentsTests : AgentsTestBase
     {
         if (useExternalAgent)
         {
-            Assert.That(agent, Is.InstanceOf<ExternalAgentDefinition>());
+            Assert.That(agent.Definition, Is.InstanceOf<ExternalAgentDefinition>());
         }
         else
         {

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.Identity;
@@ -20,10 +19,8 @@ public class Sample_ExternalAgents_CRUD : SamplesBase
         #region Snippet:Sample_CreateClient_ExternalAgentsCRUD
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("ExternalAgents=V1Preview"), PipelinePosition.PerCall);
@@ -45,7 +42,7 @@ public class Sample_ExternalAgents_CRUD : SamplesBase
         };
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
             agentName: "myExternalAgent1",
-            options: new(agentDefinition));
+            options: agentOptions);
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
 
@@ -58,7 +55,7 @@ public class Sample_ExternalAgents_CRUD : SamplesBase
         Console.WriteLine($"Versions for agent {agentVersion.Name}");
         await foreach (ProjectsAgentVersion oneAgentVersion in agentsClient.GetAgentVersionsAsync(agentVersion.Name))
         {
-            Console.WriteLine($"    - Agent id: {agentVersion.Id}, version: {agentVersion.Version}");
+            Console.WriteLine($"    - Agent id: {oneAgentVersion.Id}, version: {oneAgentVersion.Version}");
         }
         #endregion
 
@@ -82,10 +79,8 @@ public class Sample_ExternalAgents_CRUD : SamplesBase
     {
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
 #endif
         AgentAdministrationClientOptions options = new();
         options.AddPolicy(new FeaturePolicy("ExternalAgents=V1Preview"), PipelinePosition.PerCall);
@@ -106,7 +101,7 @@ public class Sample_ExternalAgents_CRUD : SamplesBase
         };
         ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersion(
             agentName: "myExternalAgent1",
-            options: new(agentDefinition));
+            options: agentOptions);
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
 
@@ -119,7 +114,7 @@ public class Sample_ExternalAgents_CRUD : SamplesBase
         Console.WriteLine($"Versions for agent {agentVersion.Name}");
         foreach (ProjectsAgentVersion oneAgentVersion in agentsClient.GetAgentVersions(agentVersion.Name))
         {
-            Console.WriteLine($"    - Agent id: {agentVersion.Id}, version: {agentVersion.Version}");
+            Console.WriteLine($"    - Agent id: {oneAgentVersion.Id}, version: {oneAgentVersion.Version}");
         }
         #endregion
 

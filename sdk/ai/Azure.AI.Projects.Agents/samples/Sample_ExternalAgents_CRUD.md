@@ -34,7 +34,6 @@ We also need to ignore the `AAIP001` warning.
 
 ```C# Snippet:Sample_CreateClient_ExternalAgentsCRUD
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 AgentAdministrationClientOptions options = new();
 options.AddPolicy(new FeaturePolicy("ExternalAgents=V1Preview"), PipelinePosition.PerCall);
 AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
@@ -58,7 +57,7 @@ ProjectsAgentVersionCreationOptions agentOptions = new(agentDefinition)
 };
 ProjectsAgentVersion agentVersion = agentsClient.CreateAgentVersion(
     agentName: "myExternalAgent1",
-    options: new(agentDefinition));
+    options: agentOptions);
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
 
@@ -78,7 +77,7 @@ ProjectsAgentVersionCreationOptions agentOptions = new(agentDefinition)
 };
 ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(
     agentName: "myExternalAgent1",
-    options: new(agentDefinition));
+    options: agentOptions);
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 ```
 
@@ -103,7 +102,7 @@ Synchronous sample:
 Console.WriteLine($"Versions for agent {agentVersion.Name}");
 foreach (ProjectsAgentVersion oneAgentVersion in agentsClient.GetAgentVersions(agentVersion.Name))
 {
-    Console.WriteLine($"    - Agent id: {agentVersion.Id}, version: {agentVersion.Version}");
+    Console.WriteLine($"    - Agent id: {oneAgentVersion.Id}, version: {oneAgentVersion.Version}");
 }
 ```
 
@@ -112,11 +111,11 @@ Asynchronous sample:
 Console.WriteLine($"Versions for agent {agentVersion.Name}");
 await foreach (ProjectsAgentVersion oneAgentVersion in agentsClient.GetAgentVersionsAsync(agentVersion.Name))
 {
-    Console.WriteLine($"    - Agent id: {agentVersion.Id}, version: {agentVersion.Version}");
+    Console.WriteLine($"    - Agent id: {oneAgentVersion.Id}, version: {oneAgentVersion.Version}");
 }
 ```
 
-4. List all external Agents.
+5. List all external Agents.
 
 Synchronous sample:
 ```C# Snippet:Sample_ListAgents_ExternalAgentsCRUD_Sync
@@ -136,7 +135,7 @@ await foreach (ProjectsAgentRecord agent in agentsClient.GetAgentsAsync(kind: Pr
 }
 ```
 
-5. Finally, remove the Agents we have created.
+6. Finally, remove the Agents we have created.
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteAgent_ExternalAgentsCRUD_Sync
