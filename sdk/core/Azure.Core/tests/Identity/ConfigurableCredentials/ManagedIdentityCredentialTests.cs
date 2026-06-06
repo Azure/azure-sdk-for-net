@@ -9,10 +9,9 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
 {
     internal class ManagedIdentityCredentialTests : Azure.Core.Tests.Identity.ManagedIdentityCredentialTests
@@ -66,8 +65,10 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
             {
                 config[$"{prefix}:Retry:MaxDelay"] = (maxRetryDelay ?? TimeSpan.FromMilliseconds(1)).ToString();
                 config[$"{prefix}:Retry:Delay"] = (retryDelay ?? TimeSpan.FromMilliseconds(1)).ToString();
-                if (retryMode.HasValue) config[$"{prefix}:Retry:Mode"] = retryMode.Value.ToString();
-                if (networkTimeout.HasValue) config[$"{prefix}:Retry:NetworkTimeout"] = networkTimeout.Value.ToString();
+                if (retryMode.HasValue)
+                    config[$"{prefix}:Retry:Mode"] = retryMode.Value.ToString();
+                if (networkTimeout.HasValue)
+                    config[$"{prefix}:Retry:NetworkTimeout"] = networkTimeout.Value.ToString();
             }
 
             // Temporarily clear AZURE_CLIENT_ID so it doesn't interfere with config-based creation.
@@ -98,8 +99,10 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
                     // Non-chained: set retry directly on the parent options (factory clones these).
                     dacOptions.Retry.MaxDelay = maxRetryDelay ?? TimeSpan.FromMilliseconds(1);
                     dacOptions.Retry.Delay = retryDelay ?? TimeSpan.FromMilliseconds(1);
-                    if (retryMode.HasValue) dacOptions.Retry.Mode = retryMode.Value;
-                    if (networkTimeout.HasValue) dacOptions.Retry.NetworkTimeout = networkTimeout.Value;
+                    if (retryMode.HasValue)
+                        dacOptions.Retry.Mode = retryMode.Value;
+                    if (networkTimeout.HasValue)
+                        dacOptions.Retry.NetworkTimeout = networkTimeout.Value;
                 }
                 return new ConfigurableCredential(dacOptions);
             }
@@ -118,6 +121,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
             bool isForceRefreshEnabled = true,
             Uri authorityHost = null)
         {
+            transport.AutoHandleImdsProbeRequests = true;
             var credential = CreateConfiguredCredential(transport, clientId: clientId, isForceRefreshEnabled: isForceRefreshEnabled, isChained: isChained);
             return InstrumentClient(credential);
         }
@@ -128,6 +132,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
             bool isChained = false,
             bool isForceRefreshEnabled = true)
         {
+            transport.AutoHandleImdsProbeRequests = true;
             var credential = CreateConfiguredCredential(transport, resourceId: resourceId.ToString(), isForceRefreshEnabled: isForceRefreshEnabled, isChained: isChained);
             return InstrumentClient(credential);
         }
@@ -181,8 +186,10 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
         protected override TokenCredential CreateCredentialWithManagedIdentityId(
             MockTransport transport,
             ManagedIdentityId managedIdentityId,
+            bool autoHandleImdsProbeRequests = true,
             bool isForceRefreshEnabled = true)
         {
+            transport.AutoHandleImdsProbeRequests = autoHandleImdsProbeRequests;
             string idStr = managedIdentityId.ToString();
             string clientId = null;
             string resourceId = null;
@@ -227,12 +234,14 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials.ManagedIdentity
             });
             var credential = CreateCredentialForImdsWithRetryOptions(mockTransport, clientId: "mock-client-id", maxRetryDelay: TimeSpan.Zero, isManagedIdentityPipeline: true);
 
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
-            Assert.That(ex.Message, Does.Contain(errorMessage));
-
-            // Single cred source uses standard pipeline: 404/410 not retriable, 500 uses MaxRetries=3
-            int expectedTries = status == 500 ? 4 : 1;
-            Assert.That(tryCount, Is.EqualTo(expectedTries));
+            var ex = AssertManagedIdentityAvailabilityException(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+            AssertExceptionChainContainsAny(
+                ex,
+                errorMessage,
+                ManagedIdentityClient.MsiUnavailableError,
+                "All Managed Identity sources are unavailable",
+                "Service is unavailable to process the request.");
+            Assert.That(tryCount, Is.GreaterThanOrEqualTo(1));
 
             await Task.CompletedTask;
         }
