@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Quota
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Quota request details. </param>
-        internal QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, QuotaRequestProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaRequestDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaRequestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Quota request details. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Quota
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Quota
         {
             get
             {
-                return Properties.Message;
+                return Properties is null ? default : Properties.Message;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Quota
         {
             get
             {
-                return Properties.Error;
+                return Properties is null ? default : Properties.Error;
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Quota
         {
             get
             {
-                return Properties.RequestSubmitOn;
+                return Properties is null ? default : Properties.RequestSubmitOn;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Quota
         {
             get
             {
-                return Properties.Value;
+                return Properties is null ? default : Properties.Value;
             }
         }
     }

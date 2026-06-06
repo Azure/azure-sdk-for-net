@@ -25,6 +25,9 @@ namespace Azure.AI.Projects.Agents
         private readonly string _apiVersion;
         private AgentAdministrationClient _cachedAgentAdministrationClient;
         private AgentToolboxes _cachedAgentToolboxes;
+        private ProjectAgentSkills _cachedProjectAgentSkills;
+        private AgentSessionFiles _cachedAgentSessionFiles;
+        private AgentOptimizationJobs _cachedAgentOptimizationJobs;
 
         /// <summary> Initializes a new instance of InternalProjectsClient for mocking. </summary>
         protected InternalProjectsClient()
@@ -81,6 +84,24 @@ namespace Azure.AI.Projects.Agents
         public virtual AgentToolboxes GetAgentToolboxesClient()
         {
             return Volatile.Read(ref _cachedAgentToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentToolboxes;
+        }
+
+        /// <summary> Initializes a new instance of ProjectAgentSkills. </summary>
+        public virtual ProjectAgentSkills GetProjectAgentSkillsClient()
+        {
+            return Volatile.Read(ref _cachedProjectAgentSkills) ?? Interlocked.CompareExchange(ref _cachedProjectAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedProjectAgentSkills;
+        }
+
+        /// <summary> Initializes a new instance of AgentSessionFiles. </summary>
+        public virtual AgentSessionFiles GetAgentSessionFilesClient()
+        {
+            return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
+        }
+
+        /// <summary> Initializes a new instance of AgentOptimizationJobs. </summary>
+        public virtual AgentOptimizationJobs GetAgentOptimizationJobsClient()
+        {
+            return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
         }
     }
 }

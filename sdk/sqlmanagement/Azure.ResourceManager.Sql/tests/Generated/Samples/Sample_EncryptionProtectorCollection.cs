@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateTheEncryptionProtectorToKeyVault()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorCreateOrUpdateKeyVault.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/EncryptionProtectorCreateOrUpdateKeyVault.json
             // this example is just showing the usage of "EncryptionProtectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateTheEncryptionProtectorToKeyVaultWithVersionlessKey()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorCreateOrUpdateKeyVaultWithVersionlessKey.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/EncryptionProtectorCreateOrUpdateKeyVaultWithVersionlessKey.json
             // this example is just showing the usage of "EncryptionProtectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_UpdateTheEncryptionProtectorToServiceManaged()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorCreateOrUpdateServiceManaged.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/EncryptionProtectorCreateOrUpdateServiceManaged.json
             // this example is just showing the usage of "EncryptionProtectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheEncryptionProtector()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/EncryptionProtectorGet.json
             // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheEncryptionProtectorWithVersionlessKey()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorGetWithVersionlessKey.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/EncryptionProtectorGetWithVersionlessKey.json
             // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListEncryptionProtectorsByServer()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorList.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/EncryptionProtectorList.json
             // this example is just showing the usage of "EncryptionProtectors_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetTheEncryptionProtector()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/EncryptionProtectorGet.json
             // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetTheEncryptionProtectorWithVersionlessKey()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorGetWithVersionlessKey.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/EncryptionProtectorGetWithVersionlessKey.json
             // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetTheEncryptionProtector()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/EncryptionProtectorGet.json
             // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetTheEncryptionProtectorWithVersionlessKey()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/EncryptionProtectorGetWithVersionlessKey.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/SQL/stable/2025-01-01/examples/EncryptionProtectorGetWithVersionlessKey.json
             // this example is just showing the usage of "EncryptionProtectors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

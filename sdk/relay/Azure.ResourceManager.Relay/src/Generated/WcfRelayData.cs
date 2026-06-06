@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Relay
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the WCF relay. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal WcfRelayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WcfRelayProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WcfRelayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WcfRelayProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Location = location;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the WCF relay. </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     Properties = new WcfRelayProperties();
                 }
-                Properties.RelayType = value.Value;
+                Properties.RelayType = value;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     Properties = new WcfRelayProperties();
                 }
-                Properties.IsClientAuthorizationRequired = value.Value;
+                Properties.IsClientAuthorizationRequired = value;
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Relay
                 {
                     Properties = new WcfRelayProperties();
                 }
-                Properties.IsTransportSecurityRequired = value.Value;
+                Properties.IsTransportSecurityRequired = value;
             }
         }
 

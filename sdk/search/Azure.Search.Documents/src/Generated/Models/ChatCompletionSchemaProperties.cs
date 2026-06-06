@@ -24,14 +24,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="ChatCompletionSchemaProperties"/>. </summary>
         /// <param name="name"> Name of the json schema the model will adhere to. </param>
         /// <param name="description"> Description of the json schema the model will adhere to. </param>
-        /// <param name="strict"> Whether or not the model's response should use structured outputs. Default is true. </param>
+        /// <param name="isStrict"> Whether or not the model's response should use structured outputs. Default is true. </param>
         /// <param name="schema"> The schema definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionSchemaProperties(string name, string description, bool? strict, ChatCompletionSchema schema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChatCompletionSchemaProperties(string name, string description, bool? isStrict, ChatCompletionSchema schema, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
-            Strict = strict;
+            IsStrict = isStrict;
             Schema = schema;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Description { get; set; }
 
         /// <summary> Whether or not the model's response should use structured outputs. Default is true. </summary>
-        public bool? Strict { get; set; }
+        public bool? IsStrict { get; set; }
 
         /// <summary> The schema definition. </summary>
         public ChatCompletionSchema Schema { get; set; }

@@ -26,6 +26,8 @@ Use this skill instead of `azure-sdk-mgmt-pr-review` when the PR is a **migratio
 
 Run the full review from the `azure-sdk-mgmt-pr-review` skill (Phase 1: Versioning, Phase 2: API Review, Phase 3: Breaking Change Detection). All rules from that skill apply.
 
+**Migration-specific note for Phase 2**: Migrations often introduce newly generated enums/models with names that are technically valid C# but still too generic for the public API, such as `Scope`, `GroupScope`, `Sensitivity`, or `ManagedRuleSetException`. Flag these as contextual naming issues and recommend a `@@clientName(..., "csharp")` rename that adds service or resource context (for example, `FrontDoorRuleScope`).
+
 **Migration-specific note for Phase 3**: In migration PRs, breaking changes are expected but must still be mitigated. Pay close attention to `ApiCompatBaseline.txt` — migration PRs are the most tempting place to add baseline entries, but they are still **not allowed**. Every ApiCompat error must be mitigated through customization code or TypeSpec decorators.
 
 ## Phase 4: Migration Customization Review
@@ -347,9 +349,11 @@ If the PR uses `[CodeGenType]` without evidence that `@@access` was tried first,
 
 ## Output Format
 
+When this migration skill is run from a GitHub Agentic Workflow, follow the **Agentic workflow mode** output rules in `.github/skills/azure-sdk-mgmt-pr-review/SKILL.md`: use safe-output review tools, do not perform direct GitHub write calls, and do not execute untrusted PR code from `pull_request_target` runs.
+
 ### Posting Inline Review Comments
 
-All findings **must** be posted as inline review comments directly on the PR using the GitHub API. Use the `gh api` CLI or GitHub MCP tools to create a pull request review with inline comments:
+All findings **must** be posted as inline review comments directly on the PR. Outside Agentic Workflow mode, use the `gh api` CLI or GitHub MCP tools to create a pull request review with inline comments:
 
 ```
 POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews

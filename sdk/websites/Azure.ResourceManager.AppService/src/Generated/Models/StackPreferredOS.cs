@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Function App stack preferred OS. </summary>
+    /// <summary>
+    /// Function App stack preferred OS.
+    /// Serialized Name: StackPreferredOs
+    /// </summary>
     public enum StackPreferredOS
     {
-        /// <summary> Windows. </summary>
+        /// <summary>
+        /// Windows
+        /// Serialized Name: StackPreferredOs.Windows
+        /// </summary>
         Windows,
-        /// <summary> Linux. </summary>
+        /// <summary>
+        /// Linux
+        /// Serialized Name: StackPreferredOs.Linux
+        /// </summary>
         Linux
     }
 }

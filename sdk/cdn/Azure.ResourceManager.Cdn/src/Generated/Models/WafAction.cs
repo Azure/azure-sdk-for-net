@@ -7,51 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafAction. </summary>
+    /// <summary></summary>
     public readonly partial struct WafAction : IEquatable<WafAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WafAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WafAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllowValue = "allow";
         private const string BlockValue = "block";
         private const string LogValue = "log";
         private const string RedirectValue = "redirect";
 
-        /// <summary> allow. </summary>
+        /// <summary> Initializes a new instance of <see cref="WafAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WafAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Allow. </summary>
         public static WafAction Allow { get; } = new WafAction(AllowValue);
-        /// <summary> block. </summary>
+
+        /// <summary> Gets the Block. </summary>
         public static WafAction Block { get; } = new WafAction(BlockValue);
-        /// <summary> log. </summary>
+
+        /// <summary> Gets the Log. </summary>
         public static WafAction Log { get; } = new WafAction(LogValue);
-        /// <summary> redirect. </summary>
+
+        /// <summary> Gets the Redirect. </summary>
         public static WafAction Redirect { get; } = new WafAction(RedirectValue);
+
         /// <summary> Determines if two <see cref="WafAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WafAction left, WafAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WafAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WafAction left, WafAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WafAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WafAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WafAction(string value) => new WafAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WafAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WafAction?(string value) => value == null ? null : new WafAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WafAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WafAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

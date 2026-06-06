@@ -26,13 +26,15 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="value"> Reported value of the signal. </param>
         /// <param name="reportedOn"> Timestamp when the value was reported. </param>
         /// <param name="error"> Error message if the signal status cannot be retrieved. </param>
+        /// <param name="additionalContext"> Additional context as provided by the submitter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalStatus(EntityHealthState? healthState, double? value, DateTimeOffset? reportedOn, string error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SignalStatus(EntityHealthState? healthState, double? value, DateTimeOffset? reportedOn, string error, string additionalContext, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HealthState = healthState;
             Value = value;
             ReportedOn = reportedOn;
             Error = error;
+            AdditionalContext = additionalContext;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,5 +49,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Error message if the signal status cannot be retrieved. </summary>
         public string Error { get; }
+
+        /// <summary> Additional context as provided by the submitter. </summary>
+        public string AdditionalContext { get; }
     }
 }

@@ -1259,6 +1259,14 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Azure.Analytics.Purview.DataMap.Relationship GetRelationshipClient() { throw null; }
         public virtual Azure.Analytics.Purview.DataMap.TypeDefinition GetTypeDefinitionClient() { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class DataMapClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDataMapClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDataMapClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Analytics.Purview.DataMap.DataMapClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDataMapClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDataMapClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Analytics.Purview.DataMap.DataMapClientSettings> configureSettings) { throw null; }
+    }
     public partial class DataMapClientOptions : Azure.Core.ClientOptions
     {
         public DataMapClientOptions(Azure.Analytics.Purview.DataMap.DataMapClientOptions.ServiceVersion version = Azure.Analytics.Purview.DataMap.DataMapClientOptions.ServiceVersion.V2023_09_01) { }
@@ -2280,14 +2288,5 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Azure.Response GetTypeDefinition(bool? includeTermTemplate, string type, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef>> GetTypeDefinitionAsync(bool? includeTermTemplate = default(bool?), Azure.Analytics.Purview.DataMap.TypeCategory? type = default(Azure.Analytics.Purview.DataMap.TypeCategory?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTypeDefinitionAsync(bool? includeTermTemplate, string type, Azure.RequestContext context) { throw null; }
-    }
-}
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class PurviewDataMapClientBuilderExtensions
-    {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.DataMap.DataMapClient, Azure.Analytics.Purview.DataMap.DataMapClientOptions> AddDataMapClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Analytics.Purview.DataMap.DataMapClient, Azure.Analytics.Purview.DataMap.DataMapClientOptions> AddDataMapClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

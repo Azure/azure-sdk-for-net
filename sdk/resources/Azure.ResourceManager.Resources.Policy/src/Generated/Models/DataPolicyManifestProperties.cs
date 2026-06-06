@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         {
             get
             {
-                return ResourceFunctions.Standard;
+                return ResourceFunctions is null ? default : ResourceFunctions.Standard;
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         {
             get
             {
-                return ResourceFunctions.Custom;
+                return ResourceFunctions is null ? default : ResourceFunctions.Custom;
             }
         }
     }

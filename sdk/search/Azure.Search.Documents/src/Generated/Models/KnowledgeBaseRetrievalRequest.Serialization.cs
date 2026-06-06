@@ -115,6 +115,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("maxOutputSize"u8);
                 writer.WriteNumberValue(MaxOutputSize.Value);
             }
+            if (Optional.IsDefined(MaxOutputDocuments))
+            {
+                writer.WritePropertyName("maxOutputDocuments"u8);
+                writer.WriteNumberValue(MaxOutputDocuments.Value);
+            }
+            if (Optional.IsDefined(MaxOutputSizeInTokens))
+            {
+                writer.WritePropertyName("maxOutputSizeInTokens"u8);
+                writer.WriteNumberValue(MaxOutputSizeInTokens.Value);
+            }
             if (Optional.IsDefined(RetrievalReasoningEffort))
             {
                 writer.WritePropertyName("retrievalReasoningEffort"u8);
@@ -186,6 +196,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IList<KnowledgeRetrievalIntent> intents = default;
             int? maxRuntimeInSeconds = default;
             int? maxOutputSize = default;
+            int? maxOutputDocuments = default;
+            int? maxOutputSizeInTokens = default;
             KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
             bool? includeActivity = default;
             KnowledgeRetrievalOutputMode? outputMode = default;
@@ -239,6 +251,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     maxOutputSize = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("maxOutputDocuments"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxOutputDocuments = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("maxOutputSizeInTokens"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxOutputSizeInTokens = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("retrievalReasoningEffort"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -290,6 +320,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 intents ?? new ChangeTrackingList<KnowledgeRetrievalIntent>(),
                 maxRuntimeInSeconds,
                 maxOutputSize,
+                maxOutputDocuments,
+                maxOutputSizeInTokens,
                 retrievalReasoningEffort,
                 includeActivity,
                 outputMode,

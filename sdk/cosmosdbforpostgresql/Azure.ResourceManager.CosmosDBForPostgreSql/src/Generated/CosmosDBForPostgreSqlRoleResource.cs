@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _rolesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlRoleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource>(
-                    new CosmosDBForPostgreSqlRoleOperationSource(Client),
+                    new CosmosDBForPostgreSqlRoleResourceOperationSource(Client),
                     _rolesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 HttpMessage message = _rolesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, CosmosDBForPostgreSqlRoleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource> operation = new CosmosDBForPostgreSqlArmOperation<CosmosDBForPostgreSqlRoleResource>(
-                    new CosmosDBForPostgreSqlRoleOperationSource(Client),
+                    new CosmosDBForPostgreSqlRoleResourceOperationSource(Client),
                     _rolesClientDiagnostics,
                     Pipeline,
                     message.Request,

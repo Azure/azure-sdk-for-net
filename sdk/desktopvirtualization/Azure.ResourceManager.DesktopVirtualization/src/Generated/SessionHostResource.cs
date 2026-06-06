@@ -413,13 +413,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="DesktopVirtualizationRegistrationTokenMinimal"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DesktopVirtualizationRegistrationTokenMinimal> GetSingleSessionHostRegistrationTokensAsync(ScopedRegistrationTokenProperties body, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DesktopVirtualizationRegistrationTokenMinimal> GetSingleSessionHostRegistrationTokensAsync(ScopedRegistrationTokenContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = new RequestContext
             {
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                ScopedRegistrationTokenProperties.ToRequestContent(body),
+                ScopedRegistrationTokenContent.ToRequestContent(content),
                 context,
                 "SessionHostResource.GetSingleSessionHostRegistrationTokens");
         }
@@ -457,13 +457,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="DesktopVirtualizationRegistrationTokenMinimal"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DesktopVirtualizationRegistrationTokenMinimal> GetSingleSessionHostRegistrationTokens(ScopedRegistrationTokenProperties body, CancellationToken cancellationToken = default)
+        public virtual Pageable<DesktopVirtualizationRegistrationTokenMinimal> GetSingleSessionHostRegistrationTokens(ScopedRegistrationTokenContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = new RequestContext
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
-                ScopedRegistrationTokenProperties.ToRequestContent(body),
+                ScopedRegistrationTokenContent.ToRequestContent(content),
                 context,
                 "SessionHostResource.GetSingleSessionHostRegistrationTokens");
         }

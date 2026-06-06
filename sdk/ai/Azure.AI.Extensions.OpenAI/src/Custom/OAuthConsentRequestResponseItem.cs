@@ -9,6 +9,7 @@ public partial class OAuthConsentRequestResponseItem
     [CodeGenMember("ConsentLink")]
     internal string InternalConsentLink { get; }
 
+    /// <summary> Gets the URI the user can open to provide OAuth consent. </summary>
     public Uri ConsentLink { get => new(InternalConsentLink); }
 
     /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
@@ -16,7 +17,7 @@ public partial class OAuthConsentRequestResponseItem
     /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="consentLink"/> or <paramref name="serverLabel"/> is null. </exception>
     public OAuthConsentRequestResponseItem(Uri consentLink, string serverLabel) : this(consentLink?.AbsoluteUri, serverLabel)
-    {}
+    { }
 
     /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/>. </summary>
     /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>

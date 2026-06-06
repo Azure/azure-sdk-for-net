@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciNetworkProfile : IUtf8JsonSerializable, IJsonModel<HciNetworkProfile>
+    /// <summary> The network profile of a device. </summary>
+    public partial class HciNetworkProfile : IJsonModel<HciNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciNetworkProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciNetworkProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciNetworkProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciNetworkProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciNetworkProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciNetworkProfile IPersistableModel<HciNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +69,16 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciNetworkProfile)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsCollectionDefined(NicDetails))
             {
                 writer.WritePropertyName("nicDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in NicDetails)
+                foreach (HciNicDetail item in NicDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -50,7 +88,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("switchDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in SwitchDetails)
+                foreach (HciEdgeDeviceSwitchDetail item in SwitchDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -61,15 +99,20 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("hostNetwork"u8);
                 writer.WriteObjectValue(HostNetwork, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && Optional.IsDefined(SdnProperties))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("sdnProperties"u8);
+                writer.WriteObjectValue(SdnProperties, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,22 +121,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        HciNetworkProfile IJsonModel<HciNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciNetworkProfile IJsonModel<HciNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciNetworkProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciNetworkProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciNetworkProfile(document.RootElement, options);
         }
 
-        internal static HciNetworkProfile DeserializeHciNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HciNetworkProfile DeserializeHciNetworkProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,163 +149,62 @@ namespace Azure.ResourceManager.Hci.Models
             IReadOnlyList<HciNicDetail> nicDetails = default;
             IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails = default;
             HciEdgeDeviceHostNetwork hostNetwork = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            SdnProperties sdnProperties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("nicDetails"u8))
+                if (prop.NameEquals("nicDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<HciNicDetail> array = new List<HciNicDetail>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(HciNicDetail.DeserializeHciNicDetail(item, options));
                     }
                     nicDetails = array;
                     continue;
                 }
-                if (property.NameEquals("switchDetails"u8))
+                if (prop.NameEquals("switchDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<HciEdgeDeviceSwitchDetail> array = new List<HciEdgeDeviceSwitchDetail>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(HciEdgeDeviceSwitchDetail.DeserializeHciEdgeDeviceSwitchDetail(item, options));
                     }
                     switchDetails = array;
                     continue;
                 }
-                if (property.NameEquals("hostNetwork"u8))
+                if (prop.NameEquals("hostNetwork"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hostNetwork = HciEdgeDeviceHostNetwork.DeserializeHciEdgeDeviceHostNetwork(property.Value, options);
+                    hostNetwork = HciEdgeDeviceHostNetwork.DeserializeHciEdgeDeviceHostNetwork(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sdnProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sdnProperties = SdnProperties.DeserializeSdnProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new HciNetworkProfile(nicDetails ?? new ChangeTrackingList<HciNicDetail>(), switchDetails ?? new ChangeTrackingList<HciEdgeDeviceSwitchDetail>(), hostNetwork, serializedAdditionalRawData);
+            return new HciNetworkProfile(nicDetails ?? new ChangeTrackingList<HciNicDetail>(), switchDetails ?? new ChangeTrackingList<HciEdgeDeviceSwitchDetail>(), hostNetwork, sdnProperties, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NicDetails), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nicDetails: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NicDetails))
-                {
-                    if (NicDetails.Any())
-                    {
-                        builder.Append("  nicDetails: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NicDetails)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  nicDetails: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SwitchDetails), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  switchDetails: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SwitchDetails))
-                {
-                    if (SwitchDetails.Any())
-                    {
-                        builder.Append("  switchDetails: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SwitchDetails)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  switchDetails: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostNetwork), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hostNetwork: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HostNetwork))
-                {
-                    builder.Append("  hostNetwork: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, HostNetwork, options, 2, false, "  hostNetwork: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<HciNetworkProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(HciNetworkProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HciNetworkProfile IPersistableModel<HciNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHciNetworkProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciNetworkProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HciNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

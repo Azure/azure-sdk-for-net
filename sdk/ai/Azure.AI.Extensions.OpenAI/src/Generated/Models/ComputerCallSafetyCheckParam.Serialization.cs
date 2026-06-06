@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A pending safety check for the computer call. </summary>
-    internal partial class ComputerCallSafetyCheckParam : IJsonModel<ComputerCallSafetyCheckParam>
+    public partial class ComputerCallSafetyCheckParam : IJsonModel<ComputerCallSafetyCheckParam>
     {
         /// <summary> Initializes a new instance of <see cref="ComputerCallSafetyCheckParam"/> for deserialization. </summary>
         internal ComputerCallSafetyCheckParam()

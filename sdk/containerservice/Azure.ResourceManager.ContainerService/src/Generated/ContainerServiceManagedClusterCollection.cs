@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _managedClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ContainerServiceManagedClusterData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerServiceArmOperation<ContainerServiceManagedClusterResource> operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(
-                    new ContainerServiceManagedClusterOperationSource(Client),
+                    new ContainerServiceManagedClusterResourceOperationSource(Client),
                     _managedClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _managedClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ContainerServiceManagedClusterData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerServiceArmOperation<ContainerServiceManagedClusterResource> operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(
-                    new ContainerServiceManagedClusterOperationSource(Client),
+                    new ContainerServiceManagedClusterResourceOperationSource(Client),
                     _managedClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             float? healthObjective = default;
             EntityImpact? impact = default;
             IDictionary<string, string> tags = default;
-            SignalGroups signalGroups = default;
+            EntitySignalGroups signalGroups = default;
             string discoveredBy = default;
             EntityHealthState? healthState = default;
             EntityAlerts alerts = default;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    signalGroups = SignalGroups.DeserializeSignalGroups(prop.Value, options);
+                    signalGroups = EntitySignalGroups.DeserializeEntitySignalGroups(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("discoveredBy"u8))

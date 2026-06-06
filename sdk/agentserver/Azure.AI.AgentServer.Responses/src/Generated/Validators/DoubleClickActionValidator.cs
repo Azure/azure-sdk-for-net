@@ -31,6 +31,15 @@ internal static partial class DoubleClickActionValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Required (nullable): keys
+        if (!element.TryGetProperty("keys", out var keysProp))
+            errors.Add(new ValidationError("$.keys", "Required property 'keys' is missing"));
+        else if (keysProp.ValueKind != JsonValueKind.Null)
+        {
+            if (keysProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.keys", $"Expected array, got {keysProp.ValueKind}"));
+        }
+
         // Required: type
         if (!element.TryGetProperty("type", out var typeValProp))
             errors.Add(new ValidationError("$.type", "Required property 'type' is missing"));

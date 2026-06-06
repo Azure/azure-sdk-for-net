@@ -13,8 +13,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.AI.Projects.Agents;
+using Azure.Core;
 using static Azure.AI.Projects.Agents.Telemetry.OpenTelemetryConstants;
 
 namespace Azure.AI.Projects.Agents.Telemetry
@@ -313,7 +313,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 // Handle image-based hosted agent - add all hosted-specific attributes including image
                 scope.SetTagMaybe(GenAiAgentHostedCpu, imageBasedHostedAgentDefinition.Cpu);
                 scope.SetTagMaybe(GenAiAgentHostedMemory, imageBasedHostedAgentDefinition.Memory);
-                scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.Image);
+                scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.ContainerConfiguration.Image);
 
                 // Extract protocol and version from ContainerProtocolVersions if available
                 if (imageBasedHostedAgentDefinition.Versions != null &&
@@ -332,7 +332,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 // Handle non-image-based hosted agent (fallback for base HostedAgentDefinition)
                 scope.SetTagMaybe(GenAiAgentHostedCpu, hostedAgentDefinition.Cpu);
                 scope.SetTagMaybe(GenAiAgentHostedMemory, hostedAgentDefinition.Memory);
-                scope.SetTagMaybe(GenAiAgentHostedImage, hostedAgentDefinition.Image);
+                scope.SetTagMaybe(GenAiAgentHostedImage, hostedAgentDefinition.ContainerConfiguration.Image);
 
                 // Extract protocol and version from ContainerProtocolVersions if available
                 if (hostedAgentDefinition.Versions != null &&

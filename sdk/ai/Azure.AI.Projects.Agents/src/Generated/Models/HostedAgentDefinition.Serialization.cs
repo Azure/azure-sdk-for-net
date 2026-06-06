@@ -86,16 +86,6 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Versions))
-            {
-                writer.WritePropertyName("container_protocol_versions"u8);
-                writer.WriteStartArray();
-                foreach (ProtocolVersionRecord item in Versions)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             writer.WritePropertyName("cpu"u8);
             writer.WriteStringValue(Cpu);
             writer.WritePropertyName("memory"u8);
@@ -116,21 +106,16 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Image))
-            {
-                writer.WritePropertyName("image"u8);
-                writer.WriteStringValue(Image);
-            }
             if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("container_configuration"u8);
                 writer.WriteObjectValue(ContainerConfiguration, options);
             }
-            if (Optional.IsCollectionDefined(ProtocolVersions))
+            if (Optional.IsCollectionDefined(Versions))
             {
                 writer.WritePropertyName("protocol_versions"u8);
                 writer.WriteStartArray();
-                foreach (ProtocolVersionRecord item in ProtocolVersions)
+                foreach (ProtocolVersionRecord item in Versions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,6 +125,11 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("code_configuration"u8);
                 writer.WriteObjectValue(CodeConfiguration, options);
+            }
+            if (Optional.IsDefined(TelemetryConfig))
+            {
+                writer.WritePropertyName("telemetry_config"u8);
+                writer.WriteObjectValue(TelemetryConfig, options);
             }
         }
 
@@ -172,14 +162,13 @@ namespace Azure.AI.Projects.Agents
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<ProjectsAgentTool> tools = default;
-            IList<ProtocolVersionRecord> versions = default;
             string cpu = default;
             string memory = default;
             IDictionary<string, string> environmentVariables = default;
-            string image = default;
             ContainerConfiguration containerConfiguration = default;
-            IList<ProtocolVersionRecord> protocolVersions = default;
+            IList<ProtocolVersionRecord> versions = default;
             CodeConfiguration codeConfiguration = default;
+            TelemetryConfig telemetryConfig = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -208,20 +197,6 @@ namespace Azure.AI.Projects.Agents
                         array.Add(ProjectsAgentTool.DeserializeProjectsAgentTool(item, options));
                     }
                     tools = array;
-                    continue;
-                }
-                if (prop.NameEquals("container_protocol_versions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ProtocolVersionRecord> array = new List<ProtocolVersionRecord>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ProtocolVersionRecord.DeserializeProtocolVersionRecord(item, options));
-                    }
-                    versions = array;
                     continue;
                 }
                 if (prop.NameEquals("cpu"u8))
@@ -255,11 +230,6 @@ namespace Azure.AI.Projects.Agents
                     environmentVariables = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("image"u8))
-                {
-                    image = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("container_configuration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -280,7 +250,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         array.Add(ProtocolVersionRecord.DeserializeProtocolVersionRecord(item, options));
                     }
-                    protocolVersions = array;
+                    versions = array;
                     continue;
                 }
                 if (prop.NameEquals("code_configuration"u8))
@@ -290,6 +260,15 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     codeConfiguration = CodeConfiguration.DeserializeCodeConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("telemetry_config"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    telemetryConfig = TelemetryConfig.DeserializeTelemetryConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -302,14 +281,13 @@ namespace Azure.AI.Projects.Agents
                 contentFilterConfiguration,
                 additionalBinaryDataProperties,
                 tools ?? new ChangeTrackingList<ProjectsAgentTool>(),
-                versions ?? new ChangeTrackingList<ProtocolVersionRecord>(),
                 cpu,
                 memory,
                 environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
-                image,
                 containerConfiguration,
-                protocolVersions ?? new ChangeTrackingList<ProtocolVersionRecord>(),
-                codeConfiguration);
+                versions ?? new ChangeTrackingList<ProtocolVersionRecord>(),
+                codeConfiguration,
+                telemetryConfig);
         }
     }
 }

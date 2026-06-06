@@ -32,11 +32,10 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                guestSubscriptionProvisioningState is null ? default : new GuestSubscriptionProperties(guestSubscriptionProvisioningState, null));
+                guestSubscriptionProvisioningState is null ? default : new GuestSubscriptionProperties(guestSubscriptionProvisioningState, default),
+                default);
         }
 
-        /// <summary> Compute limits shared by the subscription. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -50,11 +49,10 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Properties of the compute shared limit. </summary>
         /// <param name="resourceName"> The limit name properties. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="unit"> The quota units, such as Count. </param>
@@ -62,16 +60,72 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         /// <returns> A new <see cref="Models.ComputeLimitSharedLimitProperties"/> instance for mocking. </returns>
         public static ComputeLimitSharedLimitProperties ComputeLimitSharedLimitProperties(ComputeLimitLimitName resourceName = default, int? limit = default, string unit = default, ComputeLimitResourceProvisioningState? provisioningState = default)
         {
-            return new ComputeLimitSharedLimitProperties(resourceName, limit, unit, provisioningState, additionalBinaryDataProperties: null);
+            return new ComputeLimitSharedLimitProperties(resourceName, limit, unit, provisioningState, default);
         }
 
-        /// <summary> Properties of the limit name. </summary>
         /// <param name="value"> The limit name. </param>
         /// <param name="localizedValue"> The localized limit name. </param>
         /// <returns> A new <see cref="Models.ComputeLimitLimitName"/> instance for mocking. </returns>
         public static ComputeLimitLimitName ComputeLimitLimitName(string value = default, string localizedValue = default)
         {
-            return new ComputeLimitLimitName(value, localizedValue, additionalBinaryDataProperties: null);
+            return new ComputeLimitLimitName(value, localizedValue, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ComputeLimit.ComputeLimitFeatureData"/> instance for mocking. </returns>
+        public static ComputeLimitFeatureData ComputeLimitFeatureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeLimitFeatureProperties properties = default)
+        {
+            return new ComputeLimitFeatureData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="state"> The current state of the feature (for example, Enabled, Disabled). </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.ComputeLimitFeatureProperties"/> instance for mocking. </returns>
+        public static ComputeLimitFeatureProperties ComputeLimitFeatureProperties(ComputeLimitFeatureState? state = default, ComputeLimitResourceProvisioningState? provisioningState = default)
+        {
+            return new ComputeLimitFeatureProperties(state, provisioningState, default);
+        }
+
+        /// <param name="serviceTreeId"> The Service Tree identifier associated with this feature action. </param>
+        /// <returns> A new <see cref="Models.ComputeLimitFeatureEnableContent"/> instance for mocking. </returns>
+        public static ComputeLimitFeatureEnableContent ComputeLimitFeatureEnableContent(string serviceTreeId = default)
+        {
+            return new ComputeLimitFeatureEnableContent(serviceTreeId, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ComputeLimit.ComputeLimitVmFamilyData"/> instance for mocking. </returns>
+        public static ComputeLimitVmFamilyData ComputeLimitVmFamilyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeLimitVmFamilyProperties properties = default)
+        {
+            return new ComputeLimitVmFamilyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="category"> The category of the VM family (for example, GeneralPurpose, ComputeOptimized). </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.ComputeLimitVmFamilyProperties"/> instance for mocking. </returns>
+        public static ComputeLimitVmFamilyProperties ComputeLimitVmFamilyProperties(string category = default, ComputeLimitResourceProvisioningState? provisioningState = default)
+        {
+            return new ComputeLimitVmFamilyProperties(category, provisioningState, default);
         }
     }
 }

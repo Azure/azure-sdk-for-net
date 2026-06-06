@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="healthState"> Health state of this entity. </param>
         /// <param name="alerts"> Alert configuration for this entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelEntityProperties(HealthModelProvisioningState? provisioningState, string displayName, EntityCoordinates canvasPosition, EntityIcon icon, float? healthObjective, EntityImpact? impact, IDictionary<string, string> tags, SignalGroups signalGroups, string discoveredBy, EntityHealthState? healthState, EntityAlerts alerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthModelEntityProperties(HealthModelProvisioningState? provisioningState, string displayName, EntityCoordinates canvasPosition, EntityIcon icon, float? healthObjective, EntityImpact? impact, IDictionary<string, string> tags, EntitySignalGroups signalGroups, string discoveredBy, EntityHealthState? healthState, EntityAlerts alerts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> Signal groups which are assigned to this entity. </summary>
-        public SignalGroups SignalGroups { get; set; }
+        public EntitySignalGroups SignalGroups { get; set; }
 
         /// <summary> Discovered by which discovery rule. If set, the entity cannot be deleted manually. </summary>
         public string DiscoveredBy { get; }

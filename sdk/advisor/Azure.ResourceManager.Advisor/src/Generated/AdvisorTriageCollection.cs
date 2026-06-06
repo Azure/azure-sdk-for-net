@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Advisor
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AdvisorTriageRecommendationResource.ResourceType)
+            if (id.ResourceType != "Microsoft.Advisor/triageRecommendations")
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AdvisorTriageRecommendationResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Advisor/triageRecommendations"), nameof(id));
             }
         }
 

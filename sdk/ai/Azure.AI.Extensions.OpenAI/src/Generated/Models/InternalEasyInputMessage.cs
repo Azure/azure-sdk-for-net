@@ -37,14 +37,16 @@ namespace OpenAI
         /// Text, image, or audio input to the model, used to generate a response.
         ///   Can also contain previous assistant responses.
         /// </param>
+        /// <param name="phase"></param>
         /// <param name="status">
         /// The status of item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalEasyInputMessage(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, EasyInputMessageRole role, BinaryData content, EasyInputMessageStatus? status) : base(@type, additionalBinaryDataProperties)
+        internal InternalEasyInputMessage(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, EasyInputMessageRole role, BinaryData content, MessagePhase? phase, EasyInputMessageStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
+            Phase = phase;
             Status = status;
         }
 
@@ -52,7 +54,7 @@ namespace OpenAI
         /// The role of the message input. One of `user`, `assistant`, `system`, or
         ///   `developer`.
         /// </summary>
-        public EasyInputMessageRole Role { get; }
+        public EasyInputMessageRole Role { get; set; }
 
         /// <summary>
         /// Text, image, or audio input to the model, used to generate a response.
@@ -94,7 +96,10 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Content { get; }
+        public BinaryData Content { get; set; }
+
+        /// <summary> Gets or sets the Phase. </summary>
+        public MessagePhase? Phase { get; set; }
 
         /// <summary>
         /// The status of item. One of `in_progress`, `completed`, or

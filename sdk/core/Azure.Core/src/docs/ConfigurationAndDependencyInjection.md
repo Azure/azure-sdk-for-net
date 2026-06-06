@@ -7,7 +7,7 @@ and add Azure-specific credential handling.
 
 > [!NOTE]
 > These APIs are experimental and marked with diagnostic ID `SCME0002`.
-> See the [Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/src/docs/ExperimentalFeatures.md) documentation for suppression guidance.
+> See the [Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ExperimentalFeatures.md) documentation for suppression guidance.
 
 > [!IMPORTANT]
 > Not all Azure SDK clients support this feature yet. Support is being rolled out incrementally. A client supports configuration and dependency injection if it has a constructor that accepts a single parameter inheriting from `System.ClientModel.Primitives.ClientSettings`.
@@ -21,24 +21,29 @@ and add Azure-specific credential handling.
 - [Simple Configuration Example](#simple-configuration-example)
 - [Simple Dependency Injection Example](#simple-dependency-injection-example)
 - [Keyed Services Example](#keyed-services-example)
-- [Using WithAzureCredential Explicitly](#using-withazurecredential-explicitly)
+- [Resolving Credentials Directly](#resolving-credentials-directly)
+- [Chaining Additional Configuration](#chaining-additional-configuration)
 - [Common Client Configuration](#common-client-configuration)
 - [Credential Configuration](#credential-configuration)
   - [Common Properties](#common-properties)
   - [Credential Sources](#credential-sources)
 - [Configuration Reference Syntax](#configuration-reference-syntax)
+- [For Library Authors: Custom Credential Resolvers](#for-library-authors-custom-credential-resolvers)
 
 ## How It Works
 
 The `Azure.Identity` package provides `AddAzureClient` and `GetAzureClientSettings`
 extension methods that wrap the base `System.ClientModel` configuration methods. The
-key difference is that `AddAzureClient` automatically calls `WithAzureCredential` to
-configure Azure credential resolution. This means you don't need to manually set up
-token credentials — they are resolved from your configuration's `Credential` section
-automatically.
+key difference is that they automatically configure Azure credential resolution, so
+token credentials are resolved from your configuration's `Credential` section without
+any extra setup.
 
-If you prefer more control, you can use the base `AddClient` method from
-`System.ClientModel` and call `WithAzureCredential` yourself.
+Service-specific `AddXxxClient` extensions (such as `AddSecretClient`,
+`AddBlobServiceClient`) provided by individual Azure SDK libraries are convenience
+wrappers built on top of `AddAzureClient` — they handle any service-specific
+credential or configuration concerns for you. Library authors who want to publish
+custom credential sources should see
+[For Library Authors: Custom Credential Resolvers](#for-library-authors-custom-credential-resolvers).
 
 ## Simple Configuration Example
 
@@ -57,20 +62,20 @@ automatically configures Azure credential resolution.
 }
 ```
 
-```csharp
+```C# Snippet:Azure_Core_Samples_AzureClient_SimpleConfiguration
 ConfigurationManager configuration = new();
 configuration.AddJsonFile("appsettings.json");
 
-// GetAzureClientSettings calls WithAzureCredential automatically
+// GetAzureClientSettings resolves the credential automatically via the built-in AzureCredentialResolver
 MyClientSettings settings = configuration.GetAzureClientSettings<MyClientSettings>("MyClient");
 MyClient client = new(settings);
-
 ```
 
 ## Simple Dependency Injection Example
 
 Use `AddAzureClient` to register an Azure client with the DI container. This
-automatically calls `WithAzureCredential` to configure credential resolution.
+automatically adds the built-in `AzureCredentialResolver` so credentials are
+resolved from configuration.
 
 **appsettings.json:**
 ```json
@@ -84,26 +89,24 @@ automatically calls `WithAzureCredential` to configure credential resolution.
 }
 ```
 
-```csharp
+```C# Snippet:Azure_Core_Samples_AzureClient_SimpleDI
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 
-// AddAzureClient calls WithAzureCredential automatically
+// AddAzureClient resolves the credential automatically via the built-in AzureCredentialResolver
 builder.AddAzureClient<MyClient, MyClientSettings>("MyClient");
 
 IServiceProvider provider = builder.Services.BuildServiceProvider();
 MyClient client = provider.GetRequiredService<MyClient>();
-
 ```
 
 All settings are configurable from `IConfiguration`, but you can optionally provide
 a callback to override values programmatically after they are bound from configuration:
 
-```csharp
+```C# Snippet:Azure_Core_Samples_AzureClient_SimpleDIOverride
 builder.AddAzureClient<MyClient, MyClientSettings>("MyClient", settings =>
 {
     settings.Options.NetworkTimeout = TimeSpan.FromSeconds(60);
 });
-
 ```
 
 ## Keyed Services Example
@@ -129,7 +132,7 @@ using keyed services.
 }
 ```
 
-```csharp
+```C# Snippet:Azure_Core_Samples_AzureClient_KeyedServices
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.AddKeyedAzureClient<MyClient, MyClientSettings>("primary", "PrimaryClient");
 builder.AddKeyedAzureClient<MyClient, MyClientSettings>("secondary", "SecondaryClient");
@@ -137,38 +140,55 @@ builder.AddKeyedAzureClient<MyClient, MyClientSettings>("secondary", "SecondaryC
 IServiceProvider provider = builder.Services.BuildServiceProvider();
 MyClient primary = provider.GetRequiredKeyedService<MyClient>("primary");
 MyClient secondary = provider.GetRequiredKeyedService<MyClient>("secondary");
-
 ```
 
-## Using WithAzureCredential Explicitly
+## Resolving Credentials Directly
 
-If you want to use the base `System.ClientModel` `AddClient` method while still
-getting Azure credential resolution, you can call `WithAzureCredential` explicitly:
+If you need a credential separately from a client settings object — for example, to
+share one credential across multiple non-`ClientSettings` consumers, or to handle
+both token credentials and inline API keys at the same call site — use
+`GetAzureCredentialSettings`:
 
-```csharp
+```C# Snippet:Azure_Core_Samples_AzureClient_GetCredentialSettings
+CredentialSettings credential = configuration.GetAzureCredentialSettings("MyClient:Credential");
+
+if (credential?.TokenProvider is TokenCredential token)
+{
+    // Use the resolved TokenCredential.
+}
+else if (credential?.CredentialSource == "apikeycredential" && credential.Key is string key)
+{
+    // Use the inline API key.
+}
+else
+{
+    // Section missing, or no resolver claimed it.
+}
+```
+
+`GetAzureCredentialSettings` returns `null` only when the named section does not
+exist. When the section exists, the returned `CredentialSettings` always exposes
+the bound `Key`, `CredentialSource`, and `AdditionalProperties` — for inline ApiKey
+sections `TokenProvider` is `null` and the caller dispatches on `CredentialSource`
+to use the `Key` directly. It never throws.
+
+## Chaining Additional Configuration
+
+`AddAzureClient` accepts an optional `Action<TSettings>` callback that lets you
+override settings programmatically after they are bound from `IConfiguration`:
+
+```C# Snippet:Azure_Core_Samples_AzureClient_ChainingAdditionalConfiguration
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 
-// Use base AddClient and call WithAzureCredential explicitly
-builder.AddClient<MyClient, MyClientSettings>("MyClient")
-    .WithAzureCredential();
-
+builder.AddAzureClient<MyClient, MyClientSettings>("MyClient", settings =>
+{
+    settings.Options.NetworkTimeout = TimeSpan.FromSeconds(60);
+});
 ```
 
-This is equivalent to calling `AddAzureClient` and gives you access to the
-`IClientBuilder` for additional chaining such as `PostConfigure`.
-
-```csharp
-HostApplicationBuilder builder = Host.CreateApplicationBuilder();
-
-// Chain WithAzureCredential with PostConfigure
-builder.AddClient<MyClient, MyClientSettings>("MyClient")
-    .WithAzureCredential()
-    .PostConfigure(settings =>
-    {
-        // Additional programmatic configuration
-    });
-
-```
+The same overload is available on `AddKeyedAzureClient`. For non-DI scenarios,
+`GetAzureClientSettings<T>` has equivalent overloads that take a callback for
+overriding either the settings or the credential configuration section.
 
 ## Common Client Configuration
 
@@ -234,6 +254,18 @@ the `Credential` section as well.
 ```
 
 ### Credential Sources
+
+> **ApiKeyCredential note:** `ApiKeyCredential` is a configuration-schema source
+> recognized by `System.ClientModel`, but `AzureCredentialResolver` does not
+> claim it. `GetAzureCredentialSettings` still returns a populated
+> `CredentialSettings` for an inline API-key section (with `Key`,
+> `CredentialSource`, and `AdditionalProperties` bound) but with `TokenProvider`
+> set to `null`. Service-specific Azure clients that accept an API key inspect
+> `Credential.CredentialSource` themselves at construction time and read
+> `Credential.Key` directly. From an application-author perspective nothing
+> changes — `AddAzureClient`/`GetAzureClientSettings<T>` still bind the
+> `Credential` section as documented; the resolver chain just doesn't synthesize
+> a `TokenCredential` for the API-key case.
 
 **ApiKeyCredential:**
 ```json
@@ -460,15 +492,115 @@ section you want to reference.
 }
 ```
 
-```csharp
+```C# Snippet:Azure_Core_Samples_AzureClient_ConfigReference
 HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 builder.AddKeyedAzureClient<MyClient, MyClientSettings>("svc1", "Client1");
 builder.AddKeyedAzureClient<MyClient, MyClientSettings>("svc2", "Client2");
-
 ```
+
+## For Library Authors: Custom Credential Resolvers
+
+> This section is for authors of Azure SDK libraries (or third-party libraries
+> that integrate with the configuration system). Application authors who consume
+> Azure SDK clients via `AddXxxClient` extensions do not need to read this section
+> — service-specific extensions handle any custom credential sources internally.
+
+Credential resolution is driven by a chain of
+`System.ClientModel.Primitives.CredentialResolver` instances. The built-in
+`AzureCredentialResolver` handles the token-based credential sources documented
+under [Credential Sources](#credential-sources). `ApiKeyCredential` sections are
+intentionally not claimed by the resolver — service-specific clients that
+accept an API key dispatch on `Credential.CredentialSource` themselves and read
+`Credential.Key` directly. Library authors can publish their own
+`CredentialResolver` to handle new credential source values (for example, a
+secret-manager-backed source defined by their library).
+
+### Implementing a Resolver
+
+```C# Snippet:Azure_Core_Samples_AzureClient_CustomCredentialResolver
+public sealed class MyVaultCredentialResolver : CredentialResolver
+{
+    public override bool TryResolve(
+        IConfigurationSection credentialSection,
+        out AuthenticationTokenProvider provider)
+    {
+        if (credentialSection?["CredentialSource"] is not "MyVaultCredential")
+        {
+            provider = null;
+            return false;
+        }
+
+        provider = new MyVaultTokenCredential(credentialSection["VaultUri"]);
+        return true;
+    }
+}
+```
+
+A resolver should return `false` when it does not recognize the section so the
+next resolver in the chain gets a chance. Caller-supplied resolvers are evaluated
+before the built-in `AzureCredentialResolver` — register a custom resolver and it
+will win for matching source values, but built-in Azure handling remains intact
+for everything else. Source values should be unique; overriding a built-in source
+name is an anti-pattern.
+
+### Registering the Resolver in Your `AddXxxClient` Extension
+
+Service-specific `AddXxxClient` extensions should register any credential
+resolvers their service requires, so application authors don't have to think about
+it. Use `AddCredentialResolver<T>` (from `System.ClientModel`) — registrations are
+idempotent so repeated calls from multiple `AddXxxClient` invocations are safe.
+
+```C# Snippet:Azure_Core_Samples_AzureClient_AddMyClientWithAzure
+public static IClientBuilder AddMyClient(
+    this IHostApplicationBuilder builder,
+    string sectionName)
+{
+    builder.Services.AddCredentialResolver<MyVaultCredentialResolver>();
+    return builder.AddAzureClient<MyClient, MyClientSettings>(sectionName);
+}
+```
+
+`AddAzureClient` automatically registers `AzureCredentialResolver`, so the Azure
+built-in chain is already in place.
+
+### Composing with `AddClient` Instead of `AddAzureClient`
+
+If you are building on top of `System.ClientModel`'s base `AddClient` rather than
+`AddAzureClient`, call `AddAzureCredentialResolver` to bring in the Azure built-in
+resolver alongside your custom one. Both registrations are idempotent.
+
+```C# Snippet:Azure_Core_Samples_AzureClient_AddMyClientWithBase
+public static IClientBuilder AddMyClient(
+    this IHostApplicationBuilder builder,
+    string sectionName)
+{
+    builder.AddAzureCredentialResolver();
+    builder.Services.AddCredentialResolver<MyVaultCredentialResolver>();
+    return builder.AddClient<MyClient, MyClientSettings>(sectionName);
+}
+```
+
+### Standalone (Non-DI) Use
+
+For non-DI scenarios — for example, console tools that call `GetAzureClientSettings`
+or `GetAzureCredentialSettings` directly — resolvers can be passed as arguments
+without any DI container:
+
+```C# Snippet:Azure_Core_Samples_AzureClient_StandaloneCustomResolver
+MyClientSettings settings = configuration.GetAzureClientSettings<MyClientSettings>(
+    "MyClient",
+    new MyVaultCredentialResolver());
+
+CredentialSettings credential = configuration.GetAzureCredentialSettings(
+    "MyClient:Credential",
+    new MyVaultCredentialResolver());
+```
+
+The built-in `AzureCredentialResolver` is appended automatically; you only pass the
+custom resolvers your call site needs.
 
 ## Related Documentation
 
 - [System.ClientModel Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ConfigurationAndDependencyInjection.md) — Base configuration patterns
 - [System.ClientModel Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ExperimentalFeatures.md) — SCME0002 diagnostic details
-- [Azure.Identity Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/src/docs/ExperimentalFeatures.md) — Identity-specific experimental APIs
+- [Azure.Core Experimental Features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ExperimentalFeatures.md) — Identity-specific experimental APIs

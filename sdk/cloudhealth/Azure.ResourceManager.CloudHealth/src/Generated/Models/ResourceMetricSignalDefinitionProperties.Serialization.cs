@@ -88,11 +88,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             writer.WriteStringValue(TimeGrain);
             writer.WritePropertyName("aggregationType"u8);
             writer.WriteStringValue(AggregationType.ToString());
-            if (Optional.IsDefined(Dimension))
-            {
-                writer.WritePropertyName("dimension"u8);
-                writer.WriteStringValue(Dimension);
-            }
             if (Optional.IsDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
@@ -137,7 +132,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             string metricName = default;
             string timeGrain = default;
             MetricAggregationType aggregationType = default;
-            string dimension = default;
             string dimensionFilter = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,11 +214,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     aggregationType = new MetricAggregationType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("dimension"u8))
-                {
-                    dimension = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("dimensionFilter"u8))
                 {
                     dimensionFilter = prop.Value.GetString();
@@ -248,7 +237,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 metricName,
                 timeGrain,
                 aggregationType,
-                dimension,
                 dimensionFilter);
         }
     }

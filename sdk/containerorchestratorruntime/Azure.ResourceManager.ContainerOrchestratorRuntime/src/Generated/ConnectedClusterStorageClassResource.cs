@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConnectedClusterStorageClassData> response = Response.FromValue(ConnectedClusterStorageClassData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConnectedClusterStorageClassData> response = Response.FromValue(ConnectedClusterStorageClassData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateUpdateRequest(Id.Parent, Id.Name, ConnectedClusterStorageClassPatch.ToRequestContent(patch), context);
+                HttpMessage message = _storageClassRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, ConnectedClusterStorageClassPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource>(
-                    new ConnectedClusterStorageClassOperationSource(Client),
+                    new ConnectedClusterStorageClassResourceOperationSource(Client),
                     _storageClassClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -282,10 +282,10 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateUpdateRequest(Id.Parent, Id.Name, ConnectedClusterStorageClassPatch.ToRequestContent(patch), context);
+                HttpMessage message = _storageClassRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, ConnectedClusterStorageClassPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource>(
-                    new ConnectedClusterStorageClassOperationSource(Client),
+                    new ConnectedClusterStorageClassResourceOperationSource(Client),
                     _storageClassClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _storageClassRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerOrchestratorRuntimeArmOperation operation = new ContainerOrchestratorRuntimeArmOperation(_storageClassClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _storageClassRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _storageClassRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerOrchestratorRuntimeArmOperation operation = new ContainerOrchestratorRuntimeArmOperation(_storageClassClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

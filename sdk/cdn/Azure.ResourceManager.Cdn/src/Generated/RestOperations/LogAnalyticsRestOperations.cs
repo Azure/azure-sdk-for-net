@@ -7,934 +7,309 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Cdn.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    internal partial class LogAnalyticsRestOperations
+    internal partial class LogAnalytics
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of LogAnalyticsRestOperations. </summary>
+        /// <summary> Initializes a new instance of LogAnalytics for mocking. </summary>
+        protected LogAnalytics()
+        {
+        }
+
+        /// <summary> Initializes a new instance of LogAnalytics. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public LogAnalyticsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal LogAnalytics(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-06-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetLogAnalyticsMetricsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetLogAnalyticsMetricsRequest(Guid subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, string granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getLogAnalyticsMetrics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (metrics != null && !(metrics is ChangeTrackingList<LogMetric> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                foreach (var param in metrics)
+                foreach (var @param in metrics)
                 {
-                    uri.AppendQuery("metrics", param.ToString(), true);
+                    uri.AppendQuery("metrics", @param.ToString(), true);
                 }
             }
-            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
-            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            uri.AppendQuery("granularity", granularity.ToString(), true);
+            uri.AppendQuery("dateTimeBegin", TypeFormatters.ConvertToString(dateTimeBegin, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("dateTimeEnd", TypeFormatters.ConvertToString(dateTimeEnd, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("granularity", granularity, true);
             if (groupBy != null && !(groupBy is ChangeTrackingList<LogMetricsGroupBy> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                foreach (var param in groupBy)
+                foreach (var @param in groupBy)
                 {
-                    uri.AppendQuery("groupBy", param.ToString(), true);
+                    uri.AppendQuery("groupBy", @param.ToString(), true);
                 }
             }
             if (continents != null && !(continents is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                foreach (var param in continents)
+                foreach (var @param in continents)
                 {
-                    uri.AppendQuery("continents", param, true);
+                    uri.AppendQuery("continents", @param, true);
                 }
             }
             if (countryOrRegions != null && !(countryOrRegions is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
-                foreach (var param in countryOrRegions)
+                foreach (var @param in countryOrRegions)
                 {
-                    uri.AppendQuery("countryOrRegions", param, true);
+                    uri.AppendQuery("countryOrRegions", @param, true);
                 }
             }
             if (customDomains != null && !(customDomains is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
-                foreach (var param in customDomains)
+                foreach (var @param in customDomains)
                 {
-                    uri.AppendQuery("customDomains", param, true);
+                    uri.AppendQuery("customDomains", @param, true);
                 }
             }
             if (protocols != null && !(protocols is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
-                foreach (var param in protocols)
+                foreach (var @param in protocols)
                 {
-                    uri.AppendQuery("protocols", param, true);
+                    uri.AppendQuery("protocols", @param, true);
                 }
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateGetLogAnalyticsMetricsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getLogAnalyticsMetrics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (metrics != null && !(metrics is ChangeTrackingList<LogMetric> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var param in metrics)
-                {
-                    uri.AppendQuery("metrics", param.ToString(), true);
-                }
-            }
-            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
-            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            uri.AppendQuery("granularity", granularity.ToString(), true);
-            if (groupBy != null && !(groupBy is ChangeTrackingList<LogMetricsGroupBy> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var param in groupBy)
-                {
-                    uri.AppendQuery("groupBy", param.ToString(), true);
-                }
-            }
-            if (continents != null && !(continents is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                foreach (var param in continents)
-                {
-                    uri.AppendQuery("continents", param, true);
-                }
-            }
-            if (countryOrRegions != null && !(countryOrRegions is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
-            {
-                foreach (var param in countryOrRegions)
-                {
-                    uri.AppendQuery("countryOrRegions", param, true);
-                }
-            }
-            if (customDomains != null && !(customDomains is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
-            {
-                foreach (var param in customDomains)
-                {
-                    uri.AppendQuery("customDomains", param, true);
-                }
-            }
-            if (protocols != null && !(protocols is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
-            {
-                foreach (var param in protocols)
-                {
-                    uri.AppendQuery("protocols", param, true);
-                }
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get log report for AFD profile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogMetric"/> to use. </param>
-        /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="granularity"> The <see cref="LogMetricsGranularity"/> to use. </param>
-        /// <param name="customDomains"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
-        /// <param name="protocols"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
-        /// <param name="groupBy"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogMetricsGroupBy"/> to use. </param>
-        /// <param name="continents"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
-        /// <param name="countryOrRegions"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MetricsResponse>> GetLogAnalyticsMetricsAsync(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetLogAnalyticsRankingsRequest(Guid subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(customDomains, nameof(customDomains));
-            Argument.AssertNotNull(protocols, nameof(protocols));
-
-            using var message = CreateGetLogAnalyticsMetricsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        MetricsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MetricsResponse.DeserializeMetricsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get log report for AFD profile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogMetric"/> to use. </param>
-        /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="granularity"> The <see cref="LogMetricsGranularity"/> to use. </param>
-        /// <param name="customDomains"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
-        /// <param name="protocols"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
-        /// <param name="groupBy"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogMetricsGroupBy"/> to use. </param>
-        /// <param name="continents"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
-        /// <param name="countryOrRegions"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MetricsResponse> GetLogAnalyticsMetrics(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy = null, IEnumerable<string> continents = null, IEnumerable<string> countryOrRegions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(customDomains, nameof(customDomains));
-            Argument.AssertNotNull(protocols, nameof(protocols));
-
-            using var message = CreateGetLogAnalyticsMetricsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, customDomains, protocols, groupBy, continents, countryOrRegions);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        MetricsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MetricsResponse.DeserializeMetricsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetLogAnalyticsRankingsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getLogAnalyticsRankings", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (rankings != null && !(rankings is ChangeTrackingList<LogRanking> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                foreach (var param in rankings)
+                foreach (var @param in rankings)
                 {
-                    uri.AppendQuery("rankings", param.ToString(), true);
+                    uri.AppendQuery("rankings", @param.ToString(), true);
                 }
             }
             if (metrics != null && !(metrics is ChangeTrackingList<LogRankingMetric> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                foreach (var param in metrics)
+                foreach (var @param in metrics)
                 {
-                    uri.AppendQuery("metrics", param.ToString(), true);
+                    uri.AppendQuery("metrics", @param.ToString(), true);
                 }
             }
-            uri.AppendQuery("maxRanking", maxRanking, true);
-            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
-            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            uri.AppendQuery("maxRanking", TypeFormatters.ConvertToString(maxRanking), true);
+            uri.AppendQuery("dateTimeBegin", TypeFormatters.ConvertToString(dateTimeBegin, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("dateTimeEnd", TypeFormatters.ConvertToString(dateTimeEnd, SerializationFormat.DateTime_RFC3339), true);
             if (customDomains != null && !(customDomains is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                foreach (var param in customDomains)
+                foreach (var @param in customDomains)
                 {
-                    uri.AppendQuery("customDomains", param, true);
+                    uri.AppendQuery("customDomains", @param, true);
                 }
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateGetLogAnalyticsRankingsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getLogAnalyticsRankings", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (rankings != null && !(rankings is ChangeTrackingList<LogRanking> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var param in rankings)
-                {
-                    uri.AppendQuery("rankings", param.ToString(), true);
-                }
-            }
-            if (metrics != null && !(metrics is ChangeTrackingList<LogRankingMetric> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var param in metrics)
-                {
-                    uri.AppendQuery("metrics", param.ToString(), true);
-                }
-            }
-            uri.AppendQuery("maxRanking", maxRanking, true);
-            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
-            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            if (customDomains != null && !(customDomains is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                foreach (var param in customDomains)
-                {
-                    uri.AppendQuery("customDomains", param, true);
-                }
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get log analytics ranking report for AFD profile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="rankings"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRanking"/> to use. </param>
-        /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRankingMetric"/> to use. </param>
-        /// <param name="maxRanking"> The <see cref="int"/> to use. </param>
-        /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="customDomains"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RankingsResponse>> GetLogAnalyticsRankingsAsync(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetLogAnalyticsLocationsRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(rankings, nameof(rankings));
-            Argument.AssertNotNull(metrics, nameof(metrics));
-
-            using var message = CreateGetLogAnalyticsRankingsRequest(subscriptionId, resourceGroupName, profileName, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RankingsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RankingsResponse.DeserializeRankingsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get log analytics ranking report for AFD profile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="rankings"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRanking"/> to use. </param>
-        /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="LogRankingMetric"/> to use. </param>
-        /// <param name="maxRanking"> The <see cref="int"/> to use. </param>
-        /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="customDomains"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RankingsResponse> GetLogAnalyticsRankings(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(rankings, nameof(rankings));
-            Argument.AssertNotNull(metrics, nameof(metrics));
-
-            using var message = CreateGetLogAnalyticsRankingsRequest(subscriptionId, resourceGroupName, profileName, rankings, metrics, maxRanking, dateTimeBegin, dateTimeEnd, customDomains);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RankingsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RankingsResponse.DeserializeRankingsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetLogAnalyticsLocationsRequestUri(string subscriptionId, string resourceGroupName, string profileName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getLogAnalyticsLocations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetLogAnalyticsLocationsRequest(string subscriptionId, string resourceGroupName, string profileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getLogAnalyticsLocations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get all available location names for AFD log analytics report. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContinentsResponse>> GetLogAnalyticsLocationsAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetLogAnalyticsResourcesRequest(Guid subscriptionId, string resourceGroupName, string profileName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-
-            using var message = CreateGetLogAnalyticsLocationsRequest(subscriptionId, resourceGroupName, profileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ContinentsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ContinentsResponse.DeserializeContinentsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get all available location names for AFD log analytics report. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContinentsResponse> GetLogAnalyticsLocations(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-
-            using var message = CreateGetLogAnalyticsLocationsRequest(subscriptionId, resourceGroupName, profileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ContinentsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ContinentsResponse.DeserializeContinentsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetLogAnalyticsResourcesRequestUri(string subscriptionId, string resourceGroupName, string profileName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getLogAnalyticsResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetLogAnalyticsResourcesRequest(string subscriptionId, string resourceGroupName, string profileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getLogAnalyticsResources", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourcesResponse>> GetLogAnalyticsResourcesAsync(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetWafLogAnalyticsMetricsRequest(Guid subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, string granularity, IEnumerable<WafAction> actions, IEnumerable<WafRankingGroupBy> groupBy, IEnumerable<WafRuleType> ruleTypes, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-
-            using var message = CreateGetLogAnalyticsResourcesRequest(subscriptionId, resourceGroupName, profileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourcesResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResourcesResponse.DeserializeResourcesResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get all endpoints and custom domains available for AFD log report. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourcesResponse> GetLogAnalyticsResources(string subscriptionId, string resourceGroupName, string profileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-
-            using var message = CreateGetLogAnalyticsResourcesRequest(subscriptionId, resourceGroupName, profileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ResourcesResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResourcesResponse.DeserializeResourcesResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetWafLogAnalyticsMetricsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions, IEnumerable<WafRankingGroupBy> groupBy, IEnumerable<WafRuleType> ruleTypes)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getWafLogAnalyticsMetrics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (metrics != null && !(metrics is ChangeTrackingList<WafMetric> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                foreach (var param in metrics)
+                foreach (var @param in metrics)
                 {
-                    uri.AppendQuery("metrics", param.ToString(), true);
+                    uri.AppendQuery("metrics", @param.ToString(), true);
                 }
             }
-            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
-            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            uri.AppendQuery("granularity", granularity.ToString(), true);
+            uri.AppendQuery("dateTimeBegin", TypeFormatters.ConvertToString(dateTimeBegin, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("dateTimeEnd", TypeFormatters.ConvertToString(dateTimeEnd, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("granularity", granularity, true);
             if (actions != null && !(actions is ChangeTrackingList<WafAction> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                foreach (var param in actions)
+                foreach (var @param in actions)
                 {
-                    uri.AppendQuery("actions", param.ToString(), true);
+                    uri.AppendQuery("actions", @param.ToString(), true);
                 }
             }
             if (groupBy != null && !(groupBy is ChangeTrackingList<WafRankingGroupBy> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                foreach (var param in groupBy)
+                foreach (var @param in groupBy)
                 {
-                    uri.AppendQuery("groupBy", param.ToString(), true);
+                    uri.AppendQuery("groupBy", @param.ToString(), true);
                 }
             }
             if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
-                foreach (var param in ruleTypes)
+                foreach (var @param in ruleTypes)
                 {
-                    uri.AppendQuery("ruleTypes", param.ToString(), true);
+                    uri.AppendQuery("ruleTypes", @param.ToString(), true);
                 }
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateGetWafLogAnalyticsMetricsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions, IEnumerable<WafRankingGroupBy> groupBy, IEnumerable<WafRuleType> ruleTypes)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getWafLogAnalyticsMetrics", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (metrics != null && !(metrics is ChangeTrackingList<WafMetric> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var param in metrics)
-                {
-                    uri.AppendQuery("metrics", param.ToString(), true);
-                }
-            }
-            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
-            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            uri.AppendQuery("granularity", granularity.ToString(), true);
-            if (actions != null && !(actions is ChangeTrackingList<WafAction> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var param in actions)
-                {
-                    uri.AppendQuery("actions", param.ToString(), true);
-                }
-            }
-            if (groupBy != null && !(groupBy is ChangeTrackingList<WafRankingGroupBy> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                foreach (var param in groupBy)
-                {
-                    uri.AppendQuery("groupBy", param.ToString(), true);
-                }
-            }
-            if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
-            {
-                foreach (var param in ruleTypes)
-                {
-                    uri.AppendQuery("ruleTypes", param.ToString(), true);
-                }
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get Waf related log analytics report for AFD profile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
-        /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="granularity"> The <see cref="WafGranularity"/> to use. </param>
-        /// <param name="actions"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafAction"/> to use. </param>
-        /// <param name="groupBy"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafRankingGroupBy"/> to use. </param>
-        /// <param name="ruleTypes"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafRuleType"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="metrics"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WafMetricsResponse>> GetWafLogAnalyticsMetricsAsync(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetWafLogAnalyticsRankingsRequest(Guid subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions, IEnumerable<WafRuleType> ruleTypes, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(metrics, nameof(metrics));
-
-            using var message = CreateGetWafLogAnalyticsMetricsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        WafMetricsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = WafMetricsResponse.DeserializeWafMetricsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get Waf related log analytics report for AFD profile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
-        /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="granularity"> The <see cref="WafGranularity"/> to use. </param>
-        /// <param name="actions"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafAction"/> to use. </param>
-        /// <param name="groupBy"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafRankingGroupBy"/> to use. </param>
-        /// <param name="ruleTypes"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafRuleType"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="metrics"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WafMetricsResponse> GetWafLogAnalyticsMetrics(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions = null, IEnumerable<WafRankingGroupBy> groupBy = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(metrics, nameof(metrics));
-
-            using var message = CreateGetWafLogAnalyticsMetricsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, granularity, actions, groupBy, ruleTypes);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        WafMetricsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = WafMetricsResponse.DeserializeWafMetricsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetWafLogAnalyticsRankingsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions, IEnumerable<WafRuleType> ruleTypes)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getWafLogAnalyticsRankings", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (metrics != null && !(metrics is ChangeTrackingList<WafMetric> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                foreach (var param in metrics)
+                foreach (var @param in metrics)
                 {
-                    uri.AppendQuery("metrics", param.ToString(), true);
+                    uri.AppendQuery("metrics", @param.ToString(), true);
                 }
             }
-            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
-            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            uri.AppendQuery("maxRanking", maxRanking, true);
+            uri.AppendQuery("dateTimeBegin", TypeFormatters.ConvertToString(dateTimeBegin, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("dateTimeEnd", TypeFormatters.ConvertToString(dateTimeEnd, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("maxRanking", TypeFormatters.ConvertToString(maxRanking), true);
             if (rankings != null && !(rankings is ChangeTrackingList<WafRankingType> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                foreach (var param in rankings)
+                foreach (var @param in rankings)
                 {
-                    uri.AppendQuery("rankings", param.ToString(), true);
+                    uri.AppendQuery("rankings", @param.ToString(), true);
                 }
             }
             if (actions != null && !(actions is ChangeTrackingList<WafAction> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                foreach (var param in actions)
+                foreach (var @param in actions)
                 {
-                    uri.AppendQuery("actions", param.ToString(), true);
+                    uri.AppendQuery("actions", @param.ToString(), true);
                 }
             }
             if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
-                foreach (var param in ruleTypes)
+                foreach (var @param in ruleTypes)
                 {
-                    uri.AppendQuery("ruleTypes", param.ToString(), true);
+                    uri.AppendQuery("ruleTypes", @param.ToString(), true);
                 }
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateGetWafLogAnalyticsRankingsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions, IEnumerable<WafRuleType> ruleTypes)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
-            uri.AppendPath(profileName, true);
-            uri.AppendPath("/getWafLogAnalyticsRankings", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (metrics != null && !(metrics is ChangeTrackingList<WafMetric> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                foreach (var param in metrics)
-                {
-                    uri.AppendQuery("metrics", param.ToString(), true);
-                }
-            }
-            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
-            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            uri.AppendQuery("maxRanking", maxRanking, true);
-            if (rankings != null && !(rankings is ChangeTrackingList<WafRankingType> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var param in rankings)
-                {
-                    uri.AppendQuery("rankings", param.ToString(), true);
-                }
-            }
-            if (actions != null && !(actions is ChangeTrackingList<WafAction> changeTrackingList1 && changeTrackingList1.IsUndefined))
-            {
-                foreach (var param in actions)
-                {
-                    uri.AppendQuery("actions", param.ToString(), true);
-                }
-            }
-            if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
-            {
-                foreach (var param in ruleTypes)
-                {
-                    uri.AppendQuery("ruleTypes", param.ToString(), true);
-                }
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Get WAF log analytics charts for AFD profile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
-        /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="maxRanking"> The <see cref="int"/> to use. </param>
-        /// <param name="rankings"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafRankingType"/> to use. </param>
-        /// <param name="actions"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafAction"/> to use. </param>
-        /// <param name="ruleTypes"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafRuleType"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WafRankingsResponse>> GetWafLogAnalyticsRankingsAsync(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(rankings, nameof(rankings));
-
-            using var message = CreateGetWafLogAnalyticsRankingsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        WafRankingsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = WafRankingsResponse.DeserializeWafRankingsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get WAF log analytics charts for AFD profile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="metrics"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafMetric"/> to use. </param>
-        /// <param name="dateTimeBegin"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="dateTimeEnd"> The <see cref="DateTimeOffset"/> to use. </param>
-        /// <param name="maxRanking"> The <see cref="int"/> to use. </param>
-        /// <param name="rankings"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafRankingType"/> to use. </param>
-        /// <param name="actions"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafAction"/> to use. </param>
-        /// <param name="ruleTypes"> The <see cref="IEnumerable{T}"/> where <c>T</c> is of type <see cref="WafRuleType"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WafRankingsResponse> GetWafLogAnalyticsRankings(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions = null, IEnumerable<WafRuleType> ruleTypes = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(metrics, nameof(metrics));
-            Argument.AssertNotNull(rankings, nameof(rankings));
-
-            using var message = CreateGetWafLogAnalyticsRankingsRequest(subscriptionId, resourceGroupName, profileName, metrics, dateTimeBegin, dateTimeEnd, maxRanking, rankings, actions, ruleTypes);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        WafRankingsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = WafRankingsResponse.DeserializeWafRankingsResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

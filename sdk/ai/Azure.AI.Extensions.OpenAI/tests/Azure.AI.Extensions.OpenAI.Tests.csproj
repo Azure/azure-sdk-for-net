@@ -15,7 +15,6 @@
     <ProjectReference Include="..\..\Azure.AI.Extensions.OpenAI\src\Azure.AI.Extensions.OpenAI.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
     <PackageReference Include="Microsoft.ClientModel.TestFramework" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />

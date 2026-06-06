@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
-using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -65,25 +64,44 @@ internal class NameVisitor : ScmLibraryVisitor
             return null;
         }
 
-        if (TryTransformUrlToUri(model.Name, out var newName))
+        type = base.PreVisitModel(model, type);
+        if (type is null)
+        {
+            return null;
+        }
+
+        if (TryTransformUrlToUri(type.Name, out var newName))
         {
             type.Update(name: newName);
         }
 
         if (_knownTypes.Contains(model.Name))
         {
-            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
+            // Compose with type.Name (not model.Name) so any prior provider-level rename
+            // (e.g. ResourceDataModelProvider's "Data" suffix) is preserved.
+            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{type.Name}";
             type.Update(name: newName);
         }
 
         if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName, out var isAlsoUsedInCreate))
         {
-            newName = isAlsoUsedInCreate
-                ? $"{enclosingResourceName}CreateOrUpdateContent"
-                : $"{enclosingResourceName}Patch";
-            type.Update(name: newName);
+            // Honor user-provided @@clientName(.., "csharp") only on the patch-only path.
+            // When the same model is also used as the Create body we always rename to
+            // {Resource}CreateOrUpdateContent to keep the Create/Update parameter type
+            // consistent across the SDK surface.
+            if (isAlsoUsedInCreate)
+            {
+                newName = $"{enclosingResourceName}CreateOrUpdateContent";
+                type.Update(name: newName);
+            }
+            else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
+            {
+                // PATCH-only payloads use {Resource}Patch unless the service provided an explicit clientName.
+                newName = $"{enclosingResourceName}Patch";
+                type.Update(name: newName);
+            }
         }
-        return base.PreVisitModel(model, type);
+        return type;
     }
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
@@ -102,7 +120,7 @@ internal class NameVisitor : ScmLibraryVisitor
             return;
         }
         var enclosingType = propertyProvider.EnclosingType;
-        if (enclosingType is not InheritableSystemObjectModelProvider modelProvider
+        if (enclosingType is not SystemObjectModelProvider modelProvider
             || modelProvider.CrossLanguageDefinitionId?.Equals(KnownManagementTypes.ArmResourceId) != true)
         {
             return;

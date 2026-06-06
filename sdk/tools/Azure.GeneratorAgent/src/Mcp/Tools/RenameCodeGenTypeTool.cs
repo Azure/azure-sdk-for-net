@@ -146,7 +146,7 @@ public static class RenameCodeGenTypeTool
     private static List<(string ClassName, string FilePath)> FindCustomTypesWithSuffix(string srcPath, string generatedPath, string suffix)
     {
         var results = new List<(string, string)>();
-        var normalizedGenerated = Path.GetFullPath(generatedPath);
+        var normalizedGenerated = Path.TrimEndingDirectorySeparator(Path.GetFullPath(generatedPath)) + Path.DirectorySeparatorChar;
 
         foreach (var file in Directory.GetFiles(srcPath, "*.cs", SearchOption.AllDirectories))
         {

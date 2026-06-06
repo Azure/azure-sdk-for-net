@@ -7,12 +7,21 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The action to take when an unauthenticated client attempts to access the app. </summary>
+    /// <summary>
+    /// The action to take when an unauthenticated client attempts to access the app.
+    /// Serialized Name: UnauthenticatedClientAction
+    /// </summary>
     public enum UnauthenticatedClientAction
     {
-        /// <summary> RedirectToLoginPage. </summary>
+        /// <summary>
+        /// RedirectToLoginPage
+        /// Serialized Name: UnauthenticatedClientAction.RedirectToLoginPage
+        /// </summary>
         RedirectToLoginPage,
-        /// <summary> AllowAnonymous. </summary>
+        /// <summary>
+        /// AllowAnonymous
+        /// Serialized Name: UnauthenticatedClientAction.AllowAnonymous
+        /// </summary>
         AllowAnonymous
     }
 }

@@ -40,60 +40,6 @@ namespace Azure.Search.Documents
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary>
-        /// [Protocol Method] Queries the number of documents in the index.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDocumentCount(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocumentCount");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDocumentCountRequest(context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Queries the number of documents in the index.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDocumentCountAsync(RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocumentCount");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDocumentCountRequest(context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         /// <summary> Queries the number of documents in the index. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -547,7 +493,7 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDocument(string key, string querySourceAuthorization, bool? enableElevatedRead, IEnumerable<string> selectedFields, RequestContext context)
+        public virtual Response GetDocument(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocument");
             scope.Start();
@@ -582,7 +528,7 @@ namespace Azure.Search.Documents
         /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDocumentAsync(string key, string querySourceAuthorization, bool? enableElevatedRead, IEnumerable<string> selectedFields, RequestContext context)
+        public virtual async Task<Response> GetDocumentAsync(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocument");
             scope.Start();
@@ -598,40 +544,6 @@ namespace Azure.Search.Documents
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Retrieves a document from the index. </summary>
-        /// <param name="key"> The key of the document to retrieve. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
-        /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<LookupDocument> GetDocument(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            Response result = GetDocument(key, querySourceAuthorization, enableElevatedRead, selectedFields, cancellationToken.ToRequestContext());
-            return Response.FromValue((LookupDocument)result, result);
-        }
-
-        /// <summary> Retrieves a document from the index. </summary>
-        /// <param name="key"> The key of the document to retrieve. </param>
-        /// <param name="querySourceAuthorization"> Token identifying the user for which the query is being executed. This token is used to enforce security restrictions on documents. </param>
-        /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
-        /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<LookupDocument>> GetDocumentAsync(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-
-            Response result = await GetDocumentAsync(key, querySourceAuthorization, enableElevatedRead, selectedFields, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((LookupDocument)result, result);
         }
 
         /// <summary>

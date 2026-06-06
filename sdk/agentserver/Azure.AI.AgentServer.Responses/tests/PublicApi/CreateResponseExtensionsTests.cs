@@ -301,6 +301,70 @@ public class CreateResponseExtensionsTests
         Assert.That(ex.InnerException, Is.Not.Null);
     }
 
+    [Test]
+    public void GetInputExpanded_StringContent_NormalizedToArray()
+    {
+        // content is a plain JSON string — should be auto-expanded to array form
+        var json = """[{"type":"message","role":"user","content":"Hello world"}]""";
+        var request = new CreateResponse
+        {
+            Input = BinaryData.FromString(json),
+        };
+
+        var result = request.GetInputExpanded();
+
+        var itemMsg = XAssert.IsType<ItemMessage>(XAssert.Single(result));
+
+        // Content BinaryData should now be a JSON array, not a string
+        using var doc = System.Text.Json.JsonDocument.Parse(itemMsg.Content.ToMemory());
+        Assert.That(doc.RootElement.ValueKind, Is.EqualTo(System.Text.Json.JsonValueKind.Array));
+
+        // GetContentExpanded should still work correctly
+        var content = itemMsg.GetContentExpanded();
+        var textContent = XAssert.IsType<MessageContentInputTextContent>(XAssert.Single(content));
+        Assert.That(textContent.Text, Is.EqualTo("Hello world"));
+    }
+
+    [Test]
+    public void GetInputExpanded_ArrayContent_RemainsUnchanged()
+    {
+        // content is already an array — should pass through without re-serialization
+        var json = """[{"type":"message","role":"user","content":[{"type":"input_text","text":"Already expanded"}]}]""";
+        var request = new CreateResponse
+        {
+            Input = BinaryData.FromString(json),
+        };
+
+        var result = request.GetInputExpanded();
+
+        var itemMsg = XAssert.IsType<ItemMessage>(XAssert.Single(result));
+        using var doc = System.Text.Json.JsonDocument.Parse(itemMsg.Content.ToMemory());
+        Assert.That(doc.RootElement.ValueKind, Is.EqualTo(System.Text.Json.JsonValueKind.Array));
+
+        var content = itemMsg.GetContentExpanded();
+        var textContent = XAssert.IsType<MessageContentInputTextContent>(XAssert.Single(content));
+        Assert.That(textContent.Text, Is.EqualTo("Already expanded"));
+    }
+
+    [Test]
+    public void GetInputText_StringContent_ExtractsTextCorrectly()
+    {
+        // Ensures GetInputText works when content is a string shorthand
+        var json = """
+        [
+            {"type":"message","role":"user","content":"First message"},
+            {"type":"message","role":"user","content":[{"type":"input_text","text":"Second message"}]}
+        ]
+        """;
+        var request = new CreateResponse
+        {
+            Input = BinaryData.FromString(json),
+        };
+
+        var result = request.GetInputText();
+        Assert.That(result, Is.EqualTo("First message\nSecond message"));
+    }
+
     // ── GetInputText ──────────────────────────────────────────────────
 
     [Test]

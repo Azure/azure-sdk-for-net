@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The standby pool profile reference. </summary>
     public partial class StandbyPoolProfileDefinition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StandbyPoolProfileDefinition"/>. </summary>
         public StandbyPoolProfileDefinition()
@@ -54,16 +25,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="StandbyPoolProfileDefinition"/>. </summary>
         /// <param name="id"> The standby pool profile reference id.This will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyPoolName}'. </param>
         /// <param name="failContainerGroupCreateOnReuseFailure"> The flag to determine whether ACI should fail the create request if the container group can not be obtained from standby pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyPoolProfileDefinition(ResourceIdentifier id, bool? failContainerGroupCreateOnReuseFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StandbyPoolProfileDefinition(ResourceIdentifier id, bool? failContainerGroupCreateOnReuseFailure, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             FailContainerGroupCreateOnReuseFailure = failContainerGroupCreateOnReuseFailure;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The standby pool profile reference id.This will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyPoolName}'. </summary>
         public ResourceIdentifier Id { get; set; }
+
         /// <summary> The flag to determine whether ACI should fail the create request if the container group can not be obtained from standby pool. </summary>
         public bool? FailContainerGroupCreateOnReuseFailure { get; set; }
     }

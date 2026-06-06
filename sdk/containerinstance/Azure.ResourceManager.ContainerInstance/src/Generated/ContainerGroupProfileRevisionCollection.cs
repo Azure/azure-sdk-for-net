@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.ContainerInstance
     /// </summary>
     public partial class ContainerGroupProfileRevisionCollection : ArmCollection, IEnumerable<ContainerGroupProfileRevisionResource>, IAsyncEnumerable<ContainerGroupProfileRevisionResource>
     {
-        private readonly ClientDiagnostics _containerGroupProfileRevisionCGProfileClientDiagnostics;
-        private readonly CGProfileRestOperations _containerGroupProfileRevisionCGProfileRestClient;
+        private readonly ClientDiagnostics _cgProfileClientDiagnostics;
+        private readonly CGProfile _cgProfileRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerGroupProfileRevisionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerGroupProfileRevisionCollection for mocking. </summary>
         protected ContainerGroupProfileRevisionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerGroupProfileRevisionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileRevisionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerGroupProfileRevisionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerGroupProfileRevisionCGProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupProfileRevisionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerGroupProfileRevisionResource.ResourceType, out string containerGroupProfileRevisionCGProfileApiVersion);
-            _containerGroupProfileRevisionCGProfileRestClient = new CGProfileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerGroupProfileRevisionCGProfileApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ContainerGroupProfileRevisionResource.ResourceType, out string containerGroupProfileRevisionApiVersion);
+            _cgProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupProfileRevisionResource.ResourceType.Namespace, Diagnostics);
+            _cgProfileRestClient = new CGProfile(_cgProfileClientDiagnostics, Pipeline, Endpoint, containerGroupProfileRevisionApiVersion ?? "2025-09-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerGroupProfileResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerGroupProfileResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerGroupProfileResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the properties of the specified revision of the container group profile in the given subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CGProfile_GetByRevisionNumber</description>
+        /// <term> Operation Id. </term>
+        /// <description> CGProfile_GetByRevisionNumber. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupProfileRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionNumber"> The revision number of the container group profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ContainerGroupProfileRevisionResource>> GetAsync(string revisionNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionNumber, nameof(revisionNumber));
 
-            using var scope = _containerGroupProfileRevisionCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionCollection.Get");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _containerGroupProfileRevisionCGProfileRestClient.GetByRevisionNumberAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionNumber, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerGroupProfileRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Gets the properties of the specified revision of the container group profile in the given subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CGProfile_GetByRevisionNumber</description>
+        /// <term> Operation Id. </term>
+        /// <description> CGProfile_GetByRevisionNumber. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupProfileRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionNumber"> The revision number of the container group profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ContainerGroupProfileRevisionResource> Get(string revisionNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionNumber, nameof(revisionNumber));
 
-            using var scope = _containerGroupProfileRevisionCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionCollection.Get");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionCollection.Get");
             scope.Start();
             try
             {
-                var response = _containerGroupProfileRevisionCGProfileRestClient.GetByRevisionNumber(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionNumber, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerGroupProfileData> response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerGroupProfileRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,50 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Get a list of all the revisions of the specified container group profile in the given subscription and resource group. This operation returns properties of each revision of the specified container group profile including containers, image registry credentials, restart policy, IP address type, OS type volumes, revision number, etc.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CGProfile_ListAllRevisions</description>
+        /// <term> Operation Id. </term>
+        /// <description> CGProfile_ListAllRevisions. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupProfileRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerGroupProfileRevisionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerGroupProfileRevisionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerGroupProfileRevisionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupProfileRevisionCGProfileRestClient.CreateListAllRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerGroupProfileRevisionCGProfileRestClient.CreateListAllRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupProfileRevisionResource(Client, ContainerGroupProfileData.DeserializeContainerGroupProfileData(e)), _containerGroupProfileRevisionCGProfileClientDiagnostics, Pipeline, "ContainerGroupProfileRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ContainerGroupProfileData, ContainerGroupProfileRevisionResource>(new CGProfileGetAllRevisionsAsyncCollectionResultOfT(
+                _cgProfileRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerGroupProfileRevisionCollection.GetAll"), data => new ContainerGroupProfileRevisionResource(Client, data));
         }
 
         /// <summary>
         /// Get a list of all the revisions of the specified container group profile in the given subscription and resource group. This operation returns properties of each revision of the specified container group profile including containers, image registry credentials, restart policy, IP address type, OS type volumes, revision number, etc.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CGProfile_ListAllRevisions</description>
+        /// <term> Operation Id. </term>
+        /// <description> CGProfile_ListAllRevisions. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupProfileRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +207,67 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="ContainerGroupProfileRevisionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerGroupProfileRevisionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupProfileRevisionCGProfileRestClient.CreateListAllRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerGroupProfileRevisionCGProfileRestClient.CreateListAllRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupProfileRevisionResource(Client, ContainerGroupProfileData.DeserializeContainerGroupProfileData(e)), _containerGroupProfileRevisionCGProfileClientDiagnostics, Pipeline, "ContainerGroupProfileRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ContainerGroupProfileData, ContainerGroupProfileRevisionResource>(new CGProfileGetAllRevisionsCollectionResultOfT(
+                _cgProfileRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ContainerGroupProfileRevisionCollection.GetAll"), data => new ContainerGroupProfileRevisionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CGProfile_GetByRevisionNumber</description>
+        /// <term> Operation Id. </term>
+        /// <description> CGProfile_GetByRevisionNumber. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupProfileRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionNumber"> The revision number of the container group profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string revisionNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionNumber, nameof(revisionNumber));
 
-            using var scope = _containerGroupProfileRevisionCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionCollection.Exists");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _containerGroupProfileRevisionCGProfileRestClient.GetByRevisionNumberAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionNumber, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerGroupProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerGroupProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +281,50 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CGProfile_GetByRevisionNumber</description>
+        /// <term> Operation Id. </term>
+        /// <description> CGProfile_GetByRevisionNumber. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupProfileRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionNumber"> The revision number of the container group profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string revisionNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionNumber, nameof(revisionNumber));
 
-            using var scope = _containerGroupProfileRevisionCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionCollection.Exists");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _containerGroupProfileRevisionCGProfileRestClient.GetByRevisionNumber(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionNumber, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerGroupProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerGroupProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +338,54 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CGProfile_GetByRevisionNumber</description>
+        /// <term> Operation Id. </term>
+        /// <description> CGProfile_GetByRevisionNumber. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupProfileRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionNumber"> The revision number of the container group profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ContainerGroupProfileRevisionResource>> GetIfExistsAsync(string revisionNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionNumber, nameof(revisionNumber));
 
-            using var scope = _containerGroupProfileRevisionCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionCollection.GetIfExists");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _containerGroupProfileRevisionCGProfileRestClient.GetByRevisionNumberAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionNumber, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerGroupProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerGroupProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerGroupProfileRevisionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerGroupProfileRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +399,54 @@ namespace Azure.ResourceManager.ContainerInstance
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}/revisions/{revisionNumber}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CGProfile_GetByRevisionNumber</description>
+        /// <term> Operation Id. </term>
+        /// <description> CGProfile_GetByRevisionNumber. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerGroupProfileRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionNumber"> The revision number of the container group profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionNumber"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionNumber"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ContainerGroupProfileRevisionResource> GetIfExists(string revisionNumber, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionNumber, nameof(revisionNumber));
 
-            using var scope = _containerGroupProfileRevisionCGProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionCollection.GetIfExists");
+            using DiagnosticScope scope = _cgProfileClientDiagnostics.CreateScope("ContainerGroupProfileRevisionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _containerGroupProfileRevisionCGProfileRestClient.GetByRevisionNumber(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionNumber, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _cgProfileRestClient.CreateGetByRevisionNumberRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionNumber, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerGroupProfileData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerGroupProfileData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerGroupProfileData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerGroupProfileRevisionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerGroupProfileRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +466,7 @@ namespace Azure.ResourceManager.ContainerInstance
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerGroupProfileRevisionResource> IAsyncEnumerable<ContainerGroupProfileRevisionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

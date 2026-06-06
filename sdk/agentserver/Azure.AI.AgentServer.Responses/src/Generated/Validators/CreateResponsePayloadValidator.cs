@@ -213,6 +213,12 @@ internal static partial class CreateResponsePayloadValidator
         {
             if (safetyIdentifierProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.safety_identifier", $"Expected string, got {safetyIdentifierProp.ValueKind}"));
+            else
+            {
+                var strVal = safetyIdentifierProp.GetString()!;
+                if (strVal.Length > 64)
+                    errors.Add(new ValidationError("$.safety_identifier", $"String length {strVal.Length} exceeds maximum 64"));
+            }
         }
 
         // Optional: service_tier

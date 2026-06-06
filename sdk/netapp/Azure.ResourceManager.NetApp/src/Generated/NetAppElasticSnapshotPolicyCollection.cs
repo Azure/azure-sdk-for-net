@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppElasticSnapshotPolicyCollection : ArmCollection, IEnumerable<NetAppElasticSnapshotPolicyResource>, IAsyncEnumerable<NetAppElasticSnapshotPolicyResource>
     {
-        private readonly ClientDiagnostics _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics;
-        private readonly ElasticSnapshotPoliciesRestOperations _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient;
+        private readonly ClientDiagnostics _elasticSnapshotPoliciesClientDiagnostics;
+        private readonly ElasticSnapshotPolicies _elasticSnapshotPoliciesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetAppElasticSnapshotPolicyCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetAppElasticSnapshotPolicyCollection for mocking. </summary>
         protected NetAppElasticSnapshotPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetAppElasticSnapshotPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppElasticSnapshotPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetAppElasticSnapshotPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppElasticSnapshotPolicyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetAppElasticSnapshotPolicyResource.ResourceType, out string netAppElasticSnapshotPolicyElasticSnapshotPoliciesApiVersion);
-            _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient = new ElasticSnapshotPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppElasticSnapshotPolicyElasticSnapshotPoliciesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NetAppElasticSnapshotPolicyResource.ResourceType, out string netAppElasticSnapshotPolicyApiVersion);
+            _elasticSnapshotPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppElasticSnapshotPolicyResource.ResourceType.Namespace, Diagnostics);
+            _elasticSnapshotPoliciesRestClient = new ElasticSnapshotPolicies(_elasticSnapshotPoliciesClientDiagnostics, Pipeline, Endpoint, netAppElasticSnapshotPolicyApiVersion ?? "2026-01-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetAppElasticAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetAppElasticAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetAppElasticAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create a ElasticSnapshotPolicy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshotPolicies_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshotPolicies_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticSnapshotPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="snapshotPolicyName"> The name of the ElasticSnapshotPolicy. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetAppElasticSnapshotPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string snapshotPolicyName, NetAppElasticSnapshotPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _elasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<NetAppElasticSnapshotPolicyResource>(new NetAppElasticSnapshotPolicyOperationSource(Client), _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics, Pipeline, _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, snapshotPolicyName, NetAppElasticSnapshotPolicyData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetAppArmOperation<NetAppElasticSnapshotPolicyResource> operation = new NetAppArmOperation<NetAppElasticSnapshotPolicyResource>(
+                    new NetAppElasticSnapshotPolicyResourceOperationSource(Client),
+                    _elasticSnapshotPoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.NetApp
         /// Create a ElasticSnapshotPolicy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshotPolicies_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshotPolicies_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticSnapshotPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="snapshotPolicyName"> The name of the ElasticSnapshotPolicy. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetAppElasticSnapshotPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string snapshotPolicyName, NetAppElasticSnapshotPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _elasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, data, cancellationToken);
-                var operation = new NetAppArmOperation<NetAppElasticSnapshotPolicyResource>(new NetAppElasticSnapshotPolicyOperationSource(Client), _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics, Pipeline, _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, snapshotPolicyName, NetAppElasticSnapshotPolicyData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetAppArmOperation<NetAppElasticSnapshotPolicyResource> operation = new NetAppArmOperation<NetAppElasticSnapshotPolicyResource>(
+                    new NetAppElasticSnapshotPolicyResourceOperationSource(Client),
+                    _elasticSnapshotPoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.NetApp
         /// Get a ElasticSnapshotPolicy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshotPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshotPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticSnapshotPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotPolicyName"> The name of the ElasticSnapshotPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetAppElasticSnapshotPolicyResource>> GetAsync(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
 
-            using var scope = _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.Get");
+            using DiagnosticScope scope = _elasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, snapshotPolicyName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetAppElasticSnapshotPolicyData> response = Response.FromValue(NetAppElasticSnapshotPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetAppElasticSnapshotPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.NetApp
         /// Get a ElasticSnapshotPolicy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshotPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshotPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticSnapshotPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotPolicyName"> The name of the ElasticSnapshotPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetAppElasticSnapshotPolicyResource> Get(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
 
-            using var scope = _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.Get");
+            using DiagnosticScope scope = _elasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, snapshotPolicyName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetAppElasticSnapshotPolicyData> response = Response.FromValue(NetAppElasticSnapshotPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetAppElasticSnapshotPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.NetApp
         /// List ElasticSnapshotPolicy resources by ElasticAccount
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshotPolicies_ListByElasticAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshotPolicies_ListByElasticAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticSnapshotPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppElasticSnapshotPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetAppElasticSnapshotPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppElasticSnapshotPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.CreateListByElasticAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.CreateListByElasticAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppElasticSnapshotPolicyResource(Client, NetAppElasticSnapshotPolicyData.DeserializeNetAppElasticSnapshotPolicyData(e)), _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics, Pipeline, "NetAppElasticSnapshotPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetAppElasticSnapshotPolicyData, NetAppElasticSnapshotPolicyResource>(new ElasticSnapshotPoliciesGetByElasticAccountAsyncCollectionResultOfT(
+                _elasticSnapshotPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetAppElasticSnapshotPolicyCollection.GetAll"), data => new NetAppElasticSnapshotPolicyResource(Client, data));
         }
 
         /// <summary>
         /// List ElasticSnapshotPolicy resources by ElasticAccount
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshotPolicies_ListByElasticAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshotPolicies_ListByElasticAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticSnapshotPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="NetAppElasticSnapshotPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppElasticSnapshotPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.CreateListByElasticAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.CreateListByElasticAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppElasticSnapshotPolicyResource(Client, NetAppElasticSnapshotPolicyData.DeserializeNetAppElasticSnapshotPolicyData(e)), _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics, Pipeline, "NetAppElasticSnapshotPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetAppElasticSnapshotPolicyData, NetAppElasticSnapshotPolicyResource>(new ElasticSnapshotPoliciesGetByElasticAccountCollectionResultOfT(
+                _elasticSnapshotPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "NetAppElasticSnapshotPolicyCollection.GetAll"), data => new NetAppElasticSnapshotPolicyResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshotPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshotPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticSnapshotPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotPolicyName"> The name of the ElasticSnapshotPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
 
-            using var scope = _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.Exists");
+            using DiagnosticScope scope = _elasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, snapshotPolicyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetAppElasticSnapshotPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetAppElasticSnapshotPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetAppElasticSnapshotPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.NetApp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshotPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshotPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticSnapshotPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotPolicyName"> The name of the ElasticSnapshotPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
 
-            using var scope = _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.Exists");
+            using DiagnosticScope scope = _elasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, snapshotPolicyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetAppElasticSnapshotPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetAppElasticSnapshotPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetAppElasticSnapshotPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshotPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshotPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticSnapshotPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotPolicyName"> The name of the ElasticSnapshotPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetAppElasticSnapshotPolicyResource>> GetIfExistsAsync(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
 
-            using var scope = _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _elasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, snapshotPolicyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetAppElasticSnapshotPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetAppElasticSnapshotPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetAppElasticSnapshotPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetAppElasticSnapshotPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetAppElasticSnapshotPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticSnapshotPolicies/{snapshotPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticSnapshotPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticSnapshotPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticSnapshotPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotPolicyName"> The name of the ElasticSnapshotPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetAppElasticSnapshotPolicyResource> GetIfExists(string snapshotPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotPolicyName, nameof(snapshotPolicyName));
 
-            using var scope = _netAppElasticSnapshotPolicyElasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _elasticSnapshotPoliciesClientDiagnostics.CreateScope("NetAppElasticSnapshotPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _netAppElasticSnapshotPolicyElasticSnapshotPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotPolicyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticSnapshotPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, snapshotPolicyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetAppElasticSnapshotPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetAppElasticSnapshotPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetAppElasticSnapshotPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetAppElasticSnapshotPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetAppElasticSnapshotPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.NetApp
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetAppElasticSnapshotPolicyResource> IAsyncEnumerable<NetAppElasticSnapshotPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

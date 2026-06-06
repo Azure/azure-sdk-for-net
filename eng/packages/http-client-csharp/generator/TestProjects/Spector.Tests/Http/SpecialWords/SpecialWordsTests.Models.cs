@@ -285,5 +285,23 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
             var response = await client.SameAsModelAsync(body);
             NUnit.Framework.Assert.AreEqual(204, response.Status);
         });
+
+        [SpectorTest]
+        public Task ModelProperties_DictMethodsAsync() => Test(async (host) =>
+        {
+            DictMethods body = new DictMethods("ok", "ok", "ok", "ok", "ok", "ok", "ok", "ok", "ok", "ok");
+            var client = new SpecialWordsClient(host, null).GetModelPropertiesClient();
+            var response = await client.DictMethodsAsync(body);
+            NUnit.Framework.Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
+        public Task ModelProperties_WithListAsync() => Test(async (host) =>
+        {
+            ModelWithList body = new ModelWithList("ok");
+            var client = new SpecialWordsClient(host, null).GetModelPropertiesClient();
+            var response = await client.WithListAsync(body);
+            NUnit.Framework.Assert.AreEqual(204, response.Status);
+        });
     }
 }

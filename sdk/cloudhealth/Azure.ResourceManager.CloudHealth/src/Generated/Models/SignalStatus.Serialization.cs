@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
+            if (Optional.IsDefined(AdditionalContext))
+            {
+                writer.WritePropertyName("additionalContext"u8);
+                writer.WriteStringValue(AdditionalContext);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,6 +145,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             double? value = default;
             DateTimeOffset? reportedOn = default;
             string error = default;
+            string additionalContext = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,12 +181,23 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     error = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("additionalContext"u8))
+                {
+                    additionalContext = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SignalStatus(healthState, value, reportedOn, error, additionalBinaryDataProperties);
+            return new SignalStatus(
+                healthState,
+                value,
+                reportedOn,
+                error,
+                additionalContext,
+                additionalBinaryDataProperties);
         }
     }
 }

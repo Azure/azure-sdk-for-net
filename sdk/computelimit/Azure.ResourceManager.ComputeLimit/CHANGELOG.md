@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2026-06-04)
+
+### Features Added
+
+- Upgraded API version to 2026-06-01.
+- Added `ComputeLimitFeatureEnableContent` and an optional `content` parameter to `ComputeLimitFeatureResource.Enable` and `EnableAsync` for passing a Service Tree ID when enabling a feature.
+
+## 1.0.0 (2026-04-30)
+
+### Features Added
+
+- Upgraded API version to 2026-04-30.
+- Added `ComputeLimitVmFamilyResource`, `ComputeLimitVmFamilyCollection`, and `ComputeLimitVmFamilyData` for managing VM family resources.
+- Added `Disable` operation on `ComputeLimitFeatureResource`.
 
 ## 1.0.0-beta.1 (2025-11-21)
 

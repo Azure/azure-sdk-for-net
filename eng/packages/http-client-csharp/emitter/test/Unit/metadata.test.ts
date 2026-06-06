@@ -191,4 +191,59 @@ describe("Metadata generation tests", async () => {
     ok(keys.length >= 1, "apiVersions should have at least one service entry");
     strictEqual(parsed.apiVersions["ServiceA"], "2024-01-01");
   });
+
+  it("Ensures output directory exists before writing metadata.json", async () => {
+    const runner = await createEmitterTestHost();
+    const program = await typeSpecCompile(
+      `
+      @service(#{
+        title: "Test Service",
+      })
+      namespace TestService {
+        @get
+        op getItem(): string;
+      }
+      `,
+      runner
+    );
+
+    // Track call order to verify mkdirp is called before writeFile
+    const callOrder: string[] = [];
+    const trackedWriteFileMock = vi.fn().mockImplementation(async () => {
+      callOrder.push("writeFile");
+    });
+    const trackedMkdirpMock = vi.fn().mockImplementation(async () => {
+      callOrder.push("mkdirp");
+    });
+
+    const originalHost = program.host;
+    program.host = {
+      ...originalHost,
+      writeFile: trackedWriteFileMock,
+      mkdirp: trackedMkdirpMock
+    };
+
+    const options: AzureEmitterOptions = {};
+    const context = createEmitterContext(program, options);
+
+    await $onEmit(context);
+
+    // Verify mkdirp was called with the emitter output directory
+    strictEqual(trackedMkdirpMock.mock.calls.length, 1);
+    const mkdirpPath = trackedMkdirpMock.mock.calls[0][0];
+    ok(
+      mkdirpPath === context.emitterOutputDir,
+      "mkdirp should be called with the emitter output directory"
+    );
+
+    // Verify mkdirp was called before writeFile for metadata.json
+    const mkdirpIndex = callOrder.indexOf("mkdirp");
+    const writeFileIndex = callOrder.indexOf("writeFile");
+    ok(mkdirpIndex !== -1, "mkdirp should have been called");
+    ok(writeFileIndex !== -1, "writeFile should have been called");
+    ok(
+      mkdirpIndex < writeFileIndex,
+      "mkdirp should be called before writeFile to ensure the output directory exists"
+    );
+  });
 });

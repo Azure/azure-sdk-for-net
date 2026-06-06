@@ -24,16 +24,32 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
     private readonly string? _agentVersion;
     private readonly string? _agentId;
     private readonly string? _projectId;
+    private readonly string? _blueprintId;
+    private readonly string? _tenantId;
+    private readonly string? _agentType;
 
     public FoundryEnrichmentProcessor()
     {
         _agentName = FoundryEnvironment.AgentName;
         _agentVersion = FoundryEnvironment.AgentVersion;
         _projectId = FoundryEnvironment.ProjectArmId;
+        _blueprintId = FoundryEnvironment.AgentBlueprintClientId;
+        _tenantId = FoundryEnvironment.AgentTenantId;
+        _agentType = FoundryEnvironment.IsHosted ? "hosted" : null;
 
-        _agentId = _agentName is not null && _agentVersion is not null
-            ? $"{_agentName}:{_agentVersion}"
-            : _agentName;
+        // Agent ID resolution: prefer instance client ID (managed identity),
+        // fall back to name:version or just name.
+        var instanceClientId = FoundryEnvironment.AgentInstanceClientId;
+        if (!string.IsNullOrEmpty(instanceClientId))
+        {
+            _agentId = instanceClientId;
+        }
+        else
+        {
+            _agentId = _agentName is not null && _agentVersion is not null
+                ? $"{_agentName}:{_agentVersion}"
+                : _agentName;
+        }
     }
 
     /// <inheritdoc/>
@@ -42,6 +58,23 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
         if (_projectId is not null)
         {
             activity.SetTag("microsoft.foundry.project.id", _projectId);
+        }
+
+        // Session ID and conversation ID are correlation IDs propagated via
+        // OTel baggage by the calling service / hosting packages. Stamp them
+        // as span attributes so every span (root + framework child) carries
+        // them without extra plumbing. The two are independent — no fallback
+        // between them.
+        var sessionId = activity.GetBaggageItem("azure.ai.agentserver.session_id");
+        if (!string.IsNullOrWhiteSpace(sessionId))
+        {
+            activity.SetTag("microsoft.session.id", sessionId);
+        }
+
+        var conversationId = activity.GetBaggageItem("azure.ai.agentserver.conversation_id");
+        if (!string.IsNullOrWhiteSpace(conversationId))
+        {
+            activity.SetTag("gen_ai.conversation.id", conversationId);
         }
     }
 
@@ -66,6 +99,21 @@ internal sealed class FoundryEnrichmentProcessor : BaseProcessor<Activity>
         if (_agentId is not null)
         {
             activity.SetTag("gen_ai.agent.id", _agentId);
+        }
+
+        if (!string.IsNullOrEmpty(_blueprintId))
+        {
+            activity.SetTag("microsoft.a365.agent.blueprint.id", _blueprintId);
+        }
+
+        if (!string.IsNullOrEmpty(_tenantId))
+        {
+            activity.SetTag("microsoft.tenant.id", _tenantId);
+        }
+
+        if (_agentType is not null)
+        {
+            activity.SetTag("microsoft.foundry.agent.type", _agentType);
         }
     }
 }

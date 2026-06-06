@@ -97,6 +97,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
             writer.WriteStringValue(AddRecommendedSignals.ToString());
             writer.WritePropertyName("specification"u8);
             writer.WriteObjectValue(Specification, options);
+            if (Optional.IsDefined(AddResourceHealthSignal))
+            {
+                writer.WritePropertyName("addResourceHealthSignal"u8);
+                writer.WriteStringValue(AddResourceHealthSignal.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
@@ -155,6 +160,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             DiscoveryRuleRelationshipDiscoveryBehavior discoverRelationships = default;
             DiscoveryRuleRecommendedSignalsBehavior addRecommendedSignals = default;
             DiscoveryRuleSpecification specification = default;
+            ResourceHealthAvailabilityStateSignalBehavior? addResourceHealthSignal = default;
             DiscoveryError error = default;
             string entityName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -194,6 +200,15 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     specification = DiscoveryRuleSpecification.DeserializeDiscoveryRuleSpecification(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("addResourceHealthSignal"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    addResourceHealthSignal = new ResourceHealthAvailabilityStateSignalBehavior(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("error"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -220,6 +235,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 discoverRelationships,
                 addRecommendedSignals,
                 specification,
+                addResourceHealthSignal,
                 error,
                 entityName,
                 additionalBinaryDataProperties);

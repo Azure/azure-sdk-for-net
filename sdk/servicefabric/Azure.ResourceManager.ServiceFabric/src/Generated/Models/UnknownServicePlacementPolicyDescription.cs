@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary> Unknown version of ServicePlacementPolicyDescription. </summary>
     internal partial class UnknownServicePlacementPolicyDescription : ServicePlacementPolicyDescription
     {
         /// <summary> Initializes a new instance of <see cref="UnknownServicePlacementPolicyDescription"/>. </summary>
-        /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownServicePlacementPolicyDescription(ServicePlacementPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(policyType, serializedAdditionalRawData)
-        {
-            PolicyType = policyType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownServicePlacementPolicyDescription"/> for deserialization. </summary>
-        internal UnknownServicePlacementPolicyDescription()
+        /// <param name="type"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownServicePlacementPolicyDescription(ServicePlacementPolicyType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

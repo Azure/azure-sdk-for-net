@@ -120,6 +120,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("aiServices"u8);
                 writer.WriteObjectValue(AiServices, options);
             }
+            if (Optional.IsDefined(AssetStore))
+            {
+                writer.WritePropertyName("assetStore"u8);
+                writer.WriteObjectValue(AssetStore, options);
+            }
+            if (Optional.IsDefined(FreshnessPolicy))
+            {
+                writer.WritePropertyName("freshnessPolicy"u8);
+                writer.WriteObjectValue(FreshnessPolicy, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -170,6 +180,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IList<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default;
             KnowledgeSourceContentExtractionMode? contentExtractionMode = default;
             AIServices aiServices = default;
+            AssetStore assetStore = default;
+            FreshnessPolicy freshnessPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -256,6 +268,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     aiServices = AIServices.DeserializeAIServices(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("assetStore"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    assetStore = AssetStore.DeserializeAssetStore(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("freshnessPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    freshnessPolicy = FreshnessPolicy.DeserializeFreshnessPolicy(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -270,6 +300,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 ingestionPermissionOptions ?? new ChangeTrackingList<KnowledgeSourceIngestionPermissionOption>(),
                 contentExtractionMode,
                 aiServices,
+                assetStore,
+                freshnessPolicy,
                 additionalBinaryDataProperties);
         }
     }

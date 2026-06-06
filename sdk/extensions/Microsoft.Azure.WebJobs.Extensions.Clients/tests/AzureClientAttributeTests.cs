@@ -38,8 +38,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
         {
             public void Run([AzureClient("Connection")] TestClient testClient)
             {
-                Assert.NotNull(testClient.Options);
-                Assert.AreEqual(testClient.Uri.AbsoluteUri, "http://localhost/");
+                Assert.That(testClient.Options, Is.Not.Null);
+                Assert.That("http://localhost/", Is.EqualTo(testClient.Uri.AbsoluteUri));
             }
         }
 
@@ -91,8 +91,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
         {
             public void Run([AzureClient("Connection")] TestClient testClient)
             {
-                Assert.NotNull(testClient.Options);
-                Assert.AreEqual(testClient.ConnectionString, "Key=Value;Key2=Value2");
+                Assert.That(testClient.Options, Is.Not.Null);
+                Assert.That("Key=Value;Key2=Value2", Is.EqualTo(testClient.ConnectionString));
             }
         }
 
@@ -121,8 +121,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
         {
             public void Run([AzureClient("%ConnectionSettingName%")] TestClient testClient)
             {
-                Assert.NotNull(testClient.Options);
-                Assert.AreEqual(testClient.ConnectionString, "Key=Value;Key2=Value2");
+                Assert.That(testClient.Options, Is.Not.Null);
+                Assert.That("Key=Value;Key2=Value2", Is.EqualTo(testClient.ConnectionString));
             }
         }
     }

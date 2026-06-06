@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Meta data about operation used for display in portal. </summary>
+    /// <summary>
+    /// Meta data about operation used for display in portal.
+    /// Serialized Name: CsmOperationDisplay
+    /// </summary>
     public partial class CsmOperationDisplay
     {
         /// <summary>
@@ -51,10 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CsmOperationDisplay"/>. </summary>
-        /// <param name="provider"></param>
-        /// <param name="resource"></param>
-        /// <param name="operation"></param>
-        /// <param name="description"></param>
+        /// <param name="provider"> Serialized Name: CsmOperationDisplay.provider. </param>
+        /// <param name="resource"> Serialized Name: CsmOperationDisplay.resource. </param>
+        /// <param name="operation"> Serialized Name: CsmOperationDisplay.operation. </param>
+        /// <param name="description"> Serialized Name: CsmOperationDisplay.description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CsmOperationDisplay(string provider, string resource, string operation, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +68,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the provider. </summary>
+        /// <summary> Serialized Name: CsmOperationDisplay.provider. </summary>
         [WirePath("provider")]
         public string Provider { get; }
-        /// <summary> Gets the resource. </summary>
+        /// <summary> Serialized Name: CsmOperationDisplay.resource. </summary>
         [WirePath("resource")]
         public string Resource { get; }
-        /// <summary> Gets the operation. </summary>
+        /// <summary> Serialized Name: CsmOperationDisplay.operation. </summary>
         [WirePath("operation")]
         public string Operation { get; }
-        /// <summary> Gets the description. </summary>
+        /// <summary> Serialized Name: CsmOperationDisplay.description. </summary>
         [WirePath("description")]
         public string Description { get; }
     }

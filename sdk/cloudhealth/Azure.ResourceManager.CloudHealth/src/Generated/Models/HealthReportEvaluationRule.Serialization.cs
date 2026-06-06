@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 return null;
             }
-            ThresholdRuleV2 degradedRule = default;
-            ThresholdRuleV2 unhealthyRule = default;
+            EntitySignalThresholdRuleV2 degradedRule = default;
+            EntitySignalThresholdRuleV2 unhealthyRule = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    degradedRule = ThresholdRuleV2.DeserializeThresholdRuleV2(prop.Value, options);
+                    degradedRule = EntitySignalThresholdRuleV2.DeserializeEntitySignalThresholdRuleV2(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("unhealthyRule"u8))
                 {
-                    unhealthyRule = ThresholdRuleV2.DeserializeThresholdRuleV2(prop.Value, options);
+                    unhealthyRule = EntitySignalThresholdRuleV2.DeserializeEntitySignalThresholdRuleV2(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -298,6 +298,7 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 status,
                 detailedStatus,
                 logUrl,
@@ -308,7 +309,6 @@ namespace Azure.ResourceManager.AppService
                 error,
                 usingSdk,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                kind,
                 serializedAdditionalRawData);
         }
 

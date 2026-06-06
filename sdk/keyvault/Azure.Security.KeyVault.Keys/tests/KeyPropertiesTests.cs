@@ -49,5 +49,42 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.AreEqual(expected, properties.HsmPlatform);
         }
+
+        [TestCase(@"{""kid"":""https://vault/keys/key-name""}", null)]
+        [TestCase(@"{""kid"":""https://vault/keys/key-name"",""attributes"":{""key_size"":null}}", null)]
+        [TestCase(@"{""kid"":""https://vault/keys/key-name"",""attributes"":{""key_size"":128}}", 128)]
+        [TestCase(@"{""kid"":""https://vault/keys/key-name"",""attributes"":{""key_size"":256}}", 256)]
+        public void DeserializesKeySize(string content, int? expected)
+        {
+            KeyProperties properties = new KeyProperties();
+            using (JsonStream json = new JsonStream(content))
+            {
+                properties.Deserialize(json.AsStream());
+            }
+
+            Assert.AreEqual(expected, properties.KeySize);
+        }
+
+        [TestCase(@"{""kid"":""https://vault/keys/key-name""}", null)]
+        [TestCase(@"{""kid"":""https://vault/keys/key-name"",""attributes"":{""external_key"":null}}", null)]
+        [TestCase(@"{""kid"":""https://vault/keys/key-name"",""attributes"":{""external_key"":{""id"":""ext-key-01""}}}", "ext-key-01")]
+        public void DeserializesExternalKey(string content, string expectedId)
+        {
+            KeyProperties properties = new KeyProperties();
+            using (JsonStream json = new JsonStream(content))
+            {
+                properties.Deserialize(json.AsStream());
+            }
+
+            if (expectedId is null)
+            {
+                Assert.IsNull(properties.ExternalKey);
+            }
+            else
+            {
+                Assert.IsNotNull(properties.ExternalKey);
+                Assert.AreEqual(expectedId, properties.ExternalKey.Id);
+            }
+        }
     }
 }

@@ -311,7 +311,7 @@ try {
     }
 
     # This needs to happen after we set the TenantId but before we use the ResourceGroupName
-    if ($wellKnownTMETenants.Contains($TenantId)) {
+    if ($wellKnownTMETenants.Contains($TenantId) -and !$ResourceGroupName.StartsWith("SSS3PT_", [System.StringComparison]::OrdinalIgnoreCase)) {
         # Add a prefix to the resource group name to avoid flagging the usages of local auth
         # See details at https://eng.ms/docs/products/onecert-certificates-key-vault-and-dsms/key-vault-dsms/certandsecretmngmt/credfreefaqs#how-can-i-disable-s360-reporting-when-testing-customer-facing-3p-features-that-depend-on-use-of-unsafe-local-auth
         $ResourceGroupName = "SSS3PT_" + $ResourceGroupName

@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
         private const string EqualValue = "Equal";
         /// <summary> Not equal to. </summary>
         private const string NotEqualValue = "NotEqual";
+        /// <summary> Dynamic threshold — uses deviation from a ML-computed baseline to determine health state transitions. Only valid for the unhealthy threshold rule. Requires `sensitivity` and `lookBackWindow` on the rule; `threshold` is ignored. </summary>
+        private const string DynamicValue = "Dynamic";
 
         /// <summary> Initializes a new instance of <see cref="EntitySignalOperator"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -55,6 +57,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Not equal to. </summary>
         public static EntitySignalOperator NotEqual { get; } = new EntitySignalOperator(NotEqualValue);
+
+        /// <summary> Dynamic threshold — uses deviation from a ML-computed baseline to determine health state transitions. Only valid for the unhealthy threshold rule. Requires `sensitivity` and `lookBackWindow` on the rule; `threshold` is ignored. </summary>
+        public static EntitySignalOperator Dynamic { get; } = new EntitySignalOperator(DynamicValue);
 
         /// <summary> Determines if two <see cref="EntitySignalOperator"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

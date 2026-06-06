@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the HybridConnectionLimit data model.
     /// Hybrid Connection limits contract. This is used to return the plan limits of Hybrid Connections.
+    /// Serialized Name: HybridConnectionLimits
     /// </summary>
     public partial class HybridConnectionLimitData : ResourceData
     {
@@ -60,26 +61,44 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="current"> The current number of Hybrid Connections. </param>
-        /// <param name="maximum"> The maximum number of Hybrid Connections allowed. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: HybridConnectionLimits.kind
+        /// </param>
+        /// <param name="current">
+        /// The current number of Hybrid Connections.
+        /// Serialized Name: HybridConnectionLimits.properties.current
+        /// </param>
+        /// <param name="maximum">
+        /// The maximum number of Hybrid Connections allowed.
+        /// Serialized Name: HybridConnectionLimits.properties.maximum
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridConnectionLimitData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? maximum, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal HybridConnectionLimitData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? current, int? maximum, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             Current = current;
             Maximum = maximum;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The current number of Hybrid Connections. </summary>
-        [WirePath("properties.current")]
-        public int? Current { get; }
-        /// <summary> The maximum number of Hybrid Connections allowed. </summary>
-        [WirePath("properties.maximum")]
-        public int? Maximum { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: HybridConnectionLimits.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary>
+        /// The current number of Hybrid Connections.
+        /// Serialized Name: HybridConnectionLimits.properties.current
+        /// </summary>
+        [WirePath("properties.current")]
+        public int? Current { get; }
+        /// <summary>
+        /// The maximum number of Hybrid Connections allowed.
+        /// Serialized Name: HybridConnectionLimits.properties.maximum
+        /// </summary>
+        [WirePath("properties.maximum")]
+        public int? Maximum { get; }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="queries"/> is null. </exception>
-        public OutputItemFileSearchToolCall(string id, OutputItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(OutputItemType.FileSearchCall)
+        public OutputItemFileSearchToolCall(string id, ItemFileSearchToolCallStatus status, IEnumerable<string> queries) : base(OutputItemType.FileSearchCall)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(queries, nameof(queries));
@@ -46,7 +46,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// </param>
         /// <param name="queries"> The queries used to search for files. </param>
         /// <param name="results"></param>
-        internal OutputItemFileSearchToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemFileSearchToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemFileSearchToolCallStatus status, IList<string> queries, IList<FileSearchToolCallResults> results) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -61,7 +61,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the file search tool call. One of `in_progress`,
         ///   `searching`, `incomplete` or `failed`,
         /// </summary>
-        public OutputItemFileSearchToolCallStatus Status { get; set; }
+        public ItemFileSearchToolCallStatus Status { get; set; }
 
         /// <summary> The queries used to search for files. </summary>
         public IList<string> Queries { get; }

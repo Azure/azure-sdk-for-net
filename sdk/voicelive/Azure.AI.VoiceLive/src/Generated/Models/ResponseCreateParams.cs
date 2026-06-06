@@ -79,8 +79,9 @@ namespace Azure.AI.VoiceLive
         /// This can be useful for storing additional information about the object in a structured format.
         /// Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.
         /// </param>
+        /// <param name="interimResponse"> Configuration for interim response generation during latency or tool calls. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IList<ConversationRequestItem> appendInputItems, IList<ConversationRequestItem> inputItems, IList<InteractionModality> modalities, string instructions, BinaryData voice, OutputAudioFormat? outputAudioFormat, IList<VoiceLiveToolDefinition> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, AssistantMessageItem preGeneratedAssistantMessage, ReasoningEffort? reasoningEffort, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IList<ConversationRequestItem> appendInputItems, IList<ConversationRequestItem> inputItems, IList<InteractionModality> modalities, string instructions, BinaryData voice, OutputAudioFormat? outputAudioFormat, IList<VoiceLiveToolDefinition> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, AssistantMessageItem preGeneratedAssistantMessage, ReasoningEffort? reasoningEffort, IDictionary<string, string> metadata, BinaryData interimResponse, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Commit = commit;
             CancelPrevious = cancelPrevious;
@@ -97,6 +98,7 @@ namespace Azure.AI.VoiceLive
             PreGeneratedAssistantMessage = preGeneratedAssistantMessage;
             ReasoningEffort = reasoningEffort;
             Metadata = metadata;
+            InterimResponse = interimResponse;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -257,5 +259,46 @@ namespace Azure.AI.VoiceLive
         /// Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.
         /// </summary>
         public IDictionary<string, string> Metadata { get; }
+
+        /// <summary>
+        /// Configuration for interim response generation during latency or tool calls.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="StaticInterimResponseConfig"/>. </description>
+        /// </item>
+        /// <item>
+        /// <description> <see cref="LlmInterimResponseConfig"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData InterimResponse { get; set; }
     }
 }

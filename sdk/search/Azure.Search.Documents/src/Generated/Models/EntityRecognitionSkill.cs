@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Argument.AssertNotNull(inputs, nameof(inputs));
             Argument.AssertNotNull(outputs, nameof(outputs));
 
-            EntityCategories = new ChangeTrackingList<string>();
+            Categories = new ChangeTrackingList<EntityCategory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionSkill"/>. </summary>
@@ -34,17 +34,23 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="entityCategories"> A list of entity categories that should be extracted. </param>
-        /// <param name="languageCode"> A value indicating which language code to use. Default is `en`. </param>
+        /// <param name="categories"> A list of entity categories that should be extracted. </param>
+        /// <param name="defaultLanguageCode"> A value indicating which language code to use. Default is `en`. </param>
         /// <param name="minimumPrecision"> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </param>
         /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics API. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
-        internal EntityRecognitionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> entityCategories, string languageCode, double? minimumPrecision, string modelVersion) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
+        internal EntityRecognitionSkill(string odataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<EntityCategory> categories, EntityRecognitionSkillLanguage? defaultLanguageCode, double? minimumPrecision, string modelVersion) : base(odataType, name, description, context, inputs, outputs, additionalBinaryDataProperties)
         {
-            EntityCategories = entityCategories;
-            LanguageCode = languageCode;
+            Categories = categories;
+            DefaultLanguageCode = defaultLanguageCode;
             MinimumPrecision = minimumPrecision;
             ModelVersion = modelVersion;
         }
+
+        /// <summary> A list of entity categories that should be extracted. </summary>
+        public IList<EntityCategory> Categories { get; }
+
+        /// <summary> A value indicating which language code to use. Default is `en`. </summary>
+        public EntityRecognitionSkillLanguage? DefaultLanguageCode { get; set; }
 
         /// <summary> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </summary>
         public double? MinimumPrecision { get; set; }

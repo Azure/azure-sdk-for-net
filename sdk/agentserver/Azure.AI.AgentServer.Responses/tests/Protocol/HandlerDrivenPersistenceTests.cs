@@ -155,6 +155,10 @@ public class HandlerDrivenPersistenceTests : IDisposable
         // Wait for bg task to complete
         await WaitForBackgroundCompletionAsync(responseId);
 
+        // GET returning a terminal status does not guarantee finalization
+        // (persistence) has completed — poll until UpdateResponseAsync appears.
+        await WaitForSpyCallAsync("UpdateResponseAsync");
+
         // Provider should have exactly 1 Create and 1 Update
         var calls = _spy.Calls.ToArray();
         Assert.That(calls.Count(c => c == "CreateResponseAsync"), Is.EqualTo(1));
@@ -230,6 +234,20 @@ public class HandlerDrivenPersistenceTests : IDisposable
                 if (status is "completed" or "failed" or "incomplete" or "cancelled")
                     return;
             }
+            await Task.Delay(50);
+        }
+    }
+
+    /// <summary>
+    /// Polls the spy's call log until the expected method name appears or timeout.
+    /// </summary>
+    private async Task WaitForSpyCallAsync(string methodName, TimeSpan? timeout = null)
+    {
+        var deadline = DateTimeOffset.UtcNow + (timeout ?? TimeSpan.FromSeconds(5));
+        while (DateTimeOffset.UtcNow < deadline)
+        {
+            if (_spy.Calls.Contains(methodName))
+                return;
             await Task.Delay(50);
         }
     }

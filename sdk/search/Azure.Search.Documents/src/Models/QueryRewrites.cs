@@ -1,23 +1,24 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+// search-preview:2026-05-01-preview (entire class)
 
 using System;
 using System.Text;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary>
-    /// Configuration for how semantic search returns query rewrite to the search.
+    /// Configuration for how semantic search generates query rewrites.
     /// </summary>
     public partial class QueryRewrites
     {
-        private const string QueryRewriteCountRaw = "count-";
+        private const string QueryRewritesCountRaw = "count-";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryRewrites"/> class.
         /// </summary>
-        /// <param name="rewritesType">A value that specifies whether <see cref="SemanticSearchResults.SemanticQueryRewritesResultType"/> should be returned as part of the search response.</param>
+        /// <param name="rewritesType">A value that specifies whether query rewrites should be generated to augment the search query.</param>
         public QueryRewrites(QueryRewritesType rewritesType)
         {
             Argument.AssertNotNull(rewritesType, nameof(rewritesType));
@@ -30,50 +31,57 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         internal QueryRewrites() { }
 
-        /// <summary> A value that specifies whether <see cref="SemanticSearchResults.SemanticQueryRewritesResultType"/> should be returned as part of the search response. </summary>
+        /// <summary> A value that specifies whether query rewrites should be generated to augment the search query. </summary>
         public QueryRewritesType RewritesType { get; internal set; }
 
-        /// <summary> A value that specifies the number of <see cref="SemanticSearchResults.SemanticQueryRewritesResultType"/> that should be returned as part of the search response and will default to 10. </summary>
+        /// <summary>
+        /// A value that specifies the number of query rewrites that should be generated. Optional and defaults to null,
+        /// which lets the service apply its own default (10 for <see cref="QueryRewritesType.Generative"/>).
+        /// </summary>
         public int? Count { get; set; }
 
         /// <summary>
         /// Constructed from <see cref="RewritesType"/> and <see cref="Count"/>.
         /// Examples of the values:
-        /// - "none"
-        /// - `generative|count-3`
+        /// - "generative"
+        /// - "generative|count-3"
         /// </summary>
         internal string QueryRewritesRaw
         {
             get
             {
-                StringBuilder queryRewriteStringValue = new(RewritesType.ToString());
+                StringBuilder builder = new(RewritesType.ToString());
 
                 if (Count.HasValue)
                 {
-                    queryRewriteStringValue.Append('|');
-                    queryRewriteStringValue.Append($"{QueryRewriteCountRaw}{Count.Value}");
+                    builder.Append('|');
+                    builder.Append($"{QueryRewritesCountRaw}{Count.Value}");
                 }
 
-                return queryRewriteStringValue.ToString();
+                return builder.ToString();
             }
             set
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    string[] queryRewriteValues = value.Split('|');
-                    if (!string.IsNullOrEmpty(queryRewriteValues[0]))
+                    string[] parts = value.Split('|');
+                    if (!string.IsNullOrEmpty(parts[0]))
                     {
-                        RewritesType = new QueryRewritesType(queryRewriteValues[0]);
+                        RewritesType = new QueryRewritesType(parts[0]);
                     }
 
-                    if (queryRewriteValues.Length == 2 && queryRewriteValues[1].Contains(QueryRewriteCountRaw))
+                    if (parts.Length == 2)
                     {
-                        var countPart = queryRewriteValues[1].Substring(
-                            queryRewriteValues[1].IndexOf(QueryRewriteCountRaw, StringComparison.OrdinalIgnoreCase) + QueryRewriteCountRaw.Length);
-
-                        if (int.TryParse(countPart, out int countValue))
+                        foreach (var param in parts[1].Split(','))
                         {
-                            Count = countValue;
+                            if (param.StartsWith(QueryRewritesCountRaw, StringComparison.OrdinalIgnoreCase))
+                            {
+                                var countPart = param.Substring(QueryRewritesCountRaw.Length);
+                                if (int.TryParse(countPart, out int countValue))
+                                {
+                                    Count = countValue;
+                                }
+                            }
                         }
                     }
                 }

@@ -31,22 +31,6 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public QueryCaption QueryCaption { get; set; }
 
-        /// <summary>
-        /// This parameter is only valid if the query type is `semantic`. When QueryRewrites is set to `generative`, the query terms are sent to a
-        /// generate model which will produce 10 (default) rewrites to help increase the recall of the request. The requested count can be configured
-        /// by appending the pipe character `|` followed by the `count-&lt;number of rewrites&gt;` option, such as `generative|count-3`. Defaults to `None`. </summary>
-        public QueryRewrites QueryRewrites { get; set; }
-
-        /// <summary> The list of field names used for semantic search. </summary>
-        public IList<string> SemanticFields { get; internal set; } = new List<string>();
-
-        /// <summary> Join SemanticFields so it can be sent as a comma-separated string. </summary>
-        internal string SemanticFieldsRaw
-        {
-            get => SemanticFields.CommaJoin();
-            set => SemanticFields = InternalSearchExtensions.CommaSplit(value);
-        }
-
         /// <summary> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </summary>
         public string SemanticQuery { get; set; }
 
@@ -55,5 +39,26 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </summary>
         public TimeSpan? MaxWait { get; set; }
+
+        // search-preview:2026-05-01-preview {
+        /// <summary> A value that specifies the language of the search query. </summary>
+        public QueryLanguage? QueryLanguage { get; set; }
+
+        /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
+        public QuerySpellerType? QuerySpeller { get; set; }
+
+        /// <summary>
+        /// This parameter is only valid if the query type is 'semantic'. When <see cref="QueryRewrites.RewritesType"/> is set to
+        /// <see cref="QueryRewritesType.Generative"/>, the query terms are sent to a generative model which produces alternative
+        /// query rewrites (10 by default) to help increase the recall of the request. The requested count can be configured via
+        /// <see cref="QueryRewrites.Count"/>, which serializes as e.g. 'generative|count-3'. Defaults to 'None'.
+        /// </summary>
+        public QueryRewrites QueryRewrites { get; set; }
+
+        /// <summary>
+        /// The list of field names used for semantic ranking.
+        /// </summary>
+        public IList<string> SemanticFields { get; internal set; } = new List<string>();
+        // search-preview:2026-05-01-preview }
     }
 }

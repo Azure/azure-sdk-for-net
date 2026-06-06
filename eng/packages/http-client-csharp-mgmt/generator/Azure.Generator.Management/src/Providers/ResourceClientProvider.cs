@@ -64,27 +64,26 @@ namespace Azure.Generator.Management.Providers
         private ResourceClientProvider(string resourceName, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ArmResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
-            _operationContext = OperationContext.Create(new RequestPathPattern(resourceMetadata.ResourceIdPattern));
+            _operationContext = OperationContext.Create(resourceMetadata.ResourceIdPattern);
             _inputModel = model;
 
             _resourceTypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(ResourceTypeValue));
 
-            ResourceName = resourceName;
+            ResourceName = resourceName.ToIdentifierName();
 
             _resourceServiceMethods = resourceMethods;
             _readMethod = resourceMethods.First(m => m.Kind == ResourceOperationKind.Read)!;
             ResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
 
             // Initialize client info dictionary using extension method
-            _clientInfos = resourceMetadata.CreateClientInfosMap(this);
+            _clientInfos = resourceMetadata.CreateClientInfosMap(this, resourceMethods);
 
             _dataField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, ResourceData.Type, "_data", this);
         }
 
-        internal ResourceScope ResourceScope => _resourceMetadata.ResourceScope;
-        internal string? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
-        internal string ResourceIdPattern => _resourceMetadata.ResourceIdPattern;
-        internal string? ParentResourceType => _resourceMetadata.ParentResourceType;
+        internal ResourceScope ResourceScope => _resourceMetadata.Scope.Kind;
+        internal RequestPathPattern? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
+        internal RequestPathPattern ResourceIdPattern => _resourceMetadata.ResourceIdPattern;
 
         internal bool IsExtensionResource => ResourceScope == ResourceScope.Extension;
 
@@ -139,13 +138,13 @@ namespace Azure.Generator.Management.Providers
             }
 
             // if not and this is an extension resource, we return ArmResource as the parent type as fallback
-            if (_resourceMetadata.ResourceScope == ResourceScope.Extension)
+            if (_resourceMetadata.Scope.Kind == ResourceScope.Extension)
             {
                 return typeof(ArmResource);
             }
 
             // if it does not, this resource's parent must be one of the MockableResource
-            return ManagementClientGenerator.Instance.OutputLibrary.GetMockableResourceByScope(_resourceMetadata.ResourceScope).ArmCoreType;
+            return ManagementClientGenerator.Instance.OutputLibrary.GetMockableResourceByScope(_resourceMetadata.Scope.Kind).ArmCoreType;
         }
 
         private MethodSignature? _factoryMethodSignature;
@@ -445,9 +444,11 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, bool isAsync, string? methodName, bool isFakeLro)
         {
-            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable.
+            // Long-running operations are excluded: an LRO returning an array is surfaced as
+            // ArmOperation<IReadOnlyList<T>> instead of a pageable.
             var responseBodyType = method.GetResponseBodyType();
-            if (responseBodyType != null && responseBodyType.IsList)
+            if (responseBodyType != null && responseBodyType.IsList && !method.IsLongRunningOperation())
             {
                 return new ArrayResponseOperationMethodProvider(this, _operationContext, restClientInfo, method, isAsync, methodName);
             }
@@ -485,13 +486,7 @@ namespace Azure.Generator.Management.Providers
 
         private static bool OperationReturnsContent(InputServiceMethod method)
         {
-            if (method is InputLongRunningServiceMethod lroMethod)
-            {
-                return lroMethod.LongRunningServiceMetadata.ReturnType is not null;
-            }
-
-            var response = method.Operation.Responses.FirstOrDefault(r => !r.IsErrorResponse);
-            return response?.BodyType is not null;
+            return method.GetResponseBodyType() is not null;
         }
 
         private List<MethodProvider> BuildGetChildResourceMethods()

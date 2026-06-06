@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriConnectorRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectorName, IotOperationsAkriConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsAkriConnectorResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorResource>(
-                    new IotOperationsAkriConnectorOperationSource(Client),
+                    new IotOperationsAkriConnectorResourceOperationSource(Client),
                     _akriConnectorClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriConnectorRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectorName, IotOperationsAkriConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsAkriConnectorResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorResource>(
-                    new IotOperationsAkriConnectorOperationSource(Client),
+                    new IotOperationsAkriConnectorResourceOperationSource(Client),
                     _akriConnectorClientDiagnostics,
                     Pipeline,
                     message.Request,
