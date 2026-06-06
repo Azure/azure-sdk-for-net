@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="identity"> The identity of the cache, if configured. </param>
         /// <param name="sku"> SKU for the cache. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CacheProperties properties, CacheIdentity identity, StorageCacheSkuInfo sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CacheProperties properties, ManagedServiceIdentity identity, StorageCacheSkuInfo sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.StorageCache
         internal CacheProperties Properties { get; set; }
 
         /// <summary> The identity of the cache, if configured. </summary>
-        public CacheIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> SKU for the cache. </summary>
         internal StorageCacheSkuInfo Sku { get; set; }

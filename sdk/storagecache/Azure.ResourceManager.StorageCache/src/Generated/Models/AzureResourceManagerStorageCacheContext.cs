@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(AmlFileSystemEncryptionSettings))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemHealth))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemHsmSettings))]
-    [ModelReaderWriterBuildable(typeof(AmlFileSystemIdentity))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemPatch))]
     [ModelReaderWriterBuildable(typeof(AmlFilesystemProperties))]
     [ModelReaderWriterBuildable(typeof(AmlFileSystemPropertiesHsm))]
@@ -53,7 +52,6 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(AutoImportJobsListResult))]
     [ModelReaderWriterBuildable(typeof(AutoImportJobUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(BlobNfsTarget))]
-    [ModelReaderWriterBuildable(typeof(CacheIdentity))]
     [ModelReaderWriterBuildable(typeof(CacheProperties))]
     [ModelReaderWriterBuildable(typeof(ClfsTarget))]
     [ModelReaderWriterBuildable(typeof(ExpansionJobData))]
@@ -66,6 +64,7 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(ImportJobPropertiesStatus))]
     [ModelReaderWriterBuildable(typeof(ImportJobUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(KeyVaultKeyReferenceSourceVault))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NamespaceJunction))]
     [ModelReaderWriterBuildable(typeof(Nfs3Target))]
     [ModelReaderWriterBuildable(typeof(NfsAccessPolicy))]
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(StorageTargetsResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownTarget))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentitiesValue))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerStorageCacheContext : ModelReaderWriterContext
     {
     }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="sku"> SKU for the resource. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AmlFilesystemProperties properties, string amlFileSystemName, AmlFileSystemIdentity identity, StorageCacheSkuName sku, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AmlFilesystemProperties properties, string amlFileSystemName, ManagedServiceIdentity identity, StorageCacheSkuName sku, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             AmlFileSystemName = amlFileSystemName;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StorageCache
         public string AmlFileSystemName { get; }
 
         /// <summary> The managed identity used by the AML file system, if configured. </summary>
-        public AmlFileSystemIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> SKU for the resource. </summary>
         internal StorageCacheSkuName Sku { get; set; }

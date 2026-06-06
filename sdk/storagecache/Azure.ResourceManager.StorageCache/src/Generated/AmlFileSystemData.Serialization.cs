@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.StorageCache
             AzureLocation location = default;
             AmlFilesystemProperties properties = default;
             string amlFileSystemName = default;
-            AmlFileSystemIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             StorageCacheSkuName sku = default;
             IList<string> zones = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    identity = AmlFileSystemIdentity.DeserializeAmlFileSystemIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerStorageCacheContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

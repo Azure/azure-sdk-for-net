@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StorageCache
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             CacheProperties properties = default;
-            CacheIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             StorageCacheSkuInfo sku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.StorageCache
                     {
                         continue;
                     }
-                    identity = CacheIdentity.DeserializeCacheIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerStorageCacheContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

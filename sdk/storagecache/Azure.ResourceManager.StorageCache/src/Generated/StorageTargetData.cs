@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="properties"> StorageTarget properties. </param>
         /// <param name="location"> Region name string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageTargetProperties properties, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal StorageTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageTargetProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StorageCache
         internal StorageTargetProperties Properties { get; set; }
 
         /// <summary> Region name string. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> List of cache namespace junctions to target for namespace associations. </summary>
         public IList<NamespaceJunction> Junctions
