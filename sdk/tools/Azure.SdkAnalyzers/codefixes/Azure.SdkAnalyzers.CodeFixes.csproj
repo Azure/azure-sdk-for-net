@@ -1,6 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <!-- Treated the same as the analyzer project (netstandard2.0 only). The repo
+         auto-detects analyzer projects via $(MSBuildProjectName.EndsWith('Analyzers'))
+         in eng/Directory.Build.Common.props, but this project name ends with
+         "CodeFixes" so we declare the TFM and analyzer treatment explicitly. -->
+    <RequiredTargetFrameworks>netstandard2.0</RequiredTargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <IsAnalzyer>true</IsAnalzyer>
+    <OutputItemType>Analyzer</OutputItemType>
+    <AnalyzerLanguage>cs</AnalyzerLanguage>
     <!-- Code-fix providers live in their own assembly so the analyzer assembly
          can be free of the Microsoft.CodeAnalysis.Workspaces reference. Workspaces
          is not provided by csc at command-line build time; an analyzer assembly
