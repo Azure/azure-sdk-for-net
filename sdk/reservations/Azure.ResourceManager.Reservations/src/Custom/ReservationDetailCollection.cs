@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Reservations
     // The TypeSpec generator only emits revisions on ReservationDetailResource, so these shims preserve the GA collection surface.
     public partial class ReservationDetailCollection
     {
-         /// <summary>
+        /// <summary>
         /// List of all the revisions for the `Reservation`.
         /// <list type="bullet">
         /// <item>
