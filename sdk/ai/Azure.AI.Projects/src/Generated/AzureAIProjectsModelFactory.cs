@@ -692,6 +692,7 @@ namespace Azure.AI.Projects
         /// <param name="metadata"> Metadata about the evaluator. </param>
         /// <param name="evaluatorType"> The type of the evaluator. </param>
         /// <param name="categories"> The categories of the evaluator. </param>
+        /// <param name="supportedEvaluationLevels"> Evaluation levels this evaluator supports (e.g., `turn`, `conversation`). When omitted on create, the service defaults to `["turn"]`. On update, omitting this field leaves it unchanged; an empty list is rejected. Custom code-based evaluators support only `turn`; custom prompt-based evaluators support exactly one level (`turn` or `conversation`). </param>
         /// <param name="definition"> Definition of the evaluator. </param>
         /// <param name="generationArtifacts"> Provenance artifacts from the generation pipeline. Read-only; present only on evaluator versions created via an EvaluatorGenerationJob. Each artifact resolves to a versioned Foundry Dataset. </param>
         /// <param name="createdBy"> Creator of the evaluator. </param>
@@ -703,10 +704,11 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
-        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, IEnumerable<EvaluationLevel> supportedEvaluationLevels = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             categories ??= new ChangeTrackingList<EvaluatorCategory>();
+            supportedEvaluationLevels ??= new ChangeTrackingList<EvaluationLevel>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new EvaluatorVersion(
@@ -714,6 +716,7 @@ namespace Azure.AI.Projects
                 metadata,
                 evaluatorType,
                 categories.ToList(),
+                supportedEvaluationLevels.ToList(),
                 definition,
                 generationArtifacts,
                 createdBy,
@@ -2026,7 +2029,7 @@ namespace Azure.AI.Projects
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static EvaluatorVersion EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags)
         {
-            return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, definition: definition, generationArtifacts: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
+            return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, supportedEvaluationLevels: default, definition: definition, generationArtifacts: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
         }
 
         /// <summary> Evaluator Metric. </summary>
