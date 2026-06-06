@@ -4,11 +4,7 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+Upgraded api-version to 2026-05-01-preview.
 
 ## 1.0.0-beta.2 (2026-04-20)
 
