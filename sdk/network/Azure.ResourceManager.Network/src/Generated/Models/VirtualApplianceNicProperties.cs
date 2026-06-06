@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Network Virtual Appliance NIC properties. </summary>
     public partial class VirtualApplianceNicProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceNicProperties"/>. </summary>
         internal VirtualApplianceNicProperties()
@@ -53,34 +24,33 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceNicProperties"/>. </summary>
         /// <param name="nicType"> NIC type - PublicNic, PrivateNic, or AdditionalNic; AdditionalPrivateNic and AdditionalPublicNic are only supported for NVAs deployed in VNets. </param>
         /// <param name="name"> NIC name. </param>
-        /// <param name="publicIPAddress"> Public IP address. </param>
-        /// <param name="privateIPAddress"> Private IP address. </param>
+        /// <param name="publicIpAddress"> Public IP address. </param>
+        /// <param name="privateIpAddress"> Private IP address. </param>
         /// <param name="instanceName"> Instance on which nic is attached. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualApplianceNicProperties(NicTypeInResponse? nicType, string name, string publicIPAddress, string privateIPAddress, string instanceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualApplianceNicProperties(NicTypeInResponse? nicType, string name, string publicIpAddress, string privateIpAddress, string instanceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NicType = nicType;
             Name = name;
-            PublicIPAddress = publicIPAddress;
-            PrivateIPAddress = privateIPAddress;
+            PublicIpAddress = publicIpAddress;
+            PrivateIpAddress = privateIpAddress;
             InstanceName = instanceName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> NIC type - PublicNic, PrivateNic, or AdditionalNic; AdditionalPrivateNic and AdditionalPublicNic are only supported for NVAs deployed in VNets. </summary>
-        [WirePath("nicType")]
         public NicTypeInResponse? NicType { get; }
+
         /// <summary> NIC name. </summary>
-        [WirePath("name")]
         public string Name { get; }
+
         /// <summary> Public IP address. </summary>
-        [WirePath("publicIpAddress")]
-        public string PublicIPAddress { get; }
+        public string PublicIpAddress { get; }
+
         /// <summary> Private IP address. </summary>
-        [WirePath("privateIpAddress")]
-        public string PrivateIPAddress { get; }
+        public string PrivateIpAddress { get; }
+
         /// <summary> Instance on which nic is attached. </summary>
-        [WirePath("instanceName")]
         public string InstanceName { get; }
     }
 }

@@ -5,32 +5,39 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VpnConnectionOperationSource : IOperationSource<VpnConnectionResource>
+    /// <summary></summary>
+    internal partial class VpnConnectionOperationSource : IOperationSource<VpnConnection>
     {
-        private readonly ArmClient _client;
-
-        internal VpnConnectionOperationSource(ArmClient client)
+        /// <summary></summary>
+        internal VpnConnectionOperationSource()
         {
-            _client = client;
         }
 
-        VpnConnectionResource IOperationSource<VpnConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        VpnConnection IOperationSource<VpnConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VpnConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return new VpnConnectionResource(_client, data);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return VpnConnection.DeserializeVpnConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
-        async ValueTask<VpnConnectionResource> IOperationSource<VpnConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<VpnConnection> IOperationSource<VpnConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VpnConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new VpnConnectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return VpnConnection.DeserializeVpnConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

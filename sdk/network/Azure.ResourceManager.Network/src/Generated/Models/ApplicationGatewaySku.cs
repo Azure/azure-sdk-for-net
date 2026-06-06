@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> SKU of an application gateway. </summary>
     public partial class ApplicationGatewaySku
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySku"/>. </summary>
         public ApplicationGatewaySku()
@@ -55,27 +26,26 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="tier"> Tier of an application gateway. </param>
         /// <param name="capacity"> Capacity (instance count) of an application gateway. </param>
         /// <param name="family"> Family of an application gateway SKU. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewaySku(ApplicationGatewaySkuName? name, ApplicationGatewayTier? tier, int? capacity, ApplicationGatewaySkuFamily? family, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewaySku(ApplicationGatewaySkuName? name, ApplicationGatewayTier? tier, int? capacity, ApplicationGatewaySkuFamily? family, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
             Capacity = capacity;
             Family = family;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of an application gateway SKU. </summary>
-        [WirePath("name")]
         public ApplicationGatewaySkuName? Name { get; set; }
+
         /// <summary> Tier of an application gateway. </summary>
-        [WirePath("tier")]
         public ApplicationGatewayTier? Tier { get; set; }
+
         /// <summary> Capacity (instance count) of an application gateway. </summary>
-        [WirePath("capacity")]
         public int? Capacity { get; set; }
+
         /// <summary> Family of an application gateway SKU. </summary>
-        [WirePath("family")]
         public ApplicationGatewaySkuFamily? Family { get; set; }
     }
 }

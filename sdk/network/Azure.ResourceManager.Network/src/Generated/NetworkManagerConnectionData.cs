@@ -7,85 +7,80 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkManagerConnection data model.
-    /// The Network Manager Connection resource
-    /// </summary>
-    public partial class NetworkManagerConnectionData : ResourceData
+    /// <summary> The Network Manager Connection resource. </summary>
+    public partial class NetworkManagerConnectionData : ChildResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="NetworkManagerConnectionData"/>. </summary>
         public NetworkManagerConnectionData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkManagerConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="networkManagerId"> Network Manager Id. </param>
-        /// <param name="connectionState"> Connection state. </param>
-        /// <param name="description"> A description of the network manager connection. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkManagerConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier networkManagerId, ScopeConnectionState? connectionState, string description, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The scope connection properties. </param>
+        /// <param name="systemData"> The system metadata related to this resource. </param>
+        internal NetworkManagerConnectionData(string id, string name, string @type, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkManagerConnectionProperties properties, SystemData systemData) : base(id, name, @type, eTag, additionalBinaryDataProperties)
         {
-            NetworkManagerId = networkManagerId;
-            ConnectionState = connectionState;
-            Description = description;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            SystemData = systemData;
         }
 
+        /// <summary> The scope connection properties. </summary>
+        internal NetworkManagerConnectionProperties Properties { get; set; }
+
+        /// <summary> The system metadata related to this resource. </summary>
+        public SystemData SystemData { get; }
+
         /// <summary> Network Manager Id. </summary>
-        [WirePath("properties.networkManagerId")]
-        public ResourceIdentifier NetworkManagerId { get; set; }
+        public string NetworkManagerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkManagerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkManagerConnectionProperties();
+                }
+                Properties.NetworkManagerId = value;
+            }
+        }
+
         /// <summary> Connection state. </summary>
-        [WirePath("properties.connectionState")]
-        public ScopeConnectionState? ConnectionState { get; }
+        public ScopeConnectionState? ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+        }
+
         /// <summary> A description of the network manager connection. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkManagerConnectionProperties();
+                }
+                Properties.Description = value;
+            }
+        }
     }
 }

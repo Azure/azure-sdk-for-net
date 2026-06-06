@@ -9,102 +9,148 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the P2SVpnGateway data model.
-    /// P2SVpnGateway Resource.
-    /// </summary>
-    public partial class P2SVpnGatewayData : NetworkTrackedResourceData
+    /// <summary> P2SVpnGateway Resource. </summary>
+    public partial class P2SVpnGatewayData : TrackedResourceWithSettableIdOptionalLocation
     {
         /// <summary> Initializes a new instance of <see cref="P2SVpnGatewayData"/>. </summary>
         public P2SVpnGatewayData()
         {
-            P2SConnectionConfigurations = new ChangeTrackingList<P2SConnectionConfiguration>();
-            CustomDnsServers = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="P2SVpnGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="virtualHub"> The VirtualHub to which the gateway belongs. </param>
-        /// <param name="p2sConnectionConfigurations"> List of all p2s connection configurations of the gateway. </param>
-        /// <param name="provisioningState"> The provisioning state of the P2S VPN gateway resource. </param>
-        /// <param name="vpnGatewayScaleUnit"> The scale unit for this p2s vpn gateway. </param>
-        /// <param name="vpnServerConfiguration"> The VpnServerConfiguration to which the p2sVpnGateway is attached to. </param>
-        /// <param name="vpnClientConnectionHealth"> All P2S VPN clients' connection health status. </param>
-        /// <param name="customDnsServers"> List of all customer specified DNS servers IP addresses. </param>
-        /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the P2SVpnGateway. </param>
-        internal P2SVpnGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource virtualHub, IList<P2SConnectionConfiguration> p2sConnectionConfigurations, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, WritableSubResource vpnServerConfiguration, VpnClientConnectionHealth vpnClientConnectionHealth, IList<string> customDnsServers, bool? isRoutingPreferenceInternet) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the P2SVpnGateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal P2SVpnGatewayData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, P2SVpnGatewayProperties properties, string eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            VirtualHub = virtualHub;
-            P2SConnectionConfigurations = p2sConnectionConfigurations;
-            ProvisioningState = provisioningState;
-            VpnGatewayScaleUnit = vpnGatewayScaleUnit;
-            VpnServerConfiguration = vpnServerConfiguration;
-            VpnClientConnectionHealth = vpnClientConnectionHealth;
-            CustomDnsServers = customDnsServers;
-            IsRoutingPreferenceInternet = isRoutingPreferenceInternet;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the P2SVpnGateway. </summary>
+        internal P2SVpnGatewayProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
-        /// <summary> The VirtualHub to which the gateway belongs. </summary>
-        internal WritableSubResource VirtualHub { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.virtualHub.id")]
-        public ResourceIdentifier VirtualHubId
+        public string ETag { get; }
+
+        /// <summary> List of all p2s connection configurations of the gateway. </summary>
+        public IList<P2SConnectionConfiguration> P2SConnectionConfigurations
         {
-            get => VirtualHub is null ? default : VirtualHub.Id;
-            set
+            get
             {
-                if (VirtualHub is null)
-                    VirtualHub = new WritableSubResource();
-                VirtualHub.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new P2SVpnGatewayProperties();
+                }
+                return Properties.P2SConnectionConfigurations;
             }
         }
 
-        /// <summary> List of all p2s connection configurations of the gateway. </summary>
-        [WirePath("properties.p2SConnectionConfigurations")]
-        public IList<P2SConnectionConfiguration> P2SConnectionConfigurations { get; }
         /// <summary> The provisioning state of the P2S VPN gateway resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The scale unit for this p2s vpn gateway. </summary>
-        [WirePath("properties.vpnGatewayScaleUnit")]
-        public int? VpnGatewayScaleUnit { get; set; }
-        /// <summary> The VpnServerConfiguration to which the p2sVpnGateway is attached to. </summary>
-        internal WritableSubResource VpnServerConfiguration { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.vpnServerConfiguration.id")]
-        public ResourceIdentifier VpnServerConfigurationId
+        public NetworkProvisioningState? ProvisioningState
         {
-            get => VpnServerConfiguration is null ? default : VpnServerConfiguration.Id;
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The scale unit for this p2s vpn gateway. </summary>
+        public int? VpnGatewayScaleUnit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VpnGatewayScaleUnit;
+            }
             set
             {
-                if (VpnServerConfiguration is null)
-                    VpnServerConfiguration = new WritableSubResource();
-                VpnServerConfiguration.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new P2SVpnGatewayProperties();
+                }
+                Properties.VpnGatewayScaleUnit = value;
             }
         }
 
         /// <summary> All P2S VPN clients' connection health status. </summary>
-        [WirePath("properties.vpnClientConnectionHealth")]
-        public VpnClientConnectionHealth VpnClientConnectionHealth { get; }
+        public VpnClientConnectionHealth VpnClientConnectionHealth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VpnClientConnectionHealth;
+            }
+        }
+
         /// <summary> List of all customer specified DNS servers IP addresses. </summary>
-        [WirePath("properties.customDnsServers")]
-        public IList<string> CustomDnsServers { get; }
+        public IList<string> CustomDnsServers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new P2SVpnGatewayProperties();
+                }
+                return Properties.CustomDnsServers;
+            }
+        }
+
         /// <summary> Enable Routing Preference property for the Public IP Interface of the P2SVpnGateway. </summary>
-        [WirePath("properties.isRoutingPreferenceInternet")]
-        public bool? IsRoutingPreferenceInternet { get; set; }
+        public bool? IsRoutingPreferenceInternet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsRoutingPreferenceInternet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new P2SVpnGatewayProperties();
+                }
+                Properties.IsRoutingPreferenceInternet = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier VirtualHubId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualHubId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new P2SVpnGatewayProperties();
+                }
+                Properties.VirtualHubId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier VpnServerConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VpnServerConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new P2SVpnGatewayProperties();
+                }
+                Properties.VpnServerConfigurationId = value;
+            }
+        }
     }
 }

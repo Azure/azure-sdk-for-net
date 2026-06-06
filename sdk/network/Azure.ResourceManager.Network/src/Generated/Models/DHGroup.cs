@@ -7,63 +7,95 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The DH Groups used in IKE Phase 1 for initial SA. </summary>
-    public readonly partial struct DHGroup : IEquatable<DHGroup>
+    public readonly partial struct DhGroup : IEquatable<DhGroup>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> DHGroup1. </summary>
+        private const string DhGroup1Value = "DHGroup1";
+        /// <summary> DHGroup2. </summary>
+        private const string DhGroup2Value = "DHGroup2";
+        /// <summary> DHGroup14. </summary>
+        private const string DhGroup14Value = "DHGroup14";
+        /// <summary> DHGroup2048. </summary>
+        private const string DhGroup2048Value = "DHGroup2048";
+        /// <summary> ECP256. </summary>
+        private const string Ecp256Value = "ECP256";
+        /// <summary> ECP384. </summary>
+        private const string Ecp384Value = "ECP384";
+        /// <summary> DHGroup24. </summary>
+        private const string DhGroup24Value = "DHGroup24";
 
-        /// <summary> Initializes a new instance of <see cref="DHGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DhGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DHGroup(string value)
+        public DhGroup(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NoneValue = "None";
-        private const string DHGroup1Value = "DHGroup1";
-        private const string DHGroup2Value = "DHGroup2";
-        private const string DHGroup14Value = "DHGroup14";
-        private const string DHGroup2048Value = "DHGroup2048";
-        private const string Ecp256Value = "ECP256";
-        private const string Ecp384Value = "ECP384";
-        private const string DHGroup24Value = "DHGroup24";
-
         /// <summary> None. </summary>
-        public static DHGroup None { get; } = new DHGroup(NoneValue);
+        public static DhGroup None { get; } = new DhGroup(NoneValue);
+
         /// <summary> DHGroup1. </summary>
-        public static DHGroup DHGroup1 { get; } = new DHGroup(DHGroup1Value);
+        public static DhGroup DhGroup1 { get; } = new DhGroup(DhGroup1Value);
+
         /// <summary> DHGroup2. </summary>
-        public static DHGroup DHGroup2 { get; } = new DHGroup(DHGroup2Value);
+        public static DhGroup DhGroup2 { get; } = new DhGroup(DhGroup2Value);
+
         /// <summary> DHGroup14. </summary>
-        public static DHGroup DHGroup14 { get; } = new DHGroup(DHGroup14Value);
+        public static DhGroup DhGroup14 { get; } = new DhGroup(DhGroup14Value);
+
         /// <summary> DHGroup2048. </summary>
-        public static DHGroup DHGroup2048 { get; } = new DHGroup(DHGroup2048Value);
+        public static DhGroup DhGroup2048 { get; } = new DhGroup(DhGroup2048Value);
+
         /// <summary> ECP256. </summary>
-        public static DHGroup Ecp256 { get; } = new DHGroup(Ecp256Value);
+        public static DhGroup Ecp256 { get; } = new DhGroup(Ecp256Value);
+
         /// <summary> ECP384. </summary>
-        public static DHGroup Ecp384 { get; } = new DHGroup(Ecp384Value);
+        public static DhGroup Ecp384 { get; } = new DhGroup(Ecp384Value);
+
         /// <summary> DHGroup24. </summary>
-        public static DHGroup DHGroup24 { get; } = new DHGroup(DHGroup24Value);
-        /// <summary> Determines if two <see cref="DHGroup"/> values are the same. </summary>
-        public static bool operator ==(DHGroup left, DHGroup right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="DHGroup"/> values are not the same. </summary>
-        public static bool operator !=(DHGroup left, DHGroup right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DHGroup"/>. </summary>
-        public static implicit operator DHGroup(string value) => new DHGroup(value);
+        public static DhGroup DhGroup24 { get; } = new DhGroup(DhGroup24Value);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two <see cref="DhGroup"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(DhGroup left, DhGroup right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="DhGroup"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(DhGroup left, DhGroup right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="DhGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DhGroup(string value) => new DhGroup(value);
+
+        /// <summary> Converts a string to a <see cref="DhGroup"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DhGroup?(string value) => value == null ? null : new DhGroup(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DHGroup other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(DHGroup other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is DhGroup other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(DhGroup other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

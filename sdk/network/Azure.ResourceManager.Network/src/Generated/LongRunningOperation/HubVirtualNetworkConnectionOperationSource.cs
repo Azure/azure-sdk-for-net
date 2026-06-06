@@ -5,32 +5,39 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class HubVirtualNetworkConnectionOperationSource : IOperationSource<HubVirtualNetworkConnectionResource>
+    /// <summary></summary>
+    internal partial class HubVirtualNetworkConnectionOperationSource : IOperationSource<HubVirtualNetworkConnection>
     {
-        private readonly ArmClient _client;
-
-        internal HubVirtualNetworkConnectionOperationSource(ArmClient client)
+        /// <summary></summary>
+        internal HubVirtualNetworkConnectionOperationSource()
         {
-            _client = client;
         }
 
-        HubVirtualNetworkConnectionResource IOperationSource<HubVirtualNetworkConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        HubVirtualNetworkConnection IOperationSource<HubVirtualNetworkConnection>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HubVirtualNetworkConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return new HubVirtualNetworkConnectionResource(_client, data);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return HubVirtualNetworkConnection.DeserializeHubVirtualNetworkConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
-        async ValueTask<HubVirtualNetworkConnectionResource> IOperationSource<HubVirtualNetworkConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<HubVirtualNetworkConnection> IOperationSource<HubVirtualNetworkConnection>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HubVirtualNetworkConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new HubVirtualNetworkConnectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return HubVirtualNetworkConnection.DeserializeHubVirtualNetworkConnection(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

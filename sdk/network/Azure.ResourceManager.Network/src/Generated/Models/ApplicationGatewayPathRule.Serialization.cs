@@ -8,18 +8,58 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayPathRule : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayPathRule>
+    /// <summary> Path rule of URL path map of an application gateway. </summary>
+    public partial class ApplicationGatewayPathRule : NetworkSubResource, IJsonModel<ApplicationGatewayPathRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayPathRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPathRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplicationGatewayPathRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayPathRule)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPathRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayPathRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApplicationGatewayPathRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationGatewayPathRule IPersistableModel<ApplicationGatewayPathRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApplicationGatewayPathRule)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplicationGatewayPathRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationGatewayPathRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,520 +71,116 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPathRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPathRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationGatewayPathRule)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Paths))
+            if (options.Format != "W" && Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("paths"u8);
-                writer.WriteStartArray();
-                foreach (var item in Paths)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
             }
-            if (Optional.IsDefined(BackendAddressPool))
-            {
-                writer.WritePropertyName("backendAddressPool"u8);
-                ((IJsonModel<WritableSubResource>)BackendAddressPool).Write(writer, options);
-            }
-            if (Optional.IsDefined(BackendHttpSettings))
-            {
-                writer.WritePropertyName("backendHttpSettings"u8);
-                ((IJsonModel<WritableSubResource>)BackendHttpSettings).Write(writer, options);
-            }
-            if (Optional.IsDefined(RedirectConfiguration))
-            {
-                writer.WritePropertyName("redirectConfiguration"u8);
-                ((IJsonModel<WritableSubResource>)RedirectConfiguration).Write(writer, options);
-            }
-            if (Optional.IsDefined(RewriteRuleSet))
-            {
-                writer.WritePropertyName("rewriteRuleSet"u8);
-                ((IJsonModel<WritableSubResource>)RewriteRuleSet).Write(writer, options);
-            }
-            if (Optional.IsDefined(LoadDistributionPolicy))
-            {
-                writer.WritePropertyName("loadDistributionPolicy"u8);
-                ((IJsonModel<WritableSubResource>)LoadDistributionPolicy).Write(writer, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(FirewallPolicy))
-            {
-                writer.WritePropertyName("firewallPolicy"u8);
-                ((IJsonModel<WritableSubResource>)FirewallPolicy).Write(writer, options);
-            }
-            writer.WriteEndObject();
         }
 
-        ApplicationGatewayPathRule IJsonModel<ApplicationGatewayPathRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationGatewayPathRule IJsonModel<ApplicationGatewayPathRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApplicationGatewayPathRule)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPathRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPathRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationGatewayPathRule)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApplicationGatewayPathRule(document.RootElement, options);
         }
 
-        internal static ApplicationGatewayPathRule DeserializeApplicationGatewayPathRule(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApplicationGatewayPathRule DeserializeApplicationGatewayPathRule(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ApplicationGatewayPathRulePropertiesFormat properties = default;
             string name = default;
-            ResourceType? type = default;
-            IList<string> paths = default;
-            WritableSubResource backendAddressPool = default;
-            WritableSubResource backendHttpSettings = default;
-            WritableSubResource redirectConfiguration = default;
-            WritableSubResource rewriteRuleSet = default;
-            WritableSubResource loadDistributionPolicy = default;
-            NetworkProvisioningState? provisioningState = default;
-            WritableSubResource firewallPolicy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ETag? eTag = default;
+            string @type = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    properties = ApplicationGatewayPathRulePropertiesFormat.DeserializeApplicationGatewayPathRulePropertiesFormat(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("etag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new ResourceType(property.Value.GetString());
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("paths"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            paths = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("backendAddressPool"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            backendAddressPool = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("backendHttpSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            backendHttpSettings = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("redirectConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            redirectConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("rewriteRuleSet"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            rewriteRuleSet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("loadDistributionPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            loadDistributionPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("firewallPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            firewallPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                    }
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationGatewayPathRule(
                 id,
+                additionalBinaryDataProperties,
+                properties,
                 name,
-                type,
-                serializedAdditionalRawData,
-                etag,
-                paths ?? new ChangeTrackingList<string>(),
-                backendAddressPool,
-                backendHttpSettings,
-                redirectConfiguration,
-                rewriteRuleSet,
-                loadDistributionPolicy,
-                provisioningState,
-                firewallPolicy);
+                eTag,
+                @type);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Paths), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    paths: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Paths))
-                {
-                    if (Paths.Any())
-                    {
-                        builder.Append("    paths: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Paths)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("BackendAddressPoolId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    backendAddressPool: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      backendAddressPool: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(BackendAddressPool))
-                {
-                    builder.Append("    backendAddressPool: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, BackendAddressPool, options, 4, false, "    backendAddressPool: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("BackendHttpSettingsId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    backendHttpSettings: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      backendHttpSettings: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(BackendHttpSettings))
-                {
-                    builder.Append("    backendHttpSettings: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, BackendHttpSettings, options, 4, false, "    backendHttpSettings: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RedirectConfigurationId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    redirectConfiguration: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      redirectConfiguration: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(RedirectConfiguration))
-                {
-                    builder.Append("    redirectConfiguration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RedirectConfiguration, options, 4, false, "    redirectConfiguration: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RewriteRuleSetId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    rewriteRuleSet: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      rewriteRuleSet: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(RewriteRuleSet))
-                {
-                    builder.Append("    rewriteRuleSet: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RewriteRuleSet, options, 4, false, "    rewriteRuleSet: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("LoadDistributionPolicyId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    loadDistributionPolicy: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      loadDistributionPolicy: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(LoadDistributionPolicy))
-                {
-                    builder.Append("    loadDistributionPolicy: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, LoadDistributionPolicy, options, 4, false, "    loadDistributionPolicy: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FirewallPolicyId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    firewallPolicy: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      firewallPolicy: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(FirewallPolicy))
-                {
-                    builder.Append("    firewallPolicy: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, FirewallPolicy, options, 4, false, "    firewallPolicy: ");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ApplicationGatewayPathRule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPathRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayPathRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApplicationGatewayPathRule IPersistableModel<ApplicationGatewayPathRule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPathRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApplicationGatewayPathRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayPathRule)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApplicationGatewayPathRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

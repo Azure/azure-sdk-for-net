@@ -9,15 +9,11 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the InboundNatRule data model.
-    /// Inbound NAT rule of the load balancer.
-    /// </summary>
-    public partial class InboundNatRuleData : NetworkResourceData
+    /// <summary> Inbound NAT rule of the load balancer. </summary>
+    public partial class InboundNatRuleData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="InboundNatRuleData"/>. </summary>
         public InboundNatRuleData()
@@ -26,101 +22,209 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="InboundNatRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="frontendIPConfiguration"> A reference to frontend IP addresses. </param>
-        /// <param name="backendIPConfiguration"> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </param>
-        /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
-        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values range from 1 to 65534. </param>
-        /// <param name="backendPort"> The port used for the internal endpoint. Acceptable values range from 1 to 65535. </param>
-        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
-        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="frontendPortRangeStart"> The port range start for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeEnd. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534. </param>
-        /// <param name="frontendPortRangeEnd"> The port range end for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeStart. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534. </param>
-        /// <param name="backendAddressPool"> A reference to backendAddressPool resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the inbound NAT rule resource. </param>
-        internal InboundNatRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource frontendIPConfiguration, NetworkInterfaceIPConfigurationData backendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, int? frontendPortRangeStart, int? frontendPortRangeEnd, WritableSubResource backendAddressPool, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of load balancer inbound NAT rule. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal InboundNatRuleData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, InboundNatRulePropertiesFormat properties, string eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            FrontendIPConfiguration = frontendIPConfiguration;
-            BackendIPConfiguration = backendIPConfiguration;
-            Protocol = protocol;
-            FrontendPort = frontendPort;
-            BackendPort = backendPort;
-            IdleTimeoutInMinutes = idleTimeoutInMinutes;
-            EnableFloatingIP = enableFloatingIP;
-            EnableTcpReset = enableTcpReset;
-            FrontendPortRangeStart = frontendPortRangeStart;
-            FrontendPortRangeEnd = frontendPortRangeEnd;
-            BackendAddressPool = backendAddressPool;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of load balancer inbound NAT rule. </summary>
+        internal InboundNatRulePropertiesFormat Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
-        /// <summary> A reference to frontend IP addresses. </summary>
-        internal WritableSubResource FrontendIPConfiguration { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.frontendIPConfiguration.id")]
-        public ResourceIdentifier FrontendIPConfigurationId
+        public string ETag { get; }
+
+        /// <summary> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </summary>
+        public NetworkInterfaceIPConfigurationData BackendIPConfiguration
         {
-            get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
-            set
+            get
             {
-                if (FrontendIPConfiguration is null)
-                    FrontendIPConfiguration = new WritableSubResource();
-                FrontendIPConfiguration.Id = value;
+                return Properties is null ? default : Properties.BackendIPConfiguration;
             }
         }
 
-        /// <summary> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </summary>
-        [WirePath("properties.backendIPConfiguration")]
-        public NetworkInterfaceIPConfigurationData BackendIPConfiguration { get; }
         /// <summary> The reference to the transport protocol used by the load balancing rule. </summary>
-        [WirePath("properties.protocol")]
-        public LoadBalancingTransportProtocol? Protocol { get; set; }
-        /// <summary> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values range from 1 to 65534. </summary>
-        [WirePath("properties.frontendPort")]
-        public int? FrontendPort { get; set; }
-        /// <summary> The port used for the internal endpoint. Acceptable values range from 1 to 65535. </summary>
-        [WirePath("properties.backendPort")]
-        public int? BackendPort { get; set; }
-        /// <summary> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </summary>
-        [WirePath("properties.idleTimeoutInMinutes")]
-        public int? IdleTimeoutInMinutes { get; set; }
-        /// <summary> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </summary>
-        [WirePath("properties.enableFloatingIP")]
-        public bool? EnableFloatingIP { get; set; }
-        /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
-        [WirePath("properties.enableTcpReset")]
-        public bool? EnableTcpReset { get; set; }
-        /// <summary> The port range start for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeEnd. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534. </summary>
-        [WirePath("properties.frontendPortRangeStart")]
-        public int? FrontendPortRangeStart { get; set; }
-        /// <summary> The port range end for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeStart. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534. </summary>
-        [WirePath("properties.frontendPortRangeEnd")]
-        public int? FrontendPortRangeEnd { get; set; }
-        /// <summary> A reference to backendAddressPool resource. </summary>
-        internal WritableSubResource BackendAddressPool { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.backendAddressPool.id")]
-        public ResourceIdentifier BackendAddressPoolId
+        public TransportProtocol? Protocol
         {
-            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
+            get
+            {
+                return Properties is null ? default : Properties.Protocol;
+            }
             set
             {
-                if (BackendAddressPool is null)
-                    BackendAddressPool = new WritableSubResource();
-                BackendAddressPool.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new InboundNatRulePropertiesFormat();
+                }
+                Properties.Protocol = value;
+            }
+        }
+
+        /// <summary> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values range from 1 to 65534. </summary>
+        public int? FrontendPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendPort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InboundNatRulePropertiesFormat();
+                }
+                Properties.FrontendPort = value;
+            }
+        }
+
+        /// <summary> The port used for the internal endpoint. Acceptable values range from 1 to 65535. </summary>
+        public int? BackendPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendPort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InboundNatRulePropertiesFormat();
+                }
+                Properties.BackendPort = value;
+            }
+        }
+
+        /// <summary> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </summary>
+        public int? IdleTimeoutInMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InboundNatRulePropertiesFormat();
+                }
+                Properties.IdleTimeoutInMinutes = value;
+            }
+        }
+
+        /// <summary> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </summary>
+        public bool? EnableFloatingIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableFloatingIP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InboundNatRulePropertiesFormat();
+                }
+                Properties.EnableFloatingIP = value;
+            }
+        }
+
+        /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
+        public bool? EnableTcpReset
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableTcpReset;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InboundNatRulePropertiesFormat();
+                }
+                Properties.EnableTcpReset = value;
+            }
+        }
+
+        /// <summary> The port range start for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeEnd. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534. </summary>
+        public int? FrontendPortRangeStart
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendPortRangeStart;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InboundNatRulePropertiesFormat();
+                }
+                Properties.FrontendPortRangeStart = value;
+            }
+        }
+
+        /// <summary> The port range end for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeStart. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534. </summary>
+        public int? FrontendPortRangeEnd
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendPortRangeEnd;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InboundNatRulePropertiesFormat();
+                }
+                Properties.FrontendPortRangeEnd = value;
             }
         }
 
         /// <summary> The provisioning state of the inbound NAT rule resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier FrontendIPConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendIPConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InboundNatRulePropertiesFormat();
+                }
+                Properties.FrontendIPConfigurationId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier BackendAddressPoolId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendAddressPoolId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InboundNatRulePropertiesFormat();
+                }
+                Properties.BackendAddressPoolId = value;
+            }
+        }
     }
 }

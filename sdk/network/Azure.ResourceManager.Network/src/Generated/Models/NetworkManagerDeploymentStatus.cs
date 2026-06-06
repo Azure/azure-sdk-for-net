@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network Manager Deployment Status. </summary>
     public partial class NetworkManagerDeploymentStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkManagerDeploymentStatus"/>. </summary>
         internal NetworkManagerDeploymentStatus()
@@ -54,39 +26,38 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkManagerDeploymentStatus"/>. </summary>
         /// <param name="commitOn"> Commit Time. </param>
         /// <param name="region"> Region Name. </param>
-        /// <param name="deploymentState"> Deployment Status. </param>
+        /// <param name="deploymentStatus"> Deployment Status. </param>
         /// <param name="configurationIds"> List of configuration ids. </param>
         /// <param name="deploymentType"> Configuration Deployment Type. </param>
         /// <param name="errorMessage"> Error Message. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkManagerDeploymentStatus(DateTimeOffset? commitOn, string region, NetworkManagerDeploymentState? deploymentState, IReadOnlyList<string> configurationIds, NetworkConfigurationDeploymentType? deploymentType, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkManagerDeploymentStatus(DateTimeOffset? commitOn, string region, DeploymentStatus? deploymentStatus, IReadOnlyList<string> configurationIds, Models.NetworkConfigurationDeploymentType? deploymentType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CommitOn = commitOn;
             Region = region;
-            DeploymentState = deploymentState;
+            DeploymentStatus = deploymentStatus;
             ConfigurationIds = configurationIds;
             DeploymentType = deploymentType;
             ErrorMessage = errorMessage;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Commit Time. </summary>
-        [WirePath("commitTime")]
         public DateTimeOffset? CommitOn { get; }
+
         /// <summary> Region Name. </summary>
-        [WirePath("region")]
         public string Region { get; }
+
         /// <summary> Deployment Status. </summary>
-        [WirePath("deploymentStatus")]
-        public NetworkManagerDeploymentState? DeploymentState { get; }
+        public DeploymentStatus? DeploymentStatus { get; }
+
         /// <summary> List of configuration ids. </summary>
-        [WirePath("configurationIds")]
         public IReadOnlyList<string> ConfigurationIds { get; }
+
         /// <summary> Configuration Deployment Type. </summary>
-        [WirePath("deploymentType")]
-        public NetworkConfigurationDeploymentType? DeploymentType { get; }
+        public Models.NetworkConfigurationDeploymentType? DeploymentType { get; }
+
         /// <summary> Error Message. </summary>
-        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
     }
 }

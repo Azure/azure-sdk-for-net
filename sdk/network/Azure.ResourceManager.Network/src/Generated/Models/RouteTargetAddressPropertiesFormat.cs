@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of route target address. </summary>
     public partial class RouteTargetAddressPropertiesFormat
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RouteTargetAddressPropertiesFormat"/>. </summary>
         public RouteTargetAddressPropertiesFormat()
@@ -54,23 +26,22 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="privateIPAddress"> The private IPv4 or IPv6 address of the service gateway route target address. </param>
         /// <param name="privateIPAllocationMethod"> The Private IP allocation method. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouteTargetAddressPropertiesFormat(SubnetData subnet, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RouteTargetAddressPropertiesFormat(SubnetData subnet, string privateIPAddress, Models.NetworkIPAllocationMethod? privateIPAllocationMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The reference to the subnet resource. </summary>
-        [WirePath("subnet")]
         public SubnetData Subnet { get; set; }
+
         /// <summary> The private IPv4 or IPv6 address of the service gateway route target address. </summary>
-        [WirePath("privateIPAddress")]
         public string PrivateIPAddress { get; set; }
+
         /// <summary> The Private IP allocation method. </summary>
-        [WirePath("privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+        public Models.NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
     }
 }

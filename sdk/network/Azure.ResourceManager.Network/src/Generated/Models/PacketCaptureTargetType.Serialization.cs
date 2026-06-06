@@ -11,17 +11,25 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal static partial class PacketCaptureTargetTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this PacketCaptureTargetType value) => value switch
         {
-            PacketCaptureTargetType.AzureVm => "AzureVM",
-            PacketCaptureTargetType.AzureVmss => "AzureVMSS",
+            PacketCaptureTargetType.AzureVM => "AzureVM",
+            PacketCaptureTargetType.AzureVMSS => "AzureVMSS",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PacketCaptureTargetType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static PacketCaptureTargetType ToPacketCaptureTargetType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureVM")) return PacketCaptureTargetType.AzureVm;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureVMSS")) return PacketCaptureTargetType.AzureVmss;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureVM"))
+            {
+                return PacketCaptureTargetType.AzureVM;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureVMSS"))
+            {
+                return PacketCaptureTargetType.AzureVMSS;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PacketCaptureTargetType value.");
         }
     }

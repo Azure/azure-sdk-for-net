@@ -8,18 +8,75 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class DscpConfigurationData : IUtf8JsonSerializable, IJsonModel<DscpConfigurationData>
+    /// <summary> Differentiated Services Code Point configuration for any given network interface. </summary>
+    public partial class DscpConfigurationData : NetworkTrackedResourceData, IJsonModel<DscpConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscpConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkTrackedResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DscpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDscpConfigurationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DscpConfigurationData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DscpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DscpConfigurationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DscpConfigurationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DscpConfigurationData IPersistableModel<DscpConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DscpConfigurationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DscpConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dscpConfigurationData"> The <see cref="DscpConfigurationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DscpConfigurationData dscpConfigurationData)
+        {
+            if (dscpConfigurationData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(dscpConfigurationData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DscpConfigurationData"/> from. </param>
+        internal static DscpConfigurationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDscpConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DscpConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,761 +88,136 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DscpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DscpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DscpConfigurationData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Markings))
-            {
-                writer.WritePropertyName("markings"u8);
-                writer.WriteStartArray();
-                foreach (var item in Markings)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(SourceIPRanges))
-            {
-                writer.WritePropertyName("sourceIpRanges"u8);
-                writer.WriteStartArray();
-                foreach (var item in SourceIPRanges)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(DestinationIPRanges))
-            {
-                writer.WritePropertyName("destinationIpRanges"u8);
-                writer.WriteStartArray();
-                foreach (var item in DestinationIPRanges)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(SourcePortRanges))
-            {
-                writer.WritePropertyName("sourcePortRanges"u8);
-                writer.WriteStartArray();
-                foreach (var item in SourcePortRanges)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(DestinationPortRanges))
-            {
-                writer.WritePropertyName("destinationPortRanges"u8);
-                writer.WriteStartArray();
-                foreach (var item in DestinationPortRanges)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Protocol))
-            {
-                writer.WritePropertyName("protocol"u8);
-                writer.WriteStringValue(Protocol.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(QosDefinitionCollection))
-            {
-                writer.WritePropertyName("qosDefinitionCollection"u8);
-                writer.WriteStartArray();
-                foreach (var item in QosDefinitionCollection)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(QosCollectionId))
-            {
-                writer.WritePropertyName("qosCollectionId"u8);
-                writer.WriteStringValue(QosCollectionId);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedNetworkInterfaces))
-            {
-                writer.WritePropertyName("associatedNetworkInterfaces"u8);
-                writer.WriteStartArray();
-                foreach (var item in AssociatedNetworkInterfaces)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
-            {
-                writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        DscpConfigurationData IJsonModel<DscpConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DscpConfigurationData IJsonModel<DscpConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DscpConfigurationData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkTrackedResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DscpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DscpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DscpConfigurationData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDscpConfigurationData(document.RootElement, options);
         }
 
-        internal static DscpConfigurationData DeserializeDscpConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DscpConfigurationData DeserializeDscpConfigurationData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            string @type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            IList<int> markings = default;
-            IList<QosIPRange> sourceIPRanges = default;
-            IList<QosIPRange> destinationIPRanges = default;
-            IList<QosPortRange> sourcePortRanges = default;
-            IList<QosPortRange> destinationPortRanges = default;
-            ProtocolType? protocol = default;
-            IList<DscpQosDefinition> qosDefinitionCollection = default;
-            string qosCollectionId = default;
-            IReadOnlyList<NetworkInterfaceData> associatedNetworkInterfaces = default;
-            Guid? resourceGuid = default;
-            NetworkProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DscpConfigurationPropertiesFormat properties = default;
+            string eTag = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("markings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<int> array = new List<int>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetInt32());
-                            }
-                            markings = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceIpRanges"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<QosIPRange> array = new List<QosIPRange>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(QosIPRange.DeserializeQosIPRange(item, options));
-                            }
-                            sourceIPRanges = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("destinationIpRanges"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<QosIPRange> array = new List<QosIPRange>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(QosIPRange.DeserializeQosIPRange(item, options));
-                            }
-                            destinationIPRanges = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("sourcePortRanges"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<QosPortRange> array = new List<QosPortRange>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(QosPortRange.DeserializeQosPortRange(item, options));
-                            }
-                            sourcePortRanges = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("destinationPortRanges"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<QosPortRange> array = new List<QosPortRange>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(QosPortRange.DeserializeQosPortRange(item, options));
-                            }
-                            destinationPortRanges = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("protocol"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            protocol = new ProtocolType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("qosDefinitionCollection"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DscpQosDefinition> array = new List<DscpQosDefinition>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DscpQosDefinition.DeserializeDscpQosDefinition(item, options));
-                            }
-                            qosDefinitionCollection = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("qosCollectionId"u8))
-                        {
-                            qosCollectionId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("associatedNetworkInterfaces"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item, options));
-                            }
-                            associatedNetworkInterfaces = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceGuid"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceGuid = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = DscpConfigurationPropertiesFormat.DeserializeDscpConfigurationPropertiesFormat(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DscpConfigurationData(
                 id,
                 name,
-                type,
+                @type,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                etag,
-                markings ?? new ChangeTrackingList<int>(),
-                sourceIPRanges ?? new ChangeTrackingList<QosIPRange>(),
-                destinationIPRanges ?? new ChangeTrackingList<QosIPRange>(),
-                sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(),
-                destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(),
-                protocol,
-                qosDefinitionCollection ?? new ChangeTrackingList<DscpQosDefinition>(),
-                qosCollectionId,
-                associatedNetworkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
-                resourceGuid,
-                provisioningState);
+                additionalBinaryDataProperties,
+                properties,
+                eTag);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Markings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    markings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Markings))
-                {
-                    if (Markings.Any())
-                    {
-                        builder.Append("    markings: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Markings)
-                        {
-                            builder.AppendLine($"      {item}");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceIPRanges), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sourceIpRanges: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SourceIPRanges))
-                {
-                    if (SourceIPRanges.Any())
-                    {
-                        builder.Append("    sourceIpRanges: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SourceIPRanges)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    sourceIpRanges: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationIPRanges), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    destinationIpRanges: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DestinationIPRanges))
-                {
-                    if (DestinationIPRanges.Any())
-                    {
-                        builder.Append("    destinationIpRanges: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DestinationIPRanges)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    destinationIpRanges: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourcePortRanges), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sourcePortRanges: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SourcePortRanges))
-                {
-                    if (SourcePortRanges.Any())
-                    {
-                        builder.Append("    sourcePortRanges: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SourcePortRanges)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    sourcePortRanges: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationPortRanges), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    destinationPortRanges: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DestinationPortRanges))
-                {
-                    if (DestinationPortRanges.Any())
-                    {
-                        builder.Append("    destinationPortRanges: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DestinationPortRanges)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    destinationPortRanges: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    protocol: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Protocol))
-                {
-                    builder.Append("    protocol: ");
-                    builder.AppendLine($"'{Protocol.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QosDefinitionCollection), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    qosDefinitionCollection: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(QosDefinitionCollection))
-                {
-                    if (QosDefinitionCollection.Any())
-                    {
-                        builder.Append("    qosDefinitionCollection: ");
-                        builder.AppendLine("[");
-                        foreach (var item in QosDefinitionCollection)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    qosDefinitionCollection: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QosCollectionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    qosCollectionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QosCollectionId))
-                {
-                    builder.Append("    qosCollectionId: ");
-                    if (QosCollectionId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{QosCollectionId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{QosCollectionId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssociatedNetworkInterfaces), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    associatedNetworkInterfaces: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AssociatedNetworkInterfaces))
-                {
-                    if (AssociatedNetworkInterfaces.Any())
-                    {
-                        builder.Append("    associatedNetworkInterfaces: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AssociatedNetworkInterfaces)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    associatedNetworkInterfaces: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGuid), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceGuid: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceGuid))
-                {
-                    builder.Append("    resourceGuid: ");
-                    builder.AppendLine($"'{ResourceGuid.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DscpConfigurationData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DscpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DscpConfigurationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DscpConfigurationData IPersistableModel<DscpConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DscpConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDscpConfigurationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DscpConfigurationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DscpConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

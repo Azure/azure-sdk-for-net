@@ -5,32 +5,39 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class RouteFilterRuleOperationSource : IOperationSource<RouteFilterRuleResource>
+    /// <summary></summary>
+    internal partial class RouteFilterRuleOperationSource : IOperationSource<RouteFilterRule>
     {
-        private readonly ArmClient _client;
-
-        internal RouteFilterRuleOperationSource(ArmClient client)
+        /// <summary></summary>
+        internal RouteFilterRuleOperationSource()
         {
-            _client = client;
         }
 
-        RouteFilterRuleResource IOperationSource<RouteFilterRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        RouteFilterRule IOperationSource<RouteFilterRule>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RouteFilterRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return new RouteFilterRuleResource(_client, data);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return RouteFilterRule.DeserializeRouteFilterRule(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
-        async ValueTask<RouteFilterRuleResource> IOperationSource<RouteFilterRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<RouteFilterRule> IOperationSource<RouteFilterRule>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RouteFilterRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new RouteFilterRuleResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return RouteFilterRule.DeserializeRouteFilterRule(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

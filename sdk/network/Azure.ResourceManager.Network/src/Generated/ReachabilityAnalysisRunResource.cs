@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a ReachabilityAnalysisRun along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReachabilityAnalysisRunResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetReachabilityAnalysisRunResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkVerifierWorkspaceResource"/> using the GetReachabilityAnalysisRun method.
+    /// A class representing a ReachabilityAnalysisRun along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReachabilityAnalysisRunResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VerifierWorkspaceResource"/> using the GetReachabilityAnalysisRuns method.
     /// </summary>
     public partial class ReachabilityAnalysisRunResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ReachabilityAnalysisRunResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="networkManagerName"> The networkManagerName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="reachabilityAnalysisRunName"> The reachabilityAnalysisRunName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string reachabilityAnalysisRunName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _reachabilityAnalysisRunClientDiagnostics;
-        private readonly ReachabilityAnalysisRunsRestOperations _reachabilityAnalysisRunRestClient;
+        private readonly ClientDiagnostics _reachabilityAnalysisRunsClientDiagnostics;
+        private readonly ReachabilityAnalysisRuns _reachabilityAnalysisRunsRestClient;
         private readonly ReachabilityAnalysisRunData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/verifierWorkspaces/reachabilityAnalysisRuns";
 
-        /// <summary> Initializes a new instance of the <see cref="ReachabilityAnalysisRunResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ReachabilityAnalysisRunResource for mocking. </summary>
         protected ReachabilityAnalysisRunResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReachabilityAnalysisRunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ReachabilityAnalysisRunResource(ArmClient client, ReachabilityAnalysisRunData data) : this(client, data.Id)
@@ -55,71 +43,94 @@ namespace Azure.ResourceManager.Network
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReachabilityAnalysisRunResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisRunResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ReachabilityAnalysisRunResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _reachabilityAnalysisRunClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string reachabilityAnalysisRunApiVersion);
-            _reachabilityAnalysisRunRestClient = new ReachabilityAnalysisRunsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, reachabilityAnalysisRunApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _reachabilityAnalysisRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _reachabilityAnalysisRunsRestClient = new ReachabilityAnalysisRuns(_reachabilityAnalysisRunsClientDiagnostics, Pipeline, Endpoint, reachabilityAnalysisRunApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ReachabilityAnalysisRunData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="reachabilityAnalysisRunName"> The reachabilityAnalysisRunName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string reachabilityAnalysisRunName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets Reachability Analysis Run.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReachabilityAnalysisRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReachabilityAnalysisRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReachabilityAnalysisRunResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReachabilityAnalysisRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ReachabilityAnalysisRunResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _reachabilityAnalysisRunClientDiagnostics.CreateScope("ReachabilityAnalysisRunResource.Get");
+            using DiagnosticScope scope = _reachabilityAnalysisRunsClientDiagnostics.CreateScope("ReachabilityAnalysisRunResource.Get");
             scope.Start();
             try
             {
-                var response = await _reachabilityAnalysisRunRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reachabilityAnalysisRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ReachabilityAnalysisRunData> response = Response.FromValue(ReachabilityAnalysisRunData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ReachabilityAnalysisRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.Network
         /// Gets Reachability Analysis Run.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReachabilityAnalysisRuns_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReachabilityAnalysisRuns_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReachabilityAnalysisRunResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReachabilityAnalysisRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ReachabilityAnalysisRunResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _reachabilityAnalysisRunClientDiagnostics.CreateScope("ReachabilityAnalysisRunResource.Get");
+            using DiagnosticScope scope = _reachabilityAnalysisRunsClientDiagnostics.CreateScope("ReachabilityAnalysisRunResource.Get");
             scope.Start();
             try
             {
-                var response = _reachabilityAnalysisRunRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reachabilityAnalysisRunsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ReachabilityAnalysisRunData> response = Response.FromValue(ReachabilityAnalysisRunData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ReachabilityAnalysisRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.Network
         /// Deletes Reachability Analysis Run.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReachabilityAnalysisRuns_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReachabilityAnalysisRuns_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReachabilityAnalysisRunResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReachabilityAnalysisRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,14 +213,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _reachabilityAnalysisRunClientDiagnostics.CreateScope("ReachabilityAnalysisRunResource.Delete");
+            using DiagnosticScope scope = _reachabilityAnalysisRunsClientDiagnostics.CreateScope("ReachabilityAnalysisRunResource.Delete");
             scope.Start();
             try
             {
-                var response = await _reachabilityAnalysisRunRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_reachabilityAnalysisRunClientDiagnostics, Pipeline, _reachabilityAnalysisRunRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reachabilityAnalysisRunsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation operation = new NetworkArmOperation(_reachabilityAnalysisRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +241,20 @@ namespace Azure.ResourceManager.Network
         /// Deletes Reachability Analysis Run.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReachabilityAnalysisRuns_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReachabilityAnalysisRuns_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReachabilityAnalysisRunResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReachabilityAnalysisRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,14 +262,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _reachabilityAnalysisRunClientDiagnostics.CreateScope("ReachabilityAnalysisRunResource.Delete");
+            using DiagnosticScope scope = _reachabilityAnalysisRunsClientDiagnostics.CreateScope("ReachabilityAnalysisRunResource.Delete");
             scope.Start();
             try
             {
-                var response = _reachabilityAnalysisRunRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_reachabilityAnalysisRunClientDiagnostics, Pipeline, _reachabilityAnalysisRunRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reachabilityAnalysisRunsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation operation = new NetworkArmOperation(_reachabilityAnalysisRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -254,23 +287,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates Reachability Analysis Runs.
+        /// Update a ReachabilityAnalysisRun.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReachabilityAnalysisRuns_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReachabilityAnalysisRuns_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReachabilityAnalysisRunResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReachabilityAnalysisRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,16 +315,24 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _reachabilityAnalysisRunClientDiagnostics.CreateScope("ReachabilityAnalysisRunResource.Update");
+            using DiagnosticScope scope = _reachabilityAnalysisRunsClientDiagnostics.CreateScope("ReachabilityAnalysisRunResource.Update");
             scope.Start();
             try
             {
-                var response = await _reachabilityAnalysisRunRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _reachabilityAnalysisRunRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<ReachabilityAnalysisRunResource>(Response.FromValue(new ReachabilityAnalysisRunResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reachabilityAnalysisRunsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReachabilityAnalysisRunData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ReachabilityAnalysisRunData> response = Response.FromValue(ReachabilityAnalysisRunData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<ReachabilityAnalysisRunResource> operation = new NetworkArmOperation<ReachabilityAnalysisRunResource>(Response.FromValue(new ReachabilityAnalysisRunResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -302,23 +343,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates Reachability Analysis Runs.
+        /// Update a ReachabilityAnalysisRun.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}/reachabilityAnalysisRuns/{reachabilityAnalysisRunName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReachabilityAnalysisRuns_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReachabilityAnalysisRuns_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReachabilityAnalysisRunResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ReachabilityAnalysisRunResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,16 +371,24 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _reachabilityAnalysisRunClientDiagnostics.CreateScope("ReachabilityAnalysisRunResource.Update");
+            using DiagnosticScope scope = _reachabilityAnalysisRunsClientDiagnostics.CreateScope("ReachabilityAnalysisRunResource.Update");
             scope.Start();
             try
             {
-                var response = _reachabilityAnalysisRunRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _reachabilityAnalysisRunRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<ReachabilityAnalysisRunResource>(Response.FromValue(new ReachabilityAnalysisRunResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reachabilityAnalysisRunsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ReachabilityAnalysisRunData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ReachabilityAnalysisRunData> response = Response.FromValue(ReachabilityAnalysisRunData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<ReachabilityAnalysisRunResource> operation = new NetworkArmOperation<ReachabilityAnalysisRunResource>(Response.FromValue(new ReachabilityAnalysisRunResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

@@ -8,13 +8,13 @@
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The current mode enforced, 0 - Disabled, 1 - Alert, 2 -Deny. </summary>
-    public enum FirewallPolicyIdpsSignatureMode
+    public enum FirewallPolicyIDPSSignatureMode
     {
         /// <summary> 0. </summary>
-        Zero = 0,
+        _0 = 0,
         /// <summary> 1. </summary>
-        One = 1,
+        _1 = 1,
         /// <summary> 2. </summary>
-        Two = 2
+        _2 = 2
     }
 }

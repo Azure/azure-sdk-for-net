@@ -12,11 +12,8 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ExpressRouteCircuitAuthorization data model.
-    /// Authorization in an ExpressRouteCircuit resource.
-    /// </summary>
-    public partial class ExpressRouteCircuitAuthorizationData : NetworkResourceData
+    /// <summary> Authorization in an ExpressRouteCircuit resource. </summary>
+    public partial class ExpressRouteCircuitAuthorizationData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitAuthorizationData"/>. </summary>
         public ExpressRouteCircuitAuthorizationData()
@@ -25,37 +22,73 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitAuthorizationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="authorizationKey"> The authorization key. </param>
-        /// <param name="authorizationUseStatus"> The authorization use status. </param>
-        /// <param name="connectionResourceUri"> The reference to the ExpressRoute connection resource using the authorization. </param>
-        /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
-        internal ExpressRouteCircuitAuthorizationData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, Uri connectionResourceUri, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the express route circuit authorization. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ExpressRouteCircuitAuthorizationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, AuthorizationPropertiesFormat properties, string eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            AuthorizationKey = authorizationKey;
-            AuthorizationUseStatus = authorizationUseStatus;
-            ConnectionResourceUri = connectionResourceUri;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the express route circuit authorization. </summary>
+        internal AuthorizationPropertiesFormat Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
+
         /// <summary> The authorization key. </summary>
-        [WirePath("properties.authorizationKey")]
-        public string AuthorizationKey { get; set; }
+        public string AuthorizationKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthorizationKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationPropertiesFormat();
+                }
+                Properties.AuthorizationKey = value;
+            }
+        }
+
         /// <summary> The authorization use status. </summary>
-        [WirePath("properties.authorizationUseStatus")]
-        public AuthorizationUseStatus? AuthorizationUseStatus { get; set; }
+        public AuthorizationUseStatus? AuthorizationUseStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthorizationUseStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AuthorizationPropertiesFormat();
+                }
+                Properties.AuthorizationUseStatus = value;
+            }
+        }
+
         /// <summary> The reference to the ExpressRoute connection resource using the authorization. </summary>
-        [WirePath("properties.connectionResourceUri")]
-        public Uri ConnectionResourceUri { get; }
+        public string ConnectionResourceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionResourceUri;
+            }
+        }
+
         /// <summary> The provisioning state of the authorization resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

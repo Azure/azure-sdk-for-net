@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VirtualHubRouteTableV2 route. </summary>
     public partial class VirtualHubRouteV2
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualHubRouteV2"/>. </summary>
         public VirtualHubRouteV2()
@@ -57,27 +29,26 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinations"> List of all destinations. </param>
         /// <param name="nextHopType"> The type of next hops. </param>
         /// <param name="nextHops"> NextHops ip address. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualHubRouteV2(string destinationType, IList<string> destinations, string nextHopType, IList<string> nextHops, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualHubRouteV2(string destinationType, IList<string> destinations, string nextHopType, IList<string> nextHops, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DestinationType = destinationType;
             Destinations = destinations;
             NextHopType = nextHopType;
             NextHops = nextHops;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of destinations. </summary>
-        [WirePath("destinationType")]
         public string DestinationType { get; set; }
+
         /// <summary> List of all destinations. </summary>
-        [WirePath("destinations")]
         public IList<string> Destinations { get; }
+
         /// <summary> The type of next hops. </summary>
-        [WirePath("nextHopType")]
         public string NextHopType { get; set; }
+
         /// <summary> NextHops ip address. </summary>
-        [WirePath("nextHops")]
         public IList<string> NextHops { get; }
     }
 }

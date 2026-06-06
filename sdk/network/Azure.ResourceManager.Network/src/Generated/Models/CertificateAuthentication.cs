@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Certificate Authentication information for a certificate based authentication connection. </summary>
     public partial class CertificateAuthentication
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CertificateAuthentication"/>. </summary>
         public CertificateAuthentication()
@@ -55,23 +27,22 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="outboundAuthCertificate"> Keyvault secret ID for outbound authentication certificate. </param>
         /// <param name="inboundAuthCertificateSubjectName"> Inbound authentication certificate subject name. </param>
         /// <param name="inboundAuthCertificateChain"> Inbound authentication certificate public keys. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateAuthentication(Uri outboundAuthCertificate, string inboundAuthCertificateSubjectName, IList<string> inboundAuthCertificateChain, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CertificateAuthentication(Uri outboundAuthCertificate, string inboundAuthCertificateSubjectName, IList<string> inboundAuthCertificateChain, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OutboundAuthCertificate = outboundAuthCertificate;
             InboundAuthCertificateSubjectName = inboundAuthCertificateSubjectName;
             InboundAuthCertificateChain = inboundAuthCertificateChain;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Keyvault secret ID for outbound authentication certificate. </summary>
-        [WirePath("outboundAuthCertificate")]
         public Uri OutboundAuthCertificate { get; set; }
+
         /// <summary> Inbound authentication certificate subject name. </summary>
-        [WirePath("inboundAuthCertificateSubjectName")]
         public string InboundAuthCertificateSubjectName { get; set; }
+
         /// <summary> Inbound authentication certificate public keys. </summary>
-        [WirePath("inboundAuthCertificateChain")]
         public IList<string> InboundAuthCertificateChain { get; }
     }
 }

@@ -8,18 +8,58 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayBackendHttpSettings : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayBackendHttpSettings>
+    /// <summary> Backend address pool settings of an application gateway. </summary>
+    public partial class ApplicationGatewayBackendHttpSettings : NetworkSubResource, IJsonModel<ApplicationGatewayBackendHttpSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayBackendHttpSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplicationGatewayBackendHttpSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApplicationGatewayBackendHttpSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationGatewayBackendHttpSettings IPersistableModel<ApplicationGatewayBackendHttpSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => (ApplicationGatewayBackendHttpSettings)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplicationGatewayBackendHttpSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationGatewayBackendHttpSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,831 +71,116 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Port))
+            if (options.Format != "W" && Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("port"u8);
-                writer.WriteNumberValue(Port.Value);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
             }
-            if (Optional.IsDefined(Protocol))
-            {
-                writer.WritePropertyName("protocol"u8);
-                writer.WriteStringValue(Protocol.Value.ToString());
-            }
-            if (Optional.IsDefined(CookieBasedAffinity))
-            {
-                writer.WritePropertyName("cookieBasedAffinity"u8);
-                writer.WriteStringValue(CookieBasedAffinity.Value.ToString());
-            }
-            if (Optional.IsDefined(RequestTimeoutInSeconds))
-            {
-                writer.WritePropertyName("requestTimeout"u8);
-                writer.WriteNumberValue(RequestTimeoutInSeconds.Value);
-            }
-            if (Optional.IsDefined(Probe))
-            {
-                writer.WritePropertyName("probe"u8);
-                ((IJsonModel<WritableSubResource>)Probe).Write(writer, options);
-            }
-            if (Optional.IsCollectionDefined(AuthenticationCertificates))
-            {
-                writer.WritePropertyName("authenticationCertificates"u8);
-                writer.WriteStartArray();
-                foreach (var item in AuthenticationCertificates)
-                {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(TrustedRootCertificates))
-            {
-                writer.WritePropertyName("trustedRootCertificates"u8);
-                writer.WriteStartArray();
-                foreach (var item in TrustedRootCertificates)
-                {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ConnectionDraining))
-            {
-                writer.WritePropertyName("connectionDraining"u8);
-                writer.WriteObjectValue(ConnectionDraining, options);
-            }
-            if (Optional.IsDefined(HostName))
-            {
-                writer.WritePropertyName("hostName"u8);
-                writer.WriteStringValue(HostName);
-            }
-            if (Optional.IsDefined(PickHostNameFromBackendAddress))
-            {
-                writer.WritePropertyName("pickHostNameFromBackendAddress"u8);
-                writer.WriteBooleanValue(PickHostNameFromBackendAddress.Value);
-            }
-            if (Optional.IsDefined(AffinityCookieName))
-            {
-                writer.WritePropertyName("affinityCookieName"u8);
-                writer.WriteStringValue(AffinityCookieName);
-            }
-            if (Optional.IsDefined(ProbeEnabled))
-            {
-                writer.WritePropertyName("probeEnabled"u8);
-                writer.WriteBooleanValue(ProbeEnabled.Value);
-            }
-            if (Optional.IsDefined(Path))
-            {
-                writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
-            }
-            if (Optional.IsDefined(IsDedicatedBackendConnectionEnabled))
-            {
-                writer.WritePropertyName("dedicatedBackendConnection"u8);
-                writer.WriteBooleanValue(IsDedicatedBackendConnectionEnabled.Value);
-            }
-            if (Optional.IsDefined(IsValidateCertChainAndExpiryEnabled))
-            {
-                writer.WritePropertyName("validateCertChainAndExpiry"u8);
-                writer.WriteBooleanValue(IsValidateCertChainAndExpiryEnabled.Value);
-            }
-            if (Optional.IsDefined(IsValidateSniEnabled))
-            {
-                writer.WritePropertyName("validateSNI"u8);
-                writer.WriteBooleanValue(IsValidateSniEnabled.Value);
-            }
-            if (Optional.IsDefined(SniName))
-            {
-                writer.WritePropertyName("sniName"u8);
-                writer.WriteStringValue(SniName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        ApplicationGatewayBackendHttpSettings IJsonModel<ApplicationGatewayBackendHttpSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationGatewayBackendHttpSettings IJsonModel<ApplicationGatewayBackendHttpSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ApplicationGatewayBackendHttpSettings)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApplicationGatewayBackendHttpSettings(document.RootElement, options);
         }
 
-        internal static ApplicationGatewayBackendHttpSettings DeserializeApplicationGatewayBackendHttpSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApplicationGatewayBackendHttpSettings DeserializeApplicationGatewayBackendHttpSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ApplicationGatewayBackendHttpSettingsPropertiesFormat properties = default;
             string name = default;
-            ResourceType? type = default;
-            int? port = default;
-            ApplicationGatewayProtocol? protocol = default;
-            ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = default;
-            int? requestTimeout = default;
-            WritableSubResource probe = default;
-            IList<WritableSubResource> authenticationCertificates = default;
-            IList<WritableSubResource> trustedRootCertificates = default;
-            ApplicationGatewayConnectionDraining connectionDraining = default;
-            string hostName = default;
-            bool? pickHostNameFromBackendAddress = default;
-            string affinityCookieName = default;
-            bool? probeEnabled = default;
-            string path = default;
-            bool? dedicatedBackendConnection = default;
-            bool? validateCertChainAndExpiry = default;
-            bool? validateSNI = default;
-            string sniName = default;
-            NetworkProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ETag? eTag = default;
+            string @type = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    properties = ApplicationGatewayBackendHttpSettingsPropertiesFormat.DeserializeApplicationGatewayBackendHttpSettingsPropertiesFormat(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("etag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new ResourceType(property.Value.GetString());
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("port"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            port = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("protocol"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            protocol = new ApplicationGatewayProtocol(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("cookieBasedAffinity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            cookieBasedAffinity = new ApplicationGatewayCookieBasedAffinity(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("requestTimeout"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            requestTimeout = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("probe"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            probe = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("authenticationCertificates"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
-                            }
-                            authenticationCertificates = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("trustedRootCertificates"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
-                            }
-                            trustedRootCertificates = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("connectionDraining"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectionDraining = ApplicationGatewayConnectionDraining.DeserializeApplicationGatewayConnectionDraining(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("hostName"u8))
-                        {
-                            hostName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("pickHostNameFromBackendAddress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            pickHostNameFromBackendAddress = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("affinityCookieName"u8))
-                        {
-                            affinityCookieName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("probeEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            probeEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("path"u8))
-                        {
-                            path = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dedicatedBackendConnection"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dedicatedBackendConnection = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("validateCertChainAndExpiry"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            validateCertChainAndExpiry = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("validateSNI"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            validateSNI = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("sniName"u8))
-                        {
-                            sniName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationGatewayBackendHttpSettings(
                 id,
+                additionalBinaryDataProperties,
+                properties,
                 name,
-                type,
-                serializedAdditionalRawData,
-                etag,
-                port,
-                protocol,
-                cookieBasedAffinity,
-                requestTimeout,
-                probe,
-                authenticationCertificates ?? new ChangeTrackingList<WritableSubResource>(),
-                trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
-                connectionDraining,
-                hostName,
-                pickHostNameFromBackendAddress,
-                affinityCookieName,
-                probeEnabled,
-                path,
-                dedicatedBackendConnection,
-                validateCertChainAndExpiry,
-                validateSNI,
-                sniName,
-                provisioningState);
+                eTag,
+                @type);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    port: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Port))
-                {
-                    builder.Append("    port: ");
-                    builder.AppendLine($"{Port.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    protocol: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Protocol))
-                {
-                    builder.Append("    protocol: ");
-                    builder.AppendLine($"'{Protocol.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CookieBasedAffinity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    cookieBasedAffinity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CookieBasedAffinity))
-                {
-                    builder.Append("    cookieBasedAffinity: ");
-                    builder.AppendLine($"'{CookieBasedAffinity.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestTimeoutInSeconds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    requestTimeout: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestTimeoutInSeconds))
-                {
-                    builder.Append("    requestTimeout: ");
-                    builder.AppendLine($"{RequestTimeoutInSeconds.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ProbeId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    probe: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      probe: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Probe))
-                {
-                    builder.Append("    probe: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Probe, options, 4, false, "    probe: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationCertificates), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    authenticationCertificates: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AuthenticationCertificates))
-                {
-                    if (AuthenticationCertificates.Any())
-                    {
-                        builder.Append("    authenticationCertificates: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AuthenticationCertificates)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    authenticationCertificates: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrustedRootCertificates), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    trustedRootCertificates: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(TrustedRootCertificates))
-                {
-                    if (TrustedRootCertificates.Any())
-                    {
-                        builder.Append("    trustedRootCertificates: ");
-                        builder.AppendLine("[");
-                        foreach (var item in TrustedRootCertificates)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    trustedRootCertificates: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionDraining), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    connectionDraining: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectionDraining))
-                {
-                    builder.Append("    connectionDraining: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ConnectionDraining, options, 4, false, "    connectionDraining: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    hostName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HostName))
-                {
-                    builder.Append("    hostName: ");
-                    if (HostName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{HostName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{HostName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PickHostNameFromBackendAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    pickHostNameFromBackendAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PickHostNameFromBackendAddress))
-                {
-                    builder.Append("    pickHostNameFromBackendAddress: ");
-                    var boolValue = PickHostNameFromBackendAddress.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AffinityCookieName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    affinityCookieName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AffinityCookieName))
-                {
-                    builder.Append("    affinityCookieName: ");
-                    if (AffinityCookieName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AffinityCookieName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AffinityCookieName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProbeEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    probeEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProbeEnabled))
-                {
-                    builder.Append("    probeEnabled: ");
-                    var boolValue = ProbeEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    path: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Path))
-                {
-                    builder.Append("    path: ");
-                    if (Path.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Path}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Path}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDedicatedBackendConnectionEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    dedicatedBackendConnection: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDedicatedBackendConnectionEnabled))
-                {
-                    builder.Append("    dedicatedBackendConnection: ");
-                    var boolValue = IsDedicatedBackendConnectionEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsValidateCertChainAndExpiryEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    validateCertChainAndExpiry: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsValidateCertChainAndExpiryEnabled))
-                {
-                    builder.Append("    validateCertChainAndExpiry: ");
-                    var boolValue = IsValidateCertChainAndExpiryEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsValidateSniEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    validateSNI: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsValidateSniEnabled))
-                {
-                    builder.Append("    validateSNI: ");
-                    var boolValue = IsValidateSniEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SniName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sniName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SniName))
-                {
-                    builder.Append("    sniName: ");
-                    if (SniName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SniName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SniName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ApplicationGatewayBackendHttpSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApplicationGatewayBackendHttpSettings IPersistableModel<ApplicationGatewayBackendHttpSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApplicationGatewayBackendHttpSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApplicationGatewayBackendHttpSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

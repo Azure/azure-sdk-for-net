@@ -7,90 +7,89 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkGroup data model.
-    /// The network group resource
-    /// </summary>
-    public partial class NetworkGroupData : ResourceData
+    /// <summary> The network group resource. </summary>
+    public partial class NetworkGroupData : ChildResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="NetworkGroupData"/>. </summary>
         public NetworkGroupData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description of the network group. </param>
-        /// <param name="memberType"> The type of the group member. </param>
-        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, NetworkGroupMemberType? memberType, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The Network Group properties. </param>
+        /// <param name="systemData"> The system metadata related to this resource. </param>
+        internal NetworkGroupData(string id, string name, string @type, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkGroupProperties properties, SystemData systemData) : base(id, name, @type, eTag, additionalBinaryDataProperties)
         {
-            Description = description;
-            MemberType = memberType;
-            ProvisioningState = provisioningState;
-            ResourceGuid = resourceGuid;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            SystemData = systemData;
         }
 
+        /// <summary> The Network Group properties. </summary>
+        internal NetworkGroupProperties Properties { get; set; }
+
+        /// <summary> The system metadata related to this resource. </summary>
+        public SystemData SystemData { get; }
+
         /// <summary> A description of the network group. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkGroupProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The type of the group member. </summary>
-        [WirePath("properties.memberType")]
-        public NetworkGroupMemberType? MemberType { get; set; }
+        public GroupMemberType? MemberType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MemberType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkGroupProperties();
+                }
+                Properties.MemberType = value;
+            }
+        }
+
         /// <summary> The provisioning state of the scope assignment resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Unique identifier for this resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
     }
 }

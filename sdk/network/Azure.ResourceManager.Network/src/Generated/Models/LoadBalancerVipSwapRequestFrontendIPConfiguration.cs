@@ -8,44 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> VIP swap request's frontend IP configuration object. </summary>
     public partial class LoadBalancerVipSwapRequestFrontendIPConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerVipSwapRequestFrontendIPConfiguration"/>. </summary>
         public LoadBalancerVipSwapRequestFrontendIPConfiguration()
@@ -54,30 +24,35 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerVipSwapRequestFrontendIPConfiguration"/>. </summary>
         /// <param name="id"> The ID of frontend IP configuration resource. </param>
-        /// <param name="publicIPAddress"> A reference to public IP address resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerVipSwapRequestFrontendIPConfiguration(string id, WritableSubResource publicIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The properties of VIP swap request's frontend IP configuration object. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancerVipSwapRequestFrontendIPConfiguration(string id, LoadBalancerVipSwapRequestFrontendIPConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            PublicIPAddress = publicIPAddress;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of frontend IP configuration resource. </summary>
-        [WirePath("id")]
         public string Id { get; set; }
-        /// <summary> A reference to public IP address resource. </summary>
-        internal WritableSubResource PublicIPAddress { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.publicIPAddress.id")]
+
+        /// <summary> The properties of VIP swap request's frontend IP configuration object. </summary>
+        internal LoadBalancerVipSwapRequestFrontendIPConfigurationProperties Properties { get; set; }
+
+        /// <summary> Resource ID. </summary>
         public ResourceIdentifier PublicIPAddressId
         {
-            get => PublicIPAddress is null ? default : PublicIPAddress.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddressId;
+            }
             set
             {
-                if (PublicIPAddress is null)
-                    PublicIPAddress = new WritableSubResource();
-                PublicIPAddress.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerVipSwapRequestFrontendIPConfigurationProperties();
+                }
+                Properties.PublicIPAddressId = value;
             }
         }
     }

@@ -7,13 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration for virtual network gateway. </summary>
-    public partial class VirtualNetworkGatewayIPConfiguration : NetworkResourceData
+    public partial class VirtualNetworkGatewayIPConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayIPConfiguration"/>. </summary>
         public VirtualNetworkGatewayIPConfiguration()
@@ -22,66 +22,93 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
-        /// <param name="subnet"> The reference to the subnet resource. </param>
-        /// <param name="publicIPAddress"> The reference to the public IP resource. </param>
-        /// <param name="privateIPAddress"> Private IP Address for this gateway. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual network gateway IP configuration resource. </param>
-        internal VirtualNetworkGatewayIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, WritableSubResource publicIPAddress, string privateIPAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the virtual network gateway ip configuration. </param>
+        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VirtualNetworkGatewayIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualNetworkGatewayIPConfigurationPropertiesFormat properties, string name, ETag? eTag) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            PrivateIPAllocationMethod = privateIPAllocationMethod;
-            Subnet = subnet;
-            PublicIPAddress = publicIPAddress;
-            PrivateIPAddress = privateIPAddress;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the virtual network gateway ip configuration. </summary>
+        internal VirtualNetworkGatewayIPConfigurationPropertiesFormat Properties { get; set; }
+
+        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        public string Name { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> The private IP address allocation method. </summary>
-        [WirePath("properties.privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
-        /// <summary> The reference to the subnet resource. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.subnet.id")]
-        public ResourceIdentifier SubnetId
-        {
-            get => Subnet is null ? default : Subnet.Id;
-            set
-            {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
-            }
-        }
 
-        /// <summary> The reference to the public IP resource. </summary>
-        internal WritableSubResource PublicIPAddress { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.publicIPAddress.id")]
-        public ResourceIdentifier PublicIPAddressId
+        /// <summary> The private IP address allocation method. </summary>
+        public IPAllocationMethod? PrivateIPAllocationMethod
         {
-            get => PublicIPAddress is null ? default : PublicIPAddress.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAllocationMethod;
+            }
             set
             {
-                if (PublicIPAddress is null)
-                    PublicIPAddress = new WritableSubResource();
-                PublicIPAddress.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayIPConfigurationPropertiesFormat();
+                }
+                Properties.PrivateIPAllocationMethod = value;
             }
         }
 
         /// <summary> Private IP Address for this gateway. </summary>
-        [WirePath("properties.privateIPAddress")]
-        public string PrivateIPAddress { get; }
+        public string PrivateIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
+        }
+
         /// <summary> The provisioning state of the virtual network gateway IP configuration resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayIPConfigurationPropertiesFormat();
+                }
+                Properties.SubnetId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier PublicIPAddressId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddressId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayIPConfigurationPropertiesFormat();
+                }
+                Properties.PublicIPAddressId = value;
+            }
+        }
     }
 }

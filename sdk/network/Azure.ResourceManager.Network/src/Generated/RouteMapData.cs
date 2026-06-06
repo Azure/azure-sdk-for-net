@@ -7,93 +7,83 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the RouteMap data model.
-    /// The RouteMap child resource of a Virtual hub.
-    /// </summary>
-    public partial class RouteMapData : ResourceData
+    /// <summary> The RouteMap child resource of a Virtual hub. </summary>
+    public partial class RouteMapData : ReadOnlySubResourceModel
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="RouteMapData"/>. </summary>
         public RouteMapData()
         {
-            AssociatedInboundConnections = new ChangeTrackingList<string>();
-            AssociatedOutboundConnections = new ChangeTrackingList<string>();
-            Rules = new ChangeTrackingList<RouteMapRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteMapData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="associatedInboundConnections"> List of connections which have this RoutMap associated for inbound traffic. </param>
-        /// <param name="associatedOutboundConnections"> List of connections which have this RoutMap associated for outbound traffic. </param>
-        /// <param name="rules"> List of RouteMap rules to be applied. </param>
-        /// <param name="provisioningState"> The provisioning state of the RouteMap resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouteMapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IList<string> associatedInboundConnections, IList<string> associatedOutboundConnections, IList<RouteMapRule> rules, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Type of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the RouteMap resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal RouteMapData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouteMapProperties properties, string eTag) : base(id, name, @type, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            AssociatedInboundConnections = associatedInboundConnections;
-            AssociatedOutboundConnections = associatedOutboundConnections;
-            Rules = rules;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the RouteMap resource. </summary>
+        internal RouteMapProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
+
         /// <summary> List of connections which have this RoutMap associated for inbound traffic. </summary>
-        [WirePath("properties.associatedInboundConnections")]
-        public IList<string> AssociatedInboundConnections { get; }
+        public IList<string> AssociatedInboundConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteMapProperties();
+                }
+                return Properties.AssociatedInboundConnections;
+            }
+        }
+
         /// <summary> List of connections which have this RoutMap associated for outbound traffic. </summary>
-        [WirePath("properties.associatedOutboundConnections")]
-        public IList<string> AssociatedOutboundConnections { get; }
+        public IList<string> AssociatedOutboundConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteMapProperties();
+                }
+                return Properties.AssociatedOutboundConnections;
+            }
+        }
+
         /// <summary> List of RouteMap rules to be applied. </summary>
-        [WirePath("properties.rules")]
-        public IList<RouteMapRule> Rules { get; }
+        public IList<RouteMapRule> Rules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteMapProperties();
+                }
+                return Properties.Rules;
+            }
+        }
+
         /// <summary> The provisioning state of the RouteMap resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

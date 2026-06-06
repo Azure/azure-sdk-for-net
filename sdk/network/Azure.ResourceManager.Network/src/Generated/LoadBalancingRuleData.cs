@@ -12,11 +12,8 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the LoadBalancingRule data model.
-    /// A load balancing rule for a load balancer.
-    /// </summary>
-    public partial class LoadBalancingRuleData : NetworkResourceData
+    /// <summary> A load balancing rule for a load balancer. </summary>
+    public partial class LoadBalancingRuleData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleData"/>. </summary>
         public LoadBalancingRuleData()
@@ -25,22 +22,253 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of load balancer load balancing rule. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal LoadBalancingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, LoadBalancingRuleProperties properties, ETag? etag) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal LoadBalancingRuleData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, LoadBalancingRulePropertiesFormat properties, string eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
-            ETag = etag;
+            ETag = eTag;
         }
 
         /// <summary> Properties of load balancer load balancing rule. </summary>
-        [WirePath("properties")]
-        public LoadBalancingRuleProperties Properties { get; set; }
+        internal LoadBalancingRulePropertiesFormat Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
+
+        /// <summary> An array of references to pool of DIPs. </summary>
+        public IList<NetworkSubResource> BackendAddressPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRulePropertiesFormat();
+                }
+                return Properties.BackendAddressPools;
+            }
+        }
+
+        /// <summary> The reference to the transport protocol used by the load balancing rule. </summary>
+        public TransportProtocol? Protocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Protocol;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new LoadBalancingRulePropertiesFormat();
+                    }
+                    Properties.Protocol = value.Value;
+                }
+            }
+        }
+
+        /// <summary> The load distribution policy for this rule. </summary>
+        public LoadDistribution? LoadDistribution
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadDistribution;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRulePropertiesFormat();
+                }
+                Properties.LoadDistribution = value;
+            }
+        }
+
+        /// <summary> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </summary>
+        public int? FrontendPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendPort;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new LoadBalancingRulePropertiesFormat();
+                    }
+                    Properties.FrontendPort = value.Value;
+                }
+            }
+        }
+
+        /// <summary> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </summary>
+        public int? BackendPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendPort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRulePropertiesFormat();
+                }
+                Properties.BackendPort = value;
+            }
+        }
+
+        /// <summary> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </summary>
+        public int? IdleTimeoutInMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRulePropertiesFormat();
+                }
+                Properties.IdleTimeoutInMinutes = value;
+            }
+        }
+
+        /// <summary> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </summary>
+        public bool? EnableFloatingIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableFloatingIP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRulePropertiesFormat();
+                }
+                Properties.EnableFloatingIP = value;
+            }
+        }
+
+        /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
+        public bool? EnableTcpReset
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableTcpReset;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRulePropertiesFormat();
+                }
+                Properties.EnableTcpReset = value;
+            }
+        }
+
+        /// <summary> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </summary>
+        public bool? DisableOutboundSnat
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableOutboundSnat;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRulePropertiesFormat();
+                }
+                Properties.DisableOutboundSnat = value;
+            }
+        }
+
+        /// <summary> Defines whether connections between 2 communicating endpoints can be tracked and associated to the same backend VM over its lifetime when using UDP protocol. </summary>
+        public bool? EnableConnectionTracking
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableConnectionTracking;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRulePropertiesFormat();
+                }
+                Properties.EnableConnectionTracking = value;
+            }
+        }
+
+        /// <summary> The provisioning state of the load balancing rule resource. </summary>
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier FrontendIPConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendIPConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRulePropertiesFormat();
+                }
+                Properties.FrontendIPConfigurationId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier BackendAddressPoolId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendAddressPoolId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRulePropertiesFormat();
+                }
+                Properties.BackendAddressPoolId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier ProbeId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProbeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRulePropertiesFormat();
+                }
+                Properties.ProbeId = value;
+            }
+        }
     }
 }

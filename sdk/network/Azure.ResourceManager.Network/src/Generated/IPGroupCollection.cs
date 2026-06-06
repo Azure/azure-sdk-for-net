@@ -8,68 +8,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IPGroupResource"/> and their operations.
-    /// Each <see cref="IPGroupResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="IPGroupCollection"/> instance call the GetIPGroups method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="IpGroupResource"/> and their operations.
+    /// Each <see cref="IpGroupResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="IpGroupCollection"/> instance call the GetIpGroups method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class IPGroupCollection : ArmCollection, IEnumerable<IPGroupResource>, IAsyncEnumerable<IPGroupResource>
+    public partial class IpGroupCollection : ArmCollection, IEnumerable<IpGroupResource>, IAsyncEnumerable<IpGroupResource>
     {
-        private readonly ClientDiagnostics _ipGroupIPGroupsClientDiagnostics;
-        private readonly IpGroupsRestOperations _ipGroupIPGroupsRestClient;
+        private readonly ClientDiagnostics _ipGroupsClientDiagnostics;
+        private readonly IpGroups _ipGroupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="IPGroupCollection"/> class for mocking. </summary>
-        protected IPGroupCollection()
+        /// <summary> Initializes a new instance of IpGroupCollection for mocking. </summary>
+        protected IpGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="IPGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IpGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal IPGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal IpGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _ipGroupIPGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IPGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(IPGroupResource.ResourceType, out string ipGroupIPGroupsApiVersion);
-            _ipGroupIPGroupsRestClient = new IpGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, ipGroupIPGroupsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(IpGroupResource.ResourceType, out string ipGroupApiVersion);
+            _ipGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IpGroupResource.ResourceType.Namespace, Diagnostics);
+            _ipGroupsRestClient = new IpGroups(_ipGroupsClientDiagnostics, Pipeline, Endpoint, ipGroupApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates an ipGroups in a specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="data"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<IPGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipGroupsName, IPGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<IpGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipGroupsName, IpGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _ipGroupsClientDiagnostics.CreateScope("IpGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _ipGroupIPGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<IPGroupResource>(new IPGroupOperationSource(Client), _ipGroupIPGroupsClientDiagnostics, Pipeline, _ipGroupIPGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipGroupsName, IpGroupData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<IpGroupResource> operation = new NetworkArmOperation<IpGroupResource>(
+                    new IpGroupResourceOperationSource(Client),
+                    _ipGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.Network
         /// Creates or updates an ipGroups in a specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="data"> Parameters supplied to the create or update IpGroups operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<IPGroupResource> CreateOrUpdate(WaitUntil waitUntil, string ipGroupsName, IPGroupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<IpGroupResource> CreateOrUpdate(WaitUntil waitUntil, string ipGroupsName, IpGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _ipGroupsClientDiagnostics.CreateScope("IpGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _ipGroupIPGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, data, cancellationToken);
-                var operation = new NetworkArmOperation<IPGroupResource>(new IPGroupOperationSource(Client), _ipGroupIPGroupsClientDiagnostics, Pipeline, _ipGroupIPGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipGroupsName, IpGroupData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<IpGroupResource> operation = new NetworkArmOperation<IpGroupResource>(
+                    new IpGroupResourceOperationSource(Client),
+                    _ipGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,40 +175,44 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified ipGroups.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public virtual async Task<Response<IPGroupResource>> GetAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<IpGroupResource>> GetAsync(string ipGroupsName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
-            using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.Get");
+            using DiagnosticScope scope = _ipGroupsClientDiagnostics.CreateScope("IpGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _ipGroupIPGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipGroupsName, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<IpGroupData> response = Response.FromValue(IpGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IPGroupResource(Client, response.Value), response.GetRawResponse());
+                }
+                return Response.FromValue(new IpGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,40 +225,44 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified ipGroups.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public virtual Response<IPGroupResource> Get(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<IpGroupResource> Get(string ipGroupsName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
-            using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.Get");
+            using DiagnosticScope scope = _ipGroupsClientDiagnostics.CreateScope("IpGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _ipGroupIPGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipGroupsName, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<IpGroupData> response = Response.FromValue(IpGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new IPGroupResource(Client, response.Value), response.GetRawResponse());
+                }
+                return Response.FromValue(new IpGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -246,97 +275,107 @@ namespace Azure.ResourceManager.Network
         /// Gets all IpGroups in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IPGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IpGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IpGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _ipGroupIPGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipGroupIPGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPGroupResource(Client, IPGroupData.DeserializeIPGroupData(e)), _ipGroupIPGroupsClientDiagnostics, Pipeline, "IPGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IpGroupData, IpGroupResource>(new IpGroupsGetByResourceGroupAsyncCollectionResultOfT(_ipGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IpGroupCollection.GetAll"), data => new IpGroupResource(Client, data));
         }
 
         /// <summary>
         /// Gets all IpGroups in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IPGroupResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IpGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IpGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _ipGroupIPGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipGroupIPGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPGroupResource(Client, IPGroupData.DeserializeIPGroupData(e)), _ipGroupIPGroupsClientDiagnostics, Pipeline, "IPGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IpGroupData, IpGroupResource>(new IpGroupsGetByResourceGroupCollectionResultOfT(_ipGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IpGroupCollection.GetAll"), data => new IpGroupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string ipGroupsName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
-            using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.Exists");
+            using DiagnosticScope scope = _ipGroupsClientDiagnostics.CreateScope("IpGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _ipGroupIPGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipGroupsName, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IpGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IpGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IpGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,37 +389,51 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public virtual Response<bool> Exists(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string ipGroupsName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
-            using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.Exists");
+            using DiagnosticScope scope = _ipGroupsClientDiagnostics.CreateScope("IpGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _ipGroupIPGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipGroupsName, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IpGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IpGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IpGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,40 +447,56 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public virtual async Task<NullableResponse<IPGroupResource>> GetIfExistsAsync(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<IpGroupResource>> GetIfExistsAsync(string ipGroupsName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
-            using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _ipGroupsClientDiagnostics.CreateScope("IpGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _ipGroupIPGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipGroupsName, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<IpGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IpGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IpGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
-                    return new NoValueResponse<IPGroupResource>(response.GetRawResponse());
-                return Response.FromValue(new IPGroupResource(Client, response.Value), response.GetRawResponse());
+                {
+                    return new NoValueResponse<IpGroupResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new IpGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -440,40 +509,56 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ipGroups/{ipGroupsName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipGroupsName"> The name of the ipGroups. </param>
         /// <param name="expand"> Expands resourceIds (of Firewalls/Network Security Groups etc.) back referenced by the IpGroups resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipGroupsName"/> is null. </exception>
-        public virtual NullableResponse<IPGroupResource> GetIfExists(string ipGroupsName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="ipGroupsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<IpGroupResource> GetIfExists(string ipGroupsName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipGroupsName, nameof(ipGroupsName));
 
-            using var scope = _ipGroupIPGroupsClientDiagnostics.CreateScope("IPGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _ipGroupsClientDiagnostics.CreateScope("IpGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _ipGroupIPGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipGroupsName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipGroupsName, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<IpGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(IpGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((IpGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
-                    return new NoValueResponse<IPGroupResource>(response.GetRawResponse());
-                return Response.FromValue(new IPGroupResource(Client, response.Value), response.GetRawResponse());
+                {
+                    return new NoValueResponse<IpGroupResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new IpGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -482,7 +567,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<IPGroupResource> IEnumerable<IPGroupResource>.GetEnumerator()
+        IEnumerator<IpGroupResource> IEnumerable<IpGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -492,7 +577,8 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<IPGroupResource> IAsyncEnumerable<IPGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<IpGroupResource> IAsyncEnumerable<IpGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class HubIPConfigurationResource : IJsonModel<HubIPConfigurationData>
+    /// <summary></summary>
+    public partial class HubIpConfigurationResource : IJsonModel<HubIpConfigurationData>
     {
-        private static HubIPConfigurationData s_dataDeserializationInstance;
-        private static HubIPConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HubIpConfigurationData> s_dataDeserializationInstance;
 
-        void IJsonModel<HubIPConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HubIPConfigurationData>)Data).Write(writer, options);
+        private static IJsonModel<HubIpConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HubIpConfigurationData();
 
-        HubIPConfigurationData IJsonModel<HubIPConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HubIPConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<HubIpConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HubIpConfigurationData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<HubIPConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HubIPConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HubIpConfigurationData IJsonModel<HubIpConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        HubIPConfigurationData IPersistableModel<HubIPConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HubIPConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HubIpConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HubIpConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<HubIPConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HubIPConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HubIpConfigurationData IPersistableModel<HubIpConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HubIpConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HubIpConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

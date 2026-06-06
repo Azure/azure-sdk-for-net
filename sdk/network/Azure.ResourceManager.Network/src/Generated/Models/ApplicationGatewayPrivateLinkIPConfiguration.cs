@@ -8,68 +8,119 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The application gateway private link ip configuration. </summary>
-    public partial class ApplicationGatewayPrivateLinkIPConfiguration : NetworkResourceData
+    public partial class ApplicationGatewayPrivateLinkIpConfiguration : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIPConfiguration"/>. </summary>
-        public ApplicationGatewayPrivateLinkIPConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIpConfiguration"/>. </summary>
+        public ApplicationGatewayPrivateLinkIpConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIPConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIpConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
-        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
-        /// <param name="subnet"> Reference to the subnet resource. </param>
-        /// <param name="isPrimary"> Whether the ip configuration is primary or not. </param>
-        /// <param name="provisioningState"> The provisioning state of the application gateway private link IP configuration. </param>
-        internal ApplicationGatewayPrivateLinkIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, bool? isPrimary, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of an application gateway private link ip configuration. </param>
+        /// <param name="name"> The name of application gateway private link ip configuration. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> The resource type. </param>
+        internal ApplicationGatewayPrivateLinkIpConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayPrivateLinkIpConfigurationProperties properties, string name, string eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            PrivateIPAddress = privateIPAddress;
-            PrivateIPAllocationMethod = privateIPAllocationMethod;
-            Subnet = subnet;
-            IsPrimary = isPrimary;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            Type = @type;
         }
+
+        /// <summary> Properties of an application gateway private link ip configuration. </summary>
+        internal ApplicationGatewayPrivateLinkIpConfigurationProperties Properties { get; set; }
+
+        /// <summary> The name of application gateway private link ip configuration. </summary>
+        public string Name { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
+
+        /// <summary> The resource type. </summary>
+        public string Type { get; }
+
         /// <summary> The private IP address of the IP configuration. </summary>
-        [WirePath("properties.privateIPAddress")]
-        public string PrivateIPAddress { get; set; }
-        /// <summary> The private IP address allocation method. </summary>
-        [WirePath("properties.privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
-        /// <summary> Reference to the subnet resource. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.subnet.id")]
-        public ResourceIdentifier SubnetId
+        public string PrivateIPAddress
         {
-            get => Subnet is null ? default : Subnet.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
             set
             {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateLinkIpConfigurationProperties();
+                }
+                Properties.PrivateIPAddress = value;
+            }
+        }
+
+        /// <summary> The private IP address allocation method. </summary>
+        public IPAllocationMethod? PrivateIPAllocationMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAllocationMethod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateLinkIpConfigurationProperties();
+                }
+                Properties.PrivateIPAllocationMethod = value;
             }
         }
 
         /// <summary> Whether the ip configuration is primary or not. </summary>
-        [WirePath("properties.primary")]
-        public bool? IsPrimary { get; set; }
+        public bool? Primary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Primary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateLinkIpConfigurationProperties();
+                }
+                Properties.Primary = value;
+            }
+        }
+
         /// <summary> The provisioning state of the application gateway private link IP configuration. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayPrivateLinkIpConfigurationProperties();
+                }
+                Properties.SubnetId = value;
+            }
+        }
     }
 }

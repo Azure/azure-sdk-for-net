@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkInterfaceResource : IJsonModel<NetworkInterfaceData>
+    /// <summary></summary>
+    public partial class NetworkInterfaceResource : IJsonModel<NetworkInterfaceIPConfigurationData>
     {
-        private static NetworkInterfaceData s_dataDeserializationInstance;
-        private static NetworkInterfaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkInterfaceIPConfigurationData> s_dataDeserializationInstance;
 
-        void IJsonModel<NetworkInterfaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkInterfaceData>)Data).Write(writer, options);
+        private static IJsonModel<NetworkInterfaceIPConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkInterfaceIPConfigurationData();
 
-        NetworkInterfaceData IJsonModel<NetworkInterfaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkInterfaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<NetworkInterfaceIPConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkInterfaceIPConfigurationData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<NetworkInterfaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkInterfaceData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkInterfaceIPConfigurationData IJsonModel<NetworkInterfaceIPConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        NetworkInterfaceData IPersistableModel<NetworkInterfaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkInterfaceData>(data, options, AzureResourceManagerNetworkContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkInterfaceIPConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkInterfaceIPConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkInterfaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkInterfaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkInterfaceIPConfigurationData IPersistableModel<NetworkInterfaceIPConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkInterfaceIPConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkInterfaceIPConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

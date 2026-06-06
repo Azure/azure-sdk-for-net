@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Group of src/dest ips and ports to be captured. </summary>
     public partial class AzureFirewallPacketCaptureRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureRule"/>. </summary>
         public AzureFirewallPacketCaptureRule()
@@ -57,23 +29,22 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sources"> List of source IP addresses/subnets to be captured. </param>
         /// <param name="destinations"> List of destination IP addresses/subnets to be captured. </param>
         /// <param name="destinationPorts"> List of ports to be captured. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFirewallPacketCaptureRule(IList<string> sources, IList<string> destinations, IList<string> destinationPorts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AzureFirewallPacketCaptureRule(IList<string> sources, IList<string> destinations, IList<string> destinationPorts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sources = sources;
             Destinations = destinations;
             DestinationPorts = destinationPorts;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of source IP addresses/subnets to be captured. </summary>
-        [WirePath("sources")]
         public IList<string> Sources { get; }
+
         /// <summary> List of destination IP addresses/subnets to be captured. </summary>
-        [WirePath("destinations")]
         public IList<string> Destinations { get; }
+
         /// <summary> List of ports to be captured. </summary>
-        [WirePath("destinationPorts")]
         public IList<string> DestinationPorts { get; }
     }
 }

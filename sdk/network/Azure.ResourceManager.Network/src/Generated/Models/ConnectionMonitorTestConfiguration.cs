@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes a connection monitor test configuration. </summary>
     public partial class ConnectionMonitorTestConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestConfiguration"/>. </summary>
         /// <param name="name"> The name of the connection monitor test configuration. </param>
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="tcpConfiguration"> The parameters used to perform test evaluation over TCP. </param>
         /// <param name="icmpConfiguration"> The parameters used to perform test evaluation over ICMP. </param>
         /// <param name="successThreshold"> The threshold for declaring a test successful. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorTestConfiguration(string name, int? testFrequencySec, ConnectionMonitorTestConfigurationProtocol protocol, TestEvalPreferredIPVersion? preferredIPVersion, ConnectionMonitorHttpConfiguration httpConfiguration, ConnectionMonitorTcpConfiguration tcpConfiguration, ConnectionMonitorIcmpConfiguration icmpConfiguration, ConnectionMonitorSuccessThreshold successThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorTestConfiguration(string name, int? testFrequencySec, ConnectionMonitorTestConfigurationProtocol protocol, Models.TestEvalPreferredIPVersion? preferredIPVersion, ConnectionMonitorHttpConfiguration httpConfiguration, ConnectionMonitorTcpConfiguration tcpConfiguration, ConnectionMonitorIcmpConfiguration icmpConfiguration, ConnectionMonitorSuccessThreshold successThreshold, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             TestFrequencySec = testFrequencySec;
@@ -77,49 +49,48 @@ namespace Azure.ResourceManager.Network.Models
             TcpConfiguration = tcpConfiguration;
             IcmpConfiguration = icmpConfiguration;
             SuccessThreshold = successThreshold;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestConfiguration"/> for deserialization. </summary>
-        internal ConnectionMonitorTestConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the connection monitor test configuration. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> The frequency of test evaluation, in seconds. </summary>
-        [WirePath("testFrequencySec")]
         public int? TestFrequencySec { get; set; }
+
         /// <summary> The protocol to use in test evaluation. </summary>
-        [WirePath("protocol")]
         public ConnectionMonitorTestConfigurationProtocol Protocol { get; set; }
+
         /// <summary> The preferred IP version to use in test evaluation. The connection monitor may choose to use a different version depending on other parameters. </summary>
-        [WirePath("preferredIPVersion")]
-        public TestEvalPreferredIPVersion? PreferredIPVersion { get; set; }
+        public Models.TestEvalPreferredIPVersion? PreferredIPVersion { get; set; }
+
         /// <summary> The parameters used to perform test evaluation over HTTP. </summary>
-        [WirePath("httpConfiguration")]
         public ConnectionMonitorHttpConfiguration HttpConfiguration { get; set; }
+
         /// <summary> The parameters used to perform test evaluation over TCP. </summary>
-        [WirePath("tcpConfiguration")]
         public ConnectionMonitorTcpConfiguration TcpConfiguration { get; set; }
+
         /// <summary> The parameters used to perform test evaluation over ICMP. </summary>
         internal ConnectionMonitorIcmpConfiguration IcmpConfiguration { get; set; }
+
+        /// <summary> The threshold for declaring a test successful. </summary>
+        public ConnectionMonitorSuccessThreshold SuccessThreshold { get; set; }
+
         /// <summary> Value indicating whether path evaluation with trace route should be disabled. </summary>
-        [WirePath("icmpConfiguration.disableTraceRoute")]
         public bool? DisableTraceRoute
         {
-            get => IcmpConfiguration is null ? default : IcmpConfiguration.DisableTraceRoute;
+            get
+            {
+                return IcmpConfiguration is null ? default : IcmpConfiguration.DisableTraceRoute;
+            }
             set
             {
                 if (IcmpConfiguration is null)
+                {
                     IcmpConfiguration = new ConnectionMonitorIcmpConfiguration();
+                }
                 IcmpConfiguration.DisableTraceRoute = value;
             }
         }
-
-        /// <summary> The threshold for declaring a test successful. </summary>
-        [WirePath("successThreshold")]
-        public ConnectionMonitorSuccessThreshold SuccessThreshold { get; set; }
     }
 }

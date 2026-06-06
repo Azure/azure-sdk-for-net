@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EffectiveConnectivityConfiguration : IUtf8JsonSerializable, IJsonModel<EffectiveConnectivityConfiguration>
+    /// <summary> The network manager effective connectivity configuration. </summary>
+    public partial class EffectiveConnectivityConfiguration : IJsonModel<EffectiveConnectivityConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveConnectivityConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EffectiveConnectivityConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EffectiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEffectiveConnectivityConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EffectiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EffectiveConnectivityConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EffectiveConnectivityConfiguration IPersistableModel<EffectiveConnectivityConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EffectiveConnectivityConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EffectiveConnectivityConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,94 +69,40 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EffectiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EffectiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(ConfigurationGroups))
             {
                 writer.WritePropertyName("configurationGroups"u8);
                 writer.WriteStartArray();
-                foreach (var item in ConfigurationGroups)
+                foreach (Models.NetworkConfigurationGroup item in ConfigurationGroups)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<Models.NetworkConfigurationGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(ConnectivityTopology))
-            {
-                writer.WritePropertyName("connectivityTopology"u8);
-                writer.WriteStringValue(ConnectivityTopology.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Hubs))
-            {
-                writer.WritePropertyName("hubs"u8);
-                writer.WriteStartArray();
-                foreach (var item in Hubs)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsGlobal))
-            {
-                writer.WritePropertyName("isGlobal"u8);
-                writer.WriteStringValue(IsGlobal.Value.ToString());
-            }
-            if (Optional.IsDefined(ConnectivityCapabilities))
-            {
-                writer.WritePropertyName("connectivityCapabilities"u8);
-                writer.WriteObjectValue(ConnectivityCapabilities, options);
-            }
-            if (Optional.IsCollectionDefined(AppliesToGroups))
-            {
-                writer.WritePropertyName("appliesToGroups"u8);
-                writer.WriteStartArray();
-                foreach (var item in AppliesToGroups)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(DeleteExistingPeering))
-            {
-                writer.WritePropertyName("deleteExistingPeering"u8);
-                writer.WriteStringValue(DeleteExistingPeering.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
-            {
-                writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid.Value);
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -126,434 +111,71 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        EffectiveConnectivityConfiguration IJsonModel<EffectiveConnectivityConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EffectiveConnectivityConfiguration IJsonModel<EffectiveConnectivityConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EffectiveConnectivityConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EffectiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EffectiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEffectiveConnectivityConfiguration(document.RootElement, options);
         }
 
-        internal static EffectiveConnectivityConfiguration DeserializeEffectiveConnectivityConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EffectiveConnectivityConfiguration DeserializeEffectiveConnectivityConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string id = default;
-            IReadOnlyList<NetworkConfigurationGroup> configurationGroups = default;
-            string description = default;
-            ConnectivityTopology? connectivityTopology = default;
-            IReadOnlyList<ConnectivityHub> hubs = default;
-            GlobalMeshSupportFlag? isGlobal = default;
-            ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = default;
-            IReadOnlyList<ConnectivityGroupItem> appliesToGroups = default;
-            NetworkProvisioningState? provisioningState = default;
-            DeleteExistingPeering? deleteExistingPeering = default;
-            Guid? resourceGuid = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ConnectivityConfigurationProperties properties = default;
+            IReadOnlyList<Models.NetworkConfigurationGroup> configurationGroups = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("configurationGroups"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    properties = ConnectivityConfigurationProperties.DeserializeConnectivityConfigurationProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("configurationGroups"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
+                        continue;
+                    }
+                    List<Models.NetworkConfigurationGroup> array = new List<Models.NetworkConfigurationGroup>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(Models.NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
                     }
                     configurationGroups = array;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("connectivityTopology"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectivityTopology = new ConnectivityTopology(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("hubs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ConnectivityHub> array = new List<ConnectivityHub>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ConnectivityHub.DeserializeConnectivityHub(item, options));
-                            }
-                            hubs = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("isGlobal"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isGlobal = new GlobalMeshSupportFlag(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("connectivityCapabilities"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectivityCapabilities = ConnectivityConfigurationPropertiesConnectivityCapabilities.DeserializeConnectivityConfigurationPropertiesConnectivityCapabilities(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("appliesToGroups"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ConnectivityGroupItem> array = new List<ConnectivityGroupItem>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ConnectivityGroupItem.DeserializeConnectivityGroupItem(item, options));
-                            }
-                            appliesToGroups = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("deleteExistingPeering"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            deleteExistingPeering = new DeleteExistingPeering(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceGuid"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceGuid = property0.Value.GetGuid();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EffectiveConnectivityConfiguration(
-                id,
-                configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
-                description,
-                connectivityTopology,
-                hubs ?? new ChangeTrackingList<ConnectivityHub>(),
-                isGlobal,
-                connectivityCapabilities,
-                appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
-                provisioningState,
-                deleteExistingPeering,
-                resourceGuid,
-                serializedAdditionalRawData);
+            return new EffectiveConnectivityConfiguration(id, properties, configurationGroups ?? new ChangeTrackingList<Models.NetworkConfigurationGroup>(), additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  configurationGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ConfigurationGroups))
-                {
-                    if (ConfigurationGroups.Any())
-                    {
-                        builder.Append("  configurationGroups: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ConfigurationGroups)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  configurationGroups: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("    description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectivityTopology), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    connectivityTopology: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectivityTopology))
-                {
-                    builder.Append("    connectivityTopology: ");
-                    builder.AppendLine($"'{ConnectivityTopology.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hubs), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    hubs: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Hubs))
-                {
-                    if (Hubs.Any())
-                    {
-                        builder.Append("    hubs: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Hubs)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    hubs: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGlobal), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isGlobal: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsGlobal))
-                {
-                    builder.Append("    isGlobal: ");
-                    builder.AppendLine($"'{IsGlobal.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectivityCapabilities), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    connectivityCapabilities: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectivityCapabilities))
-                {
-                    builder.Append("    connectivityCapabilities: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ConnectivityCapabilities, options, 4, false, "    connectivityCapabilities: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppliesToGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    appliesToGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AppliesToGroups))
-                {
-                    if (AppliesToGroups.Any())
-                    {
-                        builder.Append("    appliesToGroups: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AppliesToGroups)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    appliesToGroups: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeleteExistingPeering), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    deleteExistingPeering: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeleteExistingPeering))
-                {
-                    builder.Append("    deleteExistingPeering: ");
-                    builder.AppendLine($"'{DeleteExistingPeering.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGuid), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceGuid: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceGuid))
-                {
-                    builder.Append("    resourceGuid: ");
-                    builder.AppendLine($"'{ResourceGuid.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<EffectiveConnectivityConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EffectiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EffectiveConnectivityConfiguration IPersistableModel<EffectiveConnectivityConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EffectiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEffectiveConnectivityConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EffectiveConnectivityConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -15,31 +15,42 @@ namespace Azure.ResourceManager.Network.Models
     public partial class BgpServiceCommunity : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="BgpServiceCommunity"/>. </summary>
-        public BgpServiceCommunity()
+        internal BgpServiceCommunity()
         {
-            BgpCommunities = new ChangeTrackingList<BgpCommunity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BgpServiceCommunity"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="serviceName"> The name of the bgp community. e.g. Skype. </param>
-        /// <param name="bgpCommunities"> A list of bgp communities. </param>
-        internal BgpServiceCommunity(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string serviceName, IList<BgpCommunity> bgpCommunities) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the BGP service community. </param>
+        internal BgpServiceCommunity(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, BgpServiceCommunityPropertiesFormat properties) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ServiceName = serviceName;
-            BgpCommunities = bgpCommunities;
+            Properties = properties;
         }
 
+        /// <summary> Properties of the BGP service community. </summary>
+        internal BgpServiceCommunityPropertiesFormat Properties { get; }
+
         /// <summary> The name of the bgp community. e.g. Skype. </summary>
-        [WirePath("properties.serviceName")]
-        public string ServiceName { get; set; }
+        public string ServiceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceName;
+            }
+        }
+
         /// <summary> A list of bgp communities. </summary>
-        [WirePath("properties.bgpCommunities")]
-        public IList<BgpCommunity> BgpCommunities { get; }
+        public IList<BGPCommunity> BgpCommunities
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BgpCommunities;
+            }
+        }
     }
 }

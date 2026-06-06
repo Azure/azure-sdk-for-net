@@ -9,99 +9,154 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ExpressRouteCrossConnection data model.
-    /// ExpressRouteCrossConnection resource.
-    /// </summary>
+    /// <summary> ExpressRouteCrossConnection resource. </summary>
     public partial class ExpressRouteCrossConnectionData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionData"/>. </summary>
         public ExpressRouteCrossConnectionData()
         {
-            Peerings = new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpressRouteCrossConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="primaryAzurePort"> The name of the primary port. </param>
-        /// <param name="secondaryAzurePort"> The name of the secondary port. </param>
-        /// <param name="stag"> The identifier of the circuit traffic. </param>
-        /// <param name="peeringLocation"> The peering location of the ExpressRoute circuit. </param>
-        /// <param name="bandwidthInMbps"> The circuit bandwidth In Mbps. </param>
-        /// <param name="expressRouteCircuit"> The ExpressRouteCircuit. </param>
-        /// <param name="serviceProviderProvisioningState"> The provisioning state of the circuit in the connectivity provider system. </param>
-        /// <param name="serviceProviderNotes"> Additional read only notes set by the connectivity provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the express route cross connection resource. </param>
-        /// <param name="peerings"> The list of peerings. </param>
-        internal ExpressRouteCrossConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string primaryAzurePort, string secondaryAzurePort, int? stag, string peeringLocation, int? bandwidthInMbps, WritableSubResource expressRouteCircuit, ServiceProviderProvisioningState? serviceProviderProvisioningState, string serviceProviderNotes, NetworkProvisioningState? provisioningState, IList<ExpressRouteCrossConnectionPeeringData> peerings) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the express route cross connection. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ExpressRouteCrossConnectionData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpressRouteCrossConnectionProperties properties, string eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            PrimaryAzurePort = primaryAzurePort;
-            SecondaryAzurePort = secondaryAzurePort;
-            STag = stag;
-            PeeringLocation = peeringLocation;
-            BandwidthInMbps = bandwidthInMbps;
-            ExpressRouteCircuit = expressRouteCircuit;
-            ServiceProviderProvisioningState = serviceProviderProvisioningState;
-            ServiceProviderNotes = serviceProviderNotes;
-            ProvisioningState = provisioningState;
-            Peerings = peerings;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the express route cross connection. </summary>
+        internal ExpressRouteCrossConnectionProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
+
         /// <summary> The name of the primary port. </summary>
-        [WirePath("properties.primaryAzurePort")]
-        public string PrimaryAzurePort { get; }
-        /// <summary> The name of the secondary port. </summary>
-        [WirePath("properties.secondaryAzurePort")]
-        public string SecondaryAzurePort { get; }
-        /// <summary> The identifier of the circuit traffic. </summary>
-        [WirePath("properties.sTag")]
-        public int? STag { get; }
-        /// <summary> The peering location of the ExpressRoute circuit. </summary>
-        [WirePath("properties.peeringLocation")]
-        public string PeeringLocation { get; }
-        /// <summary> The circuit bandwidth In Mbps. </summary>
-        [WirePath("properties.bandwidthInMbps")]
-        public int? BandwidthInMbps { get; }
-        /// <summary> The ExpressRouteCircuit. </summary>
-        internal WritableSubResource ExpressRouteCircuit { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.expressRouteCircuit.id")]
-        public ResourceIdentifier ExpressRouteCircuitId
+        public string PrimaryAzurePort
         {
-            get => ExpressRouteCircuit is null ? default : ExpressRouteCircuit.Id;
-            set
+            get
             {
-                if (ExpressRouteCircuit is null)
-                    ExpressRouteCircuit = new WritableSubResource();
-                ExpressRouteCircuit.Id = value;
+                return Properties is null ? default : Properties.PrimaryAzurePort;
+            }
+        }
+
+        /// <summary> The name of the secondary port. </summary>
+        public string SecondaryAzurePort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryAzurePort;
+            }
+        }
+
+        /// <summary> The identifier of the circuit traffic. </summary>
+        public int? STag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.STag;
+            }
+        }
+
+        /// <summary> The peering location of the ExpressRoute circuit. </summary>
+        public string PeeringLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PeeringLocation;
+            }
+        }
+
+        /// <summary> The circuit bandwidth In Mbps. </summary>
+        public int? BandwidthInMbps
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BandwidthInMbps;
             }
         }
 
         /// <summary> The provisioning state of the circuit in the connectivity provider system. </summary>
-        [WirePath("properties.serviceProviderProvisioningState")]
-        public ServiceProviderProvisioningState? ServiceProviderProvisioningState { get; set; }
+        public ServiceProviderProvisioningState? ServiceProviderProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceProviderProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionProperties();
+                }
+                Properties.ServiceProviderProvisioningState = value;
+            }
+        }
+
         /// <summary> Additional read only notes set by the connectivity provider. </summary>
-        [WirePath("properties.serviceProviderNotes")]
-        public string ServiceProviderNotes { get; set; }
+        public string ServiceProviderNotes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceProviderNotes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionProperties();
+                }
+                Properties.ServiceProviderNotes = value;
+            }
+        }
+
         /// <summary> The provisioning state of the express route cross connection resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The list of peerings. </summary>
-        [WirePath("properties.peerings")]
-        public IList<ExpressRouteCrossConnectionPeeringData> Peerings { get; }
+        public IList<ExpressRouteCrossConnectionPeering> Peerings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionProperties();
+                }
+                return Properties.Peerings;
+            }
+        }
+
+        /// <summary> Corresponding Express Route Circuit Id. </summary>
+        public string ExpressRouteCircuitId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteCircuitId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionProperties();
+                }
+                Properties.ExpressRouteCircuitId = value;
+            }
+        }
     }
 }

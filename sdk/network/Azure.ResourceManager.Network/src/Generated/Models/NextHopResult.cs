@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The information about next hop from the specified VM. </summary>
     public partial class NextHopResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NextHopResult"/>. </summary>
         internal NextHopResult()
@@ -53,25 +24,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="NextHopResult"/>. </summary>
         /// <param name="nextHopType"> Next hop type. </param>
-        /// <param name="nextHopIPAddress"> Next hop IP Address. </param>
+        /// <param name="nextHopIpAddress"> Next hop IP Address. </param>
         /// <param name="routeTableId"> The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created routes then this field will be the string 'System Route'. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NextHopResult(NextHopType? nextHopType, string nextHopIPAddress, ResourceIdentifier routeTableId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NextHopResult(NextHopType? nextHopType, string nextHopIpAddress, ResourceIdentifier routeTableId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextHopType = nextHopType;
-            NextHopIPAddress = nextHopIPAddress;
+            NextHopIpAddress = nextHopIpAddress;
             RouteTableId = routeTableId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Next hop type. </summary>
-        [WirePath("nextHopType")]
         public NextHopType? NextHopType { get; }
+
         /// <summary> Next hop IP Address. </summary>
-        [WirePath("nextHopIpAddress")]
-        public string NextHopIPAddress { get; }
+        public string NextHopIpAddress { get; }
+
         /// <summary> The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created routes then this field will be the string 'System Route'. </summary>
-        [WirePath("routeTableId")]
         public ResourceIdentifier RouteTableId { get; }
     }
 }

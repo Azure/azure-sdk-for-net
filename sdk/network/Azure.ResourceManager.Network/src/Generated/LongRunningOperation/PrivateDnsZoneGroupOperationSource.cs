@@ -5,32 +5,39 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class PrivateDnsZoneGroupOperationSource : IOperationSource<PrivateDnsZoneGroupResource>
+    /// <summary></summary>
+    internal partial class PrivateDnsZoneGroupOperationSource : IOperationSource<PrivateDnsZoneGroup>
     {
-        private readonly ArmClient _client;
-
-        internal PrivateDnsZoneGroupOperationSource(ArmClient client)
+        /// <summary></summary>
+        internal PrivateDnsZoneGroupOperationSource()
         {
-            _client = client;
         }
 
-        PrivateDnsZoneGroupResource IOperationSource<PrivateDnsZoneGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        PrivateDnsZoneGroup IOperationSource<PrivateDnsZoneGroup>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PrivateDnsZoneGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return new PrivateDnsZoneGroupResource(_client, data);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return PrivateDnsZoneGroup.DeserializePrivateDnsZoneGroup(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
-        async ValueTask<PrivateDnsZoneGroupResource> IOperationSource<PrivateDnsZoneGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<PrivateDnsZoneGroup> IOperationSource<PrivateDnsZoneGroup>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PrivateDnsZoneGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new PrivateDnsZoneGroupResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return PrivateDnsZoneGroup.DeserializePrivateDnsZoneGroup(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

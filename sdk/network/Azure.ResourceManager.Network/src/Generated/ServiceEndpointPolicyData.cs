@@ -12,70 +12,112 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ServiceEndpointPolicy data model.
-    /// Service End point policy resource.
-    /// </summary>
+    /// <summary> Service End point policy resource. </summary>
     public partial class ServiceEndpointPolicyData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyData"/>. </summary>
         public ServiceEndpointPolicyData()
         {
-            ServiceEndpointPolicyDefinitions = new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>();
-            Subnets = new ChangeTrackingList<SubnetData>();
-            ContextualServiceEndpointPolicies = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the service end point policy. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="kind"> Kind of service endpoint policy. This is metadata used for the Azure portal experience. </param>
-        /// <param name="serviceEndpointPolicyDefinitions"> A collection of service endpoint policy definitions of the service endpoint policy. </param>
-        /// <param name="subnets"> A collection of references to subnets. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the service endpoint policy resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the service endpoint policy resource. </param>
-        /// <param name="serviceAlias"> The alias indicating if the policy belongs to a service. </param>
-        /// <param name="contextualServiceEndpointPolicies"> A collection of contextual service endpoint policy. </param>
-        internal ServiceEndpointPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string serviceAlias, IList<string> contextualServiceEndpointPolicies) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal ServiceEndpointPolicyData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceEndpointPolicyPropertiesFormat properties, string eTag, string kind) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
+            Properties = properties;
+            ETag = eTag;
             Kind = kind;
-            ServiceEndpointPolicyDefinitions = serviceEndpointPolicyDefinitions;
-            Subnets = subnets;
-            ResourceGuid = resourceGuid;
-            ProvisioningState = provisioningState;
-            ServiceAlias = serviceAlias;
-            ContextualServiceEndpointPolicies = contextualServiceEndpointPolicies;
         }
 
+        /// <summary> Properties of the service end point policy. </summary>
+        internal ServiceEndpointPolicyPropertiesFormat Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
+
         /// <summary> Kind of service endpoint policy. This is metadata used for the Azure portal experience. </summary>
-        [WirePath("kind")]
         public string Kind { get; }
+
         /// <summary> A collection of service endpoint policy definitions of the service endpoint policy. </summary>
-        [WirePath("properties.serviceEndpointPolicyDefinitions")]
-        public IList<ServiceEndpointPolicyDefinitionData> ServiceEndpointPolicyDefinitions { get; }
+        public IList<ServiceEndpointPolicyDefinitionData> ServiceEndpointPolicyDefinitions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceEndpointPolicyPropertiesFormat();
+                }
+                return Properties.ServiceEndpointPolicyDefinitions;
+            }
+        }
+
         /// <summary> A collection of references to subnets. </summary>
-        [WirePath("properties.subnets")]
-        public IReadOnlyList<SubnetData> Subnets { get; }
+        public IReadOnlyList<SubnetData> Subnets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceEndpointPolicyPropertiesFormat();
+                }
+                return Properties.Subnets;
+            }
+        }
+
         /// <summary> The resource GUID property of the service endpoint policy resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
+        public string ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> The provisioning state of the service endpoint policy resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The alias indicating if the policy belongs to a service. </summary>
-        [WirePath("properties.serviceAlias")]
-        public string ServiceAlias { get; set; }
+        public string ServiceAlias
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceAlias;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceEndpointPolicyPropertiesFormat();
+                }
+                Properties.ServiceAlias = value;
+            }
+        }
+
         /// <summary> A collection of contextual service endpoint policy. </summary>
-        [WirePath("properties.contextualServiceEndpointPolicies")]
-        public IList<string> ContextualServiceEndpointPolicies { get; }
+        public IList<string> ContextualServiceEndpointPolicies
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceEndpointPolicyPropertiesFormat();
+                }
+                return Properties.ContextualServiceEndpointPolicies;
+            }
+        }
     }
 }

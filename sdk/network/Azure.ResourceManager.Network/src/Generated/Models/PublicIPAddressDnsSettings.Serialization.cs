@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PublicIPAddressDnsSettings : IUtf8JsonSerializable, IJsonModel<PublicIPAddressDnsSettings>
+    /// <summary> Contains FQDN of the DNS record associated with the public IP address. </summary>
+    public partial class PublicIPAddressDnsSettings : IJsonModel<PublicIPAddressDnsSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicIPAddressDnsSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PublicIPAddressDnsSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePublicIPAddressDnsSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PublicIPAddressDnsSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PublicIPAddressDnsSettings IPersistableModel<PublicIPAddressDnsSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PublicIPAddressDnsSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PublicIPAddressDnsSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DomainNameLabel))
             {
                 writer.WritePropertyName("domainNameLabel"u8);
@@ -55,15 +94,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("reverseFqdn"u8);
                 writer.WriteStringValue(ReverseFqdn);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,197 +111,68 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        PublicIPAddressDnsSettings IJsonModel<PublicIPAddressDnsSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PublicIPAddressDnsSettings IJsonModel<PublicIPAddressDnsSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PublicIPAddressDnsSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePublicIPAddressDnsSettings(document.RootElement, options);
         }
 
-        internal static PublicIPAddressDnsSettings DeserializePublicIPAddressDnsSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PublicIPAddressDnsSettings DeserializePublicIPAddressDnsSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string domainNameLabel = default;
-            PublicIPAddressDnsSettingsDomainNameLabelScope? domainNameLabelScope = default;
+            Models.PublicIPAddressDnsSettingsDomainNameLabelScope? domainNameLabelScope = default;
             string fqdn = default;
             string reverseFqdn = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("domainNameLabel"u8))
+                if (prop.NameEquals("domainNameLabel"u8))
                 {
-                    domainNameLabel = property.Value.GetString();
+                    domainNameLabel = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("domainNameLabelScope"u8))
+                if (prop.NameEquals("domainNameLabelScope"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    domainNameLabelScope = property.Value.GetString().ToPublicIPAddressDnsSettingsDomainNameLabelScope();
+                    domainNameLabelScope = prop.Value.GetString().ToPublicIPAddressDnsSettingsDomainNameLabelScope();
                     continue;
                 }
-                if (property.NameEquals("fqdn"u8))
+                if (prop.NameEquals("fqdn"u8))
                 {
-                    fqdn = property.Value.GetString();
+                    fqdn = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reverseFqdn"u8))
+                if (prop.NameEquals("reverseFqdn"u8))
                 {
-                    reverseFqdn = property.Value.GetString();
+                    reverseFqdn = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new PublicIPAddressDnsSettings(domainNameLabel, domainNameLabelScope, fqdn, reverseFqdn, serializedAdditionalRawData);
+            return new PublicIPAddressDnsSettings(domainNameLabel, domainNameLabelScope, fqdn, reverseFqdn, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainNameLabel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  domainNameLabel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DomainNameLabel))
-                {
-                    builder.Append("  domainNameLabel: ");
-                    if (DomainNameLabel.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DomainNameLabel}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DomainNameLabel}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainNameLabelScope), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  domainNameLabelScope: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DomainNameLabelScope))
-                {
-                    builder.Append("  domainNameLabelScope: ");
-                    builder.AppendLine($"'{DomainNameLabelScope.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Fqdn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  fqdn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Fqdn))
-                {
-                    builder.Append("  fqdn: ");
-                    if (Fqdn.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Fqdn}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Fqdn}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReverseFqdn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  reverseFqdn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReverseFqdn))
-                {
-                    builder.Append("  reverseFqdn: ");
-                    if (ReverseFqdn.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ReverseFqdn}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ReverseFqdn}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<PublicIPAddressDnsSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PublicIPAddressDnsSettings IPersistableModel<PublicIPAddressDnsSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePublicIPAddressDnsSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PublicIPAddressDnsSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,96 +9,169 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VpnGateway data model.
-    /// VpnGateway Resource.
-    /// </summary>
-    public partial class VpnGatewayData : NetworkTrackedResourceData
+    /// <summary> VpnGateway Resource. </summary>
+    public partial class VpnGatewayData : TrackedResourceWithSettableIdOptionalLocation
     {
         /// <summary> Initializes a new instance of <see cref="VpnGatewayData"/>. </summary>
         public VpnGatewayData()
         {
-            Connections = new ChangeTrackingList<VpnConnectionData>();
-            IPConfigurations = new ChangeTrackingList<VpnGatewayIPConfiguration>();
-            NatRules = new ChangeTrackingList<VpnGatewayNatRuleData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VpnGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="virtualHub"> The VirtualHub to which the gateway belongs. </param>
-        /// <param name="connections"> List of all vpn connections to the gateway. </param>
-        /// <param name="bgpSettings"> Local network gateway's BGP speaker settings. </param>
-        /// <param name="provisioningState"> The provisioning state of the VPN gateway resource. </param>
-        /// <param name="vpnGatewayScaleUnit"> The scale unit for this vpn gateway. </param>
-        /// <param name="ipConfigurations"> List of all IPs configured on the gateway. </param>
-        /// <param name="enableBgpRouteTranslationForNat"> Enable BGP routes translation for NAT on this VpnGateway. </param>
-        /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the VpnGateway. </param>
-        /// <param name="natRules"> List of all the nat Rules associated with the gateway. </param>
-        internal VpnGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource virtualHub, IList<VpnConnectionData> connections, BgpSettings bgpSettings, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, IReadOnlyList<VpnGatewayIPConfiguration> ipConfigurations, bool? enableBgpRouteTranslationForNat, bool? isRoutingPreferenceInternet, IList<VpnGatewayNatRuleData> natRules) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the VPN gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VpnGatewayData(string id, string name, string @type, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VpnGatewayProperties properties, string eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            VirtualHub = virtualHub;
-            Connections = connections;
-            BgpSettings = bgpSettings;
-            ProvisioningState = provisioningState;
-            VpnGatewayScaleUnit = vpnGatewayScaleUnit;
-            IPConfigurations = ipConfigurations;
-            EnableBgpRouteTranslationForNat = enableBgpRouteTranslationForNat;
-            IsRoutingPreferenceInternet = isRoutingPreferenceInternet;
-            NatRules = natRules;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the VPN gateway. </summary>
+        internal VpnGatewayProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
-        /// <summary> The VirtualHub to which the gateway belongs. </summary>
-        internal WritableSubResource VirtualHub { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.virtualHub.id")]
-        public ResourceIdentifier VirtualHubId
+        public string ETag { get; }
+
+        /// <summary> List of all vpn connections to the gateway. </summary>
+        public IList<VpnConnection> Connections
         {
-            get => VirtualHub is null ? default : VirtualHub.Id;
-            set
+            get
             {
-                if (VirtualHub is null)
-                    VirtualHub = new WritableSubResource();
-                VirtualHub.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayProperties();
+                }
+                return Properties.Connections;
             }
         }
 
-        /// <summary> List of all vpn connections to the gateway. </summary>
-        [WirePath("properties.connections")]
-        public IList<VpnConnectionData> Connections { get; }
         /// <summary> Local network gateway's BGP speaker settings. </summary>
-        [WirePath("properties.bgpSettings")]
-        public BgpSettings BgpSettings { get; set; }
+        public BgpSettings BgpSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BgpSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayProperties();
+                }
+                Properties.BgpSettings = value;
+            }
+        }
+
         /// <summary> The provisioning state of the VPN gateway resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The scale unit for this vpn gateway. </summary>
-        [WirePath("properties.vpnGatewayScaleUnit")]
-        public int? VpnGatewayScaleUnit { get; set; }
+        public int? VpnGatewayScaleUnit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VpnGatewayScaleUnit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayProperties();
+                }
+                Properties.VpnGatewayScaleUnit = value;
+            }
+        }
+
         /// <summary> List of all IPs configured on the gateway. </summary>
-        [WirePath("properties.ipConfigurations")]
-        public IReadOnlyList<VpnGatewayIPConfiguration> IPConfigurations { get; }
+        public IReadOnlyList<VpnGatewayIpConfiguration> IpConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayProperties();
+                }
+                return Properties.IpConfigurations;
+            }
+        }
+
         /// <summary> Enable BGP routes translation for NAT on this VpnGateway. </summary>
-        [WirePath("properties.enableBgpRouteTranslationForNat")]
-        public bool? EnableBgpRouteTranslationForNat { get; set; }
+        public bool? EnableBgpRouteTranslationForNat
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableBgpRouteTranslationForNat;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayProperties();
+                }
+                Properties.EnableBgpRouteTranslationForNat = value;
+            }
+        }
+
         /// <summary> Enable Routing Preference property for the Public IP Interface of the VpnGateway. </summary>
-        [WirePath("properties.isRoutingPreferenceInternet")]
-        public bool? IsRoutingPreferenceInternet { get; set; }
+        public bool? IsRoutingPreferenceInternet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsRoutingPreferenceInternet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayProperties();
+                }
+                Properties.IsRoutingPreferenceInternet = value;
+            }
+        }
+
         /// <summary> List of all the nat Rules associated with the gateway. </summary>
-        [WirePath("properties.natRules")]
-        public IList<VpnGatewayNatRuleData> NatRules { get; }
+        public IList<VpnGatewayNatRuleData> NatRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayProperties();
+                }
+                return Properties.NatRules;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier VirtualHubId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualHubId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnGatewayProperties();
+                }
+                Properties.VirtualHubId = value;
+            }
+        }
     }
 }

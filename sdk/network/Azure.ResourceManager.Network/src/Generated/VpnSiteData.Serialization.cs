@@ -8,19 +8,75 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VpnSiteData : IUtf8JsonSerializable, IJsonModel<VpnSiteData>
+    /// <summary> VpnSite Resource. </summary>
+    public partial class VpnSiteData : TrackedResourceWithSettableIdOptionalLocation, IJsonModel<VpnSiteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnSiteData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TrackedResourceWithSettableIdOptionalLocation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VpnSiteData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVpnSiteData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VpnSiteData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VpnSiteData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VpnSiteData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VpnSiteData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VpnSiteData IPersistableModel<VpnSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VpnSiteData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VpnSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="vpnSiteData"> The <see cref="VpnSiteData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VpnSiteData vpnSiteData)
+        {
+            if (vpnSiteData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(vpnSiteData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VpnSiteData"/> from. </param>
+        internal static VpnSiteData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeVpnSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VpnSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,637 +88,128 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnSiteData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VpnSiteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VpnSiteData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualWan))
-            {
-                writer.WritePropertyName("virtualWan"u8);
-                ((IJsonModel<WritableSubResource>)VirtualWan).Write(writer, options);
-            }
-            if (Optional.IsDefined(DeviceProperties))
-            {
-                writer.WritePropertyName("deviceProperties"u8);
-                writer.WriteObjectValue(DeviceProperties, options);
-            }
-            if (Optional.IsDefined(IPAddress))
-            {
-                writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IPAddress);
-            }
-            if (Optional.IsDefined(SiteKey))
-            {
-                writer.WritePropertyName("siteKey"u8);
-                writer.WriteStringValue(SiteKey);
-            }
-            if (Optional.IsDefined(AddressSpace))
-            {
-                writer.WritePropertyName("addressSpace"u8);
-                writer.WriteObjectValue(AddressSpace, options);
-            }
-            if (Optional.IsDefined(BgpProperties))
-            {
-                writer.WritePropertyName("bgpProperties"u8);
-                writer.WriteObjectValue(BgpProperties, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(IsSecuritySite))
-            {
-                writer.WritePropertyName("isSecuritySite"u8);
-                writer.WriteBooleanValue(IsSecuritySite.Value);
-            }
-            if (Optional.IsCollectionDefined(VpnSiteLinks))
-            {
-                writer.WritePropertyName("vpnSiteLinks"u8);
-                writer.WriteStartArray();
-                foreach (var item in VpnSiteLinks)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(O365Policy))
-            {
-                writer.WritePropertyName("o365Policy"u8);
-                writer.WriteObjectValue(O365Policy, options);
-            }
-            writer.WriteEndObject();
         }
 
-        VpnSiteData IJsonModel<VpnSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VpnSiteData IJsonModel<VpnSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VpnSiteData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override TrackedResourceWithSettableIdOptionalLocation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnSiteData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VpnSiteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VpnSiteData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVpnSiteData(document.RootElement, options);
         }
 
-        internal static VpnSiteData DeserializeVpnSiteData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VpnSiteData DeserializeVpnSiteData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType? type = default;
-            AzureLocation? location = default;
+            string @type = default;
+            string location = default;
             IDictionary<string, string> tags = default;
-            WritableSubResource virtualWan = default;
-            DeviceProperties deviceProperties = default;
-            string ipAddress = default;
-            string siteKey = default;
-            VirtualNetworkAddressSpace addressSpace = default;
-            BgpSettings bgpProperties = default;
-            NetworkProvisioningState? provisioningState = default;
-            bool? isSecuritySite = default;
-            IList<VpnSiteLinkData> vpnSiteLinks = default;
-            O365PolicyProperties o365Policy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            VpnSiteProperties properties = default;
+            string eTag = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    name = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
+                    location = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("virtualWan"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            virtualWan = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("deviceProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            deviceProperties = DeviceProperties.DeserializeDeviceProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("ipAddress"u8))
-                        {
-                            ipAddress = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("siteKey"u8))
-                        {
-                            siteKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("addressSpace"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            addressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("bgpProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            bgpProperties = BgpSettings.DeserializeBgpSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("isSecuritySite"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isSecuritySite = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("vpnSiteLinks"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<VpnSiteLinkData> array = new List<VpnSiteLinkData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item, options));
-                            }
-                            vpnSiteLinks = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("o365Policy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            o365Policy = O365PolicyProperties.DeserializeO365PolicyProperties(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    properties = VpnSiteProperties.DeserializeVpnSiteProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VpnSiteData(
                 id,
                 name,
-                type,
+                @type,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                etag,
-                virtualWan,
-                deviceProperties,
-                ipAddress,
-                siteKey,
-                addressSpace,
-                bgpProperties,
-                provisioningState,
-                isSecuritySite,
-                vpnSiteLinks ?? new ChangeTrackingList<VpnSiteLinkData>(),
-                o365Policy);
+                additionalBinaryDataProperties,
+                properties,
+                eTag);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("VirtualWanId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    virtualWan: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      virtualWan: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(VirtualWan))
-                {
-                    builder.Append("    virtualWan: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, VirtualWan, options, 4, false, "    virtualWan: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeviceProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    deviceProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeviceProperties))
-                {
-                    builder.Append("    deviceProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, DeviceProperties, options, 4, false, "    deviceProperties: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ipAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IPAddress))
-                {
-                    builder.Append("    ipAddress: ");
-                    if (IPAddress.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IPAddress}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IPAddress}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SiteKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    siteKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SiteKey))
-                {
-                    builder.Append("    siteKey: ");
-                    if (SiteKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SiteKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SiteKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddressSpace), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    addressSpace: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AddressSpace))
-                {
-                    builder.Append("    addressSpace: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AddressSpace, options, 4, false, "    addressSpace: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BgpProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    bgpProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BgpProperties))
-                {
-                    builder.Append("    bgpProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, BgpProperties, options, 4, false, "    bgpProperties: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSecuritySite), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isSecuritySite: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsSecuritySite))
-                {
-                    builder.Append("    isSecuritySite: ");
-                    var boolValue = IsSecuritySite.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VpnSiteLinks), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    vpnSiteLinks: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(VpnSiteLinks))
-                {
-                    if (VpnSiteLinks.Any())
-                    {
-                        builder.Append("    vpnSiteLinks: ");
-                        builder.AppendLine("[");
-                        foreach (var item in VpnSiteLinks)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    vpnSiteLinks: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("O365BreakOutCategories", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    o365Policy: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      o365Policy: {");
-                builder.Append("        breakOutCategories: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(O365Policy))
-                {
-                    builder.Append("    o365Policy: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, O365Policy, options, 4, false, "    o365Policy: ");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<VpnSiteData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnSiteData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(VpnSiteData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VpnSiteData IPersistableModel<VpnSiteData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnSiteData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVpnSiteData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VpnSiteData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VpnSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

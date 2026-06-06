@@ -8,19 +8,75 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteCircuitData : IUtf8JsonSerializable, IJsonModel<ExpressRouteCircuitData>
+    /// <summary> ExpressRouteCircuit resource. </summary>
+    public partial class ExpressRouteCircuitData : NetworkTrackedResourceData, IJsonModel<ExpressRouteCircuitData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCircuitData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkTrackedResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExpressRouteCircuitData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExpressRouteCircuitData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteCircuitData IPersistableModel<ExpressRouteCircuitData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExpressRouteCircuitData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExpressRouteCircuitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="expressRouteCircuitData"> The <see cref="ExpressRouteCircuitData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ExpressRouteCircuitData expressRouteCircuitData)
+        {
+            if (expressRouteCircuitData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(expressRouteCircuitData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExpressRouteCircuitData"/> from. </param>
+        internal static ExpressRouteCircuitData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeExpressRouteCircuitData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExpressRouteCircuitData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,916 +88,152 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag);
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AllowClassicOperations))
-            {
-                writer.WritePropertyName("allowClassicOperations"u8);
-                writer.WriteBooleanValue(AllowClassicOperations.Value);
-            }
-            if (Optional.IsDefined(CircuitProvisioningState))
-            {
-                writer.WritePropertyName("circuitProvisioningState"u8);
-                writer.WriteStringValue(CircuitProvisioningState);
-            }
-            if (Optional.IsDefined(ServiceProviderProvisioningState))
-            {
-                writer.WritePropertyName("serviceProviderProvisioningState"u8);
-                writer.WriteStringValue(ServiceProviderProvisioningState.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Authorizations))
-            {
-                writer.WritePropertyName("authorizations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Authorizations)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Peerings))
-            {
-                writer.WritePropertyName("peerings"u8);
-                writer.WriteStartArray();
-                foreach (var item in Peerings)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ServiceKey))
-            {
-                writer.WritePropertyName("serviceKey"u8);
-                writer.WriteStringValue(ServiceKey);
-            }
-            if (Optional.IsDefined(ServiceProviderNotes))
-            {
-                writer.WritePropertyName("serviceProviderNotes"u8);
-                writer.WriteStringValue(ServiceProviderNotes);
-            }
-            if (Optional.IsDefined(ServiceProviderProperties))
-            {
-                writer.WritePropertyName("serviceProviderProperties"u8);
-                writer.WriteObjectValue(ServiceProviderProperties, options);
-            }
-            if (Optional.IsDefined(ExpressRoutePort))
-            {
-                writer.WritePropertyName("expressRoutePort"u8);
-                ((IJsonModel<WritableSubResource>)ExpressRoutePort).Write(writer, options);
-            }
-            if (Optional.IsDefined(BandwidthInGbps))
-            {
-                writer.WritePropertyName("bandwidthInGbps"u8);
-                writer.WriteNumberValue(BandwidthInGbps.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(STag))
-            {
-                writer.WritePropertyName("stag"u8);
-                writer.WriteNumberValue(STag.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(GatewayManagerETag))
-            {
-                writer.WritePropertyName("gatewayManagerEtag"u8);
-                writer.WriteStringValue(GatewayManagerETag);
-            }
-            if (Optional.IsDefined(GlobalReachEnabled))
-            {
-                writer.WritePropertyName("globalReachEnabled"u8);
-                writer.WriteBooleanValue(GlobalReachEnabled.Value);
-            }
-            if (Optional.IsDefined(AuthorizationKey))
-            {
-                writer.WritePropertyName("authorizationKey"u8);
-                writer.WriteStringValue(AuthorizationKey);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AuthorizationStatus))
-            {
-                writer.WritePropertyName("authorizationStatus"u8);
-                writer.WriteStringValue(AuthorizationStatus);
-            }
-            if (Optional.IsDefined(EnableDirectPortRateLimit))
-            {
-                writer.WritePropertyName("enableDirectPortRateLimit"u8);
-                writer.WriteBooleanValue(EnableDirectPortRateLimit.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        ExpressRouteCircuitData IJsonModel<ExpressRouteCircuitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteCircuitData IJsonModel<ExpressRouteCircuitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExpressRouteCircuitData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkTrackedResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExpressRouteCircuitData(document.RootElement, options);
         }
 
-        internal static ExpressRouteCircuitData DeserializeExpressRouteCircuitData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExpressRouteCircuitData DeserializeExpressRouteCircuitData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ExpressRouteCircuitSku sku = default;
-            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            string @type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            bool? allowClassicOperations = default;
-            string circuitProvisioningState = default;
-            ServiceProviderProvisioningState? serviceProviderProvisioningState = default;
-            IList<ExpressRouteCircuitAuthorizationData> authorizations = default;
-            IList<ExpressRouteCircuitPeeringData> peerings = default;
-            string serviceKey = default;
-            string serviceProviderNotes = default;
-            ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default;
-            WritableSubResource expressRoutePort = default;
-            float? bandwidthInGbps = default;
-            int? stag = default;
-            NetworkProvisioningState? provisioningState = default;
-            string gatewayManagerETag = default;
-            bool? globalReachEnabled = default;
-            string authorizationKey = default;
-            string authorizationStatus = default;
-            bool? enableDirectPortRateLimit = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ExpressRouteCircuitPropertiesFormat properties = default;
+            string eTag = default;
+            ExpressRouteCircuitSku sku = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sku = ExpressRouteCircuitSku.DeserializeExpressRouteCircuitSku(property.Value, options);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    properties = ExpressRouteCircuitPropertiesFormat.DeserializeExpressRouteCircuitPropertiesFormat(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    eTag = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sku"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("allowClassicOperations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            allowClassicOperations = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("circuitProvisioningState"u8))
-                        {
-                            circuitProvisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceProviderProvisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serviceProviderProvisioningState = new ServiceProviderProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("authorizations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ExpressRouteCircuitAuthorizationData> array = new List<ExpressRouteCircuitAuthorizationData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ExpressRouteCircuitAuthorizationData.DeserializeExpressRouteCircuitAuthorizationData(item, options));
-                            }
-                            authorizations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("peerings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ExpressRouteCircuitPeeringData> array = new List<ExpressRouteCircuitPeeringData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ExpressRouteCircuitPeeringData.DeserializeExpressRouteCircuitPeeringData(item, options));
-                            }
-                            peerings = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceKey"u8))
-                        {
-                            serviceKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceProviderNotes"u8))
-                        {
-                            serviceProviderNotes = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceProviderProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serviceProviderProperties = ExpressRouteCircuitServiceProviderProperties.DeserializeExpressRouteCircuitServiceProviderProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("expressRoutePort"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            expressRoutePort = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("bandwidthInGbps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            bandwidthInGbps = property0.Value.GetSingle();
-                            continue;
-                        }
-                        if (property0.NameEquals("stag"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            stag = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("gatewayManagerEtag"u8))
-                        {
-                            gatewayManagerETag = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("globalReachEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            globalReachEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("authorizationKey"u8))
-                        {
-                            authorizationKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("authorizationStatus"u8))
-                        {
-                            authorizationStatus = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableDirectPortRateLimit"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableDirectPortRateLimit = property0.Value.GetBoolean();
-                            continue;
-                        }
+                        continue;
                     }
+                    sku = ExpressRouteCircuitSku.DeserializeExpressRouteCircuitSku(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ExpressRouteCircuitData(
                 id,
                 name,
-                type,
+                @type,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                sku,
-                etag,
-                allowClassicOperations,
-                circuitProvisioningState,
-                serviceProviderProvisioningState,
-                authorizations ?? new ChangeTrackingList<ExpressRouteCircuitAuthorizationData>(),
-                peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>(),
-                serviceKey,
-                serviceProviderNotes,
-                serviceProviderProperties,
-                expressRoutePort,
-                bandwidthInGbps,
-                stag,
-                provisioningState,
-                gatewayManagerETag,
-                globalReachEnabled,
-                authorizationKey,
-                authorizationStatus,
-                enableDirectPortRateLimit);
+                additionalBinaryDataProperties,
+                properties,
+                eTag,
+                sku);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sku: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Sku))
-                {
-                    builder.Append("  sku: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowClassicOperations), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    allowClassicOperations: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AllowClassicOperations))
-                {
-                    builder.Append("    allowClassicOperations: ");
-                    var boolValue = AllowClassicOperations.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CircuitProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    circuitProvisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CircuitProvisioningState))
-                {
-                    builder.Append("    circuitProvisioningState: ");
-                    if (CircuitProvisioningState.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CircuitProvisioningState}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CircuitProvisioningState}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceProviderProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    serviceProviderProvisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceProviderProvisioningState))
-                {
-                    builder.Append("    serviceProviderProvisioningState: ");
-                    builder.AppendLine($"'{ServiceProviderProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Authorizations), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    authorizations: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Authorizations))
-                {
-                    if (Authorizations.Any())
-                    {
-                        builder.Append("    authorizations: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Authorizations)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    authorizations: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Peerings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    peerings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Peerings))
-                {
-                    if (Peerings.Any())
-                    {
-                        builder.Append("    peerings: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Peerings)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    peerings: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    serviceKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceKey))
-                {
-                    builder.Append("    serviceKey: ");
-                    if (ServiceKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ServiceKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ServiceKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceProviderNotes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    serviceProviderNotes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceProviderNotes))
-                {
-                    builder.Append("    serviceProviderNotes: ");
-                    if (ServiceProviderNotes.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ServiceProviderNotes}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ServiceProviderNotes}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceProviderProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    serviceProviderProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceProviderProperties))
-                {
-                    builder.Append("    serviceProviderProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ServiceProviderProperties, options, 4, false, "    serviceProviderProperties: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ExpressRoutePortId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    expressRoutePort: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      expressRoutePort: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(ExpressRoutePort))
-                {
-                    builder.Append("    expressRoutePort: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ExpressRoutePort, options, 4, false, "    expressRoutePort: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BandwidthInGbps), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    bandwidthInGbps: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BandwidthInGbps))
-                {
-                    builder.Append("    bandwidthInGbps: ");
-                    builder.AppendLine($"'{BandwidthInGbps.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(STag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    stag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(STag))
-                {
-                    builder.Append("    stag: ");
-                    builder.AppendLine($"{STag.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GatewayManagerETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    gatewayManagerEtag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GatewayManagerETag))
-                {
-                    builder.Append("    gatewayManagerEtag: ");
-                    if (GatewayManagerETag.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GatewayManagerETag}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GatewayManagerETag}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GlobalReachEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    globalReachEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GlobalReachEnabled))
-                {
-                    builder.Append("    globalReachEnabled: ");
-                    var boolValue = GlobalReachEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorizationKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    authorizationKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AuthorizationKey))
-                {
-                    builder.Append("    authorizationKey: ");
-                    if (AuthorizationKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AuthorizationKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AuthorizationKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorizationStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    authorizationStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AuthorizationStatus))
-                {
-                    builder.Append("    authorizationStatus: ");
-                    if (AuthorizationStatus.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AuthorizationStatus}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AuthorizationStatus}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableDirectPortRateLimit), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableDirectPortRateLimit: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableDirectPortRateLimit))
-                {
-                    builder.Append("    enableDirectPortRateLimit: ");
-                    var boolValue = EnableDirectPortRateLimit.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ExpressRouteCircuitData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExpressRouteCircuitData IPersistableModel<ExpressRouteCircuitData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExpressRouteCircuitData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExpressRouteCircuitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

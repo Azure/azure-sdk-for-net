@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Type of custom IP prefix. Should be Singular, Parent, or Child. </summary>
-    public readonly partial struct CustomIPPrefixType : IEquatable<CustomIPPrefixType>
+    public readonly partial struct CustomIpPrefixType : IEquatable<CustomIpPrefixType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CustomIPPrefixType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> Singular. </summary>
         private const string SingularValue = "Singular";
+        /// <summary> Parent. </summary>
         private const string ParentValue = "Parent";
+        /// <summary> Child. </summary>
         private const string ChildValue = "Child";
 
+        /// <summary> Initializes a new instance of <see cref="CustomIpPrefixType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CustomIpPrefixType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
         /// <summary> Singular. </summary>
-        public static CustomIPPrefixType Singular { get; } = new CustomIPPrefixType(SingularValue);
+        public static CustomIpPrefixType Singular { get; } = new CustomIpPrefixType(SingularValue);
+
         /// <summary> Parent. </summary>
-        public static CustomIPPrefixType Parent { get; } = new CustomIPPrefixType(ParentValue);
+        public static CustomIpPrefixType Parent { get; } = new CustomIpPrefixType(ParentValue);
+
         /// <summary> Child. </summary>
-        public static CustomIPPrefixType Child { get; } = new CustomIPPrefixType(ChildValue);
-        /// <summary> Determines if two <see cref="CustomIPPrefixType"/> values are the same. </summary>
-        public static bool operator ==(CustomIPPrefixType left, CustomIPPrefixType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="CustomIPPrefixType"/> values are not the same. </summary>
-        public static bool operator !=(CustomIPPrefixType left, CustomIPPrefixType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomIPPrefixType"/>. </summary>
-        public static implicit operator CustomIPPrefixType(string value) => new CustomIPPrefixType(value);
+        public static CustomIpPrefixType Child { get; } = new CustomIpPrefixType(ChildValue);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two <see cref="CustomIpPrefixType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(CustomIpPrefixType left, CustomIpPrefixType right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="CustomIpPrefixType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(CustomIpPrefixType left, CustomIpPrefixType right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="CustomIpPrefixType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CustomIpPrefixType(string value) => new CustomIpPrefixType(value);
+
+        /// <summary> Converts a string to a <see cref="CustomIpPrefixType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CustomIpPrefixType?(string value) => value == null ? null : new CustomIpPrefixType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CustomIPPrefixType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(CustomIPPrefixType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is CustomIpPrefixType other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(CustomIpPrefixType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

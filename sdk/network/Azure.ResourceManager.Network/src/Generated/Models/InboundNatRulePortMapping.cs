@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Individual port mappings for inbound NAT rule created for backend pool. </summary>
     public partial class InboundNatRulePortMapping
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InboundNatRulePortMapping"/>. </summary>
         internal InboundNatRulePortMapping()
@@ -55,27 +26,26 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="protocol"> The reference to the transport protocol used by the inbound NAT rule. </param>
         /// <param name="frontendPort"> Frontend port. </param>
         /// <param name="backendPort"> Backend port. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InboundNatRulePortMapping(string inboundNatRuleName, LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InboundNatRulePortMapping(string inboundNatRuleName, Models.LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InboundNatRuleName = inboundNatRuleName;
             Protocol = protocol;
             FrontendPort = frontendPort;
             BackendPort = backendPort;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of inbound NAT rule. </summary>
-        [WirePath("inboundNatRuleName")]
         public string InboundNatRuleName { get; }
+
         /// <summary> The reference to the transport protocol used by the inbound NAT rule. </summary>
-        [WirePath("protocol")]
-        public LoadBalancingTransportProtocol? Protocol { get; }
+        public Models.LoadBalancingTransportProtocol? Protocol { get; }
+
         /// <summary> Frontend port. </summary>
-        [WirePath("frontendPort")]
         public int? FrontendPort { get; }
+
         /// <summary> Backend port. </summary>
-        [WirePath("backendPort")]
         public int? BackendPort { get; }
     }
 }

@@ -8,44 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Details of on demand test probe request. </summary>
     public partial class ApplicationGatewayOnDemandProbe
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayOnDemandProbe"/>. </summary>
         public ApplicationGatewayOnDemandProbe()
@@ -62,8 +32,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="match"> Criterion for classifying a healthy probe response. </param>
         /// <param name="backendAddressPool"> Reference to backend pool of application gateway to which probe request will be sent. </param>
         /// <param name="backendHttpSettings"> Reference to backend http setting of application gateway to be used for test probe. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayOnDemandProbe(ApplicationGatewayProtocol? protocol, string host, string path, int? timeout, bool? pickHostNameFromBackendHttpSettings, bool? isProbeProxyProtocolHeaderEnabled, ApplicationGatewayProbeHealthResponseMatch match, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayOnDemandProbe(ApplicationGatewayProtocol? protocol, string host, string path, int? timeout, bool? pickHostNameFromBackendHttpSettings, bool? isProbeProxyProtocolHeaderEnabled, ApplicationGatewayProbeHealthResponseMatch match, NetworkSubResource backendAddressPool, NetworkSubResource backendHttpSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
             Host = host;
@@ -74,56 +44,66 @@ namespace Azure.ResourceManager.Network.Models
             Match = match;
             BackendAddressPool = backendAddressPool;
             BackendHttpSettings = backendHttpSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The protocol used for the probe. </summary>
-        [WirePath("protocol")]
         public ApplicationGatewayProtocol? Protocol { get; set; }
+
         /// <summary> Host name to send the probe to. </summary>
-        [WirePath("host")]
         public string Host { get; set; }
+
         /// <summary> Relative path of probe. Valid path starts from '/'. Probe is sent to &lt;Protocol&gt;://&lt;host&gt;:&lt;port&gt;&lt;path&gt;. </summary>
-        [WirePath("path")]
         public string Path { get; set; }
+
         /// <summary> The probe timeout in seconds. Probe marked as failed if valid response is not received with this timeout period. Acceptable values are from 1 second to 86400 seconds. </summary>
-        [WirePath("timeout")]
         public int? Timeout { get; set; }
+
         /// <summary> Whether the host header should be picked from the backend http settings. Default value is false. </summary>
-        [WirePath("pickHostNameFromBackendHttpSettings")]
         public bool? PickHostNameFromBackendHttpSettings { get; set; }
+
         /// <summary> Whether to send Proxy Protocol header along with the Health Probe over TCP or TLS protocol. Default value is false. </summary>
-        [WirePath("enableProbeProxyProtocolHeader")]
         public bool? IsProbeProxyProtocolHeaderEnabled { get; set; }
+
         /// <summary> Criterion for classifying a healthy probe response. </summary>
-        [WirePath("match")]
         public ApplicationGatewayProbeHealthResponseMatch Match { get; set; }
+
         /// <summary> Reference to backend pool of application gateway to which probe request will be sent. </summary>
-        internal WritableSubResource BackendAddressPool { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("backendAddressPool.id")]
+        internal NetworkSubResource BackendAddressPool { get; set; }
+
+        /// <summary> Reference to backend http setting of application gateway to be used for test probe. </summary>
+        internal NetworkSubResource BackendHttpSettings { get; set; }
+
+        /// <summary> Resource ID. </summary>
         public ResourceIdentifier BackendAddressPoolId
         {
-            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
+            get
+            {
+                return BackendAddressPool is null ? default : BackendAddressPool.Id;
+            }
             set
             {
                 if (BackendAddressPool is null)
-                    BackendAddressPool = new WritableSubResource();
+                {
+                    BackendAddressPool = new NetworkSubResource();
+                }
                 BackendAddressPool.Id = value;
             }
         }
 
-        /// <summary> Reference to backend http setting of application gateway to be used for test probe. </summary>
-        internal WritableSubResource BackendHttpSettings { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("backendHttpSettings.id")]
+        /// <summary> Resource ID. </summary>
         public ResourceIdentifier BackendHttpSettingsId
         {
-            get => BackendHttpSettings is null ? default : BackendHttpSettings.Id;
+            get
+            {
+                return BackendHttpSettings is null ? default : BackendHttpSettings.Id;
+            }
             set
             {
                 if (BackendHttpSettings is null)
-                    BackendHttpSettings = new WritableSubResource();
+                {
+                    BackendHttpSettings = new NetworkSubResource();
+                }
                 BackendHttpSettings.Id = value;
             }
         }

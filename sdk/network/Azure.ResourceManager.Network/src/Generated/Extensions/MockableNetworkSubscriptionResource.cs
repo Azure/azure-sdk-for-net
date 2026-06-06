@@ -6,405 +6,425 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableNetworkSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _applicationGatewayClientDiagnostics;
-        private ApplicationGatewaysRestOperations _applicationGatewayRestClient;
-        private ClientDiagnostics _applicationSecurityGroupClientDiagnostics;
-        private ApplicationSecurityGroupsRestOperations _applicationSecurityGroupRestClient;
-        private ClientDiagnostics _availableDelegationsClientDiagnostics;
-        private AvailableDelegationsRestOperations _availableDelegationsRestClient;
-        private ClientDiagnostics _availableServiceAliasesClientDiagnostics;
-        private AvailableServiceAliasesRestOperations _availableServiceAliasesRestClient;
-        private ClientDiagnostics _azureFirewallClientDiagnostics;
-        private AzureFirewallsRestOperations _azureFirewallRestClient;
-        private ClientDiagnostics _azureFirewallFqdnTagsClientDiagnostics;
-        private AzureFirewallFqdnTagsRestOperations _azureFirewallFqdnTagsRestClient;
-        private ClientDiagnostics _bastionHostClientDiagnostics;
-        private BastionHostsRestOperations _bastionHostRestClient;
-        private ClientDiagnostics _expressRouteProviderPortClientDiagnostics;
-        private NetworkManagementRestOperations _expressRouteProviderPortRestClient;
-        private ClientDiagnostics _customIPPrefixClientDiagnostics;
-        private CustomIPPrefixesRestOperations _customIPPrefixRestClient;
-        private ClientDiagnostics _ddosProtectionPlanClientDiagnostics;
-        private DdosProtectionPlansRestOperations _ddosProtectionPlanRestClient;
-        private ClientDiagnostics _dscpConfigurationClientDiagnostics;
-        private DscpConfigurationRestOperations _dscpConfigurationRestClient;
-        private ClientDiagnostics _availableEndpointServicesClientDiagnostics;
-        private AvailableEndpointServicesRestOperations _availableEndpointServicesRestClient;
-        private ClientDiagnostics _expressRouteCircuitClientDiagnostics;
-        private ExpressRouteCircuitsRestOperations _expressRouteCircuitRestClient;
-        private ClientDiagnostics _expressRouteServiceProvidersClientDiagnostics;
-        private ExpressRouteServiceProvidersRestOperations _expressRouteServiceProvidersRestClient;
-        private ClientDiagnostics _expressRouteCrossConnectionClientDiagnostics;
-        private ExpressRouteCrossConnectionsRestOperations _expressRouteCrossConnectionRestClient;
-        private ClientDiagnostics _expressRoutePortClientDiagnostics;
-        private ExpressRoutePortsRestOperations _expressRoutePortRestClient;
-        private ClientDiagnostics _firewallPolicyClientDiagnostics;
-        private FirewallPoliciesRestOperations _firewallPolicyRestClient;
-        private ClientDiagnostics _ipAllocationIPAllocationsClientDiagnostics;
-        private IpAllocationsRestOperations _ipAllocationIPAllocationsRestClient;
-        private ClientDiagnostics _ipGroupIPGroupsClientDiagnostics;
-        private IpGroupsRestOperations _ipGroupIPGroupsRestClient;
-        private ClientDiagnostics _loadBalancerClientDiagnostics;
-        private LoadBalancersRestOperations _loadBalancerRestClient;
-        private ClientDiagnostics _natGatewayClientDiagnostics;
-        private NatGatewaysRestOperations _natGatewayRestClient;
-        private ClientDiagnostics _networkInterfaceClientDiagnostics;
-        private NetworkInterfacesRestOperations _networkInterfaceRestClient;
-        private ClientDiagnostics _networkManagerClientDiagnostics;
-        private NetworkManagersRestOperations _networkManagerRestClient;
-        private ClientDiagnostics _networkProfileClientDiagnostics;
-        private NetworkProfilesRestOperations _networkProfileRestClient;
-        private ClientDiagnostics _networkSecurityGroupClientDiagnostics;
-        private NetworkSecurityGroupsRestOperations _networkSecurityGroupRestClient;
-        private ClientDiagnostics _networkSecurityPerimeterClientDiagnostics;
-        private NetworkSecurityPerimetersRestOperations _networkSecurityPerimeterRestClient;
-        private ClientDiagnostics _networkSecurityPerimeterAssociableResourceTypesClientDiagnostics;
-        private NetworkSecurityPerimeterAssociableResourceTypesRestOperations _networkSecurityPerimeterAssociableResourceTypesRestClient;
-        private ClientDiagnostics _networkSecurityPerimeterServiceTagsClientDiagnostics;
-        private NetworkSecurityPerimeterServiceTagsRestOperations _networkSecurityPerimeterServiceTagsRestClient;
-        private ClientDiagnostics _networkVirtualApplianceClientDiagnostics;
-        private NetworkVirtualAppliancesRestOperations _networkVirtualApplianceRestClient;
-        private ClientDiagnostics _networkWatcherClientDiagnostics;
-        private NetworkWatchersRestOperations _networkWatcherRestClient;
-        private ClientDiagnostics _privateEndpointClientDiagnostics;
-        private PrivateEndpointsRestOperations _privateEndpointRestClient;
-        private ClientDiagnostics _availablePrivateEndpointTypesClientDiagnostics;
-        private AvailablePrivateEndpointTypesRestOperations _availablePrivateEndpointTypesRestClient;
-        private ClientDiagnostics _privateLinkServiceClientDiagnostics;
-        private PrivateLinkServicesRestOperations _privateLinkServiceRestClient;
+        private ClientDiagnostics _applicationGatewaysClientDiagnostics;
+        private ApplicationGateways _applicationGatewaysRestClient;
+        private ClientDiagnostics _applicationSecurityGroupsClientDiagnostics;
+        private ApplicationSecurityGroups _applicationSecurityGroupsRestClient;
+        private ClientDiagnostics _azureFirewallsClientDiagnostics;
+        private AzureFirewalls _azureFirewallsRestClient;
+        private ClientDiagnostics _bastionHostsClientDiagnostics;
+        private BastionHosts _bastionHostsRestClient;
+        private ClientDiagnostics _networkInterfacesClientDiagnostics;
+        private NetworkInterfaces _networkInterfacesRestClient;
+        private ClientDiagnostics _publicIPAddressesClientDiagnostics;
+        private PublicIPAddresses _publicIPAddressesRestClient;
+        private ClientDiagnostics _ddosCustomPoliciesClientDiagnostics;
+        private DdosCustomPolicies _ddosCustomPoliciesRestClient;
+        private ClientDiagnostics _ddosProtectionPlansClientDiagnostics;
+        private DdosProtectionPlans _ddosProtectionPlansRestClient;
+        private ClientDiagnostics _expressRouteCircuitsClientDiagnostics;
+        private ExpressRouteCircuits _expressRouteCircuitsRestClient;
+        private ClientDiagnostics _expressRouteCrossConnectionsClientDiagnostics;
+        private ExpressRouteCrossConnections _expressRouteCrossConnectionsRestClient;
+        private ClientDiagnostics _expressRoutePortsClientDiagnostics;
+        private ExpressRoutePorts _expressRoutePortsRestClient;
+        private ClientDiagnostics _firewallPoliciesClientDiagnostics;
+        private FirewallPolicies _firewallPoliciesRestClient;
+        private ClientDiagnostics _networkManagersClientDiagnostics;
+        private NetworkManagers _networkManagersRestClient;
+        private ClientDiagnostics _ipAllocationsClientDiagnostics;
+        private IpAllocations _ipAllocationsRestClient;
+        private ClientDiagnostics _ipGroupsClientDiagnostics;
+        private IpGroups _ipGroupsRestClient;
+        private ClientDiagnostics _loadBalancersClientDiagnostics;
+        private LoadBalancers _loadBalancersRestClient;
+        private ClientDiagnostics _natGatewaysClientDiagnostics;
+        private NatGateways _natGatewaysRestClient;
+        private ClientDiagnostics _networkProfilesClientDiagnostics;
+        private NetworkProfiles _networkProfilesRestClient;
+        private ClientDiagnostics _networkSecurityGroupsClientDiagnostics;
+        private NetworkSecurityGroups _networkSecurityGroupsRestClient;
+        private ClientDiagnostics _networkSecurityPerimetersClientDiagnostics;
+        private NetworkSecurityPerimeters _networkSecurityPerimetersRestClient;
+        private ClientDiagnostics _networkVirtualAppliancesClientDiagnostics;
+        private NetworkVirtualAppliances _networkVirtualAppliancesRestClient;
+        private ClientDiagnostics _networkWatchersClientDiagnostics;
+        private NetworkWatchers _networkWatchersRestClient;
+        private ClientDiagnostics _privateEndpointsClientDiagnostics;
+        private PrivateEndpoints _privateEndpointsRestClient;
         private ClientDiagnostics _privateLinkServicesClientDiagnostics;
-        private PrivateLinkServicesRestOperations _privateLinkServicesRestClient;
-        private ClientDiagnostics _publicIPAddressClientDiagnostics;
-        private PublicIPAddressesRestOperations _publicIPAddressRestClient;
-        private ClientDiagnostics _publicIPPrefixClientDiagnostics;
-        private PublicIPPrefixesRestOperations _publicIPPrefixRestClient;
-        private ClientDiagnostics _routeFilterClientDiagnostics;
-        private RouteFiltersRestOperations _routeFilterRestClient;
-        private ClientDiagnostics _routeTableClientDiagnostics;
-        private RouteTablesRestOperations _routeTableRestClient;
-        private ClientDiagnostics _securityPartnerProviderClientDiagnostics;
-        private SecurityPartnerProvidersRestOperations _securityPartnerProviderRestClient;
+        private PrivateLinkServices _privateLinkServicesRestClient;
+        private ClientDiagnostics _publicIPPrefixesClientDiagnostics;
+        private PublicIPPrefixes _publicIPPrefixesRestClient;
+        private ClientDiagnostics _routeFiltersClientDiagnostics;
+        private RouteFilters _routeFiltersRestClient;
+        private ClientDiagnostics _routeTablesClientDiagnostics;
+        private RouteTables _routeTablesRestClient;
+        private ClientDiagnostics _securityPartnerProvidersClientDiagnostics;
+        private SecurityPartnerProviders _securityPartnerProvidersRestClient;
+        private ClientDiagnostics _serviceEndpointPoliciesClientDiagnostics;
+        private ServiceEndpointPolicies _serviceEndpointPoliciesRestClient;
+        private ClientDiagnostics _virtualNetworksClientDiagnostics;
+        private VirtualNetworks _virtualNetworksRestClient;
+        private ClientDiagnostics _virtualNetworkTapsClientDiagnostics;
+        private VirtualNetworkTaps _virtualNetworkTapsRestClient;
+        private ClientDiagnostics _virtualRoutersClientDiagnostics;
+        private VirtualRouters _virtualRoutersRestClient;
+        private ClientDiagnostics _virtualWansClientDiagnostics;
+        private VirtualWans _virtualWansRestClient;
+        private ClientDiagnostics _vpnSitesClientDiagnostics;
+        private VpnSites _vpnSitesRestClient;
+        private ClientDiagnostics _vpnServerConfigurationsClientDiagnostics;
+        private VpnServerConfigurations _vpnServerConfigurationsRestClient;
+        private ClientDiagnostics _virtualHubsClientDiagnostics;
+        private VirtualHubs _virtualHubsRestClient;
+        private ClientDiagnostics _vpnGatewaysClientDiagnostics;
+        private VpnGateways _vpnGatewaysRestClient;
+        private ClientDiagnostics _webApplicationFirewallPoliciesClientDiagnostics;
+        private WebApplicationFirewallPolicies _webApplicationFirewallPoliciesRestClient;
+        private ClientDiagnostics _virtualNetworkAppliancesClientDiagnostics;
+        private VirtualNetworkAppliances _virtualNetworkAppliancesRestClient;
+        private ClientDiagnostics _serviceGatewaysClientDiagnostics;
+        private ServiceGateways _serviceGatewaysRestClient;
+        private ClientDiagnostics _interconnectGroupsClientDiagnostics;
+        private InterconnectGroups _interconnectGroupsRestClient;
+        private ClientDiagnostics _customIPPrefixesClientDiagnostics;
+        private CustomIPPrefixes _customIPPrefixesRestClient;
+        private ClientDiagnostics _dscpConfigurationClientDiagnostics;
+        private DscpConfiguration _dscpConfigurationRestClient;
+        private ClientDiagnostics _p2sVpnGatewaysClientDiagnostics;
+        private P2sVpnGateways _p2sVpnGatewaysRestClient;
+        private ClientDiagnostics _expressRouteGatewaysClientDiagnostics;
+        private ExpressRouteGateways _expressRouteGatewaysRestClient;
+        private ClientDiagnostics _checkDnsNameAvailabilityClientDiagnostics;
+        private CheckDnsNameAvailability _checkDnsNameAvailabilityRestClient;
+        private ClientDiagnostics _expressRouteProviderPortsLocationClientDiagnostics;
+        private ExpressRouteProviderPortsLocation _expressRouteProviderPortsLocationRestClient;
+        private ClientDiagnostics _availableDelegationsClientDiagnostics;
+        private AvailableDelegations _availableDelegationsRestClient;
+        private ClientDiagnostics _availableServiceAliasesClientDiagnostics;
+        private AvailableServiceAliases _availableServiceAliasesRestClient;
+        private ClientDiagnostics _azureFirewallFqdnTagsClientDiagnostics;
+        private AzureFirewallFqdnTags _azureFirewallFqdnTagsRestClient;
+        private ClientDiagnostics _availableEndpointServicesClientDiagnostics;
+        private AvailableEndpointServices _availableEndpointServicesRestClient;
+        private ClientDiagnostics _expressRouteServiceProvidersClientDiagnostics;
+        private ExpressRouteServiceProviders _expressRouteServiceProvidersRestClient;
+        private ClientDiagnostics _networkSecurityPerimeterAssociableResourceTypesClientDiagnostics;
+        private NetworkSecurityPerimeterAssociableResourceTypes _networkSecurityPerimeterAssociableResourceTypesRestClient;
+        private ClientDiagnostics _networkSecurityPerimeterOperationStatusesClientDiagnostics;
+        private NetworkSecurityPerimeterOperationStatuses _networkSecurityPerimeterOperationStatusesRestClient;
+        private ClientDiagnostics _networkSecurityPerimeterServiceTagsClientDiagnostics;
+        private NetworkSecurityPerimeterServiceTags _networkSecurityPerimeterServiceTagsRestClient;
+        private ClientDiagnostics _availablePrivateEndpointTypesClientDiagnostics;
+        private AvailablePrivateEndpointTypes _availablePrivateEndpointTypesRestClient;
         private ClientDiagnostics _bgpServiceCommunitiesClientDiagnostics;
-        private BgpServiceCommunitiesRestOperations _bgpServiceCommunitiesRestClient;
-        private ClientDiagnostics _serviceEndpointPolicyClientDiagnostics;
-        private ServiceEndpointPoliciesRestOperations _serviceEndpointPolicyRestClient;
-        private ClientDiagnostics _serviceGatewayClientDiagnostics;
-        private ServiceGatewaysRestOperations _serviceGatewayRestClient;
+        private BgpServiceCommunities _bgpServiceCommunitiesRestClient;
         private ClientDiagnostics _serviceTagsClientDiagnostics;
-        private ServiceTagsRestOperations _serviceTagsRestClient;
+        private ServiceTags _serviceTagsRestClient;
         private ClientDiagnostics _serviceTagInformationClientDiagnostics;
-        private ServiceTagInformationRestOperations _serviceTagInformationRestClient;
+        private ServiceTagInformation _serviceTagInformationRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
-        private UsagesRestOperations _usagesRestClient;
-        private ClientDiagnostics _virtualNetworkClientDiagnostics;
-        private VirtualNetworksRestOperations _virtualNetworkRestClient;
-        private ClientDiagnostics _virtualNetworkApplianceClientDiagnostics;
-        private VirtualNetworkAppliancesRestOperations _virtualNetworkApplianceRestClient;
-        private ClientDiagnostics _virtualNetworkTapClientDiagnostics;
-        private VirtualNetworkTapsRestOperations _virtualNetworkTapRestClient;
-        private ClientDiagnostics _virtualRouterClientDiagnostics;
-        private VirtualRoutersRestOperations _virtualRouterRestClient;
-        private ClientDiagnostics _virtualWanClientDiagnostics;
-        private VirtualWansRestOperations _virtualWanRestClient;
-        private ClientDiagnostics _vpnSiteClientDiagnostics;
-        private VpnSitesRestOperations _vpnSiteRestClient;
-        private ClientDiagnostics _vpnServerConfigurationClientDiagnostics;
-        private VpnServerConfigurationsRestOperations _vpnServerConfigurationRestClient;
-        private ClientDiagnostics _virtualHubClientDiagnostics;
-        private VirtualHubsRestOperations _virtualHubRestClient;
-        private ClientDiagnostics _vpnGatewayClientDiagnostics;
-        private VpnGatewaysRestOperations _vpnGatewayRestClient;
-        private ClientDiagnostics _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics;
-        private P2SVpnGatewaysRestOperations _p2sVpnGatewayP2sVpnGatewaysRestClient;
-        private ClientDiagnostics _expressRouteGatewayClientDiagnostics;
-        private ExpressRouteGatewaysRestOperations _expressRouteGatewayRestClient;
-        private ClientDiagnostics _webApplicationFirewallPolicyClientDiagnostics;
-        private WebApplicationFirewallPoliciesRestOperations _webApplicationFirewallPolicyRestClient;
+        private Usages _usagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNetworkSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableNetworkSubscriptionResource for mocking. </summary>
         protected MockableNetworkSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNetworkSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableNetworkSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNetworkSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ApplicationGatewayClientDiagnostics => _applicationGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewayResource.ResourceType.Namespace, Diagnostics);
-        private ApplicationGatewaysRestOperations ApplicationGatewayRestClient => _applicationGatewayRestClient ??= new ApplicationGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplicationGatewayResource.ResourceType));
-        private ClientDiagnostics ApplicationSecurityGroupClientDiagnostics => _applicationSecurityGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationSecurityGroupResource.ResourceType.Namespace, Diagnostics);
-        private ApplicationSecurityGroupsRestOperations ApplicationSecurityGroupRestClient => _applicationSecurityGroupRestClient ??= new ApplicationSecurityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplicationSecurityGroupResource.ResourceType));
-        private ClientDiagnostics AvailableDelegationsClientDiagnostics => _availableDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AvailableDelegationsRestOperations AvailableDelegationsRestClient => _availableDelegationsRestClient ??= new AvailableDelegationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics AvailableServiceAliasesClientDiagnostics => _availableServiceAliasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AvailableServiceAliasesRestOperations AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics AzureFirewallClientDiagnostics => _azureFirewallClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", AzureFirewallResource.ResourceType.Namespace, Diagnostics);
-        private AzureFirewallsRestOperations AzureFirewallRestClient => _azureFirewallRestClient ??= new AzureFirewallsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AzureFirewallResource.ResourceType));
-        private ClientDiagnostics AzureFirewallFqdnTagsClientDiagnostics => _azureFirewallFqdnTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AzureFirewallFqdnTagsRestOperations AzureFirewallFqdnTagsRestClient => _azureFirewallFqdnTagsRestClient ??= new AzureFirewallFqdnTagsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics BastionHostClientDiagnostics => _bastionHostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", BastionHostResource.ResourceType.Namespace, Diagnostics);
-        private BastionHostsRestOperations BastionHostRestClient => _bastionHostRestClient ??= new BastionHostsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BastionHostResource.ResourceType));
-        private ClientDiagnostics ExpressRouteProviderPortClientDiagnostics => _expressRouteProviderPortClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteProviderPortResource.ResourceType.Namespace, Diagnostics);
-        private NetworkManagementRestOperations ExpressRouteProviderPortRestClient => _expressRouteProviderPortRestClient ??= new NetworkManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExpressRouteProviderPortResource.ResourceType));
-        private ClientDiagnostics CustomIPPrefixClientDiagnostics => _customIPPrefixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", CustomIPPrefixResource.ResourceType.Namespace, Diagnostics);
-        private CustomIPPrefixesRestOperations CustomIPPrefixRestClient => _customIPPrefixRestClient ??= new CustomIPPrefixesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CustomIPPrefixResource.ResourceType));
-        private ClientDiagnostics DdosProtectionPlanClientDiagnostics => _ddosProtectionPlanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", DdosProtectionPlanResource.ResourceType.Namespace, Diagnostics);
-        private DdosProtectionPlansRestOperations DdosProtectionPlanRestClient => _ddosProtectionPlanRestClient ??= new DdosProtectionPlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DdosProtectionPlanResource.ResourceType));
-        private ClientDiagnostics DscpConfigurationClientDiagnostics => _dscpConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", DscpConfigurationResource.ResourceType.Namespace, Diagnostics);
-        private DscpConfigurationRestOperations DscpConfigurationRestClient => _dscpConfigurationRestClient ??= new DscpConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DscpConfigurationResource.ResourceType));
-        private ClientDiagnostics AvailableEndpointServicesClientDiagnostics => _availableEndpointServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AvailableEndpointServicesRestOperations AvailableEndpointServicesRestClient => _availableEndpointServicesRestClient ??= new AvailableEndpointServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ExpressRouteCircuitClientDiagnostics => _expressRouteCircuitClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCircuitResource.ResourceType.Namespace, Diagnostics);
-        private ExpressRouteCircuitsRestOperations ExpressRouteCircuitRestClient => _expressRouteCircuitRestClient ??= new ExpressRouteCircuitsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExpressRouteCircuitResource.ResourceType));
-        private ClientDiagnostics ExpressRouteServiceProvidersClientDiagnostics => _expressRouteServiceProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ExpressRouteServiceProvidersRestOperations ExpressRouteServiceProvidersRestClient => _expressRouteServiceProvidersRestClient ??= new ExpressRouteServiceProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ExpressRouteCrossConnectionClientDiagnostics => _expressRouteCrossConnectionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCrossConnectionResource.ResourceType.Namespace, Diagnostics);
-        private ExpressRouteCrossConnectionsRestOperations ExpressRouteCrossConnectionRestClient => _expressRouteCrossConnectionRestClient ??= new ExpressRouteCrossConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExpressRouteCrossConnectionResource.ResourceType));
-        private ClientDiagnostics ExpressRoutePortClientDiagnostics => _expressRoutePortClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRoutePortResource.ResourceType.Namespace, Diagnostics);
-        private ExpressRoutePortsRestOperations ExpressRoutePortRestClient => _expressRoutePortRestClient ??= new ExpressRoutePortsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExpressRoutePortResource.ResourceType));
-        private ClientDiagnostics FirewallPolicyClientDiagnostics => _firewallPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", FirewallPolicyResource.ResourceType.Namespace, Diagnostics);
-        private FirewallPoliciesRestOperations FirewallPolicyRestClient => _firewallPolicyRestClient ??= new FirewallPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FirewallPolicyResource.ResourceType));
-        private ClientDiagnostics IPAllocationIpAllocationsClientDiagnostics => _ipAllocationIPAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPAllocationResource.ResourceType.Namespace, Diagnostics);
-        private IpAllocationsRestOperations IPAllocationIpAllocationsRestClient => _ipAllocationIPAllocationsRestClient ??= new IpAllocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPAllocationResource.ResourceType));
-        private ClientDiagnostics IPGroupIpGroupsClientDiagnostics => _ipGroupIPGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", IPGroupResource.ResourceType.Namespace, Diagnostics);
-        private IpGroupsRestOperations IPGroupIpGroupsRestClient => _ipGroupIPGroupsRestClient ??= new IpGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IPGroupResource.ResourceType));
-        private ClientDiagnostics LoadBalancerClientDiagnostics => _loadBalancerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", LoadBalancerResource.ResourceType.Namespace, Diagnostics);
-        private LoadBalancersRestOperations LoadBalancerRestClient => _loadBalancerRestClient ??= new LoadBalancersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LoadBalancerResource.ResourceType));
-        private ClientDiagnostics NatGatewayClientDiagnostics => _natGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NatGatewayResource.ResourceType.Namespace, Diagnostics);
-        private NatGatewaysRestOperations NatGatewayRestClient => _natGatewayRestClient ??= new NatGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NatGatewayResource.ResourceType));
-        private ClientDiagnostics NetworkInterfaceClientDiagnostics => _networkInterfaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
-        private NetworkInterfacesRestOperations NetworkInterfaceRestClient => _networkInterfaceRestClient ??= new NetworkInterfacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkInterfaceResource.ResourceType));
-        private ClientDiagnostics NetworkManagerClientDiagnostics => _networkManagerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkManagerResource.ResourceType.Namespace, Diagnostics);
-        private NetworkManagersRestOperations NetworkManagerRestClient => _networkManagerRestClient ??= new NetworkManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkManagerResource.ResourceType));
-        private ClientDiagnostics NetworkProfileClientDiagnostics => _networkProfileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkProfileResource.ResourceType.Namespace, Diagnostics);
-        private NetworkProfilesRestOperations NetworkProfileRestClient => _networkProfileRestClient ??= new NetworkProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkProfileResource.ResourceType));
-        private ClientDiagnostics NetworkSecurityGroupClientDiagnostics => _networkSecurityGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityGroupResource.ResourceType.Namespace, Diagnostics);
-        private NetworkSecurityGroupsRestOperations NetworkSecurityGroupRestClient => _networkSecurityGroupRestClient ??= new NetworkSecurityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkSecurityGroupResource.ResourceType));
-        private ClientDiagnostics NetworkSecurityPerimeterClientDiagnostics => _networkSecurityPerimeterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityPerimeterResource.ResourceType.Namespace, Diagnostics);
-        private NetworkSecurityPerimetersRestOperations NetworkSecurityPerimeterRestClient => _networkSecurityPerimeterRestClient ??= new NetworkSecurityPerimetersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkSecurityPerimeterResource.ResourceType));
-        private ClientDiagnostics NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics => _networkSecurityPerimeterAssociableResourceTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private NetworkSecurityPerimeterAssociableResourceTypesRestOperations NetworkSecurityPerimeterAssociableResourceTypesRestClient => _networkSecurityPerimeterAssociableResourceTypesRestClient ??= new NetworkSecurityPerimeterAssociableResourceTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics NetworkSecurityPerimeterServiceTagsClientDiagnostics => _networkSecurityPerimeterServiceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private NetworkSecurityPerimeterServiceTagsRestOperations NetworkSecurityPerimeterServiceTagsRestClient => _networkSecurityPerimeterServiceTagsRestClient ??= new NetworkSecurityPerimeterServiceTagsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics NetworkVirtualApplianceClientDiagnostics => _networkVirtualApplianceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVirtualApplianceResource.ResourceType.Namespace, Diagnostics);
-        private NetworkVirtualAppliancesRestOperations NetworkVirtualApplianceRestClient => _networkVirtualApplianceRestClient ??= new NetworkVirtualAppliancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkVirtualApplianceResource.ResourceType));
-        private ClientDiagnostics NetworkWatcherClientDiagnostics => _networkWatcherClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkWatcherResource.ResourceType.Namespace, Diagnostics);
-        private NetworkWatchersRestOperations NetworkWatcherRestClient => _networkWatcherRestClient ??= new NetworkWatchersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkWatcherResource.ResourceType));
-        private ClientDiagnostics PrivateEndpointClientDiagnostics => _privateEndpointClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", PrivateEndpointResource.ResourceType.Namespace, Diagnostics);
-        private PrivateEndpointsRestOperations PrivateEndpointRestClient => _privateEndpointRestClient ??= new PrivateEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PrivateEndpointResource.ResourceType));
-        private ClientDiagnostics AvailablePrivateEndpointTypesClientDiagnostics => _availablePrivateEndpointTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AvailablePrivateEndpointTypesRestOperations AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PrivateLinkServiceClientDiagnostics => _privateLinkServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", PrivateLinkServiceResource.ResourceType.Namespace, Diagnostics);
-        private PrivateLinkServicesRestOperations PrivateLinkServiceRestClient => _privateLinkServiceRestClient ??= new PrivateLinkServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PrivateLinkServiceResource.ResourceType));
-        private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private PrivateLinkServicesRestOperations PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PublicIPAddressClientDiagnostics => _publicIPAddressClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPAddressResource.ResourceType.Namespace, Diagnostics);
-        private PublicIPAddressesRestOperations PublicIPAddressRestClient => _publicIPAddressRestClient ??= new PublicIPAddressesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PublicIPAddressResource.ResourceType));
-        private ClientDiagnostics PublicIPPrefixClientDiagnostics => _publicIPPrefixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", PublicIPPrefixResource.ResourceType.Namespace, Diagnostics);
-        private PublicIPPrefixesRestOperations PublicIPPrefixRestClient => _publicIPPrefixRestClient ??= new PublicIPPrefixesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PublicIPPrefixResource.ResourceType));
-        private ClientDiagnostics RouteFilterClientDiagnostics => _routeFilterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", RouteFilterResource.ResourceType.Namespace, Diagnostics);
-        private RouteFiltersRestOperations RouteFilterRestClient => _routeFilterRestClient ??= new RouteFiltersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RouteFilterResource.ResourceType));
-        private ClientDiagnostics RouteTableClientDiagnostics => _routeTableClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", RouteTableResource.ResourceType.Namespace, Diagnostics);
-        private RouteTablesRestOperations RouteTableRestClient => _routeTableRestClient ??= new RouteTablesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RouteTableResource.ResourceType));
-        private ClientDiagnostics SecurityPartnerProviderClientDiagnostics => _securityPartnerProviderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", SecurityPartnerProviderResource.ResourceType.Namespace, Diagnostics);
-        private SecurityPartnerProvidersRestOperations SecurityPartnerProviderRestClient => _securityPartnerProviderRestClient ??= new SecurityPartnerProvidersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SecurityPartnerProviderResource.ResourceType));
-        private ClientDiagnostics BgpServiceCommunitiesClientDiagnostics => _bgpServiceCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private BgpServiceCommunitiesRestOperations BgpServiceCommunitiesRestClient => _bgpServiceCommunitiesRestClient ??= new BgpServiceCommunitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ServiceEndpointPolicyClientDiagnostics => _serviceEndpointPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ServiceEndpointPolicyResource.ResourceType.Namespace, Diagnostics);
-        private ServiceEndpointPoliciesRestOperations ServiceEndpointPolicyRestClient => _serviceEndpointPolicyRestClient ??= new ServiceEndpointPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServiceEndpointPolicyResource.ResourceType));
-        private ClientDiagnostics ServiceGatewayClientDiagnostics => _serviceGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ServiceGatewayResource.ResourceType.Namespace, Diagnostics);
-        private ServiceGatewaysRestOperations ServiceGatewayRestClient => _serviceGatewayRestClient ??= new ServiceGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServiceGatewayResource.ResourceType));
-        private ClientDiagnostics ServiceTagsClientDiagnostics => _serviceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ServiceTagsRestOperations ServiceTagsRestClient => _serviceTagsRestClient ??= new ServiceTagsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ServiceTagInformationClientDiagnostics => _serviceTagInformationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ServiceTagInformationRestOperations ServiceTagInformationRestClient => _serviceTagInformationRestClient ??= new ServiceTagInformationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VirtualNetworkClientDiagnostics => _virtualNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-        private VirtualNetworksRestOperations VirtualNetworkRestClient => _virtualNetworkRestClient ??= new VirtualNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualNetworkResource.ResourceType));
-        private ClientDiagnostics VirtualNetworkApplianceClientDiagnostics => _virtualNetworkApplianceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkApplianceResource.ResourceType.Namespace, Diagnostics);
-        private VirtualNetworkAppliancesRestOperations VirtualNetworkApplianceRestClient => _virtualNetworkApplianceRestClient ??= new VirtualNetworkAppliancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualNetworkApplianceResource.ResourceType));
-        private ClientDiagnostics VirtualNetworkTapClientDiagnostics => _virtualNetworkTapClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualNetworkTapResource.ResourceType.Namespace, Diagnostics);
-        private VirtualNetworkTapsRestOperations VirtualNetworkTapRestClient => _virtualNetworkTapRestClient ??= new VirtualNetworkTapsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualNetworkTapResource.ResourceType));
-        private ClientDiagnostics VirtualRouterClientDiagnostics => _virtualRouterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualRouterResource.ResourceType.Namespace, Diagnostics);
-        private VirtualRoutersRestOperations VirtualRouterRestClient => _virtualRouterRestClient ??= new VirtualRoutersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualRouterResource.ResourceType));
-        private ClientDiagnostics VirtualWanClientDiagnostics => _virtualWanClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualWanResource.ResourceType.Namespace, Diagnostics);
-        private VirtualWansRestOperations VirtualWanRestClient => _virtualWanRestClient ??= new VirtualWansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualWanResource.ResourceType));
-        private ClientDiagnostics VpnSiteClientDiagnostics => _vpnSiteClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VpnSiteResource.ResourceType.Namespace, Diagnostics);
-        private VpnSitesRestOperations VpnSiteRestClient => _vpnSiteRestClient ??= new VpnSitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VpnSiteResource.ResourceType));
-        private ClientDiagnostics VpnServerConfigurationClientDiagnostics => _vpnServerConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VpnServerConfigurationResource.ResourceType.Namespace, Diagnostics);
-        private VpnServerConfigurationsRestOperations VpnServerConfigurationRestClient => _vpnServerConfigurationRestClient ??= new VpnServerConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VpnServerConfigurationResource.ResourceType));
-        private ClientDiagnostics VirtualHubClientDiagnostics => _virtualHubClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VirtualHubResource.ResourceType.Namespace, Diagnostics);
-        private VirtualHubsRestOperations VirtualHubRestClient => _virtualHubRestClient ??= new VirtualHubsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualHubResource.ResourceType));
-        private ClientDiagnostics VpnGatewayClientDiagnostics => _vpnGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", VpnGatewayResource.ResourceType.Namespace, Diagnostics);
-        private VpnGatewaysRestOperations VpnGatewayRestClient => _vpnGatewayRestClient ??= new VpnGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VpnGatewayResource.ResourceType));
-        private ClientDiagnostics P2SVpnGatewayP2sVpnGatewaysClientDiagnostics => _p2sVpnGatewayP2sVpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", P2SVpnGatewayResource.ResourceType.Namespace, Diagnostics);
-        private P2SVpnGatewaysRestOperations P2SVpnGatewayP2sVpnGatewaysRestClient => _p2sVpnGatewayP2sVpnGatewaysRestClient ??= new P2SVpnGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(P2SVpnGatewayResource.ResourceType));
-        private ClientDiagnostics ExpressRouteGatewayClientDiagnostics => _expressRouteGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteGatewayResource.ResourceType.Namespace, Diagnostics);
-        private ExpressRouteGatewaysRestOperations ExpressRouteGatewayRestClient => _expressRouteGatewayRestClient ??= new ExpressRouteGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ExpressRouteGatewayResource.ResourceType));
-        private ClientDiagnostics WebApplicationFirewallPolicyClientDiagnostics => _webApplicationFirewallPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", WebApplicationFirewallPolicyResource.ResourceType.Namespace, Diagnostics);
-        private WebApplicationFirewallPoliciesRestOperations WebApplicationFirewallPolicyRestClient => _webApplicationFirewallPolicyRestClient ??= new WebApplicationFirewallPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(WebApplicationFirewallPolicyResource.ResourceType));
+        private ClientDiagnostics ApplicationGatewaysClientDiagnostics => _applicationGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ApplicationGateways ApplicationGatewaysRestClient => _applicationGatewaysRestClient ??= new ApplicationGateways(ApplicationGatewaysClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
 
-        /// <summary> Gets a collection of ApplicationGatewayWafDynamicManifestResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The region where the nrp are located at. </param>
-        /// <returns> An object representing collection of ApplicationGatewayWafDynamicManifestResources and their operations over a ApplicationGatewayWafDynamicManifestResource. </returns>
-        public virtual ApplicationGatewayWafDynamicManifestCollection GetApplicationGatewayWafDynamicManifests(AzureLocation location)
-        {
-            return new ApplicationGatewayWafDynamicManifestCollection(Client, Id, location);
-        }
+        private ClientDiagnostics ApplicationSecurityGroupsClientDiagnostics => _applicationSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ApplicationSecurityGroups ApplicationSecurityGroupsRestClient => _applicationSecurityGroupsRestClient ??= new ApplicationSecurityGroups(ApplicationSecurityGroupsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics AzureFirewallsClientDiagnostics => _azureFirewallsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AzureFirewalls AzureFirewallsRestClient => _azureFirewallsRestClient ??= new AzureFirewalls(AzureFirewallsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics BastionHostsClientDiagnostics => _bastionHostsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private BastionHosts BastionHostsRestClient => _bastionHostsRestClient ??= new BastionHosts(BastionHostsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics NetworkInterfacesClientDiagnostics => _networkInterfacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics PublicIPAddressesClientDiagnostics => _publicIPAddressesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics DdosCustomPoliciesClientDiagnostics => _ddosCustomPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DdosCustomPolicies DdosCustomPoliciesRestClient => _ddosCustomPoliciesRestClient ??= new DdosCustomPolicies(DdosCustomPoliciesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics DdosProtectionPlansClientDiagnostics => _ddosProtectionPlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DdosProtectionPlans DdosProtectionPlansRestClient => _ddosProtectionPlansRestClient ??= new DdosProtectionPlans(DdosProtectionPlansClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics ExpressRouteCircuitsClientDiagnostics => _expressRouteCircuitsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ExpressRouteCircuits ExpressRouteCircuitsRestClient => _expressRouteCircuitsRestClient ??= new ExpressRouteCircuits(ExpressRouteCircuitsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics ExpressRouteCrossConnectionsClientDiagnostics => _expressRouteCrossConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ExpressRouteCrossConnections ExpressRouteCrossConnectionsRestClient => _expressRouteCrossConnectionsRestClient ??= new ExpressRouteCrossConnections(ExpressRouteCrossConnectionsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics ExpressRoutePortsClientDiagnostics => _expressRoutePortsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ExpressRoutePorts ExpressRoutePortsRestClient => _expressRoutePortsRestClient ??= new ExpressRoutePorts(ExpressRoutePortsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics FirewallPoliciesClientDiagnostics => _firewallPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private FirewallPolicies FirewallPoliciesRestClient => _firewallPoliciesRestClient ??= new FirewallPolicies(FirewallPoliciesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics NetworkManagersClientDiagnostics => _networkManagersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkManagers NetworkManagersRestClient => _networkManagersRestClient ??= new NetworkManagers(NetworkManagersClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics IpAllocationsClientDiagnostics => _ipAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private IpAllocations IpAllocationsRestClient => _ipAllocationsRestClient ??= new IpAllocations(IpAllocationsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics IpGroupsClientDiagnostics => _ipGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private IpGroups IpGroupsRestClient => _ipGroupsRestClient ??= new IpGroups(IpGroupsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics LoadBalancersClientDiagnostics => _loadBalancersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private LoadBalancers LoadBalancersRestClient => _loadBalancersRestClient ??= new LoadBalancers(LoadBalancersClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics NatGatewaysClientDiagnostics => _natGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics NetworkProfilesClientDiagnostics => _networkProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkProfiles NetworkProfilesRestClient => _networkProfilesRestClient ??= new NetworkProfiles(NetworkProfilesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics NetworkSecurityGroupsClientDiagnostics => _networkSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics NetworkSecurityPerimetersClientDiagnostics => _networkSecurityPerimetersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkSecurityPerimeters NetworkSecurityPerimetersRestClient => _networkSecurityPerimetersRestClient ??= new NetworkSecurityPerimeters(NetworkSecurityPerimetersClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics NetworkVirtualAppliancesClientDiagnostics => _networkVirtualAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkVirtualAppliances NetworkVirtualAppliancesRestClient => _networkVirtualAppliancesRestClient ??= new NetworkVirtualAppliances(NetworkVirtualAppliancesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics NetworkWatchersClientDiagnostics => _networkWatchersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkWatchers NetworkWatchersRestClient => _networkWatchersRestClient ??= new NetworkWatchers(NetworkWatchersClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics PrivateEndpointsClientDiagnostics => _privateEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PrivateEndpoints PrivateEndpointsRestClient => _privateEndpointsRestClient ??= new PrivateEndpoints(PrivateEndpointsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PrivateLinkServices PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServices(PrivateLinkServicesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics PublicIPPrefixesClientDiagnostics => _publicIPPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private PublicIPPrefixes PublicIPPrefixesRestClient => _publicIPPrefixesRestClient ??= new PublicIPPrefixes(PublicIPPrefixesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics RouteFiltersClientDiagnostics => _routeFiltersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private RouteFilters RouteFiltersRestClient => _routeFiltersRestClient ??= new RouteFilters(RouteFiltersClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics RouteTablesClientDiagnostics => _routeTablesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private RouteTables RouteTablesRestClient => _routeTablesRestClient ??= new RouteTables(RouteTablesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics SecurityPartnerProvidersClientDiagnostics => _securityPartnerProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SecurityPartnerProviders SecurityPartnerProvidersRestClient => _securityPartnerProvidersRestClient ??= new SecurityPartnerProviders(SecurityPartnerProvidersClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics ServiceEndpointPoliciesClientDiagnostics => _serviceEndpointPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ServiceEndpointPolicies ServiceEndpointPoliciesRestClient => _serviceEndpointPoliciesRestClient ??= new ServiceEndpointPolicies(ServiceEndpointPoliciesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics VirtualNetworksClientDiagnostics => _virtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics VirtualNetworkTapsClientDiagnostics => _virtualNetworkTapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualNetworkTaps VirtualNetworkTapsRestClient => _virtualNetworkTapsRestClient ??= new VirtualNetworkTaps(VirtualNetworkTapsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics VirtualRoutersClientDiagnostics => _virtualRoutersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualRouters VirtualRoutersRestClient => _virtualRoutersRestClient ??= new VirtualRouters(VirtualRoutersClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics VirtualWansClientDiagnostics => _virtualWansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualWans VirtualWansRestClient => _virtualWansRestClient ??= new VirtualWans(VirtualWansClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics VpnSitesClientDiagnostics => _vpnSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VpnSites VpnSitesRestClient => _vpnSitesRestClient ??= new VpnSites(VpnSitesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics VpnServerConfigurationsClientDiagnostics => _vpnServerConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VpnServerConfigurations VpnServerConfigurationsRestClient => _vpnServerConfigurationsRestClient ??= new VpnServerConfigurations(VpnServerConfigurationsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics VirtualHubsClientDiagnostics => _virtualHubsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualHubs VirtualHubsRestClient => _virtualHubsRestClient ??= new VirtualHubs(VirtualHubsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics VpnGatewaysClientDiagnostics => _vpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VpnGateways VpnGatewaysRestClient => _vpnGatewaysRestClient ??= new VpnGateways(VpnGatewaysClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics WebApplicationFirewallPoliciesClientDiagnostics => _webApplicationFirewallPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private WebApplicationFirewallPolicies WebApplicationFirewallPoliciesRestClient => _webApplicationFirewallPoliciesRestClient ??= new WebApplicationFirewallPolicies(WebApplicationFirewallPoliciesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics VirtualNetworkAppliancesClientDiagnostics => _virtualNetworkAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualNetworkAppliances VirtualNetworkAppliancesRestClient => _virtualNetworkAppliancesRestClient ??= new VirtualNetworkAppliances(VirtualNetworkAppliancesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics ServiceGatewaysClientDiagnostics => _serviceGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ServiceGateways ServiceGatewaysRestClient => _serviceGatewaysRestClient ??= new ServiceGateways(ServiceGatewaysClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics InterconnectGroupsClientDiagnostics => _interconnectGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private InterconnectGroups InterconnectGroupsRestClient => _interconnectGroupsRestClient ??= new InterconnectGroups(InterconnectGroupsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics CustomIPPrefixesClientDiagnostics => _customIPPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CustomIPPrefixes CustomIPPrefixesRestClient => _customIPPrefixesRestClient ??= new CustomIPPrefixes(CustomIPPrefixesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics DscpConfigurationClientDiagnostics => _dscpConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DscpConfiguration DscpConfigurationRestClient => _dscpConfigurationRestClient ??= new DscpConfiguration(DscpConfigurationClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics P2sVpnGatewaysClientDiagnostics => _p2sVpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private P2sVpnGateways P2sVpnGatewaysRestClient => _p2sVpnGatewaysRestClient ??= new P2sVpnGateways(P2sVpnGatewaysClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics ExpressRouteGatewaysClientDiagnostics => _expressRouteGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ExpressRouteGateways ExpressRouteGatewaysRestClient => _expressRouteGatewaysRestClient ??= new ExpressRouteGateways(ExpressRouteGatewaysClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics CheckDnsNameAvailabilityClientDiagnostics => _checkDnsNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CheckDnsNameAvailability CheckDnsNameAvailabilityRestClient => _checkDnsNameAvailabilityRestClient ??= new CheckDnsNameAvailability(CheckDnsNameAvailabilityClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics ExpressRouteProviderPortsLocationClientDiagnostics => _expressRouteProviderPortsLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ExpressRouteProviderPortsLocation ExpressRouteProviderPortsLocationRestClient => _expressRouteProviderPortsLocationRestClient ??= new ExpressRouteProviderPortsLocation(ExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics AvailableDelegationsClientDiagnostics => _availableDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AvailableDelegations AvailableDelegationsRestClient => _availableDelegationsRestClient ??= new AvailableDelegations(AvailableDelegationsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics AvailableServiceAliasesClientDiagnostics => _availableServiceAliasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AvailableServiceAliases AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliases(AvailableServiceAliasesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics AzureFirewallFqdnTagsClientDiagnostics => _azureFirewallFqdnTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AzureFirewallFqdnTags AzureFirewallFqdnTagsRestClient => _azureFirewallFqdnTagsRestClient ??= new AzureFirewallFqdnTags(AzureFirewallFqdnTagsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics AvailableEndpointServicesClientDiagnostics => _availableEndpointServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AvailableEndpointServices AvailableEndpointServicesRestClient => _availableEndpointServicesRestClient ??= new AvailableEndpointServices(AvailableEndpointServicesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics ExpressRouteServiceProvidersClientDiagnostics => _expressRouteServiceProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ExpressRouteServiceProviders ExpressRouteServiceProvidersRestClient => _expressRouteServiceProvidersRestClient ??= new ExpressRouteServiceProviders(ExpressRouteServiceProvidersClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics => _networkSecurityPerimeterAssociableResourceTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkSecurityPerimeterAssociableResourceTypes NetworkSecurityPerimeterAssociableResourceTypesRestClient => _networkSecurityPerimeterAssociableResourceTypesRestClient ??= new NetworkSecurityPerimeterAssociableResourceTypes(NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics NetworkSecurityPerimeterOperationStatusesClientDiagnostics => _networkSecurityPerimeterOperationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkSecurityPerimeterOperationStatuses NetworkSecurityPerimeterOperationStatusesRestClient => _networkSecurityPerimeterOperationStatusesRestClient ??= new NetworkSecurityPerimeterOperationStatuses(NetworkSecurityPerimeterOperationStatusesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics NetworkSecurityPerimeterServiceTagsClientDiagnostics => _networkSecurityPerimeterServiceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private NetworkSecurityPerimeterServiceTags NetworkSecurityPerimeterServiceTagsRestClient => _networkSecurityPerimeterServiceTagsRestClient ??= new NetworkSecurityPerimeterServiceTags(NetworkSecurityPerimeterServiceTagsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics AvailablePrivateEndpointTypesClientDiagnostics => _availablePrivateEndpointTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AvailablePrivateEndpointTypes AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypes(AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics BgpServiceCommunitiesClientDiagnostics => _bgpServiceCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private BgpServiceCommunities BgpServiceCommunitiesRestClient => _bgpServiceCommunitiesRestClient ??= new BgpServiceCommunities(BgpServiceCommunitiesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics ServiceTagsClientDiagnostics => _serviceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ServiceTags ServiceTagsRestClient => _serviceTagsRestClient ??= new ServiceTags(ServiceTagsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics ServiceTagInformationClientDiagnostics => _serviceTagInformationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ServiceTagInformation ServiceTagInformationRestClient => _serviceTagInformationRestClient ??= new ServiceTagInformation(ServiceTagInformationClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
 
         /// <summary>
-        /// Gets the regional application gateway waf manifest.
+        /// Lists available Ssl options for configuring Ssl policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewayAvailableSslOptionsOperationGroup_ListAvailableSslOptions. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationGatewayAvailableSslOptionsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The region where the nrp are located at. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetApplicationGatewayWafDynamicManifestAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptionsResource"/> object. </returns>
+        public virtual ApplicationGatewayAvailableSslOptionsResource GetApplicationGatewayAvailableSslOptions()
         {
-            return await GetApplicationGatewayWafDynamicManifests(location).GetAsync(cancellationToken).ConfigureAwait(false);
+            return new ApplicationGatewayAvailableSslOptionsResource(Client, Id.AppendProviderResource("Microsoft.Network", "applicationGatewayAvailableSslOptions", "default"));
         }
 
-        /// <summary>
-        /// Gets the regional application gateway waf manifest.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The region where the nrp are located at. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ApplicationGatewayWafDynamicManifestResource> GetApplicationGatewayWafDynamicManifest(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            return GetApplicationGatewayWafDynamicManifests(location).Get(cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AzureWebCategoryResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of AzureWebCategoryResources and their operations over a AzureWebCategoryResource. </returns>
-        public virtual AzureWebCategoryCollection GetAzureWebCategories()
-        {
-            return GetCachedClient(client => new AzureWebCategoryCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified Azure Web Category.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebCategories_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AzureWebCategoryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the azureWebCategory. </param>
-        /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AzureWebCategoryResource>> GetAzureWebCategoryAsync(string name, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetAzureWebCategories().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified Azure Web Category.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebCategories_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AzureWebCategoryResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the azureWebCategory. </param>
-        /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AzureWebCategoryResource> GetAzureWebCategory(string name, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetAzureWebCategories().Get(name, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ExpressRouteProviderPortResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of ExpressRouteProviderPortResources and their operations over a ExpressRouteProviderPortResource. </returns>
+        /// <summary> Gets a collection of ExpressRouteProviderPorts in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of ExpressRouteProviderPorts and their operations over a ExpressRouteProviderPortResource. </returns>
         public virtual ExpressRouteProviderPortCollection GetExpressRouteProviderPorts()
         {
             return GetCachedClient(client => new ExpressRouteProviderPortCollection(client, Id));
@@ -414,20 +434,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves detail of a provider port.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts/{providerport}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts/{providerport}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteProviderPort</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteProviderPorts_ExpressRouteProviderPort. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -438,6 +454,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteProviderPortResource>> GetExpressRouteProviderPortAsync(string providerport, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerport, nameof(providerport));
+
             return await GetExpressRouteProviderPorts().GetAsync(providerport, cancellationToken).ConfigureAwait(false);
         }
 
@@ -445,20 +463,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves detail of a provider port.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts/{providerport}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts/{providerport}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteProviderPort</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteProviderPorts_ExpressRouteProviderPort. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -469,11 +483,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteProviderPortResource> GetExpressRouteProviderPort(string providerport, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(providerport, nameof(providerport));
+
             return GetExpressRouteProviderPorts().Get(providerport, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExpressRoutePortsLocationResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of ExpressRoutePortsLocationResources and their operations over a ExpressRoutePortsLocationResource. </returns>
+        /// <summary> Gets a collection of ExpressRoutePortsLocations in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of ExpressRoutePortsLocations and their operations over a ExpressRoutePortsLocationResource. </returns>
         public virtual ExpressRoutePortsLocationCollection GetExpressRoutePortsLocations()
         {
             return GetCachedClient(client => new ExpressRoutePortsLocationCollection(client, Id));
@@ -483,20 +499,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRoutePortsLocations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRoutePortsLocations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRoutePortsLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,6 +519,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRoutePortsLocationResource>> GetExpressRoutePortsLocationAsync(string locationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+
             return await GetExpressRoutePortsLocations().GetAsync(locationName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -514,20 +528,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves a single ExpressRoutePort peering location, including the list of available bandwidths available at said peering location.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePortsLocations/{locationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRoutePortsLocations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRoutePortsLocations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRoutePortsLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -538,11 +548,107 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<ExpressRoutePortsLocationResource> GetExpressRoutePortsLocation(string locationName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
+
             return GetExpressRoutePortsLocations().Get(locationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SubscriptionNetworkManagerConnectionResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SubscriptionNetworkManagerConnectionResources and their operations over a SubscriptionNetworkManagerConnectionResource. </returns>
+        /// <summary>
+        /// Gets the regional application gateway waf manifest.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewayWafDynamicManifestResults_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationGatewayWafDynamicManifestResultResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="ApplicationGatewayWafDynamicManifestResultResource"/> object. </returns>
+        public virtual ApplicationGatewayWafDynamicManifestResultResource GetApplicationGatewayWafDynamicManifestResult()
+        {
+            return new ApplicationGatewayWafDynamicManifestResultResource(Client, Id.AppendProviderResource("Microsoft.Network", "locations", "dafault"));
+        }
+
+        /// <summary> Gets a collection of AzureWebCategories in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of AzureWebCategories and their operations over a AzureWebCategoryResource. </returns>
+        public virtual AzureWebCategoryCollection GetAzureWebCategories()
+        {
+            return GetCachedClient(client => new AzureWebCategoryCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified Azure Web Category.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AzureWebCategories_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the azureWebCategory. </param>
+        /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AzureWebCategoryResource>> GetAzureWebCategoryAsync(string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetAzureWebCategories().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified Azure Web Category.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureWebCategories/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AzureWebCategories_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the azureWebCategory. </param>
+        /// <param name="expand"> Expands resourceIds back referenced by the azureWebCategory resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AzureWebCategoryResource> GetAzureWebCategory(string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetAzureWebCategories().Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionNetworkManagerConnections in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of SubscriptionNetworkManagerConnections and their operations over a SubscriptionNetworkManagerConnectionResource. </returns>
         public virtual SubscriptionNetworkManagerConnectionCollection GetSubscriptionNetworkManagerConnections()
         {
             return GetCachedClient(client => new SubscriptionNetworkManagerConnectionCollection(client, Id));
@@ -552,20 +658,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Get a specified connection created by this subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SubscriptionNetworkManagerConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagerConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -576,6 +678,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionNetworkManagerConnectionResource>> GetSubscriptionNetworkManagerConnectionAsync(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
+
             return await GetSubscriptionNetworkManagerConnections().GetAsync(networkManagerConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -583,20 +687,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Get a specified connection created by this subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SubscriptionNetworkManagerConnections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagerConnections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -607,11 +707,13 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<SubscriptionNetworkManagerConnectionResource> GetSubscriptionNetworkManagerConnection(string networkManagerConnectionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
+
             return GetSubscriptionNetworkManagerConnections().Get(networkManagerConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkVirtualApplianceSkuResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of NetworkVirtualApplianceSkuResources and their operations over a NetworkVirtualApplianceSkuResource. </returns>
+        /// <summary> Gets a collection of NetworkVirtualApplianceSkus in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkVirtualApplianceSkus and their operations over a NetworkVirtualApplianceSkuResource. </returns>
         public virtual NetworkVirtualApplianceSkuCollection GetNetworkVirtualApplianceSkus()
         {
             return GetCachedClient(client => new NetworkVirtualApplianceSkuCollection(client, Id));
@@ -621,20 +723,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves a single available sku for network virtual appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualApplianceSkus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualApplianceSkus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceSkuResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -645,6 +743,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkVirtualApplianceSkuResource>> GetNetworkVirtualApplianceSkuAsync(string skuName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
+
             return await GetNetworkVirtualApplianceSkus().GetAsync(skuName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -652,20 +752,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Retrieves a single available sku for network virtual appliance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualApplianceSkus/{skuName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualApplianceSkus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualApplianceSkus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceSkuResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -676,6 +772,8 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual Response<NetworkVirtualApplianceSkuResource> GetNetworkVirtualApplianceSku(string skuName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
+
             return GetNetworkVirtualApplianceSkus().Get(skuName, cancellationToken);
         }
 
@@ -683,50 +781,44 @@ namespace Azure.ResourceManager.Network.Mocking
         /// Gets all the application gateways in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGateways_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayResource> GetApplicationGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayResource(Client, ApplicationGatewayData.DeserializeApplicationGatewayData(e)), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetApplicationGateways", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewaysListAllAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetApplicationGateways"), data => new ApplicationGatewayResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the application gateways in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGateways. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGateways_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -734,513 +826,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="ApplicationGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayResource> GetApplicationGateways(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayResource(Client, ApplicationGatewayData.DeserializeApplicationGatewayData(e)), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetApplicationGateways", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available server variables.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAvailableServerVariables</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetAvailableServerVariablesApplicationGatewaysAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableServerVariablesRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableServerVariablesApplicationGateways", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available server variables.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAvailableServerVariables</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetAvailableServerVariablesApplicationGateways(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableServerVariablesRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableServerVariablesApplicationGateways", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available request headers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAvailableRequestHeaders</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetAvailableRequestHeadersApplicationGatewaysAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableRequestHeadersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableRequestHeadersApplicationGateways", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available request headers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAvailableRequestHeaders</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetAvailableRequestHeadersApplicationGateways(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableRequestHeadersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableRequestHeadersApplicationGateways", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available response headers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAvailableResponseHeaders</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<string> GetAvailableResponseHeadersApplicationGatewaysAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableResponseHeadersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableResponseHeadersApplicationGateways", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available response headers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAvailableResponseHeaders</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<string> GetAvailableResponseHeadersApplicationGateways(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableResponseHeadersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableResponseHeadersApplicationGateways", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available web application firewall rule sets.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAvailableWafRuleSets</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewayFirewallRuleSet"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSetsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableWafRuleSetsRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(e), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAppGatewayAvailableWafRuleSets", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all available web application firewall rule sets.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAvailableWafRuleSets</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewayFirewallRuleSet"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationGatewayFirewallRuleSet> GetAppGatewayAvailableWafRuleSets(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableWafRuleSetsRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationGatewayFirewallRuleSet.DeserializeApplicationGatewayFirewallRuleSet(e), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAppGatewayAvailableWafRuleSets", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists available Ssl options for configuring Ssl policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAvailableSslOptions</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslOptions");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = await ApplicationGatewayRestClient.ListAvailableSslOptionsAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists available Ssl options for configuring Ssl policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAvailableSslOptions</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(CancellationToken cancellationToken = default)
-        {
-            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslOptions");
-            scope.Start();
-            try
-            {
-                var response = ApplicationGatewayRestClient.ListAvailableSslOptions(Id.SubscriptionId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Lists all SSL predefined policies for configuring Ssl policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAvailableSslPredefinedPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewaySslPredefinedPolicy"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPoliciesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(e), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslPredefinedPolicies", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all SSL predefined policies for configuring Ssl policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_ListAvailableSslPredefinedPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewaySslPredefinedPolicy"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewayAvailableSslPredefinedPolicies(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationGatewayRestClient.CreateListAvailableSslPredefinedPoliciesNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApplicationGatewaySslPredefinedPolicy.DeserializeApplicationGatewaySslPredefinedPolicy(e), ApplicationGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetApplicationGatewayAvailableSslPredefinedPolicies", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets Ssl predefined policy with the specified policy name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_GetSslPredefinedPolicy</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public virtual async Task<Response<ApplicationGatewaySslPredefinedPolicy>> GetApplicationGatewaySslPredefinedPolicyAsync(string predefinedPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
-
-            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewaySslPredefinedPolicy");
-            scope.Start();
-            try
-            {
-                var response = await ApplicationGatewayRestClient.GetSslPredefinedPolicyAsync(Id.SubscriptionId, predefinedPolicyName, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets Ssl predefined policy with the specified policy name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGateways_GetSslPredefinedPolicy</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="predefinedPolicyName"> Name of Ssl predefined policy. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="predefinedPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="predefinedPolicyName"/> is null. </exception>
-        public virtual Response<ApplicationGatewaySslPredefinedPolicy> GetApplicationGatewaySslPredefinedPolicy(string predefinedPolicyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(predefinedPolicyName, nameof(predefinedPolicyName));
-
-            using var scope = ApplicationGatewayClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetApplicationGatewaySslPredefinedPolicy");
-            scope.Start();
-            try
-            {
-                var response = ApplicationGatewayRestClient.GetSslPredefinedPolicy(Id.SubscriptionId, predefinedPolicyName, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApplicationGatewayData, ApplicationGatewayResource>(new ApplicationGatewaysListAllCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetApplicationGateways"), data => new ApplicationGatewayResource(Client, data));
         }
 
         /// <summary>
         /// Gets all application security groups in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationSecurityGroupResource> GetApplicationSecurityGroupsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationSecurityGroupRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationSecurityGroupResource(Client, ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(e)), ApplicationSecurityGroupClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetApplicationSecurityGroups", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApplicationSecurityGroupData, ApplicationSecurityGroupResource>(new ApplicationSecurityGroupsListAllAsyncCollectionResultOfT(ApplicationSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetApplicationSecurityGroups"), data => new ApplicationSecurityGroupResource(Client, data));
         }
 
         /// <summary>
         /// Gets all application security groups in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationSecurityGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1248,167 +882,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="ApplicationSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationSecurityGroupResource> GetApplicationSecurityGroups(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApplicationSecurityGroupRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationSecurityGroupResource(Client, ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(e)), ApplicationSecurityGroupClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetApplicationSecurityGroups", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all of the available subnet delegations for this subscription in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailableDelegations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of the subnet. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableDelegation> GetAvailableDelegationsAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableDelegationsRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableDelegationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableDelegation.DeserializeAvailableDelegation(e), AvailableDelegationsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableDelegations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all of the available subnet delegations for this subscription in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailableDelegations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of the subnet. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableDelegation> GetAvailableDelegations(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableDelegationsRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableDelegationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableDelegation.DeserializeAvailableDelegation(e), AvailableDelegationsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableDelegations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all available service aliases for this subscription in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailableServiceAliases_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableServiceAlias> GetAvailableServiceAliasesAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableServiceAliasesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableServiceAlias.DeserializeAvailableServiceAlias(e), AvailableServiceAliasesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableServiceAliases", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all available service aliases for this subscription in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailableServiceAliases_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableServiceAlias> GetAvailableServiceAliases(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableServiceAliasesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableServiceAlias.DeserializeAvailableServiceAlias(e), AvailableServiceAliasesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableServiceAliases", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApplicationSecurityGroupData, ApplicationSecurityGroupResource>(new ApplicationSecurityGroupsListAllCollectionResultOfT(ApplicationSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetApplicationSecurityGroups"), data => new ApplicationSecurityGroupResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the Azure Firewalls in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureFirewalls_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureFirewalls_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AzureFirewallResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureFirewallResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureFirewallResource> GetAzureFirewallsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureFirewallRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureFirewallRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AzureFirewallResource(Client, AzureFirewallData.DeserializeAzureFirewallData(e)), AzureFirewallClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAzureFirewalls", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallsListAllAsyncCollectionResultOfT(AzureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAzureFirewalls"), data => new AzureFirewallResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the Azure Firewalls in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewalls. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureFirewalls_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> AzureFirewalls_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AzureFirewallResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1416,111 +938,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="AzureFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureFirewallResource> GetAzureFirewalls(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureFirewallRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureFirewallRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AzureFirewallResource(Client, AzureFirewallData.DeserializeAzureFirewallData(e)), AzureFirewallClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAzureFirewalls", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the Azure Firewall FQDN Tags in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureFirewallFqdnTags_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureFirewallFqdnTag"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AzureFirewallFqdnTag> GetAzureFirewallFqdnTagsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureFirewallFqdnTagsRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureFirewallFqdnTagsRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AzureFirewallFqdnTag.DeserializeAzureFirewallFqdnTag(e), AzureFirewallFqdnTagsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAzureFirewallFqdnTags", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the Azure Firewall FQDN Tags in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzureFirewallFqdnTags_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureFirewallFqdnTag"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AzureFirewallFqdnTag> GetAzureFirewallFqdnTags(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzureFirewallFqdnTagsRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzureFirewallFqdnTagsRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AzureFirewallFqdnTag.DeserializeAzureFirewallFqdnTag(e), AzureFirewallFqdnTagsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAzureFirewallFqdnTags", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AzureFirewallData, AzureFirewallResource>(new AzureFirewallsListAllCollectionResultOfT(AzureFirewallsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAzureFirewalls"), data => new AzureFirewallResource(Client, data));
         }
 
         /// <summary>
         /// Lists all Bastion Hosts in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BastionHosts_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BastionHosts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BastionHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BastionHostResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BastionHostResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BastionHostResource> GetBastionHostsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BastionHostRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BastionHostRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BastionHostResource(Client, BastionHostData.DeserializeBastionHostData(e)), BastionHostClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetBastionHosts", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BastionHostData, BastionHostResource>(new BastionHostsGetAllAsyncCollectionResultOfT(BastionHostsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetBastionHosts"), data => new BastionHostResource(Client, data));
         }
 
         /// <summary>
         /// Lists all Bastion Hosts in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/bastionHosts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BastionHosts_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> BastionHosts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BastionHostResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1528,1007 +994,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="BastionHostResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BastionHostResource> GetBastionHosts(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BastionHostRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BastionHostRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BastionHostResource(Client, BastionHostData.DeserializeBastionHostData(e)), BastionHostClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetBastionHosts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks whether a domain name in the cloudapp.azure.com zone is available for use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckDnsNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainNameLabel"/> is null. </exception>
-        public virtual async Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(AzureLocation location, string domainNameLabel, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(domainNameLabel, nameof(domainNameLabel));
-
-            using var scope = ExpressRouteProviderPortClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.CheckDnsNameAvailability");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = await ExpressRouteProviderPortRestClient.CheckDnsNameAvailabilityAsync(Id.SubscriptionId, location, domainNameLabel, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks whether a domain name in the cloudapp.azure.com zone is available for use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/CheckDnsNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckDnsNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainNameLabel"/> is null. </exception>
-        public virtual Response<DnsNameAvailabilityResult> CheckDnsNameAvailability(AzureLocation location, string domainNameLabel, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(domainNameLabel, nameof(domainNameLabel));
-
-            using var scope = ExpressRouteProviderPortClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.CheckDnsNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = ExpressRouteProviderPortRestClient.CheckDnsNameAvailability(Id.SubscriptionId, location, domainNameLabel, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets all the custom IP prefixes in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomIPPrefixes_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CustomIPPrefixResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CustomIPPrefixResource> GetCustomIPPrefixesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CustomIPPrefixRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomIPPrefixRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomIPPrefixResource(Client, CustomIPPrefixData.DeserializeCustomIPPrefixData(e)), CustomIPPrefixClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetCustomIPPrefixes", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the custom IP prefixes in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomIPPrefixes_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CustomIPPrefixResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CustomIPPrefixResource> GetCustomIPPrefixes(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CustomIPPrefixRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CustomIPPrefixRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomIPPrefixResource(Client, CustomIPPrefixData.DeserializeCustomIPPrefixData(e)), CustomIPPrefixClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetCustomIPPrefixes", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all DDoS protection plans in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DdosProtectionPlans_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DdosProtectionPlanResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DdosProtectionPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DdosProtectionPlanResource> GetDdosProtectionPlansAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DdosProtectionPlanRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DdosProtectionPlanRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DdosProtectionPlanResource(Client, DdosProtectionPlanData.DeserializeDdosProtectionPlanData(e)), DdosProtectionPlanClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetDdosProtectionPlans", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all DDoS protection plans in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DdosProtectionPlans_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DdosProtectionPlanResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DdosProtectionPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DdosProtectionPlanResource> GetDdosProtectionPlans(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DdosProtectionPlanRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DdosProtectionPlanRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DdosProtectionPlanResource(Client, DdosProtectionPlanData.DeserializeDdosProtectionPlanData(e)), DdosProtectionPlanClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetDdosProtectionPlans", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all dscp configurations in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscpConfiguration_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscpConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DscpConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DscpConfigurationResource> GetDscpConfigurationsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DscpConfigurationRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DscpConfigurationRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DscpConfigurationResource(Client, DscpConfigurationData.DeserializeDscpConfigurationData(e)), DscpConfigurationClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetDscpConfigurations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all dscp configurations in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscpConfiguration_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscpConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DscpConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DscpConfigurationResource> GetDscpConfigurations(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DscpConfigurationRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DscpConfigurationRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DscpConfigurationResource(Client, DscpConfigurationData.DeserializeDscpConfigurationData(e)), DscpConfigurationClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetDscpConfigurations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List what values of endpoint services are available for use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailableEndpointServices_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location to check available endpoint services. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EndpointServiceResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EndpointServiceResult> GetAvailableEndpointServicesAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableEndpointServicesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableEndpointServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EndpointServiceResult.DeserializeEndpointServiceResult(e), AvailableEndpointServicesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableEndpointServices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List what values of endpoint services are available for use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailableEndpointServices_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location to check available endpoint services. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EndpointServiceResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EndpointServiceResult> GetAvailableEndpointServices(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableEndpointServicesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableEndpointServicesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EndpointServiceResult.DeserializeEndpointServiceResult(e), AvailableEndpointServicesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailableEndpointServices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the express route circuits in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteCircuits_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteCircuitResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteCircuitResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressRouteCircuitResource> GetExpressRouteCircuitsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteCircuitRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRouteCircuitRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCircuitResource(Client, ExpressRouteCircuitData.DeserializeExpressRouteCircuitData(e)), ExpressRouteCircuitClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetExpressRouteCircuits", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the express route circuits in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteCircuits_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteCircuitResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteCircuitResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressRouteCircuitResource> GetExpressRouteCircuits(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteCircuitRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRouteCircuitRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCircuitResource(Client, ExpressRouteCircuitData.DeserializeExpressRouteCircuitData(e)), ExpressRouteCircuitClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetExpressRouteCircuits", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the available express route service providers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteServiceProviders_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteServiceProvider"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressRouteServiceProvider> GetExpressRouteServiceProvidersAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteServiceProvidersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRouteServiceProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ExpressRouteServiceProvider.DeserializeExpressRouteServiceProvider(e), ExpressRouteServiceProvidersClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetExpressRouteServiceProviders", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the available express route service providers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteServiceProviders_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteServiceProvider"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressRouteServiceProvider> GetExpressRouteServiceProviders(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteServiceProvidersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRouteServiceProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ExpressRouteServiceProvider.DeserializeExpressRouteServiceProvider(e), ExpressRouteServiceProvidersClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetExpressRouteServiceProviders", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieves all the ExpressRouteCrossConnections in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteCrossConnections_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteCrossConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=name eq '{circuitServiceKey}'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteCrossConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteCrossConnectionRestClient.CreateListRequest(Id.SubscriptionId, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRouteCrossConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCrossConnectionResource(Client, ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(e)), ExpressRouteCrossConnectionClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetExpressRouteCrossConnections", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieves all the ExpressRouteCrossConnections in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteCrossConnections_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteCrossConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=name eq '{circuitServiceKey}'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteCrossConnectionRestClient.CreateListRequest(Id.SubscriptionId, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRouteCrossConnectionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRouteCrossConnectionResource(Client, ExpressRouteCrossConnectionData.DeserializeExpressRouteCrossConnectionData(e)), ExpressRouteCrossConnectionClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetExpressRouteCrossConnections", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the ExpressRoutePort resources in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRoutePorts_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRoutePortResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRoutePortResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressRoutePortResource> GetExpressRoutePortsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRoutePortRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRoutePortRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExpressRoutePortResource(Client, ExpressRoutePortData.DeserializeExpressRoutePortData(e)), ExpressRoutePortClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetExpressRoutePorts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the ExpressRoutePort resources in the specified subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRoutePorts_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRoutePortResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRoutePortResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressRoutePortResource> GetExpressRoutePorts(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRoutePortRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ExpressRoutePortRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExpressRoutePortResource(Client, ExpressRoutePortData.DeserializeExpressRoutePortData(e)), ExpressRoutePortClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetExpressRoutePorts", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the Firewall Policies in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicies_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FirewallPolicyResource> GetFirewallPoliciesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FirewallPolicyRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirewallPolicyResource(Client, FirewallPolicyData.DeserializeFirewallPolicyData(e)), FirewallPolicyClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetFirewallPolicies", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the Firewall Policies in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicies_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="FirewallPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FirewallPolicyResource> GetFirewallPolicies(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FirewallPolicyRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirewallPolicyResource(Client, FirewallPolicyData.DeserializeFirewallPolicyData(e)), FirewallPolicyClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetFirewallPolicies", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all IpAllocations in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpAllocations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPAllocationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPAllocationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IPAllocationResource> GetIPAllocationsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IPAllocationIpAllocationsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPAllocationIpAllocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPAllocationResource(Client, IPAllocationData.DeserializeIPAllocationData(e)), IPAllocationIpAllocationsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetIPAllocations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all IpAllocations in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpAllocations_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPAllocationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPAllocationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IPAllocationResource> GetIPAllocations(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IPAllocationIpAllocationsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPAllocationIpAllocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPAllocationResource(Client, IPAllocationData.DeserializeIPAllocationData(e)), IPAllocationIpAllocationsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetIPAllocations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all IpGroups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IPGroupResource> GetIPGroupsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IPGroupIpGroupsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPGroupIpGroupsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IPGroupResource(Client, IPGroupData.DeserializeIPGroupData(e)), IPGroupIpGroupsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetIPGroups", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all IpGroups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpGroups_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="IPGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IPGroupResource> GetIPGroups(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => IPGroupIpGroupsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IPGroupIpGroupsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IPGroupResource(Client, IPGroupData.DeserializeIPGroupData(e)), IPGroupIpGroupsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetIPGroups", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the load balancers in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancers_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadBalancerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LoadBalancerResource> GetLoadBalancersAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LoadBalancerRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LoadBalancerRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), LoadBalancerClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetLoadBalancers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the load balancers in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancers_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadBalancerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LoadBalancerResource> GetLoadBalancers(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LoadBalancerRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LoadBalancerRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LoadBalancerResource(Client, LoadBalancerData.DeserializeLoadBalancerData(e)), LoadBalancerClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetLoadBalancers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Swaps VIPs between two load balancers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancers_SwapPublicIPAddresses</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadBalancerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The region where load balancers are located at. </param>
-        /// <param name="content"> Parameters that define which VIPs should be swapped. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = LoadBalancerClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.SwapPublicIPAddressesLoadBalancer");
-            scope.Start();
-            try
-            {
-                var response = await LoadBalancerRestClient.SwapPublicIPAddressesAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Swaps VIPs between two load balancers.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LoadBalancers_SwapPublicIPAddresses</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LoadBalancerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The region where load balancers are located at. </param>
-        /// <param name="content"> Parameters that define which VIPs should be swapped. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = LoadBalancerClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.SwapPublicIPAddressesLoadBalancer");
-            scope.Start();
-            try
-            {
-                var response = LoadBalancerRestClient.SwapPublicIPAddresses(Id.SubscriptionId, location, content, cancellationToken);
-                var operation = new NetworkArmOperation(LoadBalancerClientDiagnostics, Pipeline, LoadBalancerRestClient.CreateSwapPublicIPAddressesRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets all the Nat Gateways in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NatGateways_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NatGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NatGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NatGatewayResource> GetNatGatewaysAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NatGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NatGatewayRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NatGatewayResource(Client, NatGatewayData.DeserializeNatGatewayData(e)), NatGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNatGateways", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the Nat Gateways in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NatGateways_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NatGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NatGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NatGatewayResource> GetNatGateways(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NatGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NatGatewayRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NatGatewayResource(Client, NatGatewayData.DeserializeNatGatewayData(e)), NatGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNatGateways", "value", "nextLink", cancellationToken);
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BastionHostData, BastionHostResource>(new BastionHostsGetAllCollectionResultOfT(BastionHostsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetBastionHosts"), data => new BastionHostResource(Client, data));
         }
 
         /// <summary>
         /// Gets all network interfaces in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaces_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceOperationGroup_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkInterfaceResource> GetNetworkInterfacesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkInterfaceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), NetworkInterfaceClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkInterfaces", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfacesListAllAsyncCollectionResultOfT(NetworkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkInterfaces"), data => new NetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
         /// Gets all network interfaces in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkInterfaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkInterfaces_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceOperationGroup_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2536,847 +1050,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="NetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkInterfaceResource> GetNetworkInterfaces(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkInterfaceRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkInterfaceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkInterfaceResource(Client, NetworkInterfaceData.DeserializeNetworkInterfaceData(e)), NetworkInterfaceClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkInterfaces", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all network managers in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkManagerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkManagerResource> GetNetworkManagersAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkManagerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkManagerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerResource(Client, NetworkManagerData.DeserializeNetworkManagerData(e)), NetworkManagerClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkManagers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all network managers in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkManagers_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkManagerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkManagerResource> GetNetworkManagers(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkManagerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkManagerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkManagerResource(Client, NetworkManagerData.DeserializeNetworkManagerData(e)), NetworkManagerClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkManagers", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the network profiles in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkProfiles_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkProfileResource> GetNetworkProfilesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkProfileRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkProfileRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkProfileResource(Client, NetworkProfileData.DeserializeNetworkProfileData(e)), NetworkProfileClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkProfiles", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the network profiles in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkProfiles_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkProfileResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkProfileResource> GetNetworkProfiles(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkProfileRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkProfileRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkProfileResource(Client, NetworkProfileData.DeserializeNetworkProfileData(e)), NetworkProfileClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkProfiles", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all network security groups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroups_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkSecurityGroupResource> GetNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityGroupRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityGroupResource(Client, NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(e)), NetworkSecurityGroupClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityGroups", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all network security groups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityGroups_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkSecurityGroupResource> GetNetworkSecurityGroups(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityGroupRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityGroupRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityGroupResource(Client, NetworkSecurityGroupData.DeserializeNetworkSecurityGroupData(e)), NetworkSecurityGroupClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityGroups", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all network security perimeters in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityPerimeters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeters_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkSecurityPerimeterResource> GetNetworkSecurityPerimetersAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityPerimeterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityPerimeterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityPerimeterResource(Client, NetworkSecurityPerimeterData.DeserializeNetworkSecurityPerimeterData(e)), NetworkSecurityPerimeterClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all network security perimeters in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityPerimeters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeters_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
-        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkSecurityPerimeterResource> GetNetworkSecurityPerimeters(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityPerimeterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityPerimeterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityPerimeterResource(Client, NetworkSecurityPerimeterData.DeserializeNetworkSecurityPerimeterData(e)), NetworkSecurityPerimeterClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of resources that are onboarded with NSP. These resources can be associated with a network security perimeter
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/perimeterAssociableResourceTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterAssociableResourceTypes_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of network security perimeter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterAssociableResourceType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkSecurityPerimeterAssociableResourceType> GetNetworkSecurityPerimeterAssociableResourceTypesAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityPerimeterAssociableResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityPerimeterAssociableResourceTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NetworkSecurityPerimeterAssociableResourceType.DeserializeNetworkSecurityPerimeterAssociableResourceType(e), NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterAssociableResourceTypes", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of resources that are onboarded with NSP. These resources can be associated with a network security perimeter
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/perimeterAssociableResourceTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterAssociableResourceTypes_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of network security perimeter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterAssociableResourceType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkSecurityPerimeterAssociableResourceType> GetNetworkSecurityPerimeterAssociableResourceTypes(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityPerimeterAssociableResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityPerimeterAssociableResourceTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NetworkSecurityPerimeterAssociableResourceType.DeserializeNetworkSecurityPerimeterAssociableResourceType(e), NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterAssociableResourceTypes", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of service tags supported by NSP. These service tags can be used to create access rules in NSP.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/nspServiceTags</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterServiceTags_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of network security perimeter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterServiceTags"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkSecurityPerimeterServiceTags> GetNetworkSecurityPerimeterServiceTagsAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityPerimeterServiceTagsRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityPerimeterServiceTagsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NetworkSecurityPerimeterServiceTags.DeserializeNetworkSecurityPerimeterServiceTags(e), NetworkSecurityPerimeterServiceTagsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterServiceTags", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of service tags supported by NSP. These service tags can be used to create access rules in NSP.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/nspServiceTags</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterServiceTags_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of network security perimeter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterServiceTags"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkSecurityPerimeterServiceTags> GetNetworkSecurityPerimeterServiceTags(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityPerimeterServiceTagsRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityPerimeterServiceTagsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NetworkSecurityPerimeterServiceTags.DeserializeNetworkSecurityPerimeterServiceTags(e), NetworkSecurityPerimeterServiceTagsClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterServiceTags", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all Network Virtual Appliances in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkVirtualApplianceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkVirtualApplianceResource> GetNetworkVirtualAppliancesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkVirtualApplianceRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkVirtualApplianceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkVirtualApplianceResource(Client, NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(e)), NetworkVirtualApplianceClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkVirtualAppliances", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all Network Virtual Appliances in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkVirtualAppliances_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkVirtualApplianceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkVirtualApplianceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkVirtualApplianceResource> GetNetworkVirtualAppliances(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkVirtualApplianceRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkVirtualApplianceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkVirtualApplianceResource(Client, NetworkVirtualApplianceData.DeserializeNetworkVirtualApplianceData(e)), NetworkVirtualApplianceClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkVirtualAppliances", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all network watchers by subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkWatchers_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkWatcherResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkWatcherResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkWatcherResource> GetNetworkWatchersAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkWatcherRestClient.CreateListAllRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetworkWatcherResource(Client, NetworkWatcherData.DeserializeNetworkWatcherData(e)), NetworkWatcherClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkWatchers", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all network watchers by subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkWatchers_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkWatcherResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkWatcherResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkWatcherResource> GetNetworkWatchers(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkWatcherRestClient.CreateListAllRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetworkWatcherResource(Client, NetworkWatcherData.DeserializeNetworkWatcherData(e)), NetworkWatcherClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkWatchers", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all private endpoints in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpoints_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateEndpointResource> GetPrivateEndpointsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateEndpointRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateEndpointRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateEndpointResource(Client, PrivateEndpointData.DeserializePrivateEndpointData(e)), PrivateEndpointClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetPrivateEndpoints", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all private endpoints in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpoints_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateEndpointResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateEndpointResource> GetPrivateEndpoints(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateEndpointRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateEndpointRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateEndpointResource(Client, PrivateEndpointData.DeserializePrivateEndpointData(e)), PrivateEndpointClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetPrivateEndpoints", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailablePrivateEndpointTypes_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypesAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailablePrivateEndpointTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType(e), AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailablePrivateEndpointTypes", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailablePrivateEndpointTypes_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailablePrivateEndpointType> GetAvailablePrivateEndpointTypes(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailablePrivateEndpointTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType(e), AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAvailablePrivateEndpointTypes", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all private link service in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateLinkServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkServiceResource> GetPrivateLinkServicesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateLinkServiceResource(Client, PrivateLinkServiceData.DeserializePrivateLinkServiceData(e)), PrivateLinkServiceClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetPrivateLinkServices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all private link service in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateLinkServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkServiceResource> GetPrivateLinkServices(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateLinkServiceResource(Client, PrivateLinkServiceData.DeserializePrivateLinkServiceData(e)), PrivateLinkServiceClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetPrivateLinkServices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks whether the subscription is visible to private link service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_CheckPrivateLinkServiceVisibility</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="checkPrivateLinkServiceVisibilityRequest"> The request body of CheckPrivateLinkService API call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkPrivateLinkServiceVisibilityRequest"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
-
-            using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.CheckPrivateLinkServiceVisibilityPrivateLinkService");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = await PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibilityAsync(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks whether the subscription is visible to private link service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_CheckPrivateLinkServiceVisibility</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="checkPrivateLinkServiceVisibilityRequest"> The request body of CheckPrivateLinkService API call. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="checkPrivateLinkServiceVisibilityRequest"/> is null. </exception>
-        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(checkPrivateLinkServiceVisibilityRequest, nameof(checkPrivateLinkServiceVisibilityRequest));
-
-            using var scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.CheckPrivateLinkServiceVisibilityPrivateLinkService");
-            scope.Start();
-            try
-            {
-                var response = PrivateLinkServicesRestClient.CheckPrivateLinkServiceVisibility(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
-                var operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(new PrivateLinkServiceVisibilityOperationSource(), PrivateLinkServicesClientDiagnostics, Pipeline, PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Id.SubscriptionId, location, checkPrivateLinkServiceVisibilityRequest).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_ListAutoApprovedPrivateLinkServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServicesAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService(e), PrivateLinkServicesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAutoApprovedPrivateLinkServicesPrivateLinkServices", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkServices_ListAutoApprovedPrivateLinkServices</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location of the domain name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesPrivateLinkServices(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService(e), PrivateLinkServicesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAutoApprovedPrivateLinkServicesPrivateLinkServices", "value", "nextLink", cancellationToken);
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkInterfaceData, NetworkInterfaceResource>(new NetworkInterfacesListAllCollectionResultOfT(NetworkInterfacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkInterfaces"), data => new NetworkInterfaceResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the public IP addresses in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublicIPAddressResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PublicIPAddressResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublicIPAddressResource> GetPublicIPAddressesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PublicIPAddressRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PublicIPAddressRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublicIPAddressResource(Client, PublicIPAddressData.DeserializePublicIPAddressData(e)), PublicIPAddressClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetPublicIPAddresses", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressesListAllAsyncCollectionResultOfT(PublicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPublicIPAddresses"), data => new PublicIPAddressResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the public IP addresses in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPAddresses. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPAddresses_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPAddressOperationGroup_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPAddressResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3384,59 +1106,1097 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="PublicIPAddressResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicIPAddressResource> GetPublicIPAddresses(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PublicIPAddressRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PublicIPAddressRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublicIPAddressResource(Client, PublicIPAddressData.DeserializePublicIPAddressData(e)), PublicIPAddressClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetPublicIPAddresses", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PublicIPAddressData, PublicIPAddressResource>(new PublicIPAddressesListAllCollectionResultOfT(PublicIPAddressesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPublicIPAddresses"), data => new PublicIPAddressResource(Client, data));
         }
 
         /// <summary>
-        /// Gets all the public IP prefixes in a subscription.
+        /// Gets all the DDoS custom policies in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosCustomPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPPrefixes_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> DdosCustomPolicies_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublicIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PublicIPPrefixResource> GetPublicIPPrefixesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DdosCustomPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DdosCustomPolicyResource> GetDdosCustomPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PublicIPPrefixRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PublicIPPrefixRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublicIPPrefixResource(Client, PublicIPPrefixData.DeserializePublicIPPrefixData(e)), PublicIPPrefixClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetPublicIPPrefixes", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPoliciesListAllAsyncCollectionResultOfT(DdosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDdosCustomPolicies"), data => new DdosCustomPolicyResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the DDoS custom policies in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosCustomPolicies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DdosCustomPolicies_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DdosCustomPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DdosCustomPolicyResource> GetDdosCustomPolicies(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DdosCustomPolicyData, DdosCustomPolicyResource>(new DdosCustomPoliciesListAllCollectionResultOfT(DdosCustomPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDdosCustomPolicies"), data => new DdosCustomPolicyResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all DDoS protection plans in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DdosProtectionPlans_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DdosProtectionPlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DdosProtectionPlanResource> GetDdosProtectionPlansAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlansGetAllAsyncCollectionResultOfT(DdosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDdosProtectionPlans"), data => new DdosProtectionPlanResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all DDoS protection plans in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/ddosProtectionPlans. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DdosProtectionPlans_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DdosProtectionPlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DdosProtectionPlanResource> GetDdosProtectionPlans(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DdosProtectionPlanData, DdosProtectionPlanResource>(new DdosProtectionPlansGetAllCollectionResultOfT(DdosProtectionPlansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDdosProtectionPlans"), data => new DdosProtectionPlanResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the express route circuits in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCircuits_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteCircuitResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpressRouteCircuitResource> GetExpressRouteCircuitsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitsListAllAsyncCollectionResultOfT(ExpressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteCircuits"), data => new ExpressRouteCircuitResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the express route circuits in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCircuits. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCircuits_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteCircuitResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpressRouteCircuitResource> GetExpressRouteCircuits(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ExpressRouteCircuitData, ExpressRouteCircuitResource>(new ExpressRouteCircuitsListAllCollectionResultOfT(ExpressRouteCircuitsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteCircuits"), data => new ExpressRouteCircuitResource(Client, data));
+        }
+
+        /// <summary>
+        /// Retrieves all the ExpressRouteCrossConnections in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=name eq '{circuitServiceKey}'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnectionsAsync(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionsGetAllAsyncCollectionResultOfT(ExpressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableNetworkSubscriptionResource.GetExpressRouteCrossConnections"), data => new ExpressRouteCrossConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// Retrieves all the ExpressRouteCrossConnections in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteCrossConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=name eq '{circuitServiceKey}'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteCrossConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpressRouteCrossConnectionResource> GetExpressRouteCrossConnections(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ExpressRouteCrossConnectionData, ExpressRouteCrossConnectionResource>(new ExpressRouteCrossConnectionsGetAllCollectionResultOfT(ExpressRouteCrossConnectionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableNetworkSubscriptionResource.GetExpressRouteCrossConnections"), data => new ExpressRouteCrossConnectionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all the ExpressRoutePort resources in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRoutePorts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRoutePortResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpressRoutePortResource> GetExpressRoutePortsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortsGetAllAsyncCollectionResultOfT(ExpressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRoutePorts"), data => new ExpressRoutePortResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all the ExpressRoutePort resources in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/ExpressRoutePorts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRoutePorts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRoutePortResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpressRoutePortResource> GetExpressRoutePorts(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ExpressRoutePortData, ExpressRoutePortResource>(new ExpressRoutePortsGetAllCollectionResultOfT(ExpressRoutePortsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRoutePorts"), data => new ExpressRoutePortResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the Firewall Policies in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicies_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FirewallPolicyResource> GetFirewallPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FirewallPolicyData, FirewallPolicyResource>(new FirewallPoliciesListAllAsyncCollectionResultOfT(FirewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetFirewallPolicies"), data => new FirewallPolicyResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the Firewall Policies in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/firewallPolicies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicies_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FirewallPolicyResource> GetFirewallPolicies(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FirewallPolicyData, FirewallPolicyResource>(new FirewallPoliciesListAllCollectionResultOfT(FirewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetFirewallPolicies"), data => new FirewallPolicyResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all network managers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkManagerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkManagerResource> GetNetworkManagersAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkManagerData, NetworkManagerResource>(new NetworkManagersGetBySubscriptionAsyncCollectionResultOfT(
+                NetworkManagersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkSubscriptionResource.GetNetworkManagers"), data => new NetworkManagerResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all network managers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkManagers_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkManagerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkManagerResource> GetNetworkManagers(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkManagerData, NetworkManagerResource>(new NetworkManagersGetBySubscriptionCollectionResultOfT(
+                NetworkManagersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkSubscriptionResource.GetNetworkManagers"), data => new NetworkManagerResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all IpAllocations in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IpAllocations_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IpAllocationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IpAllocationResource> GetIpAllocationsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IpAllocationData, IpAllocationResource>(new IpAllocationsGetAllAsyncCollectionResultOfT(IpAllocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIpAllocations"), data => new IpAllocationResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all IpAllocations in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/IpAllocations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IpAllocations_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IpAllocationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IpAllocationResource> GetIpAllocations(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IpAllocationData, IpAllocationResource>(new IpAllocationsGetAllCollectionResultOfT(IpAllocationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIpAllocations"), data => new IpAllocationResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all IpGroups in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IpGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IpGroupResource> GetIpGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<IpGroupData, IpGroupResource>(new IpGroupsGetAllAsyncCollectionResultOfT(IpGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIpGroups"), data => new IpGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all IpGroups in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/ipGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IpGroups_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IpGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IpGroupResource> GetIpGroups(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<IpGroupData, IpGroupResource>(new IpGroupsGetAllCollectionResultOfT(IpGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIpGroups"), data => new IpGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the load balancers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancers_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LoadBalancerResource> GetLoadBalancersAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancersListAllAsyncCollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetLoadBalancers"), data => new LoadBalancerResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the load balancers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/loadBalancers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancers_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LoadBalancerResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LoadBalancerResource> GetLoadBalancers(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<LoadBalancerData, LoadBalancerResource>(new LoadBalancersListAllCollectionResultOfT(LoadBalancersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetLoadBalancers"), data => new LoadBalancerResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the Nat Gateways in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NatGateways_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NatGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NatGatewayResource> GetNatGatewaysAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewaysListAllAsyncCollectionResultOfT(NatGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNatGateways"), data => new NatGatewayResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the Nat Gateways in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/natGateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NatGateways_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NatGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NatGatewayResource> GetNatGateways(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NatGatewayData, NatGatewayResource>(new NatGatewaysListAllCollectionResultOfT(NatGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNatGateways"), data => new NatGatewayResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the network profiles in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkProfiles_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkProfileResource> GetNetworkProfilesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfilesListAllAsyncCollectionResultOfT(NetworkProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkProfiles"), data => new NetworkProfileResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the network profiles in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkProfiles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkProfiles_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkProfileResource> GetNetworkProfiles(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkProfileData, NetworkProfileResource>(new NetworkProfilesListAllCollectionResultOfT(NetworkProfilesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkProfiles"), data => new NetworkProfileResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all network security groups in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkSecurityGroupResource> GetNetworkSecurityGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkSecurityGroupData, NetworkSecurityGroupResource>(new NetworkSecurityGroupsListAllAsyncCollectionResultOfT(NetworkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkSecurityGroups"), data => new NetworkSecurityGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all network security groups in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityGroups_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkSecurityGroupResource> GetNetworkSecurityGroups(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkSecurityGroupData, NetworkSecurityGroupResource>(new NetworkSecurityGroupsListAllCollectionResultOfT(NetworkSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkSecurityGroups"), data => new NetworkSecurityGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all network security perimeters in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityPerimeters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeters_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkSecurityPerimeterResource> GetNetworkSecurityPerimetersAsync(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkSecurityPerimeterData, NetworkSecurityPerimeterResource>(new NetworkSecurityPerimetersGetBySubscriptionAsyncCollectionResultOfT(
+                NetworkSecurityPerimetersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeters"), data => new NetworkSecurityPerimeterResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all network security perimeters in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityPerimeters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeters_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkSecurityPerimeterResource> GetNetworkSecurityPerimeters(int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkSecurityPerimeterData, NetworkSecurityPerimeterResource>(new NetworkSecurityPerimetersGetBySubscriptionCollectionResultOfT(
+                NetworkSecurityPerimetersRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                top,
+                skipToken,
+                context,
+                "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeters"), data => new NetworkSecurityPerimeterResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all Network Virtual Appliances in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkVirtualApplianceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkVirtualApplianceResource> GetNetworkVirtualAppliancesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkVirtualApplianceData, NetworkVirtualApplianceResource>(new NetworkVirtualAppliancesGetAllAsyncCollectionResultOfT(NetworkVirtualAppliancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkVirtualAppliances"), data => new NetworkVirtualApplianceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all Network Virtual Appliances in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkVirtualAppliances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkVirtualAppliances_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkVirtualApplianceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkVirtualApplianceResource> GetNetworkVirtualAppliances(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkVirtualApplianceData, NetworkVirtualApplianceResource>(new NetworkVirtualAppliancesGetAllCollectionResultOfT(NetworkVirtualAppliancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkVirtualAppliances"), data => new NetworkVirtualApplianceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all network watchers by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkWatchers_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkWatcherResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkWatcherResource> GetNetworkWatchersAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatchersListAllAsyncCollectionResultOfT(NetworkWatchersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkWatchers"), data => new NetworkWatcherResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all network watchers by subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/networkWatchers. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkWatchers_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkWatcherResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkWatcherResource> GetNetworkWatchers(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkWatcherData, NetworkWatcherResource>(new NetworkWatchersListAllCollectionResultOfT(NetworkWatchersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetNetworkWatchers"), data => new NetworkWatcherResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all private endpoints in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpoints_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateEndpointResource> GetPrivateEndpointsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PrivateEndpointData, PrivateEndpointResource>(new PrivateEndpointsGetBySubscriptionAsyncCollectionResultOfT(PrivateEndpointsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPrivateEndpoints"), data => new PrivateEndpointResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all private endpoints in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateEndpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpoints_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PrivateEndpointResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateEndpointResource> GetPrivateEndpoints(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PrivateEndpointData, PrivateEndpointResource>(new PrivateEndpointsGetBySubscriptionCollectionResultOfT(PrivateEndpointsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPrivateEndpoints"), data => new PrivateEndpointResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all private link service in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkServices_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PrivateLinkServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateLinkServiceResource> GetPrivateLinkServicesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PrivateLinkServiceData, PrivateLinkServiceResource>(new PrivateLinkServicesGetBySubscriptionAsyncCollectionResultOfT(PrivateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPrivateLinkServices"), data => new PrivateLinkServiceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all private link service in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/privateLinkServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkServices_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PrivateLinkServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateLinkServiceResource> GetPrivateLinkServices(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PrivateLinkServiceData, PrivateLinkServiceResource>(new PrivateLinkServicesGetBySubscriptionCollectionResultOfT(PrivateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPrivateLinkServices"), data => new PrivateLinkServiceResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the public IP prefixes in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicIPPrefixes_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPPrefixes_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PublicIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PublicIPPrefixResource> GetPublicIPPrefixesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PublicIPPrefixData, PublicIPPrefixResource>(new PublicIPPrefixesListAllAsyncCollectionResultOfT(PublicIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPublicIPPrefixes"), data => new PublicIPPrefixResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the public IP prefixes in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/publicIPPrefixes. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublicIPPrefixResource"/></description>
+        /// <term> Operation Id. </term>
+        /// <description> PublicIPPrefixes_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3444,59 +2204,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="PublicIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublicIPPrefixResource> GetPublicIPPrefixes(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PublicIPPrefixRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PublicIPPrefixRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublicIPPrefixResource(Client, PublicIPPrefixData.DeserializePublicIPPrefixData(e)), PublicIPPrefixClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetPublicIPPrefixes", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PublicIPPrefixData, PublicIPPrefixResource>(new PublicIPPrefixesListAllCollectionResultOfT(PublicIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetPublicIPPrefixes"), data => new PublicIPPrefixResource(Client, data));
         }
 
         /// <summary>
         /// Gets all route filters in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RouteFilters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> RouteFilters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RouteFilterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RouteFilterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RouteFilterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RouteFilterResource> GetRouteFiltersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RouteFilterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RouteFilterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RouteFilterResource(Client, RouteFilterData.DeserializeRouteFilterData(e)), RouteFilterClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetRouteFilters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RouteFilterData, RouteFilterResource>(new RouteFiltersGetAllAsyncCollectionResultOfT(RouteFiltersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetRouteFilters"), data => new RouteFilterResource(Client, data));
         }
 
         /// <summary>
         /// Gets all route filters in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeFilters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RouteFilters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> RouteFilters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RouteFilterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3504,59 +2260,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="RouteFilterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RouteFilterResource> GetRouteFilters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RouteFilterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RouteFilterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RouteFilterResource(Client, RouteFilterData.DeserializeRouteFilterData(e)), RouteFilterClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetRouteFilters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RouteFilterData, RouteFilterResource>(new RouteFiltersGetAllCollectionResultOfT(RouteFiltersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetRouteFilters"), data => new RouteFilterResource(Client, data));
         }
 
         /// <summary>
         /// Gets all route tables in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RouteTables_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> RouteTables_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RouteTableResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RouteTableResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RouteTableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RouteTableResource> GetRouteTablesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RouteTableRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RouteTableRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RouteTableResource(Client, RouteTableData.DeserializeRouteTableData(e)), RouteTableClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetRouteTables", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RouteTableData, RouteTableResource>(new RouteTablesListAllAsyncCollectionResultOfT(RouteTablesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetRouteTables"), data => new RouteTableResource(Client, data));
         }
 
         /// <summary>
         /// Gets all route tables in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/routeTables. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RouteTables_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> RouteTables_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RouteTableResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3564,59 +2316,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="RouteTableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RouteTableResource> GetRouteTables(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RouteTableRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RouteTableRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RouteTableResource(Client, RouteTableData.DeserializeRouteTableData(e)), RouteTableClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetRouteTables", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RouteTableData, RouteTableResource>(new RouteTablesListAllCollectionResultOfT(RouteTablesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetRouteTables"), data => new RouteTableResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the Security Partner Providers in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityPartnerProviders_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityPartnerProviders_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityPartnerProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityPartnerProviderResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityPartnerProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityPartnerProviderResource> GetSecurityPartnerProvidersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityPartnerProviderRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityPartnerProviderRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityPartnerProviderResource(Client, SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(e)), SecurityPartnerProviderClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetSecurityPartnerProviders", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProvidersGetAllAsyncCollectionResultOfT(SecurityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetSecurityPartnerProviders"), data => new SecurityPartnerProviderResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the Security Partner Providers in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/securityPartnerProviders. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityPartnerProviders_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityPartnerProviders_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityPartnerProviderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3624,413 +2372,111 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="SecurityPartnerProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityPartnerProviderResource> GetSecurityPartnerProviders(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SecurityPartnerProviderRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SecurityPartnerProviderRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityPartnerProviderResource(Client, SecurityPartnerProviderData.DeserializeSecurityPartnerProviderData(e)), SecurityPartnerProviderClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetSecurityPartnerProviders", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the available bgp service communities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BgpServiceCommunities_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BgpServiceCommunity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BgpServiceCommunity> GetBgpServiceCommunitiesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BgpServiceCommunitiesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BgpServiceCommunitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BgpServiceCommunity.DeserializeBgpServiceCommunity(e), BgpServiceCommunitiesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetBgpServiceCommunities", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the available bgp service communities.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BgpServiceCommunities_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BgpServiceCommunity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BgpServiceCommunity> GetBgpServiceCommunities(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BgpServiceCommunitiesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BgpServiceCommunitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BgpServiceCommunity.DeserializeBgpServiceCommunity(e), BgpServiceCommunitiesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetBgpServiceCommunities", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityPartnerProviderData, SecurityPartnerProviderResource>(new SecurityPartnerProvidersGetAllCollectionResultOfT(SecurityPartnerProvidersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetSecurityPartnerProviders"), data => new SecurityPartnerProviderResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the service endpoint policies in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/serviceEndpointPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceEndpointPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicyAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceEndpointPolicyRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceEndpointPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceEndpointPolicyResource(Client, ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(e)), ServiceEndpointPolicyClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetServiceEndpointPoliciesByServiceEndpointPolicy", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the service endpoint policies in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ServiceEndpointPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ServiceEndpointPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesByServiceEndpointPolicy(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ServiceEndpointPolicyResource> GetServiceEndpointPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceEndpointPolicyRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceEndpointPolicyRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceEndpointPolicyResource(Client, ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(e)), ServiceEndpointPolicyClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetServiceEndpointPoliciesByServiceEndpointPolicy", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the service gateways in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/serviceGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGateways_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceGatewayResource> GetServiceGatewaysAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceGatewayRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceGatewayResource(Client, ServiceGatewayData.DeserializeServiceGatewayData(e)), ServiceGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetServiceGateways", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the service gateways in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/serviceGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceGateways_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceGatewayResource> GetServiceGateways(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceGatewayRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceGatewayRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceGatewayResource(Client, ServiceGatewayData.DeserializeServiceGatewayData(e)), ServiceGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetServiceGateways", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of service tag information resources.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceTags_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceTagsListResult>> GetServiceTagAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            using var scope = ServiceTagsClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetServiceTag");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = await ServiceTagsRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPoliciesGetAllAsyncCollectionResultOfT(ServiceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetServiceEndpointPolicies"), data => new ServiceEndpointPolicyResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the service endpoint policies in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/serviceEndpointPolicies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceEndpointPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceEndpointPolicyResource> GetServiceEndpointPolicies(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
             {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of service tag information resources.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceTags_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location that will be used as a reference for version (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceTagsListResult> GetServiceTag(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            using var scope = ServiceTagsClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetServiceTag");
-            scope.Start();
-            try
-            {
-                var response = ServiceTagsRestClient.List(Id.SubscriptionId, location, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of service tag information resources with pagination.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTagDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceTagInformation_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location that will be used as a reference for cloud (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
-        /// <param name="noAddressPrefixes"> Do not return address prefixes for the tag(s). </param>
-        /// <param name="tagName"> Return tag information for a particular tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceTagInformation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceTagInformation> GetAllServiceTagInformationAsync(AzureLocation location, bool? noAddressPrefixes = null, string tagName = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceTagInformationRestClient.CreateListRequest(Id.SubscriptionId, location, noAddressPrefixes, tagName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceTagInformationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, noAddressPrefixes, tagName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ServiceTagInformation.DeserializeServiceTagInformation(e), ServiceTagInformationClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAllServiceTagInformation", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of service tag information resources with pagination.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTagDetails</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceTagInformation_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location that will be used as a reference for cloud (not as a filter based on location, you will get the list of service tags with prefix details across all regions but limited to the cloud that your subscription belongs to). </param>
-        /// <param name="noAddressPrefixes"> Do not return address prefixes for the tag(s). </param>
-        /// <param name="tagName"> Return tag information for a particular tag. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceTagInformation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceTagInformation> GetAllServiceTagInformation(AzureLocation location, bool? noAddressPrefixes = null, string tagName = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceTagInformationRestClient.CreateListRequest(Id.SubscriptionId, location, noAddressPrefixes, tagName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceTagInformationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, noAddressPrefixes, tagName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ServiceTagInformation.DeserializeServiceTagInformation(e), ServiceTagInformationClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetAllServiceTagInformation", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List network usages for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location where resource usage is queried. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NetworkUsage.DeserializeNetworkUsage(e), UsagesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List network usages for a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location where resource usage is queried. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NetworkUsage.DeserializeNetworkUsage(e), UsagesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPoliciesGetAllCollectionResultOfT(ServiceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetServiceEndpointPolicies"), data => new ServiceEndpointPolicyResource(Client, data));
         }
 
         /// <summary>
         /// Gets all virtual networks in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworks_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkResource> GetVirtualNetworksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkResource(Client, VirtualNetworkData.DeserializeVirtualNetworkData(e)), VirtualNetworkClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVirtualNetworks", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualNetworkData, VirtualNetworkResource>(new VirtualNetworksListAllAsyncCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworks"), data => new VirtualNetworkResource(Client, data));
         }
 
         /// <summary>
         /// Gets all virtual networks in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworks_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworks_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4038,119 +2484,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="VirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkResource> GetVirtualNetworks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkResource(Client, VirtualNetworkData.DeserializeVirtualNetworkData(e)), VirtualNetworkClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVirtualNetworks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all virtual network appliances in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkAppliances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkAppliances_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkApplianceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetworkApplianceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualNetworkApplianceResource> GetVirtualNetworkAppliancesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkApplianceRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkApplianceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkApplianceResource(Client, VirtualNetworkApplianceData.DeserializeVirtualNetworkApplianceData(e)), VirtualNetworkApplianceClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVirtualNetworkAppliances", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all virtual network appliances in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkAppliances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkAppliances_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkApplianceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualNetworkApplianceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualNetworkApplianceResource> GetVirtualNetworkAppliances(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkApplianceRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkApplianceRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkApplianceResource(Client, VirtualNetworkApplianceData.DeserializeVirtualNetworkApplianceData(e)), VirtualNetworkApplianceClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVirtualNetworkAppliances", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualNetworkData, VirtualNetworkResource>(new VirtualNetworksListAllCollectionResultOfT(VirtualNetworksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworks"), data => new VirtualNetworkResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the VirtualNetworkTaps in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkTaps_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkTaps_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualNetworkTapResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualNetworkTapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualNetworkTapResource> GetVirtualNetworkTapsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkTapRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkTapRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkTapResource(Client, VirtualNetworkTapData.DeserializeVirtualNetworkTapData(e)), VirtualNetworkTapClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVirtualNetworkTaps", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualNetworkTapData, VirtualNetworkTapResource>(new VirtualNetworkTapsGetAllAsyncCollectionResultOfT(VirtualNetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworkTaps"), data => new VirtualNetworkTapResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the VirtualNetworkTaps in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkTaps. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualNetworkTaps_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkTaps_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualNetworkTapResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4158,59 +2540,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="VirtualNetworkTapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualNetworkTapResource> GetVirtualNetworkTaps(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualNetworkTapRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualNetworkTapRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualNetworkTapResource(Client, VirtualNetworkTapData.DeserializeVirtualNetworkTapData(e)), VirtualNetworkTapClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVirtualNetworkTaps", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualNetworkTapData, VirtualNetworkTapResource>(new VirtualNetworkTapsGetAllCollectionResultOfT(VirtualNetworkTapsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworkTaps"), data => new VirtualNetworkTapResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the Virtual Routers in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualRouters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualRouters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualRouterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualRouterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualRouterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualRouterResource> GetVirtualRoutersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualRouterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualRouterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualRouterResource(Client, VirtualRouterData.DeserializeVirtualRouterData(e)), VirtualRouterClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVirtualRouters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRoutersGetAllAsyncCollectionResultOfT(VirtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualRouters"), data => new VirtualRouterResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the Virtual Routers in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualRouters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualRouters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualRouters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualRouterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4218,119 +2596,111 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="VirtualRouterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualRouterResource> GetVirtualRouters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualRouterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualRouterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualRouterResource(Client, VirtualRouterData.DeserializeVirtualRouterData(e)), VirtualRouterClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVirtualRouters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualRouterData, VirtualRouterResource>(new VirtualRoutersGetAllCollectionResultOfT(VirtualRoutersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualRouters"), data => new VirtualRouterResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the VirtualWANs in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualWans_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualWans_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualWanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualWanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualWanResource> GetVirtualWansAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWANResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualWANResource> GetVirtualWANsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualWanRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualWanRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualWanResource(Client, VirtualWanData.DeserializeVirtualWanData(e)), VirtualWanClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVirtualWans", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualWANData, VirtualWANResource>(new VirtualWansGetAllAsyncCollectionResultOfT(VirtualWansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualWANs"), data => new VirtualWANResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the VirtualWANs in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualWans. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualWans_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualWans_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualWanResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualWanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualWanResource> GetVirtualWans(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="VirtualWANResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualWANResource> GetVirtualWANs(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualWanRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualWanRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualWanResource(Client, VirtualWanData.DeserializeVirtualWanData(e)), VirtualWanClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVirtualWans", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualWANData, VirtualWANResource>(new VirtualWansGetAllCollectionResultOfT(VirtualWansRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualWANs"), data => new VirtualWANResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the VpnSites in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnSites_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnSites_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VpnSiteResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VpnSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnSiteResource> GetVpnSitesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VpnSiteRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VpnSiteRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnSiteResource(Client, VpnSiteData.DeserializeVpnSiteData(e)), VpnSiteClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVpnSites", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSitesGetAllAsyncCollectionResultOfT(VpnSitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnSites"), data => new VpnSiteResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the VpnSites in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnSites. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnSites_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnSites_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnSiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4338,59 +2708,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="VpnSiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnSiteResource> GetVpnSites(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VpnSiteRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VpnSiteRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnSiteResource(Client, VpnSiteData.DeserializeVpnSiteData(e)), VpnSiteClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVpnSites", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VpnSiteData, VpnSiteResource>(new VpnSitesGetAllCollectionResultOfT(VpnSitesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnSites"), data => new VpnSiteResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the VpnServerConfigurations in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnServerConfigurations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurations_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VpnServerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VpnServerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnServerConfigurationResource> GetVpnServerConfigurationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VpnServerConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VpnServerConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnServerConfigurationResource(Client, VpnServerConfigurationData.DeserializeVpnServerConfigurationData(e)), VpnServerConfigurationClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVpnServerConfigurations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VpnServerConfigurationData, VpnServerConfigurationResource>(new VpnServerConfigurationsGetAllAsyncCollectionResultOfT(VpnServerConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnServerConfigurations"), data => new VpnServerConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the VpnServerConfigurations in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnServerConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnServerConfigurations_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnServerConfigurations_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnServerConfigurationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4398,59 +2764,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="VpnServerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnServerConfigurationResource> GetVpnServerConfigurations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VpnServerConfigurationRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VpnServerConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnServerConfigurationResource(Client, VpnServerConfigurationData.DeserializeVpnServerConfigurationData(e)), VpnServerConfigurationClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVpnServerConfigurations", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VpnServerConfigurationData, VpnServerConfigurationResource>(new VpnServerConfigurationsGetAllCollectionResultOfT(VpnServerConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnServerConfigurations"), data => new VpnServerConfigurationResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the VirtualHubs in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHubs_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHubs_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualHubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualHubResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualHubResource> GetVirtualHubsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualHubRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualHubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualHubResource(Client, VirtualHubData.DeserializeVirtualHubData(e)), VirtualHubClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVirtualHubs", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubsGetAllAsyncCollectionResultOfT(VirtualHubsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualHubs"), data => new VirtualHubResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the VirtualHubs in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualHubs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualHubs_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualHubs_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualHubResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4458,59 +2820,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="VirtualHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualHubResource> GetVirtualHubs(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualHubRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualHubRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualHubResource(Client, VirtualHubData.DeserializeVirtualHubData(e)), VirtualHubClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVirtualHubs", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualHubData, VirtualHubResource>(new VirtualHubsGetAllCollectionResultOfT(VirtualHubsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualHubs"), data => new VirtualHubResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the VpnGateways in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnGateways_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnGateways_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VpnGatewayResource> GetVpnGatewaysAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VpnGatewayRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VpnGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VpnGatewayResource(Client, VpnGatewayData.DeserializeVpnGatewayData(e)), VpnGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVpnGateways", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VpnGatewayData, VpnGatewayResource>(new VpnGatewaysGetAllAsyncCollectionResultOfT(VpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnGateways"), data => new VpnGatewayResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the VpnGateways in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/vpnGateways. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnGateways_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VpnGateways_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnGatewayResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4518,177 +2876,55 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="VpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VpnGatewayResource> GetVpnGateways(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VpnGatewayRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VpnGatewayRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VpnGatewayResource(Client, VpnGatewayData.DeserializeVpnGatewayData(e)), VpnGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetVpnGateways", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the P2SVpnGateways in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>P2sVpnGateways_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="P2SVpnGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="P2SVpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<P2SVpnGatewayResource> GetP2SVpnGatewaysAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => P2SVpnGatewayP2sVpnGatewaysRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => P2SVpnGatewayP2sVpnGatewaysRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new P2SVpnGatewayResource(Client, P2SVpnGatewayData.DeserializeP2SVpnGatewayData(e)), P2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetP2SVpnGateways", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the P2SVpnGateways in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>P2sVpnGateways_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="P2SVpnGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="P2SVpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<P2SVpnGatewayResource> GetP2SVpnGateways(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => P2SVpnGatewayP2sVpnGatewaysRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => P2SVpnGatewayP2sVpnGatewaysRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new P2SVpnGatewayResource(Client, P2SVpnGatewayData.DeserializeP2SVpnGatewayData(e)), P2SVpnGatewayP2sVpnGatewaysClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetP2SVpnGateways", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists ExpressRoute gateways under a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteGateways_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressRouteGatewayResource> GetExpressRouteGatewaysAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteGatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ExpressRouteGatewayResource(Client, ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(e)), ExpressRouteGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetExpressRouteGateways", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists ExpressRoute gateways under a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExpressRouteGateways_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExpressRouteGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteGatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressRouteGatewayResource> GetExpressRouteGateways(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ExpressRouteGatewayRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ExpressRouteGatewayResource(Client, ExpressRouteGatewayData.DeserializeExpressRouteGatewayData(e)), ExpressRouteGatewayClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetExpressRouteGateways", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VpnGatewayData, VpnGatewayResource>(new VpnGatewaysGetAllCollectionResultOfT(VpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVpnGateways"), data => new VpnGatewayResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the WAF policies in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApplicationFirewallPolicies_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPoliciesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WebApplicationFirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WebApplicationFirewallPolicyRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebApplicationFirewallPolicyResource(Client, WebApplicationFirewallPolicyData.DeserializeWebApplicationFirewallPolicyData(e)), WebApplicationFirewallPolicyClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetWebApplicationFirewallPolicies", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<WebApplicationFirewallPolicyData, WebApplicationFirewallPolicyResource>(new WebApplicationFirewallPoliciesListAllAsyncCollectionResultOfT(WebApplicationFirewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetWebApplicationFirewallPolicies"), data => new WebApplicationFirewallPolicyResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the WAF policies in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApplicationFirewallPolicies_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebApplicationFirewallPolicies_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WebApplicationFirewallPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4696,9 +2932,2077 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> A collection of <see cref="WebApplicationFirewallPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicies(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => WebApplicationFirewallPolicyRestClient.CreateListAllRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WebApplicationFirewallPolicyRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebApplicationFirewallPolicyResource(Client, WebApplicationFirewallPolicyData.DeserializeWebApplicationFirewallPolicyData(e)), WebApplicationFirewallPolicyClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetWebApplicationFirewallPolicies", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<WebApplicationFirewallPolicyData, WebApplicationFirewallPolicyResource>(new WebApplicationFirewallPoliciesListAllCollectionResultOfT(WebApplicationFirewallPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetWebApplicationFirewallPolicies"), data => new WebApplicationFirewallPolicyResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all virtual network appliances in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkAppliances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkAppliances_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualNetworkApplianceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualNetworkApplianceResource> GetVirtualNetworkAppliancesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualNetworkApplianceData, VirtualNetworkApplianceResource>(new VirtualNetworkAppliancesListAllAsyncCollectionResultOfT(VirtualNetworkAppliancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworkAppliances"), data => new VirtualNetworkApplianceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all virtual network appliances in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/virtualNetworkAppliances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworkAppliances_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualNetworkApplianceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualNetworkApplianceResource> GetVirtualNetworkAppliances(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualNetworkApplianceData, VirtualNetworkApplianceResource>(new VirtualNetworkAppliancesListAllCollectionResultOfT(VirtualNetworkAppliancesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetVirtualNetworkAppliances"), data => new VirtualNetworkApplianceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the service gateways in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/serviceGateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGateways_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceGatewayResource> GetServiceGatewaysAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ServiceGatewayData, ServiceGatewayResource>(new ServiceGatewaysListAllAsyncCollectionResultOfT(ServiceGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetServiceGateways"), data => new ServiceGatewayResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the service gateways in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/serviceGateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGateways_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceGatewayResource> GetServiceGateways(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ServiceGatewayData, ServiceGatewayResource>(new ServiceGatewaysListAllCollectionResultOfT(ServiceGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetServiceGateways"), data => new ServiceGatewayResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all interconnect groups in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/interconnectGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InterconnectGroups_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="InterconnectGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<InterconnectGroupResource> GetInterconnectGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<InterconnectGroupData, InterconnectGroupResource>(new InterconnectGroupsListAllAsyncCollectionResultOfT(InterconnectGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetInterconnectGroups"), data => new InterconnectGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all interconnect groups in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/interconnectGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InterconnectGroups_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="InterconnectGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<InterconnectGroupResource> GetInterconnectGroups(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<InterconnectGroupData, InterconnectGroupResource>(new InterconnectGroupsListAllCollectionResultOfT(InterconnectGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetInterconnectGroups"), data => new InterconnectGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the custom IP prefixes in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomIpPrefixes_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CustomIpPrefixResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CustomIpPrefixResource> GetCustomIpPrefixesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CustomIpPrefixData, CustomIpPrefixResource>(new CustomIPPrefixesListAllAsyncCollectionResultOfT(CustomIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetCustomIpPrefixes"), data => new CustomIpPrefixResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the custom IP prefixes in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/customIpPrefixes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomIpPrefixes_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CustomIpPrefixResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CustomIpPrefixResource> GetCustomIpPrefixes(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CustomIpPrefixData, CustomIpPrefixResource>(new CustomIPPrefixesListAllCollectionResultOfT(CustomIPPrefixesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetCustomIpPrefixes"), data => new CustomIpPrefixResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all dscp configurations in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DscpConfigurations_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DscpConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DscpConfigurationResource> GetDscpConfigurationsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationListAllAsyncCollectionResultOfT(DscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDscpConfigurations"), data => new DscpConfigurationResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all dscp configurations in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/dscpConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DscpConfigurations_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DscpConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DscpConfigurationResource> GetDscpConfigurations(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DscpConfigurationData, DscpConfigurationResource>(new DscpConfigurationListAllCollectionResultOfT(DscpConfigurationRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetDscpConfigurations"), data => new DscpConfigurationResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all the P2SVpnGateways in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> P2SVpnGateways_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="P2SVpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<P2SVpnGatewayResource> GetP2SVpnGatewaysAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2sVpnGatewaysGetAllAsyncCollectionResultOfT(P2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetP2SVpnGateways"), data => new P2SVpnGatewayResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all the P2SVpnGateways in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/p2svpnGateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> P2SVpnGateways_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="P2SVpnGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<P2SVpnGatewayResource> GetP2SVpnGateways(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<P2SVpnGatewayData, P2SVpnGatewayResource>(new P2sVpnGatewaysGetAllCollectionResultOfT(P2sVpnGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetP2SVpnGateways"), data => new P2SVpnGatewayResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all available server variables.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewaysOperationGroup_ListAvailableServerVariables. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<string> GetAvailableServerVariablesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableServerVariablesAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariables");
+        }
+
+        /// <summary>
+        /// Lists all available server variables.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableServerVariables. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewaysOperationGroup_ListAvailableServerVariables. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<string> GetAvailableServerVariables(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableServerVariablesCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariables");
+        }
+
+        /// <summary>
+        /// Lists all available request headers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewaysOperationGroup_ListAvailableRequestHeaders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<string> GetAvailableRequestHeadersAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeaders");
+        }
+
+        /// <summary>
+        /// Lists all available request headers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableRequestHeaders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewaysOperationGroup_ListAvailableRequestHeaders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<string> GetAvailableRequestHeaders(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeaders");
+        }
+
+        /// <summary>
+        /// Lists all available response headers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewaysOperationGroup_ListAvailableResponseHeaders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<string> GetAvailableResponseHeadersAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableResponseHeadersAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeaders");
+        }
+
+        /// <summary>
+        /// Lists all available response headers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableResponseHeaders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewaysOperationGroup_ListAvailableResponseHeaders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="string"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<string> GetAvailableResponseHeaders(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableResponseHeadersCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeaders");
+        }
+
+        /// <summary>
+        /// Lists all available web application firewall rule sets.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewaysOperationGroup_ListAvailableWafRuleSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ApplicationGatewayAvailableWafRuleSetsResult>> GetAppGatewayAvailableWafRuleSetsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ApplicationGatewaysClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetAppGatewayAvailableWafRuleSets");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ApplicationGatewaysRestClient.CreateGetAppGatewayAvailableWafRuleSetsRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationGatewayAvailableWafRuleSetsResult> response = Response.FromValue(ApplicationGatewayAvailableWafRuleSetsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists all available web application firewall rule sets.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableWafRuleSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewaysOperationGroup_ListAvailableWafRuleSets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ApplicationGatewayAvailableWafRuleSetsResult> GetAppGatewayAvailableWafRuleSets(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ApplicationGatewaysClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetAppGatewayAvailableWafRuleSets");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ApplicationGatewaysRestClient.CreateGetAppGatewayAvailableWafRuleSetsRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationGatewayAvailableWafRuleSetsResult> response = Response.FromValue(ApplicationGatewayAvailableWafRuleSetsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Swaps VIPs between two load balancers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancersOperationGroup_SwapPublicIpAddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> SwapPublicIpAddressesAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = LoadBalancersClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.SwapPublicIpAddresses");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LoadBalancersRestClient.CreateSwapPublicIpAddressesRequest(Guid.Parse(Id.SubscriptionId), location, LoadBalancerVipSwapRequest.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation operation = new NetworkArmOperation(LoadBalancersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Swaps VIPs between two load balancers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/setLoadBalancerFrontendPublicIpAddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LoadBalancersOperationGroup_SwapPublicIpAddresses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation SwapPublicIpAddresses(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = LoadBalancersClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.SwapPublicIpAddresses");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LoadBalancersRestClient.CreateSwapPublicIpAddressesRequest(Guid.Parse(Id.SubscriptionId), location, LoadBalancerVipSwapRequest.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation operation = new NetworkArmOperation(LoadBalancersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks whether the subscription is visible to private link service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkServicesOperationGroup_CheckPrivateLinkServiceVisibility. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityAsync(WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.CheckPrivateLinkServiceVisibility");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
+                    new PrivateLinkServiceVisibilityOperationSource(),
+                    PrivateLinkServicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks whether the subscription is visible to private link service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkPrivateLinkServiceVisibility. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkServicesOperationGroup_CheckPrivateLinkServiceVisibility. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibility(WaitUntil waitUntil, string location, CheckPrivateLinkServiceVisibilityRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = PrivateLinkServicesClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.CheckPrivateLinkServiceVisibility");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PrivateLinkServicesRestClient.CreateCheckPrivateLinkServiceVisibilityRequest(Guid.Parse(Id.SubscriptionId), location, CheckPrivateLinkServiceVisibilityRequest.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<PrivateLinkServiceVisibility> operation = new NetworkArmOperation<PrivateLinkServiceVisibility>(
+                    new PrivateLinkServiceVisibilityOperationSource(),
+                    PrivateLinkServicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkServicesOperationGroup_ListAutoApprovedPrivateLinkServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServicesAsync(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PrivateLinkServicesGetAutoApprovedPrivateLinkServicesAsyncCollectionResultOfT(PrivateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAutoApprovedPrivateLinkServices");
+        }
+
+        /// <summary>
+        /// Returns all of the private link service ids that can be linked to a Private Endpoint with auto approved in this subscription in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/autoApprovedPrivateLinkServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkServicesOperationGroup_ListAutoApprovedPrivateLinkServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AutoApprovedPrivateLinkService"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutoApprovedPrivateLinkService> GetAutoApprovedPrivateLinkServices(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PrivateLinkServicesGetAutoApprovedPrivateLinkServicesCollectionResultOfT(PrivateLinkServicesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAutoApprovedPrivateLinkServices");
+        }
+
+        /// <summary>
+        /// Lists ExpressRoute gateways under a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ExpressRouteGatewayList>> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ExpressRouteGatewaysClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetBySubscription");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ExpressRouteGatewaysRestClient.CreateGetBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ExpressRouteGatewayList> response = Response.FromValue(ExpressRouteGatewayList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists ExpressRoute gateways under a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteGateways. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ExpressRouteGatewayList> GetBySubscription(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ExpressRouteGatewaysClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetBySubscription");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ExpressRouteGatewaysRestClient.CreateGetBySubscriptionRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ExpressRouteGatewayList> response = Response.FromValue(ExpressRouteGatewayList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks whether a domain name in the cloudapp.azure.com zone is available for use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkDnsNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CheckDnsNameAvailability_CheckDnsNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="domainNameLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="domainNameLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(string location, string domainNameLabel, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(domainNameLabel, nameof(domainNameLabel));
+
+            using DiagnosticScope scope = CheckDnsNameAvailabilityClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.CheckDnsNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CheckDnsNameAvailabilityRestClient.CreateCheckDnsNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, domainNameLabel, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DnsNameAvailabilityResult> response = Response.FromValue(DnsNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks whether a domain name in the cloudapp.azure.com zone is available for use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/checkDnsNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CheckDnsNameAvailability_CheckDnsNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="domainNameLabel"> The domain name to be verified. It must conform to the following regular expression: ^[a-z][a-z0-9-]{1,61}[a-z0-9]$. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="domainNameLabel"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="domainNameLabel"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DnsNameAvailabilityResult> CheckDnsNameAvailability(string location, string domainNameLabel, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+            Argument.AssertNotNullOrEmpty(domainNameLabel, nameof(domainNameLabel));
+
+            using DiagnosticScope scope = CheckDnsNameAvailabilityClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.CheckDnsNameAvailability");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CheckDnsNameAvailabilityRestClient.CreateCheckDnsNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, domainNameLabel, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DnsNameAvailabilityResult> response = Response.FromValue(DnsNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves all the ExpressRouteProviderPorts in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteProviderPorts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ExpressRouteProviderPortListResult>> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ExpressRouteProviderPortsLocationClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ExpressRouteProviderPortsLocationRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), filter, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ExpressRouteProviderPortListResult> response = Response.FromValue(ExpressRouteProviderPortListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves all the ExpressRouteProviderPorts in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteProviderPorts_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ExpressRouteProviderPortListResult> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ExpressRouteProviderPortsLocationClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ExpressRouteProviderPortsLocationRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), filter, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ExpressRouteProviderPortListResult> response = Response.FromValue(ExpressRouteProviderPortListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all of the available subnet delegations for this subscription in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableDelegationsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailableDelegation> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailableDelegationsGetAllAsyncCollectionResultOfT(AvailableDelegationsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets all of the available subnet delegations for this subscription in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableDelegations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableDelegationsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AvailableDelegation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailableDelegation> GetAll(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailableDelegationsGetAllCollectionResultOfT(AvailableDelegationsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets all available service aliases for this subscription in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableServiceAliasesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailableServiceAlias> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailableServiceAliasesGetAllAsyncCollectionResultOfT(AvailableServiceAliasesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets all available service aliases for this subscription in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availableServiceAliases. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableServiceAliasesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AvailableServiceAlias"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailableServiceAlias> GetAll(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailableServiceAliasesGetAllCollectionResultOfT(AvailableServiceAliasesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets all the Azure Firewall FQDN Tags in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AzureFirewallFqdnTagsOperationGroup_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AzureFirewallFqdnTag"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AzureFirewallFqdnTag> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AzureFirewallFqdnTagsGetAllAsyncCollectionResultOfT(AzureFirewallFqdnTagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets all the Azure Firewall FQDN Tags in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/azureFirewallFqdnTags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AzureFirewallFqdnTagsOperationGroup_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AzureFirewallFqdnTag"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AzureFirewallFqdnTag> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AzureFirewallFqdnTagsGetAllCollectionResultOfT(AzureFirewallFqdnTagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// List what values of endpoint services are available for use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableEndpointServicesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="EndpointServiceResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EndpointServiceResult> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailableEndpointServicesGetAllAsyncCollectionResultOfT(AvailableEndpointServicesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// List what values of endpoint services are available for use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/virtualNetworkAvailableEndpointServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableEndpointServicesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="EndpointServiceResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EndpointServiceResult> GetAll(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailableEndpointServicesGetAllCollectionResultOfT(AvailableEndpointServicesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets all the available express route service providers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteServiceProvidersOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteServiceProvider"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpressRouteServiceProvider> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ExpressRouteServiceProvidersGetAllAsyncCollectionResultOfT(ExpressRouteServiceProvidersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets all the available express route service providers.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteServiceProviders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteServiceProvidersOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteServiceProvider"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpressRouteServiceProvider> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ExpressRouteServiceProvidersGetAllCollectionResultOfT(ExpressRouteServiceProvidersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets the list of resources that are onboarded with NSP. These resources can be associated with a network security perimeter
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/perimeterAssociableResourceTypes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterAssociableResourceTypesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PerimeterAssociableResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PerimeterAssociableResource> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NetworkSecurityPerimeterAssociableResourceTypesGetAllAsyncCollectionResultOfT(NetworkSecurityPerimeterAssociableResourceTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets the list of resources that are onboarded with NSP. These resources can be associated with a network security perimeter
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/perimeterAssociableResourceTypes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterAssociableResourceTypesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PerimeterAssociableResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PerimeterAssociableResource> GetAll(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NetworkSecurityPerimeterAssociableResourceTypesGetAllCollectionResultOfT(NetworkSecurityPerimeterAssociableResourceTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets the operation status for the given operation id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/networkSecurityPerimeterOperationStatuses/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterOperationStatusesOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The operation id of the async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<OperationStatusResult>> GetAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = NetworkSecurityPerimeterOperationStatusesClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NetworkSecurityPerimeterOperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the operation status for the given operation id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/networkSecurityPerimeterOperationStatuses/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterOperationStatusesOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The operation id of the async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<OperationStatusResult> Get(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope = NetworkSecurityPerimeterOperationStatusesClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = NetworkSecurityPerimeterOperationStatusesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of service tags supported by NSP. These service tags can be used to create access rules in NSP.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/nspServiceTags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterServiceTagsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NspServiceTagsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NspServiceTagsResource> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NetworkSecurityPerimeterServiceTagsGetAllAsyncCollectionResultOfT(NetworkSecurityPerimeterServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets the list of service tags supported by NSP. These service tags can be used to create access rules in NSP.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/nspServiceTags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkSecurityPerimeterServiceTagsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NspServiceTagsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NspServiceTagsResource> GetAll(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NetworkSecurityPerimeterServiceTagsGetAllCollectionResultOfT(NetworkSecurityPerimeterServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailablePrivateEndpointTypesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailablePrivateEndpointType> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailablePrivateEndpointTypesGetAllAsyncCollectionResultOfT(AvailablePrivateEndpointTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Returns all of the resource types that can be linked to a Private Endpoint in this subscription in this region.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/availablePrivateEndpointTypes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailablePrivateEndpointTypesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AvailablePrivateEndpointType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailablePrivateEndpointType> GetAll(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailablePrivateEndpointTypesGetAllCollectionResultOfT(AvailablePrivateEndpointTypesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets all the available bgp service communities.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BgpServiceCommunitiesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BgpServiceCommunity"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BgpServiceCommunity> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BgpServiceCommunitiesGetAllAsyncCollectionResultOfT(BgpServiceCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets all the available bgp service communities.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/bgpServiceCommunities. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BgpServiceCommunitiesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BgpServiceCommunity"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BgpServiceCommunity> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new BgpServiceCommunitiesGetAllCollectionResultOfT(BgpServiceCommunitiesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets a list of service tag information resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceTagsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ServiceTagsListResult>> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            using DiagnosticScope scope = ServiceTagsClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServiceTagsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceTagsListResult> response = Response.FromValue(ServiceTagsListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of service tag information resources.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceTagsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ServiceTagsListResult> GetAll(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            using DiagnosticScope scope = ServiceTagsClientDiagnostics.CreateScope("MockableNetworkSubscriptionResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ServiceTagsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceTagsListResult> response = Response.FromValue(ServiceTagsListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of service tag information resources with pagination.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTagDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceTagInformationOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="noAddressPrefixes"> Do not return address prefixes for the tag(s). </param>
+        /// <param name="tagName"> Return tag information for a particular tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="Models.ServiceTagInformation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Models.ServiceTagInformation> GetAllAsync(string location, bool? noAddressPrefixes = default, string tagName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ServiceTagInformationGetAllAsyncCollectionResultOfT(
+                ServiceTagInformationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                location,
+                noAddressPrefixes,
+                tagName,
+                context,
+                "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets a list of service tag information resources with pagination.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/serviceTagDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceTagInformationOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="noAddressPrefixes"> Do not return address prefixes for the tag(s). </param>
+        /// <param name="tagName"> Return tag information for a particular tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="Models.ServiceTagInformation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Models.ServiceTagInformation> GetAll(string location, bool? noAddressPrefixes = default, string tagName = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ServiceTagInformationGetAllCollectionResultOfT(
+                ServiceTagInformationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                location,
+                noAddressPrefixes,
+                tagName,
+                context,
+                "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// List network usages for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UsagesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NetworkUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkUsage> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetAllAsyncCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// List network usages for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> UsagesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NetworkUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkUsage> GetAll(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetAllCollectionResultOfT(UsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableNetworkSubscriptionResource.GetAll");
         }
     }
 }

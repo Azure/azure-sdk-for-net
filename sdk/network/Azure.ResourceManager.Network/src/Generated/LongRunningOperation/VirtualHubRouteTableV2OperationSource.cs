@@ -5,32 +5,39 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VirtualHubRouteTableV2OperationSource : IOperationSource<VirtualHubRouteTableV2Resource>
+    /// <summary></summary>
+    internal partial class VirtualHubRouteTableV2OperationSource : IOperationSource<VirtualHubRouteTableV2>
     {
-        private readonly ArmClient _client;
-
-        internal VirtualHubRouteTableV2OperationSource(ArmClient client)
+        /// <summary></summary>
+        internal VirtualHubRouteTableV2OperationSource()
         {
-            _client = client;
         }
 
-        VirtualHubRouteTableV2Resource IOperationSource<VirtualHubRouteTableV2Resource>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        VirtualHubRouteTableV2 IOperationSource<VirtualHubRouteTableV2>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualHubRouteTableV2Data>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return new VirtualHubRouteTableV2Resource(_client, data);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return VirtualHubRouteTableV2.DeserializeVirtualHubRouteTableV2(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
-        async ValueTask<VirtualHubRouteTableV2Resource> IOperationSource<VirtualHubRouteTableV2Resource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<VirtualHubRouteTableV2> IOperationSource<VirtualHubRouteTableV2>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualHubRouteTableV2Data>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
-            return await Task.FromResult(new VirtualHubRouteTableV2Resource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return VirtualHubRouteTableV2.DeserializeVirtualHubRouteTableV2(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

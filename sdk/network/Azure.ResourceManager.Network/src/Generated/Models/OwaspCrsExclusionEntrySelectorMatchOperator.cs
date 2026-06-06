@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct OwaspCrsExclusionEntrySelectorMatchOperator : IEquatable<OwaspCrsExclusionEntrySelectorMatchOperator>
     {
         private readonly string _value;
+        /// <summary> Equals. </summary>
+        private const string EqualsValue = "Equals";
+        /// <summary> Contains. </summary>
+        private const string ContainsValue = "Contains";
+        /// <summary> StartsWith. </summary>
+        private const string StartsWithValue = "StartsWith";
+        /// <summary> EndsWith. </summary>
+        private const string EndsWithValue = "EndsWith";
+        /// <summary> EqualsAny. </summary>
+        private const string EqualsAnyValue = "EqualsAny";
 
         /// <summary> Initializes a new instance of <see cref="OwaspCrsExclusionEntrySelectorMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OwaspCrsExclusionEntrySelectorMatchOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EqualsValueValue = "Equals";
-        private const string ContainsValue = "Contains";
-        private const string StartsWithValue = "StartsWith";
-        private const string EndsWithValue = "EndsWith";
-        private const string EqualsAnyValue = "EqualsAny";
-
         /// <summary> Equals. </summary>
-        public static OwaspCrsExclusionEntrySelectorMatchOperator EqualsValue { get; } = new OwaspCrsExclusionEntrySelectorMatchOperator(EqualsValueValue);
+        public static OwaspCrsExclusionEntrySelectorMatchOperator Equals { get; } = new OwaspCrsExclusionEntrySelectorMatchOperator(EqualsValue);
+
         /// <summary> Contains. </summary>
         public static OwaspCrsExclusionEntrySelectorMatchOperator Contains { get; } = new OwaspCrsExclusionEntrySelectorMatchOperator(ContainsValue);
+
         /// <summary> StartsWith. </summary>
         public static OwaspCrsExclusionEntrySelectorMatchOperator StartsWith { get; } = new OwaspCrsExclusionEntrySelectorMatchOperator(StartsWithValue);
+
         /// <summary> EndsWith. </summary>
         public static OwaspCrsExclusionEntrySelectorMatchOperator EndsWith { get; } = new OwaspCrsExclusionEntrySelectorMatchOperator(EndsWithValue);
+
         /// <summary> EqualsAny. </summary>
         public static OwaspCrsExclusionEntrySelectorMatchOperator EqualsAny { get; } = new OwaspCrsExclusionEntrySelectorMatchOperator(EqualsAnyValue);
+
         /// <summary> Determines if two <see cref="OwaspCrsExclusionEntrySelectorMatchOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OwaspCrsExclusionEntrySelectorMatchOperator left, OwaspCrsExclusionEntrySelectorMatchOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OwaspCrsExclusionEntrySelectorMatchOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OwaspCrsExclusionEntrySelectorMatchOperator left, OwaspCrsExclusionEntrySelectorMatchOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OwaspCrsExclusionEntrySelectorMatchOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OwaspCrsExclusionEntrySelectorMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OwaspCrsExclusionEntrySelectorMatchOperator(string value) => new OwaspCrsExclusionEntrySelectorMatchOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OwaspCrsExclusionEntrySelectorMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OwaspCrsExclusionEntrySelectorMatchOperator?(string value) => value == null ? null : new OwaspCrsExclusionEntrySelectorMatchOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OwaspCrsExclusionEntrySelectorMatchOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OwaspCrsExclusionEntrySelectorMatchOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

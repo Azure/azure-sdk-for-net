@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationRule : FirewallPolicyRule
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationRule"/>. </summary>
-        public ApplicationRule()
+        public ApplicationRule() : base(FirewallPolicyRuleType.ApplicationRule)
         {
             SourceAddresses = new ChangeTrackingList<string>();
             DestinationAddresses = new ChangeTrackingList<string>();
@@ -22,28 +23,27 @@ namespace Azure.ResourceManager.Network.Models
             TargetFqdns = new ChangeTrackingList<string>();
             TargetUrls = new ChangeTrackingList<string>();
             FqdnTags = new ChangeTrackingList<string>();
-            SourceIPGroups = new ChangeTrackingList<string>();
+            SourceIpGroups = new ChangeTrackingList<string>();
             WebCategories = new ChangeTrackingList<string>();
             HttpHeadersToInsert = new ChangeTrackingList<FirewallPolicyHttpHeaderToInsert>();
-            RuleType = FirewallPolicyRuleType.ApplicationRule;
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>
         /// <param name="destinationAddresses"> List of destination IP addresses or Service Tags. </param>
         /// <param name="protocols"> Array of Application Protocols. </param>
         /// <param name="targetFqdns"> List of FQDNs for this rule. </param>
         /// <param name="targetUrls"> List of Urls for this rule condition. </param>
         /// <param name="fqdnTags"> List of FQDN Tags for this rule. </param>
-        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
+        /// <param name="sourceIpGroups"> List of source IpGroups for this rule. </param>
         /// <param name="terminateTLS"> Terminate TLS connections for this rule. </param>
         /// <param name="webCategories"> List of destination azure web categories. </param>
         /// <param name="httpHeadersToInsert"> List of HTTP/S headers to insert. </param>
-        internal ApplicationRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<FirewallPolicyRuleApplicationProtocol> protocols, IList<string> targetFqdns, IList<string> targetUrls, IList<string> fqdnTags, IList<string> sourceIPGroups, bool? terminateTLS, IList<string> webCategories, IList<FirewallPolicyHttpHeaderToInsert> httpHeadersToInsert) : base(name, description, ruleType, serializedAdditionalRawData)
+        internal ApplicationRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<FirewallPolicyRuleApplicationProtocol> protocols, IList<string> targetFqdns, IList<string> targetUrls, IList<string> fqdnTags, IList<string> sourceIpGroups, bool? terminateTLS, IList<string> webCategories, IList<FirewallPolicyHttpHeaderToInsert> httpHeadersToInsert) : base(name, description, ruleType, additionalBinaryDataProperties)
         {
             SourceAddresses = sourceAddresses;
             DestinationAddresses = destinationAddresses;
@@ -51,42 +51,40 @@ namespace Azure.ResourceManager.Network.Models
             TargetFqdns = targetFqdns;
             TargetUrls = targetUrls;
             FqdnTags = fqdnTags;
-            SourceIPGroups = sourceIPGroups;
+            SourceIpGroups = sourceIpGroups;
             TerminateTLS = terminateTLS;
             WebCategories = webCategories;
             HttpHeadersToInsert = httpHeadersToInsert;
-            RuleType = ruleType;
         }
 
         /// <summary> List of source IP addresses for this rule. </summary>
-        [WirePath("sourceAddresses")]
         public IList<string> SourceAddresses { get; }
+
         /// <summary> List of destination IP addresses or Service Tags. </summary>
-        [WirePath("destinationAddresses")]
         public IList<string> DestinationAddresses { get; }
+
         /// <summary> Array of Application Protocols. </summary>
-        [WirePath("protocols")]
         public IList<FirewallPolicyRuleApplicationProtocol> Protocols { get; }
+
         /// <summary> List of FQDNs for this rule. </summary>
-        [WirePath("targetFqdns")]
         public IList<string> TargetFqdns { get; }
+
         /// <summary> List of Urls for this rule condition. </summary>
-        [WirePath("targetUrls")]
         public IList<string> TargetUrls { get; }
+
         /// <summary> List of FQDN Tags for this rule. </summary>
-        [WirePath("fqdnTags")]
         public IList<string> FqdnTags { get; }
+
         /// <summary> List of source IpGroups for this rule. </summary>
-        [WirePath("sourceIpGroups")]
-        public IList<string> SourceIPGroups { get; }
+        public IList<string> SourceIpGroups { get; }
+
         /// <summary> Terminate TLS connections for this rule. </summary>
-        [WirePath("terminateTLS")]
         public bool? TerminateTLS { get; set; }
+
         /// <summary> List of destination azure web categories. </summary>
-        [WirePath("webCategories")]
         public IList<string> WebCategories { get; }
+
         /// <summary> List of HTTP/S headers to insert. </summary>
-        [WirePath("httpHeadersToInsert")]
         public IList<FirewallPolicyHttpHeaderToInsert> HttpHeadersToInsert { get; }
     }
 }

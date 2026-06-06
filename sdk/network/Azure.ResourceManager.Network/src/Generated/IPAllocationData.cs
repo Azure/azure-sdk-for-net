@@ -9,89 +9,152 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the IPAllocation data model.
-    /// IpAllocation resource.
-    /// </summary>
-    public partial class IPAllocationData : NetworkTrackedResourceData
+    /// <summary> IpAllocation resource. </summary>
+    public partial class IpAllocationData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="IPAllocationData"/>. </summary>
-        public IPAllocationData()
+        /// <summary> Initializes a new instance of <see cref="IpAllocationData"/>. </summary>
+        public IpAllocationData()
         {
-            AllocationTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPAllocationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IpAllocationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="subnet"> The Subnet that using the prefix of this IpAllocation resource. </param>
-        /// <param name="virtualNetwork"> The VirtualNetwork that using the prefix of this IpAllocation resource. </param>
-        /// <param name="ipAllocationType"> The type for the IpAllocation. </param>
-        /// <param name="prefix"> The address prefix for the IpAllocation. </param>
-        /// <param name="prefixLength"> The address prefix length for the IpAllocation. </param>
-        /// <param name="prefixType"> The address prefix Type for the IpAllocation. </param>
-        /// <param name="ipamAllocationId"> The IPAM allocation ID. </param>
-        /// <param name="allocationTags"> IpAllocation tags. </param>
-        internal IPAllocationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource subnet, WritableSubResource virtualNetwork, NetworkIPAllocationType? ipAllocationType, string prefix, int? prefixLength, NetworkIPVersion? prefixType, string ipamAllocationId, IDictionary<string, string> allocationTags) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the IpAllocation. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal IpAllocationData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpAllocationPropertiesFormat properties, string eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            Subnet = subnet;
-            VirtualNetwork = virtualNetwork;
-            IPAllocationType = ipAllocationType;
-            Prefix = prefix;
-            PrefixLength = prefixLength;
-            PrefixType = prefixType;
-            IpamAllocationId = ipamAllocationId;
-            AllocationTags = allocationTags;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the IpAllocation. </summary>
+        internal IpAllocationPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
-        /// <summary> The Subnet that using the prefix of this IpAllocation resource. </summary>
-        internal WritableSubResource Subnet { get; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.subnet.id")]
-        public ResourceIdentifier SubnetId
-        {
-            get => Subnet?.Id;
-        }
-
-        /// <summary> The VirtualNetwork that using the prefix of this IpAllocation resource. </summary>
-        internal WritableSubResource VirtualNetwork { get; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.virtualNetwork.id")]
-        public ResourceIdentifier VirtualNetworkId
-        {
-            get => VirtualNetwork?.Id;
-        }
+        public string ETag { get; }
 
         /// <summary> The type for the IpAllocation. </summary>
-        [WirePath("properties.type")]
-        public NetworkIPAllocationType? IPAllocationType { get; set; }
+        public IpAllocationType? Type
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Type;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IpAllocationPropertiesFormat();
+                }
+                Properties.Type = value;
+            }
+        }
+
         /// <summary> The address prefix for the IpAllocation. </summary>
-        [WirePath("properties.prefix")]
-        public string Prefix { get; set; }
+        public string Prefix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Prefix;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IpAllocationPropertiesFormat();
+                }
+                Properties.Prefix = value;
+            }
+        }
+
         /// <summary> The address prefix length for the IpAllocation. </summary>
-        [WirePath("properties.prefixLength")]
-        public int? PrefixLength { get; set; }
+        public int? PrefixLength
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrefixLength;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IpAllocationPropertiesFormat();
+                }
+                Properties.PrefixLength = value;
+            }
+        }
+
         /// <summary> The address prefix Type for the IpAllocation. </summary>
-        [WirePath("properties.prefixType")]
-        public NetworkIPVersion? PrefixType { get; set; }
+        public NetworkIPVersion? PrefixType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrefixType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IpAllocationPropertiesFormat();
+                }
+                Properties.PrefixType = value;
+            }
+        }
+
         /// <summary> The IPAM allocation ID. </summary>
-        [WirePath("properties.ipamAllocationId")]
-        public string IpamAllocationId { get; set; }
+        public string IpamAllocationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IpamAllocationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IpAllocationPropertiesFormat();
+                }
+                Properties.IpamAllocationId = value;
+            }
+        }
+
         /// <summary> IpAllocation tags. </summary>
-        [WirePath("properties.allocationTags")]
-        public IDictionary<string, string> AllocationTags { get; }
+        public IDictionary<string, string> AllocationTags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IpAllocationPropertiesFormat();
+                }
+                return Properties.AllocationTags;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkId;
+            }
+        }
     }
 }

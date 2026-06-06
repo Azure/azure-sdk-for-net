@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class IPAllocationResource : IJsonModel<IPAllocationData>
+    /// <summary></summary>
+    public partial class IpAllocationResource : IJsonModel<IpAllocationData>
     {
-        private static IPAllocationData s_dataDeserializationInstance;
-        private static IPAllocationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IpAllocationData> s_dataDeserializationInstance;
 
-        void IJsonModel<IPAllocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IPAllocationData>)Data).Write(writer, options);
+        private static IJsonModel<IpAllocationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IpAllocationData();
 
-        IPAllocationData IJsonModel<IPAllocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IPAllocationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<IpAllocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IpAllocationData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<IPAllocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IPAllocationData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IpAllocationData IJsonModel<IpAllocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        IPAllocationData IPersistableModel<IPAllocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IPAllocationData>(data, options, AzureResourceManagerNetworkContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IpAllocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IpAllocationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<IPAllocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IPAllocationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IpAllocationData IPersistableModel<IpAllocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IpAllocationData>(data, options, AzureResourceManagerNetworkContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IpAllocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

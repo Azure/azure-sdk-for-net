@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Protocol to be verified on. </summary>
-    public readonly partial struct IPFlowProtocol : IEquatable<IPFlowProtocol>
+    public readonly partial struct IpFlowProtocol : IEquatable<IpFlowProtocol>
     {
         private readonly string _value;
+        /// <summary> TCP. </summary>
+        private const string TCPValue = "TCP";
+        /// <summary> UDP. </summary>
+        private const string UDPValue = "UDP";
 
-        /// <summary> Initializes a new instance of <see cref="IPFlowProtocol"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IpFlowProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IPFlowProtocol(string value)
+        public IpFlowProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TcpValue = "TCP";
-        private const string UdpValue = "UDP";
-
         /// <summary> TCP. </summary>
-        public static IPFlowProtocol Tcp { get; } = new IPFlowProtocol(TcpValue);
+        public static IpFlowProtocol TCP { get; } = new IpFlowProtocol(TCPValue);
+
         /// <summary> UDP. </summary>
-        public static IPFlowProtocol Udp { get; } = new IPFlowProtocol(UdpValue);
-        /// <summary> Determines if two <see cref="IPFlowProtocol"/> values are the same. </summary>
-        public static bool operator ==(IPFlowProtocol left, IPFlowProtocol right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="IPFlowProtocol"/> values are not the same. </summary>
-        public static bool operator !=(IPFlowProtocol left, IPFlowProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IPFlowProtocol"/>. </summary>
-        public static implicit operator IPFlowProtocol(string value) => new IPFlowProtocol(value);
+        public static IpFlowProtocol UDP { get; } = new IpFlowProtocol(UDPValue);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two <see cref="IpFlowProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(IpFlowProtocol left, IpFlowProtocol right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="IpFlowProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(IpFlowProtocol left, IpFlowProtocol right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="IpFlowProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IpFlowProtocol(string value) => new IpFlowProtocol(value);
+
+        /// <summary> Converts a string to a <see cref="IpFlowProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IpFlowProtocol?(string value) => value == null ? null : new IpFlowProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IPFlowProtocol other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(IPFlowProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is IpFlowProtocol other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(IpFlowProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

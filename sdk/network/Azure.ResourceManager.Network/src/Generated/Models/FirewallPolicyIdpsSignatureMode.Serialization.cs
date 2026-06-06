@@ -9,14 +9,24 @@ using System;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal static partial class FirewallPolicyIdpsSignatureModeExtensions
+    internal static partial class FirewallPolicyIDPSSignatureModeExtensions
     {
-        public static FirewallPolicyIdpsSignatureMode ToFirewallPolicyIdpsSignatureMode(this int value)
+        /// <param name="value"> The value to deserialize. </param>
+        public static FirewallPolicyIDPSSignatureMode ToFirewallPolicyIDPSSignatureMode(this int value)
         {
-            if (value == 0) return FirewallPolicyIdpsSignatureMode.Zero;
-            if (value == 1) return FirewallPolicyIdpsSignatureMode.One;
-            if (value == 2) return FirewallPolicyIdpsSignatureMode.Two;
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureMode value.");
+            if (value == 0)
+            {
+                return FirewallPolicyIDPSSignatureMode._0;
+            }
+            if (value == 1)
+            {
+                return FirewallPolicyIDPSSignatureMode._1;
+            }
+            if (value == 2)
+            {
+                return FirewallPolicyIDPSSignatureMode._2;
+            }
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIDPSSignatureMode value.");
         }
     }
 }

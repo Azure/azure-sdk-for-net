@@ -7,57 +7,85 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The IPSec integrity algorithm (IKE phase 1). </summary>
-    public readonly partial struct IPsecIntegrity : IEquatable<IPsecIntegrity>
+    public readonly partial struct IpsecIntegrity : IEquatable<IpsecIntegrity>
     {
         private readonly string _value;
+        /// <summary> MD5. </summary>
+        private const string MD5Value = "MD5";
+        /// <summary> SHA1. </summary>
+        private const string Sha1Value = "SHA1";
+        /// <summary> SHA256. </summary>
+        private const string Sha256Value = "SHA256";
+        /// <summary> GCMAES128. </summary>
+        private const string GcmAes128Value = "GCMAES128";
+        /// <summary> GCMAES192. </summary>
+        private const string GcmAes192Value = "GCMAES192";
+        /// <summary> GCMAES256. </summary>
+        private const string GcmAes256Value = "GCMAES256";
 
-        /// <summary> Initializes a new instance of <see cref="IPsecIntegrity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IpsecIntegrity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IPsecIntegrity(string value)
+        public IpsecIntegrity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string MD5Value = "MD5";
-        private const string Sha1Value = "SHA1";
-        private const string Sha256Value = "SHA256";
-        private const string Sha384Value = "SHA384";
-        private const string GcmAes256Value = "GCMAES256";
-        private const string GcmAes128Value = "GCMAES128";
-
         /// <summary> MD5. </summary>
-        public static IPsecIntegrity MD5 { get; } = new IPsecIntegrity(MD5Value);
+        public static IpsecIntegrity MD5 { get; } = new IpsecIntegrity(MD5Value);
+
         /// <summary> SHA1. </summary>
-        public static IPsecIntegrity Sha1 { get; } = new IPsecIntegrity(Sha1Value);
+        public static IpsecIntegrity Sha1 { get; } = new IpsecIntegrity(Sha1Value);
+
         /// <summary> SHA256. </summary>
-        public static IPsecIntegrity Sha256 { get; } = new IPsecIntegrity(Sha256Value);
-        /// <summary> SHA384. </summary>
-        public static IPsecIntegrity Sha384 { get; } = new IPsecIntegrity(Sha384Value);
-        /// <summary> GCMAES256. </summary>
-        public static IPsecIntegrity GcmAes256 { get; } = new IPsecIntegrity(GcmAes256Value);
+        public static IpsecIntegrity Sha256 { get; } = new IpsecIntegrity(Sha256Value);
+
         /// <summary> GCMAES128. </summary>
-        public static IPsecIntegrity GcmAes128 { get; } = new IPsecIntegrity(GcmAes128Value);
-        /// <summary> Determines if two <see cref="IPsecIntegrity"/> values are the same. </summary>
-        public static bool operator ==(IPsecIntegrity left, IPsecIntegrity right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="IPsecIntegrity"/> values are not the same. </summary>
-        public static bool operator !=(IPsecIntegrity left, IPsecIntegrity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IPsecIntegrity"/>. </summary>
-        public static implicit operator IPsecIntegrity(string value) => new IPsecIntegrity(value);
+        public static IpsecIntegrity GcmAes128 { get; } = new IpsecIntegrity(GcmAes128Value);
 
-        /// <inheritdoc />
+        /// <summary> GCMAES192. </summary>
+        public static IpsecIntegrity GcmAes192 { get; } = new IpsecIntegrity(GcmAes192Value);
+
+        /// <summary> GCMAES256. </summary>
+        public static IpsecIntegrity GcmAes256 { get; } = new IpsecIntegrity(GcmAes256Value);
+
+        /// <summary> Determines if two <see cref="IpsecIntegrity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(IpsecIntegrity left, IpsecIntegrity right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="IpsecIntegrity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(IpsecIntegrity left, IpsecIntegrity right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="IpsecIntegrity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IpsecIntegrity(string value) => new IpsecIntegrity(value);
+
+        /// <summary> Converts a string to a <see cref="IpsecIntegrity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IpsecIntegrity?(string value) => value == null ? null : new IpsecIntegrity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IPsecIntegrity other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(IPsecIntegrity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is IpsecIntegrity other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(IpsecIntegrity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

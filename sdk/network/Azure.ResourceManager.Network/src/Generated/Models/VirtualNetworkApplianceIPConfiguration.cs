@@ -12,51 +12,83 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The virtual network appliance ip configuration. </summary>
-    public partial class VirtualNetworkApplianceIPConfiguration : NetworkResourceData
+    public partial class VirtualNetworkApplianceIpConfiguration : NetworkSubResource
     {
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIPConfiguration"/>. </summary>
-        public VirtualNetworkApplianceIPConfiguration()
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIpConfiguration"/>. </summary>
+        internal VirtualNetworkApplianceIpConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIPConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIpConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
-        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
-        /// <param name="primary"> Whether the ip configuration is primary or not. </param>
-        /// <param name="provisioningState"> The provisioning state of the private link service IP configuration resource. </param>
-        /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
-        internal VirtualNetworkApplianceIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, bool? primary, NetworkProvisioningState? provisioningState, NetworkIPVersion? privateIPAddressVersion) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the virtual network appliance ip configuration. </param>
+        /// <param name="name"> The name of virtual network appliance ip configuration. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> The resource type. </param>
+        internal VirtualNetworkApplianceIpConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualNetworkApplianceIpConfigurationProperties properties, string name, string eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            PrivateIPAddress = privateIPAddress;
-            PrivateIPAllocationMethod = privateIPAllocationMethod;
-            Primary = primary;
-            ProvisioningState = provisioningState;
-            PrivateIPAddressVersion = privateIPAddressVersion;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            Type = @type;
         }
+
+        /// <summary> Properties of the virtual network appliance ip configuration. </summary>
+        internal VirtualNetworkApplianceIpConfigurationProperties Properties { get; }
+
+        /// <summary> The name of virtual network appliance ip configuration. </summary>
+        public string Name { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
+
+        /// <summary> The resource type. </summary>
+        public string Type { get; }
+
         /// <summary> The private IP address of the IP configuration. </summary>
-        [WirePath("properties.privateIPAddress")]
-        public string PrivateIPAddress { get; set; }
+        public string PrivateIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
+        }
+
         /// <summary> The private IP address allocation method. </summary>
-        [WirePath("properties.privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+        public IPAllocationMethod? PrivateIPAllocationMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAllocationMethod;
+            }
+        }
+
         /// <summary> Whether the ip configuration is primary or not. </summary>
-        [WirePath("properties.primary")]
-        public bool? Primary { get; set; }
+        public bool? Primary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Primary;
+            }
+        }
+
         /// <summary> The provisioning state of the private link service IP configuration resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </summary>
-        [WirePath("properties.privateIPAddressVersion")]
-        public NetworkIPVersion? PrivateIPAddressVersion { get; set; }
+        public NetworkIPVersion? PrivateIPAddressVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddressVersion;
+            }
+        }
     }
 }

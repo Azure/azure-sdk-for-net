@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Troubleshooting information gained from specified resource. </summary>
     public partial class TroubleshootingResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TroubleshootingResult"/>. </summary>
         internal TroubleshootingResult()
@@ -56,27 +28,26 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="endOn"> The end time of the troubleshooting. </param>
         /// <param name="code"> The result code of the troubleshooting. </param>
         /// <param name="results"> Information from troubleshooting. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TroubleshootingResult(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, IReadOnlyList<TroubleshootingDetails> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TroubleshootingResult(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, IReadOnlyList<TroubleshootingDetails> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
             Code = code;
             Results = results;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The start time of the troubleshooting. </summary>
-        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> The end time of the troubleshooting. </summary>
-        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> The result code of the troubleshooting. </summary>
-        [WirePath("code")]
         public string Code { get; }
+
         /// <summary> Information from troubleshooting. </summary>
-        [WirePath("results")]
         public IReadOnlyList<TroubleshootingDetails> Results { get; }
     }
 }

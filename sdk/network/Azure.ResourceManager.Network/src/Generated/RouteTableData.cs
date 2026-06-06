@@ -12,59 +12,111 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the RouteTable data model.
-    /// Route table resource.
-    /// </summary>
+    /// <summary> Route table resource. </summary>
     public partial class RouteTableData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="RouteTableData"/>. </summary>
         public RouteTableData()
         {
-            Routes = new ChangeTrackingList<RouteData>();
-            Subnets = new ChangeTrackingList<SubnetData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteTableData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="routes"> Collection of routes contained within a route table. </param>
-        /// <param name="subnets"> A collection of references to subnets. </param>
-        /// <param name="disableBgpRoutePropagation"> Whether to disable the routes learned by BGP on that route table. True means disable. </param>
-        /// <param name="provisioningState"> The provisioning state of the route table resource. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the route table. </param>
-        internal RouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<RouteData> routes, IReadOnlyList<SubnetData> subnets, bool? disableBgpRoutePropagation, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the route table. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal RouteTableData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, RouteTablePropertiesFormat properties, string eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            Routes = routes;
-            Subnets = subnets;
-            DisableBgpRoutePropagation = disableBgpRoutePropagation;
-            ProvisioningState = provisioningState;
-            ResourceGuid = resourceGuid;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the route table. </summary>
+        internal RouteTablePropertiesFormat Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
+
         /// <summary> Collection of routes contained within a route table. </summary>
-        [WirePath("properties.routes")]
-        public IList<RouteData> Routes { get; }
+        public IList<RouteData> Routes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteTablePropertiesFormat();
+                }
+                return Properties.Routes;
+            }
+        }
+
         /// <summary> A collection of references to subnets. </summary>
-        [WirePath("properties.subnets")]
-        public IReadOnlyList<SubnetData> Subnets { get; }
+        public IReadOnlyList<SubnetData> Subnets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteTablePropertiesFormat();
+                }
+                return Properties.Subnets;
+            }
+        }
+
         /// <summary> Whether to disable the routes learned by BGP on that route table. True means disable. </summary>
-        [WirePath("properties.disableBgpRoutePropagation")]
-        public bool? DisableBgpRoutePropagation { get; set; }
+        public bool? DisableBgpRoutePropagation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableBgpRoutePropagation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteTablePropertiesFormat();
+                }
+                Properties.DisableBgpRoutePropagation = value;
+            }
+        }
+
+        /// <summary> Whether to disable the routes learned by peering on the route table. 'None' means peering routes are enabled, 'All' means all peering routes are disabled. </summary>
+        public DisablePeeringRoute? DisablePeeringRoute
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisablePeeringRoute;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RouteTablePropertiesFormat();
+                }
+                Properties.DisablePeeringRoute = value;
+            }
+        }
+
         /// <summary> The provisioning state of the route table resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The resource GUID property of the route table. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
+        public string ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
     }
 }

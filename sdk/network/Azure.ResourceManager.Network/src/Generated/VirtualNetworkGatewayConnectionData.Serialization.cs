@@ -8,19 +8,80 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualNetworkGatewayConnectionData : IUtf8JsonSerializable, IJsonModel<VirtualNetworkGatewayConnectionData>
+    /// <summary> A common class for general resource information. </summary>
+    public partial class VirtualNetworkGatewayConnectionData : NetworkTrackedResourceData, IJsonModel<VirtualNetworkGatewayConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayConnectionData"/> for deserialization. </summary>
+        internal VirtualNetworkGatewayConnectionData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkTrackedResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualNetworkGatewayConnectionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualNetworkGatewayConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualNetworkGatewayConnectionData IPersistableModel<VirtualNetworkGatewayConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualNetworkGatewayConnectionData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualNetworkGatewayConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="virtualNetworkGatewayConnectionData"> The <see cref="VirtualNetworkGatewayConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VirtualNetworkGatewayConnectionData virtualNetworkGatewayConnectionData)
+        {
+            if (virtualNetworkGatewayConnectionData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(virtualNetworkGatewayConnectionData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VirtualNetworkGatewayConnectionData"/> from. </param>
+        internal static VirtualNetworkGatewayConnectionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeVirtualNetworkGatewayConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualNetworkGatewayConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,1347 +93,129 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorizationKey))
-            {
-                writer.WritePropertyName("authorizationKey"u8);
-                writer.WriteStringValue(AuthorizationKey);
-            }
-            writer.WritePropertyName("virtualNetworkGateway1"u8);
-            writer.WriteObjectValue(VirtualNetworkGateway1, options);
-            if (Optional.IsDefined(VirtualNetworkGateway2))
-            {
-                writer.WritePropertyName("virtualNetworkGateway2"u8);
-                writer.WriteObjectValue(VirtualNetworkGateway2, options);
-            }
-            if (Optional.IsDefined(LocalNetworkGateway2))
-            {
-                writer.WritePropertyName("localNetworkGateway2"u8);
-                writer.WriteObjectValue(LocalNetworkGateway2, options);
-            }
-            if (Optional.IsCollectionDefined(IngressNatRules))
-            {
-                writer.WritePropertyName("ingressNatRules"u8);
-                writer.WriteStartArray();
-                foreach (var item in IngressNatRules)
-                {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(EgressNatRules))
-            {
-                writer.WritePropertyName("egressNatRules"u8);
-                writer.WriteStartArray();
-                foreach (var item in EgressNatRules)
-                {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("connectionType"u8);
-            writer.WriteStringValue(ConnectionType.ToString());
-            if (Optional.IsDefined(ConnectionProtocol))
-            {
-                writer.WritePropertyName("connectionProtocol"u8);
-                writer.WriteStringValue(ConnectionProtocol.Value.ToString());
-            }
-            if (Optional.IsDefined(RoutingWeight))
-            {
-                writer.WritePropertyName("routingWeight"u8);
-                writer.WriteNumberValue(RoutingWeight.Value);
-            }
-            if (Optional.IsDefined(DpdTimeoutSeconds))
-            {
-                writer.WritePropertyName("dpdTimeoutSeconds"u8);
-                writer.WriteNumberValue(DpdTimeoutSeconds.Value);
-            }
-            if (Optional.IsDefined(ConnectionMode))
-            {
-                writer.WritePropertyName("connectionMode"u8);
-                writer.WriteStringValue(ConnectionMode.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(TunnelProperties))
-            {
-                writer.WritePropertyName("tunnelProperties"u8);
-                writer.WriteStartArray();
-                foreach (var item in TunnelProperties)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(SharedKey))
-            {
-                writer.WritePropertyName("sharedKey"u8);
-                writer.WriteStringValue(SharedKey);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
-            {
-                writer.WritePropertyName("connectionStatus"u8);
-                writer.WriteStringValue(ConnectionStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TunnelConnectionStatus))
-            {
-                writer.WritePropertyName("tunnelConnectionStatus"u8);
-                writer.WriteStartArray();
-                foreach (var item in TunnelConnectionStatus)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
-            {
-                writer.WritePropertyName("egressBytesTransferred"u8);
-                writer.WriteNumberValue(EgressBytesTransferred.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
-            {
-                writer.WritePropertyName("ingressBytesTransferred"u8);
-                writer.WriteNumberValue(IngressBytesTransferred.Value);
-            }
-            if (Optional.IsDefined(Peer))
-            {
-                writer.WritePropertyName("peer"u8);
-                ((IJsonModel<WritableSubResource>)Peer).Write(writer, options);
-            }
-            if (Optional.IsDefined(EnableBgp))
-            {
-                writer.WritePropertyName("enableBgp"u8);
-                writer.WriteBooleanValue(EnableBgp.Value);
-            }
-            if (Optional.IsCollectionDefined(GatewayCustomBgpIPAddresses))
-            {
-                writer.WritePropertyName("gatewayCustomBgpIpAddresses"u8);
-                writer.WriteStartArray();
-                foreach (var item in GatewayCustomBgpIPAddresses)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(UseLocalAzureIPAddress))
-            {
-                writer.WritePropertyName("useLocalAzureIpAddress"u8);
-                writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
-            }
-            if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
-            {
-                writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
-                writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
-            }
-            if (Optional.IsCollectionDefined(IPsecPolicies))
-            {
-                writer.WritePropertyName("ipsecPolicies"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPsecPolicies)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
-            {
-                writer.WritePropertyName("trafficSelectorPolicies"u8);
-                writer.WriteStartArray();
-                foreach (var item in TrafficSelectorPolicies)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
-            {
-                writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(ExpressRouteGatewayBypass))
-            {
-                writer.WritePropertyName("expressRouteGatewayBypass"u8);
-                writer.WriteBooleanValue(ExpressRouteGatewayBypass.Value);
-            }
-            if (Optional.IsDefined(EnablePrivateLinkFastPath))
-            {
-                writer.WritePropertyName("enablePrivateLinkFastPath"u8);
-                writer.WriteBooleanValue(EnablePrivateLinkFastPath.Value);
-            }
-            if (Optional.IsDefined(AuthenticationType))
-            {
-                writer.WritePropertyName("authenticationType"u8);
-                writer.WriteStringValue(AuthenticationType.Value.ToString());
-            }
-            if (Optional.IsDefined(CertificateAuthentication))
-            {
-                writer.WritePropertyName("certificateAuthentication"u8);
-                writer.WriteObjectValue(CertificateAuthentication, options);
-            }
-            writer.WriteEndObject();
         }
 
-        VirtualNetworkGatewayConnectionData IJsonModel<VirtualNetworkGatewayConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualNetworkGatewayConnectionData IJsonModel<VirtualNetworkGatewayConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualNetworkGatewayConnectionData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkTrackedResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualNetworkGatewayConnectionData(document.RootElement, options);
         }
 
-        internal static VirtualNetworkGatewayConnectionData DeserializeVirtualNetworkGatewayConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VirtualNetworkGatewayConnectionData DeserializeVirtualNetworkGatewayConnectionData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            string @type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            string authorizationKey = default;
-            VirtualNetworkGatewayData virtualNetworkGateway1 = default;
-            VirtualNetworkGatewayData virtualNetworkGateway2 = default;
-            LocalNetworkGatewayData localNetworkGateway2 = default;
-            IList<WritableSubResource> ingressNatRules = default;
-            IList<WritableSubResource> egressNatRules = default;
-            VirtualNetworkGatewayConnectionType connectionType = default;
-            VirtualNetworkGatewayConnectionProtocol? connectionProtocol = default;
-            int? routingWeight = default;
-            int? dpdTimeoutSeconds = default;
-            VirtualNetworkGatewayConnectionMode? connectionMode = default;
-            IList<VirtualNetworkGatewayConnectionTunnelProperties> tunnelProperties = default;
-            string sharedKey = default;
-            VirtualNetworkGatewayConnectionStatus? connectionStatus = default;
-            IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus = default;
-            long? egressBytesTransferred = default;
-            long? ingressBytesTransferred = default;
-            WritableSubResource peer = default;
-            bool? enableBgp = default;
-            IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses = default;
-            bool? useLocalAzureIPAddress = default;
-            bool? usePolicyBasedTrafficSelectors = default;
-            IList<IPsecPolicy> ipsecPolicies = default;
-            IList<TrafficSelectorPolicy> trafficSelectorPolicies = default;
-            Guid? resourceGuid = default;
-            NetworkProvisioningState? provisioningState = default;
-            bool? expressRouteGatewayBypass = default;
-            bool? enablePrivateLinkFastPath = default;
-            ConnectionAuthenticationType? authenticationType = default;
-            CertificateAuthentication certificateAuthentication = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            VirtualNetworkGatewayConnectionPropertiesFormat properties = default;
+            string eTag = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("authorizationKey"u8))
-                        {
-                            authorizationKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualNetworkGateway1"u8))
-                        {
-                            virtualNetworkGateway1 = VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualNetworkGateway2"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            virtualNetworkGateway2 = VirtualNetworkGatewayData.DeserializeVirtualNetworkGatewayData(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("localNetworkGateway2"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            localNetworkGateway2 = LocalNetworkGatewayData.DeserializeLocalNetworkGatewayData(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("ingressNatRules"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
-                            }
-                            ingressNatRules = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("egressNatRules"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
-                            }
-                            egressNatRules = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("connectionType"u8))
-                        {
-                            connectionType = new VirtualNetworkGatewayConnectionType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("connectionProtocol"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectionProtocol = new VirtualNetworkGatewayConnectionProtocol(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("routingWeight"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            routingWeight = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("dpdTimeoutSeconds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dpdTimeoutSeconds = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("connectionMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectionMode = new VirtualNetworkGatewayConnectionMode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("tunnelProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<VirtualNetworkGatewayConnectionTunnelProperties> array = new List<VirtualNetworkGatewayConnectionTunnelProperties>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(VirtualNetworkGatewayConnectionTunnelProperties.DeserializeVirtualNetworkGatewayConnectionTunnelProperties(item, options));
-                            }
-                            tunnelProperties = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("sharedKey"u8))
-                        {
-                            sharedKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("connectionStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectionStatus = new VirtualNetworkGatewayConnectionStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("tunnelConnectionStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<TunnelConnectionHealth> array = new List<TunnelConnectionHealth>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(TunnelConnectionHealth.DeserializeTunnelConnectionHealth(item, options));
-                            }
-                            tunnelConnectionStatus = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("egressBytesTransferred"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            egressBytesTransferred = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("ingressBytesTransferred"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ingressBytesTransferred = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("peer"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            peer = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("enableBgp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableBgp = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("gatewayCustomBgpIpAddresses"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<GatewayCustomBgpIPAddressIPConfiguration> array = new List<GatewayCustomBgpIPAddressIPConfiguration>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(GatewayCustomBgpIPAddressIPConfiguration.DeserializeGatewayCustomBgpIPAddressIPConfiguration(item, options));
-                            }
-                            gatewayCustomBgpIPAddresses = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("useLocalAzureIpAddress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            useLocalAzureIPAddress = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("usePolicyBasedTrafficSelectors"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            usePolicyBasedTrafficSelectors = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipsecPolicies"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<IPsecPolicy> array = new List<IPsecPolicy>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
-                            }
-                            ipsecPolicies = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("trafficSelectorPolicies"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<TrafficSelectorPolicy> array = new List<TrafficSelectorPolicy>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(TrafficSelectorPolicy.DeserializeTrafficSelectorPolicy(item, options));
-                            }
-                            trafficSelectorPolicies = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceGuid"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceGuid = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("expressRouteGatewayBypass"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            expressRouteGatewayBypass = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enablePrivateLinkFastPath"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enablePrivateLinkFastPath = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("authenticationType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            authenticationType = new ConnectionAuthenticationType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("certificateAuthentication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            certificateAuthentication = CertificateAuthentication.DeserializeCertificateAuthentication(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    properties = VirtualNetworkGatewayConnectionPropertiesFormat.DeserializeVirtualNetworkGatewayConnectionPropertiesFormat(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualNetworkGatewayConnectionData(
                 id,
                 name,
-                type,
+                @type,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                etag,
-                authorizationKey,
-                virtualNetworkGateway1,
-                virtualNetworkGateway2,
-                localNetworkGateway2,
-                ingressNatRules ?? new ChangeTrackingList<WritableSubResource>(),
-                egressNatRules ?? new ChangeTrackingList<WritableSubResource>(),
-                connectionType,
-                connectionProtocol,
-                routingWeight,
-                dpdTimeoutSeconds,
-                connectionMode,
-                tunnelProperties ?? new ChangeTrackingList<VirtualNetworkGatewayConnectionTunnelProperties>(),
-                sharedKey,
-                connectionStatus,
-                tunnelConnectionStatus ?? new ChangeTrackingList<TunnelConnectionHealth>(),
-                egressBytesTransferred,
-                ingressBytesTransferred,
-                peer,
-                enableBgp,
-                gatewayCustomBgpIPAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
-                useLocalAzureIPAddress,
-                usePolicyBasedTrafficSelectors,
-                ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
-                trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>(),
-                resourceGuid,
-                provisioningState,
-                expressRouteGatewayBypass,
-                enablePrivateLinkFastPath,
-                authenticationType,
-                certificateAuthentication);
+                additionalBinaryDataProperties,
+                properties,
+                eTag);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorizationKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    authorizationKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AuthorizationKey))
-                {
-                    builder.Append("    authorizationKey: ");
-                    if (AuthorizationKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AuthorizationKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AuthorizationKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkGateway1), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    virtualNetworkGateway1: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VirtualNetworkGateway1))
-                {
-                    builder.Append("    virtualNetworkGateway1: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, VirtualNetworkGateway1, options, 4, false, "    virtualNetworkGateway1: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkGateway2), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    virtualNetworkGateway2: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VirtualNetworkGateway2))
-                {
-                    builder.Append("    virtualNetworkGateway2: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, VirtualNetworkGateway2, options, 4, false, "    virtualNetworkGateway2: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalNetworkGateway2), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    localNetworkGateway2: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LocalNetworkGateway2))
-                {
-                    builder.Append("    localNetworkGateway2: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, LocalNetworkGateway2, options, 4, false, "    localNetworkGateway2: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngressNatRules), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ingressNatRules: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(IngressNatRules))
-                {
-                    if (IngressNatRules.Any())
-                    {
-                        builder.Append("    ingressNatRules: ");
-                        builder.AppendLine("[");
-                        foreach (var item in IngressNatRules)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    ingressNatRules: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EgressNatRules), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    egressNatRules: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(EgressNatRules))
-                {
-                    if (EgressNatRules.Any())
-                    {
-                        builder.Append("    egressNatRules: ");
-                        builder.AppendLine("[");
-                        foreach (var item in EgressNatRules)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    egressNatRules: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    connectionType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("    connectionType: ");
-                builder.AppendLine($"'{ConnectionType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionProtocol), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    connectionProtocol: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectionProtocol))
-                {
-                    builder.Append("    connectionProtocol: ");
-                    builder.AppendLine($"'{ConnectionProtocol.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingWeight), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    routingWeight: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RoutingWeight))
-                {
-                    builder.Append("    routingWeight: ");
-                    builder.AppendLine($"{RoutingWeight.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DpdTimeoutSeconds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    dpdTimeoutSeconds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DpdTimeoutSeconds))
-                {
-                    builder.Append("    dpdTimeoutSeconds: ");
-                    builder.AppendLine($"{DpdTimeoutSeconds.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionMode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    connectionMode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectionMode))
-                {
-                    builder.Append("    connectionMode: ");
-                    builder.AppendLine($"'{ConnectionMode.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TunnelProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    tunnelProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(TunnelProperties))
-                {
-                    if (TunnelProperties.Any())
-                    {
-                        builder.Append("    tunnelProperties: ");
-                        builder.AppendLine("[");
-                        foreach (var item in TunnelProperties)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    tunnelProperties: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sharedKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SharedKey))
-                {
-                    builder.Append("    sharedKey: ");
-                    if (SharedKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SharedKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SharedKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    connectionStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectionStatus))
-                {
-                    builder.Append("    connectionStatus: ");
-                    builder.AppendLine($"'{ConnectionStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TunnelConnectionStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    tunnelConnectionStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(TunnelConnectionStatus))
-                {
-                    if (TunnelConnectionStatus.Any())
-                    {
-                        builder.Append("    tunnelConnectionStatus: ");
-                        builder.AppendLine("[");
-                        foreach (var item in TunnelConnectionStatus)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    tunnelConnectionStatus: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EgressBytesTransferred), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    egressBytesTransferred: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EgressBytesTransferred))
-                {
-                    builder.Append("    egressBytesTransferred: ");
-                    builder.AppendLine($"'{EgressBytesTransferred.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngressBytesTransferred), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ingressBytesTransferred: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IngressBytesTransferred))
-                {
-                    builder.Append("    ingressBytesTransferred: ");
-                    builder.AppendLine($"'{IngressBytesTransferred.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PeerId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    peer: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      peer: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Peer))
-                {
-                    builder.Append("    peer: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Peer, options, 4, false, "    peer: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableBgp), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableBgp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableBgp))
-                {
-                    builder.Append("    enableBgp: ");
-                    var boolValue = EnableBgp.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GatewayCustomBgpIPAddresses), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    gatewayCustomBgpIpAddresses: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(GatewayCustomBgpIPAddresses))
-                {
-                    if (GatewayCustomBgpIPAddresses.Any())
-                    {
-                        builder.Append("    gatewayCustomBgpIpAddresses: ");
-                        builder.AppendLine("[");
-                        foreach (var item in GatewayCustomBgpIPAddresses)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    gatewayCustomBgpIpAddresses: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseLocalAzureIPAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    useLocalAzureIpAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UseLocalAzureIPAddress))
-                {
-                    builder.Append("    useLocalAzureIpAddress: ");
-                    var boolValue = UseLocalAzureIPAddress.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UsePolicyBasedTrafficSelectors), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    usePolicyBasedTrafficSelectors: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
-                {
-                    builder.Append("    usePolicyBasedTrafficSelectors: ");
-                    var boolValue = UsePolicyBasedTrafficSelectors.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPsecPolicies), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ipsecPolicies: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(IPsecPolicies))
-                {
-                    if (IPsecPolicies.Any())
-                    {
-                        builder.Append("    ipsecPolicies: ");
-                        builder.AppendLine("[");
-                        foreach (var item in IPsecPolicies)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    ipsecPolicies: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrafficSelectorPolicies), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    trafficSelectorPolicies: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
-                {
-                    if (TrafficSelectorPolicies.Any())
-                    {
-                        builder.Append("    trafficSelectorPolicies: ");
-                        builder.AppendLine("[");
-                        foreach (var item in TrafficSelectorPolicies)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    trafficSelectorPolicies: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGuid), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceGuid: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceGuid))
-                {
-                    builder.Append("    resourceGuid: ");
-                    builder.AppendLine($"'{ResourceGuid.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpressRouteGatewayBypass), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    expressRouteGatewayBypass: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExpressRouteGatewayBypass))
-                {
-                    builder.Append("    expressRouteGatewayBypass: ");
-                    var boolValue = ExpressRouteGatewayBypass.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnablePrivateLinkFastPath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enablePrivateLinkFastPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnablePrivateLinkFastPath))
-                {
-                    builder.Append("    enablePrivateLinkFastPath: ");
-                    var boolValue = EnablePrivateLinkFastPath.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    authenticationType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AuthenticationType))
-                {
-                    builder.Append("    authenticationType: ");
-                    builder.AppendLine($"'{AuthenticationType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateAuthentication), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    certificateAuthentication: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertificateAuthentication))
-                {
-                    builder.Append("    certificateAuthentication: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CertificateAuthentication, options, 4, false, "    certificateAuthentication: ");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<VirtualNetworkGatewayConnectionData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VirtualNetworkGatewayConnectionData IPersistableModel<VirtualNetworkGatewayConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualNetworkGatewayConnectionData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VirtualNetworkGatewayConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

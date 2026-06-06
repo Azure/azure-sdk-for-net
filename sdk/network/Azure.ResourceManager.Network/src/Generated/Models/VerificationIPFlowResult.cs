@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Results of IP flow verification on the target resource. </summary>
     public partial class VerificationIPFlowResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VerificationIPFlowResult"/>. </summary>
         internal VerificationIPFlowResult()
@@ -53,19 +24,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VerificationIPFlowResult"/>. </summary>
         /// <param name="access"> Indicates whether the traffic is allowed or denied. </param>
         /// <param name="ruleName"> Name of the rule. If input is not matched against any security rule, it is not displayed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VerificationIPFlowResult(NetworkAccess? access, string ruleName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VerificationIPFlowResult(Models.NetworkAccess? access, string ruleName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Access = access;
             RuleName = ruleName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether the traffic is allowed or denied. </summary>
-        [WirePath("access")]
-        public NetworkAccess? Access { get; }
+        public Models.NetworkAccess? Access { get; }
+
         /// <summary> Name of the rule. If input is not matched against any security rule, it is not displayed. </summary>
-        [WirePath("ruleName")]
         public string RuleName { get; }
     }
 }

@@ -7,13 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration of an Bastion Host. </summary>
-    public partial class BastionHostIPConfiguration : NetworkResourceData
+    public partial class BastionHostIPConfiguration : NetworkSubResource
     {
         /// <summary> Initializes a new instance of <see cref="BastionHostIPConfiguration"/>. </summary>
         public BastionHostIPConfiguration()
@@ -22,61 +22,89 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="BastionHostIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="subnet"> Reference of the subnet resource. </param>
-        /// <param name="publicIPAddress"> Reference of the PublicIP resource. Null for private only bastion. </param>
-        /// <param name="provisioningState"> The provisioning state of the bastion host IP configuration resource. </param>
-        /// <param name="privateIPAllocationMethod"> Private IP allocation method. </param>
-        internal BastionHostIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState, NetworkIPAllocationMethod? privateIPAllocationMethod) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Represents the ip configuration associated with the resource. </param>
+        /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Ip configuration type. </param>
+        internal BastionHostIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, BastionHostIPConfigurationPropertiesFormat properties, string name, ETag? eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            Subnet = subnet;
-            PublicIPAddress = publicIPAddress;
-            ProvisioningState = provisioningState;
-            PrivateIPAllocationMethod = privateIPAllocationMethod;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            Type = @type;
         }
+
+        /// <summary> Represents the ip configuration associated with the resource. </summary>
+        internal BastionHostIPConfigurationPropertiesFormat Properties { get; set; }
+
+        /// <summary> Name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        public string Name { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> Reference of the subnet resource. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.subnet.id")]
-        public ResourceIdentifier SubnetId
-        {
-            get => Subnet is null ? default : Subnet.Id;
-            set
-            {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
-            }
-        }
 
-        /// <summary> Reference of the PublicIP resource. Null for private only bastion. </summary>
-        internal WritableSubResource PublicIPAddress { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.publicIPAddress.id")]
-        public ResourceIdentifier PublicIPAddressId
-        {
-            get => PublicIPAddress is null ? default : PublicIPAddress.Id;
-            set
-            {
-                if (PublicIPAddress is null)
-                    PublicIPAddress = new WritableSubResource();
-                PublicIPAddress.Id = value;
-            }
-        }
+        /// <summary> Ip configuration type. </summary>
+        public string Type { get; }
 
         /// <summary> The provisioning state of the bastion host IP configuration resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Private IP allocation method. </summary>
-        [WirePath("properties.privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+        public IPAllocationMethod? PrivateIPAllocationMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAllocationMethod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostIPConfigurationPropertiesFormat();
+                }
+                Properties.PrivateIPAllocationMethod = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostIPConfigurationPropertiesFormat();
+                }
+                Properties.SubnetId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier PublicIPAddressId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddressId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostIPConfigurationPropertiesFormat();
+                }
+                Properties.PublicIPAddressId = value;
+            }
+        }
     }
 }

@@ -8,20 +8,76 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class CustomIPPrefixData : IUtf8JsonSerializable, IJsonModel<CustomIPPrefixData>
+    /// <summary> Custom IP prefix resource. </summary>
+    public partial class CustomIpPrefixData : NetworkTrackedResourceData, IJsonModel<CustomIpPrefixData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomIPPrefixData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkTrackedResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIpPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCustomIpPrefixData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomIpPrefixData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
-        void IJsonModel<CustomIPPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIpPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CustomIpPrefixData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomIpPrefixData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomIpPrefixData IPersistableModel<CustomIpPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomIpPrefixData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomIpPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="customIpPrefixData"> The <see cref="CustomIpPrefixData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CustomIpPrefixData customIpPrefixData)
+        {
+            if (customIpPrefixData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(customIpPrefixData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CustomIpPrefixData"/> from. </param>
+        internal static CustomIpPrefixData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCustomIpPrefixData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<CustomIpPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,911 +88,190 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIpPrefixData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomIPPrefixData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomIpPrefixData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
+                writer.WriteObjectValue(ExtendedLocation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
-                foreach (var item in Zones)
+                foreach (string item in Zones)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Asn))
-            {
-                writer.WritePropertyName("asn"u8);
-                writer.WriteStringValue(Asn);
-            }
-            if (Optional.IsDefined(Cidr))
-            {
-                writer.WritePropertyName("cidr"u8);
-                writer.WriteStringValue(Cidr);
-            }
-            if (Optional.IsDefined(SignedMessage))
-            {
-                writer.WritePropertyName("signedMessage"u8);
-                writer.WriteStringValue(SignedMessage);
-            }
-            if (Optional.IsDefined(AuthorizationMessage))
-            {
-                writer.WritePropertyName("authorizationMessage"u8);
-                writer.WriteStringValue(AuthorizationMessage);
-            }
-            if (Optional.IsDefined(ParentCustomIPPrefix))
-            {
-                writer.WritePropertyName("customIpPrefixParent"u8);
-                ((IJsonModel<WritableSubResource>)ParentCustomIPPrefix).Write(writer, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ChildCustomIPPrefixList))
-            {
-                writer.WritePropertyName("childCustomIpPrefixes"u8);
-                writer.WriteStartArray();
-                foreach (var item in ChildCustomIPPrefixList)
-                {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(CommissionedState))
-            {
-                writer.WritePropertyName("commissionedState"u8);
-                writer.WriteStringValue(CommissionedState.Value.ToString());
-            }
-            if (Optional.IsDefined(ExpressRouteAdvertise))
-            {
-                writer.WritePropertyName("expressRouteAdvertise"u8);
-                writer.WriteBooleanValue(ExpressRouteAdvertise.Value);
-            }
-            if (Optional.IsDefined(Geo))
-            {
-                writer.WritePropertyName("geo"u8);
-                writer.WriteStringValue(Geo.Value.ToString());
-            }
-            if (Optional.IsDefined(NoInternetAdvertise))
-            {
-                writer.WritePropertyName("noInternetAdvertise"u8);
-                writer.WriteBooleanValue(NoInternetAdvertise.Value);
-            }
-            if (Optional.IsDefined(PrefixType))
-            {
-                writer.WritePropertyName("prefixType"u8);
-                writer.WriteStringValue(PrefixType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPPrefixes))
-            {
-                writer.WritePropertyName("publicIpPrefixes"u8);
-                writer.WriteStartArray();
-                foreach (var item in PublicIPPrefixes)
-                {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
-            {
-                writer.WritePropertyName("resourceGuid"u8);
-                writer.WriteStringValue(ResourceGuid.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(FailedReason))
-            {
-                writer.WritePropertyName("failedReason"u8);
-                writer.WriteStringValue(FailedReason);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        CustomIPPrefixData IJsonModel<CustomIPPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomIpPrefixData IJsonModel<CustomIpPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CustomIpPrefixData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkTrackedResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomIpPrefixData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomIPPrefixData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomIpPrefixData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomIPPrefixData(document.RootElement, options);
+            return DeserializeCustomIpPrefixData(document.RootElement, options);
         }
 
-        internal static CustomIPPrefixData DeserializeCustomIPPrefixData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CustomIpPrefixData DeserializeCustomIpPrefixData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ExtendedLocation extendedLocation = default;
-            ETag? etag = default;
-            IList<string> zones = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
+            string @type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            string asn = default;
-            string cidr = default;
-            string signedMessage = default;
-            string authorizationMessage = default;
-            WritableSubResource customIPPrefixParent = default;
-            IReadOnlyList<WritableSubResource> childCustomIPPrefixes = default;
-            CommissionedState? commissionedState = default;
-            bool? expressRouteAdvertise = default;
-            CidrAdvertisingGeoCode? geo = default;
-            bool? noInternetAdvertise = default;
-            CustomIPPrefixType? prefixType = default;
-            IReadOnlyList<WritableSubResource> publicIPPrefixes = default;
-            Guid? resourceGuid = default;
-            string failedReason = default;
-            NetworkProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            CustomIpPrefixPropertiesFormat properties = default;
+            ExtendedLocation extendedLocation = default;
+            string eTag = default;
+            IList<string> zones = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedLocation"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("zones"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    zones = array;
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    properties = CustomIpPrefixPropertiesFormat.DeserializeCustomIpPrefixPropertiesFormat(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("extendedLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("asn"u8))
+                        continue;
+                    }
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("etag"u8))
+                {
+                    eTag = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("zones"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            asn = property0.Value.GetString();
-                            continue;
+                            array.Add(null);
                         }
-                        if (property0.NameEquals("cidr"u8))
+                        else
                         {
-                            cidr = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("signedMessage"u8))
-                        {
-                            signedMessage = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("authorizationMessage"u8))
-                        {
-                            authorizationMessage = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("customIpPrefixParent"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            customIPPrefixParent = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("childCustomIpPrefixes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
-                            }
-                            childCustomIPPrefixes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("commissionedState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            commissionedState = new CommissionedState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("expressRouteAdvertise"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            expressRouteAdvertise = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("geo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            geo = new CidrAdvertisingGeoCode(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("noInternetAdvertise"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            noInternetAdvertise = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("prefixType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            prefixType = new CustomIPPrefixType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("publicIpPrefixes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
-                            }
-                            publicIPPrefixes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceGuid"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceGuid = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("failedReason"u8))
-                        {
-                            failedReason = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
+                            array.Add(item.GetString());
                         }
                     }
+                    zones = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CustomIPPrefixData(
+            return new CustomIpPrefixData(
                 id,
                 name,
-                type,
+                @type,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
+                properties,
                 extendedLocation,
-                etag,
-                zones ?? new ChangeTrackingList<string>(),
-                asn,
-                cidr,
-                signedMessage,
-                authorizationMessage,
-                customIPPrefixParent,
-                childCustomIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
-                commissionedState,
-                expressRouteAdvertise,
-                geo,
-                noInternetAdvertise,
-                prefixType,
-                publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
-                resourceGuid,
-                failedReason,
-                provisioningState);
+                eTag,
+                zones ?? new ChangeTrackingList<string>());
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Location))
-                {
-                    builder.Append("  location: ");
-                    builder.AppendLine($"'{Location.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtendedLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  extendedLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExtendedLocation))
-                {
-                    builder.Append("  extendedLocation: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ExtendedLocation, options, 2, false, "  extendedLocation: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Zones), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  zones: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Zones))
-                {
-                    if (Zones.Any())
-                    {
-                        builder.Append("  zones: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Zones)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Asn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    asn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Asn))
-                {
-                    builder.Append("    asn: ");
-                    if (Asn.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Asn}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Asn}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cidr), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    cidr: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Cidr))
-                {
-                    builder.Append("    cidr: ");
-                    if (Cidr.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Cidr}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Cidr}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignedMessage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    signedMessage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SignedMessage))
-                {
-                    builder.Append("    signedMessage: ");
-                    if (SignedMessage.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SignedMessage}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SignedMessage}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorizationMessage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    authorizationMessage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AuthorizationMessage))
-                {
-                    builder.Append("    authorizationMessage: ");
-                    if (AuthorizationMessage.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AuthorizationMessage}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AuthorizationMessage}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ParentCustomIPPrefixId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    customIpPrefixParent: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      customIpPrefixParent: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(ParentCustomIPPrefix))
-                {
-                    builder.Append("    customIpPrefixParent: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ParentCustomIPPrefix, options, 4, false, "    customIpPrefixParent: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChildCustomIPPrefixList), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    childCustomIpPrefixes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ChildCustomIPPrefixList))
-                {
-                    if (ChildCustomIPPrefixList.Any())
-                    {
-                        builder.Append("    childCustomIpPrefixes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ChildCustomIPPrefixList)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    childCustomIpPrefixes: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommissionedState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    commissionedState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CommissionedState))
-                {
-                    builder.Append("    commissionedState: ");
-                    builder.AppendLine($"'{CommissionedState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpressRouteAdvertise), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    expressRouteAdvertise: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExpressRouteAdvertise))
-                {
-                    builder.Append("    expressRouteAdvertise: ");
-                    var boolValue = ExpressRouteAdvertise.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Geo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    geo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Geo))
-                {
-                    builder.Append("    geo: ");
-                    builder.AppendLine($"'{Geo.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NoInternetAdvertise), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    noInternetAdvertise: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NoInternetAdvertise))
-                {
-                    builder.Append("    noInternetAdvertise: ");
-                    var boolValue = NoInternetAdvertise.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrefixType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    prefixType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrefixType))
-                {
-                    builder.Append("    prefixType: ");
-                    builder.AppendLine($"'{PrefixType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicIPPrefixes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    publicIpPrefixes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PublicIPPrefixes))
-                {
-                    if (PublicIPPrefixes.Any())
-                    {
-                        builder.Append("    publicIpPrefixes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PublicIPPrefixes)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    publicIpPrefixes: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGuid), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceGuid: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceGuid))
-                {
-                    builder.Append("    resourceGuid: ");
-                    builder.AppendLine($"'{ResourceGuid.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailedReason), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    failedReason: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FailedReason))
-                {
-                    builder.Append("    failedReason: ");
-                    if (FailedReason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FailedReason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FailedReason}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CustomIPPrefixData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CustomIPPrefixData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CustomIPPrefixData IPersistableModel<CustomIPPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCustomIPPrefixData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomIPPrefixData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CustomIPPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

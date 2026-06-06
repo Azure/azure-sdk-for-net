@@ -11,41 +11,12 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An IPSec Policy configuration for a virtual network gateway connection. </summary>
-    public partial class IPsecPolicy
+    public partial class IpsecPolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IPsecPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IpsecPolicy"/>. </summary>
         /// <param name="saLifeTimeSeconds"> The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel. </param>
         /// <param name="saDataSizeKilobytes"> The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site to site VPN tunnel. </param>
         /// <param name="ipsecEncryption"> The IPSec encryption algorithm (IKE phase 1). </param>
@@ -54,19 +25,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ikeIntegrity"> The IKE integrity algorithm (IKE phase 2). </param>
         /// <param name="dhGroup"> The DH Group used in IKE Phase 1 for initial SA. </param>
         /// <param name="pfsGroup"> The Pfs Group used in IKE Phase 2 for new child SA. </param>
-        public IPsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, IPsecEncryption ipsecEncryption, IPsecIntegrity ipsecIntegrity, IkeEncryption ikeEncryption, IkeIntegrity ikeIntegrity, DHGroup dhGroup, PfsGroup pfsGroup)
+        public IpsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, IpsecEncryption ipsecEncryption, IpsecIntegrity ipsecIntegrity, IkeEncryption ikeEncryption, IkeIntegrity ikeIntegrity, DhGroup dhGroup, PfsGroup pfsGroup)
         {
             SaLifeTimeSeconds = saLifeTimeSeconds;
             SaDataSizeKilobytes = saDataSizeKilobytes;
-            IPsecEncryption = ipsecEncryption;
-            IPsecIntegrity = ipsecIntegrity;
+            IpsecEncryption = ipsecEncryption;
+            IpsecIntegrity = ipsecIntegrity;
             IkeEncryption = ikeEncryption;
             IkeIntegrity = ikeIntegrity;
             DhGroup = dhGroup;
             PfsGroup = pfsGroup;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPsecPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IpsecPolicy"/>. </summary>
         /// <param name="saLifeTimeSeconds"> The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel. </param>
         /// <param name="saDataSizeKilobytes"> The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site to site VPN tunnel. </param>
         /// <param name="ipsecEncryption"> The IPSec encryption algorithm (IKE phase 1). </param>
@@ -75,48 +46,42 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ikeIntegrity"> The IKE integrity algorithm (IKE phase 2). </param>
         /// <param name="dhGroup"> The DH Group used in IKE Phase 1 for initial SA. </param>
         /// <param name="pfsGroup"> The Pfs Group used in IKE Phase 2 for new child SA. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, IPsecEncryption ipsecEncryption, IPsecIntegrity ipsecIntegrity, IkeEncryption ikeEncryption, IkeIntegrity ikeIntegrity, DHGroup dhGroup, PfsGroup pfsGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IpsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, IpsecEncryption ipsecEncryption, IpsecIntegrity ipsecIntegrity, IkeEncryption ikeEncryption, IkeIntegrity ikeIntegrity, DhGroup dhGroup, PfsGroup pfsGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaLifeTimeSeconds = saLifeTimeSeconds;
             SaDataSizeKilobytes = saDataSizeKilobytes;
-            IPsecEncryption = ipsecEncryption;
-            IPsecIntegrity = ipsecIntegrity;
+            IpsecEncryption = ipsecEncryption;
+            IpsecIntegrity = ipsecIntegrity;
             IkeEncryption = ikeEncryption;
             IkeIntegrity = ikeIntegrity;
             DhGroup = dhGroup;
             PfsGroup = pfsGroup;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IPsecPolicy"/> for deserialization. </summary>
-        internal IPsecPolicy()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel. </summary>
-        [WirePath("saLifeTimeSeconds")]
         public int SaLifeTimeSeconds { get; set; }
+
         /// <summary> The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site to site VPN tunnel. </summary>
-        [WirePath("saDataSizeKilobytes")]
         public int SaDataSizeKilobytes { get; set; }
+
         /// <summary> The IPSec encryption algorithm (IKE phase 1). </summary>
-        [WirePath("ipsecEncryption")]
-        public IPsecEncryption IPsecEncryption { get; set; }
+        public IpsecEncryption IpsecEncryption { get; set; }
+
         /// <summary> The IPSec integrity algorithm (IKE phase 1). </summary>
-        [WirePath("ipsecIntegrity")]
-        public IPsecIntegrity IPsecIntegrity { get; set; }
+        public IpsecIntegrity IpsecIntegrity { get; set; }
+
         /// <summary> The IKE encryption algorithm (IKE phase 2). </summary>
-        [WirePath("ikeEncryption")]
         public IkeEncryption IkeEncryption { get; set; }
+
         /// <summary> The IKE integrity algorithm (IKE phase 2). </summary>
-        [WirePath("ikeIntegrity")]
         public IkeIntegrity IkeIntegrity { get; set; }
+
         /// <summary> The DH Group used in IKE Phase 1 for initial SA. </summary>
-        [WirePath("dhGroup")]
-        public DHGroup DhGroup { get; set; }
+        public DhGroup DhGroup { get; set; }
+
         /// <summary> The Pfs Group used in IKE Phase 2 for new child SA. </summary>
-        [WirePath("pfsGroup")]
         public PfsGroup PfsGroup { get; set; }
     }
 }

@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class PublicIPDdosProtectionStatusResultOperationSource : IOperationSource<PublicIPDdosProtectionStatusResult>
+    /// <summary></summary>
+    internal partial class PublicIpDdosProtectionStatusResultOperationSource : IOperationSource<PublicIpDdosProtectionStatusResult>
     {
-        PublicIPDdosProtectionStatusResult IOperationSource<PublicIPDdosProtectionStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal PublicIpDdosProtectionStatusResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return PublicIPDdosProtectionStatusResult.DeserializePublicIPDdosProtectionStatusResult(document.RootElement);
         }
 
-        async ValueTask<PublicIPDdosProtectionStatusResult> IOperationSource<PublicIPDdosProtectionStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        PublicIpDdosProtectionStatusResult IOperationSource<PublicIpDdosProtectionStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return PublicIPDdosProtectionStatusResult.DeserializePublicIPDdosProtectionStatusResult(document.RootElement);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return PublicIpDdosProtectionStatusResult.DeserializePublicIpDdosProtectionStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<PublicIpDdosProtectionStatusResult> IOperationSource<PublicIpDdosProtectionStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return PublicIpDdosProtectionStatusResult.DeserializePublicIpDdosProtectionStatusResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -9,127 +9,174 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Information on the configuration of flow log and traffic analytics (optional) . </summary>
     public partial class FlowLogInformation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FlowLogInformation"/>. </summary>
         /// <param name="targetResourceId"> The ID of the resource to configure for flow log and traffic analytics (optional) . </param>
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="storageId"/> is null. </exception>
-        public FlowLogInformation(ResourceIdentifier targetResourceId, ResourceIdentifier storageId, bool enabled)
+        public FlowLogInformation(ResourceIdentifier targetResourceId, string storageId, bool enabled)
         {
             Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
             Argument.AssertNotNull(storageId, nameof(storageId));
 
             TargetResourceId = targetResourceId;
-            StorageId = storageId;
-            Enabled = enabled;
+            Properties = new FlowLogProperties(storageId, enabled);
         }
 
         /// <summary> Initializes a new instance of <see cref="FlowLogInformation"/>. </summary>
         /// <param name="targetResourceId"> The ID of the resource to configure for flow log and traffic analytics (optional) . </param>
+        /// <param name="properties"> Properties of the flow log. </param>
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="identity"> FlowLog resource Managed Identity. </param>
-        /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
-        /// <param name="enabledFilteringCriteria"> Optional field to filter network traffic logs based on SrcIP, SrcPort, DstIP, DstPort, Protocol, Encryption, Direction and Action. If not specified, all network traffic will be logged. </param>
-        /// <param name="recordTypes"> Optional field to filter network traffic logs based on flow states. Value of this field could be any comma separated combination string of letters B,C,E or D. B represents Begin, when a flow is created. C represents Continue for an ongoing flow generated at every five-minute interval. E represents End, when a flow is terminated. D represents Deny, when a flow is denied. If not specified, all network traffic will be logged. </param>
-        /// <param name="enabled"> Flag to enable/disable flow logging. </param>
-        /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
-        /// <param name="format"> Parameters that define the flow log format. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FlowLogInformation(ResourceIdentifier targetResourceId, TrafficAnalyticsProperties flowAnalyticsConfiguration, ManagedServiceIdentity identity, ResourceIdentifier storageId, string enabledFilteringCriteria, string recordTypes, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FlowLogInformation(ResourceIdentifier targetResourceId, FlowLogProperties properties, TrafficAnalyticsProperties flowAnalyticsConfiguration, ResourceManager.Models.ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetResourceId = targetResourceId;
+            Properties = properties;
             FlowAnalyticsConfiguration = flowAnalyticsConfiguration;
             Identity = identity;
-            StorageId = storageId;
-            EnabledFilteringCriteria = enabledFilteringCriteria;
-            RecordTypes = recordTypes;
-            Enabled = enabled;
-            RetentionPolicy = retentionPolicy;
-            Format = format;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FlowLogInformation"/> for deserialization. </summary>
-        internal FlowLogInformation()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the resource to configure for flow log and traffic analytics (optional) . </summary>
-        [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; set; }
+
+        /// <summary> Properties of the flow log. </summary>
+        internal FlowLogProperties Properties { get; set; }
+
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
-        /// <summary> Parameters that define the configuration of traffic analytics. </summary>
-        [WirePath("flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration")]
-        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
+
+        /// <summary> FlowLog resource Managed Identity. </summary>
+        public ResourceManager.Models.ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> ID of the storage account which is used to store the flow log. </summary>
+        public string StorageId
         {
-            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration;
+            get
+            {
+                return Properties is null ? default : Properties.StorageId;
+            }
             set
             {
-                if (FlowAnalyticsConfiguration is null)
-                    FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
-                FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration = value;
+                if (Properties is null)
+                {
+                    Properties = new FlowLogProperties();
+                }
+                Properties.StorageId = value;
             }
         }
 
-        /// <summary> FlowLog resource Managed Identity. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> ID of the storage account which is used to store the flow log. </summary>
-        [WirePath("properties.storageId")]
-        public ResourceIdentifier StorageId { get; set; }
         /// <summary> Optional field to filter network traffic logs based on SrcIP, SrcPort, DstIP, DstPort, Protocol, Encryption, Direction and Action. If not specified, all network traffic will be logged. </summary>
-        [WirePath("properties.enabledFilteringCriteria")]
-        public string EnabledFilteringCriteria { get; set; }
+        public string EnabledFilteringCriteria
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnabledFilteringCriteria;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FlowLogProperties();
+                }
+                Properties.EnabledFilteringCriteria = value;
+            }
+        }
+
         /// <summary> Optional field to filter network traffic logs based on flow states. Value of this field could be any comma separated combination string of letters B,C,E or D. B represents Begin, when a flow is created. C represents Continue for an ongoing flow generated at every five-minute interval. E represents End, when a flow is terminated. D represents Deny, when a flow is denied. If not specified, all network traffic will be logged. </summary>
-        [WirePath("properties.recordTypes")]
-        public string RecordTypes { get; set; }
+        public string RecordTypes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RecordTypes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FlowLogProperties();
+                }
+                Properties.RecordTypes = value;
+            }
+        }
+
         /// <summary> Flag to enable/disable flow logging. </summary>
-        [WirePath("properties.enabled")]
-        public bool Enabled { get; set; }
+        public bool Enabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FlowLogProperties();
+                }
+                Properties.Enabled = value;
+            }
+        }
+
         /// <summary> Parameters that define the retention policy for flow log. </summary>
-        [WirePath("properties.retentionPolicy")]
-        public RetentionPolicyParameters RetentionPolicy { get; set; }
+        public RetentionPolicyParameters RetentionPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RetentionPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FlowLogProperties();
+                }
+                Properties.RetentionPolicy = value;
+            }
+        }
+
         /// <summary> Parameters that define the flow log format. </summary>
-        [WirePath("properties.format")]
-        public FlowLogProperties Format { get; set; }
+        public FlowLogFormatParameters Format
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Format;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FlowLogProperties();
+                }
+                Properties.Format = value;
+            }
+        }
+
+        /// <summary> Parameters that define the configuration of traffic analytics. </summary>
+        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        {
+            get
+            {
+                return FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
+            }
+            set
+            {
+                if (FlowAnalyticsConfiguration is null)
+                {
+                    FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
+                }
+                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+            }
+        }
     }
 }

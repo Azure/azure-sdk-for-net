@@ -9,61 +9,103 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VpnServerConfigurationPolicyGroup data model.
-    /// VpnServerConfigurationPolicyGroup Resource.
-    /// </summary>
-    public partial class VpnServerConfigurationPolicyGroupData : NetworkResourceData
+    /// <summary> VpnServerConfigurationPolicyGroup Resource. </summary>
+    public partial class VpnServerConfigurationPolicyGroupData : SubResourceModel
     {
         /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationPolicyGroupData"/>. </summary>
         public VpnServerConfigurationPolicyGroupData()
         {
-            PolicyMembers = new ChangeTrackingList<VpnServerConfigurationPolicyGroupMember>();
-            P2SConnectionConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VpnServerConfigurationPolicyGroupData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="isDefault"> Shows if this is a Default VpnServerConfigurationPolicyGroup or not. </param>
-        /// <param name="priority"> Priority for VpnServerConfigurationPolicyGroup. </param>
-        /// <param name="policyMembers"> Multiple PolicyMembers for VpnServerConfigurationPolicyGroup. </param>
-        /// <param name="p2sConnectionConfigurations"> List of references to P2SConnectionConfigurations. </param>
-        /// <param name="provisioningState"> The provisioning state of the VpnServerConfigurationPolicyGroup resource. </param>
-        internal VpnServerConfigurationPolicyGroupData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, bool? isDefault, int? priority, IList<VpnServerConfigurationPolicyGroupMember> policyMembers, IReadOnlyList<WritableSubResource> p2sConnectionConfigurations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the VpnServerConfigurationPolicyGroup. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VpnServerConfigurationPolicyGroupData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnServerConfigurationPolicyGroupProperties properties, string eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            IsDefault = isDefault;
-            Priority = priority;
-            PolicyMembers = policyMembers;
-            P2SConnectionConfigurations = p2sConnectionConfigurations;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
 
+        /// <summary> Properties of the VpnServerConfigurationPolicyGroup. </summary>
+        internal VpnServerConfigurationPolicyGroupProperties Properties { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
+
         /// <summary> Shows if this is a Default VpnServerConfigurationPolicyGroup or not. </summary>
-        [WirePath("properties.isDefault")]
-        public bool? IsDefault { get; set; }
+        public bool? IsDefault
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDefault;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnServerConfigurationPolicyGroupProperties();
+                }
+                Properties.IsDefault = value;
+            }
+        }
+
         /// <summary> Priority for VpnServerConfigurationPolicyGroup. </summary>
-        [WirePath("properties.priority")]
-        public int? Priority { get; set; }
+        public int? Priority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnServerConfigurationPolicyGroupProperties();
+                }
+                Properties.Priority = value;
+            }
+        }
+
         /// <summary> Multiple PolicyMembers for VpnServerConfigurationPolicyGroup. </summary>
-        [WirePath("properties.policyMembers")]
-        public IList<VpnServerConfigurationPolicyGroupMember> PolicyMembers { get; }
+        public IList<VpnServerConfigurationPolicyGroupMember> PolicyMembers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnServerConfigurationPolicyGroupProperties();
+                }
+                return Properties.PolicyMembers;
+            }
+        }
+
         /// <summary> List of references to P2SConnectionConfigurations. </summary>
-        [WirePath("properties.p2SConnectionConfigurations")]
-        public IReadOnlyList<WritableSubResource> P2SConnectionConfigurations { get; }
+        public IReadOnlyList<NetworkSubResource> P2SConnectionConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnServerConfigurationPolicyGroupProperties();
+                }
+                return Properties.P2SConnectionConfigurations;
+            }
+        }
+
         /// <summary> The provisioning state of the VpnServerConfigurationPolicyGroup resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

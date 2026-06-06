@@ -8,18 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IPv6ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable, IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>
+    /// <summary> Contains IPv6 peering config. </summary>
+    public partial class Ipv6ExpressRouteCircuitPeeringConfig : IJsonModel<Ipv6ExpressRouteCircuitPeeringConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual Ipv6ExpressRouteCircuitPeeringConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIpv6ExpressRouteCircuitPeeringConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Ipv6ExpressRouteCircuitPeeringConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
 
-        void IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(Ipv6ExpressRouteCircuitPeeringConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Ipv6ExpressRouteCircuitPeeringConfig IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<Ipv6ExpressRouteCircuitPeeringConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Ipv6ExpressRouteCircuitPeeringConfig)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(PrimaryPeerAddressPrefix))
             {
                 writer.WritePropertyName("primaryPeerAddressPrefix"u8);
@@ -54,22 +92,22 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(RouteFilter))
             {
                 writer.WritePropertyName("routeFilter"u8);
-                ((IJsonModel<WritableSubResource>)RouteFilter).Write(writer, options);
+                writer.WriteObjectValue(RouteFilter, options);
             }
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,22 +116,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        IPv6ExpressRouteCircuitPeeringConfig IJsonModel<IPv6ExpressRouteCircuitPeeringConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        Ipv6ExpressRouteCircuitPeeringConfig IJsonModel<Ipv6ExpressRouteCircuitPeeringConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual Ipv6ExpressRouteCircuitPeeringConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Ipv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Ipv6ExpressRouteCircuitPeeringConfig)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIPv6ExpressRouteCircuitPeeringConfig(document.RootElement, options);
+            return DeserializeIpv6ExpressRouteCircuitPeeringConfig(document.RootElement, options);
         }
 
-        internal static IPv6ExpressRouteCircuitPeeringConfig DeserializeIPv6ExpressRouteCircuitPeeringConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static Ipv6ExpressRouteCircuitPeeringConfig DeserializeIpv6ExpressRouteCircuitPeeringConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,204 +144,60 @@ namespace Azure.ResourceManager.Network.Models
             string primaryPeerAddressPrefix = default;
             string secondaryPeerAddressPrefix = default;
             ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default;
-            WritableSubResource routeFilter = default;
+            NetworkSubResource routeFilter = default;
             ExpressRouteCircuitPeeringState? state = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryPeerAddressPrefix"u8))
+                if (prop.NameEquals("primaryPeerAddressPrefix"u8))
                 {
-                    primaryPeerAddressPrefix = property.Value.GetString();
+                    primaryPeerAddressPrefix = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryPeerAddressPrefix"u8))
+                if (prop.NameEquals("secondaryPeerAddressPrefix"u8))
                 {
-                    secondaryPeerAddressPrefix = property.Value.GetString();
+                    secondaryPeerAddressPrefix = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("microsoftPeeringConfig"u8))
+                if (prop.NameEquals("microsoftPeeringConfig"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property.Value, options);
+                    microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("routeFilter"u8))
+                if (prop.NameEquals("routeFilter"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    routeFilter = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                    routeFilter = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new ExpressRouteCircuitPeeringState(property.Value.GetString());
+                    state = new ExpressRouteCircuitPeeringState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new IPv6ExpressRouteCircuitPeeringConfig(
+            return new Ipv6ExpressRouteCircuitPeeringConfig(
                 primaryPeerAddressPrefix,
                 secondaryPeerAddressPrefix,
                 microsoftPeeringConfig,
                 routeFilter,
                 state,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryPeerAddressPrefix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  primaryPeerAddressPrefix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrimaryPeerAddressPrefix))
-                {
-                    builder.Append("  primaryPeerAddressPrefix: ");
-                    if (PrimaryPeerAddressPrefix.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrimaryPeerAddressPrefix}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrimaryPeerAddressPrefix}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryPeerAddressPrefix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  secondaryPeerAddressPrefix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecondaryPeerAddressPrefix))
-                {
-                    builder.Append("  secondaryPeerAddressPrefix: ");
-                    if (SecondaryPeerAddressPrefix.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecondaryPeerAddressPrefix}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecondaryPeerAddressPrefix}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftPeeringConfig), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  microsoftPeeringConfig: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MicrosoftPeeringConfig))
-                {
-                    builder.Append("  microsoftPeeringConfig: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, MicrosoftPeeringConfig, options, 2, false, "  microsoftPeeringConfig: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RouteFilterId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  routeFilter: ");
-                builder.AppendLine("{");
-                builder.Append("    id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(RouteFilter))
-                {
-                    builder.Append("  routeFilter: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RouteFilter, options, 2, false, "  routeFilter: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  state: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(State))
-                {
-                    builder.Append("  state: ");
-                    builder.AppendLine($"'{State.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IPv6ExpressRouteCircuitPeeringConfig IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIPv6ExpressRouteCircuitPeeringConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

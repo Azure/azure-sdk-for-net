@@ -8,19 +8,75 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteCircuitPeeringData : IUtf8JsonSerializable, IJsonModel<ExpressRouteCircuitPeeringData>
+    /// <summary> Peering in an ExpressRouteCircuit resource. </summary>
+    public partial class ExpressRouteCircuitPeeringData : SubResourceModel, IJsonModel<ExpressRouteCircuitPeeringData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCircuitPeeringData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPeeringData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExpressRouteCircuitPeeringData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPeeringData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExpressRouteCircuitPeeringData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteCircuitPeeringData IPersistableModel<ExpressRouteCircuitPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExpressRouteCircuitPeeringData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExpressRouteCircuitPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="expressRouteCircuitPeeringData"> The <see cref="ExpressRouteCircuitPeeringData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ExpressRouteCircuitPeeringData expressRouteCircuitPeeringData)
+        {
+            if (expressRouteCircuitPeeringData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(expressRouteCircuitPeeringData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExpressRouteCircuitPeeringData"/> from. </param>
+        internal static ExpressRouteCircuitPeeringData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeExpressRouteCircuitPeeringData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExpressRouteCircuitPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,905 +88,102 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPeeringData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPeeringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(PeeringType))
-            {
-                writer.WritePropertyName("peeringType"u8);
-                writer.WriteStringValue(PeeringType.Value.ToString());
-            }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(AzureASN))
-            {
-                writer.WritePropertyName("azureASN"u8);
-                writer.WriteNumberValue(AzureASN.Value);
-            }
-            if (Optional.IsDefined(PeerASN))
-            {
-                writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerASN.Value);
-            }
-            if (Optional.IsDefined(PrimaryPeerAddressPrefix))
-            {
-                writer.WritePropertyName("primaryPeerAddressPrefix"u8);
-                writer.WriteStringValue(PrimaryPeerAddressPrefix);
-            }
-            if (Optional.IsDefined(SecondaryPeerAddressPrefix))
-            {
-                writer.WritePropertyName("secondaryPeerAddressPrefix"u8);
-                writer.WriteStringValue(SecondaryPeerAddressPrefix);
-            }
-            if (Optional.IsDefined(PrimaryAzurePort))
-            {
-                writer.WritePropertyName("primaryAzurePort"u8);
-                writer.WriteStringValue(PrimaryAzurePort);
-            }
-            if (Optional.IsDefined(SecondaryAzurePort))
-            {
-                writer.WritePropertyName("secondaryAzurePort"u8);
-                writer.WriteStringValue(SecondaryAzurePort);
-            }
-            if (Optional.IsDefined(SharedKey))
-            {
-                writer.WritePropertyName("sharedKey"u8);
-                writer.WriteStringValue(SharedKey);
-            }
-            if (Optional.IsDefined(VlanId))
-            {
-                writer.WritePropertyName("vlanId"u8);
-                writer.WriteNumberValue(VlanId.Value);
-            }
-            if (Optional.IsDefined(MicrosoftPeeringConfig))
-            {
-                writer.WritePropertyName("microsoftPeeringConfig"u8);
-                writer.WriteObjectValue(MicrosoftPeeringConfig, options);
-            }
-            if (Optional.IsDefined(Stats))
-            {
-                writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(Stats, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(GatewayManagerETag))
-            {
-                writer.WritePropertyName("gatewayManagerEtag"u8);
-                writer.WriteStringValue(GatewayManagerETag);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
-            {
-                writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteStringValue(LastModifiedBy);
-            }
-            if (Optional.IsDefined(RouteFilter))
-            {
-                writer.WritePropertyName("routeFilter"u8);
-                ((IJsonModel<WritableSubResource>)RouteFilter).Write(writer, options);
-            }
-            if (Optional.IsDefined(IPv6PeeringConfig))
-            {
-                writer.WritePropertyName("ipv6PeeringConfig"u8);
-                writer.WriteObjectValue(IPv6PeeringConfig, options);
-            }
-            if (Optional.IsDefined(ExpressRouteConnection))
-            {
-                writer.WritePropertyName("expressRouteConnection"u8);
-                ((IJsonModel<SubResource>)ExpressRouteConnection).Write(writer, options);
-            }
-            if (Optional.IsCollectionDefined(Connections))
-            {
-                writer.WritePropertyName("connections"u8);
-                writer.WriteStartArray();
-                foreach (var item in Connections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PeeredConnections))
-            {
-                writer.WritePropertyName("peeredConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in PeeredConnections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        ExpressRouteCircuitPeeringData IJsonModel<ExpressRouteCircuitPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteCircuitPeeringData IJsonModel<ExpressRouteCircuitPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExpressRouteCircuitPeeringData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPeeringData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPeeringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExpressRouteCircuitPeeringData(document.RootElement, options);
         }
 
-        internal static ExpressRouteCircuitPeeringData DeserializeExpressRouteCircuitPeeringData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExpressRouteCircuitPeeringData DeserializeExpressRouteCircuitPeeringData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
-            ResourceType? type = default;
-            ExpressRoutePeeringType? peeringType = default;
-            ExpressRoutePeeringState? state = default;
-            int? azureASN = default;
-            long? peerASN = default;
-            string primaryPeerAddressPrefix = default;
-            string secondaryPeerAddressPrefix = default;
-            string primaryAzurePort = default;
-            string secondaryAzurePort = default;
-            string sharedKey = default;
-            int? vlanId = default;
-            ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default;
-            ExpressRouteCircuitStats stats = default;
-            NetworkProvisioningState? provisioningState = default;
-            string gatewayManagerETag = default;
-            string lastModifiedBy = default;
-            WritableSubResource routeFilter = default;
-            IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig = default;
-            SubResource expressRouteConnection = default;
-            IList<ExpressRouteCircuitConnectionData> connections = default;
-            IReadOnlyList<PeerExpressRouteCircuitConnectionData> peeredConnections = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string @type = default;
+            ExpressRouteCircuitPeeringPropertiesFormat properties = default;
+            string eTag = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    properties = ExpressRouteCircuitPeeringPropertiesFormat.DeserializeExpressRouteCircuitPeeringPropertiesFormat(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("etag"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("peeringType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            peeringType = new ExpressRoutePeeringType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("state"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            state = new ExpressRoutePeeringState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("azureASN"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            azureASN = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("peerASN"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            peerASN = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("primaryPeerAddressPrefix"u8))
-                        {
-                            primaryPeerAddressPrefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("secondaryPeerAddressPrefix"u8))
-                        {
-                            secondaryPeerAddressPrefix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("primaryAzurePort"u8))
-                        {
-                            primaryAzurePort = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("secondaryAzurePort"u8))
-                        {
-                            secondaryAzurePort = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sharedKey"u8))
-                        {
-                            sharedKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vlanId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vlanId = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("microsoftPeeringConfig"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("stats"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            stats = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("gatewayManagerEtag"u8))
-                        {
-                            gatewayManagerETag = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModifiedBy"u8))
-                        {
-                            lastModifiedBy = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("routeFilter"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            routeFilter = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("ipv6PeeringConfig"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("expressRouteConnection"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            expressRouteConnection = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("connections"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ExpressRouteCircuitConnectionData> array = new List<ExpressRouteCircuitConnectionData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(item, options));
-                            }
-                            connections = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("peeredConnections"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<PeerExpressRouteCircuitConnectionData> array = new List<PeerExpressRouteCircuitConnectionData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(item, options));
-                            }
-                            peeredConnections = array;
-                            continue;
-                        }
-                    }
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ExpressRouteCircuitPeeringData(
                 id,
+                additionalBinaryDataProperties,
                 name,
-                type,
-                serializedAdditionalRawData,
-                etag,
-                peeringType,
-                state,
-                azureASN,
-                peerASN,
-                primaryPeerAddressPrefix,
-                secondaryPeerAddressPrefix,
-                primaryAzurePort,
-                secondaryAzurePort,
-                sharedKey,
-                vlanId,
-                microsoftPeeringConfig,
-                stats,
-                provisioningState,
-                gatewayManagerETag,
-                lastModifiedBy,
-                routeFilter,
-                ipv6PeeringConfig,
-                expressRouteConnection,
-                connections ?? new ChangeTrackingList<ExpressRouteCircuitConnectionData>(),
-                peeredConnections ?? new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>());
+                @type,
+                properties,
+                eTag);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeeringType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    peeringType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PeeringType))
-                {
-                    builder.Append("    peeringType: ");
-                    builder.AppendLine($"'{PeeringType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    state: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(State))
-                {
-                    builder.Append("    state: ");
-                    builder.AppendLine($"'{State.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureASN), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    azureASN: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AzureASN))
-                {
-                    builder.Append("    azureASN: ");
-                    builder.AppendLine($"{AzureASN.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeerASN), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    peerASN: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PeerASN))
-                {
-                    builder.Append("    peerASN: ");
-                    builder.AppendLine($"'{PeerASN.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryPeerAddressPrefix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    primaryPeerAddressPrefix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrimaryPeerAddressPrefix))
-                {
-                    builder.Append("    primaryPeerAddressPrefix: ");
-                    if (PrimaryPeerAddressPrefix.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrimaryPeerAddressPrefix}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrimaryPeerAddressPrefix}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryPeerAddressPrefix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    secondaryPeerAddressPrefix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecondaryPeerAddressPrefix))
-                {
-                    builder.Append("    secondaryPeerAddressPrefix: ");
-                    if (SecondaryPeerAddressPrefix.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecondaryPeerAddressPrefix}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecondaryPeerAddressPrefix}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryAzurePort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    primaryAzurePort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrimaryAzurePort))
-                {
-                    builder.Append("    primaryAzurePort: ");
-                    if (PrimaryAzurePort.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrimaryAzurePort}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrimaryAzurePort}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryAzurePort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    secondaryAzurePort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecondaryAzurePort))
-                {
-                    builder.Append("    secondaryAzurePort: ");
-                    if (SecondaryAzurePort.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecondaryAzurePort}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecondaryAzurePort}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sharedKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SharedKey))
-                {
-                    builder.Append("    sharedKey: ");
-                    if (SharedKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SharedKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SharedKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VlanId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    vlanId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VlanId))
-                {
-                    builder.Append("    vlanId: ");
-                    builder.AppendLine($"{VlanId.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftPeeringConfig), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    microsoftPeeringConfig: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MicrosoftPeeringConfig))
-                {
-                    builder.Append("    microsoftPeeringConfig: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, MicrosoftPeeringConfig, options, 4, false, "    microsoftPeeringConfig: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Stats), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    stats: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Stats))
-                {
-                    builder.Append("    stats: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Stats, options, 4, false, "    stats: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GatewayManagerETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    gatewayManagerEtag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GatewayManagerETag))
-                {
-                    builder.Append("    gatewayManagerEtag: ");
-                    if (GatewayManagerETag.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GatewayManagerETag}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GatewayManagerETag}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedBy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    lastModifiedBy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastModifiedBy))
-                {
-                    builder.Append("    lastModifiedBy: ");
-                    if (LastModifiedBy.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LastModifiedBy}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LastModifiedBy}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RouteFilterId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    routeFilter: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      routeFilter: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(RouteFilter))
-                {
-                    builder.Append("    routeFilter: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RouteFilter, options, 4, false, "    routeFilter: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPv6PeeringConfig), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ipv6PeeringConfig: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IPv6PeeringConfig))
-                {
-                    builder.Append("    ipv6PeeringConfig: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, IPv6PeeringConfig, options, 4, false, "    ipv6PeeringConfig: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ExpressRouteConnectionId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    expressRouteConnection: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      expressRouteConnection: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(ExpressRouteConnection))
-                {
-                    builder.Append("    expressRouteConnection: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ExpressRouteConnection, options, 4, false, "    expressRouteConnection: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Connections), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    connections: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Connections))
-                {
-                    if (Connections.Any())
-                    {
-                        builder.Append("    connections: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Connections)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    connections: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeeredConnections), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    peeredConnections: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PeeredConnections))
-                {
-                    if (PeeredConnections.Any())
-                    {
-                        builder.Append("    peeredConnections: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PeeredConnections)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    peeredConnections: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ExpressRouteCircuitPeeringData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPeeringData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExpressRouteCircuitPeeringData IPersistableModel<ExpressRouteCircuitPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPeeringData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExpressRouteCircuitPeeringData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExpressRouteCircuitPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,116 +13,124 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ServiceGateway data model.
-    /// ServiceGateway resource.
-    /// </summary>
-    public partial class ServiceGatewayData : TrackedResourceData
+    /// <summary> ServiceGateway resource. </summary>
+    public partial class ServiceGatewayData : SecurityPerimeterTrackedResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="ServiceGatewayData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public ServiceGatewayData(AzureLocation location) : base(location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        public ServiceGatewayData(string location) : base(location)
         {
+            Argument.AssertNotNull(location, nameof(location));
+
             Zones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceGatewayData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of service gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The service gateway SKU. </param>
         /// <param name="zones">
         /// A list of availability zones denoting the zone in which service gateway should be deployed.
-        ///
-        /// - The zone values must be provided as strings representing numeric identifiers like "1", "2", "3" etc.
+        /// <list type="bullet"><item><description>The zone values must be provided as strings representing numeric identifiers like "1", "2", "3" etc.</description></item></list>
         /// </param>
-        /// <param name="virtualNetwork"> Reference to an existing virtual network. </param>
-        /// <param name="routeTargetAddress"> Route Target address of Service gateway. </param>
-        /// <param name="routeTargetAddressV6"> Route Target address V6 of Service gateway. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the service gateway resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the service gateway resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ServiceGatewaySku sku, IList<string> zones, VirtualNetworkData virtualNetwork, RouteTargetAddressPropertiesFormat routeTargetAddress, RouteTargetAddressPropertiesFormat routeTargetAddressV6, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceGatewayData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, ServiceGatewayPropertiesFormat properties, string eTag, ServiceGatewaySku sku, IList<string> zones) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
         {
-            ETag = etag;
+            Properties = properties;
+            ETag = eTag;
             Sku = sku;
             Zones = zones;
-            VirtualNetwork = virtualNetwork;
-            RouteTargetAddress = routeTargetAddress;
-            RouteTargetAddressV6 = routeTargetAddressV6;
-            ResourceGuid = resourceGuid;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceGatewayData"/> for deserialization. </summary>
-        internal ServiceGatewayData()
-        {
-        }
+        /// <summary> Properties of service gateway. </summary>
+        internal ServiceGatewayPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
+
         /// <summary> The service gateway SKU. </summary>
-        [WirePath("sku")]
         public ServiceGatewaySku Sku { get; set; }
+
         /// <summary>
         /// A list of availability zones denoting the zone in which service gateway should be deployed.
-        ///
-        /// - The zone values must be provided as strings representing numeric identifiers like "1", "2", "3" etc.
+        /// <list type="bullet"><item><description>The zone values must be provided as strings representing numeric identifiers like "1", "2", "3" etc.</description></item></list>
         /// </summary>
-        [WirePath("zones")]
         public IList<string> Zones { get; }
+
         /// <summary> Reference to an existing virtual network. </summary>
-        [WirePath("properties.virtualNetwork")]
-        public VirtualNetworkData VirtualNetwork { get; set; }
+        public VirtualNetworkData VirtualNetwork
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetwork;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceGatewayPropertiesFormat();
+                }
+                Properties.VirtualNetwork = value;
+            }
+        }
+
         /// <summary> Route Target address of Service gateway. </summary>
-        [WirePath("properties.routeTargetAddress")]
-        public RouteTargetAddressPropertiesFormat RouteTargetAddress { get; set; }
+        public RouteTargetAddressPropertiesFormat RouteTargetAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RouteTargetAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceGatewayPropertiesFormat();
+                }
+                Properties.RouteTargetAddress = value;
+            }
+        }
+
         /// <summary> Route Target address V6 of Service gateway. </summary>
-        [WirePath("properties.routeTargetAddressV6")]
-        public RouteTargetAddressPropertiesFormat RouteTargetAddressV6 { get; set; }
+        public RouteTargetAddressPropertiesFormat RouteTargetAddressV6
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RouteTargetAddressV6;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceGatewayPropertiesFormat();
+                }
+                Properties.RouteTargetAddressV6 = value;
+            }
+        }
+
         /// <summary> The resource GUID property of the service gateway resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
+        public string ResourceGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceGuid;
+            }
+        }
+
         /// <summary> The provisioning state of the service gateway resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

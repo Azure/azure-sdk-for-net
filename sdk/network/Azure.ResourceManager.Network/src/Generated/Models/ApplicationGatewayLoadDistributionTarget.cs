@@ -7,13 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Load Distribution Target of an application gateway. </summary>
-    public partial class ApplicationGatewayLoadDistributionTarget : NetworkResourceData
+    public partial class ApplicationGatewayLoadDistributionTarget : NetworkSubResource
     {
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionTarget"/>. </summary>
         public ApplicationGatewayLoadDistributionTarget()
@@ -22,37 +22,62 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayLoadDistributionTarget"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="weightPerServer"> Weight per server. Range between 1 and 100. </param>
-        /// <param name="backendAddressPool"> Backend address pool resource of the application gateway. </param>
-        internal ApplicationGatewayLoadDistributionTarget(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? weightPerServer, WritableSubResource backendAddressPool) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the application gateway load distribution target. </param>
+        /// <param name="name"> Name of the load distribution policy that is unique within an Application Gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Type of the resource. </param>
+        internal ApplicationGatewayLoadDistributionTarget(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, ApplicationGatewayLoadDistributionTargetPropertiesFormat properties, string name, ETag? eTag, string @type) : base(id, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            WeightPerServer = weightPerServer;
-            BackendAddressPool = backendAddressPool;
+            Properties = properties;
+            Name = name;
+            ETag = eTag;
+            Type = @type;
         }
 
+        /// <summary> Properties of the application gateway load distribution target. </summary>
+        internal ApplicationGatewayLoadDistributionTargetPropertiesFormat Properties { get; set; }
+
+        /// <summary> Name of the load distribution policy that is unique within an Application Gateway. </summary>
+        public string Name { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Type of the resource. </summary>
+        public string Type { get; }
+
         /// <summary> Weight per server. Range between 1 and 100. </summary>
-        [WirePath("properties.weightPerServer")]
-        public int? WeightPerServer { get; set; }
-        /// <summary> Backend address pool resource of the application gateway. </summary>
-        internal WritableSubResource BackendAddressPool { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.backendAddressPool.id")]
-        public ResourceIdentifier BackendAddressPoolId
+        public int? WeightPerServer
         {
-            get => BackendAddressPool is null ? default : BackendAddressPool.Id;
+            get
+            {
+                return Properties is null ? default : Properties.WeightPerServer;
+            }
             set
             {
-                if (BackendAddressPool is null)
-                    BackendAddressPool = new WritableSubResource();
-                BackendAddressPool.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayLoadDistributionTargetPropertiesFormat();
+                }
+                Properties.WeightPerServer = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier BackendAddressPoolId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendAddressPoolId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayLoadDistributionTargetPropertiesFormat();
+                }
+                Properties.BackendAddressPoolId = value;
             }
         }
     }

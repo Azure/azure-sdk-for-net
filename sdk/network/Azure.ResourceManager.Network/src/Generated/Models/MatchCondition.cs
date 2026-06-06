@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Define match conditions. </summary>
     public partial class MatchCondition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MatchCondition"/>. </summary>
         /// <param name="matchVariables"> List of match variables. </param>
@@ -68,36 +40,30 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="negationConditon"> Whether this is negate condition or not. </param>
         /// <param name="matchValues"> Match value. </param>
         /// <param name="transforms"> List of transforms. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MatchCondition(IList<MatchVariable> matchVariables, WebApplicationFirewallOperator @operator, bool? negationConditon, IList<string> matchValues, IList<WebApplicationFirewallTransform> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MatchCondition(IList<MatchVariable> matchVariables, WebApplicationFirewallOperator @operator, bool? negationConditon, IList<string> matchValues, IList<WebApplicationFirewallTransform> transforms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MatchVariables = matchVariables;
             Operator = @operator;
             NegationConditon = negationConditon;
             MatchValues = matchValues;
             Transforms = transforms;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MatchCondition"/> for deserialization. </summary>
-        internal MatchCondition()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of match variables. </summary>
-        [WirePath("matchVariables")]
         public IList<MatchVariable> MatchVariables { get; }
+
         /// <summary> The operator to be matched. </summary>
-        [WirePath("operator")]
         public WebApplicationFirewallOperator Operator { get; set; }
+
         /// <summary> Whether this is negate condition or not. </summary>
-        [WirePath("negationConditon")]
         public bool? NegationConditon { get; set; }
+
         /// <summary> Match value. </summary>
-        [WirePath("matchValues")]
         public IList<string> MatchValues { get; }
+
         /// <summary> List of transforms. </summary>
-        [WirePath("transforms")]
         public IList<WebApplicationFirewallTransform> Transforms { get; }
     }
 }

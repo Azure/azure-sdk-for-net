@@ -9,14 +9,24 @@ using System;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal static partial class FirewallPolicyIdpsSignatureSeverityExtensions
+    internal static partial class FirewallPolicyIDPSSignatureSeverityExtensions
     {
-        public static FirewallPolicyIdpsSignatureSeverity ToFirewallPolicyIdpsSignatureSeverity(this int value)
+        /// <param name="value"> The value to deserialize. </param>
+        public static FirewallPolicyIDPSSignatureSeverity ToFirewallPolicyIDPSSignatureSeverity(this int value)
         {
-            if (value == 1) return FirewallPolicyIdpsSignatureSeverity.One;
-            if (value == 2) return FirewallPolicyIdpsSignatureSeverity.Two;
-            if (value == 3) return FirewallPolicyIdpsSignatureSeverity.Three;
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureSeverity value.");
+            if (value == 1)
+            {
+                return FirewallPolicyIDPSSignatureSeverity._1;
+            }
+            if (value == 2)
+            {
+                return FirewallPolicyIDPSSignatureSeverity._2;
+            }
+            if (value == 3)
+            {
+                return FirewallPolicyIDPSSignatureSeverity._3;
+            }
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIDPSSignatureSeverity value.");
         }
     }
 }

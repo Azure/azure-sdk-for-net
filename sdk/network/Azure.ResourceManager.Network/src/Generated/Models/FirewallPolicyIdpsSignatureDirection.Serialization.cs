@@ -9,17 +9,36 @@ using System;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal static partial class FirewallPolicyIdpsSignatureDirectionExtensions
+    internal static partial class FirewallPolicyIDPSSignatureDirectionExtensions
     {
-        public static FirewallPolicyIdpsSignatureDirection ToFirewallPolicyIdpsSignatureDirection(this int value)
+        /// <param name="value"> The value to deserialize. </param>
+        public static FirewallPolicyIDPSSignatureDirection ToFirewallPolicyIDPSSignatureDirection(this int value)
         {
-            if (value == 0) return FirewallPolicyIdpsSignatureDirection.Zero;
-            if (value == 1) return FirewallPolicyIdpsSignatureDirection.One;
-            if (value == 2) return FirewallPolicyIdpsSignatureDirection.Two;
-            if (value == 3) return FirewallPolicyIdpsSignatureDirection.Three;
-            if (value == 4) return FirewallPolicyIdpsSignatureDirection.Four;
-            if (value == 5) return FirewallPolicyIdpsSignatureDirection.Five;
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIdpsSignatureDirection value.");
+            if (value == 0)
+            {
+                return FirewallPolicyIDPSSignatureDirection._0;
+            }
+            if (value == 1)
+            {
+                return FirewallPolicyIDPSSignatureDirection._1;
+            }
+            if (value == 2)
+            {
+                return FirewallPolicyIDPSSignatureDirection._2;
+            }
+            if (value == 3)
+            {
+                return FirewallPolicyIDPSSignatureDirection._3;
+            }
+            if (value == 4)
+            {
+                return FirewallPolicyIDPSSignatureDirection._4;
+            }
+            if (value == 5)
+            {
+                return FirewallPolicyIDPSSignatureDirection._5;
+            }
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FirewallPolicyIDPSSignatureDirection value.");
         }
     }
 }

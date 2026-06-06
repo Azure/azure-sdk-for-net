@@ -7,66 +7,100 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The IPSec encryption algorithm (IKE phase 1). </summary>
-    public readonly partial struct IPsecEncryption : IEquatable<IPsecEncryption>
+    public readonly partial struct IpsecEncryption : IEquatable<IpsecEncryption>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="IPsecEncryption"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IPsecEncryption(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> None. </summary>
         private const string NoneValue = "None";
+        /// <summary> DES. </summary>
         private const string DesValue = "DES";
+        /// <summary> DES3. </summary>
         private const string Des3Value = "DES3";
+        /// <summary> AES128. </summary>
         private const string Aes128Value = "AES128";
+        /// <summary> AES192. </summary>
         private const string Aes192Value = "AES192";
+        /// <summary> AES256. </summary>
         private const string Aes256Value = "AES256";
+        /// <summary> GCMAES128. </summary>
         private const string GcmAes128Value = "GCMAES128";
+        /// <summary> GCMAES192. </summary>
         private const string GcmAes192Value = "GCMAES192";
+        /// <summary> GCMAES256. </summary>
         private const string GcmAes256Value = "GCMAES256";
 
+        /// <summary> Initializes a new instance of <see cref="IpsecEncryption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public IpsecEncryption(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
         /// <summary> None. </summary>
-        public static IPsecEncryption None { get; } = new IPsecEncryption(NoneValue);
+        public static IpsecEncryption None { get; } = new IpsecEncryption(NoneValue);
+
         /// <summary> DES. </summary>
-        public static IPsecEncryption Des { get; } = new IPsecEncryption(DesValue);
+        public static IpsecEncryption Des { get; } = new IpsecEncryption(DesValue);
+
         /// <summary> DES3. </summary>
-        public static IPsecEncryption Des3 { get; } = new IPsecEncryption(Des3Value);
+        public static IpsecEncryption Des3 { get; } = new IpsecEncryption(Des3Value);
+
         /// <summary> AES128. </summary>
-        public static IPsecEncryption Aes128 { get; } = new IPsecEncryption(Aes128Value);
+        public static IpsecEncryption Aes128 { get; } = new IpsecEncryption(Aes128Value);
+
         /// <summary> AES192. </summary>
-        public static IPsecEncryption Aes192 { get; } = new IPsecEncryption(Aes192Value);
+        public static IpsecEncryption Aes192 { get; } = new IpsecEncryption(Aes192Value);
+
         /// <summary> AES256. </summary>
-        public static IPsecEncryption Aes256 { get; } = new IPsecEncryption(Aes256Value);
+        public static IpsecEncryption Aes256 { get; } = new IpsecEncryption(Aes256Value);
+
         /// <summary> GCMAES128. </summary>
-        public static IPsecEncryption GcmAes128 { get; } = new IPsecEncryption(GcmAes128Value);
+        public static IpsecEncryption GcmAes128 { get; } = new IpsecEncryption(GcmAes128Value);
+
         /// <summary> GCMAES192. </summary>
-        public static IPsecEncryption GcmAes192 { get; } = new IPsecEncryption(GcmAes192Value);
+        public static IpsecEncryption GcmAes192 { get; } = new IpsecEncryption(GcmAes192Value);
+
         /// <summary> GCMAES256. </summary>
-        public static IPsecEncryption GcmAes256 { get; } = new IPsecEncryption(GcmAes256Value);
-        /// <summary> Determines if two <see cref="IPsecEncryption"/> values are the same. </summary>
-        public static bool operator ==(IPsecEncryption left, IPsecEncryption right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="IPsecEncryption"/> values are not the same. </summary>
-        public static bool operator !=(IPsecEncryption left, IPsecEncryption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IPsecEncryption"/>. </summary>
-        public static implicit operator IPsecEncryption(string value) => new IPsecEncryption(value);
+        public static IpsecEncryption GcmAes256 { get; } = new IpsecEncryption(GcmAes256Value);
 
-        /// <inheritdoc />
+        /// <summary> Determines if two <see cref="IpsecEncryption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(IpsecEncryption left, IpsecEncryption right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="IpsecEncryption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(IpsecEncryption left, IpsecEncryption right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="IpsecEncryption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IpsecEncryption(string value) => new IpsecEncryption(value);
+
+        /// <summary> Converts a string to a <see cref="IpsecEncryption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IpsecEncryption?(string value) => value == null ? null : new IpsecEncryption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is IPsecEncryption other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(IPsecEncryption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is IpsecEncryption other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(IpsecEncryption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,84 +8,56 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Effective network security group. </summary>
     public partial class EffectiveNetworkSecurityGroup
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroup"/>. </summary>
         internal EffectiveNetworkSecurityGroup()
         {
             EffectiveSecurityRules = new ChangeTrackingList<EffectiveNetworkSecurityRule>();
-            TagToIPAddresses = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EffectiveNetworkSecurityGroup"/>. </summary>
         /// <param name="networkSecurityGroup"> The ID of network security group that is applied. </param>
         /// <param name="association"> Associated resources. </param>
         /// <param name="effectiveSecurityRules"> A collection of effective security rules. </param>
-        /// <param name="tagToIPAddresses"> Mapping of tags to list of IP Addresses included within the tag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EffectiveNetworkSecurityGroup(WritableSubResource networkSecurityGroup, EffectiveNetworkSecurityGroupAssociation association, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, IReadOnlyDictionary<string, IList<string>> tagToIPAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="tagMap"> Mapping of tags to list of IP Addresses included within the tag. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveNetworkSecurityGroup(NetworkSubResource networkSecurityGroup, EffectiveNetworkSecurityGroupAssociation association, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, string tagMap, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkSecurityGroup = networkSecurityGroup;
             Association = association;
             EffectiveSecurityRules = effectiveSecurityRules;
-            TagToIPAddresses = tagToIPAddresses;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            TagMap = tagMap;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of network security group that is applied. </summary>
-        internal WritableSubResource NetworkSecurityGroup { get; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("networkSecurityGroup.id")]
-        public ResourceIdentifier NetworkSecurityGroupId
-        {
-            get => NetworkSecurityGroup?.Id;
-        }
+        internal NetworkSubResource NetworkSecurityGroup { get; }
 
         /// <summary> Associated resources. </summary>
-        [WirePath("association")]
         public EffectiveNetworkSecurityGroupAssociation Association { get; }
+
         /// <summary> A collection of effective security rules. </summary>
-        [WirePath("effectiveSecurityRules")]
         public IReadOnlyList<EffectiveNetworkSecurityRule> EffectiveSecurityRules { get; }
+
         /// <summary> Mapping of tags to list of IP Addresses included within the tag. </summary>
-        [WirePath("tagMap")]
-        public IReadOnlyDictionary<string, IList<string>> TagToIPAddresses { get; }
+        public string TagMap { get; }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier NetworkSecurityGroupId
+        {
+            get
+            {
+                return NetworkSecurityGroup is null ? default : NetworkSecurityGroup.Id;
+            }
+        }
     }
 }
