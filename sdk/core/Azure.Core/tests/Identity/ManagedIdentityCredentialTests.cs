@@ -313,8 +313,7 @@ namespace Azure.Core.Tests.Identity
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var response = CreateSuccessResponse(ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => CreateSuccessResponse(ExpectedToken));
             var credential = CreateCredentialForImds(mockTransport);
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
@@ -356,8 +355,7 @@ namespace Azure.Core.Tests.Identity
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var response = CreateSuccessResponse(ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => CreateSuccessResponse(ExpectedToken));
             var credential = CreateCredentialForImds(mockTransport, clientId: "mock-client-id", authorityHost: authority);
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, tenantId: Guid.NewGuid().ToString()), default);
@@ -381,8 +379,7 @@ namespace Azure.Core.Tests.Identity
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var response = CreateSuccessResponse(ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => CreateSuccessResponse(ExpectedToken));
 
             var credential = CreateCredentialForImdsWithResourceId(mockTransport, new ResourceIdentifier(_expectedResourceId));
 
@@ -407,8 +404,7 @@ namespace Azure.Core.Tests.Identity
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var response = CreateSuccessResponse(ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => CreateSuccessResponse(ExpectedToken));
             var expectedObjectId = Guid.NewGuid().ToString();
 
             var credential = CreateCredentialWithManagedIdentityId(mockTransport, ManagedIdentityId.FromUserAssignedObjectId(expectedObjectId));
@@ -681,11 +677,7 @@ namespace Azure.Core.Tests.Identity
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "https://mock.podid.endpoint/" } });
 
-            var response = CreateSuccessResponse(ExpectedToken);
-            var mockTransport = new MockTransport(req =>
-            {
-                return response;
-            });
+            var mockTransport = new MockTransport(req => CreateSuccessResponse(ExpectedToken));
             var credential = CreateCredentialForImds(mockTransport, clientId: clientId);
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
@@ -712,11 +704,7 @@ namespace Azure.Core.Tests.Identity
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "https://mock.podid.endpoint/" } });
 
-            var response = CreateSuccessResponse(ExpectedToken);
-            var mockTransport = new MockTransport(req =>
-            {
-                return response;
-            });
+            var mockTransport = new MockTransport(req => CreateSuccessResponse(ExpectedToken));
             var credential = CreateCredentialForImdsWithResourceId(mockTransport, new ResourceIdentifier(_expectedResourceId));
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
@@ -1384,8 +1372,7 @@ namespace Azure.Core.Tests.Identity
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var response = CreateSuccessResponse(ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => CreateSuccessResponse(ExpectedToken));
 
             List<string> messages = new();
             using AzureEventSourceListener listener = new AzureEventSourceListener(
