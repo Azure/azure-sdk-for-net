@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Optional.IsDefined(IgnoreUnknown))
+            if (Optional.IsDefined(ShouldIgnoreUnknown))
             {
                 writer.WritePropertyName("ignoreUnknown"u8);
-                writer.WriteBooleanValue(IgnoreUnknown.Value);
+                writer.WriteBooleanValue(ShouldIgnoreUnknown.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             double? degradedThreshold = default;
             double? unhealthyThreshold = default;
             DependenciesAggregationUnit? unit = default;
-            bool? ignoreUnknown = default;
+            bool? shouldIgnoreUnknown = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    ignoreUnknown = prop.Value.GetBoolean();
+                    shouldIgnoreUnknown = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 degradedThreshold,
                 unhealthyThreshold,
                 unit,
-                ignoreUnknown,
+                shouldIgnoreUnknown,
                 additionalBinaryDataProperties);
         }
     }

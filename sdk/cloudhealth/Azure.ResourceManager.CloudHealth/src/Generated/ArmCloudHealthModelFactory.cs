@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="sensitivity"> Sensitivity level for dynamic threshold detection. Only applicable when operator is Dynamic. </param>
         /// <param name="lookBackWindow"> ISO 8601 duration for the historical look-back window used by dynamic threshold computation. Only applicable when operator is Dynamic. </param>
         /// <returns> A new <see cref="Models.EntitySignalThresholdRuleV2"/> instance for mocking. </returns>
-        public static EntitySignalThresholdRuleV2 EntitySignalThresholdRuleV2(EntitySignalOperator signalOperator = default, double? threshold = default, EntityDynamicThresholdSensitivity? sensitivity = default, LookBackWindow? lookBackWindow = default)
+        public static EntitySignalThresholdRuleV2 EntitySignalThresholdRuleV2(EntitySignalOperator signalOperator = default, double? threshold = default, EntityDynamicThresholdSensitivity? sensitivity = default, DynamicThresholdLookBackWindow? lookBackWindow = default)
         {
             return new EntitySignalThresholdRuleV2(signalOperator, threshold, sensitivity, lookBackWindow, default);
         }
@@ -528,16 +528,16 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="degradedThreshold"> Degraded threshold for aggregation. For MinHealthy: parent is degraded when healthy count/percentage falls to or below this value. For MaxNotHealthy: parent is degraded when not-healthy count/percentage reaches or exceeds this value. Optional — if not set, there is no degraded state (transitions directly from Healthy to Unhealthy). </param>
         /// <param name="unhealthyThreshold"> Unhealthy threshold for aggregation. For MinHealthy: parent is unhealthy when healthy count/percentage falls to or below this value. For MaxNotHealthy: parent is unhealthy when not-healthy count/percentage reaches or exceeds this value. Required when aggregationType is MinHealthy or MaxNotHealthy. </param>
         /// <param name="unit"> Unit type for the aggregation thresholds. Required when aggregationType is MinHealthy or MaxNotHealthy. </param>
-        /// <param name="ignoreUnknown"> If true, children with Unknown health state are excluded from aggregation calculations. Defaults to true. </param>
+        /// <param name="shouldIgnoreUnknown"> If true, children with Unknown health state are excluded from aggregation calculations. Defaults to true. </param>
         /// <returns> A new <see cref="Models.DependenciesSignalGroupV2"/> instance for mocking. </returns>
-        public static DependenciesSignalGroupV2 DependenciesSignalGroupV2(DependenciesAggregationType aggregationType = default, double? degradedThreshold = default, double? unhealthyThreshold = default, DependenciesAggregationUnit? unit = default, bool? ignoreUnknown = default)
+        public static DependenciesSignalGroupV2 DependenciesSignalGroupV2(DependenciesAggregationType aggregationType = default, double? degradedThreshold = default, double? unhealthyThreshold = default, DependenciesAggregationUnit? unit = default, bool? shouldIgnoreUnknown = default)
         {
             return new DependenciesSignalGroupV2(
                 aggregationType,
                 degradedThreshold,
                 unhealthyThreshold,
                 unit,
-                ignoreUnknown,
+                shouldIgnoreUnknown,
                 default);
         }
 

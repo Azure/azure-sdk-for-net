@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public static partial class ArmCloudHealthModelFactory
     {
         public static Azure.ResourceManager.CloudHealth.Models.ApplicationInsightsTopologySpecification ApplicationInsightsTopologySpecification(Azure.Core.ResourceIdentifier applicationInsightsResourceId = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroupV2 DependenciesSignalGroupV2(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType aggregationType = default(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType), double? degradedThreshold = default(double?), double? unhealthyThreshold = default(double?), Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit? unit = default(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit?), bool? ignoreUnknown = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroupV2 DependenciesSignalGroupV2(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType aggregationType = default(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType), double? degradedThreshold = default(double?), double? unhealthyThreshold = default(double?), Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit? unit = default(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit?), bool? shouldIgnoreUnknown = default(bool?)) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.DiscoveryError DiscoveryError(string message = null, System.Collections.Generic.IEnumerable<string> context = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleSpecification DiscoveryRuleSpecification(string kind = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent EntityAddDataAnnotationContent(System.Collections.Generic.IDictionary<string, string> annotationDetails = null, string description = null) { throw null; }
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups EntitySignalGroups(Azure.ResourceManager.CloudHealth.Models.ResourceSignals azureResource = null, Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals azureLogAnalytics = null, Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals azureMonitorWorkspace = null, Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroupV2 dependencies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.ExternalSignal> externalSignals = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent EntitySignalHistoryContent(string signalName = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), int? top = default(int?), string nextMarker = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult EntitySignalHistoryResult(string entityName = null, string signalName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.SignalHistoryDataPoint> history = null, string nextMarker = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRuleV2 EntitySignalThresholdRuleV2(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator signalOperator = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator), double? threshold = default(double?), Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity? sensitivity = default(Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity?), Azure.ResourceManager.CloudHealth.Models.LookBackWindow? lookBackWindow = default(Azure.ResourceManager.CloudHealth.Models.LookBackWindow?)) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRuleV2 EntitySignalThresholdRuleV2(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator signalOperator = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator), double? threshold = default(double?), Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity? sensitivity = default(Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity?), Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow? lookBackWindow = default(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow?)) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.ExternalSignal ExternalSignal(string name = null, string signalDefinitionName = null, Azure.ResourceManager.CloudHealth.Models.SignalStatus status = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.HealthModelAuthenticationSettingData HealthModelAuthenticationSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties properties = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties HealthModelAuthenticationSettingProperties(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState? provisioningState = default(Azure.ResourceManager.CloudHealth.Models.HealthModelProvisioningState?), string displayName = null, string authenticationKind = null) { throw null; }
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public DependenciesSignalGroupV2(Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType aggregationType) { }
         public Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationType AggregationType { get { throw null; } set { } }
         public double? DegradedThreshold { get { throw null; } set { } }
-        public bool? IgnoreUnknown { get { throw null; } set { } }
+        public bool? ShouldIgnoreUnknown { get { throw null; } set { } }
         public double? UnhealthyThreshold { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.DependenciesAggregationUnit? Unit { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroupV2 JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -567,6 +567,25 @@ namespace Azure.ResourceManager.CloudHealth.Models
         Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleSpecification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleSpecification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleSpecification>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.DiscoveryRuleSpecification>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DynamicThresholdLookBackWindow : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DynamicThresholdLookBackWindow(string value) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow PT15M { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow PT1H { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow PT30M { get { throw null; } }
+        public static Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow PT5M { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow left, Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow left, Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class EntityAddDataAnnotationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityAddDataAnnotationContent>
     {
@@ -951,7 +970,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public partial class EntitySignalThresholdRuleV2 : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRuleV2>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRuleV2>
     {
         public EntitySignalThresholdRuleV2(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator signalOperator) { }
-        public Azure.ResourceManager.CloudHealth.Models.LookBackWindow? LookBackWindow { get { throw null; } set { } }
+        public Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow? LookBackWindow { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity? Sensitivity { get { throw null; } set { } }
         public Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator SignalOperator { get { throw null; } set { } }
         public double? Threshold { get { throw null; } set { } }
@@ -1196,25 +1215,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
         Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LookBackWindow : System.IEquatable<Azure.ResourceManager.CloudHealth.Models.LookBackWindow>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LookBackWindow(string value) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.LookBackWindow PT15M { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.LookBackWindow PT1H { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.LookBackWindow PT30M { get { throw null; } }
-        public static Azure.ResourceManager.CloudHealth.Models.LookBackWindow PT5M { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CloudHealth.Models.LookBackWindow other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CloudHealth.Models.LookBackWindow left, Azure.ResourceManager.CloudHealth.Models.LookBackWindow right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.LookBackWindow (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.CloudHealth.Models.LookBackWindow? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CloudHealth.Models.LookBackWindow left, Azure.ResourceManager.CloudHealth.Models.LookBackWindow right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ManagedIdentityAuthenticationSettingProperties : Azure.ResourceManager.CloudHealth.Models.HealthModelAuthenticationSettingProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.ManagedIdentityAuthenticationSettingProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.ManagedIdentityAuthenticationSettingProperties>
     {
