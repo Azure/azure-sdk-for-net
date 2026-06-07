@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>Azure.AI.AgentServer.Optimization</RootNamespace>
+    <Version>1.0.0-beta.1</Version>
+    <Description>Config loader for optimization-ready Azure AI Hosted Agents — resolves optimized agent configurations from environment, remote API, or local directory.</Description>
+    <PackageTags>Microsoft Azure AI Agent Server Optimization Config</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="YamlDotNet" />
+  </ItemGroup>
+</Project>
