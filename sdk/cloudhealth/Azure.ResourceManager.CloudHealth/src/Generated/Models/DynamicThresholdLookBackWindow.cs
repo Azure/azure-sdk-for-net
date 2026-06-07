@@ -12,7 +12,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Allowed look-back window durations for dynamic threshold computation. </summary>
-    public readonly partial struct LookBackWindow : IEquatable<LookBackWindow>
+    public readonly partial struct DynamicThresholdLookBackWindow : IEquatable<DynamicThresholdLookBackWindow>
     {
         private readonly string _value;
         /// <summary> Five minutes. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> One hour. </summary>
         private const string PT1HValue = "PT1H";
 
-        /// <summary> Initializes a new instance of <see cref="LookBackWindow"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicThresholdLookBackWindow"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LookBackWindow(string value)
+        public DynamicThresholdLookBackWindow(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> Five minutes. </summary>
-        public static LookBackWindow PT5M { get; } = new LookBackWindow(PT5MValue);
+        public static DynamicThresholdLookBackWindow PT5M { get; } = new DynamicThresholdLookBackWindow(PT5MValue);
 
         /// <summary> Fifteen minutes. </summary>
-        public static LookBackWindow PT15M { get; } = new LookBackWindow(PT15MValue);
+        public static DynamicThresholdLookBackWindow PT15M { get; } = new DynamicThresholdLookBackWindow(PT15MValue);
 
         /// <summary> Thirty minutes. </summary>
-        public static LookBackWindow PT30M { get; } = new LookBackWindow(PT30MValue);
+        public static DynamicThresholdLookBackWindow PT30M { get; } = new DynamicThresholdLookBackWindow(PT30MValue);
 
         /// <summary> One hour. </summary>
-        public static LookBackWindow PT1H { get; } = new LookBackWindow(PT1HValue);
+        public static DynamicThresholdLookBackWindow PT1H { get; } = new DynamicThresholdLookBackWindow(PT1HValue);
 
-        /// <summary> Determines if two <see cref="LookBackWindow"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DynamicThresholdLookBackWindow"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(LookBackWindow left, LookBackWindow right) => left.Equals(right);
+        public static bool operator ==(DynamicThresholdLookBackWindow left, DynamicThresholdLookBackWindow right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LookBackWindow"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DynamicThresholdLookBackWindow"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(LookBackWindow left, LookBackWindow right) => !left.Equals(right);
+        public static bool operator !=(DynamicThresholdLookBackWindow left, DynamicThresholdLookBackWindow right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LookBackWindow"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DynamicThresholdLookBackWindow"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LookBackWindow(string value) => new LookBackWindow(value);
+        public static implicit operator DynamicThresholdLookBackWindow(string value) => new DynamicThresholdLookBackWindow(value);
 
-        /// <summary> Converts a string to a <see cref="LookBackWindow"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DynamicThresholdLookBackWindow"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LookBackWindow?(string value) => value == null ? null : new LookBackWindow(value);
+        public static implicit operator DynamicThresholdLookBackWindow?(string value) => value == null ? null : new DynamicThresholdLookBackWindow(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LookBackWindow other && Equals(other);
+        public override bool Equals(object obj) => obj is DynamicThresholdLookBackWindow other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(LookBackWindow other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DynamicThresholdLookBackWindow other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

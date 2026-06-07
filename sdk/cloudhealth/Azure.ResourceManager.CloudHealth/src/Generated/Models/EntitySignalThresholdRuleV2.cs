@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="sensitivity"> Sensitivity level for dynamic threshold detection. Only applicable when operator is Dynamic. </param>
         /// <param name="lookBackWindow"> ISO 8601 duration for the historical look-back window used by dynamic threshold computation. Only applicable when operator is Dynamic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntitySignalThresholdRuleV2(EntitySignalOperator signalOperator, double? threshold, EntityDynamicThresholdSensitivity? sensitivity, LookBackWindow? lookBackWindow, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntitySignalThresholdRuleV2(EntitySignalOperator signalOperator, double? threshold, EntityDynamicThresholdSensitivity? sensitivity, DynamicThresholdLookBackWindow? lookBackWindow, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SignalOperator = signalOperator;
             Threshold = threshold;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public EntityDynamicThresholdSensitivity? Sensitivity { get; set; }
 
         /// <summary> ISO 8601 duration for the historical look-back window used by dynamic threshold computation. Only applicable when operator is Dynamic. </summary>
-        public LookBackWindow? LookBackWindow { get; set; }
+        public DynamicThresholdLookBackWindow? LookBackWindow { get; set; }
     }
 }

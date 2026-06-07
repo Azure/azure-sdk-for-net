@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
             EntitySignalOperator signalOperator = default;
             double? threshold = default;
             EntityDynamicThresholdSensitivity? sensitivity = default;
-            LookBackWindow? lookBackWindow = default;
+            DynamicThresholdLookBackWindow? lookBackWindow = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    lookBackWindow = new LookBackWindow(prop.Value.GetString());
+                    lookBackWindow = new DynamicThresholdLookBackWindow(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
